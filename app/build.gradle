@@ -41,4 +41,6 @@ dependencies {
     implementation 'me.jessyan:autosize:0.9.5'//今日头条适配
     implementation 'q.rorbin:VerticalTabLayout:1.2.5'//二级联动列表依赖
 
+    implementation 'com.github.pinguo-zhouwei:MZBannerView:v2.0.2'
+
 }
