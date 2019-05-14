@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import q.rorbin.verticaltablayout.VerticalTabLayout;
+import q.rorbin.verticaltablayout.widget.TabView;
 
 public class Fragment_Fen extends BaseFragment {
 

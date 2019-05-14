@@ -35,6 +35,7 @@ public class vpsp extends FragmentPagerAdapter {
 //            放入布局文件中
         vcount.setArguments(bundle);
         return vcount;
+
     }
     //返回数量
 

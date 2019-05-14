@@ -63,6 +63,11 @@ public class Fragment_Shou extends BaseFragment {
     }
 
     @Override
+    protected void initView(View view) {
+
+    }
+
+    @Override
     protected void initData() {
         banner.setImages(imageList);
         banner.setImageLoader(new GlideImageLoader());

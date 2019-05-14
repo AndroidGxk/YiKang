@@ -1,9 +1,11 @@
 package com.yikangcheng.admin.yikang.activity;
 
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.Toolbar;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Fen;
@@ -17,11 +19,17 @@ public class MainActivity extends BaseActivtiy {
     private RadioGroup radio;
     private FragmentTransaction transaction;
     private RadioButton shou, fen, miao, gou, wo;
+    private Toolbar mToolbar;
+    private TextView mToolbarTv;
 
 
     @Override
     protected void initView() {
         radio = findViewById(R.id.radio_group);
+        mToolbar = findViewById(R.id.toolbar);
+        mToolbarTv = findViewById(R.id.toolbar_tv);
+        mToolbar.setTitle("");
+        setSupportActionBar(mToolbar);
     }
 
     @Override
@@ -66,6 +74,7 @@ public class MainActivity extends BaseActivtiy {
                     gou.setChecked(false);
                     wo.setChecked(false);
                     miao.setChecked(false);
+                    mToolbarTv.setText("优选商城");
                 }
             }
         });
@@ -84,6 +93,7 @@ public class MainActivity extends BaseActivtiy {
                     gou.setChecked(false);
                     wo.setChecked(false);
                     miao.setChecked(false);
+                    mToolbarTv.setText("");
                 }
             }
         });
@@ -102,6 +112,7 @@ public class MainActivity extends BaseActivtiy {
                     wo.setChecked(false);
                     shou.setChecked(false);
                     fen.setChecked(false);
+                    mToolbarTv.setText("秒杀专区");
                 }
             }
         });
@@ -120,6 +131,7 @@ public class MainActivity extends BaseActivtiy {
                     shou.setChecked(false);
                     miao.setChecked(false);
                     fen.setChecked(false);
+                    mToolbarTv.setText("我的购物车");
                 }
             }
         });
@@ -138,6 +150,7 @@ public class MainActivity extends BaseActivtiy {
                     gou.setChecked(false);
                     miao.setChecked(false);
                     fen.setChecked(false);
+                    mToolbarTv.setText("我的");
                 }
             }
         });
