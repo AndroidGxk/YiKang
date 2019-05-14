@@ -10,10 +10,6 @@ import android.view.ViewGroup;
 
 import com.yikangcheng.admin.yikang.R;
 
-/**
- * 作者：古祥坤 on 2019/5/14 11:59
- * 邮箱：1724959985@qq.com
- */
 public class Fragment_Wo extends Fragment {
 
     @Nullable

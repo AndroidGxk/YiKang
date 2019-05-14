@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants"
+    android:fillViewport="true"
+    android:focusableInTouchMode="true"
+    android:overScrollMode="never">
 
     <RelativeLayout
         android:id="@+id/table"
@@ -33,15 +38,17 @@
             android:src="@drawable/sousuo" />
     </RelativeLayout>
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/table">
+        android:layout_below="@+id/table"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:overScrollMode="never">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="80dp"
             android:orientation="vertical">
 
 
@@ -49,8 +56,7 @@
                 android:id="@+id/banner"
                 android:layout_width="match_parent"
                 android:layout_height="165dp"
-                android:layout_below="@+id/table"
-                android:background="@drawable/bao" />
+                android:layout_below="@+id/table" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -63,11 +69,13 @@
                     android:layout_height="165dp"
                     android:layout_marginTop="9dp"
                     android:background="@drawable/bao" />
+
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="165dp"
                     android:layout_marginTop="9dp"
-                    android:background="@drawable/trans"/>
+                    android:background="@drawable/trans" />
+
                 <TextView
                     android:id="@+id/tmiao"
                     android:layout_width="wrap_content"
@@ -103,11 +111,11 @@
                     android:textColor="#FFFFFF" />
 
                 <LinearLayout
-                    android:layout_below="@+id/jks"
                     android:layout_width="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/jks"
                     android:layout_marginLeft="14dp"
+                    android:layout_marginTop="10dp"
                     android:orientation="horizontal">
 
                     <Button
@@ -200,14 +208,20 @@
             <com.zhouwei.mzbanner.MZBannerView
                 android:id="@+id/bao_mzbanner"
                 android:layout_width="match_parent"
-                android:layout_height="146dp"
+                android:layout_height="124dp"
                 android:layout_marginTop="13dp"
-                android:background="@drawable/bao" />
+                app:canLoop="true"
+                app:indicatorAlign="center"
+                app:middle_page_cover="false"
+                app:open_mz_mode="true" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/bao_recycler"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="15dp" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -239,14 +253,15 @@
             <com.zhouwei.mzbanner.MZBannerView
                 android:id="@+id/she_mzbanner"
                 android:layout_width="match_parent"
-                android:layout_height="146dp"
-                android:layout_marginTop="13dp"
-                android:background="@drawable/bao" />
+                android:layout_height="124dp"
+                android:layout_marginTop="13dp" />
 
             <android.support.v7.widget.RecyclerView
+                android:id="@+id/artic_recycler"
                 android:layout_width="match_parent"
                 android:layout_height="161dp"
                 android:layout_marginLeft="15dp"
+                android:overScrollMode="never"
                 android:layout_marginTop="12dp"
                 android:layout_marginRight="15dp" />
 
@@ -277,16 +292,19 @@
                     android:textSize="11sp" />
             </RelativeLayout>
 
-            <ImageView
+            <com.youth.banner.Banner
+                android:id="@+id/m_banner"
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:layout_marginTop="13dp"
-                android:background="@drawable/bao" />
+                android:layout_height="154dp"
+                android:layout_marginTop="15dp" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/mei_recycle"
                 android:layout_width="match_parent"
-                android:layout_height="300dp" />
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="15dp" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -329,7 +347,7 @@
                 android:layout_marginLeft="13dp"
                 android:layout_marginTop="3dp"
                 android:layout_marginRight="13dp"
-                android:background="@drawable/bao" />
+                android:background="@drawable/ce2" />
 
             <ImageView
                 android:layout_width="match_parent"
@@ -349,11 +367,13 @@
                 android:textSize="15sp" />
 
             <android.support.v7.widget.RecyclerView
+                android:id="@+id/c_recycler"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="15dp"
-                android:layout_marginRight="15dp" />
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="80dp" />
         </LinearLayout>
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 </RelativeLayout>

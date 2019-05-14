@@ -1,12 +1,15 @@
 package com.yikangcheng.admin.yikang.base;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 
 
 import com.yikangcheng.admin.yikang.app.BaseApp;
@@ -16,7 +19,7 @@ import butterknife.Unbinder;
 import me.jessyan.autosize.internal.CustomAdapt;
 
 
-public abstract class BaseActivtiy extends AppCompatActivity implements IView  {
+public abstract class BaseActivtiy extends AppCompatActivity implements IView {
     private Unbinder mUnbinder;
     public static Context mContext;
     protected BasePresenter mPresenter;
@@ -27,6 +30,12 @@ public abstract class BaseActivtiy extends AppCompatActivity implements IView  {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getActivtiyLayoutId());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            //透明状态栏
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            //透明导航栏
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        }
         mUnbinder = ButterKnife.bind(this);
         mManager = getSupportFragmentManager();
         mContext = this;
@@ -36,6 +45,7 @@ public abstract class BaseActivtiy extends AppCompatActivity implements IView  {
         if (mPresenter != null)
             mPresenter.atteachView((IView) this);
         initEventData();
+
     }
 
     protected abstract void initView();
