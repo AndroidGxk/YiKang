@@ -34,9 +34,9 @@
     </RelativeLayout>
 
     <ScrollView
-        android:layout_below="@+id/table"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/table">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -50,14 +50,127 @@
                 android:layout_width="match_parent"
                 android:layout_height="165dp"
                 android:layout_below="@+id/table"
-                android:background="@drawable/ic_launcher_background" />
+                android:background="@drawable/bao" />
 
-            <ImageView
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="165dp"
-                android:layout_below="@+id/banner"
-                android:layout_marginTop="9dp"
-                android:background="@drawable/ic_launcher_background" />
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/banner">
+
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="165dp"
+                    android:layout_marginTop="9dp"
+                    android:background="@drawable/bao" />
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="165dp"
+                    android:layout_marginTop="9dp"
+                    android:background="@drawable/trans"/>
+                <TextView
+                    android:id="@+id/tmiao"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="57dp"
+                    android:text="秒杀专场"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tmiao"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="11dp"
+                    android:background="@drawable/feng_text"
+                    android:paddingLeft="8dp"
+                    android:paddingTop="5dp"
+                    android:paddingRight="8dp"
+                    android:paddingBottom="5dp"
+                    android:text="到手价三折封顶"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/jks"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="114dp"
+                    android:text="距开始"
+                    android:textColor="#FFFFFF" />
+
+                <LinearLayout
+                    android:layout_below="@+id/jks"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="14dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginRight="3dp"
+                        android:background="@drawable/feng_btn_red"
+                        android:gravity="center"
+                        android:text="1"
+                        android:textColor="#FFFFFF" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="3dp"
+                        android:text="天"
+                        android:textColor="#FFFFFF"
+                        android:textSize="15sp" />
+
+                    <Button
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginRight="3dp"
+                        android:background="@drawable/feng_btn_red"
+                        android:gravity="center"
+                        android:text="23"
+                        android:textColor="#FFFFFF" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="3dp"
+                        android:text=":"
+                        android:textColor="#FFFFFF"
+                        android:textSize="15sp" />
+
+                    <Button
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginRight="3dp"
+                        android:background="@drawable/feng_btn_red"
+                        android:gravity="center"
+                        android:text="23"
+                        android:textColor="#FFFFFF" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="3dp"
+                        android:text=":"
+                        android:textColor="#FFFFFF"
+                        android:textSize="15sp" />
+
+                    <Button
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginRight="3dp"
+                        android:background="@drawable/feng_btn_red"
+                        android:gravity="center"
+                        android:text="23"
+                        android:textColor="#FFFFFF" />
+                </LinearLayout>
+            </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -89,7 +202,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="146dp"
                 android:layout_marginTop="13dp"
-                android:background="@drawable/ic_launcher_background" />
+                android:background="@drawable/bao" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/bao_recycler"
@@ -128,7 +241,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="146dp"
                 android:layout_marginTop="13dp"
-                android:background="@drawable/ic_launcher_background" />
+                android:background="@drawable/bao" />
 
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
@@ -168,12 +281,79 @@
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:layout_marginTop="13dp"
-                android:background="@drawable/ic_launcher_background" />
+                android:background="@drawable/bao" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/mei_recycle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="300dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginBottom="0dp"
+                    android:text="3C专区"
+                    android:textColor="#000000"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/c_geng"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="15dp"
+                    android:text="查看更多 >"
+                    android:textColor="#000000"
+                    android:textSize="11sp" />
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="122dp"
+                android:layout_marginLeft="13dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="13dp"
+                android:background="@drawable/bao" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="122dp"
+                android:layout_marginLeft="13dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginRight="13dp"
+                android:background="@drawable/bao" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="122dp"
+                android:layout_marginLeft="13dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginRight="13dp"
+                android:background="@drawable/bao" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="17dp"
+                android:text="猜您喜欢"
+                android:textColor="#000000"
+                android:textSize="15sp" />
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="15dp" />
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>
