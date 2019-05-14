@@ -9,7 +9,7 @@ import java.util.Set;
 import me.jessyan.autosize.internal.CustomAdapt;
 
 
-public class BaseApp extends Application implements CustomAdapt {
+public class BaseApp extends Application  {
     private static BaseApp mAppInstance;
     private Set<Activity> mSet;
 
@@ -52,13 +52,5 @@ public class BaseApp extends Application implements CustomAdapt {
         System.exit(0);
     }
 
-    @Override
-    public boolean isBaseOnWidth() {
-        return false;
-    }
 
-    @Override
-    public float getSizeInDp() {
-        return 720;
-    }
 }

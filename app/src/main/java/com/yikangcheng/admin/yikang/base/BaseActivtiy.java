@@ -13,9 +13,10 @@ import com.yikangcheng.admin.yikang.app.BaseApp;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import me.jessyan.autosize.internal.CustomAdapt;
 
 
-public abstract class BaseActivtiy extends AppCompatActivity implements IView {
+public abstract class BaseActivtiy extends AppCompatActivity implements IView  {
     private Unbinder mUnbinder;
     public static Context mContext;
     protected BasePresenter mPresenter;
