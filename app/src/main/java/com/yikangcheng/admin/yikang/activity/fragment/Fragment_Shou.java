@@ -62,10 +62,7 @@ public class Fragment_Shou extends BaseFragment {
         c_recycler.setNestedScrollingEnabled(false);
     }
 
-    @Override
-    protected void initView(View view) {
 
-    }
 
     @Override
     protected void initData() {
