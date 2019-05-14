@@ -1,25 +1,66 @@
 package com.yikangcheng.admin.yikang.activity.fragment;
 
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.yikangcheng.admin.yikang.R;
+import com.yikangcheng.admin.yikang.base.BaseFragment;
+import com.yikangcheng.admin.yikang.tab.VerticalPager;
+import com.yikangcheng.admin.yikang.tab.vpsp;
 
-/**
- * 作者：古祥坤 on 2019/5/14 11:59
- * 邮箱：1724959985@qq.com
- */
-public class Fragment_Fen extends Fragment {
+import java.util.ArrayList;
+import java.util.List;
 
-    @Nullable
+import q.rorbin.verticaltablayout.VerticalTabLayout;
+
+public class Fragment_Fen extends BaseFragment {
+
+    private VerticalTabLayout mTablayout;
+    private VerticalPager mViewpager;
+    private List<String> datas = new ArrayList<String>();
+    private com.yikangcheng.admin.yikang.tab.vpsp vpsp;
+
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_fen, container, false);
-        return view;
+    protected void initView(View view) {
+        mViewpager = view.findViewById(R.id.viewpager);
+        mTablayout = view.findViewById(R.id.tablayout);
+    }
+
+    @Override
+    protected void initData() {
+        datas.add("推荐");
+        datas.add("要闻");
+        datas.add("娱乐");
+        datas.add("科技");
+        datas.add("汽车");
+        datas.add("体育");
+        datas.add("推荐");
+        datas.add("要闻");
+        datas.add("娱乐");
+        datas.add("科技");
+        datas.add("汽车");
+        datas.add("体育");
+        datas.add("推荐");
+        datas.add("要闻");
+        datas.add("娱乐");
+        datas.add("科技");
+        datas.add("汽车");
+        datas.add("体育");
+
+        //适配器
+        vpsp = new vpsp(getChildFragmentManager(), datas);
+        mViewpager.setAdapter(vpsp);
+        //进行关联
+        mTablayout.setupWithViewPager(mViewpager);
+        /*mTablayout.setTabBadge(7, 32);
+        mTablayout.setTabBadge(2, -1);
+        mTablayout.setTabBadge(3, -1);
+        mTablayout.setTabBadge(4, -1);*/
+
+    }
+
+    @Override
+    protected int getFragmentLayoutId() {
+        return R.layout.fragment_fen;
     }
 }
