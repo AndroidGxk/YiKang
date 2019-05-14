@@ -15,8 +15,6 @@ import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 
 public class MainActivity extends BaseActivtiy {
     private RadioGroup radio;
-    private Fragment_Fen fragment_fen;
-    private Fragment_Shou fragment_shou;
     private FragmentTransaction transaction;
     private RadioButton shou, fen, miao, gou, wo;
 
