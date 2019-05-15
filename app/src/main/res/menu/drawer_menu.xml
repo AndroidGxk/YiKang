@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:checkable="true"
+        android:id="@+id/wan"
+        android:icon="@drawable/daifukuan"
+        android:title="名称"/>
+    <item
+        android:checkable="true"
+        android:id="@+id/my_music"
+        android:icon="@drawable/mingxi"
+        android:title="lala"/>
+    <item
+        android:checkable="true"
+        android:id="@+id/my_video"
+        android:icon="@drawable/mingxi"
+        android:title="商城"/>
+    <item
+        android:checkable="true"
+        android:id="@+id/settings"
+        android:icon="@drawable/hong"
+        android:title="秒杀"/>
+</menu>

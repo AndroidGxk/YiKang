@@ -1,10 +1,21 @@
 package com.yikangcheng.admin.yikang.activity;
 
+import android.graphics.drawable.ColorDrawable;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yikangcheng.admin.yikang.R;
@@ -21,6 +32,10 @@ public class MainActivity extends BaseActivtiy {
     private RadioButton shou, fen, miao, gou, wo;
     private Toolbar mToolbar;
     private TextView mToolbarTv;
+    private DrawerLayout mDrawerLayout;
+    private NavigationView mNv;
+    private ImageView mImg_ceHua;
+    private RelativeLayout mRelativeLayout;
 
 
     @Override
@@ -30,7 +45,70 @@ public class MainActivity extends BaseActivtiy {
         mToolbarTv = findViewById(R.id.toolbar_tv);
         mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
+        mDrawerLayout = findViewById(R.id.drawerLayout);
+        mNv = findViewById(R.id.nv);
+        mImg_ceHua = findViewById(R.id.img_cehua);
+        mRelativeLayout = findViewById(R.id.relativeLayout);
+
+
+        /**
+         * 这是侧滑栏 ！！！测试框架
+         * 点击事件 点击侧滑图标的时候滑出侧滑栏
+         */
+
+
+        /**
+         * 抽屉菜单图标不显示，设置这行代码
+         */
+        mNv.setItemIconTintList(null);
+//        ActionBar supportActionBar = getSupportActionBar();
+//
+//        supportActionBar.setIcon(R.drawable.daohang);//设置ActionBar的icon图标
+//
+
+
+//        supportActionBar.setTitle("gender");//设置ActionBar的标题
+//        supportActionBar.setHomeButtonEnabled(true);//主键按钮能否可点击
+//        supportActionBar.setDisplayHomeAsUpEnabled(true);//显示返回图标
+
+
+
+//        getActionBar().setIcon(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
+
+//        mToolbar.setNavigationIcon(R.drawable.daohang);
+
+        mNv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                /**
+                 * 设置menu选中，这样才会有背景
+                 */
+                item.setChecked(true);
+                switch (item.getItemId()) {
+                    case R.id.wan:
+                        /**
+                         * 关闭抽屉
+                         */
+                        mDrawerLayout.closeDrawer(Gravity.LEFT);
+                        break;
+                }
+                return false;
+            }
+        });
+        //ActionBarDrawerToggle
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(MainActivity.this, mDrawerLayout, mToolbar, R.string.app_name, R.string.app_name);
+        mDrawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+        //抽屉滑出时,主界面被挤到右边
+        mDrawerLayout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                //抽屉滑动监听
+                mRelativeLayout.setX(mNv.getWidth() * slideOffset);
+            }
+        });
     }
+
 
     @Override
     protected void initEventData() {
