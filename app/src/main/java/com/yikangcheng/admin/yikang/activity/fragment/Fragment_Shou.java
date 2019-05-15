@@ -1,6 +1,7 @@
 package com.yikangcheng.admin.yikang.activity.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +13,7 @@ import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
 import com.yikangcheng.admin.yikang.R;
+import com.yikangcheng.admin.yikang.activity.SeckillSecondActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.ArticRecyclerAdapter;
 import com.yikangcheng.admin.yikang.activity.adapter.FaddRecyclerAdapter;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
@@ -32,6 +34,7 @@ public class Fragment_Shou extends BaseFragment {
     private RecyclerView bao_recycler, mei_recycle, artic_recycler, c_recycler;
     private FaddRecyclerAdapter faddRecyclerAdapter;
     private ArticRecyclerAdapter articRecyclerAdapter;
+    private ImageView shou_miao_imag;
 
     @Override
     protected void initView(View view) {
@@ -41,6 +44,7 @@ public class Fragment_Shou extends BaseFragment {
         m_banner = view.findViewById(R.id.m_banner);
         mMZBanner = view.findViewById(R.id.bao_mzbanner);
         bao_recycler = view.findViewById(R.id.bao_recycler);
+        shou_miao_imag = view.findViewById(R.id.shou_miao_imag);
         c_recycler = view.findViewById(R.id.c_recycler);
         mei_recycle = view.findViewById(R.id.mei_recycle);
         artic_recycler = view.findViewById(R.id.artic_recycler);
@@ -61,7 +65,6 @@ public class Fragment_Shou extends BaseFragment {
         c_recycler.setHasFixedSize(true);
         c_recycler.setNestedScrollingEnabled(false);
     }
-
 
 
     @Override
@@ -98,6 +101,12 @@ public class Fragment_Shou extends BaseFragment {
         artic_recycler.setAdapter(faddRecyclerAdapter);
         c_recycler.setLayoutManager(ctaggeredGridLayoutManager);
         c_recycler.setAdapter(articRecyclerAdapter);
+        shou_miao_imag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), SeckillSecondActivity.class));
+            }
+        });
     }
 
     public static class BannerViewHolder implements MZViewHolder<Integer> {
