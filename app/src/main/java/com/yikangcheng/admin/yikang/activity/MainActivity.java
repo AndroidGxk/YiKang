@@ -3,6 +3,7 @@ package com.yikangcheng.admin.yikang.activity;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -11,8 +12,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -32,6 +35,7 @@ public class MainActivity extends BaseActivtiy {
     private RadioButton shou, fen, miao, gou, wo;
     private Toolbar mToolbar;
     private TextView mToolbarTv;
+    private LinearLayout shou_linear, fen_linear, miao_linear, gou_linear, wo_linear;
     private DrawerLayout mDrawerLayout;
     private NavigationView mNv;
     private ImageView mImg_ceHua;
@@ -43,6 +47,11 @@ public class MainActivity extends BaseActivtiy {
         radio = findViewById(R.id.radio_group);
         mToolbar = findViewById(R.id.toolbar);
         mToolbarTv = findViewById(R.id.toolbar_tv);
+        shou_linear = findViewById(R.id.shou_linear);
+        fen_linear = findViewById(R.id.fen_linear);
+        miao_linear = findViewById(R.id.miao_linear);
+        gou_linear = findViewById(R.id.gou_linear);
+        wo_linear = findViewById(R.id.wo_linear);
         mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
         mDrawerLayout = findViewById(R.id.drawerLayout);
@@ -109,7 +118,6 @@ public class MainActivity extends BaseActivtiy {
         });
     }
 
-
     @Override
     protected void initEventData() {
         transaction = getSupportFragmentManager().beginTransaction();
@@ -137,99 +145,184 @@ public class MainActivity extends BaseActivtiy {
         miao = findViewById(R.id.miao);
         gou = findViewById(R.id.gou);
         wo = findViewById(R.id.wo);
-        shou.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        shou_linear.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.hide(fragment_fen);
-                    fragmentTransaction.hide(fragment_miao);
-                    fragmentTransaction.hide(fragment_gou);
-                    fragmentTransaction.hide(fragment_wo);
-                    fragmentTransaction.show(fragment_shou);
-                    fragmentTransaction.commit();
-                    fen.setChecked(false);
-                    gou.setChecked(false);
-                    wo.setChecked(false);
-                    miao.setChecked(false);
-                    mToolbarTv.setText("优选商城");
-                }
+            public void onClick(View view) {
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.hide(fragment_fen);
+                fragmentTransaction.hide(fragment_miao);
+                fragmentTransaction.hide(fragment_gou);
+                fragmentTransaction.hide(fragment_wo);
+                fragmentTransaction.show(fragment_shou);
+                fragmentTransaction.commit();
+                shou.setChecked(true);
+                fen.setChecked(false);
+                gou.setChecked(false);
+                wo.setChecked(false);
+                miao.setChecked(false);
+                mToolbarTv.setText("优选商城");
             }
         });
-        fen.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        fen_linear.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.hide(fragment_shou);
-                    fragmentTransaction.hide(fragment_miao);
-                    fragmentTransaction.hide(fragment_gou);
-                    fragmentTransaction.hide(fragment_wo);
-                    fragmentTransaction.show(fragment_fen);
-                    fragmentTransaction.commit();
-                    shou.setChecked(false);
-                    gou.setChecked(false);
-                    wo.setChecked(false);
-                    miao.setChecked(false);
-                    mToolbarTv.setText("");
-                }
+            public void onClick(View view) {
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.hide(fragment_shou);
+                fragmentTransaction.hide(fragment_miao);
+                fragmentTransaction.hide(fragment_gou);
+                fragmentTransaction.hide(fragment_wo);
+                fragmentTransaction.show(fragment_fen);
+                fragmentTransaction.commit();
+                fen.setChecked(true);
+                shou.setChecked(false);
+                gou.setChecked(false);
+                wo.setChecked(false);
+                miao.setChecked(false);
+                mToolbarTv.setText("");
             }
         });
-        miao.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        miao_linear.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.hide(fragment_shou);
-                    fragmentTransaction.hide(fragment_fen);
-                    fragmentTransaction.hide(fragment_gou);
-                    fragmentTransaction.hide(fragment_wo);
-                    fragmentTransaction.show(fragment_miao);
-                    fragmentTransaction.commit();
-                    gou.setChecked(false);
-                    wo.setChecked(false);
-                    shou.setChecked(false);
-                    fen.setChecked(false);
-                    mToolbarTv.setText("秒杀专区");
-                }
+            public void onClick(View view) {
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.hide(fragment_shou);
+                fragmentTransaction.hide(fragment_fen);
+                fragmentTransaction.hide(fragment_gou);
+                fragmentTransaction.hide(fragment_wo);
+                fragmentTransaction.show(fragment_miao);
+                fragmentTransaction.commit();
+                miao.setChecked(true);
+                gou.setChecked(false);
+                wo.setChecked(false);
+                shou.setChecked(false);
+                fen.setChecked(false);
+                mToolbarTv.setText("秒杀专区");
             }
         });
-        gou.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        gou_linear.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.hide(fragment_shou);
-                    fragmentTransaction.hide(fragment_fen);
-                    fragmentTransaction.hide(fragment_miao);
-                    fragmentTransaction.hide(fragment_wo);
-                    fragmentTransaction.show(fragment_gou);
-                    fragmentTransaction.commit();
-                    wo.setChecked(false);
-                    shou.setChecked(false);
-                    miao.setChecked(false);
-                    fen.setChecked(false);
-                    mToolbarTv.setText("我的购物车");
-                }
+            public void onClick(View view) {
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.hide(fragment_shou);
+                fragmentTransaction.hide(fragment_fen);
+                fragmentTransaction.hide(fragment_miao);
+                fragmentTransaction.hide(fragment_wo);
+                fragmentTransaction.show(fragment_gou);
+                fragmentTransaction.commit();
+                gou.setChecked(true);
+                wo.setChecked(false);
+                shou.setChecked(false);
+                miao.setChecked(false);
+                fen.setChecked(false);
+                mToolbarTv.setText("我的购物车");
             }
         });
-        wo.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        wo_linear.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.hide(fragment_shou);
-                    fragmentTransaction.hide(fragment_fen);
-                    fragmentTransaction.hide(fragment_miao);
-                    fragmentTransaction.hide(fragment_gou);
-                    fragmentTransaction.show(fragment_wo);
-                    fragmentTransaction.commit();
-                    shou.setChecked(false);
-                    gou.setChecked(false);
-                    miao.setChecked(false);
-                    fen.setChecked(false);
-                    mToolbarTv.setText("我的");
-                }
+            public void onClick(View view) {
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.hide(fragment_shou);
+                fragmentTransaction.hide(fragment_fen);
+                fragmentTransaction.hide(fragment_miao);
+                fragmentTransaction.hide(fragment_gou);
+                fragmentTransaction.show(fragment_wo);
+                fragmentTransaction.commit();
+                wo.setChecked(true);
+                shou.setChecked(false);
+                gou.setChecked(false);
+                miao.setChecked(false);
+                fen.setChecked(false);
+                mToolbarTv.setText("我的");
+            }
+        });
+        shou.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.hide(fragment_fen);
+                fragmentTransaction.hide(fragment_miao);
+                fragmentTransaction.hide(fragment_gou);
+                fragmentTransaction.hide(fragment_wo);
+                fragmentTransaction.show(fragment_shou);
+                fragmentTransaction.commit();
+                shou.setChecked(true);
+                fen.setChecked(false);
+                gou.setChecked(false);
+                wo.setChecked(false);
+                miao.setChecked(false);
+                mToolbarTv.setText("优选商城");
+            }
+        });
+        fen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.hide(fragment_shou);
+                fragmentTransaction.hide(fragment_miao);
+                fragmentTransaction.hide(fragment_gou);
+                fragmentTransaction.hide(fragment_wo);
+                fragmentTransaction.show(fragment_fen);
+                fragmentTransaction.commit();
+                fen.setChecked(true);
+                shou.setChecked(false);
+                gou.setChecked(false);
+                wo.setChecked(false);
+                miao.setChecked(false);
+                mToolbarTv.setText("");
+            }
+        });
+        miao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.hide(fragment_shou);
+                fragmentTransaction.hide(fragment_fen);
+                fragmentTransaction.hide(fragment_gou);
+                fragmentTransaction.hide(fragment_wo);
+                fragmentTransaction.show(fragment_miao);
+                fragmentTransaction.commit();
+                miao.setChecked(true);
+                gou.setChecked(false);
+                wo.setChecked(false);
+                shou.setChecked(false);
+                fen.setChecked(false);
+                mToolbarTv.setText("秒杀专区");
+            }
+        });
+        gou.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.hide(fragment_shou);
+                fragmentTransaction.hide(fragment_fen);
+                fragmentTransaction.hide(fragment_miao);
+                fragmentTransaction.hide(fragment_wo);
+                fragmentTransaction.show(fragment_gou);
+                fragmentTransaction.commit();
+                gou.setChecked(true);
+                wo.setChecked(false);
+                shou.setChecked(false);
+                miao.setChecked(false);
+                fen.setChecked(false);
+                mToolbarTv.setText("我的购物车");
+            }
+        });
+        wo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.hide(fragment_shou);
+                fragmentTransaction.hide(fragment_fen);
+                fragmentTransaction.hide(fragment_miao);
+                fragmentTransaction.hide(fragment_gou);
+                fragmentTransaction.show(fragment_wo);
+                fragmentTransaction.commit();
+                wo.setChecked(true);
+                shou.setChecked(false);
+                gou.setChecked(false);
+                miao.setChecked(false);
+                fen.setChecked(false);
+                mToolbarTv.setText("我的");
             }
         });
     }
@@ -243,4 +336,5 @@ public class MainActivity extends BaseActivtiy {
     protected void createPresenter() {
 
     }
+
 }
