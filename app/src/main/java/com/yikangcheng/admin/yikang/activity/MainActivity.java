@@ -54,9 +54,12 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
 
     @Override
     protected void initView() {
+
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+
         radio = findViewById(R.id.radio_group);
+        mImg_activity_main_soushuo = findViewById(R.id.iv_toolBar_right);
         shou_linear = findViewById(R.id.shou_linear);
         fen_linear = findViewById(R.id.fen_linear);
         miao_linear = findViewById(R.id.miao_linear);
