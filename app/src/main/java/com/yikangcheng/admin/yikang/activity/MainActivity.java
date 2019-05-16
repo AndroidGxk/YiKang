@@ -32,7 +32,9 @@ import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Gou;
 import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Miao;
 import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Shou;
 import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Wo;
+import com.yikangcheng.admin.yikang.activity.seek.SeekActivity;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
+import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
 import me.jessyan.autosize.internal.CustomAdapt;
 
@@ -43,13 +45,17 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
     private LinearLayout shou_linear, fen_linear, miao_linear, gou_linear, wo_linear;
     private DrawerLayout mDrawerLayout;
     private NavigationView mNv;
+    //    private ImageView mImg_ceHua;
     private RelativeLayout mRelativeLayout;
     private TextView tv_toolBar_title, tv_toolBar_right;
     private ImageView iv_toolBar_right;
+    private ImageView mImg_activity_main_soushuo;
 
 
     @Override
     protected void initView() {
+        //设置状态栏颜色
+        StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
         radio = findViewById(R.id.radio_group);
         shou_linear = findViewById(R.id.shou_linear);
         fen_linear = findViewById(R.id.fen_linear);
@@ -98,6 +104,16 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
             public void onDrawerSlide(View drawerView, float slideOffset) {
                 //抽屉滑动监听
                 mRelativeLayout.setX(mNv.getWidth() * slideOffset);
+            }
+        });
+
+
+        //点击搜索图标跳转搜索页面
+        mImg_activity_main_soushuo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SeekActivity.class);
+                startActivity(intent);
             }
         });
     }

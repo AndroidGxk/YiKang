@@ -10,7 +10,7 @@ import me.jessyan.autosize.internal.CustomAdapt;
 
 
 public class BaseApp extends Application  {
-    private static BaseApp mAppInstance;
+    public static BaseApp mAppInstance;
     private Set<Activity> mSet;
 
 

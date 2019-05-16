@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFF"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context=".activity.seek.SeekActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="43dp"
+        android:background="@drawable/sousuobeijing">
+
+        <ImageView
+            android:layout_width="300dp"
+            android:layout_height="27dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/sousuokuang" />
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginLeft="26dp"
+            android:layout_marginTop="14dp"
+            android:src="@drawable/sousuo_2" />
+
+        <EditText
+            android:id="@+id/EditTixt_activity_seek_sousuo"
+            android:layout_width="269dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="46dp"
+            android:layout_marginTop="14dp"
+            android:background="@null"
+            android:hint="请输入你想要查找的内容"
+            android:imeOptions="actionSearch"
+            android:singleLine="true"
+            android:textSize="11sp" />
+
+        <TextView
+            android:id="@+id/tv_activity_seek_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="324dp"
+            android:layout_marginTop="15dp"
+            android:text="取消"
+            android:textColor="#C6C6C6"
+            android:textSize="11sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="7dp"
+            android:text="最近搜索"
+            android:textColor="#666666"
+            android:textSize="13sp" />
+
+        <ImageView
+            android:id="@+id/img_activity_seek_delete"
+            android:layout_width="10dp"
+            android:layout_height="14dp"
+            android:layout_marginLeft="267dp"
+            android:layout_marginTop="7dp"
+            android:src="@drawable/shanchu" />
+    </LinearLayout>
+
+    <com.yikangcheng.admin.yikang.util.FlowLayout
+        android:id="@+id/FlowLayout_activity_seek"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp">
+
+    </com.yikangcheng.admin.yikang.util.FlowLayout>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="45dp"
+        android:text="热门搜索"
+        android:textColor="#666666"
+        android:textSize="13sp" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rlv_activity_seek_hot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp" />
+
+</LinearLayout>

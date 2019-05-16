@@ -67,7 +67,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="144dp"
             android:text="全部订单"
-            android:textColor="#333333 " />
+            android:textColor="#717171" />
 
         <TextView
             android:id="@+id/tv_fragment_wo_dingdan"
@@ -77,7 +77,7 @@
             android:layout_marginTop="144dp"
             android:layout_marginRight="27dp"
             android:text="查看全部订单"
-            android:textColor="#333333 " />
+            android:textColor="#717171 " />
 
         <ImageView
             android:layout_width="6dp"
@@ -167,9 +167,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="299dp"
+            android:layout_marginLeft="291dp"
             android:layout_marginTop="220dp"
-            android:text="已退款"
+            android:text="退款/售后"
             android:textColor="#333333"
             android:textSize="11sp" />
     </RelativeLayout>
@@ -187,35 +187,19 @@
         android:layout_marginTop="7dp"
         android:background="@drawable/bai">
 
-        <ImageView
-            android:id="@+id/img__fragment_wo_zhanghao"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginLeft="29dp"
-            android:layout_marginTop="9dp"
-            android:src="@drawable/zhanghao" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="25dp"
-            android:layout_marginTop="51dp"
-            android:text="我的账号"
-            android:textColor="#333333"
-            android:textSize="11sp" />
 
         <ImageView
             android:id="@+id/img_fragment_wo_mingxi"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:layout_marginLeft="115dp"
+            android:layout_marginLeft="29dp"
             android:layout_marginTop="9dp"
             android:src="@drawable/mingxi" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="111dp"
+            android:layout_marginLeft="25dp"
             android:layout_marginTop="51dp"
             android:text="账号明细"
             android:textColor="#333333"
@@ -226,14 +210,14 @@
             android:id="@+id/img_fragment_wo_dizi"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:layout_marginLeft="208dp"
+            android:layout_marginLeft="115dp"
             android:layout_marginTop="9dp"
             android:src="@drawable/dizi" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="205dp"
+            android:layout_marginLeft="111dp"
             android:layout_marginTop="51dp"
             android:text="收货地址"
             android:textColor="#333333"
@@ -243,18 +227,36 @@
             android:id="@+id/img__fragment_wo_zhongxin"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:layout_marginLeft="298dp"
+            android:layout_marginLeft="208dp"
             android:layout_marginTop="9dp"
             android:src="@drawable/zhongxin" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="295dp"
+            android:layout_marginLeft="205dp"
             android:layout_marginTop="51dp"
             android:text="帮助中心"
             android:textColor="#333333"
             android:textSize="11sp" />
+
+        <ImageView
+            android:id="@+id/img__fragment_wo_tuichudenglu"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="298dp"
+            android:layout_marginTop="9dp"
+            android:src="@drawable/tuichudenglu" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="295dp"
+            android:layout_marginTop="51dp"
+            android:text="退出登录"
+            android:textColor="#333333"
+            android:textSize="11sp" />
+
     </RelativeLayout>
 
     <ImageView
