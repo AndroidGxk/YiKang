@@ -1,5 +1,6 @@
 package com.yikangcheng.admin.yikang.activity;
 
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
@@ -57,6 +58,12 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         wo_linear = findViewById(R.id.wo_linear);
         View toobar = findViewById(R.id.toobar);
         tv_toolBar_title = toobar.findViewById(R.id.tv_toolBar_title);
+        tv_toolBar_title.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this,SearchListActivity.class));
+            }
+        });
         iv_toolBar_right = toobar.findViewById(R.id.iv_toolBar_right);
         iv_toolBar_right = toobar.findViewById(R.id.iv_toolBar_right);
         tv_toolBar_right = toobar.findViewById(R.id.tv_toolBar_right);
