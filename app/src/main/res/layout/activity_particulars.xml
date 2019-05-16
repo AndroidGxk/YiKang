@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="456dp"
+        android:background="@drawable/beijing">
+
+        <ImageView
+            android:id="@+id/img_particulars_chanpin"
+            android:layout_width="match_parent"
+            android:layout_height="360dp"
+            android:background="@drawable/ce3" />
+
+        <ImageView
+            android:id="@+id/img_particulars_fanhui"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/fanhui" />
+
+        <ImageView
+            android:id="@+id/img_particulars_fenxiang"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/img_particulars_xiaoxi"
+            android:background="@drawable/fenxiang" />
+
+        <ImageView
+
+            android:id="@+id/img_particulars_xiaoxi"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="6dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/xiaoxi" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginTop="317dp"
+            android:background="@drawable/cetou4"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tv_particulars_jiage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="¥169.00"
+                android:textColor="#FF4E4E"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/tv_particulars_yuanjia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="9dp"
+                android:text="¥199.00"
+                android:textColor="#999999"
+                android:textSize="11sp" />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="30dp"
+            android:layout_height="11dp"
+            android:layout_marginLeft="219dp"
+            android:layout_marginTop="327dp"
+            android:text="距结束"
+            android:textColor="#FF4E4E "
+            android:textSize="10sp" />
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginLeft="257dp"
+            android:layout_marginTop="324dp"
+            android:src="@drawable/feng_btn_yellow" />
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginLeft="287dp"
+            android:layout_marginTop="324dp"
+            android:src="@drawable/feng_btn_yellow" />
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginLeft="309dp"
+            android:layout_marginTop="324dp"
+            android:src="@drawable/feng_btn_yellow" />
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginLeft="331dp"
+            android:layout_marginTop="324dp"
+            android:src="@drawable/feng_btn_yellow" />
+
+        <ImageView
+            android:layout_width="126dp"
+            android:layout_height="13dp"
+            android:layout_marginLeft="220dp"
+            android:layout_marginTop="342dp"
+            android:src="@drawable/jindutiao_1" />
+
+        <ImageView
+            android:layout_width="94dp"
+            android:layout_height="13dp"
+            android:layout_marginLeft="220dp"
+            android:layout_marginTop="342dp"
+            android:src="@drawable/jindutiao_2" />
+
+        <TextView
+            android:layout_width="45dp"
+            android:layout_height="11dp"
+            android:layout_marginLeft="262dp"
+            android:layout_marginTop="342dp"
+            android:text="已抢80%"
+            android:textColor="#FF0000"
+            android:textSize="10sp" />
+
+
+        <LinearLayout
+            android:layout_width="28dp"
+            android:layout_height="14dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="376dp"
+            android:background="@drawable/seckill_text_shaper"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/tv_particulars_zekou"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2.3折"
+                android:textColor="#FFAF00"
+                android:textSize="10dp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_particulars_title"
+            android:layout_width="290dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="49dp"
+            android:layout_marginTop="373dp"
+            android:text="韩国JM牛油果精油面膜男女急救补水保湿韩国JM "
+            android:textColor="#333333"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tv_particulars_jianjie"
+            android:layout_width="287dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="49dp"
+            android:layout_marginTop="418dp"
+            android:text="韩国JM牛油果精油面膜男女急救补水保湿韩国JM牛油果精油面膜男女急救补水保湿"
+            android:textColor="#999999 "
+            android:textSize="10sp" />
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bai_1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="14dp"
+            android:text="保障"
+            android:textColor="#999999 "
+            android:textSize="11sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="9dp"
+            android:text="正品保障·部分支持七天无理由退换"
+            android:textColor="#999999 "
+            android:textSize="11sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="125dp"
+            android:src="@drawable/fanhui_1" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/beijing_2">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:text="选择"
+            android:textColor="#999999 "
+            android:textSize="11sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="45dp"
+            android:layout_marginTop="10dp"
+            android:text="数量"
+            android:textColor="#999999 "
+            android:textSize="11sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="339dp"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/fanhui_1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginBottom="9dp"
+            android:text="参数"
+            android:textColor="#999999 "
+            android:textSize="11sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="45dp"
+            android:layout_marginBottom="9dp"
+            android:text="品牌 效果..."
+            android:textColor="#999999 "
+            android:textSize="11sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="339dp"
+            android:layout_marginBottom="9dp"
+            android:src="@drawable/fanhui_1" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bai">
+
+        <ImageView
+            android:id="@+id/img_particulars_kefu"
+            android:layout_width="20dp"
+            android:layout_height="21dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/kefu" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="32dp"
+            android:text="联系客服"
+            android:textSize="10sp" />
+
+        <ImageView
+            android:id="@+id/img_particulars_fouwuche"
+            android:layout_width="20dp"
+            android:layout_height="21dp"
+            android:layout_marginLeft="74dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/gouwuche_2" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="70dp"
+            android:layout_marginTop="32dp"
+            android:text="购物车"
+            android:textSize="10sp" />
+
+        <ImageView
+            android:id="@+id/img_particulars_shouchang"
+            android:layout_width="20dp"
+            android:layout_height="21dp"
+            android:layout_marginLeft="124dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/shoucang" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="124dp"
+            android:layout_marginTop="32dp"
+            android:text="收藏"
+            android:textSize="10sp" />
+
+        <ImageView
+            android:id="@+id/img_particulars_jiarugouwuche"
+            android:layout_width="88dp"
+            android:layout_height="33dp"
+            android:layout_marginLeft="158dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/jiarugouwuce" />
+
+        <ImageView
+            android:id="@+id/img_particulars_lijigoumai"
+            android:layout_width="88dp"
+            android:layout_height="33dp"
+            android:layout_marginLeft="259dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/lijigoumai" />
+
+    </RelativeLayout>
+
+</LinearLayout>

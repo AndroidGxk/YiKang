@@ -9,13 +9,13 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.SeckillSecondActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.ArticRecyclerAdapter;
 import com.yikangcheng.admin.yikang.activity.adapter.FaddRecyclerAdapter;
+import com.yikangcheng.admin.yikang.activity.particulars.ParticularsActivity;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
@@ -64,6 +64,16 @@ public class Fragment_Shou extends BaseFragment {
         artic_recycler.setNestedScrollingEnabled(false);
         c_recycler.setHasFixedSize(true);
         c_recycler.setNestedScrollingEnabled(false);
+        faddRecyclerAdapter.setOnClickListener(new FaddRecyclerAdapter.OnClickListener() {
+            @Override
+            public void OnClickListener(View v, int position) {
+                /**
+                 * 点击秒杀跳转到详情页面
+                 */
+                Intent intent = new Intent(getActivity(), ParticularsActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 

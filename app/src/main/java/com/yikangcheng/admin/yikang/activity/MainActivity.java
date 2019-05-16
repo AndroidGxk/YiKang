@@ -1,10 +1,13 @@
 package com.yikangcheng.admin.yikang.activity;
 
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.res.ResourcesCompat;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -38,7 +41,7 @@ public class MainActivity extends BaseActivtiy {
     private LinearLayout shou_linear, fen_linear, miao_linear, gou_linear, wo_linear;
     private DrawerLayout mDrawerLayout;
     private NavigationView mNv;
-    private ImageView mImg_ceHua;
+//    private ImageView mImg_ceHua;
     private RelativeLayout mRelativeLayout;
 
 
@@ -56,7 +59,7 @@ public class MainActivity extends BaseActivtiy {
         setSupportActionBar(mToolbar);
         mDrawerLayout = findViewById(R.id.drawerLayout);
         mNv = findViewById(R.id.nv);
-        mImg_ceHua = findViewById(R.id.img_cehua);
+//        mImg_ceHua = findViewById(R.id.img_cehua);
         mRelativeLayout = findViewById(R.id.relativeLayout);
 
 
@@ -80,11 +83,12 @@ public class MainActivity extends BaseActivtiy {
 //        supportActionBar.setHomeButtonEnabled(true);//主键按钮能否可点击
 //        supportActionBar.setDisplayHomeAsUpEnabled(true);//显示返回图标
 
-
-
 //        getActionBar().setIcon(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
 
 //        mToolbar.setNavigationIcon(R.drawable.daohang);
+
+
+
 
         mNv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -232,7 +236,7 @@ public class MainActivity extends BaseActivtiy {
                 gou.setChecked(false);
                 miao.setChecked(false);
                 fen.setChecked(false);
-                mToolbarTv.setText("我的");
+                mToolbarTv.setText("个人中心");
             }
         });
         shou.setOnClickListener(new View.OnClickListener() {

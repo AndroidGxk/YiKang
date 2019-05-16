@@ -14,6 +14,7 @@
             android:background="@drawable/wodebeijing" />
 
         <ImageView
+            android:id="@+id/img_fragment_wo_lingdang"
             android:layout_width="26dp"
             android:layout_height="26dp"
             android:layout_alignParentRight="true"
@@ -22,6 +23,7 @@
             android:src="@drawable/lingdang" />
 
         <ImageView
+            android:id="@+id/img__fragment_wo_hongyuanquan_a"
             android:layout_width="13dp"
             android:layout_height="14dp"
             android:layout_alignParentRight="true"
@@ -31,6 +33,7 @@
             android:src="@drawable/hong" />
 
         <TextView
+            android:id="@+id/tv_fragment_wo_xiaoxi_a"
             android:layout_width="13dp"
             android:layout_height="14dp"
             android:layout_alignParentRight="true"
@@ -41,6 +44,7 @@
             android:textSize="9sp" />
 
         <ImageView
+            android:id="@+id/img_fragment_wo_touxiang"
             android:layout_width="62dp"
             android:layout_height="61dp"
             android:layout_centerHorizontal="true"
@@ -48,6 +52,7 @@
             android:src="@drawable/touxiang" />
 
         <TextView
+            android:id="@+id/tv__fragment_wo_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -65,6 +70,7 @@
             android:textColor="#333333 " />
 
         <TextView
+            android:id="@+id/tv_fragment_wo_dingdan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -82,6 +88,7 @@
             android:src="@drawable/right" />
 
         <ImageView
+            android:id="@+id/img_fragment_wo_daifukuan"
             android:layout_width="46dp"
             android:layout_height="46dp"
             android:layout_marginLeft="15dp"
@@ -89,6 +96,7 @@
             android:src="@drawable/yizhifu" />
 
         <ImageView
+            android:id="@+id/img_fragment_wo_hongyuanquan_b"
             android:layout_width="13dp"
             android:layout_height="14dp"
             android:layout_marginLeft="49dp"
@@ -96,6 +104,7 @@
             android:src="@drawable/hong" />
 
         <TextView
+            android:id="@+id/tv_fragment_wo_xiaoxi_b"
             android:layout_width="13dp"
             android:layout_height="14dp"
             android:layout_marginLeft="51dp"
@@ -114,6 +123,7 @@
             android:textSize="11sp" />
 
         <ImageView
+            android:id="@+id/img_fragment_wo_yizhifu"
             android:layout_width="46dp"
             android:layout_height="46dp"
             android:layout_marginLeft="110dp"
@@ -130,6 +140,7 @@
             android:textSize="11sp" />
 
         <ImageView
+            android:id="@+id/img__fragment_wo_yiquxiao"
             android:layout_width="46dp"
             android:layout_height="46dp"
             android:layout_marginLeft="202dp"
@@ -146,6 +157,7 @@
             android:textSize="11sp" />
 
         <ImageView
+            android:id="@+id/img_fragment_wo_yituikuan"
             android:layout_width="46dp"
             android:layout_height="46dp"
             android:layout_marginLeft="295dp"
@@ -176,6 +188,7 @@
         android:background="@drawable/bai">
 
         <ImageView
+            android:id="@+id/img__fragment_wo_zhanghao"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginLeft="29dp"
@@ -192,6 +205,7 @@
             android:textSize="11sp" />
 
         <ImageView
+            android:id="@+id/img_fragment_wo_mingxi"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginLeft="115dp"
@@ -209,6 +223,7 @@
 
 
         <ImageView
+            android:id="@+id/img_fragment_wo_dizi"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginLeft="208dp"
@@ -225,6 +240,7 @@
             android:textSize="11sp" />
 
         <ImageView
+            android:id="@+id/img__fragment_wo_zhongxin"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginLeft="298dp"
@@ -250,6 +266,7 @@
         android:src="@drawable/tuijian" />
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/rlv__fragment_wo"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

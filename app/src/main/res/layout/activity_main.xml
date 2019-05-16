@@ -20,13 +20,13 @@
             android:layout_height="42dp"
             android:background="@drawable/toolbar">
 
-            <ImageView
-                android:id="@+id/img_cehua"
-                android:layout_width="24dp"
-                android:layout_height="20dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/daohang" />
+            <!--<ImageView-->
+                <!--android:id="@+id/img_cehua"-->
+                <!--android:layout_width="24dp"-->
+                <!--android:layout_height="20dp"-->
+                <!--android:layout_marginLeft="15dp"-->
+                <!--android:layout_marginTop="12dp"-->
+                <!--android:background="@drawable/daohang" />-->
 
             <TextView
                 android:id="@+id/toolbar_tv"
@@ -38,6 +38,7 @@
                 android:textSize="19sp" />
 
             <ImageView
+                android:id="@+id/img_activity_main_soushuo"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_gravity="right"
@@ -63,14 +64,14 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-        <LinearLayout
-            android:id="@+id/shou_linear"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/shou_linear"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
 
                 <RadioButton
                     android:id="@+id/shou"
@@ -87,14 +88,14 @@
 
             </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/fen_linear"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/fen_linear"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
 
                 <RadioButton
                     android:id="@+id/fen"
@@ -110,13 +111,13 @@
                     android:text="分类" />
             </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/miao_linear"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/miao_linear"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
 
                 <RadioButton
                     android:id="@+id/miao"
@@ -137,14 +138,14 @@
                     android:textSize="15dp" />
             </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/gou_linear"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/gou_linear"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
 
                 <RadioButton
                     android:id="@+id/gou"
@@ -159,14 +160,14 @@
                     android:text="购物车" />
             </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/wo_linear"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/wo_linear"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
 
                 <RadioButton
                     android:id="@+id/wo"
