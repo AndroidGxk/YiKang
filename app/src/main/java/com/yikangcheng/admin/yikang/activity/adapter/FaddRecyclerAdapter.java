@@ -16,6 +16,7 @@ import java.util.List;
 
 public class FaddRecyclerAdapter extends RecyclerView.Adapter<FaddRecyclerAdapter.Vh> {
     List<String> stringList = new ArrayList<>();
+    private OnClickListener mListener;
 
     public void addAll(List<String> stringList) {
         this.stringList.addAll(stringList);
@@ -29,8 +30,14 @@ public class FaddRecyclerAdapter extends RecyclerView.Adapter<FaddRecyclerAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Vh vh, int position) {
-        vh.mBprice.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG|Paint.ANTI_ALIAS_FLAG);  //中划线
+    public void onBindViewHolder(@NonNull Vh vh, final int position) {
+        vh.mBprice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);  //中划线
+        vh.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.OnClickListener(v, position);
+            }
+        });
     }
 
     @Override
@@ -52,6 +59,15 @@ public class FaddRecyclerAdapter extends RecyclerView.Adapter<FaddRecyclerAdapte
             mPrice = itemView.findViewById(R.id.text_price);
             mBprice = itemView.findViewById(R.id.text_bprice);
         }
+    }
+
+
+    public interface OnClickListener {
+        void OnClickListener(View v, int position);
+    }
+
+    public void setOnClickListener(OnClickListener listener) {
+        this.mListener = listener;
     }
 
 }
