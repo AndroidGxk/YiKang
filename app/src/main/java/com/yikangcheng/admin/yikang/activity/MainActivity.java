@@ -1,5 +1,6 @@
 package com.yikangcheng.admin.yikang.activity;
 
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
@@ -30,7 +31,9 @@ import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Gou;
 import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Miao;
 import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Shou;
 import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Wo;
+import com.yikangcheng.admin.yikang.activity.seek.SeekActivity;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
+import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
 public class MainActivity extends BaseActivtiy {
     private RadioGroup radio;
@@ -41,13 +44,19 @@ public class MainActivity extends BaseActivtiy {
     private LinearLayout shou_linear, fen_linear, miao_linear, gou_linear, wo_linear;
     private DrawerLayout mDrawerLayout;
     private NavigationView mNv;
-//    private ImageView mImg_ceHua;
+    //    private ImageView mImg_ceHua;
     private RelativeLayout mRelativeLayout;
+    private ImageView mImg_activity_main_soushuo;
 
 
     @Override
     protected void initView() {
+
+        //设置状态栏颜色
+        StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+
         radio = findViewById(R.id.radio_group);
+        mImg_activity_main_soushuo = findViewById(R.id.img_activity_main_soushuo);
         mToolbar = findViewById(R.id.toolbar);
         mToolbarTv = findViewById(R.id.toolbar_tv);
         shou_linear = findViewById(R.id.shou_linear);
@@ -88,8 +97,6 @@ public class MainActivity extends BaseActivtiy {
 //        mToolbar.setNavigationIcon(R.drawable.daohang);
 
 
-
-
         mNv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -118,6 +125,16 @@ public class MainActivity extends BaseActivtiy {
             public void onDrawerSlide(View drawerView, float slideOffset) {
                 //抽屉滑动监听
                 mRelativeLayout.setX(mNv.getWidth() * slideOffset);
+            }
+        });
+
+
+        //点击搜索图标跳转搜索页面
+        mImg_activity_main_soushuo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SeekActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -236,7 +253,7 @@ public class MainActivity extends BaseActivtiy {
                 gou.setChecked(false);
                 miao.setChecked(false);
                 fen.setChecked(false);
-                mToolbarTv.setText("个人中心");
+
             }
         });
         shou.setOnClickListener(new View.OnClickListener() {
@@ -326,7 +343,7 @@ public class MainActivity extends BaseActivtiy {
                 gou.setChecked(false);
                 miao.setChecked(false);
                 fen.setChecked(false);
-                mToolbarTv.setText("我的");
+                mToolbarTv.setText("个人中心");
             }
         });
     }

@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'org.greenrobot.greendao'
 android {
     compileSdkVersion 27
     defaultConfig {
@@ -17,7 +17,14 @@ android {
         }
     }
 }
-
+greendao {
+    //数据库的schema版本，也可以理解为数据库版本号
+    schemaVersion 1
+    //设置DaoMaster、DaoSession、Dao包名，也就是要放置这些类的包的全路径。
+    daoPackage 'com.example.sqlite.dao'
+    //设置DaoMaster、DaoSession、Dao目录
+    targetGenDir 'src/main/java'
+}
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:27.1.1'
@@ -42,5 +49,10 @@ dependencies {
     implementation 'q.rorbin:VerticalTabLayout:1.2.5'//二级联动列表依赖
 
     implementation 'com.github.pinguo-zhouwei:MZBannerView:v2.0.2'
+
+    //改变状态栏颜色依赖
+    compile 'com.readystatesoftware.systembartint:systembartint:1.0.3'
+
+    implementation 'org.greenrobot:greendao:3.2.2'//add 数据库GreenDao的library
 
 }
