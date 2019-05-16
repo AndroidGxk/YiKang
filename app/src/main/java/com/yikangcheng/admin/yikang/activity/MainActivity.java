@@ -1,5 +1,6 @@
 package com.yikangcheng.admin.yikang.activity;
 
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
@@ -53,12 +54,9 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
 
     @Override
     protected void initView() {
-
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
-
         radio = findViewById(R.id.radio_group);
-        mImg_activity_main_soushuo = findViewById(R.id.img_activity_main_soushuo);
         shou_linear = findViewById(R.id.shou_linear);
         fen_linear = findViewById(R.id.fen_linear);
         miao_linear = findViewById(R.id.miao_linear);
