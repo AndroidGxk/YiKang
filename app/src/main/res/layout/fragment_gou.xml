@@ -99,9 +99,41 @@
                 android:layout_below="@+id/view2"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="22dp"
-                android:layout_marginBottom="145dp"
                 android:nestedScrollingEnabled="false"
                 android:overScrollMode="never" />
+
+            <RelativeLayout
+                android:layout_marginBottom="145dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <View
+                    android:id="@+id/view3"
+                    android:layout_width="100dp"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="43dp"
+                    android:layout_marginTop="27dp"
+                    android:background="#000000" />
+
+                <TextView
+                    android:id="@+id/dixian"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginTop="18dp"
+                    android:layout_toRightOf="@+id/view3"
+                    android:text="我是有底线的"
+                    android:textColor="#000000"
+                    android:textSize="13sp" />
+
+                <View
+                    android:id="@+id/view4"
+                    android:layout_width="100dp"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginTop="27dp"
+                    android:layout_toRightOf="@+id/dixian"
+                    android:background="#000000" />
+            </RelativeLayout>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
@@ -170,4 +202,5 @@
             android:textColor="#FFFFFF"
             android:textSize="15sp" />
     </RelativeLayout>
+
 </RelativeLayout>
