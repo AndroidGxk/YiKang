@@ -15,6 +15,7 @@
             android:background="@drawable/miao_background" />
 
         <RelativeLayout
+            android:id="@+id/image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/miao_background"
@@ -136,5 +137,15 @@
                     android:textColor="#FFFFFF" />
             </LinearLayout>
         </RelativeLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_one"
+            android:layout_width="match_parent"
+            android:layout_height="163dp"
+            android:overScrollMode="never"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_below="@+id/image"
+            android:background="@drawable/miao_recycler_shape" />
     </RelativeLayout>
 </android.support.v4.widget.NestedScrollView>

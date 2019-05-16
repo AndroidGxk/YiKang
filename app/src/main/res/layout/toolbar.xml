@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/toolBar"
+    android:layout_width="match_parent"
+    android:layout_height="42dp"
+    android:background="@drawable/toolbar"
+    android:fitsSystemWindows="false"
+    app:contentInsetStart="0dp">
+
+    <RelativeLayout
+        android:id="@+id/ly_toolBar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/iv_toolBar_left"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/daohang"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/tv_toolBar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="优选商城"
+            android:textColor="#222"
+            android:textSize="19sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true">
+
+            <ImageView
+                android:id="@+id/iv_toolBar_right"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:gravity="center"
+                android:src="@drawable/sousuo" />
+
+            <TextView
+                android:id="@+id/tv_toolBar_right"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:text="编辑"
+                android:textColor="#999999"
+                android:textSize="12sp"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view_toolBar"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true" />
+    </RelativeLayout>
+
+
+</android.support.v7.widget.Toolbar>

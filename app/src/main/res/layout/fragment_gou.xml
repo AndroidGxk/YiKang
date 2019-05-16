@@ -1,10 +1,173 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="购物车"/>
-</LinearLayout>
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/shop_recycler"
+                android:layout_width="match_parent"
+                android:visibility="visible"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="155dp"
+                android:visibility="gone"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="15dp"
+                android:background="#FFFFFF">
+
+                <ImageView
+                    android:id="@+id/gouwuche_img"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:src="@drawable/nullgouwuche" />
+
+                <TextView
+                    android:id="@+id/gouwuche_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/gouwuche_img"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:text="购物车空空如也"
+                    android:textColor="#999999"
+                    android:textSize="12sp" />
+
+                <ImageView
+                    android:id="@+id/gouwuche_btn"
+                    android:layout_width="85dp"
+                    android:layout_height="25dp"
+                    android:layout_below="@+id/gouwuche_text"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/guangguang" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <View
+                    android:id="@+id/view1"
+                    android:layout_width="100dp"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="43dp"
+                    android:layout_marginTop="27dp"
+                    android:background="#000000" />
+
+                <TextView
+                    android:id="@+id/tuijian"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginTop="18dp"
+                    android:layout_toRightOf="@+id/view1"
+                    android:text="为你推荐"
+                    android:textColor="#000000"
+                    android:textSize="13sp" />
+
+                <View
+                    android:id="@+id/view2"
+                    android:layout_width="100dp"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginTop="27dp"
+                    android:layout_toRightOf="@+id/tuijian"
+                    android:background="#000000" />
+            </RelativeLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/shop_recyclertwo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/view2"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="22dp"
+                android:layout_marginBottom="145dp"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never" />
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="63dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="47dp"
+        android:background="#FFFFFF">
+
+        <CheckBox
+            android:id="@+id/all_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="13dp"
+            android:button="@drawable/check_selector"
+            android:paddingLeft="10dp"
+            android:paddingTop="18dp"
+            android:paddingBottom="18dp" />
+
+        <TextView
+            android:id="@+id/quan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="19dp"
+            android:layout_toRightOf="@+id/all_check"
+            android:text="全选"
+            android:textColor="#333333"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/heji"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="19dp"
+            android:layout_toRightOf="@+id/quan"
+            android:text="合计:"
+            android:textColor="#333333"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/text_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="19dp"
+            android:layout_toRightOf="@+id/heji"
+            android:text="¥0.00"
+            android:textColor="#333333"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/num_text"
+            android:layout_width="wrap_content"
+            android:layout_height="33dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="11dp"
+            android:layout_marginRight="13dp"
+            android:background="@drawable/shop_btn_shape"
+            android:gravity="center"
+            android:minWidth="90dp"
+            android:paddingLeft="3dp"
+            android:paddingRight="3dp"
+            android:text="去结算(0)"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp" />
+    </RelativeLayout>
+</RelativeLayout>

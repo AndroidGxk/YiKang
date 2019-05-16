@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="15dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginRight="15dp"
+    android:background="@drawable/shop_recycler_shape">
+
+    <CheckBox
+        android:id="@+id/check_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="30dp"
+        android:button="@drawable/check_selector"
+        android:paddingTop="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp" />
+
+    <ImageView
+        android:id="@+id/shop_img"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="8dp"
+        android:layout_toRightOf="@+id/check_btn"
+        android:src="@drawable/ce4" />
+
+    <TextView
+        android:id="@+id/shop_count"
+        android:layout_width="194dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="8dp"
+        android:layout_toRightOf="@+id/shop_img"
+        android:text="韩国JM牛油果精油面膜男女 韩国JM牛油果精油面膜男女"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/num_text"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/shop_count"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/shop_img"
+        android:background="@drawable/shop_text_shape"
+        android:gravity="center"
+        android:padding="3dp"
+        android:text="1件  10片"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/num_text"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="8dp"
+        android:layout_toRightOf="@+id/shop_img"
+        android:text="¥ 85.00"
+        android:textColor="#FF0000"
+        android:textSize="13sp" />
+
+    <com.yikangcheng.admin.yikang.util.AddSubLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/addsub"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/num_text"
+        android:layout_marginRight="9dp" />
+</RelativeLayout>

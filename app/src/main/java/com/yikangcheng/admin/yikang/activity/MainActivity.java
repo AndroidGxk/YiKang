@@ -1,6 +1,5 @@
 package com.yikangcheng.admin.yikang.activity;
 
-import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
@@ -24,6 +23,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Fen;
@@ -35,17 +35,19 @@ import com.yikangcheng.admin.yikang.activity.seek.SeekActivity;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
-public class MainActivity extends BaseActivtiy {
+import me.jessyan.autosize.internal.CustomAdapt;
+
+public class MainActivity extends BaseActivtiy implements CustomAdapt {
     private RadioGroup radio;
     private FragmentTransaction transaction;
     private RadioButton shou, fen, miao, gou, wo;
-    private Toolbar mToolbar;
-    private TextView mToolbarTv;
     private LinearLayout shou_linear, fen_linear, miao_linear, gou_linear, wo_linear;
     private DrawerLayout mDrawerLayout;
     private NavigationView mNv;
     //    private ImageView mImg_ceHua;
     private RelativeLayout mRelativeLayout;
+    private TextView tv_toolBar_title, tv_toolBar_right;
+    private ImageView iv_toolBar_right;
     private ImageView mImg_activity_main_soushuo;
 
 
@@ -57,46 +59,23 @@ public class MainActivity extends BaseActivtiy {
 
         radio = findViewById(R.id.radio_group);
         mImg_activity_main_soushuo = findViewById(R.id.img_activity_main_soushuo);
-        mToolbar = findViewById(R.id.toolbar);
-        mToolbarTv = findViewById(R.id.toolbar_tv);
         shou_linear = findViewById(R.id.shou_linear);
         fen_linear = findViewById(R.id.fen_linear);
         miao_linear = findViewById(R.id.miao_linear);
         gou_linear = findViewById(R.id.gou_linear);
         wo_linear = findViewById(R.id.wo_linear);
-        mToolbar.setTitle("");
-        setSupportActionBar(mToolbar);
+        View toobar = findViewById(R.id.toobar);
+        tv_toolBar_title = toobar.findViewById(R.id.tv_toolBar_title);
+        iv_toolBar_right = toobar.findViewById(R.id.iv_toolBar_right);
+        iv_toolBar_right = toobar.findViewById(R.id.iv_toolBar_right);
+        tv_toolBar_right = toobar.findViewById(R.id.tv_toolBar_right);
         mDrawerLayout = findViewById(R.id.drawerLayout);
         mNv = findViewById(R.id.nv);
-//        mImg_ceHua = findViewById(R.id.img_cehua);
         mRelativeLayout = findViewById(R.id.relativeLayout);
-
-
-        /**
-         * 这是侧滑栏 ！！！测试框架
-         * 点击事件 点击侧滑图标的时候滑出侧滑栏
-         */
-
-
         /**
          * 抽屉菜单图标不显示，设置这行代码
          */
         mNv.setItemIconTintList(null);
-//        ActionBar supportActionBar = getSupportActionBar();
-//
-//        supportActionBar.setIcon(R.drawable.daohang);//设置ActionBar的icon图标
-//
-
-
-//        supportActionBar.setTitle("gender");//设置ActionBar的标题
-//        supportActionBar.setHomeButtonEnabled(true);//主键按钮能否可点击
-//        supportActionBar.setDisplayHomeAsUpEnabled(true);//显示返回图标
-
-//        getActionBar().setIcon(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
-
-//        mToolbar.setNavigationIcon(R.drawable.daohang);
-
-
         mNv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -115,10 +94,6 @@ public class MainActivity extends BaseActivtiy {
                 return false;
             }
         });
-        //ActionBarDrawerToggle
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(MainActivity.this, mDrawerLayout, mToolbar, R.string.app_name, R.string.app_name);
-        mDrawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
         //抽屉滑出时,主界面被挤到右边
         mDrawerLayout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
             @Override
@@ -158,9 +133,15 @@ public class MainActivity extends BaseActivtiy {
         transaction.hide(fragment_wo);
         transaction.show(fragment_shou);
         transaction.commit();
-        /**
-         * 切换页面
-         */
+        tv_toolBar_right.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MainActivity.this, "编辑", Toast.LENGTH_SHORT).show();
+            }
+        });
+                /**
+                 * 切换页面
+                 */
         shou = findViewById(R.id.shou);
         fen = findViewById(R.id.fen);
         miao = findViewById(R.id.miao);
@@ -181,7 +162,9 @@ public class MainActivity extends BaseActivtiy {
                 gou.setChecked(false);
                 wo.setChecked(false);
                 miao.setChecked(false);
-                mToolbarTv.setText("优选商城");
+                tv_toolBar_right.setVisibility(View.GONE);
+                iv_toolBar_right.setVisibility(View.VISIBLE);
+                tv_toolBar_title.setText("优选商城");
             }
         });
         fen_linear.setOnClickListener(new View.OnClickListener() {
@@ -199,7 +182,10 @@ public class MainActivity extends BaseActivtiy {
                 gou.setChecked(false);
                 wo.setChecked(false);
                 miao.setChecked(false);
-                mToolbarTv.setText("");
+                tv_toolBar_right.setVisibility(View.GONE);
+                iv_toolBar_right.setVisibility(View.VISIBLE);
+                tv_toolBar_title.setText("");
+
             }
         });
         miao_linear.setOnClickListener(new View.OnClickListener() {
@@ -217,7 +203,10 @@ public class MainActivity extends BaseActivtiy {
                 wo.setChecked(false);
                 shou.setChecked(false);
                 fen.setChecked(false);
-                mToolbarTv.setText("秒杀专区");
+                tv_toolBar_right.setVisibility(View.GONE);
+                iv_toolBar_right.setVisibility(View.VISIBLE);
+                tv_toolBar_title.setText("秒杀专区");
+
             }
         });
         gou_linear.setOnClickListener(new View.OnClickListener() {
@@ -235,7 +224,10 @@ public class MainActivity extends BaseActivtiy {
                 shou.setChecked(false);
                 miao.setChecked(false);
                 fen.setChecked(false);
-                mToolbarTv.setText("我的购物车");
+                iv_toolBar_right.setVisibility(View.GONE);
+                tv_toolBar_right.setVisibility(View.VISIBLE);
+                tv_toolBar_title.setText("我的购物车");
+
             }
         });
         wo_linear.setOnClickListener(new View.OnClickListener() {
@@ -253,7 +245,9 @@ public class MainActivity extends BaseActivtiy {
                 gou.setChecked(false);
                 miao.setChecked(false);
                 fen.setChecked(false);
-
+                tv_toolBar_right.setVisibility(View.GONE);
+                iv_toolBar_right.setVisibility(View.VISIBLE);
+                tv_toolBar_title.setText("我的");
             }
         });
         shou.setOnClickListener(new View.OnClickListener() {
@@ -271,7 +265,9 @@ public class MainActivity extends BaseActivtiy {
                 gou.setChecked(false);
                 wo.setChecked(false);
                 miao.setChecked(false);
-                mToolbarTv.setText("优选商城");
+                tv_toolBar_right.setVisibility(View.GONE);
+                iv_toolBar_right.setVisibility(View.VISIBLE);
+                tv_toolBar_title.setText("优选商城");
             }
         });
         fen.setOnClickListener(new View.OnClickListener() {
@@ -289,7 +285,9 @@ public class MainActivity extends BaseActivtiy {
                 gou.setChecked(false);
                 wo.setChecked(false);
                 miao.setChecked(false);
-                mToolbarTv.setText("");
+                tv_toolBar_right.setVisibility(View.GONE);
+                iv_toolBar_right.setVisibility(View.VISIBLE);
+                tv_toolBar_title.setText("");
             }
         });
         miao.setOnClickListener(new View.OnClickListener() {
@@ -307,7 +305,9 @@ public class MainActivity extends BaseActivtiy {
                 wo.setChecked(false);
                 shou.setChecked(false);
                 fen.setChecked(false);
-                mToolbarTv.setText("秒杀专区");
+                tv_toolBar_right.setVisibility(View.GONE);
+                iv_toolBar_right.setVisibility(View.VISIBLE);
+                tv_toolBar_title.setText("秒杀专区");
             }
         });
         gou.setOnClickListener(new View.OnClickListener() {
@@ -325,7 +325,9 @@ public class MainActivity extends BaseActivtiy {
                 shou.setChecked(false);
                 miao.setChecked(false);
                 fen.setChecked(false);
-                mToolbarTv.setText("我的购物车");
+                iv_toolBar_right.setVisibility(View.GONE);
+                tv_toolBar_right.setVisibility(View.VISIBLE);
+                tv_toolBar_title.setText("我的购物车");
             }
         });
         wo.setOnClickListener(new View.OnClickListener() {
@@ -343,7 +345,9 @@ public class MainActivity extends BaseActivtiy {
                 gou.setChecked(false);
                 miao.setChecked(false);
                 fen.setChecked(false);
-                mToolbarTv.setText("个人中心");
+                tv_toolBar_right.setVisibility(View.GONE);
+                iv_toolBar_right.setVisibility(View.VISIBLE);
+                tv_toolBar_title.setText("我的");
             }
         });
     }
@@ -358,4 +362,13 @@ public class MainActivity extends BaseActivtiy {
 
     }
 
+    @Override
+    public boolean isBaseOnWidth() {
+        return false;
+    }
+
+    @Override
+    public float getSizeInDp() {
+        return 750;
+    }
 }
