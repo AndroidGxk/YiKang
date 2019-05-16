@@ -14,10 +14,12 @@ import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.jessyan.autosize.internal.CustomAdapt;
+
 /**
  * 秒杀二级页面
  */
-public class SeckillSecondActivity extends BaseActivtiy implements XRecyclerView.LoadingListener {
+public class SeckillSecondActivity extends BaseActivtiy implements XRecyclerView.LoadingListener,CustomAdapt {
 
     private XRecyclerView recycler;
     private SeckillRecyclerAdapter seckillRecyclerAdapter;
@@ -74,5 +76,15 @@ public class SeckillSecondActivity extends BaseActivtiy implements XRecyclerView
         }
         seckillRecyclerAdapter.addAll(stringList);
         recycler.loadMoreComplete();
+    }
+
+    @Override
+    public boolean isBaseOnWidth() {
+        return false;
+    }
+
+    @Override
+    public float getSizeInDp() {
+        return 750;
     }
 }

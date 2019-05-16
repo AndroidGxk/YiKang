@@ -15,6 +15,7 @@ import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.SeckillSecondActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.ArticRecyclerAdapter;
 import com.yikangcheng.admin.yikang.activity.adapter.FaddRecyclerAdapter;
+import com.yikangcheng.admin.yikang.activity.adapter.RecomShopRecyclerAdapter;
 import com.yikangcheng.admin.yikang.activity.particulars.ParticularsActivity;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
 import com.youth.banner.Banner;
@@ -35,11 +36,13 @@ public class Fragment_Shou extends BaseFragment {
     private FaddRecyclerAdapter faddRecyclerAdapter;
     private ArticRecyclerAdapter articRecyclerAdapter;
     private ImageView shou_miao_imag;
+    private RecomShopRecyclerAdapter recomShopRecyclerAdapter;
 
     @Override
     protected void initView(View view) {
         faddRecyclerAdapter = new FaddRecyclerAdapter();
         articRecyclerAdapter = new ArticRecyclerAdapter();
+        recomShopRecyclerAdapter = new RecomShopRecyclerAdapter();
         banner = view.findViewById(R.id.banner);
         m_banner = view.findViewById(R.id.m_banner);
         mMZBanner = view.findViewById(R.id.bao_mzbanner);
@@ -110,7 +113,7 @@ public class Fragment_Shou extends BaseFragment {
         artic_recycler.setLayoutManager(aLayoutManager);
         artic_recycler.setAdapter(faddRecyclerAdapter);
         c_recycler.setLayoutManager(ctaggeredGridLayoutManager);
-        c_recycler.setAdapter(articRecyclerAdapter);
+        c_recycler.setAdapter(recomShopRecyclerAdapter);
         shou_miao_imag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

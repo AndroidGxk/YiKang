@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="161dp"
-    android:layout_marginTop="10dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:layout_marginLeft="10dp"
+    android:layout_marginTop="10dp"
     android:background="#FFFFFF"
-    android:layout_height="255dp">
+    android:paddingBottom="5dp">
 
     <ImageView
         android:id="@+id/recom_img"
@@ -34,21 +35,37 @@
         android:textColor="#999999"
         android:textSize="10sp" />
 
-    <TextView
-        android:id="@+id/text_price"
+    <LinearLayout
         android:layout_width="130dp"
-        android:layout_height="wrap_content"
+        android:id="@+id/line1"
         android:layout_below="@+id/recom_count"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:text="内购价：¥286"
-        android:textColor="#FF1A1A"
-        android:textSize="10sp" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true">
+        <TextView
+            android:id="@+id/text_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="内购价：¥"
+            android:textColor="#FF1A1A"
+            android:textSize="11sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/recom_count"
+            android:text="286"
+            android:layout_marginLeft="2dp"
+            android:textColor="#FF1A1A"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+
 
     <RelativeLayout
         android:layout_width="130dp"
         android:layout_height="15dp"
-        android:layout_below="@+id/text_price"
+        android:layout_below="@+id/line1"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp">
 
@@ -59,7 +76,7 @@
             android:layout_alignParentBottom="true"
             android:text="市场价：¥296"
             android:textColor="#999999"
-            android:textSize="10sp" />
+            android:textSize="11sp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -68,6 +85,6 @@
             android:layout_alignParentBottom="true"
             android:text="1234人已购"
             android:textColor="#999999"
-            android:textSize="10sp" />
+            android:textSize="11sp" />
     </RelativeLayout>
 </RelativeLayout>

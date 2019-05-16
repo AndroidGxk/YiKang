@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="161dp"
+    android:layout_width="160dp"
     android:layout_height="238dp"
     android:layout_marginTop="8dp"
     android:layout_marginRight="8dp">
@@ -31,7 +31,7 @@
         android:layout_marginBottom="10dp"
         android:text="¥286000"
         android:textColor="#FF1A1A"
-        android:textSize="9sp" />
+        android:textSize="13sp" />
 
     <TextView
         android:id="@+id/text_bprice"
@@ -43,7 +43,7 @@
         android:layout_marginBottom="10dp"
         android:text="¥386000"
         android:textColor="#999999"
-        android:textSize="9sp" />
+        android:textSize="13sp" />
 
     <TextView
         android:id="@+id/text_count"
