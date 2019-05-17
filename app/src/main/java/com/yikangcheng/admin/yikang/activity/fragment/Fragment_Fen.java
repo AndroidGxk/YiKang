@@ -3,6 +3,7 @@ package com.yikangcheng.admin.yikang.activity.fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.adapter.FenLeiAdapter;
 import com.yikangcheng.admin.yikang.activity.adapter.FenLeiBAdapter;
@@ -23,6 +24,8 @@ public class Fragment_Fen extends BaseFragment implements Contract.View {
     private FenLeiAdapter mFenLeiAdapter;
     private FenLeiBAdapter mFenLeiBAdapter;
     private ArrayList<ClassifyBean.EntityBean.ChildSubjectListBeanX> mChildSubjectListBeanXES;
+    private List<ClassifyBean.EntityBean> mEntity;
+    private ClassifyBean mClassifyBean;
 
     @Override
     protected void initView(View view) {
@@ -33,14 +36,30 @@ public class Fragment_Fen extends BaseFragment implements Contract.View {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         mRlvFragmentFenleiZuo.setLayoutManager(linearLayoutManager);
         mChildSubjectListBeans = new ArrayList<>();
-        mFenLeiAdapter = new FenLeiAdapter(getContext(),mChildSubjectListBeans);
+        mFenLeiAdapter = new FenLeiAdapter(getContext(), mChildSubjectListBeans);
         mRlvFragmentFenleiZuo.setAdapter(mFenLeiAdapter);
         //右边
         LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(getActivity());
         mRlvFragmentFenleiYou.setLayoutManager(linearLayoutManager1);
         mChildSubjectListBeanXES = new ArrayList<>();
-        mFenLeiBAdapter = new FenLeiBAdapter(mChildSubjectListBeanXES,getContext());
+        mFenLeiBAdapter = new FenLeiBAdapter(mChildSubjectListBeanXES, getContext());
         mRlvFragmentFenleiYou.setAdapter(mFenLeiBAdapter);
+
+
+        mFenLeiAdapter.setOnClickListener(new FenLeiAdapter.OnClickListener() {
+            @Override
+            public void OnClickListener(View v, int position) {
+                mFenLeiBAdapter.removeAll();
+                mChildSubjectListBeanXES.clear();
+//                mRlvFragmentFenleiYou.addData(mChildSubjectListBeanXES);
+//                for (int i = 0; i < ; i++) {
+//
+//                }
+                List<ClassifyBean.EntityBean.ChildSubjectListBeanX> childSubjectList = mClassifyBean.getEntity().get(0).getChildSubjectList();
+                mFenLeiBAdapter.addData(childSubjectList);
+
+            }
+        });
 
     }
 
@@ -48,6 +67,7 @@ public class Fragment_Fen extends BaseFragment implements Contract.View {
     protected void initData() {
         mClassifyPresenter = new ClassifyPresenter(this);
         mClassifyPresenter.start();
+
 
     }
 
@@ -71,12 +91,24 @@ public class Fragment_Fen extends BaseFragment implements Contract.View {
 
     }
 
+
     @Override
     public void showSucess(Object o) {
-        if (o instanceof ClassifyBean){
-            ClassifyBean classifyBean= (ClassifyBean) o;
-            List<ClassifyBean.EntityBean> entity = classifyBean.getEntity();
-            mFenLeiAdapter.addData(entity);
+        if (o instanceof ClassifyBean) {
+            mClassifyBean = (ClassifyBean) o;
+            mEntity = mClassifyBean.getEntity();
+            mFenLeiAdapter.addData(mEntity);
+            initSu();
         }
+
+
     }
+
+    private void initSu() {
+        List<ClassifyBean.EntityBean.ChildSubjectListBeanX> childSubjectList = mClassifyBean.getEntity().get(0).getChildSubjectList();
+        mFenLeiBAdapter.addData(childSubjectList);
+
+    }
+
+
 }

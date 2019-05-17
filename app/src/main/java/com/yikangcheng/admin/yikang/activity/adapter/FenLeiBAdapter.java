@@ -45,6 +45,16 @@ public class FenLeiBAdapter extends RecyclerView.Adapter {
         return mList.size();
     }
 
+    public void addData(List<ClassifyBean.EntityBean.ChildSubjectListBeanX> childSubjectList) {
+        mList.addAll(childSubjectList);
+        notifyDataSetChanged();
+    }
+
+    public void removeAll() {
+        this.mList.clear();
+        notifyDataSetChanged();
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView mTv;

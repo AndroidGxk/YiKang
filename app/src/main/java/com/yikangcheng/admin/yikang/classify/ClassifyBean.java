@@ -317,7 +317,7 @@ public class ClassifyBean  {
                             ", image='" + image + '\'' +
                             ", icon='" + icon + '\'' +
                             ", sort=" + sort +
-                            ", childSubjectList=" + childSubjectList +
+//                            ", childSubjectList=" + childSubjectList +
                             '}';
                 }
 
@@ -345,7 +345,7 @@ public class ClassifyBean  {
                 private String image;
                 private String icon;
                 private int sort;
-                private List<?> childSubjectList;
+//                private List<?> childSubjectList;
 
                 public int getSubjectId() {
                     return subjectId;
@@ -427,13 +427,13 @@ public class ClassifyBean  {
                     this.sort = sort;
                 }
 
-                public List<?> getChildSubjectList() {
-                    return childSubjectList;
-                }
-
-                public void setChildSubjectList(List<?> childSubjectList) {
-                    this.childSubjectList = childSubjectList;
-                }
+//                public List<?> getChildSubjectList() {
+//                    return childSubjectList;
+//                }
+//
+//                public void setChildSubjectList(List<?> childSubjectList) {
+//                    this.childSubjectList = childSubjectList;
+//                }
             }
         }
     }
