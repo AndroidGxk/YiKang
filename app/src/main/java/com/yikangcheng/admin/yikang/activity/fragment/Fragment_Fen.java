@@ -1,67 +1,82 @@
 package com.yikangcheng.admin.yikang.activity.fragment;
 
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
-
 import com.yikangcheng.admin.yikang.R;
+import com.yikangcheng.admin.yikang.activity.adapter.FenLeiAdapter;
+import com.yikangcheng.admin.yikang.activity.adapter.FenLeiBAdapter;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
-import com.yikangcheng.admin.yikang.tab.VerticalPager;
-import com.yikangcheng.admin.yikang.tab.vpsp;
+import com.yikangcheng.admin.yikang.base.contract.Contract;
+import com.yikangcheng.admin.yikang.classify.ClassifyBean;
+import com.yikangcheng.admin.yikang.presenter.ClassifyPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import q.rorbin.verticaltablayout.VerticalTabLayout;
-import q.rorbin.verticaltablayout.widget.TabView;
+public class Fragment_Fen extends BaseFragment implements Contract.View {
 
-public class Fragment_Fen extends BaseFragment {
-
-    private VerticalTabLayout mTablayout;
-    private VerticalPager mViewpager;
-    private List<String> datas = new ArrayList<String>();
-    private com.yikangcheng.admin.yikang.tab.vpsp vpsp;
-
+    private ClassifyPresenter mClassifyPresenter;
+    private RecyclerView mRlvFragmentFenleiYou;
+    private RecyclerView mRlvFragmentFenleiZuo;
+    private List<ClassifyBean.EntityBean> mChildSubjectListBeans;
+    private FenLeiAdapter mFenLeiAdapter;
+    private FenLeiBAdapter mFenLeiBAdapter;
+    private ArrayList<ClassifyBean.EntityBean.ChildSubjectListBeanX> mChildSubjectListBeanXES;
 
     @Override
     protected void initView(View view) {
-        mViewpager = view.findViewById(R.id.viewpager);
-        mTablayout = view.findViewById(R.id.tablayout);
+        mRlvFragmentFenleiYou = view.findViewById(R.id.rlv__fragment_fenlei_you);
+        mRlvFragmentFenleiZuo = view.findViewById(R.id.rlv__fragment_fenlei_zuo);
+
+        //左边
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        mRlvFragmentFenleiZuo.setLayoutManager(linearLayoutManager);
+        mChildSubjectListBeans = new ArrayList<>();
+        mFenLeiAdapter = new FenLeiAdapter(getContext(),mChildSubjectListBeans);
+        mRlvFragmentFenleiZuo.setAdapter(mFenLeiAdapter);
+        //右边
+        LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(getActivity());
+        mRlvFragmentFenleiYou.setLayoutManager(linearLayoutManager1);
+        mChildSubjectListBeanXES = new ArrayList<>();
+        mFenLeiBAdapter = new FenLeiBAdapter(mChildSubjectListBeanXES,getContext());
+        mRlvFragmentFenleiYou.setAdapter(mFenLeiBAdapter);
+
     }
 
     @Override
     protected void initData() {
-        datas.add("推荐");
-        datas.add("要闻");
-        datas.add("娱乐");
-        datas.add("科技");
-        datas.add("汽车");
-        datas.add("体育");
-        datas.add("推荐");
-        datas.add("要闻");
-        datas.add("娱乐");
-        datas.add("科技");
-        datas.add("汽车");
-        datas.add("体育");
-        datas.add("推荐");
-        datas.add("要闻");
-        datas.add("娱乐");
-        datas.add("科技");
-        datas.add("汽车");
-        datas.add("体育");
-
-        //适配器
-        vpsp = new vpsp(getChildFragmentManager(), datas);
-        mViewpager.setAdapter(vpsp);
-        //进行关联
-        mTablayout.setupWithViewPager(mViewpager);
-        /*mTablayout.setTabBadge(7, 32);
-        mTablayout.setTabBadge(2, -1);
-        mTablayout.setTabBadge(3, -1);
-        mTablayout.setTabBadge(4, -1);*/
+        mClassifyPresenter = new ClassifyPresenter(this);
+        mClassifyPresenter.start();
 
     }
 
     @Override
     protected int getFragmentLayoutId() {
         return R.layout.fragment_fen;
+    }
+
+    @Override
+    public void showProgressBar() {
+
+    }
+
+    @Override
+    public void dissProgressBar() {
+
+    }
+
+    @Override
+    public void showError(String msg) {
+
+    }
+
+    @Override
+    public void showSucess(Object o) {
+        if (o instanceof ClassifyBean){
+            ClassifyBean classifyBean= (ClassifyBean) o;
+            List<ClassifyBean.EntityBean> entity = classifyBean.getEntity();
+            mFenLeiAdapter.addData(entity);
+        }
     }
 }

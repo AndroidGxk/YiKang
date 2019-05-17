@@ -444,7 +444,12 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
 
     @Override
     public float getSizeInDp() {
-        return 750;
+        return 720;
+    }
+
+    @Override
+    public void showSucess(Object o) {
+
     }
 
 }

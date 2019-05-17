@@ -1,5 +1,6 @@
 package com.yikangcheng.admin.yikang.activity.fragment;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -9,6 +10,7 @@ import android.widget.Toast;
 import com.sobot.chat.SobotApi;
 import com.sobot.chat.api.model.Information;
 import com.yikangcheng.admin.yikang.R;
+import com.yikangcheng.admin.yikang.activity.myaccount.MyaccountActivity;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
 
 public class Fragment_Wo extends BaseFragment {
@@ -68,6 +70,18 @@ public class Fragment_Wo extends BaseFragment {
         mImgFragmentWoTuichudenglu = view.findViewById(R.id.img__fragment_wo_tuichudenglu);
         //用户名
         mTvFragmentWoName = view.findViewById(R.id.tv__fragment_wo_name);
+
+
+        /**
+         * 点击头像跳转页面
+         */
+        mImgFragmentWoTouxiang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MyaccountActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

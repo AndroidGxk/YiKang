@@ -8,6 +8,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.yikangcheng.admin.yikang.R;
+import com.yikangcheng.admin.yikang.greendao.SoSuoDb;
+
+import java.util.List;
 
 public class FlowLayout extends FrameLayout {
     //水平间的距离
@@ -67,4 +70,6 @@ public class FlowLayout extends FrameLayout {
             disWidth += (viewWidth + H_DISTANCE);
         }
     }
+
+
 }

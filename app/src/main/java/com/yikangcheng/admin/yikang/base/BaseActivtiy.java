@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -18,7 +17,6 @@ import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import me.jessyan.autosize.internal.CustomAdapt;
 
 
 public abstract class BaseActivtiy extends AppCompatActivity implements IView {
@@ -46,6 +44,8 @@ public abstract class BaseActivtiy extends AppCompatActivity implements IView {
         createPresenter();
         if (mPresenter != null)
             mPresenter.atteachView((IView) this);
+
+
         initEventData();
 
     }
@@ -77,11 +77,6 @@ public abstract class BaseActivtiy extends AppCompatActivity implements IView {
 
     @Override
     public void showError(String msg) {
-
-    }
-
-    @Override
-    public <T> void showSucess(T t) {
 
     }
 

@@ -85,4 +85,9 @@ public class SeckillSecondActivity extends BaseActivtiy implements XRecyclerView
     public float getSizeInDp() {
         return 750;
     }
+
+    @Override
+    public void showSucess(Object o) {
+
+    }
 }
