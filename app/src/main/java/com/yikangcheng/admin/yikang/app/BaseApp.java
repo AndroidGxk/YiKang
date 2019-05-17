@@ -10,7 +10,7 @@ import me.jessyan.autosize.internal.CustomAdapt;
 
 
 public class BaseApp extends Application  {
-    public static BaseApp mAppInstance;
+    public static BaseApp mAppInstance=null;
     private Set<Activity> mSet;
 
 
@@ -20,8 +20,8 @@ public class BaseApp extends Application  {
 
     @Override
     public void onCreate() {
-        super.onCreate();
         mAppInstance = this;
+        super.onCreate();
     }
 
     public void addActivtiy(Activity activity) {

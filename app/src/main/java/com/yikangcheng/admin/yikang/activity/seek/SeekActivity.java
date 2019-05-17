@@ -78,6 +78,8 @@ public class SeekActivity extends BaseActivtiy {
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 if (i == EditorInfo.IME_ACTION_UNSPECIFIED) {
                     Toast.makeText(SeekActivity.this, "你点击了回车", Toast.LENGTH_SHORT).show();
+
+
                     //隐藏软键盘
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
@@ -86,6 +88,7 @@ public class SeekActivity extends BaseActivtiy {
                     mSoSuoDbs.add(new SoSuoDb(null, s));
                     Utils.getInstance().insent(mSoSuoDbs);
                     mFlowLayout_activity_seek.addTextView(s);
+
                 }
                 return false;
             }
@@ -105,8 +108,7 @@ public class SeekActivity extends BaseActivtiy {
             @Override
             public void onClick(View v) {
                 Utils.getInstance().deleAAll();
-
-
+                mFlowLayout_activity_seek.removeAllViews();
             }
         });
     }
@@ -135,6 +137,21 @@ public class SeekActivity extends BaseActivtiy {
 
     @Override
     protected void createPresenter() {
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        List<SoSuoDb> select = Utils.getInstance().select();
+        for (int i = 0; i < select.size(); i++) {
+            SoSuoDb soSuoDb = select.get(i);
+            mFlowLayout_activity_seek.addTextView(soSuoDb.getSeekTitle());
+        }
+    }
+
+    @Override
+    public void showSucess(Object o) {
 
     }
 }

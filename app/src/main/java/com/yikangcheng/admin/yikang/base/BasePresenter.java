@@ -3,22 +3,19 @@ package com.yikangcheng.admin.yikang.base;
 
 import com.yikangcheng.admin.yikang.base.contract.Contract;
 
+import java.util.Map;
+
 public class BasePresenter implements Contract.Presenter {
     private IView mView;
 
     @Override
-    public void start() {
+    public void start(Map<String, String> scuessMap) {
 
     }
 
     @Override
-    public void atteachView(IView iView) {
-        this.mView = iView;
-    }
+    public void start(Object json) {
 
-    @Override
-    public void detachView() {
-        mView = null;
     }
 
 
@@ -39,6 +36,19 @@ public class BasePresenter implements Contract.Presenter {
 
     private boolean isViewAttached() {
         return mView != null;
+    }
+
+    @Override
+    public void start() {
+
+    }
+
+    public void atteachView(IView iView) {
+        this.mView = iView;
+    }
+
+    public void detachView() {
+        mView = null;
     }
 
 

@@ -7,6 +7,10 @@ package com.yikangcheng.admin.yikang.app;
  * 微信：704003376
  */
 public class Constants {
-    public static final String BASEURL = "";
-    public static final String BAIDU = "";
+    //1.接口标准域名：
+    public static final String BASEURL = "https://www.yikch.com";
+    //图片访问域名：
+    public static final String BASETUPIANFANGWENURL = "https://image.yikch.com";
+    //3.图片上传域名：
+    public static final String BASETUPIANSHANGCHUANURL = "https://static.yikch.com";
 }

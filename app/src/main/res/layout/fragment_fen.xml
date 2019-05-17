@@ -1,31 +1,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <q.rorbin.verticaltablayout.VerticalTabLayout
-        android:id="@+id/tablayout"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rlv__fragment_fenlei_zuo"
         android:layout_width="96dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:fitsSystemWindows="true"
-        android:scrollIndicators="bottom"
-        app:indicator_color="#FFAF00"
-        app:indicator_corners="5dp"
-        app:indicator_width="2dp"
-        app:indicator_gravity="left"
-        app:tab_height="50dp"
-        app:tab_mode="scrollable">
+        android:layout_height="match_parent" />
 
-    </q.rorbin.verticaltablayout.VerticalTabLayout>
-
-    <com.yikangcheng.admin.yikang.tab.VerticalPager
-        android:id="@+id/viewpager"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:background="#F7F7F7 ">
-
-    </com.yikangcheng.admin.yikang.tab.VerticalPager>
-
-
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rlv__fragment_fenlei_you"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>

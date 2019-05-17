@@ -34,4 +34,9 @@ public class ParticularsActivity extends BaseActivtiy {
     protected void createPresenter() {
 
     }
+
+    @Override
+    public void showSucess(Object o) {
+
+    }
 }
