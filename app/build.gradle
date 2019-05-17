@@ -53,8 +53,9 @@ dependencies {
     implementation 'com.github.pinguo-zhouwei:MZBannerView:v2.0.2'
 
     //改变状态栏颜色依赖
-    compile 'com.readystatesoftware.systembartint:systembartint:1.0.3'
+    implementation 'com.readystatesoftware.systembartint:systembartint:1.0.3'
 
-    implementation 'org.greenrobot:greendao:3.2.2'//add 数据库GreenDao的library
+    implementation 'org.greenrobot:greendao:3.2.0'
+    implementation project(path: ':sobotsdk-mall')//add 数据库GreenDao的library
 
 }

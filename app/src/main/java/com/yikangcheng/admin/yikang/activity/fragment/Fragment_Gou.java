@@ -9,6 +9,7 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.yikangcheng.admin.yikang.R;
+import com.yikangcheng.admin.yikang.activity.MainActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.RecomShopRecyclerAdapter;
 import com.yikangcheng.admin.yikang.activity.adapter.ShopRecyclerAdapter;
 import com.yikangcheng.admin.yikang.activity.bean.ShopCarBean;
@@ -22,8 +23,10 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
     private RecyclerView shop_recyclertwo, shop_recycler;
     private ShopRecyclerAdapter shopRecyclerAdapter;
     private CheckBox all_check;
-    private TextView text_total, num_text;
+    private TextView text_total, num_text, heji, dele_text;
     List<ShopCarBean> shopCarBeans = new ArrayList<>();
+    private TextView tv_toolBar_right;
+    private boolean judge = false;//判断编辑或完成
 
     @Override
     protected void initView(View view) {
@@ -31,6 +34,9 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
         shop_recyclertwo = view.findViewById(R.id.shop_recyclertwo);
         all_check = view.findViewById(R.id.all_check);
         num_text = view.findViewById(R.id.num_text);
+        dele_text = view.findViewById(R.id.dele_text);
+        tv_toolBar_right = view.findViewById(R.id.tv_toolBar_right);
+        heji = view.findViewById(R.id.heji);
         text_total = view.findViewById(R.id.text_total);
         for (int i = 0; i < 10; i++) {
             ShopCarBean shopCarBean = new ShopCarBean();
@@ -39,6 +45,7 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
             shopCarBean.setPrice(1.56 + i);
             shopCarBeans.add(shopCarBean);
         }
+
     }
 
     @Override
@@ -74,6 +81,27 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
                 shopRecyclerAdapter.checkAll(checked);
             }
         });
+        tv_toolBar_right.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (judge) {
+                    heji.setVisibility(View.VISIBLE);
+                    text_total.setVisibility(View.VISIBLE);
+                    num_text.setVisibility(View.VISIBLE);
+                    dele_text.setVisibility(View.GONE);
+                    tv_toolBar_right.setText("编辑");
+                    judge = false;
+                } else {
+                    heji.setVisibility(View.GONE);
+                    text_total.setVisibility(View.GONE);
+                    dele_text.setVisibility(View.VISIBLE);
+                    num_text.setVisibility(View.GONE);
+                    tv_toolBar_right.setText("完成");
+                    judge = true;
+                }
+
+            }
+        });
     }
 
     @Override
@@ -97,4 +125,6 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
     public void checked(boolean isCheck) {
         all_check.setChecked(isCheck);
     }
+
+
 }

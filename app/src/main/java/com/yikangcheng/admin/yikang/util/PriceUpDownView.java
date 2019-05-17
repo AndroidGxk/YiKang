@@ -56,11 +56,11 @@ public class PriceUpDownView extends LinearLayout implements View.OnClickListene
         Drawable drawable = null;
         if (isUp) {
             isUp = false;
-            drawable = getResources().getDrawable(R.drawable.xia_price);
+            drawable = getResources().getDrawable(R.drawable.shang_price);
         }
         else {
             isUp = true;
-            drawable = getResources().getDrawable(R.drawable.shang_price);
+            drawable = getResources().getDrawable(R.drawable.xia_price);
         }
         drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
         priceView.setCompoundDrawables(null, null, drawable, null);

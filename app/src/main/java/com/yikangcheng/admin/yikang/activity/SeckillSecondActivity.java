@@ -1,15 +1,12 @@
 package com.yikangcheng.admin.yikang.activity;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.adapter.SeckillRecyclerAdapter;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
+import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,10 +24,11 @@ public class SeckillSecondActivity extends BaseActivtiy implements XRecyclerView
 
     @Override
     protected void initView() {
+        StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
         seckillRecyclerAdapter = new SeckillRecyclerAdapter();
         recycler = findViewById(R.id.recycler);
         for (int i = 0; i < 10; i++) {
-            stringList.add("");
+            stringList.add("s");
         }
     }
 

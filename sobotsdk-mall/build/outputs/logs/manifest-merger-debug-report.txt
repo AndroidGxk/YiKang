@@ -1,0 +1,299 @@
+-- Merging decision tree log ---
+manifest
+ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:1:1-139:12
+INJECTED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:1:1-139:12
+INJECTED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:1:1-139:12
+	package
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:2:5-29
+		INJECTED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml
+		INJECTED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:1:11-69
+uses-permission#android.permission.INTERNET
+ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:5:5-67
+	android:name
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:5:22-64
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:6:5-81
+	android:name
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:6:22-78
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:7:5-79
+	android:name
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:7:22-77
+uses-permission#android.permission.READ_PHONE_STATE
+ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:8:5-75
+	android:name
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:8:22-72
+uses-permission#com.google.android.apps.photos.permission.GOOGLE_PHOTOS
+ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:9:5-95
+	android:name
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:9:22-92
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:10:5-79
+	android:name
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:10:22-76
+uses-permission#android.permission.ACCESS_WIFI_STATE
+ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:11:5-76
+	android:name
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:11:22-73
+uses-permission#android.permission.RECORD_AUDIO
+ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:12:5-71
+	android:name
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:12:22-68
+uses-permission#android.permission.GET_TASKS
+ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:13:5-68
+	android:name
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:13:22-65
+uses-permission#android.permission.VIBRATE
+ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:14:5-66
+	android:name
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:14:22-63
+uses-permission#android.permission.CAMERA
+ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:15:5-65
+	android:name
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:15:22-62
+uses-permission#android.permission.WAKE_LOCK
+ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:16:5-68
+	android:name
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:16:22-65
+supports-screens
+ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:18:5-24:40
+	android:largeScreens
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:20:9-36
+	android:smallScreens
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:23:9-36
+	android:normalScreens
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:21:9-37
+	android:xlargeScreens
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:24:9-37
+	android:resizeable
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:22:9-34
+	android:anyDensity
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:19:9-34
+application
+ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:26:5-137:19
+activity#com.sobot.chat.conversation.SobotChatActivity
+ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:27:9-33:58
+	android:screenOrientation
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:31:13-49
+	android:launchMode
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:30:13-44
+	android:windowSoftInputMode
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:33:13-55
+	android:configChanges
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:29:13-63
+	android:theme
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:32:13-50
+	android:name
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:28:13-73
+activity#com.sobot.chat.activity.SobotPhotoActivity
+ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:34:9-39:53
+	android:screenOrientation
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:38:13-49
+	android:hardwareAccelerated
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:37:13-48
+	android:configChanges
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:36:13-63
+	android:theme
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:39:13-50
+	android:name
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:35:13-70
+activity#com.sobot.chat.activity.WebViewActivity
+ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:40:9-44:58
+	android:screenOrientation
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:42:13-49
+	android:windowSoftInputMode
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:44:13-55
+	android:theme
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:43:13-50
+	android:name
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:41:13-67
+activity#com.sobot.chat.activity.SobotSkillGroupActivity
+ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:45:9-47:57
+	android:theme
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:47:13-54
+	android:name
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:46:13-75
+activity#com.sobot.chat.activity.SobotPostMsgActivity
+ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:48:9-52:58
+	android:screenOrientation
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:50:13-49
+	android:windowSoftInputMode
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:52:13-55
+	android:theme
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:51:13-50
+	android:name
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:49:13-72
+activity#com.sobot.chat.activity.SobotConsultationListActivity
+ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:53:9-57:58
+	android:screenOrientation
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:56:13-49
+	android:windowSoftInputMode
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:57:13-55
+	android:theme
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:55:13-50
+	android:name
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:54:13-81
+activity#com.sobot.chat.activity.SobotPhotoListActivity
+ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:58:9-63:53
+	android:screenOrientation
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:62:13-49
+	android:hardwareAccelerated
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:61:13-48
+	android:configChanges
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:60:13-63
+	android:theme
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:63:13-50
+	android:name
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:59:13-74
+activity#com.sobot.chat.activity.SobotCusFieldActivity
+ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:64:9-68:58
+	android:screenOrientation
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:66:13-49
+	android:windowSoftInputMode
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:68:13-55
+	android:theme
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:67:13-50
+	android:name
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:65:13-73
+activity#com.sobot.chat.activity.SobotPostCategoryActivity
+ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:69:9-73:58
+	android:screenOrientation
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:71:13-49
+	android:windowSoftInputMode
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:73:13-55
+	android:theme
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:72:13-50
+	android:name
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:70:13-77
+activity#com.sobot.chat.activity.SobotQueryFromActivity
+ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:74:9-78:58
+	android:screenOrientation
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:76:13-49
+	android:windowSoftInputMode
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:78:13-55
+	android:theme
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:77:13-50
+	android:name
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:75:13-74
+activity#com.sobot.chat.activity.SobotChooseCityActivity
+ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:79:9-83:58
+	android:screenOrientation
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:81:13-49
+	android:windowSoftInputMode
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:83:13-55
+	android:theme
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:82:13-50
+	android:name
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:80:13-75
+activity#com.sobot.chat.activity.SobotChooseFileActivity
+ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:84:9-88:58
+	android:screenOrientation
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:86:13-49
+	android:windowSoftInputMode
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:88:13-55
+	android:theme
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:87:13-50
+	android:name
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:85:13-75
+activity#com.sobot.chat.activity.SobotFileDetailActivity
+ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:89:9-92:53
+	android:screenOrientation
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:91:13-49
+	android:theme
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:92:13-50
+	android:name
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:90:13-75
+activity#com.sobot.chat.activity.SobotCameraActivity
+ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:93:9-96:53
+	android:screenOrientation
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:95:13-49
+	android:theme
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:96:13-50
+	android:name
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:94:13-71
+activity#com.sobot.chat.activity.SobotVideoActivity
+ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:97:9-100:53
+	android:screenOrientation
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:99:13-49
+	android:theme
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:100:13-50
+	android:name
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:98:13-70
+activity#com.sobot.chat.activity.SobotTicketDetailActivity
+ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:101:9-104:53
+	android:screenOrientation
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:103:13-49
+	android:theme
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:104:13-50
+	android:name
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:102:13-77
+activity#com.sobot.chat.activity.SobotHelpCenterActivity
+ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:105:9-108:53
+	android:screenOrientation
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:107:13-49
+	android:theme
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:108:13-50
+	android:name
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:106:13-75
+activity#com.sobot.chat.activity.SobotProblemCategoryActivity
+ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:109:9-112:53
+	android:screenOrientation
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:111:13-49
+	android:theme
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:112:13-50
+	android:name
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:110:13-80
+activity#com.sobot.chat.activity.SobotProblemDetailActivity
+ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:113:9-116:53
+	android:screenOrientation
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:115:13-49
+	android:theme
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:116:13-50
+	android:name
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:114:13-78
+activity#com.sobot.chat.activity.SobotPostLeaveMsgActivity
+ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:117:9-120:53
+	android:screenOrientation
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:119:13-49
+	android:theme
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:120:13-50
+	android:name
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:118:13-77
+service#com.sobot.chat.core.channel.SobotTCPServer
+ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:122:9-125:49
+	android:label
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:125:13-47
+	android:exported
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:124:13-37
+	android:name
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:123:13-70
+service#com.sobot.chat.server.SobotSessionServer
+ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:126:9-76
+	android:name
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:126:18-73
+provider#com.sobot.chat.provider.SobotFileProvider
+ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:128:9-136:20
+	android:grantUriPermissions
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:132:13-47
+	android:authorities
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:130:13-70
+	android:exported
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:131:13-37
+	android:name
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:129:13-69
+meta-data#android.support.FILE_PROVIDER_PATHS
+ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:133:13-135:64
+	android:resource
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:135:17-61
+	android:name
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml:134:17-67
+uses-sdk
+INJECTED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml
+INJECTED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml
+		ADDED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml
+		INJECTED from D:\SQLite\YiKangChengApp\sobotsdk-mall\src\main\AndroidManifest.xml

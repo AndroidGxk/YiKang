@@ -2,14 +2,15 @@ package com.yikangcheng.admin.yikang.app;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
+
+import com.sobot.chat.SobotApi;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import me.jessyan.autosize.internal.CustomAdapt;
 
-
-public class BaseApp extends Application  {
+public class BaseApp extends Application {
     public static BaseApp mAppInstance;
     private Set<Activity> mSet;
 
@@ -22,6 +23,7 @@ public class BaseApp extends Application  {
     public void onCreate() {
         super.onCreate();
         mAppInstance = this;
+        SobotApi.initSobotSDK(this,"7560599b63bf43378d05d018ded42cdd","");
     }
 
     public void addActivtiy(Activity activity) {
@@ -30,7 +32,6 @@ public class BaseApp extends Application  {
         }
         mSet.add(activity);
     }
-
 
 
     public void removeActivity(Activity activity) {

@@ -32,7 +32,8 @@
         <activity
             android:name=".activity.particulars.ParticularsActivity"
             tools:ignore="DuplicateActivity" />
-        <activity android:name=".activity.seek.SeekActivity"
+        <activity
+            android:name=".activity.seek.SeekActivity"
             tools:ignore="DuplicateActivity" />
         <activity android:name=".activity.SearchListActivity"></activity>
     </application>
