@@ -3,6 +3,6 @@
     android:id="@+id/price_id"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:drawableRight="@drawable/xiaoxi"
+    android:drawableRight="@drawable/price_image"
     android:text="价格"
     android:textColor="#a4a4a4" />

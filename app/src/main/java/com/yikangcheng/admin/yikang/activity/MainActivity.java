@@ -48,29 +48,41 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
     //    private ImageView mImg_ceHua;
     private RelativeLayout mRelativeLayout;
     private TextView tv_toolBar_title, tv_toolBar_right;
-    private ImageView iv_toolBar_right;
+    private TextView shou_text, fen_text, miao_text, gou_text, wo_text;
+    private ImageView iv_toolBar_right,iv_toolBar_left;
     private ImageView mImg_activity_main_soushuo;
-
+    private View toobar;
 
     @Override
     protected void initView() {
-
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
-
         radio = findViewById(R.id.radio_group);
+        radio.check(R.id.shou);
         mImg_activity_main_soushuo = findViewById(R.id.iv_toolBar_right);
         shou_linear = findViewById(R.id.shou_linear);
         fen_linear = findViewById(R.id.fen_linear);
+        shou_text = findViewById(R.id.shou_text);
+        fen_text = findViewById(R.id.fen_text);
+        miao_text = findViewById(R.id.miao_text);
+        gou_text = findViewById(R.id.gou_text);
+        wo_text = findViewById(R.id.wo_text);
         miao_linear = findViewById(R.id.miao_linear);
         gou_linear = findViewById(R.id.gou_linear);
         wo_linear = findViewById(R.id.wo_linear);
-        View toobar = findViewById(R.id.toobar);
+        toobar = findViewById(R.id.toobar);
         tv_toolBar_title = toobar.findViewById(R.id.tv_toolBar_title);
+        iv_toolBar_left = toobar.findViewById(R.id.iv_toolBar_left);
+        iv_toolBar_left.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mDrawerLayout.openDrawer(Gravity.LEFT);
+            }
+        });
         tv_toolBar_title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this,SearchListActivity.class));
+                startActivity(new Intent(MainActivity.this, SearchListActivity.class));
             }
         });
         iv_toolBar_right = toobar.findViewById(R.id.iv_toolBar_right);
@@ -140,15 +152,10 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         transaction.hide(fragment_wo);
         transaction.show(fragment_shou);
         transaction.commit();
-        tv_toolBar_right.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "编辑", Toast.LENGTH_SHORT).show();
-            }
-        });
-                /**
-                 * 切换页面
-                 */
+
+        /**
+         * 切换页面
+         */
         shou = findViewById(R.id.shou);
         fen = findViewById(R.id.fen);
         miao = findViewById(R.id.miao);
@@ -157,6 +164,7 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         shou_linear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//                private TextView shou_text,fen_text,miao_text,gou_text,wo_text;
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.hide(fragment_fen);
                 fragmentTransaction.hide(fragment_miao);
@@ -169,9 +177,15 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
                 gou.setChecked(false);
                 wo.setChecked(false);
                 miao.setChecked(false);
+                toobar.setVisibility(View.VISIBLE);
                 tv_toolBar_right.setVisibility(View.GONE);
                 iv_toolBar_right.setVisibility(View.VISIBLE);
                 tv_toolBar_title.setText("优选商城");
+                shou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorTab));
+                fen_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
+                miao_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
+                gou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
+                wo_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
             }
         });
         fen_linear.setOnClickListener(new View.OnClickListener() {
@@ -189,9 +203,15 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
                 gou.setChecked(false);
                 wo.setChecked(false);
                 miao.setChecked(false);
+                toobar.setVisibility(View.VISIBLE);
                 tv_toolBar_right.setVisibility(View.GONE);
                 iv_toolBar_right.setVisibility(View.VISIBLE);
                 tv_toolBar_title.setText("");
+                shou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
+                fen_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorTab));
+                miao_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
+                gou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
+                wo_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
 
             }
         });
@@ -210,9 +230,15 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
                 wo.setChecked(false);
                 shou.setChecked(false);
                 fen.setChecked(false);
+                toobar.setVisibility(View.VISIBLE);
                 tv_toolBar_right.setVisibility(View.GONE);
                 iv_toolBar_right.setVisibility(View.VISIBLE);
                 tv_toolBar_title.setText("秒杀专区");
+                shou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
+                fen_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
+                miao_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorTab));
+                gou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
+                wo_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
 
             }
         });
@@ -231,9 +257,15 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
                 shou.setChecked(false);
                 miao.setChecked(false);
                 fen.setChecked(false);
+                toobar.setVisibility(View.GONE);
                 iv_toolBar_right.setVisibility(View.GONE);
                 tv_toolBar_right.setVisibility(View.VISIBLE);
                 tv_toolBar_title.setText("我的购物车");
+                shou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
+                fen_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
+                miao_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
+                gou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorTab));
+                wo_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
 
             }
         });
@@ -252,9 +284,15 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
                 gou.setChecked(false);
                 miao.setChecked(false);
                 fen.setChecked(false);
+                toobar.setVisibility(View.VISIBLE);
                 tv_toolBar_right.setVisibility(View.GONE);
                 iv_toolBar_right.setVisibility(View.VISIBLE);
                 tv_toolBar_title.setText("我的");
+                shou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
+                fen_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
+                miao_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
+                gou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
+                wo_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorTab));
             }
         });
         shou.setOnClickListener(new View.OnClickListener() {
@@ -272,9 +310,15 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
                 gou.setChecked(false);
                 wo.setChecked(false);
                 miao.setChecked(false);
+                toobar.setVisibility(View.VISIBLE);
                 tv_toolBar_right.setVisibility(View.GONE);
                 iv_toolBar_right.setVisibility(View.VISIBLE);
                 tv_toolBar_title.setText("优选商城");
+                shou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorTab));
+                fen_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
+                miao_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
+                gou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
+                wo_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
             }
         });
         fen.setOnClickListener(new View.OnClickListener() {
@@ -292,9 +336,15 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
                 gou.setChecked(false);
                 wo.setChecked(false);
                 miao.setChecked(false);
+                toobar.setVisibility(View.VISIBLE);
                 tv_toolBar_right.setVisibility(View.GONE);
                 iv_toolBar_right.setVisibility(View.VISIBLE);
                 tv_toolBar_title.setText("");
+                shou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
+                fen_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorTab));
+                miao_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
+                gou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
+                wo_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
             }
         });
         miao.setOnClickListener(new View.OnClickListener() {
@@ -312,9 +362,15 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
                 wo.setChecked(false);
                 shou.setChecked(false);
                 fen.setChecked(false);
+                toobar.setVisibility(View.VISIBLE);
                 tv_toolBar_right.setVisibility(View.GONE);
                 iv_toolBar_right.setVisibility(View.VISIBLE);
                 tv_toolBar_title.setText("秒杀专区");
+                shou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
+                fen_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
+                miao_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorTab));
+                gou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
+                wo_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
             }
         });
         gou.setOnClickListener(new View.OnClickListener() {
@@ -332,9 +388,15 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
                 shou.setChecked(false);
                 miao.setChecked(false);
                 fen.setChecked(false);
+                toobar.setVisibility(View.GONE);
                 iv_toolBar_right.setVisibility(View.GONE);
                 tv_toolBar_right.setVisibility(View.VISIBLE);
                 tv_toolBar_title.setText("我的购物车");
+                shou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
+                fen_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
+                miao_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
+                gou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorTab));
+                wo_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
             }
         });
         wo.setOnClickListener(new View.OnClickListener() {
@@ -352,9 +414,15 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
                 gou.setChecked(false);
                 miao.setChecked(false);
                 fen.setChecked(false);
+                toobar.setVisibility(View.VISIBLE);
                 tv_toolBar_right.setVisibility(View.GONE);
                 iv_toolBar_right.setVisibility(View.VISIBLE);
                 tv_toolBar_title.setText("我的");
+                shou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
+                fen_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
+                miao_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
+                gou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
+                wo_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorTab));
             }
         });
     }
@@ -383,4 +451,5 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
     public void showSucess(Object o) {
 
     }
+
 }

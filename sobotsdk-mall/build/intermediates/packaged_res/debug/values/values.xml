@@ -1,0 +1,572 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="sobot_fileEndingAll">
+        <item>.mp3</item>
+        <item>.wav</item>
+
+        <item>.mp4</item>
+        <item>.rmvb</item>
+        <item>.avi</item>
+        <item>.flv</item>
+
+        <item>.txt</item>
+
+        <item>.doc</item>
+        <item>.docx</item>
+
+        <item>.xls</item>
+        <item>.xlsx</item>
+
+        <item>.ppt</item>
+        <item>.pptx</item>
+
+        <item>.pdf</item>
+
+        <item>.zip</item>
+        <item>.rar</item>
+
+        <item>.png</item>
+        <item>.gif</item>
+        <item>.jpg</item>
+        <item>.jpeg</item>
+        <item>.bmp</item>
+    </array>
+    <array name="sobot_fileEndingAudio">
+        <item>.mp3</item>
+        <item>.wav</item>
+    </array>
+    <array name="sobot_fileEndingExcel">
+        <item>.xls</item>
+        <item>.xlsx</item>
+    </array>
+    <array name="sobot_fileEndingImage">
+        <item>.png</item>
+        <item>.gif</item>
+        <item>.jpg</item>
+        <item>.jpeg</item>
+        <item>.bmp</item>
+    </array>
+    <array name="sobot_fileEndingPPT">
+        <item>.ppt</item>
+        <item>.pptx</item>
+    </array>
+    <array name="sobot_fileEndingPackage">
+        <item>.zip</item>
+        <item>.rar</item>
+    </array>
+    <array name="sobot_fileEndingPdf">
+        <item>.pdf</item>
+    </array>
+    <array name="sobot_fileEndingText">
+        <item>.txt</item>
+    </array>
+    <array name="sobot_fileEndingVideo">
+        <item>.mp4</item>
+        <item>.rmvb</item>
+        <item>.avi</item>
+        <item>.flv</item>
+    </array>
+    <array name="sobot_fileEndingWord">
+        <item>.doc</item>
+        <item>.docx</item>
+    </array>
+    <color name="sobot_announcement_bgcolor">#FDF6D7</color>
+    <color name="sobot_announcement_title_color">#6D6A69</color>
+    <color name="sobot_auto_complete">@android:color/white</color>
+    <color name="sobot_auto_complete_press">#EFF3FA</color>
+    <color name="sobot_bbutton_danger">#ffd9534f</color>
+    <color name="sobot_bbutton_danger_disabled">#a5d9534f</color>
+    <color name="sobot_bbutton_danger_disabled_edge">#a5d43f3a</color>
+    <color name="sobot_bbutton_danger_edge">#ffd43f3a</color>
+    <color name="sobot_bbutton_danger_pressed">#ffd2322d</color>
+    <color name="sobot_bbutton_danger_pressed_edge">#ffac2925</color>
+    <color name="sobot_bbutton_info">#ff5bc0de</color>
+    <color name="sobot_bbutton_info_disabled">#a55bc0de</color>
+    <color name="sobot_bbutton_info_disabled_edge">#a546b8da</color>
+    <color name="sobot_bbutton_info_edge">#ff46b8da</color>
+    <color name="sobot_bbutton_info_pressed">#ff39b3d7</color>
+    <color name="sobot_bbutton_info_pressed_edge">#ff269abc</color>
+    <color name="sobot_bg_black">#676e6f</color>
+    <color name="sobot_bg_white">#FFFFFF</color>
+    <color name="sobot_btn_bg_send">#09aeb0</color>
+    <color name="sobot_btn_bg_send_disable">#EFF3FA</color>
+    <color name="sobot_btn_bg_send_pressed">#b309aeb0</color>
+    <color name="sobot_btn_normal_color">@color/sobot_colorPrimary</color>
+    <color name="sobot_btn_send_selector_color">#0FC481</color>
+    <color name="sobot_btn_text_color">#ffffff</color>
+    <color name="sobot_chat_file_bgColor">@android:color/white</color>
+    <color name="sobot_color">#2fb9c3</color>
+    <color name="sobot_colorPrimary">#09aeb0</color>
+    <color name="sobot_color_bottom_bg">#fafcfc</color>
+    <color name="sobot_color_bottom_bg_pressed">#dcdcdc</color>
+    <color name="sobot_color_bottom_btn_voice">#777777</color>
+    <color name="sobot_color_bottom_edittext_text">#FFFFFF</color>
+    <color name="sobot_color_bottom_message">#AAAAAA</color>
+    <color name="sobot_color_bottom_upload_btn_color">#6a7272</color>
+    <color name="sobot_color_chat_bg">#F0F5F5</color>
+    <color name="sobot_color_evaluate_bg_normal">#ffffff</color>
+    <color name="sobot_color_evaluate_bg_pressed">#09aeb0</color>
+    <color name="sobot_color_evaluate_text_btn">#000000</color>
+    <color name="sobot_color_evaluate_text_normal">#656565</color>
+    <color name="sobot_color_evaluate_text_pressed">#ffffff</color>
+    <color name="sobot_color_item_skill_offline">#b5b5b5</color>
+    <color name="sobot_color_item_skill_offline_status">#cccccc</color>
+    <color name="sobot_color_item_skill_online">#09aeb0</color>
+    <color name="sobot_color_item_skill_post_msg">#f1a058</color>
+    <color name="sobot_color_link">#09aeb0</color>
+    <color name="sobot_color_link_remind">@color/sobot_color_link</color>
+    <color name="sobot_color_post_msg_text_color">#BDC3D1</color>
+    <color name="sobot_color_read_all">#09aeb0</color>
+    <color name="sobot_color_remind_bg">#676e6f</color>
+    <color name="sobot_color_rlink">#0d81c0</color>
+    <color name="sobot_color_robot_name">#858282</color>
+    <color name="sobot_color_setting_item_pressed">#eeeeee</color>
+    <color name="sobot_color_skill_cancel_bg">#ffffff</color>
+    <color name="sobot_color_skill_grid_view_bg">#F5F5F5</color>
+    <color name="sobot_color_suggestion">#09aeb0</color>
+    <color name="sobot_color_suggestion_history">#000000</color>
+    <color name="sobot_color_title_bar_back_help_center">#666666</color>
+    <color name="sobot_color_title_bar_bg">#2fb9c3</color>
+    <color name="sobot_color_title_bar_bg_yellow">#ffaf00</color>
+    <color name="sobot_color_title_bar_menu_text">#ffffffff</color>
+    <color name="sobot_color_title_bar_title">#ffffffff</color>
+    <color name="sobot_color_title_bar_title_help_center">#333333</color>
+    <color name="sobot_goods_info_btn_bgcolor">#09aeb0</color>
+    <color name="sobot_goods_label_text_color">#F9676F</color>
+    <color name="sobot_gray">#DBDBDB</color>
+    <color name="sobot_help_center_status_bar_color">#FAFAFA</color>
+    <color name="sobot_holo_red_light">#ffff4444</color>
+    <color name="sobot_item_skill_pressed">#f0f0f0</color>
+    <color name="sobot_lable_bg_color">#f9fbfa</color>
+    <color name="sobot_lable_press_bg_color">#ffffff</color>
+    <color name="sobot_lable_text_color">#999999</color>
+    <color name="sobot_lable_view_history_bg">#f2f2f2</color>
+    <color name="sobot_lable_view_ing_bg">#ffffff</color>
+    <color name="sobot_line_1dp">#d9d9d9</color>
+    <color name="sobot_listview_remind">#CECECE</color>
+    <color name="sobot_listview_remind_text_color">#fefefe</color>
+    <color name="sobot_lv_message_bg">#F0F5F5</color>
+    <color name="sobot_msg_text_color">#ffffff</color>
+    <color name="sobot_msg_voice_text_color">#ffffff</color>
+    <color name="sobot_postMsg_url_color">#09aeb0</color>
+    <color name="sobot_robot_list_selected_color">#09aeb0</color>
+    <color name="sobot_robot_msg_text_color">#000000</color>
+    <color name="sobot_sectorProgressView_fgColor">#4D000000</color>
+    <color name="sobot_text_btn_bg">#0daeaf</color>
+    <color name="sobot_text_btn_bg_press">#800daeaf</color>
+    <color name="sobot_text_btn_color">#ffffff</color>
+    <color name="sobot_text_btn_color_pressed">#80ffffff</color>
+    <color name="sobot_text_delete_hismsg_color">#e64340</color>
+    <color name="sobot_ticket_deal_line_dark">#eeeeee</color>
+    <color name="sobot_ticket_deal_line_grey">#9B9B9B</color>
+    <color name="sobot_ticket_deal_line_light">#06AEB1</color>
+    <color name="sobot_title_category_select_color">#A52A2A</color>
+    <color name="sobot_title_category_unselect_color">#B23AEE</color>
+    <color name="sobot_transparent">#00000000</color>
+    <color name="sobot_viewpagerbackground">#EBEBEB</color>
+    <color name="sobot_welcomeBackcolor">#019587</color>
+    <color name="sobot_white">#ffffff</color>
+    <dimen name="sobot_activity_horizontal_margin">16dp</dimen>
+    <dimen name="sobot_activity_vertical_margin">16dp</dimen>
+    <dimen name="sobot_bbuton_rounded_corner_radius">5dp</dimen>
+    <dimen name="sobot_btn_send_text_size">14sp</dimen>
+    <dimen name="sobot_emoticon_view_indicator_height">45dp</dimen>
+    <dimen name="sobot_emoticon_view_indicator_margin_t">25dp</dimen>
+    <dimen name="sobot_emoticon_view_indicator_padding_b">10dp</dimen>
+    <dimen name="sobot_item_emoticon_size_default">32dp</dimen>
+    <dimen name="sobot_item_plus_size_default">44dp</dimen>
+    <dimen name="sobot_item_qr_divider">15dp</dimen>
+    <dimen name="sobot_layout_lable_margin_right">10dp</dimen>
+    <dimen name="sobot_list_divider_height">10dp</dimen>
+    <dimen name="sobot_listview_remind_text_size">12sp</dimen>
+    <dimen name="sobot_max_panel_height">380dp</dimen>
+    <dimen name="sobot_min_keyboard_height">80dp</dimen>
+    <dimen name="sobot_min_panel_height">220dp</dimen>
+    <dimen name="sobot_msg_text_size">16sp</dimen>
+    <dimen name="sobot_msg_voice_text_size">16sp</dimen>
+    <dimen name="sobot_robot_msg_text_size">16sp</dimen>
+    <dimen name="sobot_text_font_large">20sp</dimen>
+    <dimen name="sobot_text_font_normal">18sp</dimen>
+    <dimen name="sobot_text_font_small">14sp</dimen>
+    <dimen name="sobot_text_font_small_16sp">16sp</dimen>
+    <dimen name="sobot_xlistview_layout_width_10">10dp</dimen>
+    <dimen name="sobot_xlistview_layout_width_3">3dp</dimen>
+    <dimen name="sobot_xlistview_layout_width_30">30dp</dimen>
+    <dimen name="sobot_xlistview_layout_width_35">-35dp</dimen>
+    <dimen name="sobot_xlistview_layout_width_40">-40dp</dimen>
+    <dimen name="sobot_xlistview_layout_width_60">60dp</dimen>
+    <dimen name="sobot_xlistview_ts_layout_width_12">12sp</dimen>
+    <drawable name="sobot_btn_skill_normal">#666666</drawable>
+    <drawable name="sobot_btn_skill_pressed">#676f6f</drawable>
+    <drawable name="sobot_button_backward_normal">#0000</drawable>
+    <drawable name="sobot_button_backward_pressed">#FF3030</drawable>
+    <drawable name="sobot_color_drawable_text_black">#000000</drawable>
+    <drawable name="sobot_color_drawbale_text_white">#ffffff</drawable>
+    <integer name="sobot_emotiocon_line">4</integer>
+    <integer name="sobot_emotiocon_row">7</integer>
+    <integer name="sobot_plus_menu_line">2</integer>
+    <integer name="sobot_plus_menu_row">4</integer>
+    <string name="sobot__is_null">不能为空</string>
+    <string name="sobot_after_consultation_to_evaluate_custome_service">咨询后才能评价服务质量</string>
+    <string name="sobot_already_save_to_picture">已保存到系统相册</string>
+    <string name="sobot_already_transfer_to_customer_service">您已经转人工</string>
+    <string name="sobot_appkey_is_null">您的AppKey为空</string>
+    <string name="sobot_attach_take_pic">拍摄</string>
+    <string name="sobot_back">返回</string>
+    <string name="sobot_btn_cancle">取消</string>
+    <string name="sobot_btn_submit">确定</string>
+    <string name="sobot_btn_submit_text">提交评价</string>
+    <string name="sobot_button_end_now">立即结束</string>
+    <string name="sobot_button_send">发送</string>
+    <string name="sobot_cancel">取消</string>
+    <string name="sobot_cannot_open_file">您的手机无法打开此文件</string>
+    <string name="sobot_choice_business">选择要留言的业务</string>
+    <string name="sobot_choice_form_picture">从手机相册选择</string>
+    <string name="sobot_choice_test">选择咨询内容</string>
+    <string name="sobot_choose_file">文件</string>
+    <string name="sobot_clear_his_msg_describe">清空记录将无法恢复,是否要清空历史记录？</string>
+    <string name="sobot_clear_his_msg_empty">清空</string>
+    <string name="sobot_clear_history_message">清空聊天记录</string>
+    <string name="sobot_close_session">结束本次对话？</string>
+    <string name="sobot_collapse">收起全部</string>
+    <string name="sobot_color_custom_name">#888888</string>
+    <string name="sobot_colse">关闭</string>
+    <string name="sobot_completed">已完成</string>
+    <string name="sobot_completed_the_evaluation">您已完成评价</string>
+    <string name="sobot_connecting_customer_service">正在连接人工客服</string>
+    <string name="sobot_conntype_connect_success">连接成功</string>
+    <string name="sobot_conntype_in_connection">连接中...</string>
+    <string name="sobot_conntype_unconnected">未连接</string>
+    <string name="sobot_consultation_list">消息中心</string>
+    <string name="sobot_consulting_describe">[摘要]</string>
+    <string name="sobot_consulting_fromurl">[链接]</string>
+    <string name="sobot_consulting_lable">[标签]</string>
+    <string name="sobot_consulting_title">[标题]</string>
+    <string name="sobot_count_down">倒计时：</string>
+    <string name="sobot_created">待受理</string>
+    <string name="sobot_created_1">已创建</string>
+    <string name="sobot_ctrl_copy">复制</string>
+    <string name="sobot_ctrl_v_success">复制成功！</string>
+    <string name="sobot_current_network">当前网络不可用,请检查网络设置</string>
+    <string name="sobot_data_wrong_hint">数据错误</string>
+    <string name="sobot_dcrc">评价客服</string>
+    <string name="sobot_delete">删除</string>
+    <string name="sobot_did_not_get_picture_path">未获取图片的地址</string>
+    <string name="sobot_ding_cai_dislike">我会努力学习，希望下次帮到您</string>
+    <string name="sobot_ding_cai_like">感谢您的支持</string>
+    <string name="sobot_ding_cai_no">无用</string>
+    <string name="sobot_ding_cai_sessionoff">会话结束，无法反馈</string>
+    <string name="sobot_ding_cai_yes">有用</string>
+    <string name="sobot_edittext_hint">欢迎给我们的服务提建议~</string>
+    <string name="sobot_email">邮箱</string>
+    <string name="sobot_email_dialog_hint">您的邮箱格式错误</string>
+    <string name="sobot_empty_data">暂无相关信息</string>
+    <string name="sobot_evaluate_no">未解决</string>
+    <string name="sobot_evaluate_yes">已解决</string>
+    <string name="sobot_evaluation_completed_exit">提交评价后会话将结束</string>
+    <string name="sobot_evaluation_decription">您的评价会让我们做得更好</string>
+    <string name="sobot_evaluation_finished">您的评价已成功提交</string>
+    <string name="sobot_file_download">立即下载</string>
+    <string name="sobot_file_downloading">正在下载中…(%1$s/%2$s)</string>
+    <string name="sobot_file_open">用其他应用打开</string>
+    <string name="sobot_file_open_decribe">暂时无法打开此类文件，可使用其他应用打开浏览</string>
+    <string name="sobot_file_preview">文件预览</string>
+    <string name="sobot_file_size">文件大小:%1$s</string>
+    <string name="sobot_file_upload_failed">不能上传20m以上的文件</string>
+    <string name="sobot_file_upload_failed_unknown_format">不能上传此格式的文件</string>
+    <string name="sobot_files_selected">已选择:%1$s</string>
+    <string name="sobot_help_center_no_data">暂无帮助内容</string>
+    <string name="sobot_help_center_no_data_describe">可点击下方按钮咨询人工客服</string>
+    <string name="sobot_help_center_online_service">在线客服</string>
+    <string name="sobot_help_center_title">客户服务中心</string>
+    <string name="sobot_in_line">排队中，请稍候</string>
+    <string name="sobot_in_line_title">排队中...</string>
+    <string name="sobot_init_data_is_null">初始化参数不能为空</string>
+    <string name="sobot_internal_memory">内部存储</string>
+    <string name="sobot_leavemsg">留言</string>
+    <string name="sobot_leavemsg_success_hint">留言成功!\n我们将尽快联系您</string>
+    <string name="sobot_leavemsg_success_tip">您的留言已提交成功</string>
+    <string name="sobot_leavemsg_title">留言消息</string>
+    <string name="sobot_loading">请稍候</string>
+    <string name="sobot_location">位置</string>
+    <string name="sobot_message_details">留言详情</string>
+    <string name="sobot_message_record">留言记录</string>
+    <string name="sobot_more">展开更多</string>
+    <string name="sobot_move_up_to_cancel">手指上滑，取消发送</string>
+    <string name="sobot_network_unavailable">当前网络不可用，请检查您的网络设置</string>
+    <string name="sobot_new_msg">条新消息</string>
+    <string name="sobot_new_ticket_info">您的留言状态有更新</string>
+    <string name="sobot_no">否</string>
+    <string name="sobot_no_access">暂无客服在线</string>
+    <string name="sobot_no_camera_permission">没有相机权限</string>
+    <string name="sobot_no_more_data">到顶了，没有更多</string>
+    <string name="sobot_no_read">以下为未读消息</string>
+    <string name="sobot_no_record_audio_permission">没有麦克风权限</string>
+    <string name="sobot_no_write_external_storage_permission">没有存储权限</string>
+    <string name="sobot_notice_collapse">收起</string>
+    <string name="sobot_notice_expand">展开</string>
+    <string name="sobot_notification_name">客服通知</string>
+    <string name="sobot_notification_tip">客服%1$s:%2$s</string>
+    <string name="sobot_notification_tip_title">客服提示</string>
+    <string name="sobot_optional">（选填）</string>
+    <string name="sobot_outline_leverByManager">您好,本次会话已结束</string>
+    <string name="sobot_outline_openNewWindows">打开新窗口</string>
+    <string name="sobot_phone">手机</string>
+    <string name="sobot_phone_dialog_hint">您的手机号码格式错误</string>
+    <string name="sobot_pic_select_again">请重新选择或拍摄</string>
+    <string name="sobot_pic_size_should_be_less_than_three">图片大小需小于3M</string>
+    <string name="sobot_please_evaluate">请您对 [%1$s] 进行评价</string>
+    <string name="sobot_please_evaluate_this_service">请您对本次服务进行评价</string>
+    <string name="sobot_please_load">请上传附件</string>
+    <string name="sobot_post_msg_hint_enclosure">上传问题图片能大大提高解决问题效率</string>
+    <string name="sobot_press_say">按住 说话</string>
+    <string name="sobot_problem">存在哪些问题</string>
+    <string name="sobot_problem_description">问题描述</string>
+    <string name="sobot_problem_detail_title">问题详情</string>
+    <string name="sobot_problem_types">问题类型</string>
+    <string name="sobot_processing">受理中</string>
+    <string name="sobot_prompt">提示</string>
+    <string name="sobot_question">请问 [%1$s] 是否解决了您的问题？</string>
+    <string name="sobot_read_all">查看详情>></string>
+    <string name="sobot_release_to_cancel">松开手指，取消发送</string>
+    <string name="sobot_required">（必填）</string>
+    <string name="sobot_resendmsg">重新发送</string>
+    <string name="sobot_restart_talk">重新建立会话</string>
+    <string name="sobot_retracted_msg_tip">客服 %1$s 撤回了一条消息</string>
+    <string name="sobot_reunicon">点击重新连接</string>
+    <string name="sobot_robot_auto_transfer_tip">对不起，未能解决您的问题，正在为您转接人工客服</string>
+    <string name="sobot_robot_customer_service_evaluation">机器人客服评价</string>
+    <string name="sobot_robot_dislike">很抱歉没能帮到您</string>
+    <string name="sobot_robot_like">感谢您的反馈</string>
+    <string name="sobot_robot_voice_hint">机器人咨询模式下，语音将自动转化为文字发送</string>
+    <string name="sobot_robot_voice_max_hint">语音转文字服务暂时中止，建议您用文字或转人工交流</string>
+    <string name="sobot_save_pic">保存图片</string>
+    <string name="sobot_sdcard_does_not_exist">没有sd卡</string>
+    <string name="sobot_server_request_wrong">服务器请求错误！</string>
+    <string name="sobot_service_accept">您好,客服  %1$s  接受了您的请求</string>
+    <string name="sobot_str_bottom_message">留言</string>
+    <string name="sobot_str_bottom_offline">离线</string>
+    <string name="sobot_str_bottom_satisfaction">评价</string>
+    <string name="sobot_submit">提交</string>
+    <string name="sobot_suggestions_are_required">建议为必填</string>
+    <string name="sobot_switch">换一组</string>
+    <string name="sobot_switch_business">切换业务</string>
+    <string name="sobot_switch_robot_title">选择要咨询的业务</string>
+    <string name="sobot_sysnum_is_null">您的Sysnum为空</string>
+    <string name="sobot_temporarily_not_evaluation">暂不评价</string>
+    <string name="sobot_thank_dialog_hint">谢谢您的反馈＾―＾!</string>
+    <string name="sobot_the_label_is_required">标签为必选</string>
+    <string name="sobot_ticket_code">工单号:%1$s</string>
+    <string name="sobot_transfer_to_customer_service">转人工</string>
+    <string name="sobot_try_again">网络错误，请检查网络后重试</string>
+    <string name="sobot_unable_to_evaluate">暂时无法评价</string>
+    <string name="sobot_unable_transfer_to_customer_service">暂时无法转接人工客服</string>
+    <string name="sobot_up_send">松开 发送</string>
+    <string name="sobot_up_send_calcel">松开手指 取消发送</string>
+    <string name="sobot_upload">图片</string>
+    <string name="sobot_voiceTooLong">录音时间过长</string>
+    <string name="sobot_voice_can_not_be_less_than_one_second">说话时间过短</string>
+    <string name="sobot_wait_full">排队已满</string>
+    <string name="sobot_welcome">loading\.\.\.</string>
+    <string name="sobot_what_are_the_problems">存在以下哪些问题</string>
+    <string name="sobot_yes">是</string>
+    <string name="sobot_you_can">您可以</string>
+    <style name="AnimBottom" parent="@android:style/Animation">
+        <item name="android:windowEnterAnimation">@anim/sobot_popupwindow_in</item>
+        <item name="android:windowExitAnimation">@anim/sobot_popupwindow_out</item>
+    </style>
+    <style name="sobot_AppBaseTheme" parent="android:Theme.Light">
+        
+    </style>
+    <style name="sobot_AppTheme" parent="sobot_AppBaseTheme">
+        <item name="android:windowNoTitle">true</item>
+    </style>
+    <style name="sobot_Dialog" parent="android:style/Theme.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+    <style name="sobot_cb_style">
+        <item name="android:textColor">@drawable/sobot_btn_text_color_selector</item>
+        <item name="android:layout_width">120dp</item>
+        <item name="android:layout_height">36dp</item>
+        <item name="android:background">@drawable/sobot_evaluate_btn_selector</item>
+        <item name="android:button">@null</item>
+        <item name="android:drawablePadding">10dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingLeft">27dp</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="sobot_center_remind_note">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:background">@drawable/sobot_toast_selector</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/sobot_listview_remind_text_color</item>
+        <item name="android:textSize">@dimen/sobot_listview_remind_text_size</item>
+        <item name="android:visibility">gone</item>
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:layout_marginRight">20dp</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_marginBottom">15dp</item>
+    </style>
+    <style name="sobot_center_remind_time" parent="sobot_center_remind_note">
+        <item name="android:layout_marginTop">3dp</item>
+    </style>
+    <style name="sobot_chatting_imghead">
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:scaleType">fitXY</item>
+        <item name="android:background">@null</item>
+        <item name="android:layout_alignParentTop">true</item>
+        <item name="android:contentDescription">@null</item>
+        <item name="android:visibility">visible</item>
+    </style>
+    <style name="sobot_chatting_keyboard_btn">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:contentDescription">@null</item>
+        <item name="android:visibility">gone</item>
+    </style>
+    <style name="sobot_chatting_nickname">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:layout_alignParentTop">true</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginTop">3dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:textColor">#AAAAAA</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:maxEms">13</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+    <style name="sobot_chatting_panel_upload">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:drawablePadding">5dp</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textColor">@color/sobot_color_bottom_upload_btn_color</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:visibility">visible</item>
+    </style>
+    <style name="sobot_clearHistoryDialogStyle" parent="@android:style/Theme.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowAnimationStyle">@style/AnimBottom</item>
+        <item name="android:windowIsFloating">true</item>
+    </style>
+    <style name="sobot_custom_dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        
+        <item name="android:windowIsFloating">true</item>
+        
+        <item name="android:windowIsTranslucent">true</item>
+        
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:background">@null</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        
+        <item name="android:backgroundDimEnabled">true</item>
+        
+        <item name="android:backgroundDimAmount">0.3</item>
+    </style>
+    <style name="sobot_dialog_Progress" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        
+        <item name="android:windowIsFloating">true</item>
+        
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        
+        <item name="android:windowNoTitle">true</item>
+        
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowBackground">@drawable/sobot_round_angle_toast</item>
+
+        
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+    <style name="sobot_dialog_dcrc" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+    </style>
+    <style name="sobot_dialog_skill" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@null</item>
+        <item name="android:windowAnimationStyle">@style/AnimBottom</item>
+    </style>
+    <style name="sobot_grid_view">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">#F5F5F5</item>
+        <item name="android:cacheColorHint">@android:color/transparent</item>
+        <item name="android:fadingEdge">none</item>
+        <item name="android:horizontalSpacing">10dp</item>
+        <item name="android:listSelector">@null</item>
+        <item name="android:numColumns">2</item>
+        <item name="android:overScrollMode">never</item>
+        <item name="android:scrollbarThumbVertical">@drawable/sobot_skill_group_scroll_img</item>
+        <item name="android:scrollbars">vertical</item>
+        <item name="android:stretchMode">columnWidth</item>
+        <item name="android:verticalSpacing">0dp</item>
+    </style>
+    <style mce_bogus="1" name="sobot_pickerview_dialogAnim" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/sobot_pickerview_dialog_scale_in</item>
+        <item name="android:windowExitAnimation">@anim/sobot_pickerview_dialog_scale_out</item>
+    </style>
+    <style name="sobot_progress_circle">
+        <item name="android:indeterminateDrawable">@drawable/sobot_progressbar_circle_loading</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="sobot_rb_style">
+        <item name="android:textColor">@drawable/sobot_btn_text_color_selector</item>
+        <item name="android:layout_width">120dp</item>
+        <item name="android:layout_height">36dp</item>
+        <item name="android:background">@drawable/sobot_evaluate_btn_selector</item>
+        <item name="android:button">@null</item>
+        <item name="android:drawablePadding">10dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingLeft">27dp</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="sobot_roomRatingBar" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/sobot_rating_yellow</item>
+        <item name="android:numStars">5</item>
+    </style>
+    <style name="sobot_tv_extend">
+        <item name="android:drawablePadding">2dp</item>
+        <item name="android:drawableRight">@drawable/sobot_icon_arrow_selector</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/sobot_bg_more_normal</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingBottom">2dp</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:paddingTop">2dp</item>
+        <item name="android:text">@string/sobot_more</item>
+        <item name="android:textColor">#0daeaf</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:visibility">gone</item>
+    </style>
+</resources>

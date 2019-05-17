@@ -5,7 +5,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.sobot.chat.SobotApi;
+import com.sobot.chat.api.model.Information;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.myaccount.MyaccountActivity;
 import com.yikangcheng.admin.yikang.base.BaseFragment;

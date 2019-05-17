@@ -16,7 +16,8 @@
 
         <include
             android:id="@+id/toobar"
-            layout="@layout/toolbar" />
+            layout="@layout/toolbar"
+            android:visibility="visible" />
 
         <FrameLayout
             android:id="@+id/frag"
@@ -25,6 +26,7 @@
             android:layout_below="@+id/toobar"
             android:background="#f3f3f3"
             android:clipToPadding="true"
+            android:layout_marginBottom="5dp"
             android:fitsSystemWindows="true" />
 
         <RadioGroup
@@ -49,14 +51,16 @@
                     android:id="@+id/shou"
                     android:layout_width="29dp"
                     android:layout_height="27dp"
-                    android:background="@drawable/shouye"
+                    android:background="@drawable/radio_sele_shou"
                     android:button="@null"
                     android:gravity="center" />
 
                 <TextView
+                    android:id="@+id/shou_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="首页" />
+                    android:text="首页"
+                    android:textColor="@color/colorTab" />
 
             </LinearLayout>
 
@@ -73,14 +77,16 @@
                     android:id="@+id/fen"
                     android:layout_width="29dp"
                     android:layout_height="26dp"
-                    android:background="@drawable/fenlei"
+                    android:background="@drawable/radio_sele_fen"
                     android:button="@null"
                     android:gravity="center" />
 
                 <TextView
+                    android:id="@+id/fen_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="分类" />
+                    android:text="分类"
+                    android:textColor="#333333" />
             </LinearLayout>
 
             <LinearLayout
@@ -103,10 +109,11 @@
                     android:gravity="center" />
 
                 <TextView
+                    android:id="@+id/miao_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
                     android:text="秒杀"
+                    android:textColor="#333333"
                     android:textSize="15dp" />
             </LinearLayout>
 
@@ -123,13 +130,15 @@
                     android:id="@+id/gou"
                     android:layout_width="29dp"
                     android:layout_height="29dp"
-                    android:background="@drawable/gouwuche"
+                    android:background="@drawable/radio_sele_gou"
                     android:button="@null" />
 
                 <TextView
+                    android:id="@+id/gou_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="购物车" />
+                    android:text="购物车"
+                    android:textColor="#333333" />
             </LinearLayout>
 
             <LinearLayout
@@ -145,13 +154,15 @@
                     android:id="@+id/wo"
                     android:layout_width="29dp"
                     android:layout_height="29dp"
-                    android:background="@drawable/wode"
+                    android:background="@drawable/radio_sele_wo"
                     android:button="@null" />
 
                 <TextView
+                    android:id="@+id/wo_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="我的" />
+                    android:text="我的"
+                    android:textColor="#333333" />
             </LinearLayout>
         </RadioGroup>
     </RelativeLayout>

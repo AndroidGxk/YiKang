@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.sobot.chat.test" >
+
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="14" />
+
+    <instrumentation
+        android:name="android.test.InstrumentationTestRunner"
+        android:functionalTest="false"
+        android:handleProfiling="false"
+        android:label="Tests for com.sobot.chat.test"
+        android:targetPackage="com.sobot.chat.test" />
+    <!-- 访问权限 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="com.google.android.apps.photos.permission.GOOGLE_PHOTOS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:resizeable="true"
+        android:smallScreens="true"
+        android:xlargeScreens="true" />
+
+    <application android:debuggable="true" >
+        <uses-library android:name="android.test.runner" />
+
+        <activity
+            android:name="com.sobot.chat.conversation.SobotChatActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/sobot_AppTheme"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.sobot.chat.activity.SobotPhotoActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:hardwareAccelerated="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/sobot_AppTheme" />
+        <activity
+            android:name="com.sobot.chat.activity.WebViewActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/sobot_AppTheme"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.sobot.chat.activity.SobotSkillGroupActivity"
+            android:theme="@style/sobot_dialog_skill" />
+        <activity
+            android:name="com.sobot.chat.activity.SobotPostMsgActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/sobot_AppTheme"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.sobot.chat.activity.SobotConsultationListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/sobot_AppTheme"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.sobot.chat.activity.SobotPhotoListActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:hardwareAccelerated="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/sobot_AppTheme" />
+        <activity
+            android:name="com.sobot.chat.activity.SobotCusFieldActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/sobot_AppTheme"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.sobot.chat.activity.SobotPostCategoryActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/sobot_AppTheme"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.sobot.chat.activity.SobotQueryFromActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/sobot_AppTheme"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.sobot.chat.activity.SobotChooseCityActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/sobot_AppTheme"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.sobot.chat.activity.SobotChooseFileActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/sobot_AppTheme"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.sobot.chat.activity.SobotFileDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/sobot_AppTheme" />
+        <activity
+            android:name="com.sobot.chat.activity.SobotCameraActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/sobot_AppTheme" />
+        <activity
+            android:name="com.sobot.chat.activity.SobotVideoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/sobot_AppTheme" />
+        <activity
+            android:name="com.sobot.chat.activity.SobotTicketDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/sobot_AppTheme" />
+        <activity
+            android:name="com.sobot.chat.activity.SobotHelpCenterActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/sobot_AppTheme" />
+        <activity
+            android:name="com.sobot.chat.activity.SobotProblemCategoryActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/sobot_AppTheme" />
+        <activity
+            android:name="com.sobot.chat.activity.SobotProblemDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/sobot_AppTheme" />
+        <activity
+            android:name="com.sobot.chat.activity.SobotPostLeaveMsgActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/sobot_AppTheme" />
+
+        <service
+            android:name="com.sobot.chat.core.channel.SobotTCPServer"
+            android:exported="false"
+            android:label="SobotChatTCPServer" />
+        <service android:name="com.sobot.chat.server.SobotSessionServer" />
+
+        <provider
+            android:name="com.sobot.chat.provider.SobotFileProvider"
+            android:authorities="com.sobot.chat.test.sobot_fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true" >
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/sobot_provider_paths" />
+        </provider>
+    </application>
+
+</manifest>

@@ -11,7 +11,9 @@ import android.view.View;
 import android.view.WindowManager;
 
 
+import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.app.BaseApp;
+import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
