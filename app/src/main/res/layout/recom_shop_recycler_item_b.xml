@@ -3,21 +3,21 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginLeft="10dp"
-    android:layout_marginTop="10dp"
+    android:layout_marginTop="20dp"
     android:background="#FFFFFF"
     android:paddingBottom="5dp">
 
     <ImageView
-        android:id="@+id/recom_img"
+        android:id="@+id/recom_img_b"
         android:layout_width="160dp"
         android:layout_height="160dp"
         android:src="@drawable/ce4" />
 
     <TextView
-        android:id="@+id/recom_title"
+        android:id="@+id/recom_title_b"
         android:layout_width="130dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/recom_img"
+        android:layout_below="@+id/recom_img_b"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:text="JMSOLUTIO蜂蜜蚕丝面...."
@@ -25,10 +25,10 @@
         android:textSize="11sp" />
 
     <TextView
-        android:id="@+id/recom_count"
+        android:id="@+id/recom_count_b"
         android:layout_width="134dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/recom_title"
+        android:layout_below="@+id/recom_title_b"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
         android:text="JMSOLUTION蜂蜜蚕丝面膜网"
@@ -37,13 +37,13 @@
 
     <LinearLayout
         android:layout_width="130dp"
-        android:id="@+id/line1"
-        android:layout_below="@+id/recom_count"
+        android:id="@+id/line1_b"
+        android:layout_below="@+id/recom_count_b"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_centerHorizontal="true">
         <TextView
-            android:id="@+id/text_price"
+            android:id="@+id/text_price_b"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="内购价：¥"
@@ -51,10 +51,10 @@
             android:textSize="11sp" />
 
         <TextView
-            android:id="@+id/tv_jiage"
+            android:id="@+id/tv_jiage_b"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/recom_count"
+            android:layout_below="@+id/recom_count_b"
             android:text="286"
             android:layout_marginLeft="2dp"
             android:textColor="#FF1A1A"
@@ -66,12 +66,12 @@
     <RelativeLayout
         android:layout_width="130dp"
         android:layout_height="15dp"
-        android:layout_below="@+id/line1"
+        android:layout_below="@+id/line1_b"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp">
 
         <TextView
-            android:id="@+id/text_bprice"
+            android:id="@+id/text_bprice_b"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -80,7 +80,7 @@
             android:textSize="11sp" />
 
         <TextView
-            android:id="@+id/tv_yigou"
+            android:id="@+id/tv_yigou_b"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"

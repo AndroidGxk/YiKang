@@ -8,7 +8,6 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.yikangcheng.admin.yikang.R;
-import com.yikangcheng.admin.yikang.activity.adapter.RecomShopRecyclerAdapter;
 import com.yikangcheng.admin.yikang.activity.adapter.ShopRecyclerAdapter;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
 
@@ -55,7 +54,6 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
 
         //为你推荐recyclerview
         shop_recyclertwo.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        shop_recyclertwo.setAdapter(new RecomShopRecyclerAdapter());
         all_check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

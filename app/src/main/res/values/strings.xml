@@ -3,4 +3,7 @@
     <string name="nearOverText">即将售罄</string>
     <string name="overText">已售罄</string>
     <string name="stratBtn">跳转</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

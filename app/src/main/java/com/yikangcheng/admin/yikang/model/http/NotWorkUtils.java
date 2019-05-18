@@ -8,7 +8,6 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
 import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -57,8 +56,8 @@ public class NotWorkUtils {
 
         try {
 
-            HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);//打印请求参数，请求结果
+//            HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+//            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);//打印请求参数，请求结果
             // Create a trust manager that does not validate certificate chains
             final TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
                 @Override
@@ -89,7 +88,7 @@ public class NotWorkUtils {
 
             OkHttpClient okHttpClient = new OkHttpClient();
             okHttpClient = okHttpClient.newBuilder()
-                    .addInterceptor(interceptor)
+//                    .addInterceptor(interceptor)
                     .sslSocketFactory(sslSocketFactory)
                     .hostnameVerifier(org.apache.http.conn.ssl.SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER).build();
 
