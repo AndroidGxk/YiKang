@@ -13,7 +13,9 @@ import com.yikangcheng.admin.yikang.R;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ *
+ */
 public class FaddRecyclerAdapter extends RecyclerView.Adapter<FaddRecyclerAdapter.Vh> {
     List<String> stringList = new ArrayList<>();
     private OnClickListener mListener;
