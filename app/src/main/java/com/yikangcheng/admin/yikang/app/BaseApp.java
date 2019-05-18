@@ -2,7 +2,6 @@ package com.yikangcheng.admin.yikang.app;
 
 import android.app.Activity;
 import android.app.Application;
-import android.content.Context;
 
 import com.sobot.chat.SobotApi;
 

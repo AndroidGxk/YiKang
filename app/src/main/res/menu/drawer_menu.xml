@@ -3,21 +3,26 @@
     <item
         android:checkable="true"
         android:id="@+id/wan"
-        android:icon="@drawable/daifukuan"
-        android:title="名称"/>
+        android:icon="@drawable/dingdan"
+        android:title="我的订单"/>
     <item
         android:checkable="true"
         android:id="@+id/my_music"
-        android:icon="@drawable/mingxi"
-        android:title="lala"/>
+        android:icon="@drawable/zhanghao"
+        android:title="我的账号"/>
     <item
         android:checkable="true"
         android:id="@+id/my_video"
-        android:icon="@drawable/mingxi"
-        android:title="商城"/>
+        android:icon="@drawable/zhanghu"
+        android:title="账户明细"/>
     <item
         android:checkable="true"
         android:id="@+id/settings"
-        android:icon="@drawable/hong"
-        android:title="秒杀"/>
+        android:icon="@drawable/dizhi"
+        android:title="收货地址"/>
+    <item
+        android:id="@+id/help"
+        android:checkable="true"
+        android:icon="@drawable/bangzhuzhongxin"
+        android:title="帮助中心" />
 </menu>

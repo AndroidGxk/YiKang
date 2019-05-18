@@ -9,8 +9,8 @@ package com.yikangcheng.admin.yikang.app;
 public class Constants {
     //1.接口标准域名：
     public static final String BASEURL = "https://www.yikch.com";
-    //图片访问域名：
+    //2.图片上传域名：
     public static final String BASETUPIANFANGWENURL = "https://image.yikch.com";
-    //3.图片上传域名：
+    //3.图片访问域名：
     public static final String BASETUPIANSHANGCHUANURL = "https://static.yikch.com";
 }

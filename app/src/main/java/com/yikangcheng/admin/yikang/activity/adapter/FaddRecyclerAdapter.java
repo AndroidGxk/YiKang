@@ -42,7 +42,6 @@ public class FaddRecyclerAdapter extends RecyclerView.Adapter<FaddRecyclerAdapte
 
     @Override
     public int getItemCount() {
-//        return stringList.size();
         return 9;
     }
 

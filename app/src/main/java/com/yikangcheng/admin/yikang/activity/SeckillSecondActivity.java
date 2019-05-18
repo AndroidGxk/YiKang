@@ -86,8 +86,4 @@ public class SeckillSecondActivity extends BaseActivtiy implements XRecyclerView
         return 750;
     }
 
-    @Override
-    public void showSucess(Object o) {
-
-    }
 }

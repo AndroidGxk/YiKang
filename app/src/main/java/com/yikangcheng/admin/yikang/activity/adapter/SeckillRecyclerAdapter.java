@@ -3,13 +3,11 @@ package com.yikangcheng.admin.yikang.activity.adapter;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.util.SaleProgressView;
@@ -48,7 +46,6 @@ public class SeckillRecyclerAdapter extends RecyclerView.Adapter<SeckillRecycler
 
     @Override
     public int getItemCount() {
-//        return stringList.size();
         return stringList.size();
     }
 

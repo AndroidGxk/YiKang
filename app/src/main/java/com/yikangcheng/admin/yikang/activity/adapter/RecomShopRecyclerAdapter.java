@@ -35,7 +35,6 @@ public class RecomShopRecyclerAdapter extends RecyclerView.Adapter<RecomShopRecy
 
     @Override
     public int getItemCount() {
-//        return stringList.size();
         return 9;
     }
 

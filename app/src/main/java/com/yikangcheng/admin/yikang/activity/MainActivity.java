@@ -1,30 +1,16 @@
 package com.yikangcheng.admin.yikang.activity;
 
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.res.ResourcesCompat;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Fen;
@@ -44,7 +30,7 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
     private RadioButton shou, fen, miao, gou, wo;
     private LinearLayout shou_linear, fen_linear, miao_linear, gou_linear, wo_linear;
     private DrawerLayout mDrawerLayout;
-    private NavigationView mNv;
+    private RelativeLayout mNv;
     //    private ImageView mImg_ceHua;
     private RelativeLayout mRelativeLayout;
     private TextView tv_toolBar_title, tv_toolBar_right;
@@ -82,7 +68,7 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         tv_toolBar_title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, SearchListActivity.class));
+                startActivity(new Intent(MainActivity.this, RegisterActivity.class));
             }
         });
         iv_toolBar_right = toobar.findViewById(R.id.iv_toolBar_right);
@@ -91,28 +77,6 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         mDrawerLayout = findViewById(R.id.drawerLayout);
         mNv = findViewById(R.id.nv);
         mRelativeLayout = findViewById(R.id.relativeLayout);
-        /**
-         * 抽屉菜单图标不显示，设置这行代码
-         */
-        mNv.setItemIconTintList(null);
-        mNv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                /**
-                 * 设置menu选中，这样才会有背景
-                 */
-                item.setChecked(true);
-                switch (item.getItemId()) {
-                    case R.id.wan:
-                        /**
-                         * 关闭抽屉
-                         */
-                        mDrawerLayout.closeDrawer(Gravity.LEFT);
-                        break;
-                }
-                return false;
-            }
-        });
         //抽屉滑出时,主界面被挤到右边
         mDrawerLayout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
             @Override
@@ -164,6 +128,10 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         shou_linear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                toobar.setVisibility(View.VISIBLE);
+                tv_toolBar_right.setVisibility(View.GONE);
+                iv_toolBar_right.setVisibility(View.VISIBLE);
+                tv_toolBar_title.setText("优选商城");
 //                private TextView shou_text,fen_text,miao_text,gou_text,wo_text;
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.hide(fragment_fen);
@@ -177,10 +145,6 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
                 gou.setChecked(false);
                 wo.setChecked(false);
                 miao.setChecked(false);
-                toobar.setVisibility(View.VISIBLE);
-                tv_toolBar_right.setVisibility(View.GONE);
-                iv_toolBar_right.setVisibility(View.VISIBLE);
-                tv_toolBar_title.setText("优选商城");
                 shou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorTab));
                 fen_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
                 miao_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
@@ -191,6 +155,10 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         fen_linear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                toobar.setVisibility(View.VISIBLE);
+                tv_toolBar_right.setVisibility(View.GONE);
+                iv_toolBar_right.setVisibility(View.VISIBLE);
+                tv_toolBar_title.setText("分类");
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.hide(fragment_shou);
                 fragmentTransaction.hide(fragment_miao);
@@ -203,10 +171,6 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
                 gou.setChecked(false);
                 wo.setChecked(false);
                 miao.setChecked(false);
-                toobar.setVisibility(View.VISIBLE);
-                tv_toolBar_right.setVisibility(View.GONE);
-                iv_toolBar_right.setVisibility(View.VISIBLE);
-                tv_toolBar_title.setText("");
                 shou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
                 fen_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorTab));
                 miao_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
@@ -218,6 +182,10 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         miao_linear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                toobar.setVisibility(View.VISIBLE);
+                tv_toolBar_right.setVisibility(View.GONE);
+                iv_toolBar_right.setVisibility(View.VISIBLE);
+                tv_toolBar_title.setText("秒杀专区");
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.hide(fragment_shou);
                 fragmentTransaction.hide(fragment_fen);
@@ -230,10 +198,6 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
                 wo.setChecked(false);
                 shou.setChecked(false);
                 fen.setChecked(false);
-                toobar.setVisibility(View.VISIBLE);
-                tv_toolBar_right.setVisibility(View.GONE);
-                iv_toolBar_right.setVisibility(View.VISIBLE);
-                tv_toolBar_title.setText("秒杀专区");
                 shou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
                 fen_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
                 miao_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorTab));
@@ -245,6 +209,10 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         gou_linear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                toobar.setVisibility(View.VISIBLE);
+                tv_toolBar_right.setVisibility(View.VISIBLE);
+                iv_toolBar_right.setVisibility(View.GONE);
+                tv_toolBar_title.setText("我的购物车");
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.hide(fragment_shou);
                 fragmentTransaction.hide(fragment_fen);
@@ -257,10 +225,6 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
                 shou.setChecked(false);
                 miao.setChecked(false);
                 fen.setChecked(false);
-                toobar.setVisibility(View.GONE);
-                iv_toolBar_right.setVisibility(View.GONE);
-                tv_toolBar_right.setVisibility(View.VISIBLE);
-                tv_toolBar_title.setText("我的购物车");
                 shou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
                 fen_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
                 miao_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
@@ -272,6 +236,10 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         wo_linear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                toobar.setVisibility(View.VISIBLE);
+                tv_toolBar_right.setVisibility(View.GONE);
+                iv_toolBar_right.setVisibility(View.VISIBLE);
+                tv_toolBar_title.setText("我的");
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.hide(fragment_shou);
                 fragmentTransaction.hide(fragment_fen);
@@ -284,10 +252,6 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
                 gou.setChecked(false);
                 miao.setChecked(false);
                 fen.setChecked(false);
-                toobar.setVisibility(View.VISIBLE);
-                tv_toolBar_right.setVisibility(View.GONE);
-                iv_toolBar_right.setVisibility(View.VISIBLE);
-                tv_toolBar_title.setText("我的");
                 shou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
                 fen_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
                 miao_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
@@ -298,6 +262,10 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         shou.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                toobar.setVisibility(View.VISIBLE);
+                tv_toolBar_right.setVisibility(View.GONE);
+                iv_toolBar_right.setVisibility(View.VISIBLE);
+                tv_toolBar_title.setText("优选商城");
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.hide(fragment_fen);
                 fragmentTransaction.hide(fragment_miao);
@@ -310,10 +278,6 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
                 gou.setChecked(false);
                 wo.setChecked(false);
                 miao.setChecked(false);
-                toobar.setVisibility(View.VISIBLE);
-                tv_toolBar_right.setVisibility(View.GONE);
-                iv_toolBar_right.setVisibility(View.VISIBLE);
-                tv_toolBar_title.setText("优选商城");
                 shou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorTab));
                 fen_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
                 miao_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
@@ -324,6 +288,10 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         fen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                toobar.setVisibility(View.VISIBLE);
+                tv_toolBar_right.setVisibility(View.GONE);
+                iv_toolBar_right.setVisibility(View.VISIBLE);
+                tv_toolBar_title.setText("分类");
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.hide(fragment_shou);
                 fragmentTransaction.hide(fragment_miao);
@@ -336,10 +304,6 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
                 gou.setChecked(false);
                 wo.setChecked(false);
                 miao.setChecked(false);
-                toobar.setVisibility(View.VISIBLE);
-                tv_toolBar_right.setVisibility(View.GONE);
-                iv_toolBar_right.setVisibility(View.VISIBLE);
-                tv_toolBar_title.setText("");
                 shou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
                 fen_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorTab));
                 miao_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
@@ -350,6 +314,10 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         miao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                toobar.setVisibility(View.VISIBLE);
+                tv_toolBar_right.setVisibility(View.GONE);
+                iv_toolBar_right.setVisibility(View.VISIBLE);
+                tv_toolBar_title.setText("秒杀专区");
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.hide(fragment_shou);
                 fragmentTransaction.hide(fragment_fen);
@@ -362,10 +330,6 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
                 wo.setChecked(false);
                 shou.setChecked(false);
                 fen.setChecked(false);
-                toobar.setVisibility(View.VISIBLE);
-                tv_toolBar_right.setVisibility(View.GONE);
-                iv_toolBar_right.setVisibility(View.VISIBLE);
-                tv_toolBar_title.setText("秒杀专区");
                 shou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
                 fen_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
                 miao_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorTab));
@@ -376,6 +340,10 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         gou.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                toobar.setVisibility(View.VISIBLE);
+                tv_toolBar_right.setVisibility(View.VISIBLE);
+                iv_toolBar_right.setVisibility(View.GONE);
+                tv_toolBar_title.setText("我的购物车");
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.hide(fragment_shou);
                 fragmentTransaction.hide(fragment_fen);
@@ -388,10 +356,6 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
                 shou.setChecked(false);
                 miao.setChecked(false);
                 fen.setChecked(false);
-                toobar.setVisibility(View.GONE);
-                iv_toolBar_right.setVisibility(View.GONE);
-                tv_toolBar_right.setVisibility(View.VISIBLE);
-                tv_toolBar_title.setText("我的购物车");
                 shou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
                 fen_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
                 miao_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
@@ -402,6 +366,10 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         wo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                toobar.setVisibility(View.VISIBLE);
+                tv_toolBar_right.setVisibility(View.GONE);
+                iv_toolBar_right.setVisibility(View.VISIBLE);
+                tv_toolBar_title.setText("我的");
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.hide(fragment_shou);
                 fragmentTransaction.hide(fragment_fen);
@@ -414,10 +382,6 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
                 gou.setChecked(false);
                 miao.setChecked(false);
                 fen.setChecked(false);
-                toobar.setVisibility(View.VISIBLE);
-                tv_toolBar_right.setVisibility(View.GONE);
-                iv_toolBar_right.setVisibility(View.VISIBLE);
-                tv_toolBar_title.setText("我的");
                 shou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
                 fen_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
                 miao_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
@@ -447,9 +411,5 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         return 720;
     }
 
-    @Override
-    public void showSucess(Object o) {
-
-    }
 
 }

@@ -7,6 +7,7 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolBar"
         android:layout_width="match_parent"
+        android:visibility="gone"
         android:layout_height="42dp"
         android:background="@drawable/toolbar"
         android:fitsSystemWindows="false"
@@ -203,7 +204,7 @@
         android:layout_width="match_parent"
         android:layout_height="63dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="47dp"
+        android:layout_marginBottom="40dp"
         android:background="#FFFFFF">
 
         <CheckBox

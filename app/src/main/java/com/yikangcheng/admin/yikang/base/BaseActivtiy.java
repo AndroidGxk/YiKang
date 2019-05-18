@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 
-public abstract class BaseActivtiy extends AppCompatActivity implements IView {
+public abstract class BaseActivtiy extends AppCompatActivity {
     private Unbinder mUnbinder;
     public static Context mContext;
     protected BasePresenter mPresenter;
@@ -42,10 +42,6 @@ public abstract class BaseActivtiy extends AppCompatActivity implements IView {
         BaseApp.getAppInstance().addActivtiy(this);
         initView();
         createPresenter();
-        if (mPresenter != null)
-            mPresenter.atteachView((IView) this);
-
-
         initEventData();
 
     }
@@ -75,11 +71,6 @@ public abstract class BaseActivtiy extends AppCompatActivity implements IView {
     protected abstract void createPresenter();
 
 
-    @Override
-    public void showError(String msg) {
-
-    }
-
 
     protected void setToolBar(Toolbar toolBar, String title) {
         toolBar.setTitle(title);
@@ -98,11 +89,6 @@ public abstract class BaseActivtiy extends AppCompatActivity implements IView {
 
     @Override
     protected void onDestroy() {
-        if (mUnbinder != null)
-            mUnbinder.unbind();
-        BaseApp.getAppInstance().removeActivity(this);
-        if (mPresenter != null)
-            mPresenter.detachView();
         super.onDestroy();
     }
 }
