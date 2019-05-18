@@ -10,15 +10,24 @@ import android.widget.TextView;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.adapter.ShopRecyclerAdapter;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
+import com.yikangcheng.admin.yikang.bean.Request;
+import com.yikangcheng.admin.yikang.bean.ShopCarBean;
+import com.yikangcheng.admin.yikang.model.http.ApiException;
+import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
+import com.yikangcheng.admin.yikang.presenter.ShopCarPresenter;
+
+import java.util.List;
 
 
-public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.TotalPriceListener, ShopRecyclerAdapter.checkBoxTouchListener {
+public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.TotalPriceListener, ShopRecyclerAdapter.checkBoxTouchListener, ICoreInfe {
     private RecyclerView shop_recyclertwo, shop_recycler;
     private ShopRecyclerAdapter shopRecyclerAdapter;
     private CheckBox all_check;
     private TextView text_total, num_text, heji, dele_text;
     private TextView tv_toolBar_right;
     private boolean judge = false;//判断编辑或完成
+    private ShopCarPresenter shopCarPresenter;
+    private List<ShopCarBean> entity;
 
     @Override
     protected void initView(View view) {
@@ -30,6 +39,8 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
         tv_toolBar_right = view.findViewById(R.id.tv_toolBar_right);
         heji = view.findViewById(R.id.heji);
         text_total = view.findViewById(R.id.text_total);
+        shopCarPresenter = new ShopCarPresenter(this);
+        shopCarPresenter.request(11);
     }
 
     @Override
@@ -104,5 +115,17 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
     @Override
     public void checked(boolean isCheck) {
         all_check.setChecked(isCheck);
+    }
+
+    @Override
+    public void success(Object data) {
+        Request request = (Request) data;
+        List<ShopCarBean> entity = (List<ShopCarBean>) request.getEntity();
+        shopRecyclerAdapter.addAll(entity);
+    }
+
+    @Override
+    public void fail(ApiException e) {
+
     }
 }

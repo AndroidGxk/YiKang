@@ -122,6 +122,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:gravity="center_horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -129,7 +130,6 @@
                     android:id="@+id/view1"
                     android:layout_width="100dp"
                     android:layout_height="1dp"
-                    android:layout_marginLeft="43dp"
                     android:layout_marginTop="27dp"
                     android:background="#000000" />
 
@@ -167,13 +167,13 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
                 android:layout_marginBottom="145dp">
 
                 <View
                     android:id="@+id/view3"
                     android:layout_width="100dp"
                     android:layout_height="1dp"
-                    android:layout_marginLeft="43dp"
                     android:layout_marginTop="27dp"
                     android:background="#000000" />
 

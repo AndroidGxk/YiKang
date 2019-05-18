@@ -22,14 +22,14 @@ import java.util.List;
 
 
 public class ShopRecyclerAdapter extends RecyclerView.Adapter<ShopRecyclerAdapter.Vh> {
-    List<ShopCarBean.EntityBean> shopList = new ArrayList<>();
+    List<ShopCarBean> shopList = new ArrayList<>();
     private Context mContext;
 
     public ShopRecyclerAdapter(Context mContext) {
         this.mContext = mContext;
     }
 
-    public void addAll(List<ShopCarBean.EntityBean> shopList) {
+    public void addAll(List<ShopCarBean> shopList) {
         this.shopList.addAll(shopList);
     }
 
@@ -55,7 +55,7 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<ShopRecyclerAdapte
 
     @Override
     public void onBindViewHolder(@NonNull Vh vh, final int position) {
-        final ShopCarBean.EntityBean.ShopSpecDetailedBean shopSpecDetailedBean = shopList.get(position).getShopSpecDetailed();
+        final ShopCarBean.ShopSpecDetailedBean shopSpecDetailedBean = shopList.get(position).getShopSpecDetailed();
         if (shopSpecDetailedBean.getCheck() == 0)
             vh.mCheckBox.setChecked(false);
         else
@@ -153,7 +153,7 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<ShopRecyclerAdapte
         int count = 0;
         //循环商品
         for (int i = 0; i < shopList.size(); i++) {
-            ShopCarBean.EntityBean.ShopSpecDetailedBean shopSpecDetailedBean = shopList.get(i).getShopSpecDetailed();
+            ShopCarBean.ShopSpecDetailedBean shopSpecDetailedBean = shopList.get(i).getShopSpecDetailed();
             //如果是选中状态才能获取价格（1,是选中状态,0是未选中状态）
             if (shopSpecDetailedBean.getCheck() == 1) {
                 //价钱乘以数量得到总价格
