@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.aftersale.AfterSaleActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_activity_myaccount"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:background="@drawable/toolbar">
+
+        <ImageView
+            android:id="@+id/img_activity_aftersale_fanhui"
+            android:layout_width="11dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/fanhuiactivity" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="123dp"
+            android:text="选择服务类型"
+            android:textColor="#000000"
+            android:textSize="19sp" />
+
+    </android.support.v7.widget.Toolbar>
+
+    <RelativeLayout
+        android:layout_width="330dp"
+        android:layout_height="97dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="11dp"
+        android:background="@drawable/beijing">
+
+        <ImageView
+            android:layout_width="77dp"
+            android:layout_height="77dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/shouchuan" />
+
+        <TextView
+            android:layout_width="204dp"
+            android:layout_height="28dp"
+            android:layout_marginLeft="109dp"
+            android:layout_marginTop="10dp"
+            android:text="产品名称ESTEE产品名称ESTEE产品
+品名称ESTEE产品名称ESTEE..."
+            android:textColor="#333333"
+            android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="180dp"
+            android:layout_height="14dp"
+            android:layout_marginLeft="109dp"
+            android:layout_marginTop="46dp"
+            android:ellipsize="end"
+            android:maxEms="6"
+            android:singleLine="true"
+            android:text="产品名称ESTEE产品名称ESTEE产品名S"
+            android:textColor="#999999"
+            android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="107dp"
+            android:layout_marginTop="70dp"
+            android:text="¥"
+            android:textColor="#FF0000" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="116dp"
+            android:layout_marginTop="70dp"
+            android:text="888.88"
+            android:textColor="#FF0000" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="330dp"
+        android:layout_height="55dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="13dp">
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="14dp"
+            android:src="@drawable/tuikuan" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="56dp"
+            android:layout_marginTop="11dp"
+            android:text="仅退款"
+            android:textColor="#333333"
+            android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="56dp"
+            android:layout_marginTop="33dp"
+            android:text="未收到货(包含未签收),或卖家协商同意前提下"
+            android:textSize="10sp" />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="330dp"
+        android:layout_height="55dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="13dp">
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="14dp"
+            android:src="@drawable/huanhuo" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="56dp"
+            android:layout_marginTop="11dp"
+            android:text="退款退货"
+            android:textColor="#333333"
+            android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="56dp"
+            android:layout_marginTop="33dp"
+            android:text="已收到货,需要退换已收到的货物"
+            android:textSize="10sp" />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="330dp"
+        android:layout_height="55dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="13dp">
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="14dp"
+            android:src="@drawable/huanhuo" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="56dp"
+            android:layout_marginTop="11dp"
+            android:text="退款退货"
+            android:textColor="#333333"
+            android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="56dp"
+            android:layout_marginTop="33dp"
+            android:text="已收到货,需要退换已收到的货物"
+            android:textSize="10sp" />
+
+    </RelativeLayout>
+</LinearLayout>

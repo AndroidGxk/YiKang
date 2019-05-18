@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yikangcheng.admin.yikang.R;
+import com.yikangcheng.admin.yikang.activity.aftersale.AfterSaleActivity;
 import com.yikangcheng.admin.yikang.activity.myaccount.MyaccountActivity;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
 
@@ -79,6 +80,17 @@ public class Fragment_Wo extends BaseFragment {
                 startActivity(intent);
             }
         });
+        /**
+         * 点击售后/退款 进行页面跳转
+         */
+        mImgFragmentWoYituikuan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), AfterSaleActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     @Override
