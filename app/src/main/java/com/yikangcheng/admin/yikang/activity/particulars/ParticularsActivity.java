@@ -3,6 +3,7 @@ package com.yikangcheng.admin.yikang.activity.particulars;
 import android.graphics.Paint;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.sobot.chat.SobotApi;
@@ -15,11 +16,12 @@ public class ParticularsActivity extends BaseActivtiy {
 
     private TextView mTvParticularsYuanjia;
     private ImageView img_particulars_kefu;
-
+    private RelativeLayout kefu_rela;
     @Override
     protected void initView() {
         mTvParticularsYuanjia = findViewById(R.id.tv_particulars_yuanjia);
         img_particulars_kefu = findViewById(R.id.img_particulars_kefu);
+        kefu_rela = findViewById(R.id.kefu_rela);
         /**
          * 在TextView文字中间加横线（原价）
          */
@@ -28,7 +30,7 @@ public class ParticularsActivity extends BaseActivtiy {
 
     @Override
     protected void initEventData() {
-        img_particulars_kefu.setOnClickListener(new View.OnClickListener() {
+        kefu_rela.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Information info = new Information();
@@ -47,11 +49,6 @@ public class ParticularsActivity extends BaseActivtiy {
 
     @Override
     protected void createPresenter() {
-
-    }
-
-    @Override
-    public void showSucess(Object o) {
 
     }
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipToPadding="true"
@@ -8,6 +8,7 @@
 
 
     <RelativeLayout
+        android:id="@+id/rela"
         android:layout_width="match_parent"
         android:layout_height="456dp"
         android:background="@drawable/beijing">
@@ -175,8 +176,10 @@
     </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="30dp"
+        android:layout_below="@+id/rela"
         android:layout_marginTop="10dp"
         android:background="@drawable/bai_1">
 
@@ -210,6 +213,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="55dp"
+        android:layout_below="@+id/line"
         android:layout_marginTop="10dp"
         android:background="@drawable/beijing_2">
 
@@ -273,24 +277,31 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="49dp"
+        android:layout_alignParentBottom="true"
         android:layout_marginTop="10dp"
         android:background="@drawable/bai">
 
-        <ImageView
-            android:id="@+id/img_particulars_kefu"
-            android:layout_width="20dp"
-            android:layout_height="21dp"
-            android:layout_marginLeft="25dp"
-            android:layout_marginTop="8dp"
-            android:src="@drawable/kefu" />
-
-        <TextView
+        <RelativeLayout
+            android:id="@+id/kefu_rela"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="32dp"
-            android:text="联系客服"
-            android:textSize="10sp" />
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/img_particulars_kefu"
+                android:layout_width="20dp"
+                android:layout_height="21dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/kefu" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="32dp"
+                android:text="联系客服"
+                android:textSize="10sp" />
+        </RelativeLayout>
 
         <ImageView
             android:id="@+id/img_particulars_fouwuche"
@@ -330,16 +341,19 @@
             android:layout_height="33dp"
             android:layout_marginLeft="158dp"
             android:layout_marginTop="8dp"
+            android:layout_marginRight="15dp"
+            android:layout_toLeftOf="@+id/img_particulars_lijigoumai"
             android:src="@drawable/jiarugouwuce" />
 
         <ImageView
             android:id="@+id/img_particulars_lijigoumai"
             android:layout_width="88dp"
             android:layout_height="33dp"
-            android:layout_marginLeft="259dp"
+            android:layout_alignParentRight="true"
             android:layout_marginTop="8dp"
+            android:layout_marginRight="15dp"
             android:src="@drawable/lijigoumai" />
 
     </RelativeLayout>
 
-</LinearLayout>
+</RelativeLayout>

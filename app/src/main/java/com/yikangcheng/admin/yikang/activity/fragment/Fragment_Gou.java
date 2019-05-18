@@ -5,18 +5,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.yikangcheng.admin.yikang.R;
-import com.yikangcheng.admin.yikang.activity.MainActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.RecomShopRecyclerAdapter;
 import com.yikangcheng.admin.yikang.activity.adapter.ShopRecyclerAdapter;
-import com.yikangcheng.admin.yikang.activity.bean.ShopCarBean;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.TotalPriceListener, ShopRecyclerAdapter.checkBoxTouchListener {
@@ -24,7 +18,6 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
     private ShopRecyclerAdapter shopRecyclerAdapter;
     private CheckBox all_check;
     private TextView text_total, num_text, heji, dele_text;
-    List<ShopCarBean> shopCarBeans = new ArrayList<>();
     private TextView tv_toolBar_right;
     private boolean judge = false;//判断编辑或完成
 
@@ -38,21 +31,11 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
         tv_toolBar_right = view.findViewById(R.id.tv_toolBar_right);
         heji = view.findViewById(R.id.heji);
         text_total = view.findViewById(R.id.text_total);
-        for (int i = 0; i < 10; i++) {
-            ShopCarBean shopCarBean = new ShopCarBean();
-            shopCarBean.setCheck(0);
-            shopCarBean.setCount(10 + i);
-            shopCarBean.setPrice(1.56 + i);
-            shopCarBeans.add(shopCarBean);
-        }
-
     }
 
     @Override
     protected void initData() {
 //        //解决滑动不流畅
-//        shop_recycler.setHasFixedSize(true);
-//        shop_recycler.setNestedScrollingEnabled(false);
         shop_recyclertwo.setHasFixedSize(true);
         shop_recyclertwo.setNestedScrollingEnabled(false);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext()) {
@@ -65,8 +48,7 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
         // TODO: 2019/5/15 侧拉删除
         //购物车recyclerview
         shop_recycler.setLayoutManager(layoutManager);
-        shopRecyclerAdapter = new ShopRecyclerAdapter();
-        shopRecyclerAdapter.addAll(shopCarBeans);
+        shopRecyclerAdapter = new ShopRecyclerAdapter(getContext());
         shopRecyclerAdapter.setTotalPriceListener(this);//设置总价回调接口
         shopRecyclerAdapter.setCheckBoxTouchListener(this);
         shop_recycler.setAdapter(shopRecyclerAdapter);
@@ -125,6 +107,4 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
     public void checked(boolean isCheck) {
         all_check.setChecked(isCheck);
     }
-
-
 }

@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.yikangcheng.admin.yikang.R;
-import com.yikangcheng.admin.yikang.classify.ClassifyBean;
+import com.yikangcheng.admin.yikang.bean.ClassifyBean;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -5,10 +5,14 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rlv__fragment_fenlei_zuo"
         android:layout_width="96dp"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:background="#F7F7F7"
+        android:overScrollMode="never" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rlv__fragment_fenlei_you"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        android:overScrollMode="never" />
 </LinearLayout>

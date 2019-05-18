@@ -35,7 +35,6 @@ public class FirstSeckillRecyclerAdapter extends RecyclerView.Adapter<FirstSecki
 
     @Override
     public int getItemCount() {
-//        return stringList.size();
         return 9;
     }
 

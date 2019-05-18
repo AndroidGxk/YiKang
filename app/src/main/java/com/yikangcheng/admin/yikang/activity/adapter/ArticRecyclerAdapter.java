@@ -35,7 +35,6 @@ public class ArticRecyclerAdapter extends RecyclerView.Adapter<ArticRecyclerAdap
 
     @Override
     public int getItemCount() {
-//        return stringList.size();
         return 9;
     }
 

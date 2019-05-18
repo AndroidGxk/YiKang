@@ -29,6 +29,9 @@
     <TextView
         android:id="@+id/shop_count"
         android:layout_width="194dp"
+        android:maxEms="28"
+        android:singleLine="true"
+        android:ellipsize="end"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="8dp"
@@ -38,7 +41,8 @@
 
     <TextView
         android:id="@+id/num_text"
-        android:layout_width="60dp"
+        android:layout_width="wrap_content"
+        android:minWidth="60dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/shop_count"
         android:layout_marginLeft="10dp"
