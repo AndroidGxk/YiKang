@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.bean.ClassifyBean;
+import com.yikangcheng.admin.yikang.bean.ClassifyListOneBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,7 @@ import java.util.List;
  * WF
  */
 public class FenLeiAdapter extends RecyclerView.Adapter<FenLeiAdapter.Vh> {
-    private List<ClassifyBean.EntityBean> stringList = new ArrayList<>();
+    private List<ClassifyListOneBean> stringList = new ArrayList<>();
     private int mPosition;
     private Context context;
 
@@ -26,7 +27,7 @@ public class FenLeiAdapter extends RecyclerView.Adapter<FenLeiAdapter.Vh> {
         this.context = context;
     }
 
-    public void addAll(List<ClassifyBean.EntityBean> stringList) {
+    public void addAll(List<ClassifyListOneBean> stringList) {
         this.stringList.addAll(stringList);
     }
 

@@ -7,10 +7,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.yikangcheng.admin.yikang.R;
-import com.yikangcheng.admin.yikang.bean.ClassifyBean;
+import com.yikangcheng.admin.yikang.app.Constants;
 import com.yikangcheng.admin.yikang.bean.ClassifyListOneBean;
 
 import java.util.ArrayList;
@@ -20,30 +22,26 @@ import java.util.List;
  * Created by lenovo on 2019/5/17.
  * WF
  */
-public class FenLeiBAdapter extends RecyclerView.Adapter {
-    private final List<ClassifyListOneBean.ChildSubjectListBeanX> mList = new ArrayList<>();
+public class FenLeiZilieAdapter extends RecyclerView.Adapter {
+    private final List<ClassifyListOneBean.ChildSubjectListBeanX.ChildSubjectListBean> mList = new ArrayList<>();
     private final Context mContent;
 
-    public FenLeiBAdapter(Context context) {
+    public FenLeiZilieAdapter(Context context) {
         this.mContent = context;
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View inflate = LayoutInflater.from(mContent).inflate(R.layout.item_fragment_fenlei_you, null, false);
+        View inflate = LayoutInflater.from(mContent).inflate(R.layout.item_fen_right_item, null, false);
         return new ViewHolder(inflate);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ViewHolder holder1 = (ViewHolder) holder;
-        holder1.mTv.setText(mList.get(position).getSubjectName());
-        holder1.tv_item_you.setLayoutManager(new GridLayoutManager(mContent,3));
-        FenLeiZilieAdapter fenLeiZilieAdapter = new FenLeiZilieAdapter(mContent);
-        List<ClassifyListOneBean.ChildSubjectListBeanX.ChildSubjectListBean> childSubjectList = mList.get(position).getChildSubjectList();
-        fenLeiZilieAdapter.addData(childSubjectList);
-        holder1.tv_item_you.setAdapter(fenLeiZilieAdapter);
+        holder1.right_text.setText(mList.get(position).getSubjectName());
+        Glide.with(mContent).load(Constants.BASETUPIANSHANGCHUANURL + mList.get(position).getIcon()).into(holder1.image);
     }
 
     @Override
@@ -51,7 +49,7 @@ public class FenLeiBAdapter extends RecyclerView.Adapter {
         return mList.size();
     }
 
-    public void addData(List<ClassifyListOneBean.ChildSubjectListBeanX> childSubjectList) {
+    public void addData(List<ClassifyListOneBean.ChildSubjectListBeanX.ChildSubjectListBean> childSubjectList) {
         mList.addAll(childSubjectList);
         notifyDataSetChanged();
     }
@@ -63,12 +61,13 @@ public class FenLeiBAdapter extends RecyclerView.Adapter {
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        private final TextView mTv;
-        RecyclerView tv_item_you;
+        ImageView image;
+        TextView right_text;
+
         public ViewHolder(View itemView) {
             super(itemView);
-            mTv = itemView.findViewById(R.id.tv_item_you);
-            tv_item_you = itemView.findViewById(R.id.tv_item_recycler);
+            image = itemView.findViewById(R.id.right_img);
+            right_text = itemView.findViewById(R.id.right_text);
         }
     }
 }
