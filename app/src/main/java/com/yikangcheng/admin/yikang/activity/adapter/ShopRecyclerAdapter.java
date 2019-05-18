@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.app.Constants;
+import com.yikangcheng.admin.yikang.bean.ShopCarBean;
 import com.yikangcheng.admin.yikang.util.AddSubLayout;
 
 import java.util.ArrayList;
