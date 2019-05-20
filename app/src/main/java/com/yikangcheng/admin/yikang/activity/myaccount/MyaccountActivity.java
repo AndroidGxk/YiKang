@@ -4,6 +4,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.yikangcheng.admin.yikang.R;
@@ -11,6 +12,7 @@ import com.yikangcheng.admin.yikang.activity.adapter.MyAccountAdapter;
 import com.yikangcheng.admin.yikang.activity.fragment.wodezhanghu.AmendFragment;
 import com.yikangcheng.admin.yikang.activity.fragment.wodezhanghu.BasicFragment;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
+import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
 import java.util.ArrayList;
 
@@ -24,6 +26,8 @@ public class MyaccountActivity extends BaseActivtiy {
 
     @Override
     protected void initView() {
+        //设置状态栏颜色
+        StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
         mImgActivityMyaccountFanhui = findViewById(R.id.img_activity_myaccount_fanhui);
         mToolbarActivityMyaccount = findViewById(R.id.toolbar_activity_myaccount);
         mTabActivityMyaccount = findViewById(R.id.tab_activity_myaccount);
@@ -43,6 +47,16 @@ public class MyaccountActivity extends BaseActivtiy {
         MyAccountAdapter myAccountAdapter = new MyAccountAdapter(getSupportFragmentManager(), strings, fragments);
         mViewPagerActivityMyaccount.setAdapter(myAccountAdapter);
         mTabActivityMyaccount.setupWithViewPager(mViewPagerActivityMyaccount);
+
+        /**
+         * 点击返回按钮 返回上一页
+         */
+        mImgActivityMyaccountFanhui.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override

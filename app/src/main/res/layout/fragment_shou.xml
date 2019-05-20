@@ -192,7 +192,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="12dp"
-                android:layout_marginRight="15dp" />
+                android:layout_marginRight="7dp" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -232,9 +232,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="161dp"
                 android:layout_marginLeft="15dp"
-                android:overScrollMode="never"
                 android:layout_marginTop="12dp"
-                android:layout_marginRight="15dp" />
+                android:layout_marginRight="15dp"
+                android:overScrollMode="never" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -336,7 +336,13 @@
                 android:text="猜您喜欢"
                 android:textColor="#000000"
                 android:textSize="15sp" />
-
+            <!--这是基础款,没有添加header,和footer,默认使用经典的刷新和加载-->
+            <!--<com.scwang.smartrefresh.layout.SmartRefreshLayout-->
+            <!--android:id="@+id/refreshLayout"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--app:srlEnableFooterFollowWhenLoadFinished="true"-->
+            <!--app:srlEnableScrollContentWhenLoaded="true">-->
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/c_recycler"
                 android:layout_width="match_parent"
@@ -345,6 +351,9 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="80dp" />
+
+            <!--</com.scwang.smartrefresh.layout.SmartRefreshLayout>-->
+
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </RelativeLayout>

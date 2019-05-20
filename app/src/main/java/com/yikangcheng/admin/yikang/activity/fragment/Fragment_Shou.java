@@ -1,16 +1,23 @@
 package com.yikangcheng.admin.yikang.activity.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.SeckillSecondActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.ArticRecyclerAdapter;
@@ -19,6 +26,10 @@ import com.yikangcheng.admin.yikang.activity.adapter.LikeAdapter;
 import com.yikangcheng.admin.yikang.bean.LikeBean;
 import com.yikangcheng.admin.yikang.activity.particulars.ParticularsActivity;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
+import com.yikangcheng.admin.yikang.bean.Request;
+import com.yikangcheng.admin.yikang.model.http.ApiException;
+import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
+import com.yikangcheng.admin.yikang.presenter.LikePresenter;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
 import com.zhouwei.mzbanner.MZBannerView;
@@ -28,7 +39,7 @@ import com.zhouwei.mzbanner.holder.MZViewHolder;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Fragment_Shou extends BaseFragment {
+public class Fragment_Shou extends BaseFragment implements ICoreInfe {
 
     private Banner banner, m_banner;
     List<Integer> imageList = new ArrayList<>();
@@ -37,9 +48,14 @@ public class Fragment_Shou extends BaseFragment {
     private FaddRecyclerAdapter faddRecyclerAdapter;
     private ArticRecyclerAdapter articRecyclerAdapter;
     private ImageView shou_miao_imag;
+    private LikeAdapter mLikeAdapter;
+//    private SmartRefreshLayout mRefreshLayout;
+    private int mPage = 1;
 
     @Override
     protected void initView(View view) {
+
+        initP();
         faddRecyclerAdapter = new FaddRecyclerAdapter();
         articRecyclerAdapter = new ArticRecyclerAdapter();
         banner = view.findViewById(R.id.banner);
@@ -50,6 +66,11 @@ public class Fragment_Shou extends BaseFragment {
         c_recycler = view.findViewById(R.id.c_recycler);
         mei_recycle = view.findViewById(R.id.mei_recycle);
         artic_recycler = view.findViewById(R.id.artic_recycler);
+
+
+//        mRefreshLayout.setOnLoadMoreListener(this);
+//        mRefreshLayout.setOnRefreshListener(this);
+//        mRefreshLayout = view.findViewById(R.id.refreshLayout);
         for (int i = 0; i < 3; i++) {
             if (i % 2 == 0) {
                 imageList.add(R.drawable.bao);
@@ -80,10 +101,21 @@ public class Fragment_Shou extends BaseFragment {
 
         StaggeredGridLayoutManager ctaggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         c_recycler.setLayoutManager(ctaggeredGridLayoutManager);
-        List<LikeBean.EntityBean> entityBeans = new ArrayList<>();
-        LikeAdapter likeAdapter = new LikeAdapter(entityBeans, getContext());
-        c_recycler.setAdapter(likeAdapter);
+        List<LikeBean> entityBeans = new ArrayList<>();
+        mLikeAdapter = new LikeAdapter(entityBeans, getContext());
+        c_recycler.setAdapter(mLikeAdapter);
 
+
+        /**刷新的监听事件
+         *
+         */
+
+
+    }
+
+    private void initP() {
+        LikePresenter likePresenter = new LikePresenter(this);
+        likePresenter.request(11, mPage);
     }
 
 
@@ -126,6 +158,36 @@ public class Fragment_Shou extends BaseFragment {
             }
         });
     }
+
+    @SuppressLint("LongLogTag")
+    @Override
+    public void success(Object data) {
+        Request request = (Request) data;
+        List<LikeBean> entity = (List<LikeBean>) request.getEntity();
+        Log.e("list------------------------", entity.toString());
+        mLikeAdapter.addData(entity);
+
+    }
+
+    @Override
+    public void fail(ApiException e) {
+
+    }
+
+//    @Override
+//    public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+//        mPage++;
+//       initP();
+//       mLikeAdapter.notifyDataSetChanged();
+//    }
+//
+//    @Override
+//    public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+//        mPage=1;
+//        initP();
+//
+//
+//    }
 
     public static class BannerViewHolder implements MZViewHolder<Integer> {
         private ImageView mImageView;

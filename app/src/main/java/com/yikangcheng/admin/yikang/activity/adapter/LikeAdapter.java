@@ -1,6 +1,7 @@
 package com.yikangcheng.admin.yikang.activity.adapter;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -21,9 +22,9 @@ import java.util.List;
  */
 public class LikeAdapter extends RecyclerView.Adapter {
     private final Context mContent;
-    private final List<LikeBean.EntityBean> mList;
+    public final List<LikeBean> mList;
 
-    public LikeAdapter(List<LikeBean.EntityBean> entityBeans, Context context) {
+    public LikeAdapter(List<LikeBean> entityBeans, Context context) {
         this.mList = entityBeans;
         this.mContent = context;
     }
@@ -42,19 +43,23 @@ public class LikeAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        int itemCount = getItemCount();
-        if (itemCount == 1) {
+        int itemViewType = getItemViewType(position);
+        if (itemViewType == 1) {
             ViewHolder holder1 = (ViewHolder) holder;
-            Glide.with(mContent).load(mList.get(position).getLogo()).into(holder1.mImg);
+            Glide.with(mContent).load("https://static.yikch.com"+mList.get(position).getLogo()).into(holder1.mImg);
             holder1.mTv_title.setText(mList.get(position).getName());
-            holder1.mTv_jiage.setText(mList.get(position).getCurrentprice());
-            holder1.mTv_shichangjia.setText(mList.get(position).getSourceprice());
+            holder1.mTv_jiage.setText(mList.get(position).getCurrentprice()+"");
+            holder1.mTv_shichangjia.setText("市场价："+mList.get(position).getSourceprice());
+            // 中间加横线 ， 添加Paint.ANTI_ALIAS_FLAG是线会变得清晰去掉锯齿
+            holder1.mTv_shichangjia.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG );
         } else {
             ViewHolderB holderB = (ViewHolderB) holder;
-            Glide.with(mContent).load(mList.get(position).getLogo()).into(holderB.mImg_b);
+            Glide.with(mContent).load("https://static.yikch.com"+mList.get(position).getLogo()).into(holderB.mImg_b);
             holderB.mTv_title_b.setText(mList.get(position).getName());
-            holderB.mTv_jiage_b.setText(mList.get(position).getCurrentprice());
-            holderB.mTv_shichangjia_b.setText(mList.get(position).getSourceprice());
+            holderB.mTv_jiage_b.setText(mList.get(position).getCurrentprice()+"");
+            holderB.mTv_shichangjia_b.setText("市场价："+mList.get(position).getSourceprice()+"");
+            // 中间加横线 ， 添加Paint.ANTI_ALIAS_FLAG是线会变得清晰去掉锯齿
+            holderB.mTv_shichangjia_b.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG );
         }
     }
 
@@ -67,9 +72,15 @@ public class LikeAdapter extends RecyclerView.Adapter {
         }
     }
 
+
     @Override
     public int getItemCount() {
         return mList.size();
+    }
+
+    public void addData(List<LikeBean> entity) {
+        mList.addAll(entity);
+        notifyDataSetChanged();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

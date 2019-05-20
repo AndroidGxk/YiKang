@@ -11,7 +11,7 @@
         android:id="@+id/recom_img_b"
         android:layout_width="160dp"
         android:layout_height="160dp"
-        android:src="@drawable/ce4" />
+        android:background="@drawable/ce4" />
 
     <TextView
         android:id="@+id/recom_title_b"

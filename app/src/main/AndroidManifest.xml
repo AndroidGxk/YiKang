@@ -16,7 +16,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.WuliuXinxiActivity"></activity>
+        <activity android:name=".activity.OrderFormActivity"></activity>
+        <activity android:name=".activity.ApoutUsActivity" />
+        <activity android:name=".activity.WuliuXinxiActivity" />
         <activity android:name=".activity.CloseActivity" />
         <activity android:name=".activity.MessageActivity" />
         <activity android:name=".activity.ConfirmActivity" />
@@ -54,7 +56,11 @@
             android:name=".activity.seek.SeekActivity"
             tools:ignore="DuplicateActivity" />
         <activity android:name=".activity.SearchListActivity" />
-        <activity android:name=".activity.aftersale.AfterSaleActivity"
+        <activity
+            android:name=".activity.aftersale.AfterSaleActivity"
+            tools:ignore="DuplicateActivity" />
+        <activity
+            android:name=".activity.ApoutUsActivity"
             tools:ignore="DuplicateActivity" />
     </application>
 
