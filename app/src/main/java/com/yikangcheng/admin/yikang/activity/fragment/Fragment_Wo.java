@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yikangcheng.admin.yikang.R;
+import com.yikangcheng.admin.yikang.activity.MessageActivity;
 import com.yikangcheng.admin.yikang.activity.aftersale.AfterSaleActivity;
 import com.yikangcheng.admin.yikang.activity.myaccount.MyaccountActivity;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
@@ -88,6 +89,15 @@ public class Fragment_Wo extends BaseFragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), AfterSaleActivity.class);
                 startActivity(intent);
+            }
+        });
+        /**
+         * 消息页面
+         */
+        mImgFragmentWoLingdang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), MessageActivity.class));
             }
         });
 

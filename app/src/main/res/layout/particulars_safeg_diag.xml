@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@drawable/seek_edi_shape"
+    android:layout_height="495dp">
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="产品保障"
+        android:textColor="#333333"
+        android:textSize="14sp" />
+
+    <ImageView
+        android:id="@+id/bao_img"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_below="@+id/text"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/buzhichi" />
+
+    <TextView
+        android:id="@+id/bao_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_toRightOf="@+id/bao_img"
+        android:text="正品保障"
+        android:textColor="#333333"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/bao_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bao_title"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/bao_img"
+        android:text="商品支持正品保障服务"
+        android:textColor="#C6C6C6"
+        android:textSize="11sp" />
+
+    <ImageView
+        android:id="@+id/zhi_img"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_below="@+id/bao_count"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="33dp"
+        android:background="@drawable/buzhichi" />
+
+    <TextView
+        android:id="@+id/zhi_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bao_count"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="33dp"
+        android:layout_toRightOf="@+id/zhi_img"
+        android:text="正品保障"
+        android:textColor="#333333"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/zhi_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/zhi_title"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/zhi_img"
+        android:text="此商品不支持七天无理由退换货"
+        android:textColor="#C6C6C6"
+        android:textSize="11sp" />
+
+    <ImageView
+        android:id="@+id/sun_img"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_below="@+id/zhi_count"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="33dp"
+        android:background="@drawable/buzhichi" />
+
+    <TextView
+        android:id="@+id/sun_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/zhi_count"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="33dp"
+        android:layout_toRightOf="@+id/sun_img"
+        android:text="损坏包退"
+        android:textColor="#333333"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/sun_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sun_title"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/sun_img"
+        android:text="签收后24小时内，商品有腐坏变质，平台承诺24小时内处理。"
+        android:textColor="#C6C6C6"
+        android:textSize="11sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/shop_btn_shape"
+        android:gravity="center"
+        android:text="完成"
+        android:textColor="#FEFEFE"
+        android:textSize="14sp" />
+</RelativeLayout>

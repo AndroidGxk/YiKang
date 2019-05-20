@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/seek_edi_shape">
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="产品参数"
+        android:textColor="#333333"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/chan_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="30dp"
+        android:text="产品名称"
+        android:textColor="#333333"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/chan_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text"
+        android:layout_marginLeft="85dp"
+        android:layout_marginTop="30dp"
+        android:layout_toRightOf="@+id/chan_text"
+        android:text="JMSOLUTION 水滋养牛油果面膜"
+        android:textColor="#999999"
+        android:textSize="12sp" />
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/chan_name"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp"
+        android:background="#E4E4E4" />
+
+    <TextView
+        android:id="@+id/pin_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view1"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="25dp"
+        android:text="品牌"
+        android:textColor="#333333"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/pin_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view1"
+        android:layout_marginLeft="85dp"
+        android:layout_marginTop="25dp"
+        android:layout_toRightOf="@+id/chan_text"
+        android:text="JMSOLUTION"
+        android:textColor="#999999"
+        android:textSize="12sp" />
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/pin_name"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp"
+        android:background="#E4E4E4" />
+
+    <TextView
+        android:id="@+id/pinname_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view2"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="25dp"
+        android:text="品牌"
+        android:textColor="#333333"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/pinname_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view2"
+        android:layout_marginLeft="85dp"
+        android:layout_marginTop="25dp"
+        android:layout_toRightOf="@+id/chan_text"
+        android:text="水滋养牛油果精油面膜"
+        android:textColor="#999999"
+        android:textSize="12sp" />
+
+    <View
+        android:id="@+id/view3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/pinname_name"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp"
+        android:background="#E4E4E4" />
+
+    <TextView
+        android:id="@+id/gong_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view3"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="25dp"
+        android:text="功效"
+        android:textColor="#333333"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/gong_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view3"
+        android:layout_marginLeft="85dp"
+        android:layout_marginTop="25dp"
+        android:layout_toRightOf="@+id/chan_text"
+        android:text="水滋养牛油果精油面膜"
+        android:textColor="#999999"
+        android:textSize="12sp" />
+
+    <View
+        android:id="@+id/view4"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/gong_name"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp"
+        android:background="#E4E4E4" />
+
+    <TextView
+        android:id="@+id/jing_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view4"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="25dp"
+        android:text="净含量"
+        android:textColor="#333333"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/jing_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view4"
+        android:layout_marginLeft="85dp"
+        android:layout_marginTop="25dp"
+        android:layout_toRightOf="@+id/chan_text"
+        android:text="10片"
+        android:textColor="#999999"
+        android:textSize="12sp" />
+
+    <View
+        android:id="@+id/view5"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/jing_name"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp"
+        android:background="#E4E4E4" />
+
+    <TextView
+        android:id="@+id/gui_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view5"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="25dp"
+        android:text="规格类型"
+        android:textColor="#333333"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/gui_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view5"
+        android:layout_marginLeft="85dp"
+        android:layout_marginTop="25dp"
+        android:layout_toRightOf="@+id/chan_text"
+        android:text="10片"
+        android:textColor="#999999"
+        android:textSize="12sp" />
+
+    <View
+        android:id="@+id/view6"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/gui_name"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp"
+        android:background="#E4E4E4" />
+
+    <TextView
+        android:id="@+id/te_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view6"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="25dp"
+        android:text="是否为特殊用途化妆品"
+        android:textColor="#333333"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/te_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view6"
+        android:layout_marginLeft="85dp"
+        android:layout_marginTop="25dp"
+        android:layout_toRightOf="@+id/chan_text"
+        android:text="否"
+        android:textColor="#999999"
+        android:textSize="12sp" />
+
+    <View
+        android:id="@+id/view7"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/te_name"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp"
+        android:background="#E4E4E4" />
+
+    <TextView
+        android:id="@+id/bao_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view7"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="25dp"
+        android:text="产品包装"
+        android:textColor="#333333"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/bao_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view7"
+        android:layout_marginLeft="85dp"
+        android:layout_marginTop="25dp"
+        android:layout_toRightOf="@+id/chan_text"
+        android:text="随机发货（新旧包装）"
+        android:textColor="#999999"
+        android:textSize="12sp" />
+
+    <View
+        android:id="@+id/view8"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/bao_name"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp"
+        android:background="#E4E4E4" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/shop_btn_shape"
+        android:gravity="center"
+        android:text="完成"
+        android:textColor="#FEFEFE"
+        android:textSize="14sp" />
+</RelativeLayout>

@@ -76,7 +76,7 @@
     <com.yikangcheng.admin.yikang.util.FlowLayout
         android:id="@+id/FlowLayout_activity_seek"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="150dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp">
 

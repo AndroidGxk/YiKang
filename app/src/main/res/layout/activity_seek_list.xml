@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.SeekListActivity">
+
+    <RelativeLayout
+        android:id="@+id/table"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#EBEBEB">
+
+        <ImageView
+            android:id="@+id/back_img"
+            android:layout_width="11dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="13dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/fanhui_seek" />
+
+
+        <EditText
+            android:id="@+id/EditTixt_activity_seek_sousuo"
+            android:layout_width="match_parent"
+            android:layout_height="27dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:textColor="#848484"
+            android:layout_toLeftOf="@+id/xiaoxi"
+            android:layout_toRightOf="@+id/back_img"
+            android:background="@drawable/seek_edi_shape"
+            android:imeOptions="actionSearch"
+            android:paddingLeft="29dp"
+            android:singleLine="true"
+            android:textSize="11sp" />
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_toRightOf="@+id/back_img"
+            android:src="@drawable/sousuo_2" />
+
+        <ImageView
+            android:id="@+id/xiaoxi"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/xiaoxi_seek" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@+id/EditTixt_activity_seek_sousuo"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/zonghe"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:gravity="center"
+                android:text="综合"
+                android:textColor="#333333"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/xiaoliang"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/zonghe"
+                android:gravity="center"
+                android:text="销量"
+                android:textColor="#333333"
+                android:textSize="12sp" />
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_toRightOf="@+id/xiaoliang"
+                android:layout_toLeftOf="@+id/qiehuan"
+                android:gravity="center_horizontal"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+                <TextView
+                    android:id="@+id/price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@drawable/price_image"
+                    android:gravity="center"
+                    android:text="价格"
+                    android:textColor="#333333"
+                    android:textSize="12sp" />
+            </RelativeLayout>
+            <ImageView
+                android:id="@+id/qiehuan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="1dp"
+                android:layout_marginRight="60dp"
+                android:layout_alignParentRight="true"
+                android:gravity="center"
+                android:src="@drawable/qiehuan" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <com.jcodecraeer.xrecyclerview.XRecyclerView
+        android:id="@+id/xrecycler"
+        android:layout_below="@+id/table"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</RelativeLayout>

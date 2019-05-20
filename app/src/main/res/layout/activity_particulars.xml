@@ -197,6 +197,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="9dp"
+            android:layout_weight="1"
             android:text="正品保障·部分支持七天无理由退换"
             android:textColor="#999999 "
             android:textSize="11sp" />
@@ -205,7 +206,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="125dp"
+            android:layout_marginRight="15dp"
             android:src="@drawable/fanhui_1" />
 
     </LinearLayout>
@@ -217,61 +218,76 @@
         android:layout_marginTop="10dp"
         android:background="@drawable/beijing_2">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="10dp"
-            android:text="选择"
-            android:textColor="#999999 "
-            android:textSize="11sp" />
+        <RelativeLayout
+            android:id="@+id/shu_rela"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="45dp"
-            android:layout_marginTop="10dp"
-            android:text="数量"
-            android:textColor="#999999 "
-            android:textSize="11sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:text="选择"
+                android:textColor="#999999 "
+                android:textSize="11sp" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="339dp"
-            android:layout_marginTop="15dp"
-            android:src="@drawable/fanhui_1" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="45dp"
+                android:layout_marginTop="10dp"
+                android:text="数量"
+                android:textColor="#999999 "
+                android:textSize="11sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginLeft="15dp"
-            android:layout_marginBottom="9dp"
-            android:text="参数"
-            android:textColor="#999999 "
-            android:textSize="11sp" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="15dp"
+                android:src="@drawable/fanhui_1" />
+        </RelativeLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginLeft="45dp"
-            android:layout_marginBottom="9dp"
-            android:text="品牌 效果..."
-            android:textColor="#999999 "
-            android:textSize="11sp" />
 
-        <ImageView
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/rela_can"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="339dp"
-            android:layout_marginBottom="9dp"
-            android:src="@drawable/fanhui_1" />
+            android:gravity="center_vertical">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:layout_marginBottom="9dp"
+                android:text="参数"
+                android:textColor="#999999 "
+                android:textSize="11sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="45dp"
+                android:layout_marginBottom="9dp"
+                android:text="品牌 效果..."
+                android:textColor="#999999 "
+                android:textSize="11sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="15dp"
+                android:src="@drawable/fanhui_1" />
+        </RelativeLayout>
     </RelativeLayout>
 
     <RelativeLayout

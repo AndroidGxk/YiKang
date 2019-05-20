@@ -6,6 +6,7 @@
     android:paddingRight="10dp"
     android:paddingTop="2dp"
     android:paddingBottom="2dp"
+    android:id="@+id/tv_attr_tag"
     android:textColor="#999999"
     android:textSize="11sp"
     android:background="@drawable/flow_text_shape"

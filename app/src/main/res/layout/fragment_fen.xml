@@ -14,6 +14,7 @@
         android:id="@+id/rlv__fragment_fenlei_you"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingBottom="50dp"
         android:background="#FFFFFF"
         android:overScrollMode="never" />
 </LinearLayout>

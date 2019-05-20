@@ -1,6 +1,7 @@
 package com.yikangcheng.admin.yikang.activity.seek;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.yikangcheng.admin.yikang.R;
+import com.yikangcheng.admin.yikang.activity.SeekListActivity;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.greendao.SoSuoDb;
 import com.yikangcheng.admin.yikang.greendao.Utils;
@@ -77,8 +79,6 @@ public class SeekActivity extends BaseActivtiy {
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 if (i == EditorInfo.IME_ACTION_UNSPECIFIED) {
                     Toast.makeText(SeekActivity.this, "你点击了回车", Toast.LENGTH_SHORT).show();
-
-
                     //隐藏软键盘
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
@@ -87,7 +87,9 @@ public class SeekActivity extends BaseActivtiy {
                     mSoSuoDbs.add(new SoSuoDb(null, s));
                     Utils.getInstance().insent(mSoSuoDbs);
                     mFlowLayout_activity_seek.addTextView(s);
-
+                    Intent intent = new Intent(SeekActivity.this, SeekListActivity.class);
+                    intent.putExtra("count", s);
+                    startActivity(intent);
                 }
                 return false;
             }
@@ -99,6 +101,7 @@ public class SeekActivity extends BaseActivtiy {
 
 
     }
+
     /**
      * 这是清除历史搜索
      */
