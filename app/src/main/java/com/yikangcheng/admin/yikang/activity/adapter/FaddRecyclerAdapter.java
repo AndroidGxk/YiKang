@@ -3,10 +3,14 @@ package com.yikangcheng.admin.yikang.activity.adapter;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.yikangcheng.admin.yikang.R;
 
@@ -40,6 +44,19 @@ public class FaddRecyclerAdapter extends RecyclerView.Adapter<FaddRecyclerAdapte
                 mListener.OnClickListener(v, position);
             }
         });
+        vh.geng_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        if (position == 8) {
+            vh.geng_img.setVisibility(View.VISIBLE);
+            vh.geng_text.setVisibility(View.VISIBLE);
+        } else {
+            vh.geng_img.setVisibility(View.GONE);
+            vh.geng_text.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -52,6 +69,8 @@ public class FaddRecyclerAdapter extends RecyclerView.Adapter<FaddRecyclerAdapte
         TextView mCount;
         TextView mPrice;
         TextView mBprice;
+        ImageView geng_img;
+        TextView geng_text;
 
         public Vh(View itemView) {
             super(itemView);
@@ -59,6 +78,8 @@ public class FaddRecyclerAdapter extends RecyclerView.Adapter<FaddRecyclerAdapte
             mCount = itemView.findViewById(R.id.text_count);
             mPrice = itemView.findViewById(R.id.text_price);
             mBprice = itemView.findViewById(R.id.text_bprice);
+            geng_img = itemView.findViewById(R.id.geng_img);
+            geng_text = itemView.findViewById(R.id.geng_text);
         }
     }
 

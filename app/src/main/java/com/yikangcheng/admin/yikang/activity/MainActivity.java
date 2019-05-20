@@ -35,9 +35,10 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
     private RelativeLayout mRelativeLayout;
     private TextView tv_toolBar_title, tv_toolBar_right;
     private TextView shou_text, fen_text, miao_text, gou_text, wo_text;
-    private ImageView iv_toolBar_right,iv_toolBar_left;
+    private ImageView iv_toolBar_right, iv_toolBar_left;
     private ImageView mImg_activity_main_soushuo;
     private View toobar;
+    private boolean isclick;
 
     @Override
     protected void initView() {
@@ -58,6 +59,7 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         wo_linear = findViewById(R.id.wo_linear);
         toobar = findViewById(R.id.toobar);
         tv_toolBar_title = toobar.findViewById(R.id.tv_toolBar_title);
+        tv_toolBar_right = toobar.findViewById(R.id.tv_toolBar_right);
         iv_toolBar_left = toobar.findViewById(R.id.iv_toolBar_left);
         iv_toolBar_left.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,6 +71,20 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, RegisterActivity.class));
+            }
+        });
+        //编辑
+        tv_toolBar_right.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!isclick) {
+                    tv_toolBar_right.setText("完成");
+                    isclick = true;
+                } else {
+                    tv_toolBar_right.setText("编辑");
+                    isclick = false;
+                }
+                onClickListener.onclick();
             }
         });
         iv_toolBar_right = toobar.findViewById(R.id.iv_toolBar_right);
@@ -411,5 +427,14 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         return 720;
     }
 
+    onClickListener onClickListener;
+
+    public void setOnClickListener(MainActivity.onClickListener onClickListener) {
+        this.onClickListener = onClickListener;
+    }
+
+    public interface onClickListener {
+        void onclick();
+    }
 
 }

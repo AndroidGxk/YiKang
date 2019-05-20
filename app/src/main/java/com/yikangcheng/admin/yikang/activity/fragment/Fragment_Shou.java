@@ -9,9 +9,11 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
 import com.yikangcheng.admin.yikang.R;
+import com.yikangcheng.admin.yikang.activity.FaddishActivity;
 import com.yikangcheng.admin.yikang.activity.SeckillSecondActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.ArticRecyclerAdapter;
 import com.yikangcheng.admin.yikang.activity.adapter.FaddRecyclerAdapter;
@@ -28,7 +30,10 @@ import com.zhouwei.mzbanner.holder.MZViewHolder;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Fragment_Shou extends BaseFragment {
+import me.jessyan.autosize.AutoSizeConfig;
+import me.jessyan.autosize.internal.CustomAdapt;
+
+public class Fragment_Shou extends BaseFragment implements CustomAdapt {
 
     private Banner banner, m_banner;
     List<Integer> imageList = new ArrayList<>();
@@ -37,14 +42,17 @@ public class Fragment_Shou extends BaseFragment {
     private FaddRecyclerAdapter faddRecyclerAdapter;
     private ArticRecyclerAdapter articRecyclerAdapter;
     private ImageView shou_miao_imag;
+    private RelativeLayout bao_rela;
 
     @Override
     protected void initView(View view) {
+        AutoSizeConfig.getInstance().setCustomFragment(true);
         faddRecyclerAdapter = new FaddRecyclerAdapter();
         articRecyclerAdapter = new ArticRecyclerAdapter();
         banner = view.findViewById(R.id.banner);
         m_banner = view.findViewById(R.id.m_banner);
         mMZBanner = view.findViewById(R.id.bao_mzbanner);
+        bao_rela = view.findViewById(R.id.bao_rela);
         bao_recycler = view.findViewById(R.id.bao_recycler);
         shou_miao_imag = view.findViewById(R.id.shou_miao_imag);
         c_recycler = view.findViewById(R.id.c_recycler);
@@ -125,6 +133,25 @@ public class Fragment_Shou extends BaseFragment {
                 startActivity(new Intent(getContext(), SeckillSecondActivity.class));
             }
         });
+        /**
+         * 跳转到爆款页面
+         */
+        bao_rela.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), FaddishActivity.class));
+            }
+        });
+    }
+
+    @Override
+    public boolean isBaseOnWidth() {
+        return false;
+    }
+
+    @Override
+    public float getSizeInDp() {
+        return 1920;
     }
 
     public static class BannerViewHolder implements MZViewHolder<Integer> {

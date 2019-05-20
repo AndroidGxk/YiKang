@@ -1,13 +1,18 @@
 package com.yikangcheng.admin.yikang.activity.fragment;
 
+import android.content.Intent;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.yikangcheng.admin.yikang.R;
+import com.yikangcheng.admin.yikang.activity.CloseActivity;
+import com.yikangcheng.admin.yikang.activity.MainActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.ShopRecyclerAdapter;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
 import com.yikangcheng.admin.yikang.bean.Request;
@@ -28,6 +33,7 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
     private boolean judge = false;//判断编辑或完成
     private ShopCarPresenter shopCarPresenter;
     private List<ShopCarBean> entity;
+    private boolean isclick;
 
     @Override
     protected void initView(View view) {
@@ -41,6 +47,26 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
         text_total = view.findViewById(R.id.text_total);
         shopCarPresenter = new ShopCarPresenter(this);
         shopCarPresenter.request(11);
+        MainActivity activity = (MainActivity) getActivity();
+        activity.setOnClickListener(new MainActivity.onClickListener() {
+            @Override
+            public void onclick() {
+                if (!isclick) {
+                    dele_text.setVisibility(View.VISIBLE);
+                    num_text.setVisibility(View.GONE);
+                    heji.setVisibility(View.GONE);
+                    text_total.setVisibility(View.GONE);
+                    isclick = true;
+                } else {
+                    dele_text.setVisibility(View.GONE);
+                    num_text.setVisibility(View.VISIBLE);
+                    heji.setVisibility(View.VISIBLE);
+                    text_total.setVisibility(View.VISIBLE);
+                    isclick = false;
+                }
+            }
+        });
+
     }
 
     @Override
@@ -91,6 +117,15 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
                     judge = true;
                 }
 
+            }
+        });
+        /**
+         * 去结算
+         */
+        num_text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), CloseActivity.class));
             }
         });
     }

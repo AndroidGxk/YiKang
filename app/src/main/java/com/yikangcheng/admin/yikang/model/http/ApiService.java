@@ -21,9 +21,11 @@ public interface ApiService {
 
     /**
      * 购物车列表
+     *
      * @param userId
      * @return
      */
     @POST("shopCart/list")
     Observable<Request<List<ShopCarBean>>> listCar(@Query("userId") int userId);
+
 }

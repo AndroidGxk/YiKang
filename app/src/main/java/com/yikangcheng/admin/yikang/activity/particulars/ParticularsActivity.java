@@ -17,7 +17,9 @@ import com.sobot.chat.api.model.Information;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 
-public class ParticularsActivity extends BaseActivtiy {
+import me.jessyan.autosize.internal.CustomAdapt;
+
+public class ParticularsActivity extends BaseActivtiy implements CustomAdapt {
 
 
     private TextView mTvParticularsYuanjia;
@@ -111,5 +113,15 @@ public class ParticularsActivity extends BaseActivtiy {
     @Override
     protected void createPresenter() {
 
+    }
+
+    @Override
+    public boolean isBaseOnWidth() {
+        return false;
+    }
+
+    @Override
+    public float getSizeInDp() {
+        return 720;
     }
 }

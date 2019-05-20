@@ -152,6 +152,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/bao_rela"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -190,9 +191,8 @@
                 android:id="@+id/bao_recycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
                 android:layout_marginTop="12dp"
-                android:layout_marginRight="15dp" />
+                android:paddingLeft="15dp" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -231,10 +231,11 @@
                 android:id="@+id/artic_recycler"
                 android:layout_width="match_parent"
                 android:layout_height="161dp"
+                android:layout_gravity="center"
                 android:layout_marginLeft="15dp"
-                android:overScrollMode="never"
                 android:layout_marginTop="12dp"
-                android:layout_marginRight="15dp" />
+                android:layout_marginRight="15dp"
+                android:overScrollMode="never" />
 
             <RelativeLayout
                 android:layout_width="match_parent"

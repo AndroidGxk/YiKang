@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.yikangcheng.admin.yikang.R;
@@ -38,8 +39,14 @@ public class FenLeiBAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ViewHolder holder1 = (ViewHolder) holder;
+        if (position == getItemCount() - 1) {
+            LinearLayout.LayoutParams layout = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            layout.setMargins(0, 0, 0, 85);
+            holder.itemView.setLayoutParams(layout);
+        }
         holder1.mTv.setText(mList.get(position).getSubjectName());
-        holder1.tv_item_you.setLayoutManager(new GridLayoutManager(mContent,3));
+        holder1.tv_item_you.setLayoutManager(new GridLayoutManager(mContent, 3));
         FenLeiZilieAdapter fenLeiZilieAdapter = new FenLeiZilieAdapter(mContent);
         List<ClassifyListOneBean.ChildSubjectListBeanX.ChildSubjectListBean> childSubjectList = mList.get(position).getChildSubjectList();
         fenLeiZilieAdapter.addData(childSubjectList);
@@ -65,6 +72,7 @@ public class FenLeiBAdapter extends RecyclerView.Adapter {
 
         private final TextView mTv;
         RecyclerView tv_item_you;
+
         public ViewHolder(View itemView) {
             super(itemView);
             mTv = itemView.findViewById(R.id.tv_item_you);

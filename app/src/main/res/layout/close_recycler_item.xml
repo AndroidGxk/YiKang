@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF">
+
+    <ImageView
+        android:id="@+id/close_img"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="23dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/ce4" />
+
+    <TextView
+        android:id="@+id/close_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/close_img"
+        android:ellipsize="end"
+        android:maxEms="18"
+        android:singleLine="true"
+        android:text="韩国JM牛油果精油面膜男女急救补水保湿救补水保湿"
+        android:textColor="#ff333333"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/close_gui"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/close_title"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/close_img"
+        android:text="规格：1件 10片"
+        android:textColor="#ff333333"
+        android:textSize="11sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/close_gui"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_toRightOf="@+id/close_img"
+        android:text="¥85.00"
+        android:textColor="#ffff0000"
+        android:textSize="10sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/close_gui"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:text="x1"
+        android:textColor="#ff333333"
+        android:textSize="11sp" />
+
+    <View
+        android:id="@+id/view_ge"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@+id/close_img"
+        android:layout_marginLeft="23dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/fengexian_shape" />
+</RelativeLayout>

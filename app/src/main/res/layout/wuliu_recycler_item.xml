@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="96dp"
-    android:background="@drawable/message_recycler_item"
+    android:layout_height="110dp"
+    android:layout_marginLeft="15dp"
+    android:layout_marginTop="15dp"
+    android:layout_marginRight="15dp"
+    android:background="#FFFFFF"
     android:gravity="center_vertical"
-    android:paddingLeft="10dp">
+    android:paddingLeft="10dp"
+    android:paddingTop="10dp"
+    android:paddingRight="10dp"
+    android:paddingBottom="10dp">
 
     <ImageView
         android:id="@+id/wuliu_img"
         android:layout_width="38dp"
         android:layout_height="38dp"
-        android:background="@drawable/wuliu" />
+        android:background="@drawable/wuliu_list" />
 
     <TextView
         android:id="@+id/wu_title"
@@ -28,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/wu_title"
         android:layout_marginLeft="15dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:layout_toRightOf="@+id/wuliu_img"
         android:text="您的订单[面膜...]已发货"
         android:textColor="#ff999999"
