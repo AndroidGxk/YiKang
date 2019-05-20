@@ -54,6 +54,8 @@
             android:name=".activity.seek.SeekActivity"
             tools:ignore="DuplicateActivity" />
         <activity android:name=".activity.SearchListActivity" />
+        <activity android:name=".activity.aftersale.AfterSaleActivity"
+            tools:ignore="DuplicateActivity" />
     </application>
 
 </manifest>

@@ -21,7 +21,7 @@ public class AfterSaleActivity extends BaseActivtiy {
 
     @Override
     protected int getActivtiyLayoutId() {
-        return 0;
+        return R.layout.activity_after_sale;
     }
 
     @Override
