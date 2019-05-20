@@ -3,7 +3,6 @@ package com.yikangcheng.admin.yikang.activity.fragment;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,19 +14,15 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.FaddishActivity;
 import com.yikangcheng.admin.yikang.activity.SeckillSecondActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.ArticRecyclerAdapter;
 import com.yikangcheng.admin.yikang.activity.adapter.FaddRecyclerAdapter;
 import com.yikangcheng.admin.yikang.activity.adapter.LikeAdapter;
-import com.yikangcheng.admin.yikang.bean.LikeBean;
 import com.yikangcheng.admin.yikang.activity.particulars.ParticularsActivity;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
+import com.yikangcheng.admin.yikang.bean.LikeBean;
 import com.yikangcheng.admin.yikang.bean.Request;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
 import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
@@ -44,7 +39,7 @@ import java.util.List;
 import me.jessyan.autosize.AutoSizeConfig;
 import me.jessyan.autosize.internal.CustomAdapt;
 
-public class Fragment_Shou extends BaseFragment implements CustomAdapt {
+public class Fragment_Shou extends BaseFragment implements CustomAdapt, ICoreInfe {
 
     private Banner banner, m_banner;
     List<Integer> imageList = new ArrayList<>();
@@ -54,7 +49,7 @@ public class Fragment_Shou extends BaseFragment implements CustomAdapt {
     private ArticRecyclerAdapter articRecyclerAdapter;
     private ImageView shou_miao_imag;
     private LikeAdapter mLikeAdapter;
-//    private SmartRefreshLayout mRefreshLayout;
+    //    private SmartRefreshLayout mRefreshLayout;
     private int mPage = 1;
     private RelativeLayout bao_rela;
 
