@@ -1,4 +1,4 @@
-package com.yikangcheng.admin.yikang.activity.aftersale;
+package com.yikangcheng.admin.yikang.activity;
 
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -8,26 +8,26 @@ import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
-public class AfterSaleActivity extends BaseActivtiy {
+public class ApoutUsActivity extends BaseActivtiy {
 
 
-    private ImageView mImgActivityAftersaleFanhui;
+    private ImageView mImgActivityApoutusFanhui;
     private Toolbar mToolbarActivityMyaccount;
 
     @Override
     protected void initView() {
+
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
 
-        mImgActivityAftersaleFanhui = findViewById(R.id.img_activity_aftersale_fanhui);
+        mImgActivityApoutusFanhui = findViewById(R.id.img_activity_apoutus_fanhui);
         mToolbarActivityMyaccount = findViewById(R.id.toolbar_activity_myaccount);
+
 
         mToolbarActivityMyaccount.setTitle("");
         setSupportActionBar(mToolbarActivityMyaccount);
-        /**
-         * 点击返回图标关闭放前页面
-         */
-        mImgActivityAftersaleFanhui.setOnClickListener(new View.OnClickListener() {
+
+        mImgActivityApoutusFanhui.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -42,7 +42,7 @@ public class AfterSaleActivity extends BaseActivtiy {
 
     @Override
     protected int getActivtiyLayoutId() {
-        return R.layout.activity_after_sale;
+        return R.layout.activity_apout_us;
     }
 
     @Override

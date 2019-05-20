@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="11dp"
+        android:background="@drawable/bai"
+        android:layout_width="match_parent"
+        android:layout_height="19dp">
+
+        <TextView
+            android:id="@+id/tv_fragment_all_bianhao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="9dp"
+            android:layout_marginTop="5dp"
+            android:text="订单编号:00000000000000000"
+            android:textColor="#333333"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/tv_fragment_all_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="165dp"
+            android:layout_marginTop="5dp"
+            android:text="2019-05-25 00:00"
+            android:textColor="#333333"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/tv_fragment_all_zhuangtai"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="262dp"
+            android:layout_marginTop="5dp"
+            android:text="交易关闭"
+            android:textColor="@color/colorToolbar"
+            android:textSize="10sp" />
+
+        <ImageView
+            android:id="@+id/img_fragment_all_shanchu"
+            android:layout_width="11dp"
+            android:layout_height="11dp"
+            android:layout_marginLeft="309dp"
+            android:layout_marginTop="6dp"
+            android:src="@drawable/shanchu_h" />
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:id="@+id/rlv_fragment_all_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/bai"
+        android:layout_width="match_parent"
+        android:layout_height="19dp"
+        android:layout_marginBottom="5dp">
+
+        <TextView
+            android:id="@+id/tv_fragment_all_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="81dp"
+            android:layout_marginTop="5dp"
+            android:text="共计1件商品"
+            android:textColor="#333333"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/tv_fragment_all_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="140dp"
+            android:layout_marginTop="5dp"
+            android:text="合计：¥000000000.00"
+            android:textColor="#333333"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/tv_fragment_all_freight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="239dp"
+            android:layout_marginTop="5dp"
+            android:text="(含运费¥ 999.00)"
+            android:textColor="#333333"
+            android:textSize="9sp" />
+    </RelativeLayout>
+
+
+</LinearLayout>

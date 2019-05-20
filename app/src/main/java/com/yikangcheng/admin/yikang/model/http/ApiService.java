@@ -1,6 +1,7 @@
 package com.yikangcheng.admin.yikang.model.http;
 
 import com.yikangcheng.admin.yikang.bean.ClassifyListOneBean;
+import com.yikangcheng.admin.yikang.bean.LikeBean;
 import com.yikangcheng.admin.yikang.bean.Request;
 import com.yikangcheng.admin.yikang.bean.ShopCarBean;
 
@@ -27,5 +28,11 @@ public interface ApiService {
      */
     @POST("shopCart/list")
     Observable<Request<List<ShopCarBean>>> listCar(@Query("userId") int userId);
+
+    /**
+     * 猜你喜欢
+     */
+    @POST("index/similarCommodityPage")
+    Observable<Request<List<LikeBean>>> list(@Query("userId") int userId,@Query("page.currentPage") int currentPage);
 
 }
