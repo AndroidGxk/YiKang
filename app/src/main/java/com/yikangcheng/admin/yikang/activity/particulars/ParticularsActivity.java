@@ -43,7 +43,7 @@ public class ParticularsActivity extends BaseActivtiy implements CustomAdapt {
         line = findViewById(R.id.line);
         kefu_rela = findViewById(R.id.kefu_rela);
         Display display = this.getWindowManager().getDefaultDisplay();
-        width = display.getWidth();
+            width = display.getWidth();
         height = display.getHeight();
         /**
          * 在TextView文字中间加横线（原价）

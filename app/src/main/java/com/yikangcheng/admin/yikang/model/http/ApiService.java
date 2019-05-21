@@ -33,6 +33,6 @@ public interface ApiService {
      * 猜你喜欢
      */
     @POST("index/similarCommodityPage")
-    Observable<Request<List<LikeBean>>> list(@Query("userId") int userId,@Query("page.currentPage") int currentPage);
+    Observable<Request<List<LikeBean>>> list(@Query("userId") int userId, @Query("page.currentPage") int currentPage);
 
 }

@@ -40,7 +40,7 @@ public class All_B_Adapter extends RecyclerView.Adapter {
         ViewHolder holder1 = (ViewHolder) holder;
         holder1.mName.setText(mList.get(position).getName());
         holder1.mTitle.setText(mList.get(position).getTitle());
-        holder1.mTitle.setText(mList.get(position).getPrice());
+        holder1.mPrice.setText(mList.get(position).getPrice());
 
     }
 
