@@ -32,6 +32,25 @@ public class MessageActivity extends BaseActivtiy {
                 startActivity(new Intent(MessageActivity.this, WuliuXinxiActivity.class));
             }
         });
+
+        /**
+         * 跳转到系统通知
+         */
+        tongzhi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MessageActivity.this, SystemActivity.class));
+            }
+        });
+        /**
+         * 跳转到客服消息
+         */
+        kefu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MessageActivity.this, CustomerActivity.class));
+            }
+        });
     }
 
     @Override

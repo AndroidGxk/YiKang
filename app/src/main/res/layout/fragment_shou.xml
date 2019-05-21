@@ -191,9 +191,10 @@
                 android:id="@+id/bao_recycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="10dp"
                 android:layout_marginTop="12dp"
-                android:paddingLeft="15dp" />
-                android:layout_marginRight="7dp" />
+                 />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -231,11 +232,11 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/artic_recycler"
                 android:layout_width="match_parent"
-                android:layout_height="161dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="12dp"
-                android:layout_marginRight="15dp"
+                android:layout_marginRight="10dp"
                 android:overScrollMode="never" />
 
             <RelativeLayout
@@ -277,7 +278,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="12dp"
-                android:layout_marginRight="15dp" />
+                android:layout_marginRight="10dp" />
 
             <RelativeLayout
                 android:layout_width="match_parent"

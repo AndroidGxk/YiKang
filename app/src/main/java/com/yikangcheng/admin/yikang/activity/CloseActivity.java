@@ -24,11 +24,11 @@ import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 public class CloseActivity extends BaseActivtiy {
 
     private RecyclerView recycler;
-    private RelativeLayout rela4;
+    private RelativeLayout rela4,rela3;
     private int width;
     private Dialog bottomDialog;
     private int height;
-    private View sele_pay_digo;
+    private View sele_pay_digo,invoice_item;
     private ImageView buy_img;
     private RelativeLayout wechat_pay, zhi_rela;
     //选中未选中
@@ -40,10 +40,12 @@ public class CloseActivity extends BaseActivtiy {
         recycler = findViewById(R.id.recycler);
         buy_img = findViewById(R.id.buy_img);
         rela4 = findViewById(R.id.rela4);
+        rela3 = findViewById(R.id.rela3);
         Display display = this.getWindowManager().getDefaultDisplay();
         width = display.getWidth();
         height = display.getHeight();
         sele_pay_digo = LayoutInflater.from(this).inflate(R.layout.sele_pay_digo, null);
+        invoice_item = LayoutInflater.from(this).inflate(R.layout.invoice_item, null);
         recycler.setLayoutManager(new LinearLayoutManager(this));
         recycler.setAdapter(new CloseRecyclerAdapter(this));
         //解决滑动不流畅
@@ -104,6 +106,21 @@ public class CloseActivity extends BaseActivtiy {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(CloseActivity.this, ConfirmActivity.class));
+            }
+        });
+        /**
+         * 开发票
+         */
+        rela3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //设置dialog的宽高为屏幕的宽高
+                ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(width, height - 340 * 2);
+                bottomDialog.setContentView(invoice_item, layoutParams);
+                bottomDialog.getWindow().setGravity(Gravity.BOTTOM);
+                bottomDialog.setCanceledOnTouchOutside(true);
+                bottomDialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
+                bottomDialog.show();
             }
         });
     }

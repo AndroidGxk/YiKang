@@ -154,8 +154,8 @@
 
         <TextView
             android:id="@+id/tv_particulars_title"
-            android:layout_width="290dp"
-            android:layout_height="35dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="49dp"
             android:layout_marginTop="373dp"
             android:text="韩国JM牛油果精油面膜男女急救补水保湿韩国JM "
@@ -164,8 +164,8 @@
 
         <TextView
             android:id="@+id/tv_particulars_jianjie"
-            android:layout_width="287dp"
-            android:layout_height="25dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="49dp"
             android:layout_marginTop="418dp"
             android:text="韩国JM牛油果精油面膜男女急救补水保湿韩国JM牛油果精油面膜男女急救补水保湿"

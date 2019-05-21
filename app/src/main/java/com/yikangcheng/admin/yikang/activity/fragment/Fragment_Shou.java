@@ -20,6 +20,7 @@ import com.yikangcheng.admin.yikang.activity.SeckillSecondActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.ArticRecyclerAdapter;
 import com.yikangcheng.admin.yikang.activity.adapter.FaddRecyclerAdapter;
 import com.yikangcheng.admin.yikang.activity.adapter.LikeAdapter;
+import com.yikangcheng.admin.yikang.activity.adapter.LuxuryRecyclerAdapter;
 import com.yikangcheng.admin.yikang.activity.particulars.ParticularsActivity;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
 import com.yikangcheng.admin.yikang.bean.LikeBean;
@@ -27,6 +28,7 @@ import com.yikangcheng.admin.yikang.bean.Request;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
 import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
 import com.yikangcheng.admin.yikang.presenter.LikePresenter;
+import com.yikangcheng.admin.yikang.util.UIUtils;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
 import com.zhouwei.mzbanner.MZBannerView;
@@ -52,6 +54,7 @@ public class Fragment_Shou extends BaseFragment implements CustomAdapt, ICoreInf
     //    private SmartRefreshLayout mRefreshLayout;
     private int mPage = 1;
     private RelativeLayout bao_rela;
+    private LuxuryRecyclerAdapter luxuryRecyclerAdapter;
 
     @Override
     protected void initView(View view) {
@@ -60,6 +63,7 @@ public class Fragment_Shou extends BaseFragment implements CustomAdapt, ICoreInf
         AutoSizeConfig.getInstance().setCustomFragment(true);
         faddRecyclerAdapter = new FaddRecyclerAdapter();
         articRecyclerAdapter = new ArticRecyclerAdapter();
+        luxuryRecyclerAdapter = new LuxuryRecyclerAdapter();
         banner = view.findViewById(R.id.banner);
         m_banner = view.findViewById(R.id.m_banner);
         mMZBanner = view.findViewById(R.id.bao_mzbanner);
@@ -69,7 +73,6 @@ public class Fragment_Shou extends BaseFragment implements CustomAdapt, ICoreInf
         c_recycler = view.findViewById(R.id.c_recycler);
         mei_recycle = view.findViewById(R.id.mei_recycle);
         artic_recycler = view.findViewById(R.id.artic_recycler);
-
 
 //        mRefreshLayout.setOnLoadMoreListener(this);
 //        mRefreshLayout.setOnRefreshListener(this);
@@ -96,23 +99,22 @@ public class Fragment_Shou extends BaseFragment implements CustomAdapt, ICoreInf
                 /**
                  * 点击秒杀跳转到详情页面
                  */
-                Intent intent = new Intent(getActivity(), ParticularsActivity.class);
-                startActivity(intent);
+                if (!UIUtils.isFastClick()) {
+                    Intent intent = new Intent(getActivity(), ParticularsActivity.class);
+                    startActivity(intent);
+                }
+
             }
         });
-
-
         StaggeredGridLayoutManager ctaggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         c_recycler.setLayoutManager(ctaggeredGridLayoutManager);
         List<LikeBean> entityBeans = new ArrayList<>();
         mLikeAdapter = new LikeAdapter(entityBeans, getContext());
         c_recycler.setAdapter(mLikeAdapter);
 
-
         /**刷新的监听事件
          *
          */
-
 
     }
 
@@ -153,20 +155,36 @@ public class Fragment_Shou extends BaseFragment implements CustomAdapt, ICoreInf
         mei_recycle.setLayoutManager(mLayoutManager);
         mei_recycle.setAdapter(faddRecyclerAdapter);
         artic_recycler.setLayoutManager(aLayoutManager);
-        artic_recycler.setAdapter(faddRecyclerAdapter);
+        artic_recycler.setAdapter(luxuryRecyclerAdapter);
         shou_miao_imag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getContext(), SeckillSecondActivity.class));
+                if (!UIUtils.isFastClick()) {
+                    startActivity(new Intent(getContext(), SeckillSecondActivity.class));
+                }
             }
         });
+
         /**
          * 跳转到爆款页面
          */
         bao_rela.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), FaddishActivity.class));
+                if (!UIUtils.isFastClick()) {
+                    startActivity(new Intent(getActivity(), FaddishActivity.class));
+                }
+            }
+        });
+        /**
+         * 奢侈品跳转详情页
+         */
+        luxuryRecyclerAdapter.setOnClickListener(new LuxuryRecyclerAdapter.OnClickListener() {
+            @Override
+            public void OnClickListener(View v, int position) {
+                if (!UIUtils.isFastClick()) {
+                    startActivity(new Intent(getActivity(), ParticularsActivity.class));
+                }
             }
         });
     }

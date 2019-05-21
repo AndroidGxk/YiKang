@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:background="@drawable/seek_edi_shape"
+    android:layout_height="match_parent">
+
+    <android.support.constraint.Guideline
+        android:id="@+id/title_line"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.04" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/left_line"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.04" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/fa_line"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.25" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/wan_line"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.88" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="发票信息"
+        android:textColor="#ff333333"
+        android:textSize="14sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_line" />
+
+    <TextView
+        android:id="@+id/invoice_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="58dp"
+        android:text="发票类型"
+        android:textColor="#ff333333"
+        android:textSize="12sp"
+        app:layout_constraintLeft_toRightOf="@+id/left_line"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/no_invoice"
+        android:layout_width="60dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/yellow_pay_shape"
+        android:gravity="center"
+        android:text="不开发票"
+        android:textColor="#ff333333"
+        android:textSize="10sp"
+        app:layout_constraintLeft_toRightOf="@+id/left_line"
+        app:layout_constraintTop_toBottomOf="@+id/invoice_type" />
+
+    <TextView
+        android:id="@+id/dian_invoice"
+        android:layout_width="60dp"
+        android:layout_height="25dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/yellow_pay_shape"
+        android:gravity="center"
+        android:text="电子发票"
+        android:textColor="#ff333333"
+        android:textSize="10sp"
+        app:layout_constraintLeft_toRightOf="@+id/no_invoice"
+        app:layout_constraintTop_toBottomOf="@+id/invoice_type" />
+
+    <TextView
+        android:layout_width="60dp"
+        android:layout_height="25dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/yellow_pay_shape"
+        android:gravity="center"
+        android:text="纸质发票"
+        android:textColor="#ff333333"
+        android:textSize="10sp"
+        app:layout_constraintLeft_toRightOf="@+id/dian_invoice"
+        app:layout_constraintTop_toBottomOf="@+id/invoice_type" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="发票抬头"
+        android:textColor="#ff333333"
+        android:textSize="12sp"
+        app:layout_constraintLeft_toRightOf="@+id/left_line"
+        app:layout_constraintTop_toBottomOf="@+id/fa_line" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/shop_btn_shape"
+        android:gravity="center"
+        android:text="完成"
+        android:textColor="#FFFFFF"
+        app:layout_constraintTop_toBottomOf="@+id/wan_line" />
+</android.support.constraint.ConstraintLayout>

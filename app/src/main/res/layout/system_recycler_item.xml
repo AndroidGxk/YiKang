@@ -33,19 +33,17 @@
         android:layout_height="0dp"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.58" />
-
     <android.support.constraint.Guideline
         android:id="@+id/check_line"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.95" />
-
     <ImageView
         android:id="@+id/wuliu_img"
         android:layout_width="38dp"
         android:layout_height="38dp"
-        android:background="@drawable/wuliu_list"
+        android:background="@drawable/syste"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/left_line"
         app:layout_constraintTop_toTopOf="parent" />
@@ -55,7 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
-        android:text="交易物流"
+        android:text="系统消息"
         android:textColor="#ff333333"
         android:textSize="13sp"
         app:layout_constraintLeft_toRightOf="@+id/wuliu_img"
@@ -66,14 +64,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
-        android:text="您的订单[面膜...]已发货"
+        android:text="您的购物车里的宝贝降价啦"
         android:textColor="#ff999999"
         android:textSize="11sp"
         app:layout_constraintLeft_toRightOf="@+id/wuliu_img"
         app:layout_constraintTop_toBottomOf="@+id/bottom_line" />
 
     <TextView
-        android:id="@+id/date_text"
+        android:id="@+id/data_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="星期五"
@@ -81,14 +79,12 @@
         android:textSize="10sp"
         app:layout_constraintRight_toRightOf="@id/check_line"
         app:layout_constraintTop_toBottomOf="@+id/top_line" />
-
     <CheckBox
         android:id="@+id/check_btn"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:background="@drawable/xuanze"
+        android:background="@drawable/xuanze_or"
         android:button="@null"
-        android:visibility="gone"
-        app:layout_constraintRight_toRightOf="@id/check_line"
-        app:layout_constraintTop_toBottomOf="@+id/date_text" />
+        app:layout_constraintTop_toBottomOf="@+id/data_text"
+        app:layout_constraintRight_toRightOf="@id/check_line" />
 </android.support.constraint.ConstraintLayout>

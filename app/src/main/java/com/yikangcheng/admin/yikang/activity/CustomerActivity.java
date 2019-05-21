@@ -6,16 +6,15 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.yikangcheng.admin.yikang.R;
-import com.yikangcheng.admin.yikang.activity.adapter.WuliuAdapter;
+import com.yikangcheng.admin.yikang.activity.adapter.CustomerRecyclerAdapter;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
-public class WuliuXinxiActivity extends BaseActivtiy {
-
+public class CustomerActivity extends BaseActivtiy {
     private RecyclerView xrecycler;
-    private TextView compile_text;
-    private WuliuAdapter wuliuAdapter;
     private boolean isclick;
+    private TextView compile_text;
+    private CustomerRecyclerAdapter customerRecyclerAdapter;
 
     @Override
     protected void initView() {
@@ -24,8 +23,8 @@ public class WuliuXinxiActivity extends BaseActivtiy {
         xrecycler = findViewById(R.id.xrecycler);
         compile_text = findViewById(R.id.compile_text);
         xrecycler.setLayoutManager(new LinearLayoutManager(this));
-        wuliuAdapter = new WuliuAdapter(this);
-        xrecycler.setAdapter(wuliuAdapter);
+        customerRecyclerAdapter = new CustomerRecyclerAdapter(this);
+        xrecycler.setAdapter(customerRecyclerAdapter);
     }
 
     @Override
@@ -36,11 +35,11 @@ public class WuliuXinxiActivity extends BaseActivtiy {
             public void onClick(View view) {
                 if (!isclick) {
                     isclick = true;
-                    wuliuAdapter.isclick(isclick);
+                    customerRecyclerAdapter.isclick(isclick);
                     compile_text.setText("完成");
                 } else {
                     isclick = false;
-                    wuliuAdapter.isclick(isclick);
+                    customerRecyclerAdapter.isclick(isclick);
                     compile_text.setText("编辑");
                 }
             }
@@ -49,7 +48,7 @@ public class WuliuXinxiActivity extends BaseActivtiy {
 
     @Override
     protected int getActivtiyLayoutId() {
-        return R.layout.activity_wuliu_xinxi;
+        return R.layout.activity_customer;
     }
 
     @Override

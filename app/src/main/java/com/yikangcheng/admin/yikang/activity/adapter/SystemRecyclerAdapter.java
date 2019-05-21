@@ -1,15 +1,12 @@
 package com.yikangcheng.admin.yikang.activity.adapter;
 
 import android.content.Context;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.CheckBox;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,23 +18,23 @@ import java.util.ArrayList;
  * 作者：古祥坤 on 2019/5/19 23:24
  * 邮箱：1724959985@qq.com
  */
-public class WuliuAdapter extends RecyclerView.Adapter<WuliuAdapter.Vh> {
+public class SystemRecyclerAdapter extends RecyclerView.Adapter<SystemRecyclerAdapter.Vh> {
     ArrayList<String> arrayList = new ArrayList<>();
-    private boolean isclick;
     Context context;
+    private boolean isclick;
+
+    public SystemRecyclerAdapter(Context context) {
+        this.context = context;
+    }
 
     public void addAll(ArrayList<String> arrayList) {
         this.arrayList.addAll(arrayList);
     }
 
-    public WuliuAdapter(Context context) {
-        this.context = context;
-    }
-
     @NonNull
     @Override
     public Vh onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.wuliu_recycler_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.system_recycler_item, parent, false);
         return new Vh(view);
     }
 
@@ -49,7 +46,7 @@ public class WuliuAdapter extends RecyclerView.Adapter<WuliuAdapter.Vh> {
             vh.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    vh.itemView.setBackgroundResource(R.drawable.distri_recycler_shape);
+                    vh.itemView.setBackgroundResource(R.drawable.system_recycler_shape);
                     vh.check_btn.setVisibility(View.VISIBLE);
                 }
             });

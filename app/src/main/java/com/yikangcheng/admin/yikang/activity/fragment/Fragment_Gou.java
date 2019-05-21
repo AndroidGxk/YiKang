@@ -66,7 +66,6 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
                 }
             }
         });
-
     }
 
     @Override
@@ -88,7 +87,6 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
         shopRecyclerAdapter.setTotalPriceListener(this);//设置总价回调接口
         shopRecyclerAdapter.setCheckBoxTouchListener(this);
         shop_recycler.setAdapter(shopRecyclerAdapter);
-
         //为你推荐recyclerview
         shop_recyclertwo.setLayoutManager(new GridLayoutManager(getContext(), 2));
         all_check.setOnClickListener(new View.OnClickListener() {
