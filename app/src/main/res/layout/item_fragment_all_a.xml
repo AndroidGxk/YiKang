@@ -16,11 +16,11 @@
             android:id="@+id/tv_fragment_all_bianhao"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="9dp"
+            android:layout_marginLeft="6dp"
             android:layout_marginTop="5dp"
             android:text="订单编号:00000000000000000"
             android:textColor="#333333"
-            android:textSize="10sp" />
+            android:textSize="11sp" />
 
         <TextView
             android:id="@+id/tv_fragment_all_data"
@@ -36,17 +36,17 @@
             android:id="@+id/tv_fragment_all_zhuangtai"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="262dp"
+            android:layout_marginLeft="252dp"
             android:layout_marginTop="5dp"
             android:text="交易关闭"
             android:textColor="@color/colorToolbar"
-            android:textSize="10sp" />
+            android:textSize="11sp" />
 
         <ImageView
             android:id="@+id/img_fragment_all_shanchu"
-            android:layout_width="11dp"
-            android:layout_height="11dp"
-            android:layout_marginLeft="309dp"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginLeft="300dp"
             android:layout_marginTop="6dp"
             android:src="@drawable/shanchu_h" />
 
@@ -71,7 +71,7 @@
             android:id="@+id/tv_fragment_all_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="81dp"
+            android:layout_marginLeft="79dp"
             android:layout_marginTop="5dp"
             android:text="共计1件商品"
             android:textColor="#333333"
@@ -81,7 +81,7 @@
             android:id="@+id/tv_fragment_all_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="140dp"
+            android:layout_marginLeft="139dp"
             android:layout_marginTop="5dp"
             android:text="合计：¥000000000.00"
             android:textColor="#333333"

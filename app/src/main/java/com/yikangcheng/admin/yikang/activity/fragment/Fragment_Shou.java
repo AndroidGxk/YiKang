@@ -3,6 +3,7 @@ package com.yikangcheng.admin.yikang.activity.fragment;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +15,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.FaddishActivity;
 import com.yikangcheng.admin.yikang.activity.SeckillSecondActivity;
@@ -40,6 +45,7 @@ import java.util.List;
 
 import me.jessyan.autosize.AutoSizeConfig;
 import me.jessyan.autosize.internal.CustomAdapt;
+import me.jessyan.autosize.utils.LogUtils;
 
 public class Fragment_Shou extends BaseFragment implements CustomAdapt, ICoreInfe {
 
@@ -54,12 +60,13 @@ public class Fragment_Shou extends BaseFragment implements CustomAdapt, ICoreInf
     //    private SmartRefreshLayout mRefreshLayout;
     private int mPage = 1;
     private RelativeLayout bao_rela;
+    private SmartRefreshLayout mSmartRefreshLayout;
     private LuxuryRecyclerAdapter luxuryRecyclerAdapter;
 
     @Override
     protected void initView(View view) {
 
-        initP();
+        initP(mPage);
         AutoSizeConfig.getInstance().setCustomFragment(true);
         faddRecyclerAdapter = new FaddRecyclerAdapter();
         articRecyclerAdapter = new ArticRecyclerAdapter();
@@ -73,6 +80,7 @@ public class Fragment_Shou extends BaseFragment implements CustomAdapt, ICoreInf
         c_recycler = view.findViewById(R.id.c_recycler);
         mei_recycle = view.findViewById(R.id.mei_recycle);
         artic_recycler = view.findViewById(R.id.artic_recycler);
+        mSmartRefreshLayout = view.findViewById(R.id.refreshLayout);
 
 //        mRefreshLayout.setOnLoadMoreListener(this);
 //        mRefreshLayout.setOnRefreshListener(this);
@@ -115,12 +123,40 @@ public class Fragment_Shou extends BaseFragment implements CustomAdapt, ICoreInf
         /**刷新的监听事件
          *
          */
+        initListener();
+
 
     }
 
-    private void initP() {
+    /**
+     * 刷新加载
+     */
+    private void initListener() {
+        //刷新的监听事件
+        mSmartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                //请求数据
+                refreshLayout.finishRefresh();  //刷新完成
+            }
+        });
+        //加载的监听事件
+        mSmartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                mPage++;
+                initP(mPage);
+                //Log.e("tag", "onLoadMore: " + mPage + "-----------");
+                refreshLayout.finishLoadMore();      //加载完成
+                refreshLayout.finishLoadMoreWithNoMoreData();  //全部加载完成,没有数据了调用此方法
+            }
+        });
+    }
+
+    private void initP(int pager) {
         LikePresenter likePresenter = new LikePresenter(this);
-        likePresenter.request(11, mPage);
+        //Log.e("tag", "initP: " + pager + "======================");
+        likePresenter.request(11, pager);
     }
 
 
@@ -204,9 +240,8 @@ public class Fragment_Shou extends BaseFragment implements CustomAdapt, ICoreInf
     public void success(Object data) {
         Request request = (Request) data;
         List<LikeBean> entity = (List<LikeBean>) request.getEntity();
-        Log.e("list------------------------", entity.toString());
+        // Log.e("list------------------------", entity.toString());
         mLikeAdapter.addData(entity);
-
     }
 
     @Override

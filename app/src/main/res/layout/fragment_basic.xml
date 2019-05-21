@@ -124,34 +124,35 @@
             android:textSize="15dp" />
 
         <ImageView
-            android:layout_width="8dp"
-            android:layout_height="10dp"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="250dp"
-            android:layout_marginTop="16dp"
             android:src="@drawable/danyuan_j" />
 
         <TextView
             android:layout_width="51dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="262dp"
-            android:layout_marginTop="11dp"
+
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="264dp"
             android:text="男      女"
             android:textColor="#999999"
             android:textSize="13sp" />
 
         <ImageView
-            android:layout_width="8dp"
-            android:layout_height="10dp"
-            android:layout_marginLeft="285dp"
-            android:layout_marginTop="16dp"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginLeft="281dp"
+            android:layout_centerVertical="true"
             android:src="@drawable/danxuan_b" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="308dp"
-            android:layout_marginTop="16dp"
-            android:src="@drawable/right" />
+        <!--<ImageView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="308dp"-->
+            <!--android:layout_marginTop="16dp"-->
+            <!--android:src="@drawable/right" />-->
     </RelativeLayout>
 
     <RelativeLayout

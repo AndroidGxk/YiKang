@@ -13,6 +13,7 @@ import com.yikangcheng.admin.yikang.activity.MessageActivity;
 import com.yikangcheng.admin.yikang.activity.OrderFormActivity;
 import com.yikangcheng.admin.yikang.activity.aftersale.AfterSaleActivity;
 import com.yikangcheng.admin.yikang.activity.myaccount.MyaccountActivity;
+import com.yikangcheng.admin.yikang.activity.siteactivity.AiteActivity;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
 
 public class Fragment_Wo extends BaseFragment {
@@ -74,6 +75,16 @@ public class Fragment_Wo extends BaseFragment {
         mTvFragmentWoName = view.findViewById(R.id.tv__fragment_wo_name);
 
 
+        /**
+         * 点击收货地址跳转页面
+         */
+        mImgFragmentWoDizi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), AiteActivity.class);
+                startActivity(intent);
+            }
+        });
         /**
          * 点击头像跳转页面
          */
