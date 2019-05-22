@@ -46,7 +46,7 @@ public class CloseRecyclerAdapter extends RecyclerView.Adapter<CloseRecyclerAdap
 
     @Override
     public int getItemCount() {
-        return 9;
+        return 2;
     }
 
     class Vh extends RecyclerView.ViewHolder {

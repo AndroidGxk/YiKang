@@ -1,65 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_marginLeft="15dp"
-    android:layout_marginRight="15dp"
     android:layout_height="88dp"
-    android:background="#FBFBFB"
-    android:layout_gravity="center_horizontal">
+    android:layout_gravity="center_horizontal"
+    android:background="#FFFFFF">
+
+    <android.support.constraint.Guideline
+        android:id="@+id/top_guide"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.14"
+        app:layout_constraintLeft_toLeftOf="@+id/miv_1" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/title_guide"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.55"
+        app:layout_constraintLeft_toLeftOf="@+id/miv_1" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/bottom_guide"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.77"
+        app:layout_constraintLeft_toLeftOf="@+id/miv_1" />
 
     <ImageView
-        android:id="@+id/img_fragment_all_b"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
+        android:id="@+id/imag"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
         android:layout_marginLeft="15dp"
-        android:src="@drawable/shouchuan" />
+        android:background="@drawable/shouchuan"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_fragment_all_b_name"
         android:layout_width="204dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="102dp"
-        android:layout_marginTop="13dp"
-        android:text="产品名称ESTEE产品名称ESTEE产品 名称ESTEE产品名称ESTEE"
-        android:textColor="#333333"
-        android:textSize="12dp" />
+        android:layout_marginLeft="20dp"
+        android:text="产品名称ESTEE产品名称ESTEE产品名称ESTEE产品名称ESTEE"
+        android:textColor="#ff333333"
+        android:textSize="12sp"
+        app:layout_constraintLeft_toRightOf="@+id/imag"
+        app:layout_constraintTop_toBottomOf="@+id/top_guide" />
 
     <TextView
         android:id="@+id/tv_fragment_all_b_title"
         android:layout_width="163dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="102dp"
-        android:layout_marginTop="49dp"
+        android:layout_marginLeft="20dp"
         android:text="产品名称ESTEE产品名称ESTEE产品"
-        android:textColor="#999999"
-        android:textSize="10dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="288dp"
-        android:layout_marginTop="50dp"
-        android:text="X1"
-        android:textColor="#ff333333"
-        android:textSize="10sp" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="¥"
-        android:textColor="#ffff0000"
-        android:layout_marginLeft="102dp"
-        android:layout_marginTop="70dp"
+        android:textColor="#ff999999"
         android:textSize="10sp"
-        />
+        app:layout_constraintLeft_toRightOf="@+id/imag"
+        app:layout_constraintTop_toBottomOf="@+id/title_guide" />
+
     <TextView
         android:id="@+id/tv_fragment_all_b_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="866999.00"
+        android:layout_marginLeft="20dp"
+        android:text="¥866999.00"
         android:textColor="#ffff0000"
-        android:layout_marginLeft="109dp"
-        android:layout_marginTop="68dp"
         android:textSize="13sp"
-        />
-</RelativeLayout>
+        app:layout_constraintLeft_toRightOf="@+id/imag"
+        app:layout_constraintTop_toBottomOf="@+id/bottom_guide" />
+</android.support.constraint.ConstraintLayout>

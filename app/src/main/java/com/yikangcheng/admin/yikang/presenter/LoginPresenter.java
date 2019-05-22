@@ -8,18 +8,19 @@ import com.yikangcheng.admin.yikang.model.http.NotWorkUtils;
 import io.reactivex.Observable;
 
 /**
- * 作者：古祥坤 on 2019/5/18 14:08
- * 邮箱：1724959985@qq.com
+ * Created by lenovo on 2019/5/17.
+ * WF
  */
-public class TestPersenter extends BasePresenter {
 
-    public TestPersenter(ICoreInfe dataCall) {
+public class LoginPresenter extends BasePresenter {
+
+    public LoginPresenter(ICoreInfe dataCall) {
         super(dataCall);
     }
 
     @Override
     protected Observable observable(Object... args) {
         ApiService apiService = NotWorkUtils.getInstance().create(ApiService.class);
-        return apiService.classify();
+        return apiService.login((String) args[0], (String) args[1]);
     }
 }

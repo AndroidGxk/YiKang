@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.ApoutUsActivity;
+import com.yikangcheng.admin.yikang.activity.LoginActivity;
 import com.yikangcheng.admin.yikang.activity.MessageActivity;
 import com.yikangcheng.admin.yikang.activity.OrderFormActivity;
 import com.yikangcheng.admin.yikang.activity.aftersale.AfterSaleActivity;
@@ -74,6 +75,16 @@ public class Fragment_Wo extends BaseFragment {
         //用户名
         mTvFragmentWoName = view.findViewById(R.id.tv__fragment_wo_name);
 
+        /**
+         * 登录
+         */
+
+        mTvFragmentWoName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), LoginActivity.class));
+            }
+        });
 
         /**
          * 点击收货地址跳转页面
@@ -85,6 +96,7 @@ public class Fragment_Wo extends BaseFragment {
                 startActivity(intent);
             }
         });
+
         /**
          * 点击头像跳转页面
          */
@@ -95,6 +107,7 @@ public class Fragment_Wo extends BaseFragment {
                 startActivity(intent);
             }
         });
+
         /**
          * 点击售后/退款 进行页面跳转
          */
@@ -105,6 +118,7 @@ public class Fragment_Wo extends BaseFragment {
                 startActivity(intent);
             }
         });
+
         /**
          * 消息页面
          */

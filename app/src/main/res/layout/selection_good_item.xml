@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:zhy="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:background="@drawable/seek_edi_shape"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/seek_edi_shape">
 
     <ImageView
         android:id="@+id/good_img"
@@ -68,15 +69,16 @@
         android:textColor="#ff333333"
         android:textSize="13sp" />
 
-    <com.yikangcheng.admin.yikang.util.FlowLayout
+    <com.zhy.view.flowlayout.TagFlowLayout
         android:id="@+id/flow1"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:layout_below="@+id/color"
         android:layout_marginTop="15dp"
-        android:paddingLeft="15dp">
+        android:paddingLeft="15dp"
+        zhy:max_select="1">
 
-    </com.yikangcheng.admin.yikang.util.FlowLayout>
+    </com.zhy.view.flowlayout.TagFlowLayout>
 
     <TextView
         android:id="@+id/nei"
@@ -89,15 +91,16 @@
         android:textColor="#ff333333"
         android:textSize="13sp" />
 
-    <com.yikangcheng.admin.yikang.util.FlowLayout
+    <com.zhy.view.flowlayout.TagFlowLayout
         android:id="@+id/flow2"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:layout_below="@+id/nei"
         android:layout_marginTop="15dp"
-        android:paddingLeft="15dp">
+        android:paddingLeft="15dp"
+        zhy:max_select="1">
 
-    </com.yikangcheng.admin.yikang.util.FlowLayout>
+    </com.zhy.view.flowlayout.TagFlowLayout>
 
     <TextView
         android:id="@+id/num"
@@ -110,20 +113,28 @@
         android:textColor="#ff000000"
         android:textSize="13sp" />
 
+    <com.yikangcheng.admin.yikang.util.AddSubLayout
+        android:layout_width="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/flow2"
+        android:layout_marginRight="15dp"
+        android:layout_height="wrap_content" />
+
     <ImageView
         android:layout_width="156dp"
-        android:layout_marginBottom="20dp"
         android:layout_height="40dp"
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="15dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/jiarugouwuche" />
 
     <ImageView
         android:layout_width="156dp"
         android:layout_height="40dp"
-        android:layout_marginBottom="20dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:layout_marginRight="15dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/lijigoumai1" />
 </RelativeLayout>

@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yikangcheng.admin.yikang.R;
+import com.yikangcheng.admin.yikang.activity.aftersale.AfterSaleActivity;
 import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Fen;
 import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Gou;
 import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Miao;
@@ -28,7 +29,7 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
     private RadioGroup radio;
     private FragmentTransaction transaction;
     private RadioButton shou, fen, miao, gou, wo;
-    private LinearLayout shou_linear, fen_linear, miao_linear, gou_linear, wo_linear;
+    private LinearLayout shou_linear, fen_linear, miao_linear, gou_linear, wo_linear,line1;
     private DrawerLayout mDrawerLayout;
     private RelativeLayout mNv;
     //    private ImageView mImg_ceHua;
@@ -51,6 +52,7 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         fen_linear = findViewById(R.id.fen_linear);
         shou_text = findViewById(R.id.shou_text);
         fen_text = findViewById(R.id.fen_text);
+        line1 = findViewById(R.id.line1);
         miao_text = findViewById(R.id.miao_text);
         gou_text = findViewById(R.id.gou_text);
         wo_text = findViewById(R.id.wo_text);
@@ -70,7 +72,7 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         tv_toolBar_title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, RegisterActivity.class));
+
             }
         });
         //编辑
@@ -403,6 +405,15 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
                 miao_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
                 gou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
                 wo_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorTab));
+            }
+        });
+        /**
+         * 跳转到activity
+         */
+        line1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, OrderFormActivity.class));
             }
         });
     }

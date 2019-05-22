@@ -58,7 +58,7 @@ public class All_B_Adapter extends RecyclerView.Adapter {
 
         public ViewHolder(View itemView) {
             super(itemView);
-            mImg = itemView.findViewById(R.id.img_fragment_all_b);
+            mImg = itemView.findViewById(R.id.imag);
             mName = itemView.findViewById(R.id.tv_fragment_all_b_name);
             mTitle = itemView.findViewById(R.id.tv_fragment_all_b_title);
             mPrice = itemView.findViewById(R.id.tv_fragment_all_b_price);

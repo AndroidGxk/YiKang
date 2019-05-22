@@ -7,10 +7,10 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolBar"
         android:layout_width="match_parent"
-        android:visibility="gone"
         android:layout_height="42dp"
         android:background="@drawable/toolbar"
         android:fitsSystemWindows="false"
+        android:visibility="gone"
         app:contentInsetStart="0dp">
 
         <RelativeLayout
@@ -122,9 +122,9 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:gravity="center_horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal">
 
                 <View
                     android:id="@+id/view1"
@@ -167,8 +167,8 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:layout_marginBottom="145dp">
+                android:layout_marginBottom="145dp"
+                android:gravity="center_horizontal">
 
                 <View
                     android:id="@+id/view3"

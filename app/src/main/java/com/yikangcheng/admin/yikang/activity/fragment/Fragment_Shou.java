@@ -159,7 +159,6 @@ public class Fragment_Shou extends BaseFragment implements CustomAdapt, ICoreInf
         likePresenter.request(11, pager);
     }
 
-
     @Override
     protected void initData() {
         banner.setImages(imageList);

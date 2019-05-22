@@ -35,6 +35,7 @@ public class SeekActivity extends BaseActivtiy {
 
     @Override
     protected void initView() {
+
         //删除最近搜索按钮
         mImgActivitySeekDelete = findViewById(R.id.img_activity_seek_delete);
         //取消搜索
@@ -45,7 +46,6 @@ public class SeekActivity extends BaseActivtiy {
         mFlowLayout_activity_seek = findViewById(R.id.FlowLayout_activity_seek);
         //热门搜索
         mRlvActivitySeekHot = findViewById(R.id.rlv_activity_seek_hot);
-
         /**
          * 点击取消按钮取消搜索
          */
@@ -57,16 +57,11 @@ public class SeekActivity extends BaseActivtiy {
         mEditTixtActivitySeekSousuo.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-
                 if (actionId == EditorInfo.IME_ACTION_SEND || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
-
                     //do something;
-
                     return true;
                 }
-
                 return false;
-
             }
 
         });
@@ -98,8 +93,11 @@ public class SeekActivity extends BaseActivtiy {
          * 这是清除历史搜索
          */
         deleteAllDb();
-
-
+        List<SoSuoDb> select = Utils.getInstance().select();
+        for (int i = 0; i < select.size(); i++) {
+            SoSuoDb soSuoDb = select.get(i);
+            mFlowLayout_activity_seek.addTextView(soSuoDb.getSeekTitle());
+        }
     }
 
     /**
@@ -142,14 +140,5 @@ public class SeekActivity extends BaseActivtiy {
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        List<SoSuoDb> select = Utils.getInstance().select();
-        for (int i = 0; i < select.size(); i++) {
-            SoSuoDb soSuoDb = select.get(i);
-            mFlowLayout_activity_seek.addTextView(soSuoDb.getSeekTitle());
-        }
-    }
 
 }
