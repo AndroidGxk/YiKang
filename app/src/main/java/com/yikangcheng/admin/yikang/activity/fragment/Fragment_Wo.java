@@ -117,6 +117,7 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe {
         /**
          *     解决滑动不流畅
          */
+        mRlvFragmentWo.setFocusable(false);
         mRlvFragmentWo.setHasFixedSize(true);
         mRlvFragmentWo.setNestedScrollingEnabled(false);
 
