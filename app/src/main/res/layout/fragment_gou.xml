@@ -160,6 +160,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/view2"
                 android:layout_centerHorizontal="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:layout_marginTop="22dp"
                 android:nestedScrollingEnabled="false"
                 android:overScrollMode="never" />

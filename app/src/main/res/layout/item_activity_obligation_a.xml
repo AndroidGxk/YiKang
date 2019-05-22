@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-
     android:background="#FFFFFF"
     android:orientation="vertical">
 
@@ -13,7 +12,7 @@
         android:background="#FFFFFF">
 
         <TextView
-            android:id="@+id/tv_fragment_all_bianhao"
+            android:id="@+id/tv_activity_obligation_bianhao"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -22,7 +21,7 @@
             android:textSize="11sp" />
 
         <TextView
-            android:id="@+id/tv_fragment_all_data"
+            android:id="@+id/tv_activity_obligation_data"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="164dp"
@@ -32,17 +31,17 @@
             android:textSize="10sp" />
 
         <TextView
-            android:id="@+id/tv_fragment_all_zhuangtai"
+            android:id="@+id/tv_activity_obligation_zhuangtai"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="252dp"
             android:layout_marginTop="5dp"
-            android:text="交易关闭"
+            android:text="等待付款"
             android:textColor="@color/colorToolbar"
             android:textSize="11sp" />
 
         <ImageView
-            android:id="@+id/img_fragment_all_shanchu"
+            android:id="@+id/img_activity_obligation_shanchu"
             android:layout_width="15dp"
             android:layout_height="15dp"
             android:layout_marginLeft="300dp"
@@ -52,10 +51,10 @@
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rlv_fragment_all_item"
+        android:id="@+id/rlv_activity_obligation_item"
         android:layout_width="match_parent"
-        android:background="#FFFF"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:background="#FFFF" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -64,7 +63,7 @@
         android:background="#FFFFFF">
 
         <TextView
-            android:id="@+id/tv_fragment_all_num"
+            android:id="@+id/tv_activity_obligation_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="66dp"
@@ -74,7 +73,7 @@
             android:textSize="10sp" />
 
         <TextView
-            android:id="@+id/tv_fragment_all_price"
+            android:id="@+id/tv_activity_obligation_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="127dp"
@@ -84,7 +83,7 @@
             android:textSize="10sp" />
 
         <TextView
-            android:id="@+id/tv_fragment_all_freight"
+            android:id="@+id/tv_activity_obligation_freight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="239dp"

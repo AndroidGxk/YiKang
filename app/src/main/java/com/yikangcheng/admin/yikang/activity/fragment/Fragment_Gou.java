@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
@@ -13,14 +14,19 @@ import android.widget.Toast;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.CloseActivity;
 import com.yikangcheng.admin.yikang.activity.MainActivity;
+import com.yikangcheng.admin.yikang.activity.adapter.RecommendAdapter;
 import com.yikangcheng.admin.yikang.activity.adapter.ShopRecyclerAdapter;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
+import com.yikangcheng.admin.yikang.bean.RecommendBean;
 import com.yikangcheng.admin.yikang.bean.Request;
 import com.yikangcheng.admin.yikang.bean.ShopCarBean;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
 import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
+import com.yikangcheng.admin.yikang.presenter.RecommendPresenter;
 import com.yikangcheng.admin.yikang.presenter.ShopCarPresenter;
+import com.yikangcheng.admin.yikang.util.SpacesItemDecoration;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -34,6 +40,7 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
     private ShopCarPresenter shopCarPresenter;
     private List<ShopCarBean> entity;
     private boolean isclick;
+    private RecommendAdapter mRecommendAdapter;
 
     @Override
     protected void initView(View view) {
@@ -66,6 +73,24 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
                 }
             }
         });
+
+        /**
+         * 为你推荐
+         */
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
+        shop_recyclertwo.setLayoutManager(gridLayoutManager);
+        List<RecommendBean> entityBeans = new ArrayList<>();
+        mRecommendAdapter = new RecommendAdapter(entityBeans, getContext());
+        shop_recyclertwo.setAdapter(mRecommendAdapter);
+
+        RecommendPresenter recommendPresenter = new RecommendPresenter(new RecomICoreInfe());
+        recommendPresenter.request(1);
+
+        int spanCount = 2; // 3 columns
+        int spacing = 20; // 50px
+        boolean includeEdge = false;
+        shop_recyclertwo.addItemDecoration(new SpacesItemDecoration(spanCount, spacing, includeEdge));
+
     }
 
     @Override
@@ -155,10 +180,27 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
         Request request = (Request) data;
         List<ShopCarBean> entity = (List<ShopCarBean>) request.getEntity();
         shopRecyclerAdapter.addAll(entity);
+
     }
 
     @Override
     public void fail(ApiException e) {
 
     }
+
+    public class RecomICoreInfe implements ICoreInfe {
+
+        @Override
+        public void success(Object data) {
+            Request request = (Request) data;
+            List<RecommendBean> entity1 = (List<RecommendBean>) request.getEntity();
+            mRecommendAdapter.addData(entity1);
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
+    }
+
 }

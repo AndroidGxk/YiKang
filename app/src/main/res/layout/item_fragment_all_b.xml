@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_marginLeft="15dp"
-    android:layout_marginRight="15dp"
     android:layout_height="88dp"
-    android:background="#FBFBFB"
     android:layout_gravity="center_horizontal">
 
     <ImageView
@@ -16,12 +13,14 @@
         android:src="@drawable/shouchuan" />
 
     <TextView
+        android:maxLines="1"
+        android:ellipsize="end"
         android:id="@+id/tv_fragment_all_b_name"
         android:layout_width="204dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="102dp"
         android:layout_marginTop="13dp"
-        android:text="产品名称ESTEE产品名称ESTEE产品 名称ESTEE产品名称ESTEE"
+        android:text="产品名称ESTEE产品名称ESTEE产品"
         android:textColor="#333333"
         android:textSize="12dp" />
 
@@ -30,7 +29,7 @@
         android:layout_width="163dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="102dp"
-        android:layout_marginTop="49dp"
+        android:layout_marginTop="43dp"
         android:text="产品名称ESTEE产品名称ESTEE产品"
         android:textColor="#999999"
         android:textSize="10dp" />
@@ -39,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="288dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="44dp"
         android:text="X1"
         android:textColor="#ff333333"
         android:textSize="10sp" />

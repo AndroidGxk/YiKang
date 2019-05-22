@@ -15,7 +15,7 @@ public class All_A_Bean {
         this.data = data;
     }
 
-    public All_A_Bean() {
+    public All_A_Bean(Object o, String 榴莲, String s, String s1) {
     }
 
     public String getId() {

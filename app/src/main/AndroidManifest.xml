@@ -16,11 +16,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.MainActivity"></activity>
+        <activity android:name=".activity.obligation.ObligationActivity"></activity>
+        <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.CustomerActivity" />
         <activity android:name=".activity.SystemActivity" />
         <activity android:name=".activity.OrderFormActivity" />
-        <activity android:name=".activity.siteactivity.CompileActivity"></activity>
+        <activity android:name=".activity.siteactivity.CompileActivity" />
         <activity android:name=".activity.siteactivity.AiteActivity" />
         <activity android:name=".activity.ApoutUsActivity" />
         <activity android:name=".activity.WuliuXinxiActivity" />
@@ -39,7 +40,7 @@
         <activity android:name=".activity.myaccount.MyaccountActivity" />
         <activity android:name=".activity.seek.SeekActivity" />
         <activity android:name=".activity.particulars.ParticularsActivity" />
-        <activity android:name=".activity.WelcomeActivity" >
+        <activity android:name=".activity.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -68,10 +69,15 @@
         <activity
             android:name=".activity.ApoutUsActivity"
             tools:ignore="DuplicateActivity" />
-        <activity android:name=".activity.siteactivity.CompileActivity"
+        <activity
+            android:name=".activity.siteactivity.CompileActivity"
             tools:ignore="DuplicateActivity" />
-        <activity android:name=".activity.siteactivity.AiteActivity"
+        <activity
+            android:name=".activity.siteactivity.AiteActivity"
+            tools:ignore="DuplicateActivity" />
+        <activity android:name=".activity.obligation.ObligationActivity"
             tools:ignore="DuplicateActivity" />
     </application>
+
 
 </manifest>

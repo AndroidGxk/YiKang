@@ -8,6 +8,7 @@ import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.adapter.All_A_Adapter;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
 import com.yikangcheng.admin.yikang.bean.All_A_Bean;
+import com.yikangcheng.admin.yikang.util.SpacesItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +36,11 @@ public class AllFragment extends BaseFragment {
 
         All_A_Adapter all_a_adapter = new All_A_Adapter(all_a_beans, getContext());
         mRlvFragmentAllDingdan.setAdapter(all_a_adapter);
+
+        int spanCount = 1; // 3 columns
+        int spacing = 20; // 50px
+        boolean includeEdge = false;
+        mRlvFragmentAllDingdan.addItemDecoration(new SpacesItemDecoration(spanCount, spacing, includeEdge));
     }
 
     @Override
