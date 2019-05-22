@@ -47,11 +47,12 @@
 
         <TextView
             android:layout_width="204dp"
-            android:layout_height="28dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="109dp"
             android:layout_marginTop="10dp"
-            android:text="产品名称ESTEE产品名称ESTEE产品
-品名称ESTEE产品名称ESTEE..."
+            android:text="产品名称ESTEE产品名称ESTEE产品"
+            android:maxLines="2"
+            android:ellipsize="end"
             android:textColor="#333333"
             android:textSize="12sp" />
 
@@ -82,46 +83,6 @@
             android:layout_marginTop="70dp"
             android:text="888.88"
             android:textColor="#FF0000" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="330dp"
-        android:layout_height="55dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="13dp"
-        android:background="@drawable/beijing">
-
-        <ImageView
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="14dp"
-            android:src="@drawable/tuikuan" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="56dp"
-            android:layout_marginTop="11dp"
-            android:text="仅退款"
-            android:textColor="#333333"
-            android:textSize="12sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="56dp"
-            android:layout_marginTop="33dp"
-            android:text="未收到货(包含未签收),或卖家协商同意前提下"
-            android:textSize="10sp" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="309dp"
-            android:src="@drawable/right" />
 
     </RelativeLayout>
 

@@ -8,11 +8,9 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rlv_fragment_all_dingdan"
         android:layout_width="match_parent"
-        android:background="#FFFFFF"
-        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_height="wrap_content" />
+        android:layout_marginRight="15dp" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -23,8 +21,12 @@
         android:src="@drawable/tuijian" />
 
     <android.support.v7.widget.RecyclerView
+        android:layout_marginTop="10dp"
         android:id="@+id/rlv_fragment_all_tuijian"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp" />
 
 </LinearLayout>
