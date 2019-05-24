@@ -35,6 +35,7 @@
 
 
                 <ImageView
+                    android:id="@+id/img_tupian_fragment_shou"
                     android:layout_width="match_parent"
                     android:layout_height="165dp"
                     android:layout_marginTop="9dp"
@@ -58,6 +59,7 @@
                     android:textSize="16sp" />
 
                 <TextView
+                    android:id="@+id/tv_zekou"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tmiao"
@@ -90,6 +92,7 @@
                     android:orientation="horizontal">
 
                     <Button
+                        android:id="@+id/bt_tian_fragment_shou"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_marginRight="3dp"
@@ -107,6 +110,7 @@
                         android:textSize="15sp" />
 
                     <Button
+                        android:id="@+id/bt_shi_fragment_shou"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_marginRight="3dp"
@@ -124,6 +128,7 @@
                         android:textSize="15sp" />
 
                     <Button
+                        android:id="@+id/bt_fen_fragment_shou"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_marginRight="3dp"
@@ -141,6 +146,7 @@
                         android:textSize="15sp" />
 
                     <Button
+                        android:id="@+id/bt_miao_fragment_shou"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_marginRight="3dp"
@@ -192,9 +198,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                android:layout_marginRight="10dp"
                 android:layout_marginTop="12dp"
-                 />
+                android:layout_marginRight="10dp" />
 
             <RelativeLayout
                 android:layout_width="match_parent"

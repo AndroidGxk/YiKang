@@ -16,7 +16,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.obligation.ObligationActivity"></activity>
+        <activity android:name=".activity.orderstatus.WaitForpaymentActivity"></activity>
+        <activity android:name=".activity.myaccount.IntroActivity" />
+        <activity android:name=".activity.myaccount.PhoneActivity" />
+        <activity android:name=".activity.myaccount.NameActivity" />
+        <activity android:name=".activity.myaccount.NicknameActivity" />
+        <activity android:name=".activity.obligation.ObligationActivity" />
         <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.CustomerActivity" />
         <activity android:name=".activity.SystemActivity" />
@@ -75,9 +80,23 @@
         <activity
             android:name=".activity.siteactivity.AiteActivity"
             tools:ignore="DuplicateActivity" />
-        <activity android:name=".activity.obligation.ObligationActivity"
+        <activity
+            android:name=".activity.obligation.ObligationActivity"
+            tools:ignore="DuplicateActivity" />
+        <activity
+            android:name=".activity.myaccount.NicknameActivity"
+            tools:ignore="DuplicateActivity" />
+        <activity
+            android:name=".activity.myaccount.NameActivity"
+            tools:ignore="DuplicateActivity" />
+        <activity
+            android:name=".activity.myaccount.PhoneActivity"
+            tools:ignore="DuplicateActivity" />
+        <activity
+            android:name=".activity.myaccount.IntroActivity"
+            tools:ignore="DuplicateActivity" />
+        <activity android:name=".activity.orderstatus.WaitForpaymentActivity"
             tools:ignore="DuplicateActivity" />
     </application>
-
 
 </manifest>

@@ -24,7 +24,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="123dp"
+            android:layout_gravity="center_horizontal"
             android:text="选择服务类型"
             android:textColor="#000000"
             android:textSize="19sp" />
@@ -50,9 +50,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="109dp"
             android:layout_marginTop="10dp"
-            android:text="产品名称ESTEE产品名称ESTEE产品"
-            android:maxLines="2"
             android:ellipsize="end"
+            android:maxLines="2"
+            android:text="产品名称ESTEE产品名称ESTEE产品"
             android:textColor="#333333"
             android:textSize="12sp" />
 

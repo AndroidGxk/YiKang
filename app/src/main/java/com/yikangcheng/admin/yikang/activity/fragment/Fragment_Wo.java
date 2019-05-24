@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +23,7 @@ import com.yikangcheng.admin.yikang.activity.adapter.Recommend_Fragment_wo_Adapt
 import com.yikangcheng.admin.yikang.activity.aftersale.AfterSaleActivity;
 import com.yikangcheng.admin.yikang.activity.myaccount.MyaccountActivity;
 import com.yikangcheng.admin.yikang.activity.obligation.ObligationActivity;
+import com.yikangcheng.admin.yikang.activity.orderstatus.WaitForpaymentActivity;
 import com.yikangcheng.admin.yikang.activity.siteactivity.AiteActivity;
 import com.yikangcheng.admin.yikang.app.Constants;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
@@ -67,6 +69,7 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe {
     private ImageView mGuanggao;
     private UserInfoPresenter userInfoPresenter;
     private LoginBean logUser;
+    private RelativeLayout mMingxi;
 
     @Override
     protected void initView(View view) {
@@ -106,6 +109,18 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe {
         mImgFragmentWoTuichudenglu = view.findViewById(R.id.img__fragment_wo_tuichudenglu);
         //用户名
         mTvFragmentWoName = view.findViewById(R.id.tv__fragment_wo_name);
+        //账户明细
+        mMingxi = view.findViewById(R.id.relativeLayout_mingxi_fragment_wo);
+
+        mMingxi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), WaitForpaymentActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
 
         //接口请求
         userInfoPresenter = new UserInfoPresenter(new UserInfo());
