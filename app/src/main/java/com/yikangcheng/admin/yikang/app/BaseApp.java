@@ -3,6 +3,8 @@ package com.yikangcheng.admin.yikang.app;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Handler;
 import android.os.Looper;
 import android.content.Context;
@@ -58,7 +60,7 @@ public class BaseApp extends Application {
     public void onCreate() {
         super.onCreate();
         mAppInstance = this;
-        SobotApi.initSobotSDK(this,"7560599b63bf43378d05d018ded42cdd","");
+        SobotApi.initSobotSDK(this, "7560599b63bf43378d05d018ded42cdd", "");
     }
 
     public void addActivtiy(Activity activity) {
@@ -74,6 +76,7 @@ public class BaseApp extends Application {
     public static BaseApp getForegroundActivity() {
         return mForegroundActivity;
     }
+
     public void removeActivity(Activity activity) {
         if (mSet != null)
             mSet.remove(activity);
@@ -92,6 +95,7 @@ public class BaseApp extends Application {
         android.os.Process.killProcess(android.os.Process.myPid());
         System.exit(0);
     }
+
     /**
      * @return 全局唯一的上下文
      * @author: 康海涛 QQ2541849981
@@ -131,6 +135,7 @@ public class BaseApp extends Application {
             }
         });
     }
+
     /**
      * 获取主线程
      */
@@ -151,5 +156,6 @@ public class BaseApp extends Application {
     public static Looper getMainThreadLooper() {
         return mMainLooper;
     }
+
 
 }

@@ -7,6 +7,7 @@ import com.yikangcheng.admin.yikang.bean.LoginBean;
 import com.yikangcheng.admin.yikang.bean.RegisterBean;
 import com.yikangcheng.admin.yikang.bean.RecommendBean;
 import com.yikangcheng.admin.yikang.bean.Request;
+import com.yikangcheng.admin.yikang.bean.SeckillBean;
 import com.yikangcheng.admin.yikang.bean.ShopCarBean;
 
 import java.util.List;
@@ -80,4 +81,10 @@ public interface ApiService {
      */
     @POST("login")
     Observable<Request<LoginBean>> login(@Query("mobile") String mobile, @Query("userPassword") String userPassword);
+
+    /**
+     * 首页 秒杀 倒计时
+     */
+    @POST("seckill")
+    Observable<Request<SeckillBean>> Seckill();
 }

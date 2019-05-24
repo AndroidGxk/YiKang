@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    tools:context=".activity.myaccount.NicknameActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_activity_nickname"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:background="@drawable/toolbar">
+
+        <ImageView
+            android:id="@+id/img_activity_nickname_fanhui"
+            android:layout_width="11dp"
+            android:layout_height="20dp"
+            android:src="@drawable/fanhuiactivity" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="修改昵称"
+            android:textColor="#000000"
+            android:textSize="19sp" />
+
+    </android.support.v7.widget.Toolbar>
+
+    <RelativeLayout
+        android:layout_width="330dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="11dp"
+        android:background="#FFFFFF">
+
+        <EditText
+            android:id="@+id/et_activity_nickname"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:background="@null"
+            android:hint="请输入昵称" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="57dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="5dp"
+        android:text="限2-16个字符"
+        android:textColor="#ff999999"
+        android:textSize="9sp" />
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout_activity_nickname_baocun"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="56dp"
+        android:background="@drawable/yuanjiao">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="保存"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+</LinearLayout>

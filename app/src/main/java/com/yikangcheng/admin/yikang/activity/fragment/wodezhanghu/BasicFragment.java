@@ -1,6 +1,7 @@
 package com.yikangcheng.admin.yikang.activity.fragment.wodezhanghu;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -11,6 +12,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yikangcheng.admin.yikang.R;
+import com.yikangcheng.admin.yikang.activity.myaccount.IntroActivity;
+import com.yikangcheng.admin.yikang.activity.myaccount.NameActivity;
+import com.yikangcheng.admin.yikang.activity.myaccount.NicknameActivity;
+import com.yikangcheng.admin.yikang.activity.myaccount.PhoneActivity;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
 
 public class BasicFragment extends BaseFragment {
@@ -19,7 +24,7 @@ public class BasicFragment extends BaseFragment {
     private RelativeLayout mReLayoutFragmentBasicSave;
     private RelativeLayout mReLayoutFragmentBasicTouxiang;
     private RelativeLayout mReLayoutFragmentBasicPhone;
-    private RelativeLayout mReLayoutFragmentBasic昵称;
+    private RelativeLayout mReLayoutFragmentBasic;
     private RelativeLayout mReLayoutFragmentBasicSex;
     private RelativeLayout mReLayoutFragmentBasicSynopsis;
     private int width;
@@ -41,11 +46,56 @@ public class BasicFragment extends BaseFragment {
         //手机号
         mReLayoutFragmentBasicPhone = view.findViewById(R.id.reLayout_fragment_basic_phone);
         //用户昵称
-        mReLayoutFragmentBasic昵称 = view.findViewById(R.id.reLayout_fragment_basic_niceng);
+        mReLayoutFragmentBasic = view.findViewById(R.id.reLayout_fragment_basic_niceng);
         //性别
         mReLayoutFragmentBasicSex = view.findViewById(R.id.reLayout_fragment_basic_sex);
         //简介
         mReLayoutFragmentBasicSynopsis = view.findViewById(R.id.reLayout_fragment_basic_synopsis);
+
+        /**
+         * 点击个人简介跳转页面
+         */
+        mReLayoutFragmentBasicSynopsis.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), IntroActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        /**
+         * 点击手机号跳转页面
+         */
+        mReLayoutFragmentBasicPhone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), PhoneActivity.class);
+                startActivity(intent);
+            }
+        });
+        /**
+         * 点击姓名跳转页面
+         */
+        mReLayoutFragmentBasicName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), NameActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+        /**
+         * 点击用户昵称跳转页面
+         */
+        mReLayoutFragmentBasic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), NicknameActivity.class);
+                startActivity(intent);
+            }
+        });
+
         mInflate = LayoutInflater.from(getContext()).inflate(R.layout.head_fragment_basic, null, false);
 
         Display display = getActivity().getWindowManager().getDefaultDisplay();
@@ -73,7 +123,7 @@ public class BasicFragment extends BaseFragment {
          * 相册id
          */
         mTvPhotoAlbu = mInflate.findViewById(R.id.tv_PhotoAlbu);
-        mImgFinsh =  mInflate.findViewById(R.id.img_finsh);
+        mImgFinsh = mInflate.findViewById(R.id.img_finsh);
 
         mImgFinsh.setOnClickListener(new View.OnClickListener() {
             @Override

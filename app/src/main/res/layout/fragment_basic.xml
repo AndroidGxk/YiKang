@@ -143,16 +143,16 @@
         <ImageView
             android:layout_width="15dp"
             android:layout_height="15dp"
-            android:layout_marginLeft="281dp"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="281dp"
             android:src="@drawable/danxuan_b" />
 
         <!--<ImageView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="308dp"-->
-            <!--android:layout_marginTop="16dp"-->
-            <!--android:src="@drawable/right" />-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="308dp"-->
+        <!--android:layout_marginTop="16dp"-->
+        <!--android:src="@drawable/right" />-->
     </RelativeLayout>
 
     <RelativeLayout
@@ -194,6 +194,7 @@
         android:layout_height="40dp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="10dp"
+
         android:background="@drawable/bai">
 
         <TextView
@@ -204,15 +205,23 @@
             android:text="简介"
             android:textSize="15dp" />
 
-        <TextView
-            android:layout_width="45dp"
+        <RelativeLayout
+            android:layout_width="240dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="263dp"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:text="请填写"
-            android:textColor="#FF0000"
-            android:textSize="13sp" />
+           android:layout_marginTop="5dp"
+            android:layout_marginLeft="63dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="请填写"
+                android:textColor="#FF0000"
+                android:textSize="13sp" />
+        </RelativeLayout>
 
 
         <ImageView

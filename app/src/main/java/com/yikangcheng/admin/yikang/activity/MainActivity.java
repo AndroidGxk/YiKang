@@ -1,6 +1,8 @@
 package com.yikangcheng.admin.yikang.activity;
 
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
@@ -447,5 +449,24 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
     public interface onClickListener {
         void onclick();
     }
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        //非默认值
+        if (newConfig.fontScale != 1){
+            getResources();
+        }
+        super.onConfigurationChanged(newConfig);
+    }
 
+    @Override
+    public Resources getResources() {//还原字体大小
+        Resources res = super.getResources();
+        //非默认值
+        if (res.getConfiguration().fontScale != 1) {
+            Configuration newConfig = new Configuration();
+            newConfig.setToDefaults();//设置默认
+            res.updateConfiguration(newConfig, res.getDisplayMetrics());
+        }
+        return res;
+    }
 }

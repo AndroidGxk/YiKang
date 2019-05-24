@@ -3,16 +3,18 @@ package com.yikangcheng.admin.yikang.activity.fragment;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -27,12 +29,15 @@ import com.yikangcheng.admin.yikang.activity.adapter.FaddRecyclerAdapter;
 import com.yikangcheng.admin.yikang.activity.adapter.LikeAdapter;
 import com.yikangcheng.admin.yikang.activity.adapter.LuxuryRecyclerAdapter;
 import com.yikangcheng.admin.yikang.activity.particulars.ParticularsActivity;
+import com.yikangcheng.admin.yikang.app.Constants;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
 import com.yikangcheng.admin.yikang.bean.LikeBean;
 import com.yikangcheng.admin.yikang.bean.Request;
+import com.yikangcheng.admin.yikang.bean.SeckillBean;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
 import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
 import com.yikangcheng.admin.yikang.presenter.LikePresenter;
+import com.yikangcheng.admin.yikang.presenter.SeckillPresenter;
 import com.yikangcheng.admin.yikang.util.UIUtils;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
@@ -40,8 +45,12 @@ import com.zhouwei.mzbanner.MZBannerView;
 import com.zhouwei.mzbanner.holder.MZHolderCreator;
 import com.zhouwei.mzbanner.holder.MZViewHolder;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
 
 import me.jessyan.autosize.AutoSizeConfig;
 import me.jessyan.autosize.internal.CustomAdapt;
@@ -62,6 +71,13 @@ public class Fragment_Shou extends BaseFragment implements CustomAdapt, ICoreInf
     private RelativeLayout bao_rela;
     private SmartRefreshLayout mSmartRefreshLayout;
     private LuxuryRecyclerAdapter luxuryRecyclerAdapter;
+    private ImageView mImg_tupian;
+    private TextView mTv_miaosha;
+    private TextView mTv_zekou;
+    private Button mBt_shi;
+    private Button mBt_tian;
+    private Button mBt_fen;
+    private Button mBt_shou;
 
     @Override
     protected void initView(View view) {
@@ -76,11 +92,34 @@ public class Fragment_Shou extends BaseFragment implements CustomAdapt, ICoreInf
         mMZBanner = view.findViewById(R.id.bao_mzbanner);
         bao_rela = view.findViewById(R.id.bao_rela);
         bao_recycler = view.findViewById(R.id.bao_recycler);
-        shou_miao_imag = view.findViewById(R.id.shou_miao_imag);
         c_recycler = view.findViewById(R.id.c_recycler);
         mei_recycle = view.findViewById(R.id.mei_recycle);
         artic_recycler = view.findViewById(R.id.artic_recycler);
         mSmartRefreshLayout = view.findViewById(R.id.refreshLayout);
+        //秒杀图片
+        mImg_tupian = view.findViewById(R.id.img_tupian_fragment_shou);
+        //秒杀阴影
+        shou_miao_imag = view.findViewById(R.id.shou_miao_imag);
+        //秒杀文字
+        mTv_miaosha = view.findViewById(R.id.tmiao);
+        //秒杀折扣
+        mTv_zekou = view.findViewById(R.id.tv_zekou);
+        //秒杀 天
+        mBt_tian = view.findViewById(R.id.bt_tian_fragment_shou);
+        //秒杀 时
+        mBt_shi = view.findViewById(R.id.bt_shi_fragment_shou);
+        //秒杀 分
+        mBt_fen = view.findViewById(R.id.bt_fen_fragment_shou);
+        //秒杀 秒
+        mBt_shou = view.findViewById(R.id.bt_miao_fragment_shou);
+
+
+        /**
+         * 秒杀倒计时P层
+         */
+        SeckillPresenter seckillPresenter = new SeckillPresenter(new seckillICreInfe());
+        seckillPresenter.request();
+
 
 //        mRefreshLayout.setOnLoadMoreListener(this);
 //        mRefreshLayout.setOnRefreshListener(this);
@@ -293,4 +332,36 @@ public class Fragment_Shou extends BaseFragment implements CustomAdapt, ICoreInf
         }
     }
 
+    /**
+     * 秒杀倒计时
+     */
+
+    public class seckillICreInfe implements ICoreInfe {
+
+        @Override
+        public void success(Object data) {
+            Request request = (Request) data;
+            SeckillBean entity = (SeckillBean) request.getEntity();
+
+            Glide.with(getContext()).load(Constants.BASETUPIANSHANGCHUANURL + entity.getAppImage()).into(mImg_tupian);
+
+            mTv_miaosha.setText(entity.getName());
+
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
+    }
+
+    public static String date2TimeStamp(String date, String format) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat(format);
+            return String.valueOf(sdf.parse(date).getTime() / 1000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
 }
