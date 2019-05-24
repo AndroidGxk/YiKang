@@ -36,7 +36,7 @@
         android:layout_height="57dp"
         android:layout_marginLeft="55dp"
         android:layout_marginTop="147dp"
-        android:background="@drawable/logo" />
+        android:background="@drawable/app_bg" />
 
     <ImageView
         android:id="@+id/name_image"
