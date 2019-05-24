@@ -2,6 +2,7 @@ package com.yikangcheng.admin.yikang.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
+import com.yikangcheng.admin.yikang.bean.LoginBean;
 import com.yikangcheng.admin.yikang.bean.Request;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
 import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
@@ -25,6 +27,7 @@ public class LoginActivity extends BaseActivtiy implements CustomAdapt, ICoreInf
     private TextView log_btn;
     private EditText phone_edit, pwd_edit;
     private LoginPresenter loginPresenter;
+    private SharedPreferences userInfo;
 
     @Override
     protected void initView() {
@@ -35,6 +38,9 @@ public class LoginActivity extends BaseActivtiy implements CustomAdapt, ICoreInf
         pwd_edit = findViewById(R.id.pwd_edit);
         log_btn = findViewById(R.id.log_btn);
         loginPresenter = new LoginPresenter(this);
+        //用户ID
+        userInfo = getSharedPreferences("userInfo", MODE_PRIVATE);
+
     }
 
     @Override
@@ -85,9 +91,15 @@ public class LoginActivity extends BaseActivtiy implements CustomAdapt, ICoreInf
     public void success(Object data) {
         Request request = (Request) data;
         if (request.isSuccess()) {
+            SharedPreferences.Editor edit = userInfo.edit();
+            LoginBean entity = (LoginBean) request.getEntity();
+            edit.putString("userId", String.valueOf(entity.getId()));
+            edit.commit();
+            entity.setStatus(1);
+            setLogUser(LoginActivity.this, entity);
             finish();
-        }else{
-            Toast.makeText(this, ""+request.getMessage(), Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "" + request.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 

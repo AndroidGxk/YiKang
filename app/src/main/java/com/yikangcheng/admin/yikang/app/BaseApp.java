@@ -7,6 +7,9 @@ import android.os.Handler;
 import android.os.Looper;
 import android.content.Context;
 
+import com.example.sqlite.dao.DaoMaster;
+import com.example.sqlite.dao.DaoSession;
+import com.example.sqlite.dao.UserDetailBeanDao;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreator;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreator;
@@ -17,8 +20,10 @@ import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.sobot.chat.SobotApi;
 import com.yikangcheng.admin.yikang.R;
+import com.yikangcheng.admin.yikang.bean.UserDetailBean;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -58,7 +63,7 @@ public class BaseApp extends Application {
     public void onCreate() {
         super.onCreate();
         mAppInstance = this;
-        SobotApi.initSobotSDK(this,"7560599b63bf43378d05d018ded42cdd","");
+        SobotApi.initSobotSDK(this, "7560599b63bf43378d05d018ded42cdd", "");
     }
 
     public void addActivtiy(Activity activity) {
@@ -74,6 +79,7 @@ public class BaseApp extends Application {
     public static BaseApp getForegroundActivity() {
         return mForegroundActivity;
     }
+
     public void removeActivity(Activity activity) {
         if (mSet != null)
             mSet.remove(activity);
@@ -92,6 +98,7 @@ public class BaseApp extends Application {
         android.os.Process.killProcess(android.os.Process.myPid());
         System.exit(0);
     }
+
     /**
      * @return 全局唯一的上下文
      * @author: 康海涛 QQ2541849981
@@ -131,6 +138,7 @@ public class BaseApp extends Application {
             }
         });
     }
+
     /**
      * 获取主线程
      */

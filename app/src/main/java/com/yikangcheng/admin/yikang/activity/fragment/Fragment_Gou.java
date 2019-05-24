@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +18,7 @@ import com.yikangcheng.admin.yikang.activity.MainActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.RecommendAdapter;
 import com.yikangcheng.admin.yikang.activity.adapter.ShopRecyclerAdapter;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
+import com.yikangcheng.admin.yikang.bean.LoginBean;
 import com.yikangcheng.admin.yikang.bean.RecommendBean;
 import com.yikangcheng.admin.yikang.bean.Request;
 import com.yikangcheng.admin.yikang.bean.ShopCarBean;
@@ -33,6 +35,7 @@ import java.util.List;
 public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.TotalPriceListener, ShopRecyclerAdapter.checkBoxTouchListener, ICoreInfe {
     private RecyclerView shop_recyclertwo, shop_recycler;
     private ShopRecyclerAdapter shopRecyclerAdapter;
+    private RelativeLayout null_car;
     private CheckBox all_check;
     private TextView text_total, num_text, heji, dele_text;
     private TextView tv_toolBar_right;
@@ -41,6 +44,7 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
     private List<ShopCarBean> entity;
     private boolean isclick;
     private RecommendAdapter mRecommendAdapter;
+    private RecommendPresenter recommendPresenter;
 
     @Override
     protected void initView(View view) {
@@ -49,11 +53,11 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
         all_check = view.findViewById(R.id.all_check);
         num_text = view.findViewById(R.id.num_text);
         dele_text = view.findViewById(R.id.dele_text);
+        null_car = view.findViewById(R.id.null_car);
         tv_toolBar_right = view.findViewById(R.id.tv_toolBar_right);
         heji = view.findViewById(R.id.heji);
         text_total = view.findViewById(R.id.text_total);
         shopCarPresenter = new ShopCarPresenter(this);
-        shopCarPresenter.request(11);
         MainActivity activity = (MainActivity) getActivity();
         activity.setOnClickListener(new MainActivity.onClickListener() {
             @Override
@@ -83,8 +87,7 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
         mRecommendAdapter = new RecommendAdapter(entityBeans, getContext());
         shop_recyclertwo.setAdapter(mRecommendAdapter);
 
-        RecommendPresenter recommendPresenter = new RecommendPresenter(new RecomICoreInfe());
-        recommendPresenter.request(1);
+        recommendPresenter = new RecommendPresenter(new RecomICoreInfe());
 
         int spanCount = 2; // 3 columns
         int spacing = 20; // 50px
@@ -179,6 +182,10 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
     public void success(Object data) {
         Request request = (Request) data;
         List<ShopCarBean> entity = (List<ShopCarBean>) request.getEntity();
+        if (entity.size() == 0) {
+            null_car.setVisibility(View.VISIBLE);
+            shop_recycler.setVisibility(View.GONE);
+        }
         shopRecyclerAdapter.addAll(entity);
 
     }
@@ -203,4 +210,13 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        LoginBean logUser = getLogUser(getContext());
+        if (logUser != null) {
+            shopCarPresenter.request(logUser.getId());
+            recommendPresenter.request(logUser.getId());
+        }
+    }
 }

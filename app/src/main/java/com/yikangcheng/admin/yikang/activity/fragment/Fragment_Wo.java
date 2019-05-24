@@ -1,6 +1,8 @@
 package com.yikangcheng.admin.yikang.activity.fragment;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -8,6 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.yikangcheng.admin.yikang.R;
@@ -23,12 +26,16 @@ import com.yikangcheng.admin.yikang.activity.siteactivity.AiteActivity;
 import com.yikangcheng.admin.yikang.app.Constants;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
 import com.yikangcheng.admin.yikang.bean.AdvertisingBean;
+import com.yikangcheng.admin.yikang.bean.LoginBean;
 import com.yikangcheng.admin.yikang.bean.RecommendBean;
 import com.yikangcheng.admin.yikang.bean.Request;
+import com.yikangcheng.admin.yikang.bean.UserDetailBean;
+import com.yikangcheng.admin.yikang.bean.UserInfoBean;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
 import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
 import com.yikangcheng.admin.yikang.presenter.AdvertisingPresenter;
 import com.yikangcheng.admin.yikang.presenter.RecommendPresenter;
+import com.yikangcheng.admin.yikang.presenter.UserInfoPresenter;
 import com.yikangcheng.admin.yikang.util.SpacesItemDecoration;
 
 import java.util.ArrayList;
@@ -58,6 +65,8 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe {
     private TextView mTvFragmentWoName;
     private Recommend_Fragment_wo_Adapter mRecommend_fragment_wo_adapter;
     private ImageView mGuanggao;
+    private UserInfoPresenter userInfoPresenter;
+    private LoginBean logUser;
 
     @Override
     protected void initView(View view) {
@@ -97,6 +106,9 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe {
         mImgFragmentWoTuichudenglu = view.findViewById(R.id.img__fragment_wo_tuichudenglu);
         //用户名
         mTvFragmentWoName = view.findViewById(R.id.tv__fragment_wo_name);
+
+        //接口请求
+        userInfoPresenter = new UserInfoPresenter(new UserInfo());
         /**
          * 广告图P层
          */
@@ -142,8 +154,12 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe {
         mImgFragmentWoDaifukuan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ObligationActivity.class);
-                startActivity(intent);
+                if (logUser != null) {
+                    Intent intent = new Intent(getActivity(), ObligationActivity.class);
+                    startActivity(intent);
+                }else{
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                }
             }
         });
 
@@ -154,7 +170,9 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe {
         mTvFragmentWoName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), LoginActivity.class));
+                if (logUser == null) {
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                }
             }
         });
 
@@ -164,8 +182,12 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe {
         mImgFragmentWoDizi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), AiteActivity.class);
-                startActivity(intent);
+                if (logUser != null) {
+                    Intent intent = new Intent(getActivity(), AiteActivity.class);
+                    startActivity(intent);
+                }else{
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                }
             }
         });
 
@@ -175,8 +197,12 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe {
         mImgFragmentWoTouxiang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), MyaccountActivity.class);
-                startActivity(intent);
+                if (logUser != null) {
+                    Intent intent = new Intent(getActivity(), MyaccountActivity.class);
+                    startActivity(intent);
+                }else{
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                }
             }
         });
 
@@ -186,8 +212,12 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe {
         mImgFragmentWoYituikuan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), AfterSaleActivity.class);
-                startActivity(intent);
+                if (logUser != null) {
+                    Intent intent = new Intent(getActivity(), AfterSaleActivity.class);
+                    startActivity(intent);
+                }else{
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                }
             }
         });
 
@@ -197,7 +227,11 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe {
         mImgFragmentWoLingdang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), MessageActivity.class));
+                if (logUser != null) {
+                    startActivity(new Intent(getActivity(), MessageActivity.class));
+                }else{
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                }
             }
         });
 
@@ -207,8 +241,12 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe {
         mImgFragmentWoguanyu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ApoutUsActivity.class);
-                startActivity(intent);
+                if (logUser != null) {
+                    Intent intent = new Intent(getActivity(), ApoutUsActivity.class);
+                    startActivity(intent);
+                }else{
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                }
             }
         });
 
@@ -218,8 +256,12 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe {
         mTvFragmentWoDingdan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), OrderFormActivity.class);
-                startActivity(intent);
+                if(logUser!=null){
+                    Intent intent = new Intent(getActivity(), OrderFormActivity.class);
+                    startActivity(intent);
+                }else{
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                }
             }
         });
 
@@ -231,7 +273,7 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe {
         public void success(Object data) {
             Request request = (Request) data;
             AdvertisingBean entity = (AdvertisingBean) request.getEntity();
-            Glide.with(getContext()).load("https://static.yikch.com"+entity.getImagesUrl()).into(mGuanggao);
+            Glide.with(getContext()).load("https://www.yikch.com/upload/shop/details/20190505/1557022728545073351.jpg").into(mGuanggao);
         }
 
         @Override
@@ -260,5 +302,39 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe {
     @Override
     public void fail(ApiException e) {
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //查询数据库中是否有用户
+        logUser = getLogUser(getContext());
+        SharedPreferences userInfo = getContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+        String userId = userInfo.getString("userId", "");
+        if (!userId.equals("")) {
+            userInfoPresenter.request(Integer.parseInt(userId));
+        }
+    }
+
+    /**
+     * 用户资料
+     */
+    private class UserInfo implements ICoreInfe {
+        @Override
+        public void success(Object data) {
+            Request request = (Request) data;
+            UserInfoBean entity = (UserInfoBean) request.getEntity();
+            UserDetailBean userCenter = (UserDetailBean) entity.getUserCenter();
+            if (request.isSuccess()) {
+                setUserInfo(getContext(), userCenter);
+            }
+            mTvFragmentWoName.setText(userCenter.getRealName());
+            Glide.with(getContext()).load("https://static.yikch.com" + userCenter.getAvatar()).into(mImgFragmentWoTouxiang);
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
     }
 }

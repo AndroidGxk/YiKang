@@ -1,6 +1,7 @@
 package com.yikangcheng.admin.yikang.activity;
 
 import android.view.Display;
+import android.widget.Toast;
 
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
@@ -44,4 +45,6 @@ public class ConfirmActivity extends BaseActivtiy implements CustomAdapt {
     public float getSizeInDp() {
         return height / 2;
     }
+
+
 }

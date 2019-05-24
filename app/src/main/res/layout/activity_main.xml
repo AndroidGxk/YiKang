@@ -57,6 +57,7 @@
 
                 <TextView
                     android:id="@+id/shou_text"
+                    android:textSize="10sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="首页"
@@ -84,6 +85,7 @@
                 <TextView
                     android:id="@+id/fen_text"
                     android:layout_width="wrap_content"
+                    android:textSize="10sp"
                     android:layout_height="wrap_content"
                     android:text="分类"
                     android:textColor="#333333" />
@@ -114,7 +116,7 @@
                     android:layout_height="wrap_content"
                     android:text="秒杀"
                     android:textColor="#333333"
-                    android:textSize="15dp" />
+                    android:textSize="10sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -138,6 +140,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="购物车"
+                    android:textSize="10sp"
                     android:textColor="#333333" />
             </LinearLayout>
 
@@ -162,6 +165,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="我的"
+                    android:textSize="10sp"
                     android:textColor="#333333" />
             </LinearLayout>
         </RadioGroup>

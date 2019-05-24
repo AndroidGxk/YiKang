@@ -8,7 +8,9 @@ import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
-public class AfterSaleActivity extends BaseActivtiy {
+import me.jessyan.autosize.internal.CustomAdapt;
+
+public class AfterSaleActivity extends BaseActivtiy implements CustomAdapt {
 
 
     private ImageView mImgActivityAftersaleFanhui;
@@ -48,5 +50,15 @@ public class AfterSaleActivity extends BaseActivtiy {
     @Override
     protected void createPresenter() {
 
+    }
+
+    @Override
+    public boolean isBaseOnWidth() {
+        return false;
+    }
+
+    @Override
+    public float getSizeInDp() {
+        return 720;
     }
 }

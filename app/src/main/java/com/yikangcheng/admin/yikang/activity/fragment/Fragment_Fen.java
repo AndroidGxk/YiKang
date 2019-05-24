@@ -5,22 +5,17 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.adapter.FenLeiAdapter;
 import com.yikangcheng.admin.yikang.activity.adapter.FenLeiBAdapter;
-import com.yikangcheng.admin.yikang.app.BaseApp;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
-import com.yikangcheng.admin.yikang.bean.ClassifyBean;
 import com.yikangcheng.admin.yikang.bean.ClassifyListOneBean;
 import com.yikangcheng.admin.yikang.bean.Request;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
 import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
 import com.yikangcheng.admin.yikang.presenter.ClassifyPresenter;
-import com.yikangcheng.admin.yikang.util.ScreenHeight;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import me.jessyan.autosize.internal.CustomAdapt;

@@ -130,11 +130,6 @@ public class RegisterActivity extends BaseActivtiy implements ICoreInfe, CustomA
 
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        handler.removeMessages(1);
-    }
 
     @Override
     public boolean isBaseOnWidth() {
@@ -180,5 +175,11 @@ public class RegisterActivity extends BaseActivtiy implements ICoreInfe, CustomA
         public void fail(ApiException e) {
 
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        handler.removeMessages(1);
     }
 }

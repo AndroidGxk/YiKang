@@ -17,23 +17,27 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="10dp"
             android:text="头像"
             android:textSize="15dp" />
 
         <ImageView
+            android:id="@+id/user_header"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_marginLeft="274dp"
-            android:layout_marginTop="8dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@+id/header_img"
             android:src="@drawable/touxiang_2" />
 
         <ImageView
+            android:id="@+id/header_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="308dp"
-            android:layout_marginTop="16dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
             android:src="@drawable/right" />
     </RelativeLayout>
 
@@ -49,28 +53,31 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="10dp"
             android:text="昵称"
             android:textSize="15dp" />
 
         <TextView
-            android:layout_width="51dp"
-            android:layout_height="15dp"
-            android:layout_marginLeft="253dp"
-            android:layout_marginTop="12dp"
+            android:id="@+id/name_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@+id/name_image"
             android:gravity="center"
             android:text="昵称"
             android:textSize="13sp" />
 
         <ImageView
+            android:id="@+id/name_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="308dp"
-            android:layout_marginTop="16dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
             android:src="@drawable/right" />
     </RelativeLayout>
-    ]
 
     <RelativeLayout
         android:id="@+id/reLayout_fragment_basic_name"
@@ -83,26 +90,30 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="10dp"
             android:text="姓名"
             android:textSize="15dp" />
 
         <TextView
-            android:layout_width="45dp"
+            android:id="@+id/rela_name_text"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="263dp"
-            android:layout_marginTop="10dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@+id/rela_imag"
             android:gravity="center"
             android:text="请填写"
             android:textColor="#FF0000"
             android:textSize="13sp" />
 
         <ImageView
+            android:id="@+id/rela_imag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="308dp"
-            android:layout_marginTop="16dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
             android:src="@drawable/right" />
     </RelativeLayout>
 
@@ -118,41 +129,39 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="10dp"
             android:text="性别"
             android:textSize="15dp" />
 
-        <ImageView
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="250dp"
-            android:src="@drawable/danyuan_j" />
-
-        <TextView
-            android:layout_width="51dp"
+        <RadioGroup
+            android:id="@+id/sex"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
+            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="264dp"
-            android:text="男      女"
-            android:textColor="#999999"
-            android:textSize="13sp" />
+            android:layout_marginRight="15dp"
+            android:orientation="horizontal">
 
-        <ImageView
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:layout_marginLeft="281dp"
-            android:layout_centerVertical="true"
-            android:src="@drawable/danxuan_b" />
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:drawableLeft="@drawable/sex_selector"
+                android:text="男"
+                android:textColor="#999999"
+                android:textSize="13sp" />
 
-        <!--<ImageView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="308dp"-->
-            <!--android:layout_marginTop="16dp"-->
-            <!--android:src="@drawable/right" />-->
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:button="@null"
+                android:drawableLeft="@drawable/sex_selector"
+                android:text="女"
+                android:textColor="#999999"
+                android:textSize="13sp" />
+        </RadioGroup>
     </RelativeLayout>
 
     <RelativeLayout
@@ -166,25 +175,29 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="10dp"
             android:text="手机号"
             android:textSize="15dp" />
 
         <TextView
-            android:layout_width="86dp"
-            android:layout_height="15dp"
-            android:layout_marginLeft="218dp"
-            android:layout_marginTop="11dp"
+            android:id="@+id/phone_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@+id/phone_img"
             android:gravity="center"
             android:text="12312312312"
             android:textSize="13sp" />
 
         <ImageView
+            android:id="@+id/phone_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="308dp"
-            android:layout_marginTop="16dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
             android:src="@drawable/right" />
     </RelativeLayout>
 
@@ -199,16 +212,18 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="10dp"
             android:text="简介"
             android:textSize="15dp" />
 
         <TextView
-            android:layout_width="45dp"
+            android:id="@+id/jianjie"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="263dp"
-            android:layout_marginTop="10dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@+id/intro_img"
             android:gravity="center"
             android:text="请填写"
             android:textColor="#FF0000"
@@ -216,30 +231,26 @@
 
 
         <ImageView
+            android:id="@+id/intro_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="308dp"
-            android:layout_marginTop="16dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
             android:src="@drawable/right" />
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/reLayout_fragment_basic_save"
-        android:layout_width="166dp"
-        android:layout_height="40dp"
-        android:layout_marginLeft="97dp"
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="62dp"
-        android:background="@drawable/baocunxinxi">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginLeft="55dp"
-            android:text="保存信息"
-            android:textColor="@color/clolrBAai"
-            android:textSize="14sp" />
-
-    </RelativeLayout>
+        android:background="@drawable/baocunxinxi"
+        android:gravity="center"
+        android:text="保存信息"
+        android:textColor="@color/clolrBAai"
+        android:textSize="14sp" />
 
 </LinearLayout>

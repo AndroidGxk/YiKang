@@ -5,12 +5,14 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.aftersale.AfterSaleActivity;
@@ -21,6 +23,7 @@ import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Shou;
 import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Wo;
 import com.yikangcheng.admin.yikang.activity.seek.SeekActivity;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
+import com.yikangcheng.admin.yikang.bean.LoginBean;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
 import me.jessyan.autosize.internal.CustomAdapt;
@@ -29,7 +32,7 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
     private RadioGroup radio;
     private FragmentTransaction transaction;
     private RadioButton shou, fen, miao, gou, wo;
-    private LinearLayout shou_linear, fen_linear, miao_linear, gou_linear, wo_linear,line1;
+    private LinearLayout shou_linear, fen_linear, miao_linear, gou_linear, wo_linear, line1;
     private DrawerLayout mDrawerLayout;
     private RelativeLayout mNv;
     //    private ImageView mImg_ceHua;
@@ -40,6 +43,7 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
     private ImageView mImg_activity_main_soushuo;
     private View toobar;
     private boolean isclick;
+    private Fragment_Miao fragment_miao;
 
     @Override
     protected void initView() {
@@ -120,7 +124,7 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         transaction = getSupportFragmentManager().beginTransaction();
         final Fragment_Shou fragment_shou = new Fragment_Shou();
         final Fragment_Fen fragment_fen = new Fragment_Fen();
-        final Fragment_Miao fragment_miao = new Fragment_Miao();
+        fragment_miao = new Fragment_Miao();
         final Fragment_Gou fragment_gou = new Fragment_Gou();
         final Fragment_Wo fragment_wo = new Fragment_Wo();
         transaction.add(R.id.frag, fragment_shou);
@@ -227,6 +231,10 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         gou_linear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                LoginBean logUser = getLogUser(MainActivity.this);
+                if (logUser == null) {
+                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                }
                 toobar.setVisibility(View.VISIBLE);
                 tv_toolBar_right.setVisibility(View.VISIBLE);
                 iv_toolBar_right.setVisibility(View.GONE);
@@ -358,6 +366,10 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         gou.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                LoginBean logUser = getLogUser(MainActivity.this);
+                if (logUser == null) {
+                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                }
                 toobar.setVisibility(View.VISIBLE);
                 tv_toolBar_right.setVisibility(View.VISIBLE);
                 iv_toolBar_right.setVisibility(View.GONE);

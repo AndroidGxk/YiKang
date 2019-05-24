@@ -8,6 +8,8 @@ import com.yikangcheng.admin.yikang.bean.RegisterBean;
 import com.yikangcheng.admin.yikang.bean.RecommendBean;
 import com.yikangcheng.admin.yikang.bean.Request;
 import com.yikangcheng.admin.yikang.bean.ShopCarBean;
+import com.yikangcheng.admin.yikang.bean.UserDetailBean;
+import com.yikangcheng.admin.yikang.bean.UserInfoBean;
 
 import java.util.List;
 
@@ -80,4 +82,18 @@ public interface ApiService {
      */
     @POST("login")
     Observable<Request<LoginBean>> login(@Query("mobile") String mobile, @Query("userPassword") String userPassword);
+
+    /**
+     * 个人信息资料
+     */
+    @POST("userDetails")
+    Observable<Request<UserInfoBean<UserDetailBean>>> userDetails(@Query("userId") int userId);
+
+    /**
+     * 修改密码
+     */
+    @POST("retrievePwd")
+    Observable<Request> retrievePwd(@Query("mobile") String mobile, @Query("retrieveType") String retrieveType,
+                                    @Query("mobileCheckCode") String mobileCheckCode,
+                                    @Query("userPassword") String userPassword, @Query("confirmPwd") String confirmPwd);
 }
