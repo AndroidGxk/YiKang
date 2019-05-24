@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipToPadding="true"
     android:fitsSystemWindows="true"
-    android:orientation="vertical"
     tools:context=".activity.myaccount.PhoneActivity">
 
     <android.support.v7.widget.Toolbar
@@ -24,109 +23,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="更换手机号"
+            android:text="更换手机号码"
             android:textColor="#000000"
             android:textSize="19sp" />
 
     </android.support.v7.widget.Toolbar>
 
     <TextView
-        android:id="@+id/tv_dangqian_activity_phone"
-        android:layout_width="137dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="19dp"
+        android:layout_below="@+id/toolbar_activity_phone"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
         android:text="当前手机号:13800000000"
         android:textColor="#ff999999"
         android:textSize="12sp" />
 
-    <RelativeLayout
-        android:layout_width="330dp"
-        android:layout_height="40dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="18dp"
-        android:background="@drawable/phone_a">
-
-        <TextView
-            android:layout_width="26dp"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp"
-            android:text="+86"
-            android:textColor="#ff333333"
-            android:textSize="15sp" />
-
-        <ImageView
-            android:id="@+id/img_xia_activity_phone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="45dp"
-            android:src="@drawable/xia" />
-
-        <EditText
-            android:id="@+id/et_phone_activity_phone"
-            android:layout_width="230dp"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="76dp"
-            android:background="@null"
-            android:hint="请输入手机号"
-            android:textSize="13sp" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="330dp"
-        android:layout_height="40dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/phone_b">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp"
-            android:text="短信验证码"
-            android:textColor="#ff333333"
-            android:textSize="15sp" />
-
-        <EditText
-            android:id="@+id/et_code_activity_phone"
-            android:layout_width="110dp"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="100dp"
-            android:background="@null"
-            android:hint="请输入验证码"
-            android:textSize="13sp" />
-
-        <TextView
-            android:id="@+id/tv_huoqu_activity_phond"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="232dp"
-            android:text="获取短信验证码"
-            android:textColor="#ffffffff"
-            android:textSize="12sp" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/relativeLayout_baocun_activity_phone"
+    <TextView
         android:layout_width="166dp"
         android:layout_height="40dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="121dp"
-        android:background="@drawable/yuanjiao">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="保存"
-            android:textColor="#FFFFFF"
-            android:textSize="14sp" />
-    </RelativeLayout>
-</LinearLayout>
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="258dp"
+        android:background="@drawable/shop_btn_shape"
+        android:gravity="center"
+        android:text="保存"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp" />
+</RelativeLayout>

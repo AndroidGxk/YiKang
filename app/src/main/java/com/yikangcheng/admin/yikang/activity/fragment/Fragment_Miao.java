@@ -10,7 +10,9 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.JavascriptInterface;
+import android.webkit.JsResult;
 import android.webkit.ValueCallback;
+import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -90,14 +92,16 @@ public class Fragment_Miao extends BaseFragment {
                 return false;
             }
         });
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.loadUrl("http://192.168.0.109/mobile/login");
-        webView.evaluateJavascript("jsToOcFunction3()", new ValueCallback<String>() {
+        webView.setWebChromeClient(new WebChromeClient() {
             @Override
-            public void onReceiveValue(String value) {
-                Toast.makeText(getContext(), ""+value, Toast.LENGTH_SHORT).show();
+            public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
+                return super.onJsAlert(view, url, message, result);
             }
         });
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.addJavascriptInterface(this, "ww");
+        webView.loadUrl("http://192.168.0.109/mobile/login");
+
     }
 
     @Override
@@ -117,5 +121,10 @@ public class Fragment_Miao extends BaseFragment {
     @Override
     protected int getFragmentLayoutId() {
         return R.layout.fragment_miao;
+    }
+
+    @JavascriptInterface
+    public void sayHello(String msg) {
+        Log.v("gxk", "JSInferface--" + msg);
     }
 }

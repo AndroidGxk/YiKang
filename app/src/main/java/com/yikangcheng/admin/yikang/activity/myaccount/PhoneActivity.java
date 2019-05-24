@@ -11,7 +11,9 @@ import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
-public class PhoneActivity extends BaseActivtiy {
+import me.jessyan.autosize.internal.CustomAdapt;
+
+public class PhoneActivity extends BaseActivtiy implements CustomAdapt {
 
 
     private ImageView mImgActivityPhoneFanhui;
@@ -21,7 +23,6 @@ public class PhoneActivity extends BaseActivtiy {
     private EditText mEtPhoneActivityPhone;
     private EditText mEtCodeActivityPhone;
     private TextView mTvHuoquActivityPhond;
-    private RelativeLayout mRelativeLayoutBaocunActivityPhone;
 
     @Override
     protected void initView() {
@@ -41,8 +42,6 @@ public class PhoneActivity extends BaseActivtiy {
         mEtCodeActivityPhone = findViewById(R.id.et_code_activity_phone);
         //获取验证码
         mTvHuoquActivityPhond = findViewById(R.id.tv_huoqu_activity_phond);
-        //保存
-        mRelativeLayoutBaocunActivityPhone = findViewById(R.id.relativeLayout_baocun_activity_phone);
         /**
          * ToolBar
          */
@@ -72,5 +71,15 @@ public class PhoneActivity extends BaseActivtiy {
     @Override
     protected void createPresenter() {
 
+    }
+
+    @Override
+    public boolean isBaseOnWidth() {
+        return false;
+    }
+
+    @Override
+    public float getSizeInDp() {
+        return 720;
     }
 }

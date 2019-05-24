@@ -103,4 +103,12 @@ public interface ApiService {
     Observable<Request> retrievePwd(@Query("mobile") String mobile, @Query("retrieveType") String retrieveType,
                                     @Query("mobileCheckCode") String mobileCheckCode,
                                     @Query("userPassword") String userPassword, @Query("confirmPwd") String confirmPwd);
+
+    /**
+     * 修改个人信息
+     */
+    @POST("updateUserMapper")
+    Observable<Request> updateUserMapper(@Query("userId") String userId, @Query("nickName") String nickName, @Query("avatar") String avatar,
+                                         @Query("realName") String realName, @Query("email") String email, @Query("gender") String gender,
+                                         @Query("userInfo") String userInfo, @Query("mobile") String mobile);
 }

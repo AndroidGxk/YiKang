@@ -1,7 +1,9 @@
 package com.yikangcheng.admin.yikang.activity.fragment.wodezhanghu;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -170,9 +172,14 @@ public class BasicFragment extends BaseFragment {
         int gender = userInfo.getGender();
         if (gender == 0) {
             sex_group.check(sex_group.getChildAt(0).getId());
-        }else{
+        } else {
             sex_group.check(sex_group.getChildAt(1).getId());
         }
         Glide.with(getContext()).load("https://static.yikch.com" + userInfo.getAvatar()).into(user_header);
+        SharedPreferences intro = getContext().getSharedPreferences("intro", Context.MODE_PRIVATE);
+        String introString = intro.getString("intro", "");
+        if (!introString.equals("")) {
+            jianjie.setText(introString);
+        }
     }
 }
