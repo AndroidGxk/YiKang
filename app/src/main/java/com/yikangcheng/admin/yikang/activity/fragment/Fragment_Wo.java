@@ -5,13 +5,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.yikangcheng.admin.yikang.R;
@@ -23,10 +21,12 @@ import com.yikangcheng.admin.yikang.activity.adapter.Recommend_Fragment_wo_Adapt
 import com.yikangcheng.admin.yikang.activity.aftersale.AfterSaleActivity;
 import com.yikangcheng.admin.yikang.activity.coupon.CouponActivity;
 import com.yikangcheng.admin.yikang.activity.myaccount.MyaccountActivity;
+import com.yikangcheng.admin.yikang.activity.obligation.CanceledActivity;
+import com.yikangcheng.admin.yikang.activity.obligation.DetailActivity;
 import com.yikangcheng.admin.yikang.activity.obligation.ObligationActivity;
-import com.yikangcheng.admin.yikang.activity.orderstatus.WaitForpaymentActivity;
+import com.yikangcheng.admin.yikang.activity.obligation.PaidActivity;
+import com.yikangcheng.admin.yikang.activity.orderstatus.CloseTheDealActivity;
 import com.yikangcheng.admin.yikang.activity.siteactivity.AiteActivity;
-import com.yikangcheng.admin.yikang.app.Constants;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
 import com.yikangcheng.admin.yikang.bean.AdvertisingBean;
 import com.yikangcheng.admin.yikang.bean.LoginBean;
@@ -43,8 +43,6 @@ import com.yikangcheng.admin.yikang.util.SpacesItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import me.jessyan.autosize.utils.LogUtils;
 
 public class Fragment_Wo extends BaseFragment implements ICoreInfe {
 
@@ -112,11 +110,45 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe {
         mTvFragmentWoName = view.findViewById(R.id.tv__fragment_wo_name);
         //账户明细
         mMingxi = view.findViewById(R.id.relativeLayout_mingxi_fragment_wo);
+        /**
+         * 点击已取消 跳转页面
+         */
+        mImgFragmentWoYiquxiao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), CanceledActivity.class);
+                startActivity(intent);
+            }
+        });
 
+        /**
+         * 点击已支付跳转页面
+         */
+        mImgFragmentWoYizhifu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), PaidActivity.class);
+                startActivity(intent);
+            }
+        });
+        /**
+         * 点击退出登录跳转到登录页面
+         */
+        mImgFragmentWoTuichudenglu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        /**
+         * 点击账户明细 跳转页面
+         */
         mMingxi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), WaitForpaymentActivity.class);
+                Intent intent = new Intent(getActivity(), DetailActivity.class);
                 startActivity(intent);
             }
         });

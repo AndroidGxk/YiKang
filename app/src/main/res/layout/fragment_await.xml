@@ -3,36 +3,54 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/img_fragment_await"
-        android:layout_width="120dp"
-        android:layout_height="80dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="102dp"
-        android:src="@drawable/dengdai" />
 
-    <TextView
-        android:layout_width="wrap_content"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rlv_fragment_await_dingdan"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="215dp"
-        android:text="暂时还没有对应的订单记录"
-        android:textColor="#ff999999"
-        android:textSize="14sp" />
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp"
+        android:visibility="gone" />
 
-    <ImageView
-        android:id="@+id/img_fragment_await_quguanghuang"
-        android:layout_width="166dp"
-        android:layout_height="40dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="271dp"
-        android:src="@drawable/yuanjiao" />
-    <TextView
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="283dp"
-        android:text="去逛逛吧"
-        android:textColor="#ffffffff"
-        android:textSize="14sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/img_fragment_await"
+            android:layout_width="120dp"
+            android:layout_height="80dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="102dp"
+            android:src="@drawable/dengdai" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="215dp"
+            android:text="暂时还没有对应的订单记录"
+            android:textColor="#ff999999"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/img_fragment_await_quguanghuang"
+            android:layout_width="166dp"
+            android:layout_height="40dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="271dp"
+            android:src="@drawable/yuanjiao" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="283dp"
+            android:text="去逛逛吧"
+            android:textColor="#ffffffff"
+            android:textSize="14sp" />
+    </RelativeLayout>
 </RelativeLayout>

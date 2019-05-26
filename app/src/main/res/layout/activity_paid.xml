@@ -9,13 +9,13 @@
     tools:context=".activity.obligation.ObligationActivity">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar_activity_obligation"
+        android:id="@+id/toolbar_activity_paid"
         android:layout_width="match_parent"
         android:layout_height="42dp"
         android:background="@drawable/toolbar">
 
         <ImageView
-            android:id="@+id/img_activity_obligation_fanhui"
+            android:id="@+id/img_activity_paid_fanhui"
             android:layout_width="11dp"
             android:layout_height="20dp"
             android:src="@drawable/fanhuiactivity" />
@@ -24,14 +24,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="待付款"
+            android:text="已支付"
             android:textColor="#000000"
             android:textSize="19sp" />
 
     </android.support.v7.widget.Toolbar>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rlv_activity_obligation"
+        android:id="@+id/rlv_activity_paid"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"

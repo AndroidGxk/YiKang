@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -33,6 +33,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="141dp"
+        android:layout_marginTop="42dp"
         android:background="@drawable/rad">
 
         <TextView
@@ -45,6 +46,7 @@
             android:textSize="24sp" />
 
         <TextView
+            android:id="@+id/tv_activity_waitfrrpayment_daojishi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
@@ -71,6 +73,7 @@
                 android:textSize="12sp" />
 
             <TextView
+                android:id="@+id/tv_activity_waitfrrpayment_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="45dp"
@@ -80,6 +83,7 @@
                 android:textSize="12sp" />
 
             <TextView
+                android:id="@+id/tv_activity_waitfrrpayment_dizi"
                 android:layout_width="295dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -94,10 +98,11 @@
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/rlv_activity_waitfrrpayment_shangPin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="204dp"
         android:layout_marginRight="15dp"
         android:layout_marginBottom="10dp" />
 
@@ -105,6 +110,7 @@
         android:layout_width="match_parent"
         android:layout_height="125dp"
         android:layout_marginLeft="15dp"
+        android:layout_marginTop="396dp"
         android:layout_marginRight="15dp"
         android:background="#FFFFFF">
 
@@ -119,6 +125,7 @@
 
 
         <TextView
+            android:id="@+id/tv_activity_waitfrrpayment_biaohao"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="80dp"
@@ -128,6 +135,7 @@
             android:textSize="12sp" />
 
         <ImageView
+            android:id="@+id/img_activity_waitfrrpayment_fizhi"
             android:layout_width="28dp"
             android:layout_height="14dp"
             android:layout_marginLeft="202dp"
@@ -144,6 +152,7 @@
             android:textSize="12sp" />
 
         <TextView
+            android:id="@+id/tv_activity_waitfrrpayment_yunFei"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="80dp"
@@ -162,6 +171,7 @@
             android:textSize="12sp" />
 
         <TextView
+            android:id="@+id/tv_activity_waitfrrpayment_jinE"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="80dp"
@@ -180,6 +190,7 @@
             android:textSize="12sp" />
 
         <TextView
+            android:id="@+id/tv_activity_waitfrrpayment_zhongJi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="80dp"
@@ -198,6 +209,7 @@
             android:textSize="12sp" />
 
         <TextView
+            android:id="@+id/tv_activity_waitfrrpayment_fangShi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="80dp"
@@ -211,7 +223,7 @@
         android:layout_width="match_parent"
         android:layout_height="33dp"
         android:layout_marginLeft="15dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="530dp"
         android:layout_marginRight="15dp"
         android:background="#FFFFFF">
 
@@ -223,6 +235,7 @@
             android:background="@drawable/kefu_huang" />
 
         <TextView
+            android:id="@+id/tv_activity_waitfrrpayment_keFu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -236,7 +249,7 @@
         android:layout_width="match_parent"
         android:layout_height="57dp"
         android:layout_marginLeft="15dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="573dp"
         android:layout_marginRight="15dp"
         android:background="#FFFFFF">
 
@@ -250,6 +263,7 @@
             android:textSize="12sp" />
 
         <TextView
+            android:id="@+id/tv_activity_waitfrrpayment_FaPianLeiXing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="73dp"
@@ -268,6 +282,7 @@
             android:textSize="12sp" />
 
         <TextView
+            android:id="@+id/tv_activity_waitfrrpayment_NeiRong"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="73dp"
@@ -277,6 +292,62 @@
             android:textSize="12sp" />
     </RelativeLayout>
 
-    
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="645dp"
+        android:background="@drawable/tuijian" />
 
-</LinearLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rlv_activity_waitfrrpayment_TuiJian"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="671dp"
+        android:layout_marginRight="15dp" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="#FFFFFF">
+
+        <ImageView
+            android:id="@+id/img_activity_waitfrrpayment_shanchu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="181dp"
+            android:background="@drawable/touming" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="190dp"
+            android:text="删除订单"
+            android:textColor="#ffffaf00"
+            android:textSize="13sp" />
+
+        <ImageView
+            android:id="@+id/img_activity_waitfrrpayment_queDing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="272dp"
+            android:background="@drawable/shixin" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="288dp"
+            android:text="去支付"
+            android:textColor="#ffffffff"
+            android:textSize="13sp" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,9 +1,9 @@
 package com.yikangcheng.admin.yikang.activity.myaccount;
 
+
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
-
 import me.jessyan.autosize.internal.CustomAdapt;
 
 public class PhoneActivity extends BaseActivtiy implements CustomAdapt {
