@@ -131,16 +131,7 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe {
                 startActivity(intent);
             }
         });
-        /**
-         * 点击退出登录跳转到登录页面
-         */
-        mImgFragmentWoTuichudenglu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), LoginActivity.class);
-                startActivity(intent);
-            }
-        });
+
 
         /**
          * 点击账户明细 跳转页面
