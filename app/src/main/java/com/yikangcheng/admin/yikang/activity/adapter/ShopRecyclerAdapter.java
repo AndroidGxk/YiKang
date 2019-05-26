@@ -33,6 +33,10 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<ShopRecyclerAdapte
         this.shopList.addAll(shopList);
     }
 
+    public void remove() {
+        this.shopList.clear();
+    }
+
     //接口
     private TotalPriceListener totalPriceListener;
 

@@ -3,6 +3,7 @@ package com.yikangcheng.admin.yikang.activity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yikangcheng.admin.yikang.R;
@@ -16,12 +17,14 @@ public class SystemActivity extends BaseActivtiy {
     private TextView compile_text;
     private boolean isclick;
     private SystemRecyclerAdapter systemRecyclerAdapter;
+    private RelativeLayout rela;
 
     @Override
     protected void initView() {
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.clolrBAai);
         xrecycler = findViewById(R.id.xrecycler);
+        rela = findViewById(R.id.rela);
         compile_text = findViewById(R.id.compile_text);
         xrecycler.setLayoutManager(new LinearLayoutManager(this));
         systemRecyclerAdapter = new SystemRecyclerAdapter(this);
@@ -38,10 +41,12 @@ public class SystemActivity extends BaseActivtiy {
                     isclick = true;
                     systemRecyclerAdapter.isclick(isclick);
                     compile_text.setText("完成");
+                    rela.setVisibility(View.VISIBLE);
                 } else {
                     isclick = false;
                     systemRecyclerAdapter.isclick(isclick);
                     compile_text.setText("编辑");
+                    rela.setVisibility(View.GONE);
                 }
             }
         });

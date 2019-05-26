@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="131dp"
+    android:layout_marginBottom="10dp"
+    android:background="@drawable/dizi_beijing">
+
+    <android.support.constraint.Guideline
+        android:id="@+id/top_line"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.25" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/address_line"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/moren_line"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.78" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/left_line"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.04" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/phone_left_line"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.68" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/bian_left_line"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.68" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/dele_left_line"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.83" />
+
+
+    <TextView
+        android:id="@+id/user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="某某某"
+        android:textSize="19sp"
+        app:layout_constraintLeft_toRightOf="@id/left_line"
+        app:layout_constraintTop_toBottomOf="@id/top_line" />
+
+    <TextView
+        android:id="@+id/user_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="138****0000"
+        android:textColor="#ff333333"
+        android:textSize="15sp"
+        app:layout_constraintLeft_toRightOf="@+id/phone_left_line"
+        app:layout_constraintTop_toBottomOf="@id/top_line" />
+
+    <TextView
+        android:id="@+id/user_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="XXX市XX区XXXXXXXXXXXXXXXXXXXXXXXXXXXXX..."
+        android:textColor="#ff999999"
+        android:textSize="14sp"
+        app:layout_constraintLeft_toRightOf="@id/left_line"
+        app:layout_constraintTop_toBottomOf="@id/address_line" />
+
+    <RadioButton
+        android:id="@+id/moren"
+        android:layout_width="65dp"
+        android:layout_height="17dp"
+        android:background="@drawable/select_radio_address"
+        android:button="@null"
+        app:layout_constraintLeft_toRightOf="@id/left_line"
+        app:layout_constraintTop_toBottomOf="@id/moren_line" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@+id/bian_left_line"
+        app:layout_constraintTop_toBottomOf="@id/moren_line">
+
+        <ImageView
+            android:id="@+id/xie"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
+            android:layout_centerVertical="true"
+            android:background="@drawable/xie" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@id/xie"
+            android:text="编辑" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@+id/dele_left_line"
+        app:layout_constraintTop_toBottomOf="@id/moren_line">
+
+        <ImageView
+            android:id="@+id/delete"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
+            android:layout_centerVertical="true"
+            android:background="@drawable/sc" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@id/delete"
+            android:text="删除" />
+    </RelativeLayout>
+</android.support.constraint.ConstraintLayout>

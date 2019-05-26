@@ -17,6 +17,7 @@ import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
 import com.yikangcheng.admin.yikang.presenter.GetMobileKeyPresenter;
 import com.yikangcheng.admin.yikang.presenter.RetrievePwdPresenter;
 import com.yikangcheng.admin.yikang.presenter.SendMobilePresenter;
+import com.yikangcheng.admin.yikang.util.UIUtils;
 
 /**
  * Created by lenovo on 2019/5/17.
@@ -27,7 +28,7 @@ public class AmendFragment extends BaseFragment implements ICoreInfe {
     private TextView moblie_text;
     private int mCount = 60;
     private RelativeLayout reLayout_fragment_basic_save;
-    private EditText phone_text, moblie, yuan_text, newpwd_text, newpwd_texts;
+    private EditText phone_text, moblie, newpwd_text, newpwd_texts;
     /**
      * 倒计时
      */
@@ -58,7 +59,6 @@ public class AmendFragment extends BaseFragment implements ICoreInfe {
         moblie_text = view.findViewById(R.id.moblie_text);
         phone_text = view.findViewById(R.id.EditTixt_activity_seek_sousuo);
         moblie = view.findViewById(R.id.set_moblie);
-        yuan_text = view.findViewById(R.id.yuan_pwd);
         newpwd_text = view.findViewById(R.id.newpwd);
         newpwd_texts = view.findViewById(R.id.newpwds);
         reLayout_fragment_basic_save = view.findViewById(R.id.reLayout_fragment_basic_save);
@@ -79,8 +79,14 @@ public class AmendFragment extends BaseFragment implements ICoreInfe {
             @Override
             public void onClick(View view) {
                 String phone = phone_text.getText().toString();
-                getMobileKeyPresenter.request(phone, "Android");
-                handler.sendEmptyMessage(1);
+                boolean mobile = UIUtils.isMobile(phone);
+                if(mobile){
+                    getMobileKeyPresenter.request(phone, "Android");
+                    handler.sendEmptyMessage(1);
+                }else{
+                    Toast.makeText(getContext(), "请输入正确的手机号", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
         /**
@@ -91,7 +97,6 @@ public class AmendFragment extends BaseFragment implements ICoreInfe {
             public void onClick(View view) {
                 String phone = phone_text.getText().toString();
                 String moblie_code = moblie.getText().toString();
-                String yuanpwd = yuan_text.getText().toString();
                 String newpwd = newpwd_text.getText().toString();
                 String newpwds = newpwd_texts.getText().toString();
                 retrievePwdPresenter.request(phone, "mobile", moblie_code, newpwd, newpwds);
@@ -129,7 +134,7 @@ public class AmendFragment extends BaseFragment implements ICoreInfe {
         @Override
         public void success(Object data) {
             Request request = (Request) data;
-            Toast.makeText(getContext(), ""+request.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "" + request.getMessage(), Toast.LENGTH_SHORT).show();
             if (request.isSuccess()) {
                 String entity = (String) request.getEntity();
                 String phone = phone_text.getText().toString();

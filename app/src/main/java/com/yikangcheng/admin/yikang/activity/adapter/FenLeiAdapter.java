@@ -52,9 +52,11 @@ public class FenLeiAdapter extends RecyclerView.Adapter<FenLeiAdapter.Vh> {
             if (mPosition == position) {
                 vh.textView.setTextColor(context.getResources().getColor(R.color.colorTab));
                 vh.itemView.setBackgroundResource(R.drawable.fen_text_check_true);
+                vh.textView.setTextSize(13);
             } else {
                 vh.textView.setTextColor(context.getResources().getColor(R.color.colorText));
                 vh.itemView.setBackgroundColor(context.getResources().getColor(R.color.colorTouMing));
+                vh.textView.setTextSize(13);
             }
         }
     }

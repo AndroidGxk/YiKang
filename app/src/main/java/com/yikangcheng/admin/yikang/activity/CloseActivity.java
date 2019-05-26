@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.adapter.CloseRecyclerAdapter;
+import com.yikangcheng.admin.yikang.activity.siteactivity.AiteActivity;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
@@ -28,13 +29,13 @@ import me.jessyan.autosize.internal.CustomAdapt;
 public class CloseActivity extends BaseActivtiy implements View.OnClickListener, CustomAdapt {
     boolean n_invoice = false, d_invoice = false, z_invoice = false, g_invoice = false, w_invoice = false, t_good = false, d_good = false;
     private RecyclerView recycler;
-    private RelativeLayout rela4, rela3;
+    private RelativeLayout rela4, rela3, rela2;
     private int width;
     private Dialog bottomDialog;
     private int height;
     private View sele_pay_digo, invoice_item;
     private ImageView buy_img;
-    private RelativeLayout wechat_pay, zhi_rela;
+    private RelativeLayout wechat_pay, zhi_rela, youhuiquan;
     //选中未选中
     private boolean wechat = true, zhi = false;
     private FragmentTransaction fragmentTransaction;
@@ -54,7 +55,9 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
         recycler = findViewById(R.id.recycler);
         buy_img = findViewById(R.id.buy_img);
         rela4 = findViewById(R.id.rela4);
+        rela2 = findViewById(R.id.rela2);
         rela3 = findViewById(R.id.rela3);
+        youhuiquan = findViewById(R.id.youhuiquan);
         Display display = this.getWindowManager().getDefaultDisplay();
         width = display.getWidth();
         height = display.getHeight();
@@ -94,6 +97,15 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
                 }
             }
         });
+        /**
+         * 收货地址
+         */
+        rela2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(CloseActivity.this, AiteActivity.class));
+            }
+        });
         invoice();
     }
 
@@ -119,6 +131,14 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
         personage.setOnClickListener(this);
         good_type.setOnClickListener(this);
         good_detail.setOnClickListener(this);
+        youhuiquan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //优惠券
+                startActivity(new Intent(CloseActivity.this, SelectCouponActivity.class));
+            }
+        });
+
     }
 
     @Override

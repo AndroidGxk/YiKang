@@ -59,6 +59,7 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
         text_total = view.findViewById(R.id.text_total);
         shopCarPresenter = new ShopCarPresenter(this);
         MainActivity activity = (MainActivity) getActivity();
+        //编辑按钮回调
         activity.setOnClickListener(new MainActivity.onClickListener() {
             @Override
             public void onclick() {
@@ -83,10 +84,8 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
          */
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
         shop_recyclertwo.setLayoutManager(gridLayoutManager);
-        List<RecommendBean> entityBeans = new ArrayList<>();
-        mRecommendAdapter = new RecommendAdapter(entityBeans, getContext());
+        mRecommendAdapter = new RecommendAdapter( getContext());
         shop_recyclertwo.setAdapter(mRecommendAdapter);
-
         recommendPresenter = new RecommendPresenter(new RecomICoreInfe());
 
         int spanCount = 2; // 3 columns
@@ -186,8 +185,8 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
             null_car.setVisibility(View.VISIBLE);
             shop_recycler.setVisibility(View.GONE);
         }
+        shopRecyclerAdapter.remove();
         shopRecyclerAdapter.addAll(entity);
-
     }
 
     @Override
@@ -201,6 +200,7 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
         public void success(Object data) {
             Request request = (Request) data;
             List<RecommendBean> entity1 = (List<RecommendBean>) request.getEntity();
+            mRecommendAdapter.removeAll();
             mRecommendAdapter.addData(entity1);
         }
 

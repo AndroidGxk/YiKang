@@ -1,9 +1,15 @@
 package com.yikangcheng.admin.yikang.activity.fragment.wodezhanghu;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -13,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.yikangcheng.admin.yikang.R;
@@ -42,6 +49,7 @@ public class BasicFragment extends BaseFragment {
     private TextView name_text, rela_name_text;
     private RadioGroup sex_group;
     private TextView phone_text, jianjie;
+    //相机相册
 
     @Override
     protected void initView(View view) {
@@ -103,7 +111,6 @@ public class BasicFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
-
         //用户名称
         name_text = view.findViewById(R.id.name_text);
         //姓名名称
@@ -126,7 +133,7 @@ public class BasicFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 //设置dialog的宽高为屏幕的宽高
-                ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(width, height - 390 * 2);
+                ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(width, height - (int) (height * 0.6));
                 mDialog.setContentView(mInflate, layoutParams);
                 mDialog.getWindow().setGravity(Gravity.BOTTOM);
                 mDialog.setCanceledOnTouchOutside(true);
@@ -138,12 +145,15 @@ public class BasicFragment extends BaseFragment {
          * 拍照id
          */
         mTvPhotograph = mInflate.findViewById(R.id.tv_Photograph);
+
         /**
          * 相册id
          */
         mTvPhotoAlbu = mInflate.findViewById(R.id.tv_PhotoAlbu);
         mImgFinsh = mInflate.findViewById(R.id.img_finsh);
-
+        /**
+         * 完成
+         */
         mImgFinsh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -180,6 +190,18 @@ public class BasicFragment extends BaseFragment {
         String introString = intro.getString("intro", "");
         if (!introString.equals("")) {
             jianjie.setText(introString);
+        }
+    }
+
+    // 第五步:回传
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // TODO Auto-generated method stub
+        super.onActivityResult(requestCode, resultCode, data);
+        // 判断请求码 是否成功
+        if (requestCode == 0) {
+            Bitmap bitmap = data.getParcelableExtra("data");
+            Toast.makeText(getActivity(), "" + data, Toast.LENGTH_SHORT).show();
         }
     }
 }

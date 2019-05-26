@@ -8,10 +8,11 @@
 
     <RelativeLayout
         android:id="@+id/reLayout_fragment_basic_touxiang"
-        android:layout_width="330dp"
+        android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="13dp"
+        android:layout_marginRight="15dp"
         android:background="@drawable/bai">
 
         <TextView
@@ -44,10 +45,11 @@
 
     <RelativeLayout
         android:id="@+id/reLayout_fragment_basic_niceng"
-        android:layout_width="330dp"
+        android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp"
         android:background="@drawable/bai">
 
         <TextView
@@ -67,6 +69,7 @@
             android:layout_toLeftOf="@+id/name_image"
             android:gravity="center"
             android:text="昵称"
+            android:textColor="#999999"
             android:textSize="13sp" />
 
         <ImageView
@@ -81,10 +84,11 @@
 
     <RelativeLayout
         android:id="@+id/reLayout_fragment_basic_name"
-        android:layout_width="330dp"
+        android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp"
         android:background="@drawable/bai">
 
         <TextView
@@ -120,10 +124,11 @@
 
     <RelativeLayout
         android:id="@+id/reLayout_fragment_basic_sex"
-        android:layout_width="330dp"
+        android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp"
         android:background="@drawable/bai">
 
         <TextView
@@ -166,10 +171,11 @@
 
     <RelativeLayout
         android:id="@+id/reLayout_fragment_basic_phone"
-        android:layout_width="330dp"
+        android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp"
         android:background="@drawable/bai">
 
         <TextView
@@ -203,10 +209,11 @@
 
     <RelativeLayout
         android:id="@+id/reLayout_fragment_basic_synopsis"
-        android:layout_width="330dp"
+        android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp"
 
         android:background="@drawable/bai">
 

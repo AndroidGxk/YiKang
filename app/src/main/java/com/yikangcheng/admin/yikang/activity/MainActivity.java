@@ -23,6 +23,7 @@ import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Gou;
 import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Miao;
 import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Shou;
 import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Wo;
+import com.yikangcheng.admin.yikang.activity.myaccount.MyaccountActivity;
 import com.yikangcheng.admin.yikang.activity.seek.SeekActivity;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.LoginBean;
@@ -42,7 +43,7 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
     private TextView tv_toolBar_title, tv_toolBar_right;
     private TextView shou_text, fen_text, miao_text, gou_text, wo_text;
     private ImageView iv_toolBar_right, iv_toolBar_left;
-    private ImageView mImg_activity_main_soushuo;
+    private ImageView mImg_activity_main_soushuo,header;
     private View toobar;
     private boolean isclick;
     private Fragment_Miao fragment_miao;
@@ -59,6 +60,7 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         shou_text = findViewById(R.id.shou_text);
         fen_text = findViewById(R.id.fen_text);
         line1 = findViewById(R.id.line1);
+        header = findViewById(R.id.header);
         miao_text = findViewById(R.id.miao_text);
         gou_text = findViewById(R.id.gou_text);
         wo_text = findViewById(R.id.wo_text);
@@ -428,6 +430,15 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, OrderFormActivity.class));
+            }
+        });
+        /**
+         * 头像跳转
+         */
+        header.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, MyaccountActivity.class));
             }
         });
     }

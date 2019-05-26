@@ -30,11 +30,13 @@
     </android.support.v7.widget.Toolbar>
 
     <TextView
+        android:id="@+id/present"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar_activity_phone"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
+        android:gravity="center"
         android:text="当前手机号:13800000000"
         android:textColor="#ff999999"
         android:textSize="12sp" />
@@ -49,4 +51,75 @@
         android:text="保存"
         android:textColor="#FFFFFF"
         android:textSize="14sp" />
+
+    <RelativeLayout
+        android:id="@+id/rela1"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/present"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="15dp">
+
+        <TextView
+            android:id="@+id/phone"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:background="@drawable/phone_text_shape"
+            android:drawableRight="@drawable/xia"
+            android:gravity="center"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="+86"
+            android:textSize="15sp" />
+
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_toRightOf="@+id/phone"
+            android:background="@drawable/phone_editext_5_shape"
+            android:hint="请输入手机号码"
+            android:paddingLeft="15dp"
+            android:textSize="13sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/rela1"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/moblie_editext_5_shape_left">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:text="短信验证码"
+            android:textSize="15sp" />
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="输入验证码"
+            android:paddingLeft="10dp"
+            android:textSize="13sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/moblie_editext_5_shape"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="获取短信验证码"
+            android:textColor="#ffffffff"
+            android:textSize="12sp" />
+    </LinearLayout>
+
 </RelativeLayout>

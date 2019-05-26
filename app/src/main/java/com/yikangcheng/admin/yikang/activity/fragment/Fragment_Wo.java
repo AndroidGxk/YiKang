@@ -21,6 +21,7 @@ import com.yikangcheng.admin.yikang.activity.MessageActivity;
 import com.yikangcheng.admin.yikang.activity.OrderFormActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.Recommend_Fragment_wo_Adapter;
 import com.yikangcheng.admin.yikang.activity.aftersale.AfterSaleActivity;
+import com.yikangcheng.admin.yikang.activity.coupon.CouponActivity;
 import com.yikangcheng.admin.yikang.activity.myaccount.MyaccountActivity;
 import com.yikangcheng.admin.yikang.activity.obligation.ObligationActivity;
 import com.yikangcheng.admin.yikang.activity.orderstatus.WaitForpaymentActivity;
@@ -63,7 +64,7 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe {
     private LinearLayout mImgFragmentWoDaifukuan;
     private LinearLayout mImgFragmentWoYiquxiao;
     private LinearLayout mImgFragmentWoDizi;
-    private LinearLayout mImgFragmentWoTuichudenglu;
+    private LinearLayout mImgFragmentWoyouhuiquan;
     private TextView mTvFragmentWoName;
     private Recommend_Fragment_wo_Adapter mRecommend_fragment_wo_adapter;
     private ImageView mGuanggao;
@@ -105,8 +106,8 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe {
         mImgFragmentWoYiquxiao = view.findViewById(R.id.img__fragment_wo_yiquxiao);
         //收货地址
         mImgFragmentWoDizi = view.findViewById(R.id.img_fragment_wo_dizi);
-        //退出登录
-        mImgFragmentWoTuichudenglu = view.findViewById(R.id.img__fragment_wo_tuichudenglu);
+        //优惠券
+        mImgFragmentWoyouhuiquan = view.findViewById(R.id.img__fragment_wo_gouwuche);
         //用户名
         mTvFragmentWoName = view.findViewById(R.id.tv__fragment_wo_name);
         //账户明细
@@ -119,7 +120,6 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe {
                 startActivity(intent);
             }
         });
-
 
 
         //接口请求
@@ -172,7 +172,7 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe {
                 if (logUser != null) {
                     Intent intent = new Intent(getActivity(), ObligationActivity.class);
                     startActivity(intent);
-                }else{
+                } else {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
                 }
             }
@@ -200,7 +200,7 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe {
                 if (logUser != null) {
                     Intent intent = new Intent(getActivity(), AiteActivity.class);
                     startActivity(intent);
-                }else{
+                } else {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
                 }
             }
@@ -215,7 +215,7 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe {
                 if (logUser != null) {
                     Intent intent = new Intent(getActivity(), MyaccountActivity.class);
                     startActivity(intent);
-                }else{
+                } else {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
                 }
             }
@@ -230,7 +230,7 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe {
                 if (logUser != null) {
                     Intent intent = new Intent(getActivity(), AfterSaleActivity.class);
                     startActivity(intent);
-                }else{
+                } else {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
                 }
             }
@@ -244,7 +244,7 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe {
             public void onClick(View view) {
                 if (logUser != null) {
                     startActivity(new Intent(getActivity(), MessageActivity.class));
-                }else{
+                } else {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
                 }
             }
@@ -259,7 +259,7 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe {
                 if (logUser != null) {
                     Intent intent = new Intent(getActivity(), ApoutUsActivity.class);
                     startActivity(intent);
-                }else{
+                } else {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
                 }
             }
@@ -271,15 +271,28 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe {
         mTvFragmentWoDingdan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(logUser!=null){
+                if (logUser != null) {
                     Intent intent = new Intent(getActivity(), OrderFormActivity.class);
                     startActivity(intent);
-                }else{
+                } else {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
                 }
             }
         });
-
+        /**
+         * 优惠券
+         */
+        mImgFragmentWoyouhuiquan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (logUser != null) {
+                    Intent intent = new Intent(getActivity(), CouponActivity.class);
+                    startActivity(intent);
+                } else {
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                }
+            }
+        });
     }
 
     public class AdvertisingICoreInfe implements ICoreInfe {

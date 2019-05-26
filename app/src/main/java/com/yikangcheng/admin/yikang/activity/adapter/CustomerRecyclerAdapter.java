@@ -7,12 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.yikangcheng.admin.yikang.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 作者：古祥坤 on 2019/5/19 23:24
@@ -22,6 +24,7 @@ public class CustomerRecyclerAdapter extends RecyclerView.Adapter<CustomerRecycl
     ArrayList<String> arrayList = new ArrayList<>();
     Context context;
     private boolean isclick;
+    List<Boolean> list = new ArrayList<>();
 
     public CustomerRecyclerAdapter(Context context) {
         this.context = context;
@@ -39,15 +42,26 @@ public class CustomerRecyclerAdapter extends RecyclerView.Adapter<CustomerRecycl
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final Vh vh, int position) {
+    public void onBindViewHolder(@NonNull final Vh vh, final int position) {
+
+        for (int i = 0; i < 9; i++) {
+            list.add(false);
+        }
         if (isclick) {
             vh.itemView.setBackgroundResource(R.drawable.jiaoyi_recycler_shape);
             vh.check_btn.setVisibility(View.GONE);
             vh.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    vh.itemView.setBackgroundResource(R.drawable.customer_recycler_shape);
-                    vh.check_btn.setVisibility(View.VISIBLE);
+                    if (!list.get(position)) {
+                        vh.itemView.setBackgroundResource(R.drawable.customer_recycler_shape);
+                        vh.check_btn.setVisibility(View.VISIBLE);
+                        list.set(position, true);
+                    } else {
+                        vh.itemView.setBackgroundResource(R.drawable.jiaoyi_recycler_shape);
+                        vh.check_btn.setVisibility(View.GONE);
+                        list.set(position, false);
+                    }
                 }
             });
         } else {
@@ -76,6 +90,7 @@ public class CustomerRecyclerAdapter extends RecyclerView.Adapter<CustomerRecycl
             check_btn = itemView.findViewById(R.id.check_btn);
         }
     }
+
     //编辑状态
     public void isclick(boolean isclick) {
         this.isclick = isclick;

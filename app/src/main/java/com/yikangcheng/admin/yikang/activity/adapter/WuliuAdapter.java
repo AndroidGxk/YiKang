@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.yikangcheng.admin.yikang.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 作者：古祥坤 on 2019/5/19 23:24
@@ -25,6 +26,7 @@ public class WuliuAdapter extends RecyclerView.Adapter<WuliuAdapter.Vh> {
     ArrayList<String> arrayList = new ArrayList<>();
     private boolean isclick;
     Context context;
+    List<Boolean> list = new ArrayList<>();
 
     public void addAll(ArrayList<String> arrayList) {
         this.arrayList.addAll(arrayList);
@@ -42,15 +44,26 @@ public class WuliuAdapter extends RecyclerView.Adapter<WuliuAdapter.Vh> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final Vh vh, int position) {
+    public void onBindViewHolder(@NonNull final Vh vh, final int position) {
+
+        for (int i = 0; i < 9; i++) {
+            list.add(false);
+        }
         if (isclick) {
             vh.itemView.setBackgroundResource(R.drawable.jiaoyi_recycler_shape);
             vh.check_btn.setVisibility(View.GONE);
             vh.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    vh.itemView.setBackgroundResource(R.drawable.distri_recycler_shape);
-                    vh.check_btn.setVisibility(View.VISIBLE);
+                    if (!list.get(position)) {
+                        vh.itemView.setBackgroundResource(R.drawable.distri_recycler_shape);
+                        vh.check_btn.setVisibility(View.VISIBLE);
+                        list.set(position, true);
+                    } else {
+                        vh.itemView.setBackgroundResource(R.drawable.jiaoyi_recycler_shape);
+                        vh.check_btn.setVisibility(View.GONE);
+                        list.set(position, false);
+                    }
                 }
             });
         } else {

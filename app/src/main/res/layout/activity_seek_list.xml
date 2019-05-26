@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:clipToPadding="true"
     android:fitsSystemWindows="true"
+    android:background="#EBEBEB"
     tools:context=".activity.SeekListActivity">
 
     <RelativeLayout
@@ -30,13 +31,14 @@
             android:layout_height="27dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:textColor="#848484"
             android:layout_toLeftOf="@+id/xiaoxi"
             android:layout_toRightOf="@+id/back_img"
             android:background="@drawable/seek_edi_shape"
+            android:focusable="false"
             android:imeOptions="actionSearch"
             android:paddingLeft="29dp"
             android:singleLine="true"
+            android:textColor="#848484"
             android:textSize="11sp" />
 
         <ImageView
@@ -66,34 +68,36 @@
             <TextView
                 android:id="@+id/zonghe"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="25dp"
+                android:layout_weight="1"
                 android:gravity="center"
                 android:text="综合"
-                android:textColor="#333333"
+                android:textColor="@color/colorTab"
                 android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/xiaoliang"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/zonghe"
+                android:layout_weight="1"
                 android:gravity="center"
                 android:text="销量"
                 android:textColor="#333333"
                 android:textSize="12sp" />
 
             <RelativeLayout
+                android:id="@+id/price"
                 android:layout_width="0dp"
-                android:layout_toRightOf="@+id/xiaoliang"
-                android:layout_toLeftOf="@+id/qiehuan"
-                android:gravity="center_horizontal"
                 android:layout_height="wrap_content"
-                android:layout_weight="1">
+                android:layout_toLeftOf="@+id/qiehuan"
+                android:layout_toRightOf="@+id/xiaoliang"
+                android:layout_weight="1"
+                android:gravity="center_horizontal">
+
                 <TextView
-                    android:id="@+id/price"
+                    android:id="@+id/price_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableRight="@drawable/price_image"
@@ -102,22 +106,26 @@
                     android:textColor="#333333"
                     android:textSize="12sp" />
             </RelativeLayout>
+
             <ImageView
                 android:id="@+id/qiehuan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="1dp"
                 android:layout_marginRight="60dp"
-                android:layout_alignParentRight="true"
+                android:src="@drawable/qiehuan"
                 android:gravity="center"
-                android:src="@drawable/qiehuan" />
+                android:padding="10dp" />
         </LinearLayout>
     </RelativeLayout>
 
     <com.jcodecraeer.xrecyclerview.XRecyclerView
         android:id="@+id/xrecycler"
-        android:layout_below="@+id/table"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:background="#EBEBEB"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/table"
+        android:layout_marginRight="5dp" />
 </RelativeLayout>

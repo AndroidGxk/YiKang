@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="96dp"
+    android:layout_marginLeft="15dp"
+    android:layout_marginTop="15dp"
+    android:layout_marginRight="15dp"
+    android:background="@drawable/youhuiquanbg">
+
+    <android.support.constraint.Guideline
+        android:id="@+id/top_line"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.18" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/text_left_line"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.32" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/man_left_line"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.327" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/go_left_line"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.73" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/qian_left_line"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.08" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/price_left_line"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.118" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/text_top_line"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.42" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/date_top_line"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.76" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/go_top_line"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.63" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/qian_top_line"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.36" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/price_top_line"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.28" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/man_top_line"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.64" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="全类目商品满500元可减50元"
+        android:textColor="#CACACA"
+        android:textSize="14sp"
+        app:layout_constraintLeft_toRightOf="@+id/text_left_line"
+        app:layout_constraintTop_toBottomOf="@id/top_line" />
+
+    <TextView
+        android:layout_width="72dp"
+        android:layout_height="20dp"
+        android:background="@drawable/effec_man_shape"
+        android:gravity="center"
+        android:text="满500可用"
+        android:textColor="#CACACA"
+        android:textSize="10sp"
+        app:layout_constraintLeft_toRightOf="@id/man_left_line"
+        app:layout_constraintTop_toBottomOf="@+id/text_top_line" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2019/5/6 — 2019/6/6"
+        android:textColor="#CACACA"
+        android:textSize="10sp"
+        app:layout_constraintLeft_toRightOf="@id/text_left_line"
+        app:layout_constraintTop_toBottomOf="@+id/date_top_line" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="¥"
+        android:textColor="#CACACA"
+        android:textSize="19sp"
+        app:layout_constraintLeft_toRightOf="@+id/qian_left_line"
+        app:layout_constraintTop_toBottomOf="@+id/qian_top_line" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="50"
+        android:textColor="#CACACA"
+        android:textSize="29sp"
+        app:layout_constraintLeft_toRightOf="@id/price_left_line"
+        app:layout_constraintTop_toBottomOf="@+id/price_top_line" />
+
+    <TextView
+        android:layout_width="48dp"
+        android:layout_height="15dp"
+        android:background="@drawable/emanjian_shape"
+        android:gravity="center"
+        android:text="满减券"
+        android:textColor="#FFFFFF"
+        android:textSize="10sp"
+        app:layout_constraintLeft_toRightOf="@+id/qian_left_line"
+        app:layout_constraintTop_toBottomOf="@id/man_top_line" />
+</android.support.constraint.ConstraintLayout>

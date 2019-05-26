@@ -5,10 +5,11 @@
     android:orientation="vertical">
 
     <RelativeLayout
-        android:layout_width="330dp"
+        android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="11dp"
+        android:layout_marginRight="15dp"
         android:background="@drawable/seckill_item_shape">
 
         <TextView
@@ -51,10 +52,11 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="330dp"
+        android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp"
         android:background="@drawable/xiugaimima_yuan">
 
         <TextView
@@ -78,38 +80,11 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="330dp"
+        android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/xiugaimima_yuan">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp"
-            android:text="原密码"
-            android:textColor="#333333" />
-
-        <EditText
-            android:id="@+id/yuan_pwd"
-            android:layout_width="188dp"
-            android:layout_height="match_parent"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="100dp"
-            android:background="@null"
-            android:imeOptions="actionSearch"
-            android:inputType="textPassword"
-            android:singleLine="true"
-            android:textSize="11sp" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="330dp"
-        android:layout_height="40dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp"
         android:background="@drawable/xiugaimima_yuan">
 
         <TextView
@@ -135,10 +110,11 @@
 
 
     <RelativeLayout
-        android:layout_width="330dp"
+        android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp"
         android:background="@drawable/xiugaimima_yuan">
 
         <TextView

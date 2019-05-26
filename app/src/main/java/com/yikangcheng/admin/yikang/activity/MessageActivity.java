@@ -1,24 +1,32 @@
 package com.yikangcheng.admin.yikang.activity;
 
 import android.content.Intent;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.yikangcheng.admin.yikang.R;
+import com.yikangcheng.admin.yikang.activity.adapter.MessageListAdapter;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
 public class MessageActivity extends BaseActivtiy {
 
     private LinearLayout wuliu, tongzhi, kefu;
+    private XRecyclerView xrecycler;
 
     @Override
     protected void initView() {
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
         wuliu = findViewById(R.id.wuliu);
+        xrecycler = findViewById(R.id.xrecycler);
         tongzhi = findViewById(R.id.tongzhi);
         kefu = findViewById(R.id.kefu);
+        xrecycler.setLayoutManager(new LinearLayoutManager(this));
+        xrecycler.setAdapter(new MessageListAdapter());
     }
 
     @Override

@@ -1,12 +1,16 @@
 package com.yikangcheng.admin.yikang.activity.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.yikangcheng.admin.yikang.R;
+import com.yikangcheng.admin.yikang.activity.SearchListActivity;
+import com.yikangcheng.admin.yikang.activity.SeekListActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.FenLeiAdapter;
 import com.yikangcheng.admin.yikang.activity.adapter.FenLeiBAdapter;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
@@ -55,7 +59,14 @@ public class Fragment_Fen extends BaseFragment implements ICoreInfe, CustomAdapt
                 mFenLeiBAdapter.addData(entity.get(position).getChildSubjectList());
             }
         });
-
+        mFenLeiBAdapter.setOnClickListener(new FenLeiBAdapter.onClickListener() {
+            @Override
+            public void onClick(int id) {
+                Intent intent = new Intent(getContext(), SeekListActivity.class);
+                intent.putExtra("id", id);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

@@ -29,30 +29,30 @@
     <TextView
         android:id="@+id/shop_count"
         android:layout_width="194dp"
-        android:maxEms="28"
-        android:singleLine="true"
-        android:ellipsize="end"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="8dp"
         android:layout_toRightOf="@+id/shop_img"
+        android:ellipsize="end"
+        android:maxEms="28"
+        android:singleLine="true"
         android:text="韩国JM牛油果精油面膜男女 韩国JM牛油果精油面膜男女"
         android:textSize="12sp" />
 
     <TextView
         android:id="@+id/num_text"
         android:layout_width="wrap_content"
-        android:minWidth="60dp"
-        android:layout_height="wrap_content"
+        android:layout_height="20dp"
         android:layout_below="@+id/shop_count"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_toRightOf="@+id/shop_img"
         android:background="@drawable/shop_text_shape"
         android:gravity="center"
+        android:minWidth="60dp"
         android:padding="3dp"
         android:text="1件  10片"
-        android:textSize="12sp" />
+        android:textSize="10sp" />
 
     <TextView
         android:id="@+id/price"
@@ -60,7 +60,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/num_text"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="6dp"
         android:layout_marginBottom="8dp"
         android:layout_toRightOf="@+id/shop_img"
         android:text="¥ 85.00"
@@ -68,10 +68,10 @@
         android:textSize="13sp" />
 
     <com.yikangcheng.admin.yikang.util.AddSubLayout
+        android:id="@+id/addsub"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/addsub"
-        android:layout_alignParentRight="true"
         android:layout_below="@+id/num_text"
+        android:layout_alignParentRight="true"
         android:layout_marginRight="9dp" />
 </RelativeLayout>

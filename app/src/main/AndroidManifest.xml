@@ -16,7 +16,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.orderstatus.WaitForpaymentActivity"></activity>
+        <activity android:name=".activity.SelectCouponActivity"></activity>
+        <activity android:name=".activity.coupon.CouponActivity" />
+        <activity android:name=".activity.orderstatus.WaitForpaymentActivity" />
         <activity android:name=".activity.myaccount.IntroActivity" />
         <activity android:name=".activity.myaccount.PhoneActivity" />
         <activity android:name=".activity.myaccount.NameActivity" />
@@ -95,7 +97,8 @@
         <activity
             android:name=".activity.myaccount.IntroActivity"
             tools:ignore="DuplicateActivity" />
-        <activity android:name=".activity.orderstatus.WaitForpaymentActivity"
+        <activity
+            android:name=".activity.orderstatus.WaitForpaymentActivity"
             tools:ignore="DuplicateActivity" />
     </application>
 
