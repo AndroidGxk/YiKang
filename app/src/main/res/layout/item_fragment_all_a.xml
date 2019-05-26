@@ -2,31 +2,31 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-
     android:background="#FFFFFF"
     android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="19dp"
-        android:layout_marginRight="10dp"
         android:background="#FFFFFF">
 
         <TextView
             android:id="@+id/tv_fragment_all_bianhao"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="订单编号:00000000000000000"
+            android:layout_marginTop="4dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="5dp"
+            android:text="订单编号:0000000000000000"
             android:textColor="#333333"
-            android:textSize="11sp" />
+            android:textSize="10sp" />
 
         <TextView
             android:id="@+id/tv_fragment_all_data"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="164dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginLeft="165dp"
+            android:layout_marginTop="4dp"
             android:text="2019-05-25 00:00"
             android:textColor="#333333"
             android:textSize="10sp" />
@@ -35,19 +35,21 @@
             android:id="@+id/tv_fragment_all_zhuangtai"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="252dp"
-            android:layout_marginTop="5dp"
-            android:text="交易关闭"
+            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="32dp"
+            android:text="交易关闭"
             android:textColor="@color/colorToolbar"
-            android:textSize="11sp" />
+            android:textSize="10sp" />
 
         <ImageView
             android:id="@+id/img_fragment_all_shanchu"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:layout_marginLeft="300dp"
-            android:layout_marginTop="6dp"
+            android:layout_width="13dp"
+            android:layout_height="13dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="5dp"
             android:src="@drawable/shanchu_h" />
 
     </RelativeLayout>
@@ -55,44 +57,25 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rlv_fragment_all_item"
         android:layout_width="match_parent"
-        android:background="#FFFF"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:background="#FFFF" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="19dp"
-        android:layout_marginBottom="5dp"
         android:background="#FFFFFF">
-
-        <TextView
-            android:id="@+id/tv_fragment_all_num"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="66dp"
-            android:layout_marginTop="5dp"
-            android:text="共计1件商品"
-            android:textColor="#333333"
-            android:textSize="10sp" />
 
         <TextView
             android:id="@+id/tv_fragment_all_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="127dp"
+            android:layout_alignParentRight="true"
             android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
             android:text="合计：¥000000000.00"
             android:textColor="#333333"
             android:textSize="10sp" />
 
-        <TextView
-            android:id="@+id/tv_fragment_all_freight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="239dp"
-            android:layout_marginTop="5dp"
-            android:text="(含运费¥ 999.00)"
-            android:textColor="#333333"
-            android:textSize="9sp" />
     </RelativeLayout>
 
 

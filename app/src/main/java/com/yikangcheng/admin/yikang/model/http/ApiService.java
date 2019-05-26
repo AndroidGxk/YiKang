@@ -1,9 +1,13 @@
 package com.yikangcheng.admin.yikang.model.http;
 
+import com.yikangcheng.admin.yikang.bean.ALLBean;
 import com.yikangcheng.admin.yikang.bean.AdvertisingBean;
 import com.yikangcheng.admin.yikang.bean.ClassifyListOneBean;
+import com.yikangcheng.admin.yikang.bean.CloseBean;
 import com.yikangcheng.admin.yikang.bean.LikeBean;
 import com.yikangcheng.admin.yikang.bean.LoginBean;
+import com.yikangcheng.admin.yikang.bean.ObligationBean;
+import com.yikangcheng.admin.yikang.bean.PaidBean;
 import com.yikangcheng.admin.yikang.bean.RegisterBean;
 import com.yikangcheng.admin.yikang.bean.RecommendBean;
 import com.yikangcheng.admin.yikang.bean.Request;
@@ -111,4 +115,31 @@ public interface ApiService {
     Observable<Request> updateUserMapper(@Query("userId") String userId, @Query("nickName") String nickName, @Query("avatar") String avatar,
                                          @Query("realName") String realName, @Query("email") String email, @Query("gender") String gender,
                                          @Query("userInfo") String userInfo, @Query("mobile") String mobile);
+
+
+    /**
+     * 查看全部订单
+     */
+    @POST("userOrderType")
+    Observable<Request<ALLBean>> All(@Query("userId") int userId, @Query("pageIndex") int pageIndex);
+
+    /**
+     * 待支付
+     */
+    @POST("userOrderType")
+    Observable<Request<ObligationBean>> Obligation(@Query("userId") int userId, @Query("pageIndex") int pageIndex, @Query("orderState") String orderState);
+
+    /**
+     * 已支付
+     */
+    @POST("userOrderType")
+    Observable<Request<PaidBean>> Paid(@Query("userId") int userId, @Query("pageIndex") int pageIndex, @Query("orderState") String orderState);
+
+
+    /**
+     * 已支付
+     */
+    @POST("userOrderType")
+    Observable<Request<CloseBean>> Close(@Query("userId") int userId, @Query("pageIndex") int pageIndex, @Query("orderState") String orderState);
+
 }

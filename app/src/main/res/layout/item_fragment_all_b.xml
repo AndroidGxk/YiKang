@@ -1,27 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_marginLeft="15dp"
-    android:layout_marginRight="15dp"
     android:layout_height="88dp"
-    android:layout_gravity="center_horizontal">
+    android:background="#FBFBFB">
 
     <ImageView
         android:id="@+id/img_fragment_all_b"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_centerVertical="true"
         android:layout_marginLeft="15dp"
         android:src="@drawable/shouchuan" />
 
     <TextView
-        android:maxLines="1"
-        android:ellipsize="end"
         android:id="@+id/tv_fragment_all_b_name"
         android:layout_width="204dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="102dp"
-        android:layout_marginTop="13dp"
+        android:layout_marginTop="12dp"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:text="产品名称ESTEE产品名称ESTEE产品"
         android:textColor="#333333"
         android:textSize="12dp" />
@@ -31,36 +29,38 @@
         android:layout_width="163dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="102dp"
-        android:layout_marginTop="43dp"
+        android:layout_marginTop="40dp"
         android:text="产品名称ESTEE产品名称ESTEE产品"
         android:textColor="#999999"
         android:textSize="10dp" />
 
     <TextView
+        android:id="@+id/tv_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="288dp"
-        android:layout_marginTop="44dp"
+       android:layout_marginRight="20dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="40dp"
         android:text="X1"
         android:textColor="#ff333333"
         android:textSize="10sp" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="102dp"
+        android:layout_marginTop="65dp"
         android:text="¥"
         android:textColor="#ffff0000"
-        android:layout_marginLeft="102dp"
-        android:layout_marginTop="70dp"
-        android:textSize="10sp"
-        />
+        android:textSize="10sp" />
+
     <TextView
         android:id="@+id/tv_fragment_all_b_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="109dp"
+        android:layout_marginTop="63dp"
         android:text="866999.00"
         android:textColor="#ffff0000"
-        android:layout_marginLeft="109dp"
-        android:layout_marginTop="68dp"
-        android:textSize="13sp"
-        />
+        android:textSize="13sp" />
 </RelativeLayout>

@@ -11,24 +11,21 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.yikangcheng.admin.yikang.R;
-import com.yikangcheng.admin.yikang.app.Constants;
-import com.yikangcheng.admin.yikang.bean.ALLBean;
+import com.yikangcheng.admin.yikang.bean.PaidBean;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by lenovo on 2019/5/20.
+ * Created by lenovo on 2019/5/26.
  * WF
  */
-public class All_B_Adapter extends RecyclerView.Adapter {
+public class AccomplishAdapter_B extends RecyclerView.Adapter {
+    private final List<PaidBean.OrderBean.OrderDetailsListBean> mList;
     private final Context mContent;
-    private final List<ALLBean.OrderBean.OrderDetailsListBean> mList;
 
-
-    public All_B_Adapter(Context content, List<ALLBean.OrderBean.OrderDetailsListBean> orderDetailsList) {
+    public AccomplishAdapter_B(Context content, List<PaidBean.OrderBean.OrderDetailsListBean> orderDetailsList) {
+        this.mList = orderDetailsList;
         this.mContent = content;
-        this.mList=orderDetailsList;
     }
 
     @NonNull
@@ -41,12 +38,11 @@ public class All_B_Adapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ViewHolder holder1 = (ViewHolder) holder;
-        Glide.with(mContent).load(Constants.BASETUPIANSHANGCHUANURL + mList.get(position).getShopImg()).into(holder1.mImg);
+        Glide.with(mContent).load("https://static.yikch.com" + mList.get(position).getShopImg()).into(holder1.mImg);
         holder1.mName.setText(mList.get(position).getShopName());
+        holder1.mNum.setText("X" + mList.get(position).getBuyNum());
         holder1.mTitle.setText(mList.get(position).getSpecNames());
-        holder1.mNum.setText("X" + mList.get(position).getBuyNum() + "");
         holder1.mPrice.setText(mList.get(position).getPrice() + "");
-
     }
 
     @Override
@@ -54,14 +50,13 @@ public class All_B_Adapter extends RecyclerView.Adapter {
         return mList.size();
     }
 
-
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        private final ImageView mImg;
-        private final TextView mName;
-        private final TextView mTitle;
-        private final TextView mPrice;
-        private final TextView mNum;
+        private ImageView mImg;
+        private TextView mName;
+        private TextView mTitle;
+        private TextView mPrice;
+        private TextView mNum;
 
         public ViewHolder(View itemView) {
             super(itemView);

@@ -27,7 +27,7 @@ public class LoginActivity extends BaseActivtiy implements CustomAdapt, ICoreInf
     private TextView log_btn;
     private EditText phone_edit, pwd_edit;
     private LoginPresenter loginPresenter;
-    private SharedPreferences userInfo;
+    public SharedPreferences userInfo;
 
     @Override
     protected void initView() {

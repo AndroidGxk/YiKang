@@ -16,7 +16,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.orderstatus.WaitForpaymentActivity"></activity>
+        <activity android:name=".activity.obligation.DetailActivity"></activity>
+        <activity android:name=".activity.obligation.CanceledActivity" />
+        <activity android:name=".activity.orderstatus.CloseTheDealActivity" />
+        <activity android:name=".activity.obligation.PaidActivity" />
+        <activity android:name=".activity.orderstatus.WaitForpaymentActivity" />
         <activity android:name=".activity.myaccount.IntroActivity" />
         <activity android:name=".activity.myaccount.PhoneActivity" />
         <activity android:name=".activity.myaccount.NameActivity" />
@@ -95,8 +99,30 @@
         <activity
             android:name=".activity.myaccount.IntroActivity"
             tools:ignore="DuplicateActivity" />
-        <activity android:name=".activity.orderstatus.WaitForpaymentActivity"
+        <activity
+            android:name=".activity.orderstatus.WaitForpaymentActivity"
             tools:ignore="DuplicateActivity" />
+        <activity
+            android:name=".activity.obligation.PaidActivity"
+            tools:ignore="DuplicateActivity" />
+        <activity
+            android:name=".activity.orderstatus.CloseTheDealActivity"
+            tools:ignore="DuplicateActivity" />
+        <activity
+            android:name=".activity.obligation.CanceledActivity"
+            tools:ignore="DuplicateActivity" />
+        <activity android:name=".activity.obligation.DetailActivity"
+            tools:ignore="DuplicateActivity" />
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.llk.study.activity.PhotoActivity"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>

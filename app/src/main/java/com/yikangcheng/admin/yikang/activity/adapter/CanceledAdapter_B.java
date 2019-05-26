@@ -1,6 +1,5 @@
 package com.yikangcheng.admin.yikang.activity.adapter;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,24 +10,22 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.yikangcheng.admin.yikang.R;
-import com.yikangcheng.admin.yikang.app.Constants;
-import com.yikangcheng.admin.yikang.bean.ALLBean;
+import com.yikangcheng.admin.yikang.activity.obligation.CanceledActivity;
+import com.yikangcheng.admin.yikang.bean.CloseBean;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by lenovo on 2019/5/20.
+ * Created by lenovo on 2019/5/26.
  * WF
  */
-public class All_B_Adapter extends RecyclerView.Adapter {
-    private final Context mContent;
-    private final List<ALLBean.OrderBean.OrderDetailsListBean> mList;
+public class CanceledAdapter_B extends RecyclerView.Adapter {
+    private final CanceledActivity mContent;
+    private final List<CloseBean.OrderBean.OrderDetailsListBean> mList;
 
-
-    public All_B_Adapter(Context content, List<ALLBean.OrderBean.OrderDetailsListBean> orderDetailsList) {
-        this.mContent = content;
-        this.mList=orderDetailsList;
+    public CanceledAdapter_B(List<CloseBean.OrderBean.OrderDetailsListBean> orderDetailsList, CanceledActivity centent) {
+        this.mList = orderDetailsList;
+        this.mContent = centent;
     }
 
     @NonNull
@@ -41,12 +38,11 @@ public class All_B_Adapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ViewHolder holder1 = (ViewHolder) holder;
-        Glide.with(mContent).load(Constants.BASETUPIANSHANGCHUANURL + mList.get(position).getShopImg()).into(holder1.mImg);
+        Glide.with(mContent).load("https://static.yikch.com" + mList.get(position).getShopImg()).into(holder1.mImg);
         holder1.mName.setText(mList.get(position).getShopName());
+        holder1.mNum.setText("X" + mList.get(position).getBuyNum());
         holder1.mTitle.setText(mList.get(position).getSpecNames());
-        holder1.mNum.setText("X" + mList.get(position).getBuyNum() + "");
         holder1.mPrice.setText(mList.get(position).getPrice() + "");
-
     }
 
     @Override
@@ -54,14 +50,13 @@ public class All_B_Adapter extends RecyclerView.Adapter {
         return mList.size();
     }
 
-
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        private final ImageView mImg;
-        private final TextView mName;
-        private final TextView mTitle;
-        private final TextView mPrice;
-        private final TextView mNum;
+        private ImageView mImg;
+        private TextView mName;
+        private TextView mTitle;
+        private TextView mPrice;
+        private TextView mNum;
 
         public ViewHolder(View itemView) {
             super(itemView);
