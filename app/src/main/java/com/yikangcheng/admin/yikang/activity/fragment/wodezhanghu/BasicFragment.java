@@ -1,6 +1,7 @@
 package com.yikangcheng.admin.yikang.activity.fragment.wodezhanghu;
 
 import android.Manifest;
+import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.ContentResolver;
@@ -19,6 +20,11 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -79,6 +85,8 @@ public class BasicFragment extends BaseFragment {
     private TextView name_text, rela_name_text;
     private RadioGroup sex_group;
     private TextView phone_text, jianjie;
+    private ImageView mUserHeader;
+    //相机相册
 
     @Override
     protected void initView(View view) {
@@ -143,7 +151,6 @@ public class BasicFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
-
         //用户名称
         name_text = view.findViewById(R.id.name_text);
         //姓名名称
@@ -166,7 +173,7 @@ public class BasicFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 //设置dialog的宽高为屏幕的宽高
-                ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(width, height - 390 * 2);
+                ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(width, height - (int) (height * 0.6));
                 mDialog.setContentView(mInflate, layoutParams);
                 mDialog.getWindow().setGravity(Gravity.BOTTOM);
                 mDialog.setCanceledOnTouchOutside(true);
@@ -178,12 +185,15 @@ public class BasicFragment extends BaseFragment {
          * 拍照id
          */
         mTvPhotograph = mInflate.findViewById(R.id.tv_Photograph);
+
         /**
          * 相册id
          */
         mTvPhotoAlbu = mInflate.findViewById(R.id.tv_PhotoAlbu);
         mImgFinsh = mInflate.findViewById(R.id.img_finsh);
-
+        /**
+         * 完成
+         */
         mImgFinsh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

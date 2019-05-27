@@ -59,6 +59,59 @@
     <com.jcodecraeer.xrecyclerview.XRecyclerView
         android:id="@+id/xrecycler"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/table_rela" />
+        android:layout_height="match_parent"
+        android:layout_below="@+id/table_rela"/>
+
+    <RelativeLayout
+        android:id="@+id/rela"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:background="#FFFFFF"
+        android:visibility="gone">
+
+        <CheckBox
+            android:id="@+id/check_btn"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/check_selector"
+            android:button="@null" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/check_btn"
+            android:text="全选"
+            android:textColor="#ff333333"
+            android:textSize="13sp" />
+
+        <TextView
+            android:layout_width="82dp"
+            android:layout_height="27dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/dele_text"
+            android:background="@drawable/shop_btn_shape"
+            android:gravity="center"
+            android:text="标为已读"
+            android:textColor="#ffffffff"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/dele_text"
+            android:layout_width="82dp"
+            android:layout_height="27dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="25dp"
+            android:background="@drawable/red_btn_shape"
+            android:gravity="center"
+            android:text="删除"
+            android:textColor="#ffffffff"
+            android:textSize="13sp" />
+    </RelativeLayout>
 </RelativeLayout>

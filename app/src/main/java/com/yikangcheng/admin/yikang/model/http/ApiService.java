@@ -2,12 +2,17 @@ package com.yikangcheng.admin.yikang.model.http;
 
 import com.yikangcheng.admin.yikang.bean.ALLBean;
 import com.yikangcheng.admin.yikang.bean.AdvertisingBean;
+import com.yikangcheng.admin.yikang.bean.AllAddressBean;
 import com.yikangcheng.admin.yikang.bean.ClassifyListOneBean;
+import com.yikangcheng.admin.yikang.bean.ClassifyCommodityListBean;
+import com.yikangcheng.admin.yikang.bean.DiscountBean;
+import com.yikangcheng.admin.yikang.bean.DiscountCouponBean;
 import com.yikangcheng.admin.yikang.bean.CloseBean;
 import com.yikangcheng.admin.yikang.bean.LikeBean;
 import com.yikangcheng.admin.yikang.bean.LoginBean;
 import com.yikangcheng.admin.yikang.bean.ObligationBean;
 import com.yikangcheng.admin.yikang.bean.PaidBean;
+import com.yikangcheng.admin.yikang.bean.ProvinceBean;
 import com.yikangcheng.admin.yikang.bean.RegisterBean;
 import com.yikangcheng.admin.yikang.bean.RecommendBean;
 import com.yikangcheng.admin.yikang.bean.Request;
@@ -19,8 +24,6 @@ import com.yikangcheng.admin.yikang.bean.UserInfoBean;
 import java.util.List;
 
 import io.reactivex.Observable;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
@@ -142,4 +145,52 @@ public interface ApiService {
     @POST("userOrderType")
     Observable<Request<CloseBean>> Close(@Query("userId") int userId, @Query("pageIndex") int pageIndex, @Query("orderState") String orderState);
 
+
+    /**
+     * 分类子类接口
+     */
+    @POST("classification/commodityList")
+    Observable<Request<ClassifyCommodityListBean>> commodityList(@Query("classificationId") int classificationId, @Query("order") int order,
+                                                                 @Query("condition") int condition, @Query("currentPage") int currentPage);
+
+    /**
+     * 获取全部省市区
+     */
+    @POST("listArea")
+    Observable<Request<List<ProvinceBean>>> listArea(@Query("parentId") int parentId);
+
+    /**
+     * 添加个人地址
+     */
+    @POST("insertAddress")
+    Observable<Request> insertAddress(@Query("userId") int userId, @Query("receiver") String receiver, @Query("mobile") String mobile,
+                                      @Query("address") String address, @Query("isFirst") int isFirst, @Query("provinceId") int provinceId,
+                                      @Query("cityId") int cityId, @Query("townId") int townId);
+
+    /**
+     * 查询用户全部收货地址
+     */
+    @POST("listUserAddress")
+    Observable<Request<AllAddressBean>> listUserAddress(@Query("userId") int userId);
+
+    /**
+     * 查询用户可用优惠券
+     */
+
+    @POST("DiscountCouponUnused")
+    Observable<Request<DiscountBean>> DiscountCouponUnused(@Query("userId") int userId);
+
+    /**
+     * 用户选择优惠券
+     */
+    @POST("DiscountCoupon")
+    Observable<Request<DiscountCouponBean>> DiscountCoupon(@Query("userId") int userId, @Query("status") int status);
+
+    /**
+     * 修改用户地址
+     */
+    @POST("updateAddress")
+    Observable<Request> updateAddress(@Query("id") int id, @Query("userId") int userId, @Query("receiver") String receiver,
+                                      @Query("mobile") String mobile, @Query("address") String address, @Query("isFirst") int isFirst,
+                                      @Query("provinceId") int provinceId, @Query("cityId") int cityId, @Query("townId") int townId);
 }

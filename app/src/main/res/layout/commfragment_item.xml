@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F3F3F3">
+
+    <com.jcodecraeer.xrecyclerview.XRecyclerView
+        android:id="@+id/xrecycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp" />
+
+    <ImageView
+        android:id="@+id/zanwuyouhuiquan"
+        android:layout_width="115dp"
+        android:layout_height="102dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="140dp"
+        android:background="@drawable/zanwuyouhuiquan"
+        android:visibility="gone" />
+
+    <ImageView
+        android:layout_width="115dp"
+        android:layout_height="102dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="140dp"
+        android:id="@+id/zanwushixiao"
+        android:background="@drawable/zanwushixiao"
+        android:visibility="gone" />
+</RelativeLayout>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:clipToPadding="true"
+    android:fillViewport="true"
+    android:fitsSystemWindows="true"
+    android:focusableInTouchMode="true"
+    android:overScrollMode="never"
+    android:layout_height="match_parent"
+    tools:context=".activity.SelectCouponActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:id="@+id/table"
+        android:background="@color/colorTab">
+
+        <ImageView
+            android:id="@+id/back_img"
+            android:layout_width="9dp"
+            android:layout_height="16dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/fanhui_seek" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@id/back_img"
+            android:text="选择优惠券"
+            android:textColor="#ff333333"
+            android:textSize="19sp" />
+    </RelativeLayout>
+
+    <com.jcodecraeer.xrecyclerview.XRecyclerView
+        android:id="@+id/xrecycler"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/table"
+        android:layout_height="match_parent" />
+</RelativeLayout>

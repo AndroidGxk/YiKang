@@ -22,6 +22,8 @@
         <activity android:name=".activity.orderstatus.CloseTheDealActivity" />
         <activity android:name=".activity.obligation.PaidActivity" />
         <activity android:name=".activity.orderstatus.WaitForpaymentActivity" />
+        <activity android:name=".activity.SelectCouponActivity"></activity>
+        <activity android:name=".activity.coupon.CouponActivity" />
         <activity android:name=".activity.myaccount.IntroActivity" />
         <activity android:name=".activity.myaccount.PhoneActivity" />
         <activity android:name=".activity.myaccount.NameActivity" />

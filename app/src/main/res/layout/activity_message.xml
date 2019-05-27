@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     tools:context=".activity.MessageActivity">
 
     <ImageView
@@ -147,8 +148,11 @@
     </LinearLayout>
 
     <com.jcodecraeer.xrecyclerview.XRecyclerView
+        android:id="@+id/xrecycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/lin1"
-        android:layout_marginTop="10dp" />
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp" />
 </RelativeLayout>

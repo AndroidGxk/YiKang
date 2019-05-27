@@ -31,47 +31,29 @@
 
     </android.support.v7.widget.Toolbar>
 
-    <RelativeLayout
-        android:layout_width="330dp"
-        android:layout_height="40dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="11dp"
-        android:background="#FFFFFF">
 
-        <EditText
-            android:id="@+id/et_activity_name"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp"
-            android:background="@null"
-            android:hint="请输入名字" />
-    </RelativeLayout>
+    <EditText
+        android:id="@+id/et_activity_name"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/moblie_editext_5_shape_left"
+        android:hint="请输入名字"
+        android:paddingLeft="15dp"
+        android:textSize="15sp" />
+
 
     <TextView
-        android:layout_width="57dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="5dp"
-        android:text="限2-16个字符"
-        android:textColor="#ff999999"
-        android:textSize="9sp" />
-
-    <RelativeLayout
-        android:id="@+id/relativeLayout_activity_name_baocun"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="166dp"
+        android:layout_height="40dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="56dp"
-        android:background="@drawable/yuanjiao">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="保存"
-            android:textColor="#FFFFFF"
-            android:textSize="14sp" />
-    </RelativeLayout>
-
+        android:layout_marginTop="70dp"
+        android:background="@drawable/shop_btn_shape"
+        android:gravity="center"
+        android:text="保存"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp" />
 </LinearLayout>

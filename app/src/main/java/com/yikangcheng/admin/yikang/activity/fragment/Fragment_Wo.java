@@ -19,6 +19,7 @@ import com.yikangcheng.admin.yikang.activity.MessageActivity;
 import com.yikangcheng.admin.yikang.activity.OrderFormActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.Recommend_Fragment_wo_Adapter;
 import com.yikangcheng.admin.yikang.activity.aftersale.AfterSaleActivity;
+import com.yikangcheng.admin.yikang.activity.coupon.CouponActivity;
 import com.yikangcheng.admin.yikang.activity.myaccount.MyaccountActivity;
 import com.yikangcheng.admin.yikang.activity.obligation.CanceledActivity;
 import com.yikangcheng.admin.yikang.activity.obligation.DetailActivity;
@@ -61,7 +62,7 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe {
     private LinearLayout mImgFragmentWoDaifukuan;
     private LinearLayout mImgFragmentWoYiquxiao;
     private LinearLayout mImgFragmentWoDizi;
-    private LinearLayout mImgFragmentWoTuichudenglu;
+    private LinearLayout mImgFragmentWoyouhuiquan;
     private TextView mTvFragmentWoName;
     private Recommend_Fragment_wo_Adapter mRecommend_fragment_wo_adapter;
     private ImageView mGuanggao;
@@ -103,8 +104,8 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe {
         mImgFragmentWoYiquxiao = view.findViewById(R.id.img__fragment_wo_yiquxiao);
         //收货地址
         mImgFragmentWoDizi = view.findViewById(R.id.img_fragment_wo_dizi);
-        //退出登录
-        mImgFragmentWoTuichudenglu = view.findViewById(R.id.img__fragment_wo_tuichudenglu);
+        //优惠券
+        mImgFragmentWoyouhuiquan = view.findViewById(R.id.img__fragment_wo_gouwuche);
         //用户名
         mTvFragmentWoName = view.findViewById(R.id.tv__fragment_wo_name);
         //账户明细
@@ -130,16 +131,7 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe {
                 startActivity(intent);
             }
         });
-        /**
-         * 点击退出登录跳转到登录页面
-         */
-        mImgFragmentWoTuichudenglu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), LoginActivity.class);
-                startActivity(intent);
-            }
-        });
+
 
         /**
          * 点击账户明细 跳转页面
@@ -310,7 +302,20 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe {
                 }
             }
         });
-
+        /**
+         * 优惠券
+         */
+        mImgFragmentWoyouhuiquan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (logUser != null) {
+                    Intent intent = new Intent(getActivity(), CouponActivity.class);
+                    startActivity(intent);
+                } else {
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                }
+            }
+        });
     }
 
     public class AdvertisingICoreInfe implements ICoreInfe {

@@ -3,6 +3,7 @@ package com.yikangcheng.admin.yikang.activity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yikangcheng.admin.yikang.R;
@@ -15,6 +16,7 @@ public class CustomerActivity extends BaseActivtiy {
     private boolean isclick;
     private TextView compile_text;
     private CustomerRecyclerAdapter customerRecyclerAdapter;
+    private RelativeLayout rela;
 
     @Override
     protected void initView() {
@@ -22,6 +24,7 @@ public class CustomerActivity extends BaseActivtiy {
         StatusBarUtil.setStatusBarMode(this, true, R.color.clolrBAai);
         xrecycler = findViewById(R.id.xrecycler);
         compile_text = findViewById(R.id.compile_text);
+        rela = findViewById(R.id.rela);
         xrecycler.setLayoutManager(new LinearLayoutManager(this));
         customerRecyclerAdapter = new CustomerRecyclerAdapter(this);
         xrecycler.setAdapter(customerRecyclerAdapter);
@@ -37,10 +40,12 @@ public class CustomerActivity extends BaseActivtiy {
                     isclick = true;
                     customerRecyclerAdapter.isclick(isclick);
                     compile_text.setText("完成");
+                    rela.setVisibility(View.VISIBLE);
                 } else {
                     isclick = false;
                     customerRecyclerAdapter.isclick(isclick);
                     compile_text.setText("编辑");
+                    rela.setVisibility(View.GONE);
                 }
             }
         });

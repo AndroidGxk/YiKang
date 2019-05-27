@@ -38,10 +38,16 @@ public class FenLeiZilieAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ViewHolder holder1 = (ViewHolder) holder;
         holder1.right_text.setText(mList.get(position).getSubjectName());
         Glide.with(mContent).load(Constants.BASETUPIANSHANGCHUANURL + mList.get(position).getIcon()).into(holder1.image);
+        holder1.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickListener.onclick(position, mList.get(position).getSubjectId());
+            }
+        });
     }
 
     @Override
@@ -69,5 +75,15 @@ public class FenLeiZilieAdapter extends RecyclerView.Adapter {
             image = itemView.findViewById(R.id.right_img);
             right_text = itemView.findViewById(R.id.right_text);
         }
+    }
+
+    onClickListener onClickListener;
+
+    public void setOnClickListener(FenLeiZilieAdapter.onClickListener onClickListener) {
+        this.onClickListener = onClickListener;
+    }
+
+    public interface onClickListener {
+        void onclick(int position, int id);
     }
 }

@@ -142,10 +142,38 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/rela4"
+                    android:id="@+id/youhuiquan"
                     android:layout_width="match_parent"
                     android:layout_height="37dp"
                     android:layout_below="@+id/rela3"
+                    android:layout_marginTop="10dp"
+                    android:background="#FFFFFF">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="15dp"
+                        android:text="优惠券"
+                        android:textColor="#ff333333"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="15dp"
+                        android:text="选择优惠券 >"
+                        android:textColor="#ff999999"
+                        android:textSize="11sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rela4"
+                    android:layout_width="match_parent"
+                    android:layout_height="37dp"
+                    android:layout_below="@+id/youhuiquan"
                     android:layout_marginTop="15dp"
                     android:background="#FFFFFF">
 

@@ -15,6 +15,7 @@ import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.app.Constants;
 import com.yikangcheng.admin.yikang.bean.RecommendBean;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -24,10 +25,13 @@ import java.util.List;
  */
 public class RecommendAdapter extends RecyclerView.Adapter {
     private final Context mContent;
-    private final List<RecommendBean> mList;
+    private final List<RecommendBean> mList = new ArrayList<>();
 
-    public RecommendAdapter(List<RecommendBean> entityBeans, Context context) {
-        this.mList = entityBeans;
+    public void removeAll() {
+        mList.clear();
+    }
+
+    public RecommendAdapter(Context context) {
         this.mContent = context;
     }
 
@@ -60,6 +64,11 @@ public class RecommendAdapter extends RecyclerView.Adapter {
     public void addData(List<RecommendBean> entity1) {
         mList.addAll(entity1);
         notifyDataSetChanged();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

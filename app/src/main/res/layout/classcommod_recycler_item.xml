@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="115dp"
+    android:layout_marginLeft="15dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginRight="15dp"
+    android:background="@drawable/moblie_editext_5_shape_left"
+    android:gravity="center">
+
+    <android.support.constraint.Guideline
+        android:id="@+id/top_line"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.08" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/bottomimg_line"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.91" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/left_line"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.34" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/count_line"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.39" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/price_line"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.68" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/yuanprice_line"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.83" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/buy_line"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.63" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/buyimg_line"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.93" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/leftimg_line"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.03" />
+
+    <ImageView
+        android:id="@+id/good_img"
+        android:layout_width="95dp"
+        android:layout_height="95dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottomimg_line"
+        app:layout_constraintLeft_toLeftOf="@id/leftimg_line"
+        app:layout_constraintTop_toBottomOf="@+id/top_line" />
+
+    <TextView
+        android:id="@+id/good_title"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:textSize="12sp"
+        android:maxLines="2"
+        android:text="ESTEE LAUDER/雅诗兰黛红石榴水鲜活亮采系列 红石榴三件套"
+        android:textColor="#333333"
+        app:layout_constraintLeft_toRightOf="@id/left_line"
+        app:layout_constraintTop_toBottomOf="@id/top_line" />
+
+    <TextView
+        android:id="@+id/good_count"
+        android:layout_width="198dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:text="ESTEE LAUDER/雅诗兰黛红石榴水鲜活亮采系列 红石榴三件套(洁面+石榴水+晚霜)"
+        android:textColor="#ff999999"
+        android:textSize="10sp"
+        app:layout_constraintLeft_toRightOf="@id/left_line"
+        app:layout_constraintTop_toBottomOf="@id/count_line" />
+
+    <TextView
+        android:id="@+id/price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/good_count"
+        android:text="内购价：￥866"
+        android:textColor="#ffff4e4e"
+        android:textSize="10sp"
+        app:layout_constraintLeft_toRightOf="@id/left_line"
+        app:layout_constraintTop_toBottomOf="@+id/price_line" />
+
+    <TextView
+        android:id="@+id/yuanprice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="市场价：￥950"
+        android:textColor="#ff999999"
+        android:textSize="10sp"
+        app:layout_constraintLeft_toRightOf="@id/left_line"
+        app:layout_constraintTop_toBottomOf="@id/yuanprice_line" />
+
+    <TextView
+        android:id="@+id/buy_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1234人已购"
+        android:textColor="#ff999999"
+        android:textSize="10sp"
+        app:layout_constraintLeft_toRightOf="@+id/buy_line"
+        app:layout_constraintTop_toBottomOf="@+id/yuanprice_line" />
+
+    <ImageView
+        android:layout_width="13dp"
+        android:layout_height="13dp"
+        android:background="@drawable/gouwuche"
+        app:layout_constraintLeft_toRightOf="@+id/buyimg_line"
+        app:layout_constraintTop_toBottomOf="@id/yuanprice_line" />
+</android.support.constraint.ConstraintLayout>
