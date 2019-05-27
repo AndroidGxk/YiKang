@@ -79,7 +79,6 @@ public class BasicFragment extends BaseFragment {
     private TextView name_text, rela_name_text;
     private RadioGroup sex_group;
     private TextView phone_text, jianjie;
-    private ImageView mUserHeader;
 
     @Override
     protected void initView(View view) {
@@ -97,8 +96,7 @@ public class BasicFragment extends BaseFragment {
         mReLayoutFragmentBasicSex = view.findViewById(R.id.reLayout_fragment_basic_sex);
         //简介
         mReLayoutFragmentBasicSynopsis = view.findViewById(R.id.reLayout_fragment_basic_synopsis);
-        //设置头像
-        mUserHeader = view.findViewById(R.id.user_header);
+
 
 
         /**
@@ -224,17 +222,6 @@ public class BasicFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-
-    }
-
-    @Override
-    protected int getFragmentLayoutId() {
-        return R.layout.fragment_basic;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
         UserDetailBean userInfo = getUserInfo(getContext());
         name_text.setText(userInfo.getNickName());
         rela_name_text.setText(userInfo.getRealName());
@@ -251,6 +238,17 @@ public class BasicFragment extends BaseFragment {
         if (!introString.equals("")) {
             jianjie.setText(introString);
         }
+    }
+
+    @Override
+    protected int getFragmentLayoutId() {
+        return R.layout.fragment_basic;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
     }
 
     //===================================================================
@@ -348,7 +346,8 @@ public class BasicFragment extends BaseFragment {
                     Bitmap bitmap1 = getRealCompressedBitmap(mOutputImage.getPath().toString(), 150, 150);
                     //转为file上传处理照相之后的结果并上传
                     File file = getFile(bitmap1);
-                    okUpload(file);
+                   // Glide.with(this).load(bitmap1).into(user_header);==========================================1111111
+                    okUpload(file);////1
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -371,7 +370,9 @@ public class BasicFragment extends BaseFragment {
                 //mFile
                 //mIvUploadHeader.setImageBitmap(bitmap);
                 if (file.exists()) {
-                    okUpload(file);
+                   // Glide.with(this).load(file).into(user_header); ================2222222222
+
+                    okUpload(file);////2
                 }
             }
         }
@@ -525,12 +526,16 @@ public class BasicFragment extends BaseFragment {
         });
     }
 
+    /**
+     * 接口请求回来数据  用这个image
+     * @param headerImage
+     */
     private void setHeader(String headerImage) {
         RequestOptions options = new RequestOptions()
                 .placeholder(R.mipmap.ic_launcher)
                 .circleCrop();
         //设置头像glide
-        Glide.with(this).load(headerImage).apply(options).into(mUserHeader);
+        Glide.with(this).load(headerImage).apply(options).into(user_header);
     }
 
     public void showToast(final String msg) {
