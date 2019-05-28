@@ -1,5 +1,6 @@
 package com.yikangcheng.admin.yikang.activity.obligation;
 
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.adapter.ObligationAdapter;
 import com.yikangcheng.admin.yikang.activity.adapter.Obligation_TuiJianAdapter;
+import com.yikangcheng.admin.yikang.activity.orderstatus.WaitForpaymentActivity;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.All_A_Bean;
 import com.yikangcheng.admin.yikang.bean.ObligationBean;
@@ -71,14 +73,24 @@ public class ObligationActivity extends BaseActivtiy implements ICoreInfe {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRlvActivityObligation.setLayoutManager(linearLayoutManager);
 
-        ArrayList<ObligationBean.OrderBean> orderBeans = new ArrayList<>();
+         ArrayList<ObligationBean.OrderBean> orderBeans = new ArrayList<>();
         //创建适配器
-        mObligationAdapter = new ObligationAdapter(this,orderBeans);
+        mObligationAdapter = new ObligationAdapter(this, orderBeans);
         //绑定适配器
         mRlvActivityObligation.setAdapter(mObligationAdapter);
 
+        mObligationAdapter.setOnClickListener(new ObligationAdapter.OnClickListener() {
+            @Override
+            public void OnClickListener(View v, int orderId) {
+                Intent intent = new Intent(ObligationActivity.this, WaitForpaymentActivity.class);
+                Intent orderId_wait = intent.putExtra("orderId_wait", orderId);
+                startActivity(intent);
+            }
+        });
+
         ObligationPresenter obligationPresenter = new ObligationPresenter(this);
         obligationPresenter.request(11, 1, "INIT");
+
 
     }
 

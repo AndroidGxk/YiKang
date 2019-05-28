@@ -23,6 +23,7 @@ import java.util.List;
 public class AwaitAdapter extends RecyclerView.Adapter {
     private  Context mContent;
     private  ArrayList<ObligationBean.OrderBean> mList;
+    private OnClickListener mListener;
 
     public AwaitAdapter(ArrayList<ObligationBean.OrderBean> orderBeans, Context context) {
         this.mList = orderBeans;
@@ -52,6 +53,12 @@ public class AwaitAdapter extends RecyclerView.Adapter {
         holder1.mRlv.setLayoutManager(linearLayoutManager);
         AwaitAdapter_B awaitAdapter_b = new AwaitAdapter_B(mList.get(position).getOrderDetailsList(), mContent);
         holder1.mRlv.setAdapter(awaitAdapter_b);
+        awaitAdapter_b.setOnClickListener(new AwaitAdapter_B.OnClickListener() {
+            @Override
+            public void OnClickListener(View v, int orderId) {
+                mListener.OnClickListener(v,orderId);
+            }
+        });
     }
 
     @Override
@@ -82,5 +89,12 @@ public class AwaitAdapter extends RecyclerView.Adapter {
             mRlv = itemView.findViewById(R.id.rlv_fragment_all_item);
             mZhuangtai = itemView.findViewById(R.id.tv_fragment_all_zhuangtai);
         }
+    }
+
+    public interface OnClickListener {
+        void OnClickListener(View v, int orderId);
+    }
+    public void setOnClickListener(OnClickListener listener){
+        this.mListener=listener;
     }
 }

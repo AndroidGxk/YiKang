@@ -21,6 +21,7 @@ import java.util.List;
 public class PaidAdapter_A extends RecyclerView.Adapter {
     private List<PaidBean.OrderBean> mList;
     private PaidActivity mContent;
+    private OnClickListener mListener;
 
     public PaidAdapter_A(PaidActivity paidActivity, List<PaidBean.OrderBean> orderBeans) {
         this.mContent = paidActivity;
@@ -47,6 +48,13 @@ public class PaidAdapter_A extends RecyclerView.Adapter {
         holder1.mRlv.setLayoutManager(new LinearLayoutManager(mContent));
         PaidAdapter_B paidAdapter_b = new PaidAdapter_B(mContent,mList.get(position).getOrderDetailsList());
         holder1.mRlv.setAdapter(paidAdapter_b);
+
+        paidAdapter_b.setOnClickListener(new PaidAdapter_B.OnClickListener() {
+            @Override
+            public void OnClickListener(View v, int orderId) {
+                mListener.OnClickListener(v,orderId);
+            }
+        });
 
     }
 
@@ -79,5 +87,12 @@ public class PaidAdapter_A extends RecyclerView.Adapter {
             mRlv = itemView.findViewById(R.id.rlv_fragment_all_item);
             mZhuangtai = itemView.findViewById(R.id.tv_fragment_all_zhuangtai);
         }
+    }
+
+    public interface OnClickListener {
+        void OnClickListener(View v, int orderId);
+    }
+    public void setOnClickListener(OnClickListener listener){
+        this.mListener=listener;
     }
 }

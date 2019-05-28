@@ -22,6 +22,7 @@ import java.util.List;
 public class CanceledAdapter_A extends RecyclerView.Adapter {
     private final List<CloseBean.OrderBean> mList;
     private final CanceledActivity mCentent;
+    private OnClickListener mListener;
 
     public CanceledAdapter_A(List<CloseBean.OrderBean> orderBeans, CanceledActivity canceledActivity) {
         this.mList = orderBeans;
@@ -40,13 +41,19 @@ public class CanceledAdapter_A extends RecyclerView.Adapter {
         ViewHolder holder1 = (ViewHolder) holder;
         holder1.mBianhao.setText("订单编号:" + mList.get(position).getOrderNo());
         holder1.mData.setText("" + mList.get(position).getCreateTime());
-        if (mList.get(position).getOrderState().equals("SUCCESS")) {
+        if (mList.get(position).getOrderState().equals("CANCEL")) {
             holder1.mZhuangtai.setText("交易关闭");
         }
         holder1.mPrice.setText("合计：¥" + mList.get(position).getRealPrice());
         holder1.mRlv.setLayoutManager(new LinearLayoutManager(mCentent));
         CanceledAdapter_B canceledAdapter_b = new CanceledAdapter_B(mList.get(position).getOrderDetailsList(),mCentent);
         holder1.mRlv.setAdapter(canceledAdapter_b);
+        canceledAdapter_b.setOnClickListener(new CanceledAdapter_B.OnClickListener() {
+            @Override
+            public void OnClickListener(View v, int orderId) {
+                mListener.OnClickListener(v,orderId);
+            }
+        });
     }
 
     @Override
@@ -77,5 +84,12 @@ public class CanceledAdapter_A extends RecyclerView.Adapter {
             mRlv = itemView.findViewById(R.id.rlv_fragment_all_item);
             mZhuangtai = itemView.findViewById(R.id.tv_fragment_all_zhuangtai);
         }
+    }
+
+    public interface OnClickListener {
+        void OnClickListener(View v, int orderId);
+    }
+    public void setOnClickListener(OnClickListener listener){
+        this.mListener=listener;
     }
 }

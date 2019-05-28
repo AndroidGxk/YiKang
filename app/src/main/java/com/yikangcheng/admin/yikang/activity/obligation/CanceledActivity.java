@@ -1,5 +1,6 @@
 package com.yikangcheng.admin.yikang.activity.obligation;
 
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -8,6 +9,7 @@ import android.widget.ImageView;
 
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.adapter.CanceledAdapter_A;
+import com.yikangcheng.admin.yikang.activity.orderstatus.FackOfActivity;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.CloseBean;
 import com.yikangcheng.admin.yikang.bean.Request;
@@ -20,7 +22,7 @@ import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CanceledActivity extends BaseActivtiy implements ICoreInfe {
+public class CanceledActivity extends BaseActivtiy implements ICoreInfe{
 
     private ImageView back_img;
     private Toolbar mToolbarActivityCanceled;
@@ -48,9 +50,7 @@ public class CanceledActivity extends BaseActivtiy implements ICoreInfe {
             }
         });
 
-        //解决滑动不流畅
-        mRlvActivityCanceled.setHasFixedSize(true);
-        mRlvActivityCanceled.setNestedScrollingEnabled(false);
+
 
         int spanCount_tuijian = 1; // 3 columns
         int spacing_tuijian = 20; // 50px
@@ -68,8 +68,20 @@ public class CanceledActivity extends BaseActivtiy implements ICoreInfe {
         mCanceledAdapter_a = new CanceledAdapter_A(orderBeans,this);
         mRlvActivityCanceled.setAdapter(mCanceledAdapter_a);
 
+        mCanceledAdapter_a.setOnClickListener(new CanceledAdapter_A.OnClickListener() {
+            @Override
+            public void OnClickListener(View v, int orderId) {
+                Intent intent = new Intent(CanceledActivity.this, FackOfActivity.class);
+                intent.putExtra("orderId_fack", orderId);
+                startActivity(intent);
+            }
+        });
+
         ClosePresenter closePresenter = new ClosePresenter(this);
-        closePresenter.request(11,1,"CANCEL");
+        closePresenter.request(11, 1, "CANCEL");
+        //解决滑动不流畅
+        mRlvActivityCanceled.setHasFixedSize(true);
+        mRlvActivityCanceled.setNestedScrollingEnabled(false);
     }
 
     @Override
@@ -89,7 +101,7 @@ public class CanceledActivity extends BaseActivtiy implements ICoreInfe {
 
     @Override
     public void success(Object data) {
-        Request request= (Request) data;
+        Request request = (Request) data;
         CloseBean entity = (CloseBean) request.getEntity();
         mCanceledAdapter_a.allAll(entity.getOrder());
     }

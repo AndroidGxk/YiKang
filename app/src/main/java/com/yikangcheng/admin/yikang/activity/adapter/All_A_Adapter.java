@@ -15,11 +15,13 @@ import com.yikangcheng.admin.yikang.activity.fragment.orderform.AllFragment;
 import com.yikangcheng.admin.yikang.bean.ALLBean;
 import com.yikangcheng.admin.yikang.bean.All_A_Bean;
 import com.yikangcheng.admin.yikang.bean.All_B_Bean;
+import com.yikangcheng.admin.yikang.bean.DeleteOrderBean;
 import com.yikangcheng.admin.yikang.bean.LoginBean;
 import com.yikangcheng.admin.yikang.bean.Request;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
 import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
 import com.yikangcheng.admin.yikang.presenter.AllPresenter;
+import com.yikangcheng.admin.yikang.presenter.DeleteOrderIdPresenter;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -31,10 +33,10 @@ import java.util.List;
  */
 public class All_A_Adapter extends RecyclerView.Adapter {
 
-    private final Context mContent;
-    private final ArrayList<ALLBean.OrderBean> mList;
+    private Context mContent;
+    public ArrayList<ALLBean.OrderBean> mList;
     private All_B_Adapter mAll_b_adapter;
-//    public int mUserId;
+    private OnClickListener mListener;
 
 
     public All_A_Adapter(Context context, ArrayList<ALLBean.OrderBean> orderBeans) {
@@ -51,7 +53,7 @@ public class All_A_Adapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ViewHolder holder1 = (ViewHolder) holder;
 //        mUserId =mList.get(position).getUserId();
 
@@ -71,13 +73,19 @@ public class All_A_Adapter extends RecyclerView.Adapter {
         if (mList.get(position).getOrderState().equals("CANCEL")) {
             holder1.mZhuangtai.setText("取消订单");
         }
-
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContent, LinearLayoutManager.VERTICAL, false);
         holder1.mRlv.setLayoutManager(linearLayoutManager);
-        mAll_b_adapter = new All_B_Adapter(mContent,mList.get(position).getOrderDetailsList());
+        mAll_b_adapter = new All_B_Adapter(mContent, mList.get(position).getOrderDetailsList());
         holder1.mRlv.setAdapter(mAll_b_adapter);
 
 
+        mAll_b_adapter.setOnClickListener(new All_B_Adapter.OnClickListener() {
+            @Override
+            public void OnClickListener(View v, int orderId) {
+                String orderState = mList.get(position).getOrderState();
+                mListener.OnClickListener(v, orderId, orderState);
+            }
+        });
     }
 
 
@@ -92,15 +100,14 @@ public class All_A_Adapter extends RecyclerView.Adapter {
         notifyDataSetChanged();
     }
 
-
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        private final TextView mBianhao;
-        private final ImageView mShanchu;
-        private final TextView mData;
-        private final TextView mPrice;
-        private final RecyclerView mRlv;
-        private final TextView mZhuangtai;
+        private TextView mBianhao;
+        public ImageView mShanchu;
+        private TextView mData;
+        private TextView mPrice;
+        private RecyclerView mRlv;
+        private TextView mZhuangtai;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -111,5 +118,13 @@ public class All_A_Adapter extends RecyclerView.Adapter {
             mRlv = itemView.findViewById(R.id.rlv_fragment_all_item);
             mZhuangtai = itemView.findViewById(R.id.tv_fragment_all_zhuangtai);
         }
+    }
+
+    public interface OnClickListener {
+        void OnClickListener(View v, int orderId, String orderState);
+    }
+
+    public void setOnClickListener(OnClickListener listener) {
+        this.mListener = listener;
     }
 }

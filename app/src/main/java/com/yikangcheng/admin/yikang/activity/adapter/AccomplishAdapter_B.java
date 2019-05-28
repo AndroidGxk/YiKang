@@ -22,6 +22,7 @@ import java.util.List;
 public class AccomplishAdapter_B extends RecyclerView.Adapter {
     private final List<PaidBean.OrderBean.OrderDetailsListBean> mList;
     private final Context mContent;
+    private OnClickListener mListener;
 
     public AccomplishAdapter_B(Context content, List<PaidBean.OrderBean.OrderDetailsListBean> orderDetailsList) {
         this.mList = orderDetailsList;
@@ -36,13 +37,22 @@ public class AccomplishAdapter_B extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ViewHolder holder1 = (ViewHolder) holder;
         Glide.with(mContent).load("https://static.yikch.com" + mList.get(position).getShopImg()).into(holder1.mImg);
         holder1.mName.setText(mList.get(position).getShopName());
         holder1.mNum.setText("X" + mList.get(position).getBuyNum());
         holder1.mTitle.setText(mList.get(position).getSpecNames());
         holder1.mPrice.setText(mList.get(position).getPrice() + "");
+
+        holder1.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int orderId = mList.get(position).getOrderId();
+                mListener.OnClickListener(v,orderId);
+            }
+        });
+
     }
 
     @Override
@@ -67,4 +77,13 @@ public class AccomplishAdapter_B extends RecyclerView.Adapter {
             mNum = itemView.findViewById(R.id.tv_num);
         }
     }
+
+    public interface OnClickListener {
+        void OnClickListener(View v, int orderId);
+    }
+
+    public void setOnClickListener(OnClickListener listener) {
+        this.mListener = listener;
+    }
+
 }

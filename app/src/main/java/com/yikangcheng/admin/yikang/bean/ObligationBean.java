@@ -45,7 +45,7 @@ public class ObligationBean {
 
         private int totalResultSize;
         private int totalPageSize;
-        private int pageSize;
+        private double pageSize;
         private int currentPage;
         private int startRow;
         private boolean first;
@@ -67,7 +67,7 @@ public class ObligationBean {
             this.totalPageSize = totalPageSize;
         }
 
-        public int getPageSize() {
+        public double getPageSize() {
             return pageSize;
         }
 
@@ -142,10 +142,10 @@ public class ObligationBean {
         private int orderId;
         private String orderNo;
         private int userId;
-        private int sumPrice;
-        private int yhPrice;
-        private int realPrice;
-        private int freightPrice;
+        private double sumPrice;
+        private double yhPrice;
+        private double realPrice;
+        private double freightPrice;
         private String createTime;
         private String payType;
         private String orderState;
@@ -221,31 +221,31 @@ public class ObligationBean {
             this.userId = userId;
         }
 
-        public int getSumPrice() {
+        public double getSumPrice() {
             return sumPrice;
         }
 
-        public void setSumPrice(int sumPrice) {
+        public void setSumPrice(double sumPrice) {
             this.sumPrice = sumPrice;
         }
 
-        public int getYhPrice() {
+        public double getYhPrice() {
             return yhPrice;
         }
 
-        public void setYhPrice(int yhPrice) {
+        public void setYhPrice(double yhPrice) {
             this.yhPrice = yhPrice;
         }
 
-        public int getRealPrice() {
+        public double getRealPrice() {
             return realPrice;
         }
 
-        public void setRealPrice(int realPrice) {
+        public void setRealPrice(double realPrice) {
             this.realPrice = realPrice;
         }
 
-        public int getFreightPrice() {
+        public double getFreightPrice() {
             return freightPrice;
         }
 
@@ -482,7 +482,7 @@ public class ObligationBean {
             private int buyNum;
             private String createTime;
             private String payState;
-            private int price;
+            private double price;
             private int freight;
             private int openTime;
             private int mailStatus;
@@ -566,11 +566,11 @@ public class ObligationBean {
                 this.payState = payState;
             }
 
-            public int getPrice() {
+            public double getPrice() {
                 return price;
             }
 
-            public void setPrice(int price) {
+            public void setPrice(double price) {
                 this.price = price;
             }
 

@@ -25,7 +25,7 @@
             android:id="@+id/tv_fragment_all_data"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="165dp"
+            android:layout_marginLeft="160dp"
             android:layout_marginTop="4dp"
             android:text="2019-05-25 00:00"
             android:textColor="#333333"

@@ -9,16 +9,15 @@
     tools:context=".activity.orderstatus.WaitForpaymentActivity">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar_activity_waitfrrpayment"
+        android:id="@+id/toolbar_activity_fack_of"
         android:layout_width="match_parent"
         android:layout_height="42dp"
         android:background="@drawable/toolbar">
 
         <ImageView
-            android:id="@+id/back_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingRight="15dp"
+            android:id="@+id/img_activity_fack_of_fanhui"
+            android:layout_width="11dp"
+            android:layout_height="20dp"
             android:src="@drawable/fanhuiactivity" />
 
         <TextView
@@ -32,8 +31,8 @@
     </android.support.v7.widget.Toolbar>
 
     <android.support.v4.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:fillViewport="true"
         android:overScrollMode="never">
 
@@ -43,16 +42,16 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="190dp"
+                android:layout_height="141dp"
                 android:layout_marginTop="42dp"
-                android:background="@drawable/wanceng">
+                android:background="@drawable/ganbi">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
                     android:layout_marginTop="24dp"
-                    android:text="交易完成"
+                    android:text="交易关闭"
                     android:textColor="#ffffffff"
                     android:textSize="24sp" />
 
@@ -61,13 +60,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
                     android:layout_marginTop="62dp"
-                    android:text="订单已完成"
+                    android:text="订单已关闭"
                     android:textColor="#ffffffff"
                     android:textSize="10sp" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="116dp"
+                    android:layout_height="67dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="84dp"
                     android:layout_marginRight="15dp"
@@ -83,7 +82,7 @@
                         android:textSize="12sp" />
 
                     <TextView
-                        android:id="@+id/tv_activity_close_name"
+                        android:id="@+id/tv_activity_fack_of_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="45dp"
@@ -102,7 +101,7 @@
                         android:lines="2">
 
                         <TextView
-                            android:id="@+id/tv_activity_close_provinceStr"
+                            android:id="@+id/tv_activity_fack_of_provinceStr"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="北京市"
@@ -110,7 +109,7 @@
                             android:textSize="10sp" />
 
                         <TextView
-                            android:id="@+id/tv_activity_close_cityStr"
+                            android:id="@+id/tv_activity_fack_of_cityStr"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
@@ -119,7 +118,7 @@
                             android:textSize="10sp" />
 
                         <TextView
-                            android:id="@+id/tv_activity_close_townStr"
+                            android:id="@+id/tv_activity_fack_of_townStr"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
@@ -128,7 +127,7 @@
                             android:textSize="10sp" />
 
                         <TextView
-                            android:id="@+id/tv_activity_close_address"
+                            android:id="@+id/tv_activity_fack_of_address"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
@@ -137,42 +136,17 @@
                             android:textSize="10sp" />
                     </LinearLayout>
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginTop="68dp"
-                        android:layout_marginRight="15dp"
-                        android:background="#F3F3F3" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="73dp"
-                        android:background="@drawable/cahkan" />
-
-                    <TextView
-                        android:id="@+id/img_activity_close_chakan"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="79dp"
-                        android:text="查看物流"
-                        android:textColor="#ffff0000"
-                        android:textSize="12sp" />
-
                 </RelativeLayout>
             </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="244dp"
+                android:layout_marginTop="195dp"
                 android:orientation="vertical">
 
                 <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rlv_activity_close_shangPin"
+                    android:id="@+id/rlv_activity_fack_of_shangPin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
@@ -183,8 +157,8 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="125dp"
-                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="15dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginRight="15dp"
                     android:background="#FFFFFF">
 
@@ -199,7 +173,7 @@
 
 
                     <TextView
-                        android:id="@+id/tv_activity_close_biaohao"
+                        android:id="@+id/tv_activity_fack_of_biaohao"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="80dp"
@@ -209,7 +183,7 @@
                         android:textSize="12sp" />
 
                     <ImageView
-                        android:id="@+id/img_activity_close_fizhi"
+                        android:id="@+id/img_activity_fack_of_fzhi"
                         android:layout_width="28dp"
                         android:layout_height="14dp"
                         android:layout_marginLeft="202dp"
@@ -226,7 +200,7 @@
                         android:textSize="12sp" />
 
                     <TextView
-                        android:id="@+id/tv_activity_close_yunFei"
+                        android:id="@+id/tv_activity_fack_of_yunFei"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="80dp"
@@ -245,7 +219,7 @@
                         android:textSize="12sp" />
 
                     <TextView
-                        android:id="@+id/tv_activity_close_jinE"
+                        android:id="@+id/tv_activity_fack_of_jinE"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="80dp"
@@ -264,7 +238,7 @@
                         android:textSize="12sp" />
 
                     <TextView
-                        android:id="@+id/tv_activity_close_zhongJi"
+                        android:id="@+id/tv_activity_fack_of_zhongJi"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="80dp"
@@ -283,7 +257,7 @@
                         android:textSize="12sp" />
 
                     <TextView
-                        android:id="@+id/tv_activity_close_fangShi"
+                        android:id="@+id/tv_activity_fack_of_fangShi"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="80dp"
@@ -309,7 +283,7 @@
                         android:background="@drawable/kefu_huang" />
 
                     <TextView
-                        android:id="@+id/tv_activity_close_keFu"
+                        android:id="@+id/tv_activity_fack_of_keFu"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -337,7 +311,7 @@
                         android:textSize="12sp" />
 
                     <TextView
-                        android:id="@+id/tv_activity_close_FaPianLeiXing"
+                        android:id="@+id/tv_activity_fack_of_FaPianLeiXing"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="73dp"
@@ -356,7 +330,7 @@
                         android:textSize="12sp" />
 
                     <TextView
-                        android:id="@+id/tv_activity_close_NeiRong"
+                        android:id="@+id/tv_activity_fack_of_NeiRong"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="73dp"
@@ -370,20 +344,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="10dp"
                     android:background="@drawable/tuijian" />
 
                 <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rlv_activity_close_TuiJian"
+                    android:id="@+id/rlv_activity_fack_of_TuiJian"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="15dp"
                     android:nestedScrollingEnabled="false" />
+
+
             </LinearLayout>
-
-
         </RelativeLayout>
 
     </android.support.v4.widget.NestedScrollView>
@@ -396,7 +370,7 @@
 
 
         <TextView
-            android:id="@+id/tv_activity_closeThe_Deal_shanchu"
+            android:id="@+id/tv_activity_fack_of_shanchu"
             android:layout_width="72dp"
             android:layout_height="23dp"
             android:layout_alignParentRight="true"

@@ -25,6 +25,7 @@ import java.util.List;
 public class PaidAdapter_B extends RecyclerView.Adapter {
     private List<PaidBean.OrderBean.OrderDetailsListBean> mList;
     private PaidActivity mContent;
+    private OnClickListener mListener;
 
     public PaidAdapter_B(PaidActivity content, List<PaidBean.OrderBean.OrderDetailsListBean> orderDetailsList) {
         this.mContent = content;
@@ -39,25 +40,26 @@ public class PaidAdapter_B extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ViewHolder holder1 = (ViewHolder) holder;
         Glide.with(mContent).load("https://static.yikch.com" + mList.get(position).getShopImg()).into(holder1.mImg);
         holder1.mName.setText(mList.get(position).getShopName());
         holder1.mNum.setText("X" + mList.get(position).getBuyNum());
         holder1.mTitle.setText(mList.get(position).getSpecNames());
         holder1.mPrice.setText(mList.get(position).getPrice() + "");
+        holder1.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int orderId = mList.get(position).getOrderId();
+                mListener.OnClickListener(v,orderId);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return mList.size();
     }
-
-
-//    public void addALL(PaidBean.OrderBean entity) {
-//        mList.add(entity);
-//        notifyDataSetChanged();
-//    }
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -75,5 +77,12 @@ public class PaidAdapter_B extends RecyclerView.Adapter {
             mPrice = itemView.findViewById(R.id.tv_fragment_all_b_price);
             mNum = itemView.findViewById(R.id.tv_num);
         }
+    }
+
+    public interface OnClickListener {
+        void OnClickListener(View v, int orderId);
+    }
+    public void setOnClickListener(OnClickListener listener){
+        this.mListener=listener;
     }
 }

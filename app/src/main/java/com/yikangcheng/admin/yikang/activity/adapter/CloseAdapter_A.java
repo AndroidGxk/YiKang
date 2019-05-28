@@ -20,8 +20,9 @@ import java.util.List;
  * WF
  */
 public class CloseAdapter_A extends RecyclerView.Adapter {
-    private final Context mContent;
-    private final List<CloseBean.OrderBean> mList;
+    private Context mContent;
+    public List<CloseBean.OrderBean> mList;
+    private OnClickListener mListener;
 
     public CloseAdapter_A(List<CloseBean.OrderBean> orderBeans, Context context) {
         this.mList = orderBeans;
@@ -36,7 +37,7 @@ public class CloseAdapter_A extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ViewHolder holder1 = (ViewHolder) holder;
         holder1.mBianhao.setText("订单编号:" + mList.get(position).getOrderNo());
         holder1.mData.setText("" + mList.get(position).getCreateTime());
@@ -47,6 +48,14 @@ public class CloseAdapter_A extends RecyclerView.Adapter {
         holder1.mRlv.setLayoutManager(new LinearLayoutManager(mContent));
         CloseAdapter_B closeAdapter_b = new CloseAdapter_B(mContent, mList.get(position).getOrderDetailsList());
         holder1.mRlv.setAdapter(closeAdapter_b);
+
+        closeAdapter_b.setOnClickListener(new CloseAdapter_B.OnClickListener() {
+            @Override
+            public void OnClickListener(View v, int orderId) {
+
+                mListener.OnClickListener(v, orderId);
+            }
+        });
     }
 
     @Override
@@ -77,5 +86,13 @@ public class CloseAdapter_A extends RecyclerView.Adapter {
             mRlv = itemView.findViewById(R.id.rlv_fragment_all_item);
             mZhuangtai = itemView.findViewById(R.id.tv_fragment_all_zhuangtai);
         }
+    }
+
+    public interface OnClickListener {
+        void OnClickListener(View v, int orderId);
+    }
+
+    public void setOnClickListener(OnClickListener listener) {
+        this.mListener = listener;
     }
 }

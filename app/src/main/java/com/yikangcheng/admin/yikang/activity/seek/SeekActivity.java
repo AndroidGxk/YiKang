@@ -2,6 +2,7 @@ package com.yikangcheng.admin.yikang.activity.seek;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.View;
@@ -14,7 +15,9 @@ import android.widget.Toast;
 
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.SeekListActivity;
+import com.yikangcheng.admin.yikang.activity.adapter.SeekHotAdapter;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
+import com.yikangcheng.admin.yikang.bean.SeekHotBean;
 import com.yikangcheng.admin.yikang.greendao.SoSuoDb;
 import com.yikangcheng.admin.yikang.greendao.Utils;
 import com.yikangcheng.admin.yikang.util.FlowLayout;
@@ -46,6 +49,21 @@ public class SeekActivity extends BaseActivtiy {
         mFlowLayout_activity_seek = findViewById(R.id.FlowLayout_activity_seek);
         //热门搜索
         mRlvActivitySeekHot = findViewById(R.id.rlv_activity_seek_hot);
+
+
+        /**
+         * 热门搜索
+         */
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        mRlvActivitySeekHot.setLayoutManager(linearLayoutManager);
+        ArrayList<SeekHotBean> seekHotBeans = new ArrayList<>();
+        seekHotBeans.add(new SeekHotBean(null,R.drawable.seekhot_a));
+        seekHotBeans.add(new SeekHotBean(null,R.drawable.seekhot_b));
+        seekHotBeans.add(new SeekHotBean(null,R.drawable.seekhot_c));
+        SeekHotAdapter seekHotAdapter = new SeekHotAdapter(this,seekHotBeans);
+        mRlvActivitySeekHot.setAdapter(seekHotAdapter);
+
+
         /**
          * 点击取消按钮取消搜索
          */
