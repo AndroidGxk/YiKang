@@ -80,6 +80,7 @@
                 android:id="@+id/shop_recycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:minHeight="250dp"
                 android:nestedScrollingEnabled="false"
                 android:visibility="visible" />
 
@@ -123,9 +124,11 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/diviline"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal">
+                android:gravity="center_horizontal"
+                android:visibility="gone">
 
                 <View
                     android:id="@+id/view1"
@@ -162,16 +165,18 @@
                 android:layout_below="@+id/view2"
                 android:layout_centerHorizontal="true"
                 android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
                 android:layout_marginTop="22dp"
+                android:layout_marginRight="20dp"
                 android:nestedScrollingEnabled="false"
                 android:overScrollMode="never" />
 
             <RelativeLayout
+                android:id="@+id/baseline"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="145dp"
-                android:gravity="center_horizontal">
+                android:gravity="center_horizontal"
+                android:visibility="gone">
 
                 <View
                     android:id="@+id/view3"
@@ -204,6 +209,7 @@
     </android.support.v4.widget.NestedScrollView>
 
     <RelativeLayout
+        android:id="@+id/base_btn"
         android:layout_width="match_parent"
         android:layout_height="63dp"
         android:layout_alignParentBottom="true"

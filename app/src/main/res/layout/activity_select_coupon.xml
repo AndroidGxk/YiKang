@@ -3,27 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:clipToPadding="true"
     android:fillViewport="true"
     android:fitsSystemWindows="true"
     android:focusableInTouchMode="true"
     android:overScrollMode="never"
-    android:layout_height="match_parent"
     tools:context=".activity.SelectCouponActivity">
 
     <RelativeLayout
+        android:id="@+id/table"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:id="@+id/table"
         android:background="@color/colorTab">
 
         <ImageView
             android:id="@+id/back_img"
-            android:layout_width="9dp"
-            android:layout_height="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp"
-            android:background="@drawable/fanhui_seek" />
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:src="@drawable/fanhui_seek" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -39,6 +40,13 @@
     <com.jcodecraeer.xrecyclerview.XRecyclerView
         android:id="@+id/xrecycler"
         android:layout_width="match_parent"
-        android:layout_below="@+id/table"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_below="@+id/table" />
+
+    <ImageView
+        android:id="@+id/youhuiquan_null"
+        android:layout_width="115dp"
+        android:layout_height="105dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/zanwuyouhuiquan" />
 </RelativeLayout>

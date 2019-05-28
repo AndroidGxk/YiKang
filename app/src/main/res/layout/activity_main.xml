@@ -57,11 +57,11 @@
 
                 <TextView
                     android:id="@+id/shou_text"
-                    android:textSize="10sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="首页"
-                    android:textColor="@color/colorTab" />
+                    android:textColor="@color/colorTab"
+                    android:textSize="10sp" />
 
             </LinearLayout>
 
@@ -85,10 +85,10 @@
                 <TextView
                     android:id="@+id/fen_text"
                     android:layout_width="wrap_content"
-                    android:textSize="10sp"
                     android:layout_height="wrap_content"
                     android:text="分类"
-                    android:textColor="#333333" />
+                    android:textColor="#333333"
+                    android:textSize="10sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -113,8 +113,8 @@
                     android:id="@+id/miao_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="秒杀"
                     android:layout_marginTop="7dp"
+                    android:text="秒杀"
                     android:textColor="#333333"
                     android:textSize="10sp" />
             </LinearLayout>
@@ -140,8 +140,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="购物车"
-                    android:textSize="10sp"
-                    android:textColor="#333333" />
+                    android:textColor="#333333"
+                    android:textSize="10sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -165,8 +165,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="我的"
-                    android:textSize="10sp"
-                    android:textColor="#333333" />
+                    android:textColor="#333333"
+                    android:textSize="10sp" />
             </LinearLayout>
         </RadioGroup>
     </RelativeLayout>
@@ -175,9 +175,9 @@
 
     <RelativeLayout
         android:id="@+id/nv"
-        android:layout_gravity="left"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_gravity="left"
         android:background="#FFB42B">
 
         <ImageView
@@ -186,7 +186,8 @@
             android:layout_height="80dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="40dp"
-            android:src="@drawable/header_img" />
+            android:src="@drawable/header_img"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/my_name"
@@ -198,7 +199,8 @@
             android:layout_marginBottom="40dp"
             android:text="雅静静"
             android:textColor="#ffffff"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:visibility="gone" />
 
         <LinearLayout
             android:id="@+id/line1"
@@ -206,7 +208,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/my_name"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/dingdan"
@@ -231,7 +234,8 @@
             android:layout_below="@+id/line1"
             android:layout_marginTop="38dp"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/zhanghao"
@@ -256,7 +260,8 @@
             android:layout_below="@+id/line2"
             android:layout_marginTop="38dp"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/zhanghu"
@@ -281,7 +286,8 @@
             android:layout_below="@id/line3"
             android:layout_marginTop="38dp"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/shouhuo"
@@ -306,7 +312,8 @@
             android:layout_below="@id/line4"
             android:layout_marginTop="38dp"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/bangzhu"
@@ -331,7 +338,8 @@
             android:layout_below="@+id/line5"
             android:layout_marginTop="85dp"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/tuichu"
@@ -354,5 +362,13 @@
             android:layout_height="85dp"
             android:layout_alignParentBottom="true"
             android:background="@drawable/beijingtu" />
+
+        <TextView
+            android:id="@+id/log_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="点击登录"
+            android:textSize="19sp" />
     </RelativeLayout>
 </android.support.v4.widget.DrawerLayout>

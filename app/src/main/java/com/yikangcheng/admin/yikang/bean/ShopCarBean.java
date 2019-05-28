@@ -1,12 +1,13 @@
 package com.yikangcheng.admin.yikang.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * 作者：古祥坤 on 2019/5/18 15:17
  * 邮箱：1724959985@qq.com
  */
-public class ShopCarBean {
+public class ShopCarBean implements Serializable {
 
     /**
      * message : 查询成功
@@ -108,7 +109,7 @@ public class ShopCarBean {
         this.shopSpecDetailed = shopSpecDetailed;
     }
 
-    public static class ShopSpecDetailedBean {
+    public static class ShopSpecDetailedBean implements Serializable{
         /**
          * id : 15521
          * commodityId : 4955

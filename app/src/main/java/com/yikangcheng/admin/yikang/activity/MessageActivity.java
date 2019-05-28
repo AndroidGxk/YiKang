@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -16,7 +17,7 @@ public class MessageActivity extends BaseActivtiy {
 
     private LinearLayout wuliu, tongzhi, kefu;
     private XRecyclerView xrecycler;
-
+    private ImageView back_img;
     @Override
     protected void initView() {
         //设置状态栏颜色
@@ -25,6 +26,7 @@ public class MessageActivity extends BaseActivtiy {
         xrecycler = findViewById(R.id.xrecycler);
         tongzhi = findViewById(R.id.tongzhi);
         kefu = findViewById(R.id.kefu);
+        back_img = findViewById(R.id.back_img);
         xrecycler.setLayoutManager(new LinearLayoutManager(this));
         xrecycler.setAdapter(new MessageListAdapter());
     }
@@ -57,6 +59,15 @@ public class MessageActivity extends BaseActivtiy {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MessageActivity.this, CustomerActivity.class));
+            }
+        });
+        /**
+         * 退出
+         */
+        back_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
     }

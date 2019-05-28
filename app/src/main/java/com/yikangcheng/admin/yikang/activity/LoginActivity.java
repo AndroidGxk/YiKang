@@ -24,7 +24,7 @@ public class LoginActivity extends BaseActivtiy implements CustomAdapt, ICoreInf
 
     private ImageView reg_image;
     private int height;
-    private TextView log_btn;
+    private TextView log_btn, forget_pwd;
     private EditText phone_edit, pwd_edit;
     private LoginPresenter loginPresenter;
     public SharedPreferences userInfo;
@@ -36,6 +36,7 @@ public class LoginActivity extends BaseActivtiy implements CustomAdapt, ICoreInf
         height = wm.getDefaultDisplay().getHeight();
         phone_edit = findViewById(R.id.phone_edit);
         pwd_edit = findViewById(R.id.pwd_edit);
+        forget_pwd = findViewById(R.id.forget_pwd);
         log_btn = findViewById(R.id.log_btn);
         loginPresenter = new LoginPresenter(this);
         //用户ID
@@ -55,7 +56,7 @@ public class LoginActivity extends BaseActivtiy implements CustomAdapt, ICoreInf
             }
         });
         /**
-         *
+         *登录
          */
         log_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,6 +64,15 @@ public class LoginActivity extends BaseActivtiy implements CustomAdapt, ICoreInf
                 String phone = phone_edit.getText().toString();
                 String pwd = pwd_edit.getText().toString();
                 loginPresenter.request(phone, pwd);
+            }
+        });
+        /**
+         * 忘记密码
+         */
+        forget_pwd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LoginActivity.this, FindPwdActivity.class));
             }
         });
     }

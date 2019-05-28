@@ -24,7 +24,9 @@ import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Miao;
 import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Shou;
 import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Wo;
 import com.yikangcheng.admin.yikang.activity.myaccount.MyaccountActivity;
+import com.yikangcheng.admin.yikang.activity.obligation.DetailActivity;
 import com.yikangcheng.admin.yikang.activity.seek.SeekActivity;
+import com.yikangcheng.admin.yikang.activity.siteactivity.AiteActivity;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.LoginBean;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
@@ -35,18 +37,28 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
     private RadioGroup radio;
     private FragmentTransaction transaction;
     private RadioButton shou, fen, miao, gou, wo;
-    private LinearLayout shou_linear, fen_linear, miao_linear, gou_linear, wo_linear, line1;
+    private LinearLayout shou_linear, fen_linear, miao_linear,
+            gou_linear, wo_linear, line1, line4, line3, line2, line5, line6;
     private DrawerLayout mDrawerLayout;
     private RelativeLayout mNv;
     //    private ImageView mImg_ceHua;
     private RelativeLayout mRelativeLayout;
-    private TextView tv_toolBar_title, tv_toolBar_right;
-    private TextView shou_text, fen_text, miao_text, gou_text, wo_text;
+    private TextView tv_toolBar_title, tv_toolBar_right, log_text;
+    private TextView shou_text, fen_text, miao_text, gou_text, wo_text, my_name;
     private ImageView iv_toolBar_right, iv_toolBar_left;
-    private ImageView mImg_activity_main_soushuo,header;
+    private ImageView mImg_activity_main_soushuo, header;
     private View toobar;
     private boolean isclick;
     private Fragment_Miao fragment_miao;
+
+    /**
+     * 记录上次点击的页面
+     */
+    private int record_ac;
+    private Fragment_Shou fragment_shou;
+    private Fragment_Fen fragment_fen;
+    private Fragment_Gou fragment_gou;
+    private Fragment_Wo fragment_wo;
 
     @Override
     protected void initView() {
@@ -59,8 +71,15 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         fen_linear = findViewById(R.id.fen_linear);
         shou_text = findViewById(R.id.shou_text);
         fen_text = findViewById(R.id.fen_text);
+        log_text = findViewById(R.id.log_text);
         line1 = findViewById(R.id.line1);
+        line4 = findViewById(R.id.line4);
+        line2 = findViewById(R.id.line2);
+        line5 = findViewById(R.id.line5);
+        line3 = findViewById(R.id.line3);
+        line6 = findViewById(R.id.line6);
         header = findViewById(R.id.header);
+        my_name = findViewById(R.id.my_name);
         miao_text = findViewById(R.id.miao_text);
         gou_text = findViewById(R.id.gou_text);
         wo_text = findViewById(R.id.wo_text);
@@ -111,8 +130,7 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
                 mRelativeLayout.setX(mNv.getWidth() * slideOffset);
             }
         });
-
-
+        record_ac = 1;
         //点击搜索图标跳转搜索页面
         mImg_activity_main_soushuo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,11 +144,11 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
     @Override
     protected void initEventData() {
         transaction = getSupportFragmentManager().beginTransaction();
-        final Fragment_Shou fragment_shou = new Fragment_Shou();
-        final Fragment_Fen fragment_fen = new Fragment_Fen();
+        fragment_shou = new Fragment_Shou();
+        fragment_fen = new Fragment_Fen();
         fragment_miao = new Fragment_Miao();
-        final Fragment_Gou fragment_gou = new Fragment_Gou();
-        final Fragment_Wo fragment_wo = new Fragment_Wo();
+        fragment_gou = new Fragment_Gou();
+        fragment_wo = new Fragment_Wo();
         transaction.add(R.id.frag, fragment_shou);
         transaction.add(R.id.frag, fragment_fen);
         transaction.add(R.id.frag, fragment_miao);
@@ -154,6 +172,7 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         shou_linear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                record_ac = 1;
                 toobar.setVisibility(View.VISIBLE);
                 tv_toolBar_right.setVisibility(View.GONE);
                 iv_toolBar_right.setVisibility(View.VISIBLE);
@@ -181,6 +200,7 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         fen_linear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                record_ac = 2;
                 toobar.setVisibility(View.VISIBLE);
                 tv_toolBar_right.setVisibility(View.GONE);
                 iv_toolBar_right.setVisibility(View.VISIBLE);
@@ -208,6 +228,7 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         miao_linear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                record_ac = 3;
                 toobar.setVisibility(View.VISIBLE);
                 tv_toolBar_right.setVisibility(View.GONE);
                 iv_toolBar_right.setVisibility(View.VISIBLE);
@@ -266,6 +287,7 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         wo_linear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                record_ac = 5;
                 toobar.setVisibility(View.VISIBLE);
                 tv_toolBar_right.setVisibility(View.GONE);
                 iv_toolBar_right.setVisibility(View.VISIBLE);
@@ -292,6 +314,7 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         shou.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                record_ac = 1;
                 toobar.setVisibility(View.VISIBLE);
                 tv_toolBar_right.setVisibility(View.GONE);
                 iv_toolBar_right.setVisibility(View.VISIBLE);
@@ -318,6 +341,7 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         fen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                record_ac = 2;
                 toobar.setVisibility(View.VISIBLE);
                 tv_toolBar_right.setVisibility(View.GONE);
                 iv_toolBar_right.setVisibility(View.VISIBLE);
@@ -344,6 +368,7 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         miao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                record_ac = 3;
                 toobar.setVisibility(View.VISIBLE);
                 tv_toolBar_right.setVisibility(View.GONE);
                 iv_toolBar_right.setVisibility(View.VISIBLE);
@@ -400,6 +425,7 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         wo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                record_ac = 5;
                 toobar.setVisibility(View.VISIBLE);
                 tv_toolBar_right.setVisibility(View.GONE);
                 iv_toolBar_right.setVisibility(View.VISIBLE);
@@ -441,6 +467,35 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
                 startActivity(new Intent(MainActivity.this, MyaccountActivity.class));
             }
         });
+
+        /**
+         * 收货地址
+         */
+        line4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, AiteActivity.class));
+            }
+        });
+        /**
+         * 账户明细
+         */
+        line3.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, DetailActivity.class));
+            }
+        });
+        /**
+         * 点击登录
+         */
+        log_text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            }
+        });
     }
 
     @Override
@@ -472,10 +527,11 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
     public interface onClickListener {
         void onclick();
     }
+
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         //非默认值
-        if (newConfig.fontScale != 1){
+        if (newConfig.fontScale != 1) {
             getResources();
         }
         super.onConfigurationChanged(newConfig);
@@ -491,5 +547,130 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
             res.updateConfiguration(newConfig, res.getDisplayMetrics());
         }
         return res;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LoginBean logUser = getLogUser(this);
+        if (logUser != null) {
+            line1.setVisibility(View.VISIBLE);
+            line2.setVisibility(View.VISIBLE);
+            line3.setVisibility(View.VISIBLE);
+            line4.setVisibility(View.VISIBLE);
+            line5.setVisibility(View.VISIBLE);
+            line6.setVisibility(View.VISIBLE);
+            header.setVisibility(View.VISIBLE);
+            my_name.setVisibility(View.VISIBLE);
+            log_text.setVisibility(View.GONE);
+            my_name.setText(logUser.getNickname());
+        } else {
+            line1.setVisibility(View.GONE);
+            line2.setVisibility(View.GONE);
+            line3.setVisibility(View.GONE);
+            line4.setVisibility(View.GONE);
+            line5.setVisibility(View.GONE);
+            line6.setVisibility(View.GONE);
+            header.setVisibility(View.GONE);
+            my_name.setVisibility(View.GONE);
+            log_text.setVisibility(View.VISIBLE);
+            /**
+             * 页面
+             */
+            switch (record_ac) {
+                case 1:
+                    toobar.setVisibility(View.VISIBLE);
+                    tv_toolBar_right.setVisibility(View.GONE);
+                    iv_toolBar_right.setVisibility(View.VISIBLE);
+                    tv_toolBar_title.setText("优选商城");
+                    shou.setChecked(true);
+                    fen.setChecked(false);
+                    gou.setChecked(false);
+                    wo.setChecked(false);
+                    miao.setChecked(false);
+                    shou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorTab));
+                    fen_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
+                    miao_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
+                    gou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
+                    wo_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
+                    FragmentTransaction fragmentTransaction1 = getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction1.hide(fragment_wo);
+                    fragmentTransaction1.hide(fragment_fen);
+                    fragmentTransaction1.hide(fragment_miao);
+                    fragmentTransaction1.hide(fragment_gou);
+                    fragmentTransaction1.show(fragment_shou);
+                    fragmentTransaction1.commit();
+                    break;
+                case 2:
+                    toobar.setVisibility(View.VISIBLE);
+                    tv_toolBar_right.setVisibility(View.GONE);
+                    iv_toolBar_right.setVisibility(View.VISIBLE);
+                    tv_toolBar_title.setText("分类");
+                    shou.setChecked(false);
+                    fen.setChecked(true);
+                    gou.setChecked(false);
+                    wo.setChecked(false);
+                    miao.setChecked(false);
+                    shou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
+                    fen_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorTab));
+                    miao_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
+                    gou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
+                    wo_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
+                    FragmentTransaction fragmentTransaction2 = getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction2.hide(fragment_shou);
+                    fragmentTransaction2.hide(fragment_wo);
+                    fragmentTransaction2.hide(fragment_miao);
+                    fragmentTransaction2.hide(fragment_gou);
+                    fragmentTransaction2.show(fragment_fen);
+                    fragmentTransaction2.commit();
+                    break;
+                case 3:
+                    toobar.setVisibility(View.VISIBLE);
+                    tv_toolBar_right.setVisibility(View.GONE);
+                    iv_toolBar_right.setVisibility(View.VISIBLE);
+                    tv_toolBar_title.setText("秒杀专区");
+                    shou.setChecked(false);
+                    fen.setChecked(false);
+                    gou.setChecked(false);
+                    wo.setChecked(false);
+                    miao.setChecked(true);
+                    shou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
+                    fen_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
+                    miao_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorTab));
+                    gou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
+                    wo_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
+                    FragmentTransaction fragmentTransaction3 = getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction3.hide(fragment_shou);
+                    fragmentTransaction3.hide(fragment_fen);
+                    fragmentTransaction3.hide(fragment_wo);
+                    fragmentTransaction3.hide(fragment_gou);
+                    fragmentTransaction3.show(fragment_miao);
+                    fragmentTransaction3.commit();
+                    break;
+                case 5:
+                    toobar.setVisibility(View.VISIBLE);
+                    tv_toolBar_right.setVisibility(View.GONE);
+                    iv_toolBar_right.setVisibility(View.VISIBLE);
+                    tv_toolBar_title.setText("我的");
+                    shou.setChecked(false);
+                    fen.setChecked(false);
+                    gou.setChecked(false);
+                    wo.setChecked(true);
+                    miao.setChecked(false);
+                    shou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
+                    fen_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
+                    miao_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
+                    gou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
+                    wo_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorTab));
+                    FragmentTransaction fragmentTransaction5 = getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction5.hide(fragment_shou);
+                    fragmentTransaction5.hide(fragment_fen);
+                    fragmentTransaction5.hide(fragment_miao);
+                    fragmentTransaction5.hide(fragment_gou);
+                    fragmentTransaction5.show(fragment_wo);
+                    fragmentTransaction5.commit();
+                    break;
+            }
+        }
     }
 }

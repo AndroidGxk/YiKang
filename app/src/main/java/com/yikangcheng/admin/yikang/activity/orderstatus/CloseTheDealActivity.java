@@ -20,7 +20,7 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt {
     private ImageView mImgActivityCloseChakan;
     private RecyclerView mRlvActivityCloseShangPin;
     private TextView mTvActivityCloseBiaohao;
-    private ImageView mImgActivityCloseFizhi;
+    private ImageView mImgActivityCloseFizhi, back_img;
     private TextView mTvActivityCloseYunFei;
     private TextView mTvActivityCloseJinE;
     private TextView mTvActivityCloseZhongJi;
@@ -46,6 +46,7 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt {
         mToolbarActivityWaitfrrpayment = findViewById(R.id.toolbar_activity_waitfrrpayment);
         mTvActivityCloseName = findViewById(R.id.tv_activity_close_name);
         mTvActivityCloseDizi = findViewById(R.id.tv_activity_close_dizi);
+        back_img = findViewById(R.id.back_img);
         mImgActivityCloseChakan = findViewById(R.id.img_activity_close_chakan);
         mRlvActivityCloseShangPin = findViewById(R.id.rlv_activity_close_shangPin);
         mTvActivityCloseBiaohao = findViewById(R.id.tv_activity_close_biaohao);
@@ -74,7 +75,15 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt {
 
     @Override
     protected void initEventData() {
-
+        /**
+         * 退出
+         */
+        back_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     @Override

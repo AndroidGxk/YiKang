@@ -5,13 +5,16 @@ import android.graphics.drawable.Drawable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.yikangcheng.admin.yikang.R;
+import com.yikangcheng.admin.yikang.activity.particulars.ParticularsActivity;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.ClassifyCommodityListBean;
 import com.yikangcheng.admin.yikang.bean.Request;
@@ -35,21 +38,23 @@ public class SeekListActivity extends BaseActivtiy implements CustomAdapt, ICore
     private ClassCommodAdapter classCommodAdapter;
     private TextView zonghe, xiaoliang, price_text;
     private RelativeLayout price;
-    private ImageView qiehuan;
+    private ImageView qiehuan, back_img;
     private boolean zclick = true, xclick, pclick, qclick = true, pimgclick = true;
     private int state;
     private int id;
+    private String count;
 
     @Override
     protected void initView() {
-        Intent intent = getIntent();
-        String count = intent.getStringExtra("count");
+        final Intent intent = getIntent();
+        count = intent.getStringExtra("count");
         id = intent.getIntExtra("id", 000);
         xrecycler = findViewById(R.id.xrecycler);
         //搜素框
         edit_seek_sousuo = findViewById(R.id.EditTixt_activity_seek_sousuo);
         zonghe = findViewById(R.id.zonghe);
         price_text = findViewById(R.id.price_text);
+        back_img = findViewById(R.id.back_img);
         zonghe.setOnClickListener(this);
         xiaoliang = findViewById(R.id.xiaoliang);
         xiaoliang.setOnClickListener(this);
@@ -59,16 +64,36 @@ public class SeekListActivity extends BaseActivtiy implements CustomAdapt, ICore
         qiehuan.setOnClickListener(this);
         edit_seek_sousuo.setText(count);
         commodityPresenter = new CommodityPresenter(this);
-        commodityPresenter.request(id, 1, 1, 1);
+        if (count == null || count.equals("")) {
+            commodityPresenter.request(id, 1, "1", 1);
+        } else {
+            commodityPresenter.request(id, 1, count, 1);
+        }
         xrecycler.setLayoutManager(new LinearLayoutManager(this));
         classCommodAdapter = new ClassCommodAdapter(this);
         xrecycler.setAdapter(classCommodAdapter);
+        classCommodAdapter.setOnClickLisetener(new ClassCommodAdapter.onClickLisetener() {
+            @Override
+            public void onclick(int id) {
+                Intent intent1 = new Intent(SeekListActivity.this, ParticularsActivity.class);
+                intent1.putExtra("id", id);
+                startActivity(intent1);
+            }
+        });
     }
 
 
     @Override
     protected void initEventData() {
-
+        /**
+         * 退出
+         */
+        back_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     @Override
@@ -115,7 +140,11 @@ public class SeekListActivity extends BaseActivtiy implements CustomAdapt, ICore
         switch (view.getId()) {
             case R.id.zonghe:
                 if (!zclick) {
-                    commodityPresenter.request(id, 1, 1, 1);
+                    if (count == null || count.equals("")) {
+                        commodityPresenter.request(id, 1, "1", 1);
+                    } else {
+                        commodityPresenter.request(id, 1, count, 1);
+                    }
                     zonghe.setTextColor(SeekListActivity.this.getResources().getColor(R.color.colorTab));
                     xiaoliang.setTextColor(SeekListActivity.this.getResources().getColor(R.color.colorText));
                     price_text.setTextColor(SeekListActivity.this.getResources().getColor(R.color.colorText));
@@ -131,7 +160,11 @@ public class SeekListActivity extends BaseActivtiy implements CustomAdapt, ICore
                 break;
             case R.id.xiaoliang:
                 if (!xclick) {
-                    commodityPresenter.request(id, 5, 1, 1);
+                    if (count == null || count.equals("")) {
+                        commodityPresenter.request(id, 5, "1", 1);
+                    } else {
+                        commodityPresenter.request(id, 5, count, 1);
+                    }
                     xiaoliang.setTextColor(SeekListActivity.this.getResources().getColor(R.color.colorTab));
                     zonghe.setTextColor(SeekListActivity.this.getResources().getColor(R.color.colorText));
                     price_text.setTextColor(SeekListActivity.this.getResources().getColor(R.color.colorText));
@@ -153,14 +186,22 @@ public class SeekListActivity extends BaseActivtiy implements CustomAdapt, ICore
                     zclick = false;
                     xclick = false;
                     if (pimgclick) {
-                        commodityPresenter.request(id, 3, 1, 1);
+                        if (count == null || count.equals("")) {
+                            commodityPresenter.request(id, 3, "1", 1);
+                        } else {
+                            commodityPresenter.request(id, 3, count, 1);
+                        }
                         Drawable drawable = mContext.getResources().getDrawable(R.drawable.price_top);
                         // 这一步必须要做,否则不会显示.
                         drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
                         price_text.setCompoundDrawables(null, null, drawable, null);
                         pimgclick = false;
                     } else {
-                        commodityPresenter.request(id, 4, 1, 1);
+                        if (count == null || count.equals("")) {
+                            commodityPresenter.request(id, 4, "1", 1);
+                        } else {
+                            commodityPresenter.request(id, 4, count, 1);
+                        }
                         Drawable drawable = mContext.getResources().getDrawable(R.drawable.price_button);
                         // 这一步必须要做,否则不会显示.
                         drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());

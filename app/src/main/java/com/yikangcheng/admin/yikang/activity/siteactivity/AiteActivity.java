@@ -1,14 +1,15 @@
 package com.yikangcheng.admin.yikang.activity.siteactivity;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,30 +23,30 @@ import com.yikangcheng.admin.yikang.bean.Request;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
 import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
 import com.yikangcheng.admin.yikang.presenter.AllAddressPresenter;
+import com.yikangcheng.admin.yikang.presenter.DeleteAddressPresenter;
 import com.yikangcheng.admin.yikang.presenter.UpdateAddressPresenter;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
 import java.util.List;
 
 import me.jessyan.autosize.internal.CustomAdapt;
-import retrofit2.http.Query;
 
 public class AiteActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt {
-
-
-    private ImageView mImgActivityAiteFanhui,address_null;
+    private ImageView mImgActivityAiteFanhui, address_null, img_activity_aite_fanhui;
     private Toolbar mToolbarActivityAite;
     private RecyclerView mRlvActivityAite;
-    private TextView new_address;
+    private TextView new_address, add_address, text;
     private AllAddressPresenter allAddressPresenter;
     private AllAddressRecyclerAdapter allAddressRecyclerAdapter;
     private UpdateAddressPresenter updateAddressPresenter;
+    private NestedScrollView nested;
+    private DeleteAddressPresenter deleteAddressPresenter;
+    private View view;
+    private int height;
+    private int width;
 
     @Override
     protected void initView() {
-        /**
-         * 这是收货地址页面  item布局已经写好  下面就是
-         */
         allAddressPresenter = new AllAddressPresenter(this);
         allAddressRecyclerAdapter = new AllAddressRecyclerAdapter(this);
         mImgActivityAiteFanhui = findViewById(R.id.img_activity_aite_fanhui);
@@ -53,16 +54,51 @@ public class AiteActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
         mRlvActivityAite = findViewById(R.id.rlv_activity_aite);
         address_null = findViewById(R.id.address_null);
         new_address = findViewById(R.id.new_address);
+        add_address = findViewById(R.id.add_address);
+        img_activity_aite_fanhui = findViewById(R.id.img_activity_aite_fanhui);
+        nested = findViewById(R.id.nested);
+        text = findViewById(R.id.text);
+        Display display = this.getWindowManager().getDefaultDisplay();
+        width = display.getWidth();
+        height = display.getHeight();
+        //删除弹框
+        view = View.inflate(this, R.layout.delete_popup_item, null);
+
         updateAddressPresenter = new UpdateAddressPresenter(new UpdateAddress());
+        deleteAddressPresenter = new DeleteAddressPresenter(new UpdateAddress());
         mRlvActivityAite.setLayoutManager(new LinearLayoutManager(this));
         mRlvActivityAite.setAdapter(allAddressRecyclerAdapter);
+        //设置默认地址
         allAddressRecyclerAdapter.setOnClickListener(new AllAddressRecyclerAdapter.onClickListener() {
             @Override
             public void onClick(AllAddressBean.ListUserAddressBean listUserAddressBean) {
-                Log.d("address-------",listUserAddressBean.toString());
+                Log.d("address-------", listUserAddressBean.toString());
                 updateAddressPresenter.request(listUserAddressBean.getId(), getLogUser(AiteActivity.this).getId(),
                         listUserAddressBean.getReceiver(), listUserAddressBean.getMobile(), listUserAddressBean.getAddress(), 1,
                         listUserAddressBean.getProvinceId(), listUserAddressBean.getCityId(), listUserAddressBean.getTownId());
+            }
+        });
+        /**
+         * 跳转编辑页面
+         */
+        allAddressRecyclerAdapter.setCompOnClickListener(new AllAddressRecyclerAdapter.compOnClickListener() {
+            @Override
+            public void onClick(AllAddressBean.ListUserAddressBean listUserAddressBean) {
+                Intent intent = new Intent(AiteActivity.this, UserCompileActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("listUserAddressBean", listUserAddressBean);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+        /**
+         * 删除用户地址
+         */
+        allAddressRecyclerAdapter.setDeleteOnClickListener(new AllAddressRecyclerAdapter.deleteOnClickListener() {
+            @Override
+            public void onClick(int id, int position) {
+//                deleteAddressPresenter.request(id);
+//                allAddressRecyclerAdapter.deletePosition(position);
             }
         });
         /**
@@ -98,7 +134,12 @@ public class AiteActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
         //解决滑动不流畅
         mRlvActivityAite.setHasFixedSize(true);
         mRlvActivityAite.setNestedScrollingEnabled(false);
-
+        img_activity_aite_fanhui.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     @Override
@@ -121,10 +162,12 @@ public class AiteActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
         Request request = (Request) data;
         AllAddressBean entity = (AllAddressBean) request.getEntity();
         List<AllAddressBean.ListUserAddressBean> listUserAddress = entity.getListUserAddress();
-        listUserAddress.clear();
-        if(listUserAddress.size()==0||listUserAddress==null){
+        if (listUserAddress.size() == 0 || listUserAddress == null) {
             Glide.with(this).load(R.drawable.dongtu).into(address_null);
-            new_address.setText("去添加收货地址");
+            nested.setVisibility(View.GONE);
+            address_null.setVisibility(View.VISIBLE);
+            text.setVisibility(View.VISIBLE);
+            add_address.setVisibility(View.VISIBLE);
         }
         allAddressRecyclerAdapter.removeAll();
         allAddressRecyclerAdapter.addAll(listUserAddress);
@@ -153,7 +196,7 @@ public class AiteActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
     }
 
     /**
-     * 修改用户地址
+     * 修改、删除用户地址
      */
     private class UpdateAddress implements ICoreInfe {
         @Override
@@ -167,4 +210,5 @@ public class AiteActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
 
         }
     }
+
 }

@@ -55,7 +55,7 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe {
     private TextView mTvFragmentWoXiaoxiA;
     private RecyclerView mRlvFragmentWo;
     private TextView mTvFragmentWoXiaoxiB;
-    private ImageView mImgFragmentWoTouxiang;
+    private ImageView mImgFragmentWoTouxiang, tuijian;
     private ImageView mImgFragmentWoHongyuanquanB;
     private ImageView mImgFragmentWoHongyuanquanA;
     private ImageView mImgFragmentWoLingdang;
@@ -69,11 +69,14 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe {
     private UserInfoPresenter userInfoPresenter;
     private LoginBean logUser;
     private RelativeLayout mMingxi;
+    private RecommendPresenter recommendPresenter;
 
     @Override
     protected void initView(View view) {
         //广告图
         mGuanggao = view.findViewById(R.id.img_fragment_wo_guanggao);
+        //为你推荐分割线
+        tuijian = view.findViewById(R.id.tuijian);
         //查看全部订单
         mTvFragmentWoDingdan = view.findViewById(R.id.tv_fragment_wo_dingdan);
         //账号明细
@@ -174,8 +177,7 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe {
         /**
          * 为你推荐P层
          */
-        RecommendPresenter recommendPresenter = new RecommendPresenter(this);
-        recommendPresenter.request(1);
+        recommendPresenter = new RecommendPresenter(this);
 
         /**
          * item间距
@@ -360,10 +362,13 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe {
         super.onResume();
         //查询数据库中是否有用户
         logUser = getLogUser(getContext());
-        SharedPreferences userInfo = getContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE);
-        String userId = userInfo.getString("userId", "");
-        if (!userId.equals("")) {
-            userInfoPresenter.request(Integer.parseInt(userId));
+        if (logUser != null) {
+            int userId = logUser.getId();
+            tuijian.setVisibility(View.VISIBLE);
+            userInfoPresenter.request(userId);
+            recommendPresenter.request(userId);
+        } else {
+            tuijian.setVisibility(View.GONE);
         }
     }
 

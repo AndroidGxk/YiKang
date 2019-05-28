@@ -6,6 +6,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.adapter.MyAccountAdapter;
@@ -21,12 +22,14 @@ import java.util.ArrayList;
 public class CouponActivity extends BaseActivtiy {
     private TabLayout coupon_tab;
     private ViewPager viewpage;
+    private ImageView back_img;
 
     @Override
     protected void initView() {
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
         coupon_tab = findViewById(R.id.coupon_tab);
         viewpage = findViewById(R.id.viewpage);
+        back_img = findViewById(R.id.back_img);
         ArrayList<String> strings = new ArrayList<>();
         strings.add("可使用");
         strings.add("已失效");
@@ -40,7 +43,15 @@ public class CouponActivity extends BaseActivtiy {
 
     @Override
     protected void initEventData() {
-
+        /**
+         * 退出
+         */
+        back_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     @Override

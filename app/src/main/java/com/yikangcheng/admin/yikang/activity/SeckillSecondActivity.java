@@ -1,6 +1,8 @@
 package com.yikangcheng.admin.yikang.activity;
 
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.yikangcheng.admin.yikang.R;
@@ -16,16 +18,18 @@ import me.jessyan.autosize.internal.CustomAdapt;
 /**
  * 秒杀二级页面
  */
-public class SeckillSecondActivity extends BaseActivtiy implements XRecyclerView.LoadingListener,CustomAdapt {
+public class SeckillSecondActivity extends BaseActivtiy implements XRecyclerView.LoadingListener, CustomAdapt {
 
     private XRecyclerView recycler;
     private SeckillRecyclerAdapter seckillRecyclerAdapter;
     private List<String> stringList = new ArrayList<>();
+    private ImageView back_img;
 
     @Override
     protected void initView() {
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
         seckillRecyclerAdapter = new SeckillRecyclerAdapter();
+        back_img = findViewById(R.id.back_img);
         recycler = findViewById(R.id.recycler);
         for (int i = 0; i < 10; i++) {
             stringList.add("s");
@@ -44,6 +48,15 @@ public class SeckillSecondActivity extends BaseActivtiy implements XRecyclerView
         recycler.setPullRefreshEnabled(true);
         seckillRecyclerAdapter.addAll(stringList);
         recycler.setAdapter(seckillRecyclerAdapter);
+        /**
+         * 退出
+         */
+        back_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     @Override

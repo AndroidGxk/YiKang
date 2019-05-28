@@ -22,7 +22,7 @@ import java.util.List;
 
 public class CanceledActivity extends BaseActivtiy implements ICoreInfe {
 
-    private ImageView mImgActivityCanceledFanhui;
+    private ImageView back_img;
     private Toolbar mToolbarActivityCanceled;
     private RecyclerView mRlvActivityCanceled;
     private CanceledAdapter_A mCanceledAdapter_a;
@@ -31,7 +31,7 @@ public class CanceledActivity extends BaseActivtiy implements ICoreInfe {
     protected void initView() {
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
-        mImgActivityCanceledFanhui = findViewById(R.id.img_activity_canceled_fanhui);
+        back_img = findViewById(R.id.back_img);
         mToolbarActivityCanceled = findViewById(R.id.toolbar_activity_canceled);
         mRlvActivityCanceled = findViewById(R.id.rlv_activity_canceled);
 
@@ -41,7 +41,7 @@ public class CanceledActivity extends BaseActivtiy implements ICoreInfe {
         /**
          * 点击返回图标关闭当前页面
          */
-        mImgActivityCanceledFanhui.setOnClickListener(new View.OnClickListener() {
+        back_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();

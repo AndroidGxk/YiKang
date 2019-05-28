@@ -3,6 +3,7 @@ package com.yikangcheng.admin.yikang.activity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -17,6 +18,7 @@ public class CustomerActivity extends BaseActivtiy {
     private TextView compile_text;
     private CustomerRecyclerAdapter customerRecyclerAdapter;
     private RelativeLayout rela;
+    private ImageView back_img;
 
     @Override
     protected void initView() {
@@ -24,6 +26,7 @@ public class CustomerActivity extends BaseActivtiy {
         StatusBarUtil.setStatusBarMode(this, true, R.color.clolrBAai);
         xrecycler = findViewById(R.id.xrecycler);
         compile_text = findViewById(R.id.compile_text);
+        back_img = findViewById(R.id.back_img);
         rela = findViewById(R.id.rela);
         xrecycler.setLayoutManager(new LinearLayoutManager(this));
         customerRecyclerAdapter = new CustomerRecyclerAdapter(this);
@@ -32,6 +35,15 @@ public class CustomerActivity extends BaseActivtiy {
 
     @Override
     protected void initEventData() {
+        /**
+         * 退出
+         */
+        back_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         //编辑
         compile_text.setOnClickListener(new View.OnClickListener() {
             @Override

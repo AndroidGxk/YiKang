@@ -2,6 +2,7 @@ package com.yikangcheng.admin.yikang.activity;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.yikangcheng.admin.yikang.R;
@@ -22,11 +23,14 @@ public class SelectCouponActivity extends BaseActivtiy implements ICoreInfe {
     private XRecyclerView xrecycler;
     private DiscountCouponPresenter discountCouponPresenter;
     private SelectCouponRecyclerAdapter selectCouponRecyclerAdapter;
+    private ImageView youhuiquan_null, back_img;
 
     @Override
     protected void initView() {
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorTab);
         xrecycler = findViewById(R.id.xrecycler);
+        back_img = findViewById(R.id.back_img);
+        youhuiquan_null = findViewById(R.id.youhuiquan_null);
         xrecycler.setLayoutManager(new LinearLayoutManager(this));
         discountCouponPresenter = new DiscountCouponPresenter(this);
         discountCouponPresenter.request(11, 1);
@@ -36,7 +40,15 @@ public class SelectCouponActivity extends BaseActivtiy implements ICoreInfe {
 
     @Override
     protected void initEventData() {
-
+        /**
+         * 退出
+         */
+        back_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     @Override
@@ -54,7 +66,11 @@ public class SelectCouponActivity extends BaseActivtiy implements ICoreInfe {
         Request request = (Request) data;
         DiscountCouponBean entity = (DiscountCouponBean) request.getEntity();
         List<DiscountCouponBean.CouponCodeListBean> couponCodeList = entity.getCouponCodeList();
-        selectCouponRecyclerAdapter.addAll(couponCodeList);
+        if (couponCodeList == null || couponCodeList.size() == 0) {
+            youhuiquan_null.setVisibility(View.VISIBLE);
+        } else {
+            selectCouponRecyclerAdapter.addAll(couponCodeList);
+        }
     }
 
     @Override

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yikangcheng.admin.yikang.R;
@@ -40,6 +41,11 @@ public class AllAddressRecyclerAdapter extends RecyclerView.Adapter<AllAddressRe
         notifyDataSetChanged();
     }
 
+    public void deletePosition(int Position) {
+        this.stringList.remove(Position);
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public Vh onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -66,6 +72,24 @@ public class AllAddressRecyclerAdapter extends RecyclerView.Adapter<AllAddressRe
                 notifyDataSetChanged();
             }
         });
+        /**
+         * 编辑页面
+         */
+        vh.compile_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                compOnClickListener.onClick(listUserAddressBean);
+            }
+        });
+        /**
+         * 删除
+         */
+        vh.dele_rela.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteOnClickListener.onClick(listUserAddressBean.getId(), position);
+            }
+        });
         for (int i = 0; i < stringList.size(); i++) {
             if (mPosition != null) {
                 if (mPosition == position) {
@@ -75,6 +99,7 @@ public class AllAddressRecyclerAdapter extends RecyclerView.Adapter<AllAddressRe
                 }
             }
         }
+
     }
 
     @Override
@@ -87,6 +112,7 @@ public class AllAddressRecyclerAdapter extends RecyclerView.Adapter<AllAddressRe
         TextView user_phone;
         TextView user_address;
         RadioButton moren;
+        RelativeLayout compile_btn, dele_rela;
 
         public Vh(View itemView) {
             super(itemView);
@@ -94,6 +120,8 @@ public class AllAddressRecyclerAdapter extends RecyclerView.Adapter<AllAddressRe
             user_phone = itemView.findViewById(R.id.user_phone);
             user_address = itemView.findViewById(R.id.user_address);
             moren = itemView.findViewById(R.id.moren);
+            compile_btn = itemView.findViewById(R.id.compile_btn);
+            dele_rela = itemView.findViewById(R.id.dele_rela);
         }
     }
 
@@ -105,5 +133,25 @@ public class AllAddressRecyclerAdapter extends RecyclerView.Adapter<AllAddressRe
 
     public interface onClickListener {
         void onClick(AllAddressBean.ListUserAddressBean listUserAddressBean);
+    }
+
+    compOnClickListener compOnClickListener;
+
+    public void setCompOnClickListener(AllAddressRecyclerAdapter.compOnClickListener compOnClickListener) {
+        this.compOnClickListener = compOnClickListener;
+    }
+
+    public interface compOnClickListener {
+        void onClick(AllAddressBean.ListUserAddressBean listUserAddressBean);
+    }
+
+    deleteOnClickListener deleteOnClickListener;
+
+    public void setDeleteOnClickListener(AllAddressRecyclerAdapter.deleteOnClickListener deleteOnClickListener) {
+        this.deleteOnClickListener = deleteOnClickListener;
+    }
+
+    public interface deleteOnClickListener {
+        void onClick(int id, int position);
     }
 }

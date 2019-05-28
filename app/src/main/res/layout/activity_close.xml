@@ -22,11 +22,13 @@
             android:background="#FFFFFF">
 
             <ImageView
-                android:layout_width="11dp"
-                android:layout_height="20dp"
+                android:id="@+id/back_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="15dp"
-                android:background="@drawable/fanhui_seek" />
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:src="@drawable/fanhui_seek" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -272,6 +274,7 @@
             android:background="#FFFFFF">
 
             <TextView
+                android:id="@+id/heji_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"

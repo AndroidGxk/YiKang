@@ -2,10 +2,10 @@
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:focusable="false"
-    android:focusableInTouchMode="true"
     android:descendantFocusability="blocksDescendants"
     android:fillViewport="true"
+    android:focusable="false"
+    android:focusableInTouchMode="true"
     android:orientation="vertical"
     android:overScrollMode="never">
 
@@ -381,6 +381,7 @@
         </LinearLayout>
 
         <ImageView
+            android:id="@+id/tuijian"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"

@@ -15,8 +15,9 @@
 
         <ImageView
             android:id="@+id/img_activity_aite_fanhui"
-            android:layout_width="11dp"
-            android:layout_height="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="10dp"
             android:src="@drawable/fanhuiactivity" />
 
         <TextView
@@ -30,6 +31,7 @@
     </android.support.v7.widget.Toolbar>
 
     <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nested"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar_activity_aite"
@@ -45,12 +47,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <ImageView
-                android:id="@+id/address_null"
-                android:layout_width="88dp"
-                android:layout_height="58dp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="140dp" />
 
             <TextView
                 android:id="@+id/new_address"
@@ -65,6 +61,39 @@
                 android:text="新增收货地址"
                 android:textColor="#ffffffff"
                 android:textSize="14sp" />
+
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
+
+    <ImageView
+        android:id="@+id/address_null"
+        android:layout_width="88dp"
+        android:layout_height="88dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="140dp"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/address_null"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:text="暂时还没有收货地址"
+        android:textColor="#ff999999"
+        android:textSize="14sp"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/add_address"
+        android:layout_width="166dp"
+        android:layout_height="40dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/shop_btn_shape"
+        android:gravity="center"
+        android:text="去添加收货地址"
+        android:textColor="#ffffffff"
+        android:textSize="14sp"
+        android:visibility="gone" />
 </RelativeLayout>

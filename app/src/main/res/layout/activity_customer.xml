@@ -20,8 +20,9 @@
             android:layout_width="9dp"
             android:layout_height="16dp"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp"
-            android:background="@drawable/fanhuiactivity" />
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:src="@drawable/fanhuiactivity" />
 
 
         <TextView
@@ -60,7 +61,7 @@
         android:id="@+id/xrecycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/table_rela"/>
+        android:layout_below="@+id/table_rela" />
 
     <RelativeLayout
         android:id="@+id/rela"

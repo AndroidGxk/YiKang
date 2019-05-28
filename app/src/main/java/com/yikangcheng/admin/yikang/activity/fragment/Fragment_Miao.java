@@ -1,34 +1,28 @@
 package com.yikangcheng.admin.yikang.activity.fragment;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
-import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ImageView;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.yikangcheng.admin.yikang.R;
-import com.yikangcheng.admin.yikang.activity.SeckillSecondActivity;
-import com.yikangcheng.admin.yikang.activity.adapter.FirstSeckillRecyclerAdapter;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
 
 public class Fragment_Miao extends BaseFragment {
     private WebView webView;
-
-//    private ImageView miao_one_btn;
+    private String s;
+    //    private ImageView miao_one_btn;
 //    private RecyclerView recycler_one;
 //    private FirstSeckillRecyclerAdapter firstSeckillRecyclerAdapter;
 
@@ -60,7 +54,7 @@ public class Fragment_Miao extends BaseFragment {
                 //返回false，意味着请求过程里，不管有多少次的跳转请求（即新的请求地址），均交给webView自己处理，这也是此方法的默认处理
                 //返回true，说明你自己想根据url，做新的跳转，比如在判断url符合条件的情况下，我想让webView加载http://ask.csdn.net/questions/178242
                 if (url.toString().contains("sina.cn")) {
-                    view.loadUrl("http://192.168.0.109/mobile/login");
+                    webView.loadUrl("http://192.168.0.143/mobile/appShow/yikang/proDetailAndroid/3602.json?type=android");
                     return true;
                 }
                 return false;
@@ -72,7 +66,7 @@ public class Fragment_Miao extends BaseFragment {
                 //返回true，说明你自己想根据url，做新的跳转，比如在判断url符合条件的情况下，我想让webView加载http://ask.csdn.net/questions/178242
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     if (request.getUrl().toString().contains("sina.cn")) {
-                        view.loadUrl("http://192.168.0.109/mobile/login");
+                        webView.loadUrl("http://192.168.0.143/mobile/appShow/yikang/proDetailAndroid/3602.json?type=android");
                         return true;
                     }
                 }
@@ -100,8 +94,7 @@ public class Fragment_Miao extends BaseFragment {
         });
         webView.getSettings().setJavaScriptEnabled(true);
         webView.addJavascriptInterface(this, "ww");
-        webView.loadUrl("http://192.168.0.109/mobile/login");
-
+        webView.loadUrl("http://192.168.0.143/mobile/appShow/yikang/proDetailAndroid/3602.json?type=android");
     }
 
     @Override
@@ -126,5 +119,7 @@ public class Fragment_Miao extends BaseFragment {
     @JavascriptInterface
     public void sayHello(String msg) {
         Log.v("gxk", "JSInferface--" + msg);
+        s += msg;
+        Toast.makeText(getContext(), "" + s, Toast.LENGTH_SHORT).show();
     }
 }

@@ -23,10 +23,11 @@
 
         <EditText
             android:id="@+id/EditTixt_activity_seek_sousuo"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:layout_marginLeft="100dp"
+            android:layout_toLeftOf="@+id/moblie_text"
             android:background="@null"
             android:hint="请输入手机号码"
             android:imeOptions="actionSearch"
@@ -69,14 +70,15 @@
 
         <EditText
             android:id="@+id/set_moblie"
-            android:layout_width="188dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:layout_marginLeft="100dp"
             android:background="@null"
+            android:hint="请输入短信验证码"
             android:imeOptions="actionSearch"
             android:singleLine="true"
-            android:textSize="11sp" />
+            android:textSize="13sp" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -97,15 +99,16 @@
 
         <EditText
             android:id="@+id/newpwd"
-            android:layout_width="188dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:layout_marginLeft="100dp"
             android:background="@null"
+            android:hint="请输入新密码"
             android:imeOptions="actionSearch"
             android:inputType="textPassword"
             android:singleLine="true"
-            android:textSize="11sp" />
+            android:textSize="13sp" />
     </RelativeLayout>
 
 
@@ -127,22 +130,23 @@
 
         <EditText
             android:id="@+id/newpwds"
-            android:layout_width="188dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:layout_marginLeft="100dp"
             android:background="@null"
+            android:hint="请输入短信验证码"
             android:imeOptions="actionSearch"
             android:inputType="textPassword"
             android:singleLine="true"
-            android:textSize="11sp" />
+            android:textSize="13sp" />
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/reLayout_fragment_basic_save"
         android:layout_width="166dp"
         android:layout_height="40dp"
-        android:layout_marginLeft="97dp"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="161dp"
         android:background="@drawable/baocunxinxi">
 

@@ -31,8 +31,8 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<ShopRecyclerAdapte
 
     public void addAll(List<ShopCarBean> shopList) {
         this.shopList.addAll(shopList);
+        notifyDataSetChanged();
     }
-
     public void remove() {
         this.shopList.clear();
     }
@@ -65,7 +65,7 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<ShopRecyclerAdapte
         else
             vh.mCheckBox.setChecked(true);
         java.text.DecimalFormat myformat = new java.text.DecimalFormat("0.00");
-        String str = myformat.format(shopSpecDetailedBean.getMarketPrice());
+        String str = myformat.format(shopSpecDetailedBean.getRetailPrice());
         vh.mPrice.setText("¥" + str);
         //选中商品设置总价
         vh.mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -123,6 +123,19 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<ShopRecyclerAdapte
         notifyDataSetChanged();
         //选中之后计算总价方法
         sum();
+    }
+
+    //获取选中商品
+    public List<ShopCarBean> getShopList() {
+        List<ShopCarBean> shopCarBeans = new ArrayList<>();
+        for (int i = 0; i < shopList.size(); i++) {
+            ShopCarBean shopCarBean = shopList.get(i);
+            ShopCarBean.ShopSpecDetailedBean shopSpecDetailed = shopCarBean.getShopSpecDetailed();
+            if (shopSpecDetailed.getCheck() == 1) {
+                shopCarBeans.add(shopCarBean);
+            }
+        }
+        return shopCarBeans;
     }
 
     //反向全选或者全部取消

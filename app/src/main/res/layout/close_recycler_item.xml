@@ -39,6 +39,7 @@
         android:textSize="11sp" />
 
     <TextView
+        android:id="@+id/close_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/close_gui"
@@ -51,6 +52,7 @@
         android:textSize="10sp" />
 
     <TextView
+        android:id="@+id/close_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/close_gui"

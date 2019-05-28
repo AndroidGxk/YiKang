@@ -1,12 +1,16 @@
 package com.yikangcheng.admin.yikang.bean;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * 作者：古祥坤 on 2019/5/25 17:25
  * 邮箱：1724959985@qq.com
  */
-public class AllAddressBean {
+
+public class AllAddressBean implements Serializable{
     private List<ListUserAddressBean> listUserAddress;
 
     public List<ListUserAddressBean> getListUserAddress() {
@@ -17,7 +21,7 @@ public class AllAddressBean {
         this.listUserAddress = listUserAddress;
     }
 
-    public static class ListUserAddressBean {
+    public static class ListUserAddressBean implements Serializable {
         @Override
         public String toString() {
             return "ListUserAddressBean{" +
