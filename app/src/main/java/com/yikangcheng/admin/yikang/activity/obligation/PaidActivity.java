@@ -1,6 +1,7 @@
 package com.yikangcheng.admin.yikang.activity.obligation;
 
 
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.adapter.PaidAdapter_A;
+import com.yikangcheng.admin.yikang.activity.orderstatus.CloseTheDealActivity;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.ObligationBean;
 import com.yikangcheng.admin.yikang.bean.PaidBean;
@@ -67,8 +69,18 @@ public class PaidActivity extends BaseActivtiy implements ICoreInfe {
         mRlvActivityPaid.setLayoutManager(linearLayoutManager);
         //创建适配器
         List<PaidBean.OrderBean> orderBeans = new ArrayList<>();
-        mPaidAdapter_a = new PaidAdapter_A(this,orderBeans);
+        mPaidAdapter_a = new PaidAdapter_A(this, orderBeans);
         mRlvActivityPaid.setAdapter(mPaidAdapter_a);
+
+        mPaidAdapter_a.setOnClickListener(new PaidAdapter_A.OnClickListener() {
+            @Override
+            public void OnClickListener(View v, int orderId) {
+                Intent intent = new Intent(PaidActivity.this, CloseTheDealActivity.class);
+                intent.putExtra("orderId", orderId);
+                startActivity(intent);
+            }
+        });
+
         //p层
         PaidPresenter paidPresenter = new PaidPresenter(this);
         paidPresenter.request(11, 1, "SUCCESS");

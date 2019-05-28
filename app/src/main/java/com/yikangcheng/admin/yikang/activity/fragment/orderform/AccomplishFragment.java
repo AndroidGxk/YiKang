@@ -1,5 +1,6 @@
 package com.yikangcheng.admin.yikang.activity.fragment.orderform;
 
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.RelativeLayout;
 import com.bumptech.glide.Glide;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.adapter.AccomplishAdapter_A;
+import com.yikangcheng.admin.yikang.activity.orderstatus.CloseTheDealActivity;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
 import com.yikangcheng.admin.yikang.bean.PaidBean;
 import com.yikangcheng.admin.yikang.bean.Request;
@@ -56,6 +58,16 @@ public class AccomplishFragment extends BaseFragment implements ICoreInfe {
         mAccomplishAdapter_a = new AccomplishAdapter_A(orderBeans, getContext());
         //绑定适配器
         mRlvFragmentAccomplish.setAdapter(mAccomplishAdapter_a);
+
+        //接口回调 跳转页面
+        mAccomplishAdapter_a.setOnClickListener(new AccomplishAdapter_A.OnClickListener() {
+            @Override
+            public void OnClickListener(View v, int orderId) {
+                Intent intent = new Intent(getContext(), CloseTheDealActivity.class);
+                intent.putExtra("orderId", orderId);
+                startActivity(intent);
+            }
+        });
 
         //p层
         PaidPresenter paidPresenter = new PaidPresenter(this);

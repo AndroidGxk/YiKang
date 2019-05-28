@@ -81,252 +81,288 @@
                 android:text="15226116161"
                 android:textColor="#ff333333"
                 android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/tv_activity_waitfrrpayment_dizi"
-                android:layout_width="295dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="33dp"
+                android:layout_marginRight="15dp"
                 android:ellipsize="end"
-                android:lines="2"
-                android:text="XX省 XX市 XX县 详细地址详细地址详细地址详细地址详细地址详细地址详细地址详细地址详细地址详细地址...."
-                android:textColor="#ff333333"
-                android:textSize="10sp" />
+                android:lines="2">
+
+                <TextView
+                    android:id="@+id/tv_activity_fack_of_provinceStr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="北京市"
+                    android:textColor="#ff333333"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/tv_activity_fack_of_cityStr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="北京辖区"
+                    android:textColor="#ff333333"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/tv_activity_fack_of_townStr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="石景山区"
+                    android:textColor="#ff333333"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/tv_activity_fack_of_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="八角北里"
+                    android:textColor="#ff333333"
+                    android:textSize="10sp" />
+            </LinearLayout>
 
         </RelativeLayout>
     </RelativeLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rlv_activity_waitfrrpayment_shangPin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
+    <LinearLayout
         android:layout_marginTop="204dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginBottom="10dp" />
-
-    <RelativeLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="125dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="396dp"
-        android:layout_marginRight="15dp"
-        android:background="#FFFFFF">
+        android:layout_height="wrap_content">
 
-        <TextView
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rlv_activity_waitfrrpayment_shangPin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="10dp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="125dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="15dp"
+            android:background="#FFFFFF">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:text="运单编号:"
+                android:textColor="#ff333333"
+                android:textSize="12sp" />
+
+
+            <TextView
+                android:id="@+id/tv_activity_waitfrrpayment_biaohao"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="80dp"
+                android:layout_marginTop="10dp"
+                android:text="NO1234567890123"
+                android:textColor="#ff999999"
+                android:textSize="12sp" />
+
+            <ImageView
+                android:id="@+id/img_activity_waitfrrpayment_fizhi"
+                android:layout_width="28dp"
+                android:layout_height="14dp"
+                android:layout_marginLeft="202dp"
+                android:layout_marginTop="11dp"
+                android:background="@drawable/fuzhi" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="33dp"
+                android:text="运          费:"
+                android:textColor="#ff333333"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_activity_waitfrrpayment_yunFei"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="80dp"
+                android:layout_marginTop="33dp"
+                android:text="¥0000.00"
+                android:textColor="#ff999999"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="55dp"
+                android:text="应付金额:"
+                android:textColor="#ff333333"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_activity_waitfrrpayment_jinE"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="80dp"
+                android:layout_marginTop="55dp"
+                android:text="¥0000.00"
+                android:textColor="#ff999999"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="79dp"
+                android:text="总          计:"
+                android:textColor="#ff333333"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_activity_waitfrrpayment_zhongJi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="80dp"
+                android:layout_marginTop="79dp"
+                android:text="¥0000.00"
+                android:textColor="#ff999999"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="101dp"
+                android:text="支付方式:"
+                android:textColor="#ff333333"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_activity_waitfrrpayment_fangShi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="80dp"
+                android:layout_marginTop="101dp"
+                android:text="未支付"
+                android:textColor="#ff999999"
+                android:textSize="12sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="33dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="15dp"
+            android:background="#FFFFFF">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="17dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/kefu_huang" />
+
+            <TextView
+                android:id="@+id/tv_activity_waitfrrpayment_keFu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="36dp"
+                android:text="联系客服"
+                android:textColor="#ff333333"
+                android:textSize="12sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="57dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="15dp"
+            android:background="#FFFFFF">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="11dp"
+                android:text="发票类型:"
+                android:textColor="#ff333333"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_activity_waitfrrpayment_FaPianLeiXing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="73dp"
+                android:layout_marginTop="11dp"
+                android:text="电子发票——个人"
+                android:textColor="#ff999999"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="32dp"
+                android:text="发票内容:"
+                android:textColor="#ff333333"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_activity_waitfrrpayment_NeiRong"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="73dp"
+                android:layout_marginTop="32dp"
+                android:text="商品明细"
+                android:textColor="#ff999999"
+                android:textSize="12sp" />
+        </RelativeLayout>
+
+        <ImageView
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/tuijian" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rlv_activity_waitfrrpayment_TuiJian"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="10dp"
-            android:text="运单编号:"
-            android:textColor="#ff333333"
-            android:textSize="12sp" />
+            android:layout_marginRight="15dp" />
 
 
-        <TextView
-            android:id="@+id/tv_activity_waitfrrpayment_biaohao"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="80dp"
-            android:layout_marginTop="10dp"
-            android:text="NO1234567890123"
-            android:textColor="#ff999999"
-            android:textSize="12sp" />
 
-        <ImageView
-            android:id="@+id/img_activity_waitfrrpayment_fizhi"
-            android:layout_width="28dp"
-            android:layout_height="14dp"
-            android:layout_marginLeft="202dp"
-            android:layout_marginTop="11dp"
-            android:background="@drawable/fuzhi" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="33dp"
-            android:text="运          费:"
-            android:textColor="#ff333333"
-            android:textSize="12sp" />
-
-        <TextView
-            android:id="@+id/tv_activity_waitfrrpayment_yunFei"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="80dp"
-            android:layout_marginTop="33dp"
-            android:text="¥0000.00"
-            android:textColor="#ff999999"
-            android:textSize="12sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="55dp"
-            android:text="应付金额:"
-            android:textColor="#ff333333"
-            android:textSize="12sp" />
-
-        <TextView
-            android:id="@+id/tv_activity_waitfrrpayment_jinE"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="80dp"
-            android:layout_marginTop="55dp"
-            android:text="¥0000.00"
-            android:textColor="#ff999999"
-            android:textSize="12sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="79dp"
-            android:text="总          计:"
-            android:textColor="#ff333333"
-            android:textSize="12sp" />
-
-        <TextView
-            android:id="@+id/tv_activity_waitfrrpayment_zhongJi"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="80dp"
-            android:layout_marginTop="79dp"
-            android:text="¥0000.00"
-            android:textColor="#ff999999"
-            android:textSize="12sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="101dp"
-            android:text="支付方式:"
-            android:textColor="#ff333333"
-            android:textSize="12sp" />
-
-        <TextView
-            android:id="@+id/tv_activity_waitfrrpayment_fangShi"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="80dp"
-            android:layout_marginTop="101dp"
-            android:text="未支付"
-            android:textColor="#ff999999"
-            android:textSize="12sp" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="33dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="530dp"
-        android:layout_marginRight="15dp"
-        android:background="#FFFFFF">
-
-        <ImageView
-            android:layout_width="16dp"
-            android:layout_height="17dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp"
-            android:background="@drawable/kefu_huang" />
-
-        <TextView
-            android:id="@+id/tv_activity_waitfrrpayment_keFu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="36dp"
-            android:text="联系客服"
-            android:textColor="#ff333333"
-            android:textSize="12sp" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="57dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="573dp"
-        android:layout_marginRight="15dp"
-        android:background="#FFFFFF">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="11dp"
-            android:text="发票类型:"
-            android:textColor="#ff333333"
-            android:textSize="12sp" />
-
-        <TextView
-            android:id="@+id/tv_activity_waitfrrpayment_FaPianLeiXing"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="73dp"
-            android:layout_marginTop="11dp"
-            android:text="电子发票——个人"
-            android:textColor="#ff999999"
-            android:textSize="12sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="32dp"
-            android:text="发票内容:"
-            android:textColor="#ff333333"
-            android:textSize="12sp" />
-
-        <TextView
-            android:id="@+id/tv_activity_waitfrrpayment_NeiRong"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="73dp"
-            android:layout_marginTop="32dp"
-            android:text="商品明细"
-            android:textColor="#ff999999"
-            android:textSize="12sp" />
-    </RelativeLayout>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="645dp"
-        android:background="@drawable/tuijian" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rlv_activity_waitfrrpayment_TuiJian"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="671dp"
-        android:layout_marginRight="15dp" />
-
-
+    </LinearLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:background="#FFFFFF">
 
-        <ImageView
-            android:id="@+id/img_activity_waitfrrpayment_shanchu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="181dp"
-            android:background="@drawable/touming" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="72dp"
+            android:layout_height="23dp"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="190dp"
+            android:id="@+id/tv_activity_wait_shanchu"
+            android:layout_marginLeft="181dp"
+            android:background="@drawable/yellow_btn_shape"
+            android:gravity="center"
             android:text="删除订单"
             android:textColor="#ffffaf00"
             android:textSize="13sp" />

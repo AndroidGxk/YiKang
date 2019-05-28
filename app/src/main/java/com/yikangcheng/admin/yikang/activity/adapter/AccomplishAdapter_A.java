@@ -1,6 +1,7 @@
 package com.yikangcheng.admin.yikang.activity.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yikangcheng.admin.yikang.R;
+import com.yikangcheng.admin.yikang.activity.orderstatus.CloseTheDealActivity;
 import com.yikangcheng.admin.yikang.bean.PaidBean;
 
 import java.util.ArrayList;
@@ -21,8 +23,9 @@ import java.util.List;
  * WF
  */
 public class AccomplishAdapter_A extends RecyclerView.Adapter {
-    private final Context mContent;
-    private final ArrayList<PaidBean.OrderBean> mList;
+    private  Context mContent;
+    public   ArrayList<PaidBean.OrderBean> mList;
+    private OnClickListener mListener;
 
     public AccomplishAdapter_A(ArrayList<PaidBean.OrderBean> orderBeans, Context context) {
         this.mList = orderBeans;
@@ -37,7 +40,7 @@ public class AccomplishAdapter_A extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ViewHolder holder1 = (ViewHolder) holder;
         holder1.mBianhao.setText("订单编号:" + mList.get(position).getOrderNo());
         holder1.mData.setText("" + mList.get(position).getCreateTime());
@@ -49,6 +52,21 @@ public class AccomplishAdapter_A extends RecyclerView.Adapter {
         holder1.mRlv.setLayoutManager(new LinearLayoutManager(mContent));
         AccomplishAdapter_B accomplishAdapter_b = new AccomplishAdapter_B(mContent, mList.get(position).getOrderDetailsList());
         holder1.mRlv.setAdapter(accomplishAdapter_b);
+
+        accomplishAdapter_b.setOnClickListener(new AccomplishAdapter_B.OnClickListener() {
+            @Override
+            public void OnClickListener(View v, int orderId) {
+                mListener.OnClickListener(v,orderId);
+            }
+        });
+
+//        holder1.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mListener.OnClickListener(v, position);
+//            }
+//        });
+
     }
 
     @Override
@@ -79,5 +97,13 @@ public class AccomplishAdapter_A extends RecyclerView.Adapter {
             mRlv = itemView.findViewById(R.id.rlv_fragment_all_item);
             mZhuangtai = itemView.findViewById(R.id.tv_fragment_all_zhuangtai);
         }
+    }
+
+    public interface OnClickListener {
+        void OnClickListener(View v, int orderId);
+    }
+
+    public void setOnClickListener(OnClickListener listener) {
+        this.mListener = listener;
     }
 }

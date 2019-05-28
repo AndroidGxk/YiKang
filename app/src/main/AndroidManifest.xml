@@ -7,7 +7,9 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <uses-permission
+        android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+        tools:ignore="ProtectedPermissions" />
 
     <application
         android:name=".app.BaseApp"
@@ -17,12 +19,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.obligation.DetailActivity"></activity>
+        <activity android:name=".activity.orderstatus.FackOfActivity"></activity>
+        <activity android:name=".activity.obligation.DetailActivity" />
         <activity android:name=".activity.obligation.CanceledActivity" />
         <activity android:name=".activity.orderstatus.CloseTheDealActivity" />
         <activity android:name=".activity.obligation.PaidActivity" />
         <activity android:name=".activity.orderstatus.WaitForpaymentActivity" />
-        <activity android:name=".activity.SelectCouponActivity"></activity>
+        <activity android:name=".activity.SelectCouponActivity" />
         <activity android:name=".activity.coupon.CouponActivity" />
         <activity android:name=".activity.myaccount.IntroActivity" />
         <activity android:name=".activity.myaccount.PhoneActivity" />
@@ -43,6 +46,9 @@
         <activity android:name=".activity.ConfirmActivity" />
         <activity android:name=".activity.SeekListActivity" />
         <activity android:name=".activity.aftersale.AfterSaleActivity" />
+        <activity
+            android:name=".activity.orderstatus.FackOfActivity"
+            tools:ignore="DuplicateActivity" />
         <activity
             android:name=".activity.LoginActivity"
             android:launchMode="singleTask" />
@@ -114,7 +120,8 @@
         <activity
             android:name=".activity.obligation.CanceledActivity"
             tools:ignore="DuplicateActivity" />
-        <activity android:name=".activity.obligation.DetailActivity"
+        <activity
+            android:name=".activity.obligation.DetailActivity"
             tools:ignore="DuplicateActivity" />
 
         <provider

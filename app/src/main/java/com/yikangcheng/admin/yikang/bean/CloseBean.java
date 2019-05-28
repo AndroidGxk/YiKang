@@ -141,10 +141,10 @@ public class CloseBean {
         private int orderId;
         private String orderNo;
         private int userId;
-        private int sumPrice;
-        private int yhPrice;
-        private int realPrice;
-        private int freightPrice;
+        private double sumPrice;
+        private double yhPrice;
+        private double realPrice;
+        private double freightPrice;
         private String createTime;
         private String payType;
         private String orderState;
@@ -220,35 +220,35 @@ public class CloseBean {
             this.userId = userId;
         }
 
-        public int getSumPrice() {
+        public double getSumPrice() {
             return sumPrice;
         }
 
-        public void setSumPrice(int sumPrice) {
+        public void setSumPrice(double sumPrice) {
             this.sumPrice = sumPrice;
         }
 
-        public int getYhPrice() {
+        public double getYhPrice() {
             return yhPrice;
         }
 
-        public void setYhPrice(int yhPrice) {
+        public void setYhPrice(double yhPrice) {
             this.yhPrice = yhPrice;
         }
 
-        public int getRealPrice() {
+        public double getRealPrice() {
             return realPrice;
         }
 
-        public void setRealPrice(int realPrice) {
+        public void setRealPrice(double realPrice) {
             this.realPrice = realPrice;
         }
 
-        public int getFreightPrice() {
+        public double getFreightPrice() {
             return freightPrice;
         }
 
-        public void setFreightPrice(int freightPrice) {
+        public void setFreightPrice(double freightPrice) {
             this.freightPrice = freightPrice;
         }
 
@@ -481,8 +481,8 @@ public class CloseBean {
             private int buyNum;
             private String createTime;
             private String payState;
-            private int price;
-            private int freight;
+            private double price;
+            private double freight;
             private int openTime;
             private int mailStatus;
             private int signStatus;
@@ -565,19 +565,19 @@ public class CloseBean {
                 this.payState = payState;
             }
 
-            public int getPrice() {
+            public double getPrice() {
                 return price;
             }
 
-            public void setPrice(int price) {
+            public void setPrice(double price) {
                 this.price = price;
             }
 
-            public int getFreight() {
+            public double getFreight() {
                 return freight;
             }
 
-            public void setFreight(int freight) {
+            public void setFreight(double freight) {
                 this.freight = freight;
             }
 

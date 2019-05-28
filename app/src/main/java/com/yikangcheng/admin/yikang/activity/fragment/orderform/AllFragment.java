@@ -1,5 +1,6 @@
 package com.yikangcheng.admin.yikang.activity.fragment.orderform;
 
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -9,12 +10,17 @@ import android.widget.RelativeLayout;
 import com.bumptech.glide.Glide;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.adapter.All_A_Adapter;
+import com.yikangcheng.admin.yikang.activity.orderstatus.CloseTheDealActivity;
+import com.yikangcheng.admin.yikang.activity.orderstatus.FackOfActivity;
+import com.yikangcheng.admin.yikang.activity.orderstatus.WaitForpaymentActivity;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
 import com.yikangcheng.admin.yikang.bean.ALLBean;
+import com.yikangcheng.admin.yikang.bean.DeleteOrderBean;
 import com.yikangcheng.admin.yikang.bean.Request;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
 import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
 import com.yikangcheng.admin.yikang.presenter.AllPresenter;
+import com.yikangcheng.admin.yikang.presenter.DeleteOrderIdPresenter;
 import com.yikangcheng.admin.yikang.util.SpacesItemDecoration;
 
 import java.util.ArrayList;
@@ -51,6 +57,25 @@ public class AllFragment extends BaseFragment implements ICoreInfe {
         //绑定适配器
         mRlvFragmentAllDingdan.setAdapter(mAll_a_adapter);
 
+        mAll_a_adapter.setOnClickListener(new All_A_Adapter.OnClickListener() {
+
+            @Override
+            public void OnClickListener(View v, int orderId, String orderState) {
+                if (orderState.equals("INIT")) {
+                    Intent intent = new Intent(getActivity(), WaitForpaymentActivity.class);
+                    intent.putExtra("orderId_wait", orderId);
+                    startActivity(intent);
+                } else if (orderState.equals("SUCCESS")) {
+                    Intent intent = new Intent(getActivity(), CloseTheDealActivity.class);
+                    intent.putExtra("orderId",orderId);
+                    startActivity(intent);
+                }else if (orderState.equals("CANCEL")){
+                    Intent intent = new Intent(getActivity(), FackOfActivity.class);
+                    intent.putExtra("orderId_fack",orderId);
+                    startActivity(intent);
+                }
+            }
+        });
         /**
          * P层
          */
@@ -96,4 +121,6 @@ public class AllFragment extends BaseFragment implements ICoreInfe {
     public void fail(ApiException e) {
 
     }
+
+
 }

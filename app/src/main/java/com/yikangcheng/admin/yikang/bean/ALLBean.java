@@ -147,9 +147,9 @@ public class ALLBean {
         private String orderNo;
         private int userId;
         private double sumPrice;
-        private int yhPrice;
+        private double yhPrice;
         private double realPrice;
-        private int freightPrice;
+        private double freightPrice;
         private String createTime;
         private String payTime;
         private String payType;
@@ -238,11 +238,11 @@ public class ALLBean {
             this.sumPrice = sumPrice;
         }
 
-        public int getYhPrice() {
+        public double getYhPrice() {
             return yhPrice;
         }
 
-        public void setYhPrice(int yhPrice) {
+        public void setYhPrice(double yhPrice) {
             this.yhPrice = yhPrice;
         }
 
@@ -254,11 +254,11 @@ public class ALLBean {
             this.realPrice = realPrice;
         }
 
-        public int getFreightPrice() {
+        public double getFreightPrice() {
             return freightPrice;
         }
 
-        public void setFreightPrice(int freightPrice) {
+        public void setFreightPrice(double freightPrice) {
             this.freightPrice = freightPrice;
         }
 
@@ -529,7 +529,7 @@ public class ALLBean {
             private int dataId;
             private int userId;
             private String dataType;
-            private int buyNum;
+            private double buyNum;
             private String createTime;
             private String payTime;
             private String payState;
@@ -593,11 +593,11 @@ public class ALLBean {
                 this.dataType = dataType;
             }
 
-            public int getBuyNum() {
+            public double getBuyNum() {
                 return buyNum;
             }
 
-            public void setBuyNum(int buyNum) {
+            public void setBuyNum(double buyNum) {
                 this.buyNum = buyNum;
             }
 

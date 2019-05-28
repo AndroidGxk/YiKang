@@ -33,10 +33,13 @@ public class MyaccountActivity extends BaseActivtiy implements CustomAdapt {
     protected void initView() {
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+
+
         mImgActivityMyaccountFanhui = findViewById(R.id.img_activity_myaccount_fanhui);
         mToolbarActivityMyaccount = findViewById(R.id.toolbar_activity_myaccount);
         mTabActivityMyaccount = findViewById(R.id.tab_activity_myaccount);
         mViewPagerActivityMyaccount = findViewById(R.id.ViewPager_activity_myaccount);
+
         ArrayList<String> strings = new ArrayList<>();
         strings.add("基本信息");
         strings.add("修改密码");
@@ -46,6 +49,8 @@ public class MyaccountActivity extends BaseActivtiy implements CustomAdapt {
         MyAccountAdapter myAccountAdapter = new MyAccountAdapter(getSupportFragmentManager(), strings, fragments);
         mViewPagerActivityMyaccount.setAdapter(myAccountAdapter);
         mTabActivityMyaccount.setupWithViewPager(mViewPagerActivityMyaccount);
+
+
 
         /**
          * 点击返回按钮 返回上一页

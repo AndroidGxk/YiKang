@@ -1,5 +1,6 @@
 package com.yikangcheng.admin.yikang.activity.fragment.orderform;
 
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.widget.RelativeLayout;
 import com.bumptech.glide.Glide;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.adapter.AwaitAdapter;
+import com.yikangcheng.admin.yikang.activity.orderstatus.FackOfActivity;
+import com.yikangcheng.admin.yikang.activity.orderstatus.WaitForpaymentActivity;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
 import com.yikangcheng.admin.yikang.bean.ObligationBean;
 import com.yikangcheng.admin.yikang.bean.Request;
@@ -56,7 +59,7 @@ public class AwaitFragment extends BaseFragment implements ICoreInfe {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mRlvFragmentAllDingdan.setLayoutManager(linearLayoutManager);
         ArrayList<ObligationBean.OrderBean> orderBeans = new ArrayList<>();
-        mAwaitAdapter = new AwaitAdapter(orderBeans,getContext());
+        mAwaitAdapter = new AwaitAdapter(orderBeans, getContext());
         mRlvFragmentAllDingdan.setAdapter(mAwaitAdapter);
 
         if (orderBeans.size() < 0) {
@@ -69,6 +72,15 @@ public class AwaitFragment extends BaseFragment implements ICoreInfe {
 
         ObligationPresenter obligationPresenter = new ObligationPresenter(this);
         obligationPresenter.request(11, 1, "INIT");
+
+        mAwaitAdapter.setOnClickListener(new AwaitAdapter.OnClickListener() {
+            @Override
+            public void OnClickListener(View v, int orderId) {
+                Intent intent = new Intent(getActivity(), WaitForpaymentActivity.class);
+                intent.putExtra("orderId_wait", orderId);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -83,7 +95,7 @@ public class AwaitFragment extends BaseFragment implements ICoreInfe {
 
     @Override
     public void success(Object data) {
-        Request request= (Request) data;
+        Request request = (Request) data;
         ObligationBean entity = (ObligationBean) request.getEntity();
         mAwaitAdapter.addAll(entity.getOrder());
     }

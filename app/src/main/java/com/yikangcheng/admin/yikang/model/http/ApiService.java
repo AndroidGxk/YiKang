@@ -5,6 +5,8 @@ import com.yikangcheng.admin.yikang.bean.AdvertisingBean;
 import com.yikangcheng.admin.yikang.bean.AllAddressBean;
 import com.yikangcheng.admin.yikang.bean.ClassifyListOneBean;
 import com.yikangcheng.admin.yikang.bean.ClassifyCommodityListBean;
+import com.yikangcheng.admin.yikang.bean.CloseTheDealBean;
+import com.yikangcheng.admin.yikang.bean.DeleteOrderBean;
 import com.yikangcheng.admin.yikang.bean.DiscountBean;
 import com.yikangcheng.admin.yikang.bean.DiscountCouponBean;
 import com.yikangcheng.admin.yikang.bean.CloseBean;
@@ -193,4 +195,17 @@ public interface ApiService {
     Observable<Request> updateAddress(@Query("id") int id, @Query("userId") int userId, @Query("receiver") String receiver,
                                       @Query("mobile") String mobile, @Query("address") String address, @Query("isFirst") int isFirst,
                                       @Query("provinceId") int provinceId, @Query("cityId") int cityId, @Query("townId") int townId);
+
+
+    /**
+     * 订单详情
+     */
+    @POST("userOrderDetails")
+    Observable<Request<CloseTheDealBean>> CloseTheDealBean(@Query("orderId") int orderId);
+
+    /**
+     * 删除订单
+     */
+    @POST("deleteOrder")
+    Observable<Request<DeleteOrderBean>> DeleteOrder(@Query("orderId") int orderId);
 }

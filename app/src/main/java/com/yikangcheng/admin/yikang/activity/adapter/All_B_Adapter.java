@@ -24,6 +24,7 @@ import java.util.List;
 public class All_B_Adapter extends RecyclerView.Adapter {
     private final Context mContent;
     private final List<ALLBean.OrderBean.OrderDetailsListBean> mList;
+    private OnClickListener mListener;
 
 
     public All_B_Adapter(Context content, List<ALLBean.OrderBean.OrderDetailsListBean> orderDetailsList) {
@@ -39,13 +40,21 @@ public class All_B_Adapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ViewHolder holder1 = (ViewHolder) holder;
         Glide.with(mContent).load(Constants.BASETUPIANSHANGCHUANURL + mList.get(position).getShopImg()).into(holder1.mImg);
         holder1.mName.setText(mList.get(position).getShopName());
         holder1.mTitle.setText(mList.get(position).getSpecNames());
         holder1.mNum.setText("X" + mList.get(position).getBuyNum() + "");
         holder1.mPrice.setText(mList.get(position).getPrice() + "");
+
+        holder1.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int orderId = mList.get(position).getOrderId();
+                mListener.OnClickListener(v,orderId);
+            }
+        });
 
     }
 
@@ -57,11 +66,11 @@ public class All_B_Adapter extends RecyclerView.Adapter {
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        private final ImageView mImg;
-        private final TextView mName;
-        private final TextView mTitle;
-        private final TextView mPrice;
-        private final TextView mNum;
+        private  ImageView mImg;
+        private  TextView mName;
+        private  TextView mTitle;
+        private  TextView mPrice;
+        private  TextView mNum;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -71,5 +80,12 @@ public class All_B_Adapter extends RecyclerView.Adapter {
             mPrice = itemView.findViewById(R.id.tv_fragment_all_b_price);
             mNum = itemView.findViewById(R.id.tv_num);
         }
+    }
+
+    public interface OnClickListener {
+        void OnClickListener(View v, int orderId);
+    }
+    public void setOnClickListener(OnClickListener listener){
+        this.mListener=listener;
     }
 }

@@ -1,11 +1,13 @@
 package com.yikangcheng.admin.yikang.activity.fragment.orderform;
 
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.adapter.CloseAdapter_A;
+import com.yikangcheng.admin.yikang.activity.orderstatus.FackOfActivity;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
 import com.yikangcheng.admin.yikang.bean.CloseBean;
 import com.yikangcheng.admin.yikang.bean.Request;
@@ -36,6 +38,14 @@ public class CloseFragment extends BaseFragment implements ICoreInfe {
         List<CloseBean.OrderBean> orderBeans = new ArrayList<>();
         mCloseAdapter_a = new CloseAdapter_A(orderBeans, getContext());
         mRlvFragmentClose.setAdapter(mCloseAdapter_a);
+        mCloseAdapter_a.setOnClickListener(new CloseAdapter_A.OnClickListener() {
+            @Override
+            public void OnClickListener(View v, int orderId) {
+                Intent intent = new Intent(getActivity(), FackOfActivity.class);
+                intent.putExtra("orderId_fack", orderId);
+                startActivity(intent);
+            }
+        });
 
         ClosePresenter closePresenter = new ClosePresenter(this);
         closePresenter.request(11, 1, "CANCEL");
@@ -61,7 +71,7 @@ public class CloseFragment extends BaseFragment implements ICoreInfe {
 
     @Override
     public void success(Object data) {
-        Request request= (Request) data;
+        Request request = (Request) data;
         CloseBean entity = (CloseBean) request.getEntity();
         mCloseAdapter_a.AddAll(entity.getOrder());
     }
