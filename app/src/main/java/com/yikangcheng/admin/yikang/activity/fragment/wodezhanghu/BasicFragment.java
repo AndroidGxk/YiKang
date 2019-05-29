@@ -25,6 +25,8 @@ import android.graphics.Bitmap;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.util.Base64;
+import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -54,6 +56,7 @@ import com.yikangcheng.admin.yikang.bean.UserDetailBean;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -61,6 +64,7 @@ import java.io.InputStream;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -507,45 +511,102 @@ public class BasicFragment extends BaseFragment {
         }
     }
 
-    private void okUpload(File file) {
-        RequestBody body = RequestBody.create(MediaType.parse("image/png"), file);
-
-        MultipartBody multipartBody = new MultipartBody.Builder()
-                .setType(MultipartBody.FORM)
-                .addFormDataPart("avatar", file.getName(), body)//头像地址
-                .addFormDataPart("userId", "11")
+    private void okUpload(final File path) {
+        /**
+         * @将图片文件转化为字节数组字符串，并对其进行Base64编码处理
+         * @author QQ986945193
+         * @Date 2015-01-26
+         * @param path 图片路径
+         * @return
+         */
+        // 将图片文件转化为字节数组字符串，并对其进行Base64编码处理
+        byte[] data = null;
+        // 读取图片字节数组
+        try {
+            InputStream in = new FileInputStream(path);
+            data = new byte[in.available()];
+            in.read(data);
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String s = Base64.encodeToString(data, Base64.DEFAULT);
+        //Log.e("qqq", "okUpload: "+s);
+        //123213321321313213132
+        OkHttpClient okHttpClient = new OkHttpClient.Builder().build();
+        RequestBody requestBody = new FormBody.Builder()
+                .add("userId","11")
+                .add("avatar",s)
                 .build();
         Request request = new Request.Builder()
-                .url(Constants.BASEURL + "/api/updateUserMapper")
-                .addHeader("Content-Type", "multipart/form-data")
-                .post(multipartBody)
+                .post(requestBody)
+                .url("https://www.yikch.com/api/update/avatar")
                 .build();
-
-        new OkHttpClient().newCall(request).enqueue(new Callback() {
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                showToast("上传失败");
+                Log.e("tag", "onFailure: "+e.getMessage() );
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String string = response.body().string();
-                Gson gson = new Gson();
-//                final HeaderImageFileBean bean = gson.fromJson(string, HeaderImageFileBean.class);
-                BasicBean basicBean = gson.fromJson(string, BasicBean.class);
-//                if (bean != null) {
-//                    if (bean.getCode() == 0) {
+                HeaderBean headerBean = new Gson().fromJson(string, HeaderBean.class);
+                Log.e("tag", "onFailure: "+headerBean.getMessage()+"-----"+headerBean.isSuccess());
+            }
+        });
+//        // 对字节数组Base64编码
+//        BASE64Encoder encoder = new BASE64Encoder();
+//        // 返回Base64编码过的字节数组字符串
+//        return encoder.encode(data);
+
+
+
+
+
+//        RequestBody body = RequestBody.create(MediaType.parse("image/png"), file);
+//
+//        MultipartBody multipartBody = new MultipartBody.Builder()
+//                .setType(MultipartBody.FORM)
+//                .addFormDataPart("avatar", file.getName(), body)//头像地址
+//                .addFormDataPart("userId", "11")
+//                .build();
+//        Request request = new Request.Builder()
+//                .url(Constants.BASEURL + "/api/update/avatar")
+//                //.addHeader("Content-Type", "multipart/form-data")
+//                .post(multipartBody)
+//                .build();
+//
+//        new OkHttpClient().newCall(request).enqueue(new Callback() {
+//            @Override
+//            public void onFailure(Call call, IOException e) {
+//                showToast("上传失败");
+//            }
+//
+//            @Override
+//            public void onResponse(Call call, Response response) throws IOException {
+//                String string = response.body().string();
+//                Gson gson = new Gson();
+//                HeaderBean headerBean = gson.fromJson(string, HeaderBean.class);
+//             //   BasicBean basicBean = gson.fromJson(string, BasicBean.class);
+//                if (headerBean != null) {
+//                    if (headerBean.getMessage().equals("修改成功")) {
 //                        showToast("上传成功");
 //                        getActivity().runOnUiThread(new Runnable() {
 //                            @Override
 //                            public void run() {
-//                                setHeader(bean.getData().getHeadImagePath());
+//                                RequestOptions options = new RequestOptions()
+//                                        .placeholder(R.mipmap.ic_launcher)
+//                                        .circleCrop();
+//                                Glide.with(getContext()).load(file).apply(options).into(user_header);
+//                                //setHeader(bean.getData().getHeadImagePath());
 //                            }
 //                        });
 //                    }
 //                }
-            }
-        });
+//            }
+//        });
     }
 
     /**
