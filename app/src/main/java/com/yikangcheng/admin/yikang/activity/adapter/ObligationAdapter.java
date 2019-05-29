@@ -25,10 +25,11 @@ import java.util.List;
  * WF
  */
 public class ObligationAdapter extends RecyclerView.Adapter {
-    private final ObligationActivity mContent;
-    private final ArrayList<ObligationBean.OrderBean> mList;
+    private  ObligationActivity mContent;
+    public   ArrayList<ObligationBean.OrderBean> mList;
     private ObligationAdapter_B mObligationAdapter_b;
     private OnClickListener mListener;
+    private OnClickListenerDelete mListenerDelete;
 
     public ObligationAdapter(ObligationActivity obligationActivity, ArrayList<ObligationBean.OrderBean> orderBeans) {
         this.mContent = obligationActivity;
@@ -43,7 +44,7 @@ public class ObligationAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ViewHolder holder1 = (ViewHolder) holder;
 
         holder1.mBianhao.setText("订单编号:" + mList.get(position).getOrderNo());
@@ -56,13 +57,20 @@ public class ObligationAdapter extends RecyclerView.Adapter {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContent, LinearLayoutManager.VERTICAL, false);
         holder1.mRlv.setLayoutManager(linearLayoutManager);
-        mObligationAdapter_b = new ObligationAdapter_B(mContent,mList.get(position).getOrderDetailsList());
+        mObligationAdapter_b = new ObligationAdapter_B(mContent, mList.get(position).getOrderDetailsList());
         holder1.mRlv.setAdapter(mObligationAdapter_b);
 
         mObligationAdapter_b.setOnClickListener(new ObligationAdapter_B.OnClickListener() {
             @Override
             public void OnClickListener(View v, int orderId) {
-                mListener.OnClickListener(v,orderId);
+                mListener.OnClickListener(v, orderId);
+            }
+        });
+
+        holder1.mShanchu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListenerDelete.OnClickListener(v, position);
             }
         });
     }
@@ -101,7 +109,16 @@ public class ObligationAdapter extends RecyclerView.Adapter {
     public interface OnClickListener {
         void OnClickListener(View v, int orderId);
     }
-    public void setOnClickListener(OnClickListener listener){
-        this.mListener=listener;
+
+    public void setOnClickListener(OnClickListener listener) {
+        this.mListener = listener;
+    }
+
+    public interface OnClickListenerDelete {
+        void OnClickListener(View v, int position);
+    }
+
+    public void setOnClickListenerDelete(OnClickListenerDelete listener) {
+        this.mListenerDelete = listener;
     }
 }
