@@ -33,6 +33,7 @@
                 android:src="@drawable/lingdang" />
 
             <ImageView
+                android:visibility="gone"
                 android:id="@+id/img__fragment_wo_hongyuanquan_a"
                 android:layout_width="13dp"
                 android:layout_height="13dp"
@@ -42,6 +43,7 @@
                 android:background="@drawable/hong" />
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/tv_fragment_wo_xiaoxi_a"
                 android:layout_width="13dp"
                 android:layout_height="14dp"
@@ -124,10 +126,12 @@
                             android:layout_width="13dp"
                             android:layout_height="14dp"
                             android:layout_marginLeft="38dp"
+                            android:visibility="gone"
                             android:layout_marginTop="9dp"
                             android:src="@drawable/hong" />
 
                         <TextView
+                            android:visibility="gone"
                             android:id="@+id/tv_fragment_wo_xiaoxi_b"
                             android:layout_width="13dp"
                             android:layout_height="14dp"

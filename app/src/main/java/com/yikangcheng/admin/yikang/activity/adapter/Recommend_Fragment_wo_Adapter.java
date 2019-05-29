@@ -34,7 +34,7 @@ public class Recommend_Fragment_wo_Adapter extends RecyclerView.Adapter {
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View inflate = LayoutInflater.from(mContent).inflate(R.layout.item_recommend,   null, false);
+        View inflate = LayoutInflater.from(mContent).inflate(R.layout.item_recommend, null, false);
         return new ViewHolder(inflate);
     }
 
@@ -60,6 +60,10 @@ public class Recommend_Fragment_wo_Adapter extends RecyclerView.Adapter {
     public void addData(List<RecommendBean> entity) {
         mList.addAll(entity);
         notifyDataSetChanged();
+    }
+
+    public void removeAll() {
+        mList.clear();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

@@ -1,19 +1,7 @@
 package com.yikangcheng.admin.yikang.activity.fragment;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.os.Message;
-import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
@@ -22,73 +10,37 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.sobot.chat.SobotApi;
 import com.sobot.chat.api.model.Information;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.ClassifyHomeActivity;
 import com.yikangcheng.admin.yikang.activity.CloseActivity;
-import com.yikangcheng.admin.yikang.activity.FaddishActivity;
-import com.yikangcheng.admin.yikang.activity.MainActivity;
-import com.yikangcheng.admin.yikang.activity.SeckillSecondActivity;
-import com.yikangcheng.admin.yikang.activity.adapter.ArticRecyclerAdapter;
-import com.yikangcheng.admin.yikang.activity.adapter.FaddRecyclerAdapter;
-import com.yikangcheng.admin.yikang.activity.adapter.LikeAdapter;
-import com.yikangcheng.admin.yikang.activity.adapter.LuxuryRecyclerAdapter;
+import com.yikangcheng.admin.yikang.activity.PartiCarActivity;
 import com.yikangcheng.admin.yikang.activity.particulars.ParticularsActivity;
-import com.yikangcheng.admin.yikang.app.Constants;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
-import com.yikangcheng.admin.yikang.bean.LikeBean;
 import com.yikangcheng.admin.yikang.bean.Request;
-import com.yikangcheng.admin.yikang.bean.SeckillBean;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
 import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
 import com.yikangcheng.admin.yikang.presenter.AddShopPresenter;
-import com.yikangcheng.admin.yikang.presenter.LikePresenter;
-import com.yikangcheng.admin.yikang.presenter.SeckillPresenter;
-import com.yikangcheng.admin.yikang.util.UIUtils;
-import com.youth.banner.Banner;
-import com.youth.banner.loader.ImageLoader;
-import com.zhouwei.mzbanner.MZBannerView;
-import com.zhouwei.mzbanner.holder.MZHolderCreator;
-import com.zhouwei.mzbanner.holder.MZViewHolder;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.logging.Handler;
-import java.util.logging.LogRecord;
-
-import me.jessyan.autosize.AutoSizeConfig;
 import me.jessyan.autosize.internal.CustomAdapt;
-import me.jessyan.autosize.utils.LogUtils;
+
 
 public class Fragment_Shou extends BaseFragment implements CustomAdapt, ICoreInfe {
 
 
-    private WebView webView;
+    private static WebView webView;
     private String s;
-    private ImageView back_img;
     private AddShopPresenter addShopPresenter;
 
     @Override
     protected void initView(View view) {
         webView = view.findViewById(R.id.webview);
-        back_img = view.findViewById(R.id.back_img);
         WebSettings webSettings = webView.getSettings();
         addShopPresenter = new AddShopPresenter(this);
-
         //设置WebView属性，能够执行Javascript脚本
         webSettings.setJavaScriptEnabled(true);
         //扩大比例的缩放
@@ -136,14 +88,10 @@ public class Fragment_Shou extends BaseFragment implements CustomAdapt, ICoreInf
         webView.loadUrl("https://www.yikch.com/mobile/appShow/index?type=android");
     }
 
+
     @Override
     protected void initData() {
-        back_img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                webView.goBack();//后退    
-            }
-        });
+
     }
 
     @Override
@@ -163,7 +111,6 @@ public class Fragment_Shou extends BaseFragment implements CustomAdapt, ICoreInf
 
     @JavascriptInterface
     public void saySomeMenu(String msg) {
-        Toast.makeText(getContext(), "" + msg, Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(getContext(), ClassifyHomeActivity.class);
         intent.putExtra("id", msg);
         startActivity(intent);
@@ -173,7 +120,6 @@ public class Fragment_Shou extends BaseFragment implements CustomAdapt, ICoreInf
     public void sayHello(String msg) {
         s += msg + ",";
         String[] split = s.split(",");
-        Toast.makeText(getContext(), "" + msg, Toast.LENGTH_SHORT).show();
         if (split.length == 4) {
             int id = getLogUser(getContext()).getId();
             addShopPresenter.request(id, split[0], split[1], split[2], split[3]);
@@ -192,6 +138,7 @@ public class Fragment_Shou extends BaseFragment implements CustomAdapt, ICoreInf
             s = "";
         }
     }
+
     @JavascriptInterface
     public void goCust() {
         Information info = new Information();
@@ -199,6 +146,30 @@ public class Fragment_Shou extends BaseFragment implements CustomAdapt, ICoreInf
         SobotApi.setCustomRobotHelloWord(getActivity(), "您好，易康成客服很高兴为您服务，请问有什么可以帮助您的？");
         SobotApi.startSobotChat(getActivity(), info);
     }
+
+    @JavascriptInterface
+    public void partID(String msg) {
+        Intent intent = new Intent(getContext(), ParticularsActivity.class);
+        int id = Integer.parseInt(msg);
+        intent.putExtra("id", id);
+        startActivity(intent);
+    }
+
+    public static void getGoBack() {
+        webView.goBack();
+    }
+
+    @JavascriptInterface
+    public void goCar() {
+        startActivity(new Intent(getContext(), PartiCarActivity.class));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        webView.setVisibility(View.VISIBLE);
+    }
+
     @Override
     public void success(Object data) {
         Request request = (Request) data;

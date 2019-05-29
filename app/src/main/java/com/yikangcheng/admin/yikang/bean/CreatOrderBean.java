@@ -27,7 +27,7 @@ public class CreatOrderBean implements Serializable {
     private String orderStatus;
     private boolean success;
     private int orderId;
-    private int sumPrice;
+    private double sumPrice;
     private String orderinfo;
 
     public String getOrderinfo() {
@@ -102,11 +102,11 @@ public class CreatOrderBean implements Serializable {
         this.orderId = orderId;
     }
 
-    public int getSumPrice() {
+    public double getSumPrice() {
         return sumPrice;
     }
 
-    public void setSumPrice(int sumPrice) {
+    public void setSumPrice(double sumPrice) {
         this.sumPrice = sumPrice;
     }
 }

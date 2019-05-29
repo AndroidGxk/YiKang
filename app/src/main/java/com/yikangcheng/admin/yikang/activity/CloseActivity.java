@@ -78,6 +78,7 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
     private ImageView back_img;
     private OrderBuyPresenter orderBuyPresenter;
     private AllAddressBean.ListUserAddressBean listUserAddressBean;
+    private PariticShopBean pariticShopBean;
 
     @Override
     protected void initView() {
@@ -179,7 +180,7 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
          */
         if (goodinfo != null) {
             String[] split = goodinfo.split(",");
-            PariticShopBean pariticShopBean = new PariticShopBean();
+            pariticShopBean = new PariticShopBean();
             pariticShopBean.setId(split[0]);
             pariticShopBean.setDataType(split[1]);
             pariticShopBean.setBuyNum(split[2]);
@@ -396,7 +397,8 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
                                 listUserAddressBean.getId(), 1, 1, 2, "易康成", "132", "2", "1724959985@qq.com", "ALIPAY", "Android");
                     }
                 } else {
-                    orderBuyPresenter.request(getLogUser(CloseActivity.this).getId(), 18576,
+                    String id = pariticShopBean.getId();
+                    orderBuyPresenter.request(getLogUser(CloseActivity.this).getId(), Integer.parseInt(id),
                             listUserAddressBean.getId(), 1, 1, 2, "易康成", "132", "2", "1724959985@qq.com", "ALIPAY", "Android");
                 }
             }
@@ -474,7 +476,6 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
         @Override
         public void success(Object data) {
             Request request = (Request) data;
-            Toast.makeText(CloseActivity.this, "" + request.getMessage() + "-------" + request.isSuccess(), Toast.LENGTH_SHORT).show();
             if (request.isSuccess()) {
                 CreatOrderBean entity = (CreatOrderBean) request.getEntity();
                 Intent intent = new Intent(CloseActivity.this, ConfirmActivity.class);

@@ -34,7 +34,7 @@ public class ShopCarBean implements Serializable {
     private int userId;
     private int buyNum;
     private String createTime;
-    private int price;
+    private double price;
     private ShopSpecDetailedBean shopSpecDetailed;
 
     public int getId() {
@@ -93,11 +93,11 @@ public class ShopCarBean implements Serializable {
         this.createTime = createTime;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -132,8 +132,8 @@ public class ShopCarBean implements Serializable {
         private String serialNo;
         private String specIds;
         private String specNames;
-        private int retailPrice;
-        private int marketPrice;
+        private double retailPrice;
+        private double marketPrice;
         private int stock;
         private int status;
         private String commodityName;
@@ -190,7 +190,7 @@ public class ShopCarBean implements Serializable {
             this.specNames = specNames;
         }
 
-        public int getRetailPrice() {
+        public double getRetailPrice() {
             return retailPrice;
         }
 
@@ -198,7 +198,7 @@ public class ShopCarBean implements Serializable {
             this.retailPrice = retailPrice;
         }
 
-        public int getMarketPrice() {
+        public double getMarketPrice() {
             return marketPrice;
         }
 

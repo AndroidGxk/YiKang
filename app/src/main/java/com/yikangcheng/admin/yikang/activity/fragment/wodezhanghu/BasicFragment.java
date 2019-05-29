@@ -77,7 +77,6 @@ public class BasicFragment extends BaseFragment {
     private RelativeLayout mReLayoutFragmentBasicName;
     private RelativeLayout mReLayoutFragmentBasicSave;
     private RelativeLayout mReLayoutFragmentBasicTouxiang;
-    private RelativeLayout mReLayoutFragmentBasicPhone;
     private RelativeLayout mReLayoutFragmentBasic;
     private RelativeLayout mReLayoutFragmentBasicSex;
     private RelativeLayout mReLayoutFragmentBasicSynopsis;
@@ -90,7 +89,7 @@ public class BasicFragment extends BaseFragment {
     private ImageView mImgFinsh, user_header;
     private TextView name_text, rela_name_text;
     private RadioGroup sex_group;
-    private TextView phone_text, jianjie;
+    private TextView jianjie;
     private ImageView mUserHeader;
     //相机相册
 
@@ -102,15 +101,13 @@ public class BasicFragment extends BaseFragment {
         mReLayoutFragmentBasicSave = view.findViewById(R.id.reLayout_fragment_basic_save);
         //头像
         mReLayoutFragmentBasicTouxiang = view.findViewById(R.id.reLayout_fragment_basic_touxiang);
-        //手机号
-        mReLayoutFragmentBasicPhone = view.findViewById(R.id.reLayout_fragment_basic_phone);
+
         //用户昵称
         mReLayoutFragmentBasic = view.findViewById(R.id.reLayout_fragment_basic_niceng);
         //性别
         mReLayoutFragmentBasicSex = view.findViewById(R.id.reLayout_fragment_basic_sex);
         //简介
         mReLayoutFragmentBasicSynopsis = view.findViewById(R.id.reLayout_fragment_basic_synopsis);
-
 
 
         /**
@@ -125,16 +122,7 @@ public class BasicFragment extends BaseFragment {
             }
         });
 
-        /**
-         * 点击手机号跳转页面
-         */
-        mReLayoutFragmentBasicPhone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), PhoneActivity.class);
-                startActivity(intent);
-            }
-        });
+
         /**
          * 点击姓名跳转页面
          */
@@ -163,8 +151,6 @@ public class BasicFragment extends BaseFragment {
         rela_name_text = view.findViewById(R.id.rela_name_text);
         //性别单选
         sex_group = view.findViewById(R.id.sex);
-        //手机号
-        phone_text = view.findViewById(R.id.phone_text);
         //简介
         jianjie = view.findViewById(R.id.jianjie);
         //用户头像
@@ -241,7 +227,6 @@ public class BasicFragment extends BaseFragment {
         UserDetailBean userInfo = getUserInfo(getContext());
         name_text.setText(userInfo.getNickName());
         rela_name_text.setText(userInfo.getRealName());
-        phone_text.setText(userInfo.getMobile() + "");
         int gender = userInfo.getGender();
         if (gender == 0) {
             sex_group.check(sex_group.getChildAt(0).getId());
@@ -264,10 +249,17 @@ public class BasicFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-
+        SharedPreferences name = getContext().getSharedPreferences("name", Context.MODE_PRIVATE);
+        String nameString = name.getString("name", "");
+        rela_name_text.setText(nameString);
+        SharedPreferences nickname = getContext().getSharedPreferences("nickname", Context.MODE_PRIVATE);
+        String nicknameString = nickname.getString("nickname", "");
+        name_text.setText(nicknameString);
+        SharedPreferences intro = getContext().getSharedPreferences("intro", Context.MODE_PRIVATE);
+        String introString = intro.getString("intro", "");
+        jianjie.setText(introString);
     }
 
-    //===================================================================
     private Uri imageUri;
     public static final int TAKE_PHOTO = 1;
     public static final int SELECT_PHOTO = 2;
@@ -363,9 +355,9 @@ public class BasicFragment extends BaseFragment {
                     //转为file上传处理照相之后的结果并上传
                     File file = getFile(bitmap1);
                     //设置图片圆角角度
-                    RoundedCorners roundedCorners= new RoundedCorners(6);
+                    RoundedCorners roundedCorners = new RoundedCorners(6);
                     //通过RequestOptions扩展功能,override:采样率,因为ImageView就这么大,可以压缩图片,降低内存消耗
-                    RequestOptions options=RequestOptions.bitmapTransform(roundedCorners).override(300, 300);
+                    RequestOptions options = RequestOptions.bitmapTransform(roundedCorners).override(300, 300);
                     Glide.with(this).load(bitmap1).apply(options).into(user_header);//==========================================1111111
                     okUpload(file);////1
                 } catch (Exception e) {
@@ -392,9 +384,9 @@ public class BasicFragment extends BaseFragment {
                 if (file.exists()) {
 
                     //设置图片圆角角度
-                    RoundedCorners roundedCorners= new RoundedCorners(6);
+                    RoundedCorners roundedCorners = new RoundedCorners(6);
                     //通过RequestOptions扩展功能,override:采样率,因为ImageView就这么大,可以压缩图片,降低内存消耗
-                    RequestOptions options=RequestOptions.bitmapTransform(roundedCorners).override(300, 300);
+                    RequestOptions options = RequestOptions.bitmapTransform(roundedCorners).override(300, 300);
                     Glide.with(this).load(file).apply(options).into(user_header);//  ================2222222222
 
                     okUpload(file);////2
@@ -535,8 +527,8 @@ public class BasicFragment extends BaseFragment {
         //123213321321313213132
         OkHttpClient okHttpClient = new OkHttpClient.Builder().build();
         RequestBody requestBody = new FormBody.Builder()
-                .add("userId","11")
-                .add("avatar",s)
+                .add("userId", "11")
+                .add("avatar", s)
                 .build();
         Request request = new Request.Builder()
                 .post(requestBody)
@@ -546,23 +538,20 @@ public class BasicFragment extends BaseFragment {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.e("tag", "onFailure: "+e.getMessage() );
+                Log.e("tag", "onFailure: " + e.getMessage());
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String string = response.body().string();
                 HeaderBean headerBean = new Gson().fromJson(string, HeaderBean.class);
-                Log.e("tag", "onFailure: "+headerBean.getMessage()+"-----"+headerBean.isSuccess());
+                Log.e("tag", "onFailure: " + headerBean.getMessage() + "-----" + headerBean.isSuccess());
             }
         });
 //        // 对字节数组Base64编码
 //        BASE64Encoder encoder = new BASE64Encoder();
 //        // 返回Base64编码过的字节数组字符串
 //        return encoder.encode(data);
-
-
-
 
 
 //        RequestBody body = RequestBody.create(MediaType.parse("image/png"), file);
@@ -611,6 +600,7 @@ public class BasicFragment extends BaseFragment {
 
     /**
      * 接口请求回来数据  用这个image
+     *
      * @param headerImage
      */
     private void setHeader(String headerImage) {

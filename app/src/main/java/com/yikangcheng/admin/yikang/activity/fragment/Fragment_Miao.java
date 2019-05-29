@@ -23,6 +23,7 @@ import com.sobot.chat.api.model.Information;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.CloseActivity;
 import com.yikangcheng.admin.yikang.activity.MainActivity;
+import com.yikangcheng.admin.yikang.activity.PartiCarActivity;
 import com.yikangcheng.admin.yikang.activity.particulars.ParticularsActivity;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
 import com.yikangcheng.admin.yikang.bean.Request;
@@ -32,7 +33,7 @@ import com.yikangcheng.admin.yikang.presenter.AddShopPresenter;
 import com.yikangcheng.admin.yikang.presenter.OrderBuyPresenter;
 
 public class Fragment_Miao extends BaseFragment implements ICoreInfe {
-    private WebView webView;
+    private static WebView webView;
     private String s = "";
     //    private ImageView miao_one_btn;
 //    private RecyclerView recycler_one;
@@ -165,7 +166,19 @@ public class Fragment_Miao extends BaseFragment implements ICoreInfe {
 
     @JavascriptInterface
     public void goCar() {
+        startActivity(new Intent(getContext(), PartiCarActivity.class));
+    }
 
+    @JavascriptInterface
+    public void partID(String msg) {
+        Intent intent = new Intent(getContext(), ParticularsActivity.class);
+        int id = Integer.parseInt(msg);
+        intent.putExtra("id", id);
+        startActivity(intent);
+    }
+
+    public static void getGoWeb() {
+        webView.goBack();
     }
 
     /**

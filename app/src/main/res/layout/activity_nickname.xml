@@ -54,6 +54,7 @@
         android:textSize="9sp" />
 
     <TextView
+        android:id="@+id/ok_btn"
         android:layout_width="166dp"
         android:layout_height="40dp"
         android:layout_centerInParent="true"

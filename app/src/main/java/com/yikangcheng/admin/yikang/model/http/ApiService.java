@@ -27,6 +27,8 @@ import com.yikangcheng.admin.yikang.bean.UserInfoBean;
 import java.util.List;
 
 import io.reactivex.Observable;
+import okhttp3.MultipartBody;
+import retrofit2.http.Body;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
@@ -237,4 +239,9 @@ public interface ApiService {
                                                  @Query("buyNum") int buyNum, @Query("invoiceType") int invoiceType, @Query("invoiceFrom") int invoiceFrom,
                                                  @Query("invoiceName") String invoiceName, @Query("invoiceNo") String invoiceNo, @Query("invoiceContent") String invoiceContent,
                                                  @Query("invoiceEmail") String invoiceEmail, @Query("payType") String payType, @Query("orderForm") String orderForm);
+    /**
+     * 上传头像
+     */
+    @POST("goswf")
+    Observable<String> goswf(@Body MultipartBody body);
 }

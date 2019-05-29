@@ -20,6 +20,9 @@ import com.sobot.chat.SobotApi;
 import com.sobot.chat.api.model.Information;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.CloseActivity;
+import com.yikangcheng.admin.yikang.activity.PartiCarActivity;
+import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Miao;
+import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Shou;
 import com.yikangcheng.admin.yikang.activity.obligation.PaidActivity;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.Request;
@@ -43,6 +46,8 @@ public class ParticularsActivity extends BaseActivtiy implements CustomAdapt, IC
     protected void initView() {
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorTab);
+        Fragment_Miao.getGoWeb();
+        Fragment_Shou.getGoBack();
         webView = findViewById(R.id.webvieww);
         back_img = findViewById(R.id.back_img);
         Intent intent = getIntent();
@@ -171,12 +176,10 @@ public class ParticularsActivity extends BaseActivtiy implements CustomAdapt, IC
         SobotApi.startSobotChat(ParticularsActivity.this, info);
     }
 
+
     @JavascriptInterface
     public void goCar() {
-        Information info = new Information();
-        info.setAppkey("7560599b63bf43378d05d018ded42cdd");
-        SobotApi.setCustomRobotHelloWord(ParticularsActivity.this, "您好，易康成客服很高兴为您服务，请问有什么可以帮助您的？");
-        SobotApi.startSobotChat(ParticularsActivity.this, info);
+        startActivity(new Intent(ParticularsActivity.this, PartiCarActivity.class));
     }
 
     /**

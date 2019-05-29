@@ -174,7 +174,7 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<ShopRecyclerAdapte
             //如果是选中状态才能获取价格（1,是选中状态,0是未选中状态）
             if (shopSpecDetailedBean.getCheck() == 1) {
                 //价钱乘以数量得到总价格
-                totalPrice = totalPrice + shopSpecDetailedBean.getMarketPrice() * shopList.get(i).getBuyNum();
+                totalPrice = totalPrice + shopSpecDetailedBean.getRetailPrice() * shopList.get(i).getBuyNum();
                 count = count + shopList.get(i).getBuyNum();
             }
         }

@@ -1,8 +1,6 @@
 package com.yikangcheng.admin.yikang.activity.fragment;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -25,7 +23,6 @@ import com.yikangcheng.admin.yikang.activity.obligation.CanceledActivity;
 import com.yikangcheng.admin.yikang.activity.obligation.DetailActivity;
 import com.yikangcheng.admin.yikang.activity.obligation.ObligationActivity;
 import com.yikangcheng.admin.yikang.activity.obligation.PaidActivity;
-import com.yikangcheng.admin.yikang.activity.orderstatus.CloseTheDealActivity;
 import com.yikangcheng.admin.yikang.activity.siteactivity.AiteActivity;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
 import com.yikangcheng.admin.yikang.bean.AdvertisingBean;
@@ -349,6 +346,7 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe {
     public void success(Object data) {
         Request request = (Request) data;
         List<RecommendBean> entity = (List<RecommendBean>) request.getEntity();
+        mRecommend_fragment_wo_adapter.removeAll();
         mRecommend_fragment_wo_adapter.addData(entity);
     }
 
@@ -393,4 +391,5 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe {
 
         }
     }
+
 }
