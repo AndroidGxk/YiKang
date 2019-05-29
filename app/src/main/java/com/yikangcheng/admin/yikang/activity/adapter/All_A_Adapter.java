@@ -37,6 +37,7 @@ public class All_A_Adapter extends RecyclerView.Adapter {
     public ArrayList<ALLBean.OrderBean> mList;
     private All_B_Adapter mAll_b_adapter;
     private OnClickListener mListener;
+    private OnClickListenerDelete mListenerDelete;
 
 
     public All_A_Adapter(Context context, ArrayList<ALLBean.OrderBean> orderBeans) {
@@ -64,6 +65,7 @@ public class All_A_Adapter extends RecyclerView.Adapter {
         if (mList.get(position).getOrderState().equals("INIT")) {
             holder1.mZhuangtai.setText("未支付");
         }
+
         if (mList.get(position).getOrderState().equals("SUCCESS")) {
             holder1.mZhuangtai.setText("支付成功");
         }
@@ -84,6 +86,13 @@ public class All_A_Adapter extends RecyclerView.Adapter {
             public void OnClickListener(View v, int orderId) {
                 String orderState = mList.get(position).getOrderState();
                 mListener.OnClickListener(v, orderId, orderState);
+            }
+        });
+
+        holder1.mShanchu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListenerDelete.OnClickListener(v,position);
             }
         });
     }
@@ -126,5 +135,14 @@ public class All_A_Adapter extends RecyclerView.Adapter {
 
     public void setOnClickListener(OnClickListener listener) {
         this.mListener = listener;
+    }
+
+
+    public interface OnClickListenerDelete {
+        void OnClickListener(View v, int position);
+    }
+
+    public void setOnClickListenerDelete(OnClickListenerDelete listener) {
+        this.mListenerDelete = listener;
     }
 }

@@ -1,13 +1,19 @@
 package com.yikangcheng.admin.yikang.activity.fragment.orderform;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.adapter.All_A_Adapter;
 import com.yikangcheng.admin.yikang.activity.orderstatus.CloseTheDealActivity;
@@ -35,6 +41,10 @@ public class AllFragment extends BaseFragment implements ICoreInfe {
     private ImageView mImgFragmentAll;
     private ImageView mImgFragmentAllQuguanghuang;
     private RelativeLayout mRelativeLayout;
+    private SmartRefreshLayout mRefreshLayout;
+    private int mPage = 1;
+    private int mDeleteItemPostion;
+
 
     @Override
     protected void initView(View view) {
@@ -42,6 +52,7 @@ public class AllFragment extends BaseFragment implements ICoreInfe {
         mImgFragmentAll = view.findViewById(R.id.img_fragment_all);
         mImgFragmentAllQuguanghuang = view.findViewById(R.id.img_fragment_all_quguanghuang);
         mRelativeLayout = view.findViewById(R.id.relativeLayout);
+        mRefreshLayout = view.findViewById(R.id.refreshLayout);
 
         Glide.with(getContext()).load(R.drawable.dongtu).into(mImgFragmentAll);
 
@@ -67,11 +78,11 @@ public class AllFragment extends BaseFragment implements ICoreInfe {
                     startActivity(intent);
                 } else if (orderState.equals("SUCCESS")) {
                     Intent intent = new Intent(getActivity(), CloseTheDealActivity.class);
-                    intent.putExtra("orderId",orderId);
+                    intent.putExtra("orderId", orderId);
                     startActivity(intent);
-                }else if (orderState.equals("CANCEL")){
+                } else if (orderState.equals("CANCEL")) {
                     Intent intent = new Intent(getActivity(), FackOfActivity.class);
-                    intent.putExtra("orderId_fack",orderId);
+                    intent.putExtra("orderId_fack", orderId);
                     startActivity(intent);
                 }
             }
@@ -79,9 +90,7 @@ public class AllFragment extends BaseFragment implements ICoreInfe {
         /**
          * P层
          */
-        AllPresenter allPresenter = new AllPresenter(this);
-//        LoginBean logUser = getLogUser(getContext());
-        allPresenter.request(11, 1);
+        initMvp(mPage);
 
         /**
          * 让rlv---item之间有空隙
@@ -97,6 +106,54 @@ public class AllFragment extends BaseFragment implements ICoreInfe {
             mRelativeLayout.setVisibility(View.GONE);
             mRlvFragmentAllDingdan.setVisibility(View.VISIBLE);
         }
+
+        initShuaXinJiaZai();
+
+        /**
+         * 点击垃圾桶删除订单
+         */
+        initDelete();
+    }
+
+    private void initDelete() {
+        mAll_a_adapter.setOnClickListenerDelete(new All_A_Adapter.OnClickListenerDelete() {
+            @Override
+            public void OnClickListener(View v, int position) {
+                mDeleteItemPostion = position;
+                int orderId = mAll_a_adapter.mList.get(position).getOrderId();
+                DeleteOrderIdPresenter deleteOrderIdPresenter = new DeleteOrderIdPresenter(new delete());
+                deleteOrderIdPresenter.request(orderId);
+
+            }
+        });
+    }
+
+    private void initMvp(int page) {
+        AllPresenter allPresenter = new AllPresenter(this);
+        allPresenter.request(11, page);
+    }
+
+    private void initShuaXinJiaZai() {
+        //刷新的监听事件
+        mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                //请求数据
+                mPage = 1;
+                initMvp(mPage);
+                refreshLayout.finishRefresh();  //刷新完成
+            }
+        });
+        //加载的监听事件
+        mRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                mPage++;
+                initMvp(mPage);
+                refreshLayout.finishLoadMore();      //加载完成
+                //refreshLayout.finishLoadMoreWithNoMoreData();  //全部加载完成,没有数据了调用此方法  这个方法调用了就加载一夜再也不加载了
+            }
+        });
     }
 
     @Override
@@ -109,11 +166,32 @@ public class AllFragment extends BaseFragment implements ICoreInfe {
         return R.layout.fragment_all;
     }
 
+    public class delete implements ICoreInfe {
+
+        public DeleteOrderBean mMEntity;
+
+        @Override
+        public void success(Object data) {
+            Request request = (Request) data;
+            mMEntity = (DeleteOrderBean) request.getEntity();
+            //有需要在这打印一下message的返回值现在返回的是空的  让后台看一下  做一个判断
+           // Log.e("aaa", "success: "+mMEntity.get );
+            mAll_a_adapter.mList.remove(mDeleteItemPostion);
+            mAll_a_adapter.notifyDataSetChanged();
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
+    }
+
     @Override
     public void success(Object data) {
         Request request = (Request) data;
         ALLBean entity = (ALLBean) request.getEntity();
         mAll_a_adapter.allData(entity.getOrder());
+
 
     }
 
