@@ -66,6 +66,7 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
         mAddress = findViewById(R.id.tv_activity_close_address);
         mProvinceStr = findViewById(R.id.tv_activity_close_provinceStr);
         mCityStr = findViewById(R.id.tv_activity_close_cityStr);
+        back_img = findViewById(R.id.back_img);
         mTownStr = findViewById(R.id.tv_activity_close_townStr);
         //查看物流按钮
         mImgActivityCloseChakan = findViewById(R.id.img_activity_close_chakan);
