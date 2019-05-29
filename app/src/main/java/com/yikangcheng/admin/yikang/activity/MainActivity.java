@@ -537,6 +537,10 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         super.onConfigurationChanged(newConfig);
     }
 
+    public void setID(String id) {
+        Toast.makeText(this, "" + id, Toast.LENGTH_SHORT).show();
+    }
+
     @Override
     public Resources getResources() {//还原字体大小
         Resources res = super.getResources();
@@ -548,6 +552,50 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         }
         return res;
     }
+
+    /**
+     * @authorszx 双击返回键退出应用
+     */
+
+    int longprePressed = 0;//第一次点击
+
+    int longlastPressed = 0;//第二次点击
+    long lastPressed;
+    long prePressed;
+
+    @Override
+
+    public void onBackPressed() {
+
+//            获得系统第二次点击的时间
+
+        lastPressed = System.currentTimeMillis();
+
+        if (lastPressed - prePressed > 2000) {
+
+//把第一次点击获得的时间赋值给第二次
+
+            prePressed = lastPressed;
+
+//弹出吐司
+
+            Toast.makeText(this, "再点一次退出应用", Toast.LENGTH_SHORT).show();
+
+        } else {
+
+//结束页面（销毁页面）
+
+            finish();
+
+            System.exit(0);
+
+//            Log.e("exit", "应用退出");
+
+        }
+
+    }
+
+
 
     @Override
     protected void onResume() {

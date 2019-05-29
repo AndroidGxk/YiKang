@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.yikangcheng.admin.yikang.R;
-import com.yikangcheng.admin.yikang.bean.ClassifyBean;
 import com.yikangcheng.admin.yikang.bean.ClassifyListOneBean;
 
 import java.util.ArrayList;
@@ -18,13 +17,13 @@ import java.util.List;
  * Created by lenovo on 2019/5/17.
  * WF
  */
-public class FenLeiAdapter extends RecyclerView.Adapter<FenLeiAdapter.Vh> {
+public class FenLeiAAdapter extends RecyclerView.Adapter<FenLeiAAdapter.Vh> {
     private List<ClassifyListOneBean> stringList = new ArrayList<>();
     private int mPosition;
     private Context context;
     private int id;
 
-    public FenLeiAdapter(Context context) {
+    public FenLeiAAdapter(Context context) {
         this.context = context;
     }
 
@@ -33,6 +32,10 @@ public class FenLeiAdapter extends RecyclerView.Adapter<FenLeiAdapter.Vh> {
         notifyDataSetChanged();
     }
 
+    public void setId(int id) {
+        this.id = id;
+        notifyDataSetChanged();
+    }
 
     @Override
     public Vh onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -46,12 +49,20 @@ public class FenLeiAdapter extends RecyclerView.Adapter<FenLeiAdapter.Vh> {
         vh.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                id = 0;
                 mPosition = position;
                 mOnclick.onClick(position);
                 notifyDataSetChanged();
             }
         });
-        for (int i = 0; i < stringList.size(); i++) {
+        if (id != 0) {
+            if (id == stringList.get(position).getSubjectId()) {
+                vh.textView.setTextColor(context.getResources().getColor(R.color.colorTab));
+                vh.itemView.setBackgroundResource(R.drawable.fen_text_check_true);
+                vh.textView.setTextSize(13);
+            }
+        }
+        if (id == 0) {
             if (mPosition == position) {
                 vh.textView.setTextColor(context.getResources().getColor(R.color.colorTab));
                 vh.itemView.setBackgroundResource(R.drawable.fen_text_check_true);

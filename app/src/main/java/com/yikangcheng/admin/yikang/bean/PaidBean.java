@@ -147,9 +147,9 @@ public class PaidBean {
         private String orderNo;
         private int userId;
         private double sumPrice;
-        private int yhPrice;
+        private double yhPrice;
         private double realPrice;
-        private int freightPrice;
+        private double freightPrice;
         private String createTime;
         private String payTime;
         private String payType;
@@ -162,7 +162,7 @@ public class PaidBean {
         private int toPay;
         private String payForm;
         private String userName;
-        private int balancePay;
+        private double balancePay;
         private double externalPay;
         private List<OrderDetailsListBean> orderDetailsList;
 
@@ -238,11 +238,11 @@ public class PaidBean {
             this.sumPrice = sumPrice;
         }
 
-        public int getYhPrice() {
+        public double getYhPrice() {
             return yhPrice;
         }
 
-        public void setYhPrice(int yhPrice) {
+        public void setYhPrice(double yhPrice) {
             this.yhPrice = yhPrice;
         }
 
@@ -254,11 +254,11 @@ public class PaidBean {
             this.realPrice = realPrice;
         }
 
-        public int getFreightPrice() {
+        public double getFreightPrice() {
             return freightPrice;
         }
 
-        public void setFreightPrice(int freightPrice) {
+        public void setFreightPrice(double freightPrice) {
             this.freightPrice = freightPrice;
         }
 
@@ -358,11 +358,11 @@ public class PaidBean {
             this.userName = userName;
         }
 
-        public int getBalancePay() {
+        public double getBalancePay() {
             return balancePay;
         }
 
-        public void setBalancePay(int balancePay) {
+        public void setBalancePay(double balancePay) {
             this.balancePay = balancePay;
         }
 

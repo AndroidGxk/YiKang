@@ -73,7 +73,7 @@ public class ObligationActivity extends BaseActivtiy implements ICoreInfe {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRlvActivityObligation.setLayoutManager(linearLayoutManager);
 
-         ArrayList<ObligationBean.OrderBean> orderBeans = new ArrayList<>();
+        ArrayList<ObligationBean.OrderBean> orderBeans = new ArrayList<>();
         //创建适配器
         mObligationAdapter = new ObligationAdapter(this, orderBeans);
         //绑定适配器
@@ -83,15 +83,13 @@ public class ObligationActivity extends BaseActivtiy implements ICoreInfe {
             @Override
             public void OnClickListener(View v, int orderId) {
                 Intent intent = new Intent(ObligationActivity.this, WaitForpaymentActivity.class);
-                Intent orderId_wait = intent.putExtra("orderId_wait", orderId);
+                intent.putExtra("orderId_wait", orderId);
                 startActivity(intent);
             }
         });
 
         ObligationPresenter obligationPresenter = new ObligationPresenter(this);
-        obligationPresenter.request(11, 1, "INIT");
-
-
+        obligationPresenter.request(getLogUser(ObligationActivity.this).getId(), 1, "INIT");
     }
 
     @Override

@@ -29,8 +29,7 @@ public class ConfirmActivity extends BaseActivtiy implements CustomAdapt {
     private int height;
     private ImageView back_img;
     private TextView pay_btn, order_number, money, order_pay;
-    public static final String RSA2_PRIVATE = "";
-    public static final String RSA_PRIVATE = "MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAIElWg0gSG5s2FVfFfdBvdFpAupuuhUFgdNotC05MUsqHjWccjJ1MlUu6bDFW+b75SZl0lBxfR8QF9MmKZIy8znUwgGJGglcH00xIqUCPZVlqCl1xtNc7GEZ2gT8n+mGNfJgcwjUhYj8T2ISiGd0YO1uUu8gpSOous+MJK0xFcj5AgMBAAECgYBGZyVbSIET6bRZffeMjkM7eMLFKE27DgCDTm4CxU3xCunjEgFTLn6c33E4E68REbsPHqzze5rZJz3FtuUstSfQVcJb0c2aCyWh57kvl+Fxi9dt9lL6qPkDWvZoWiNdPJBj+ZPHrGrBnPor9IbW8TerghQHkub/celoa/JNUHATAQJBALcYX0cNjn/0+E8xc/DtB0Wt4vCT9TeJsADmcN8GZx+avo0i7kEzIbrOCJF+vA9Jk93aF/Dbn/WnCrj1Xse0B+ECQQC0kbYelXwCH4ETl0UqjuuRRyQBkApK70+2Rxxy3tqZ0C/kT6S3fXBWHy73Bojr552YTM3hFb7D1MK65y8mkYQZAkAB/IK0G6KLItY6zbeLSpcEm4FVyNUlOBovuFBLKx+dSSl+EH3zOSHJjAitw2k45Tx0cLRHyaovmRNVtFvF4N8hAkA+VkN6QX8DOJ8WBVYSgC6hA99RTsnO3tk1A0219mufSDkQZ9JkqkB66t8K1s20K0zDxFgbCafG8Y+ceK1Vck0ZAkEAqsT0aPB8Me7TziwgnAj7ggNQisZEGRgFBlbpu5B0EKYGp7mrYZHB+hguYk0KGZSep0fxejSVLBZEXfvCVJsLoA==";
+    private CreatOrderBean creatorder;
 
     @Override
     protected void initView() {
@@ -45,7 +44,7 @@ public class ConfirmActivity extends BaseActivtiy implements CustomAdapt {
         order_pay = findViewById(R.id.order_pay);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        CreatOrderBean creatorder = (CreatOrderBean) bundle.getSerializable("creatorder");
+        creatorder = (CreatOrderBean) bundle.getSerializable("creatorder");
         order_number.setText(creatorder.getOrderNo());
         money.setText((int) creatorder.get_sumPrice() + "");
         order_pay.setText("支付宝");
@@ -59,7 +58,8 @@ public class ConfirmActivity extends BaseActivtiy implements CustomAdapt {
                         //todo 支付宝
                         // 构造PayTask 对象
                         PayTask alipay = new PayTask(ConfirmActivity.this);
-                        Map<String, String> result = alipay.payV2("alipay_sdk=alipay-sdk-java-3.1.0&app_id=2019030863469663&biz_content=%7B%22timeout_express%22%3A%2230m%22%2C%22seller_id%22%3A%22%22%2C%22product_code%22%3A%22QUICK_MSECURITY_PAY%22%2C%22total_amount%22%3A%220.02%22%2C%22subject%22%3A%221%22%2C%22body%22%3A%22%E6%88%91%E6%98%AF%E6%B5%8B%E8%AF%95%E6%95%B0%E6%8D%AE%22%2C%22out_trade_no%22%3A%22314VYGIAGG7ZOYY%22%7D&charset=utf-8&method=alipay.trade.app.pay&sign_type=RSA2&timestamp=2016-08-15%2012%3A12%3A15&version=1.0&sign=MsbylYkCzlfYLy9PeRwUUIg9nZPeN9SfXPNavUCroGKR5Kqvx0nEnd3eRmKxJuthNUx4ERCXe552EV9PfwexqW%2B1wbKOdYtDIb4%2B7PL3Pc94RZL0zKaWcaY3tSL89%2FuAVUsQuFqEJdhIukuKygrXucvejOUgTCfoUdwTi7z%2BZzQ%3D&version=1.0", true);
+                        Map<String, String> result = alipay.payV2(creatorder.getOrderinfo(), true);
+//                        Map<String, String> result = alipay.payV2("alipay_sdk=alipay-sdk-java-3.7.26.ALL&app_id=2019030863469663&biz_content=%7B%22body%22%3A%22%E6%98%93%E5%BA%B7%E6%88%90%22%2C%22out_trade_no%22%3A%22NO155906963237992%22%2C%22product_code%22%3A%22QUICK_MSECURITY_PAY%22%2C%22subject%22%3A%22%E7%BE%8E%E5%A6%86%E6%B5%8B%E8%AF%95008%22%2C%22timeout_express%22%3A%2230m%22%2C%22total_amount%22%3A%220.01%22%7D&charset=utf-8&format=json&method=alipay.trade.app.pay&notify_url=https%3A%2F%2Fwww.yikch.com%2Fapi%2Forder%2FpaySuccess&sign=ndtQ6fc9XGCC6iZJ%2FX2UrDpFzHEtVehwJivhN%2BEEwZyNsBxYUIj2og0GvMo0JX3oEiVPB57SrMRFv03G%2Fz5Wl3n9HCCiZZF9X1WDfC7PJ3CNVHjMWQ%2FGC5oQ%2FE3NIfV%2FEVtkDRqBmOfChgJa%2F1dM%2BfT9mMFcKdH7ZYkJjwSwdMg4%2FtYy8FGifR%2FSphG41JujEEQMJ4IyOuKtxcROrKpQpF7NLT1hbrEI0dh0JKLsfwTks463%2FEpE5U0Gf5Fc9Ta5PrEkBTJFwWp2MtXtbgHEMtxCj9%2B17pgaEiowlX3Vfle8NvTuJlb7rz2glzzONgwwqRwkpzXhKE0ukaKUQ61tGw%3D%3D&sign_type=RSA2&timestamp=2019-05-29+02%3A53%3A52&version=1.0", true);
                         Message msg = new Message();
                         msg.what = SDK_PAY_FLAG;
                         msg.obj = result;

@@ -28,6 +28,15 @@ public class CreatOrderBean implements Serializable {
     private boolean success;
     private int orderId;
     private int sumPrice;
+    private String orderinfo;
+
+    public String getOrderinfo() {
+        return orderinfo;
+    }
+
+    public void setOrderinfo(String orderinfo) {
+        this.orderinfo = orderinfo;
+    }
 
     public String getBalance() {
         return balance;

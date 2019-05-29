@@ -55,7 +55,7 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
     private boolean wechat = true, zhi = false;
     private FragmentTransaction fragmentTransaction;
     private RelativeLayout no_yes;
-    private TextView zhi_invoice;
+    private TextView zhi_invoice, wan;
     private TextView no_invoice;
     private TextView dian_invoice;
     private EditText mesg_mail, mesg_na, work_name;
@@ -77,6 +77,7 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
     private double mTotal;
     private ImageView back_img;
     private OrderBuyPresenter orderBuyPresenter;
+    private AllAddressBean.ListUserAddressBean listUserAddressBean;
 
     @Override
     protected void initView() {
@@ -216,6 +217,7 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
         dian_invoice = invoice_item.findViewById(R.id.dian_invoice);
         no_invoice = invoice_item.findViewById(R.id.no_invoice);
         zhi_invoice = invoice_item.findViewById(R.id.zhi_invoice);
+        wan = invoice_item.findViewById(R.id.wan);
         no_yes = invoice_item.findViewById(R.id.no_yes);
         work = invoice_item.findViewById(R.id.work);
         personage = invoice_item.findViewById(R.id.personage);
@@ -231,6 +233,12 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
         personage.setOnClickListener(this);
         good_type.setOnClickListener(this);
         good_detail.setOnClickListener(this);
+        wan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bottomDialog.dismiss();
+            }
+        });
         /**
          * 优惠券
          */
@@ -368,6 +376,13 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
                 bottomDialog.show();
             }
         });
+        TextView wan = sele_pay_digo.findViewById(R.id.wan);
+        wan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bottomDialog.dismiss();
+            }
+        });
         /***
          * 立即购买
          */
@@ -378,11 +393,15 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
                     for (int i = 0; i < shopCarBeans.size(); i++) {
                         int dataId = shopCarBeans.get(i).getDataId();
                         orderBuyPresenter.request(getLogUser(CloseActivity.this).getId(), dataId,
-                                70, 1, 1, 2, "易康成", "132", "2", "1724959985@qq.com", "ALIPAY", "Android");
+                                listUserAddressBean.getId(), 1, 1, 2, "易康成", "132", "2", "1724959985@qq.com", "ALIPAY", "Android");
                     }
+                } else {
+                    orderBuyPresenter.request(getLogUser(CloseActivity.this).getId(), 18576,
+                            listUserAddressBean.getId(), 1, 1, 2, "易康成", "132", "2", "1724959985@qq.com", "ALIPAY", "Android");
                 }
             }
         });
+
         /**
          * 开发票
          */
@@ -425,13 +444,15 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
      * 查询用户所有地址
      */
     private class AllAddress implements ICoreInfe {
+
+
         @Override
         public void success(Object data) {
             Request request = (Request) data;
             AllAddressBean entity = (AllAddressBean) request.getEntity();
             List<AllAddressBean.ListUserAddressBean> listUserAddress = entity.getListUserAddress();
             for (int i = 0; i < listUserAddress.size(); i++) {
-                AllAddressBean.ListUserAddressBean listUserAddressBean = listUserAddress.get(i);
+                listUserAddressBean = listUserAddress.get(i);
                 if (listUserAddressBean.getIsFirst() == 1) {
                     user_name.setText(listUserAddressBean.getReceiver());
                     user_phone.setText(listUserAddressBean.getMobile());

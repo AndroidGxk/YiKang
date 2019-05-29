@@ -83,7 +83,7 @@ public class PaidActivity extends BaseActivtiy implements ICoreInfe {
 
         //p层
         PaidPresenter paidPresenter = new PaidPresenter(this);
-        paidPresenter.request(11, 1, "SUCCESS");
+        paidPresenter.request(getLogUser(PaidActivity.this).getId(), 1, "SUCCESS");
 
     }
 

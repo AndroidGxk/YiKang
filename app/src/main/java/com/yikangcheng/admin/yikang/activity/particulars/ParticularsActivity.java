@@ -16,8 +16,11 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.sobot.chat.SobotApi;
+import com.sobot.chat.api.model.Information;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.CloseActivity;
+import com.yikangcheng.admin.yikang.activity.obligation.PaidActivity;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.Request;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
@@ -75,7 +78,7 @@ public class ParticularsActivity extends BaseActivtiy implements CustomAdapt, IC
                 //返回false，意味着请求过程里，不管有多少次的跳转请求（即新的请求地址），均交给webView自己处理，这也是此方法的默认处理
                 //返回true，说明你自己想根据url，做新的跳转，比如在判断url符合条件的情况下，我想让webView加载http://ask.csdn.net/questions/178242
                 if (url.toString().contains("sina.cn")) {
-                    webView.loadUrl("http://192.168.0.138/mobile/appShow/yikang/proDetailAndroid/" + id + ".json?type=android");
+                    webView.loadUrl("https://www.yikch.com/mobile/appShow/proDetail/" + id + ".json?type=android");
                     return true;
                 }
                 return false;
@@ -87,7 +90,7 @@ public class ParticularsActivity extends BaseActivtiy implements CustomAdapt, IC
                 //返回true，说明你自己想根据url，做新的跳转，比如在判断url符合条件的情况下，我想让webView加载http://ask.csdn.net/questions/178242
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     if (request.getUrl().toString().contains("sina.cn")) {
-                        webView.loadUrl("http://192.168.0.138/mobile/appShow/yikang/proDetailAndroid/" + id + ".json?type=android");
+                        webView.loadUrl("https://www.yikch.com/mobile/appShow/proDetail/" + id + ".json?type=android");
                         return true;
                     }
                 }
@@ -114,7 +117,7 @@ public class ParticularsActivity extends BaseActivtiy implements CustomAdapt, IC
         });
         webView.getSettings().setJavaScriptEnabled(true);
         webView.addJavascriptInterface(this, "ww");
-        webView.loadUrl("http://192.168.0.138/mobile/appShow/yikang/proDetailAndroid/" + id + ".json?type=android");
+        webView.loadUrl("https://www.yikch.com/mobile/appShow/proDetail/" + id + ".json?type=android");
     }
 
     @Override
@@ -158,6 +161,22 @@ public class ParticularsActivity extends BaseActivtiy implements CustomAdapt, IC
             startActivity(intent);
             s = "";
         }
+    }
+
+    @JavascriptInterface
+    public void goCust() {
+        Information info = new Information();
+        info.setAppkey("7560599b63bf43378d05d018ded42cdd");
+        SobotApi.setCustomRobotHelloWord(ParticularsActivity.this, "您好，易康成客服很高兴为您服务，请问有什么可以帮助您的？");
+        SobotApi.startSobotChat(ParticularsActivity.this, info);
+    }
+
+    @JavascriptInterface
+    public void goCar() {
+        Information info = new Information();
+        info.setAppkey("7560599b63bf43378d05d018ded42cdd");
+        SobotApi.setCustomRobotHelloWord(ParticularsActivity.this, "您好，易康成客服很高兴为您服务，请问有什么可以帮助您的？");
+        SobotApi.startSobotChat(ParticularsActivity.this, info);
     }
 
     /**

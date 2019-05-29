@@ -26,7 +26,6 @@ import me.jessyan.autosize.internal.CustomAdapt;
 
 public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, ICoreInfe {
 
-    private ImageView mImgActivityWaitfrrpaymentFanhui;
     private Toolbar mToolbarActivityWaitfrrpayment;
     private TextView mTvActivityCloseName;
     private TextView mImgActivityCloseChakan;
@@ -59,8 +58,6 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
         Intent intent = getIntent();
         int orderId = intent.getIntExtra("orderId", 0);
 
-        //返回按钮
-        mImgActivityWaitfrrpaymentFanhui = findViewById(R.id.img_activity_waitfrrpayment_fanhui);
         //ToolBar
         mToolbarActivityWaitfrrpayment = findViewById(R.id.toolbar_activity_waitfrrpayment);
         //用户名
@@ -96,13 +93,6 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
         mRlvActivityCloseTuiJian = findViewById(R.id.rlv_activity_close_TuiJian);
         //删除
         mChanchu = findViewById(R.id.tv_activity_closeThe_Deal_shanchu);
-
-        mImgActivityWaitfrrpaymentFanhui.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 
         mToolbarActivityWaitfrrpayment.setTitle("");
         setSupportActionBar(mToolbarActivityWaitfrrpayment);
