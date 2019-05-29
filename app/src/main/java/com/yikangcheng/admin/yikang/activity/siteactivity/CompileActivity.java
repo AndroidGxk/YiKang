@@ -41,20 +41,19 @@ import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.jessyan.autosize.internal.CustomAdapt;
+
 /**
- * 这是编辑地址页面
+ * 这是新增地址页面
  */
-public class CompileActivity extends BaseActivtiy implements ICoreInfe {
+public class CompileActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt {
 
     private CheckBox check_btn;
-    private ImageView mImgActivityCompileFanhui;
-    private Toolbar mToolbarActivityCompile;
-    private EditText mEtActivityCompileName;
-    private EditText mEtActivityCompileShoujihao;
-    private TextView mEtActivityCompileDizi;
-    private RelativeLayout mRelativeLayoutActivityCompile;
-    private EditText mEtActivityCompileXiangxidizi;
-    private RelativeLayout mRelativeLayoutActivityAite;
+    private ImageView back_img;
+    private EditText name_edit;
+    private EditText phone_text;
+    private TextView address_text, add_address;
+    private EditText relay_address;
     private Dialog mDialog;
     private int width;
     private int height;
@@ -93,33 +92,35 @@ public class CompileActivity extends BaseActivtiy implements ICoreInfe {
         address_recycler.setLayoutManager(new LinearLayoutManager(this));
         addressRecyclerAdapter = new AddressRecyclerAdapter(this);
         address_recycler.setAdapter(addressRecyclerAdapter);
-        mImgActivityCompileFanhui = findViewById(R.id.img_activity_compile_fanhui);
-        mToolbarActivityCompile = findViewById(R.id.toolbar_activity_compile);
-        mEtActivityCompileName = findViewById(R.id.et_activity_compile_name);
+        name_edit = findViewById(R.id.name_edit);
+        back_img = findViewById(R.id.back_img);
         check_btn = findViewById(R.id.check_btn);
-        mEtActivityCompileShoujihao = findViewById(R.id.et_activity_compile_shoujihao);
-        mEtActivityCompileDizi = findViewById(R.id.et_activity_compile_dizi);
-        mRelativeLayoutActivityCompile = findViewById(R.id.relativeLayout_activity_compile);
-        mEtActivityCompileXiangxidizi = findViewById(R.id.et_activity_compile_xiangxidizi);
-        mRelativeLayoutActivityAite = findViewById(R.id.relativeLayout_activity_aite);
+        phone_text = findViewById(R.id.phone_text);
+        address_text = findViewById(R.id.address_text);
+        add_address = findViewById(R.id.add_address);
+        relay_address = findViewById(R.id.relay_address);
         Display display = this.getWindowManager().getDefaultDisplay();
         width = display.getWidth();
         height = display.getHeight();
         mDialog = new Dialog(this, R.style.BottomDialog);
+        /**
+         * 退出
+         */
+        back_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         /**
          * 请求数据
          */
         addressPresenter = new AddressPresenter(this);
         insertAddressPresenter = new InsertAddressPresenter(new AddressIntface());
         /**
-         * ToolBar
-         */
-        mToolbarActivityCompile.setTitle("");
-        setSupportActionBar(mToolbarActivityCompile);
-        /**
          * 点击返回按钮关闭当前页面
          */
-        mImgActivityCompileFanhui.setOnClickListener(new View.OnClickListener() {
+        back_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -148,13 +149,13 @@ public class CompileActivity extends BaseActivtiy implements ICoreInfe {
                     countryId = addressBeans.get(2).getId();
                     String city = addressBeans.get(1).getAddress();
                     String country = addressBeans.get(2).getAddress();
-                    mEtActivityCompileDizi.setText(city + country);
+                    address_text.setText(city + country);
                     addressBeans.clear();
                     mDialog.dismiss();
                 }
             }
         });
-        mEtActivityCompileDizi.setOnClickListener(new View.OnClickListener() {
+        address_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 addressPresenter.request(1);
@@ -209,14 +210,14 @@ public class CompileActivity extends BaseActivtiy implements ICoreInfe {
 
             }
         });
-        mRelativeLayoutActivityAite.setOnClickListener(new View.OnClickListener() {
+        add_address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int isFirst;
-                String name = mEtActivityCompileName.getText().toString();
-                String phone = mEtActivityCompileShoujihao.getText().toString();
-                String address = mEtActivityCompileDizi.getText().toString();
-                String xiangqing = mEtActivityCompileXiangxidizi.getText().toString();
+                String name = name_edit.getText().toString();
+                String phone = phone_text.getText().toString();
+                String address = address_text.getText().toString();
+                String xiangqing = relay_address.getText().toString();
                 boolean checked = check_btn.isChecked();
                 if (checked) {
                     isFirst = 1;
@@ -257,6 +258,16 @@ public class CompileActivity extends BaseActivtiy implements ICoreInfe {
 
     }
 
+    @Override
+    public boolean isBaseOnWidth() {
+        return false;
+    }
+
+    @Override
+    public float getSizeInDp() {
+        return 720;
+    }
+
     /**
      * 添加收货地址
      */
@@ -264,7 +275,9 @@ public class CompileActivity extends BaseActivtiy implements ICoreInfe {
         @Override
         public void success(Object data) {
             Request request = (Request) data;
-            Toast.makeText(CompileActivity.this, "" + request.getMessage(), Toast.LENGTH_SHORT).show();
+            if (request.isSuccess()) {
+                finish();
+            }
         }
 
         @Override

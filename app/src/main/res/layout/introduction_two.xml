@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@drawable/introduction_two"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/introduction_two">
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/over_btn"
+        android:layout_width="50dp"
+        android:layout_height="20dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/yellow_pay_shape"
+        android:gravity="center"
+        android:text="跳过"
+        android:textColor="@color/clolrBAai"
+        android:textSize="12sp" />
+</RelativeLayout>

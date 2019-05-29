@@ -12,11 +12,12 @@
         android:background="@drawable/toolbar">
 
         <ImageView
-            android:layout_width="12dp"
-            android:layout_height="20dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/fanhuiactivity" />
+            android:id="@+id/back_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/fanhuiactivity"
+            android:paddingRight="15dp" />
 
         <TextView
             android:id="@+id/toolbar_tv"

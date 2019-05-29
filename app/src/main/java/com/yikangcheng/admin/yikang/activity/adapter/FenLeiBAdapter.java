@@ -25,6 +25,7 @@ import java.util.List;
 public class FenLeiBAdapter extends RecyclerView.Adapter {
     private final List<ClassifyListOneBean.ChildSubjectListBeanX> mList = new ArrayList<>();
     private final Context mContent;
+    private String id;
 
     public FenLeiBAdapter(Context context) {
         this.mContent = context;
@@ -68,6 +69,10 @@ public class FenLeiBAdapter extends RecyclerView.Adapter {
     public void addData(List<ClassifyListOneBean.ChildSubjectListBeanX> childSubjectList) {
         mList.addAll(childSubjectList);
         notifyDataSetChanged();
+    }
+
+    public void addid(String id) {
+        this.id = id;
     }
 
     public void removeAll() {

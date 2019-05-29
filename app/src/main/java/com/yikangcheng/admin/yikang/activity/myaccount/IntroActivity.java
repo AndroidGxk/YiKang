@@ -17,7 +17,7 @@ import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 import me.jessyan.autosize.internal.CustomAdapt;
 
 public class IntroActivity extends BaseActivtiy implements CustomAdapt {
-    private ImageView mImgActivityIntroFanhui;
+    private ImageView back_img;
     private Toolbar mToolbarActivityIntro;
     private EditText mEtIntroActivityIntro;
     private TextView baocun_text;
@@ -26,13 +26,13 @@ public class IntroActivity extends BaseActivtiy implements CustomAdapt {
     protected void initView() {
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
-        mImgActivityIntroFanhui = findViewById(R.id.img_activity_intro_fanhui);
+        back_img = findViewById(R.id.back_img);
         mToolbarActivityIntro = findViewById(R.id.toolbar_activity_intro);
         mEtIntroActivityIntro = findViewById(R.id.et_intro_activity_intro);
         baocun_text = findViewById(R.id.baocun_text);
         mToolbarActivityIntro.setTitle("");
         setSupportActionBar(mToolbarActivityIntro);
-        mImgActivityIntroFanhui.setOnClickListener(new View.OnClickListener() {
+        back_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();

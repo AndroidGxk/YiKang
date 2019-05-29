@@ -16,19 +16,20 @@
         android:background="@drawable/toolbar">
 
         <ImageView
-            android:id="@+id/img_activity_orderfrom_fanhui"
-            android:layout_width="11dp"
-            android:layout_height="20dp"
+            android:id="@+id/back_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
             android:src="@drawable/fanhuiactivity" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="143dp"
+            android:layout_gravity="center"
             android:text="我的订单"
             android:textColor="#000000"
             android:textSize="19sp" />
-
     </android.support.v7.widget.Toolbar>
 
     <android.support.design.widget.TabLayout

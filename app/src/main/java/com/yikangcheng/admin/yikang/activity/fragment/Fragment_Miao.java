@@ -4,39 +4,48 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
-import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ImageView;
+import android.widget.Button;
 import android.widget.Toast;
 
+import com.sobot.chat.SobotApi;
+import com.sobot.chat.api.model.Information;
 import com.yikangcheng.admin.yikang.R;
-import com.yikangcheng.admin.yikang.activity.SeckillSecondActivity;
-import com.yikangcheng.admin.yikang.activity.adapter.FirstSeckillRecyclerAdapter;
+import com.yikangcheng.admin.yikang.activity.CloseActivity;
+import com.yikangcheng.admin.yikang.activity.MainActivity;
+import com.yikangcheng.admin.yikang.activity.particulars.ParticularsActivity;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
+import com.yikangcheng.admin.yikang.bean.Request;
+import com.yikangcheng.admin.yikang.model.http.ApiException;
+import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
+import com.yikangcheng.admin.yikang.presenter.AddShopPresenter;
+import com.yikangcheng.admin.yikang.presenter.OrderBuyPresenter;
 
-public class Fragment_Miao extends BaseFragment {
+public class Fragment_Miao extends BaseFragment implements ICoreInfe {
     private WebView webView;
-
-//    private ImageView miao_one_btn;
+    private String s = "";
+    //    private ImageView miao_one_btn;
 //    private RecyclerView recycler_one;
 //    private FirstSeckillRecyclerAdapter firstSeckillRecyclerAdapter;
+    private AddShopPresenter addShopPresenter;
+    private OrderBuyPresenter orderBuyPresenter;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @SuppressLint("JavascriptInterface")
     @Override
     protected void initView(View view) {
-
+        addShopPresenter = new AddShopPresenter(this);
+        orderBuyPresenter = new OrderBuyPresenter(new OrderBuy());
 //        miao_one_btn = view.findViewById(R.id.miao_one_btn);
 //        recycler_one = view.findViewById(R.id.recycler_one);
 //        firstSeckillRecyclerAdapter = new FirstSeckillRecyclerAdapter();
@@ -60,7 +69,7 @@ public class Fragment_Miao extends BaseFragment {
                 //返回false，意味着请求过程里，不管有多少次的跳转请求（即新的请求地址），均交给webView自己处理，这也是此方法的默认处理
                 //返回true，说明你自己想根据url，做新的跳转，比如在判断url符合条件的情况下，我想让webView加载http://ask.csdn.net/questions/178242
                 if (url.toString().contains("sina.cn")) {
-                    view.loadUrl("http://192.168.0.109/mobile/login");
+                    webView.loadUrl("https://www.yikch.com/mobile/appShow/activity?type=android");
                     return true;
                 }
                 return false;
@@ -72,7 +81,7 @@ public class Fragment_Miao extends BaseFragment {
                 //返回true，说明你自己想根据url，做新的跳转，比如在判断url符合条件的情况下，我想让webView加载http://ask.csdn.net/questions/178242
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     if (request.getUrl().toString().contains("sina.cn")) {
-                        view.loadUrl("http://192.168.0.109/mobile/login");
+                        webView.loadUrl("https://www.yikch.com/mobile/appShow/activity?type=android");
                         return true;
                     }
                 }
@@ -100,8 +109,7 @@ public class Fragment_Miao extends BaseFragment {
         });
         webView.getSettings().setJavaScriptEnabled(true);
         webView.addJavascriptInterface(this, "ww");
-        webView.loadUrl("http://192.168.0.109/mobile/login");
-
+        webView.loadUrl("https://www.yikch.com/mobile/appShow/activity?type=android");
     }
 
     @Override
@@ -125,6 +133,69 @@ public class Fragment_Miao extends BaseFragment {
 
     @JavascriptInterface
     public void sayHello(String msg) {
-        Log.v("gxk", "JSInferface--" + msg);
+        s += msg + ",";
+        Toast.makeText(getActivity(), s + "", Toast.LENGTH_SHORT).show();
+        String[] split = s.split(",");
+        if (split.length == 4) {
+            int id = getLogUser(getContext()).getId();
+            addShopPresenter.request(id, split[0], split[1], split[2], split[3]);
+            s = "";
+        }
+    }
+
+    @JavascriptInterface
+    public void orderBuy(String msg) {
+        s += msg + ",";
+        String[] split = s.split(",");
+        if (split.length == 7) {
+            Intent intent = new Intent(getContext(), CloseActivity.class);
+            intent.putExtra("goodinfo", s);
+            startActivity(intent);
+            s = "";
+        }
+    }
+
+    @JavascriptInterface
+    public void goCust() {
+        Information info = new Information();
+        info.setAppkey("7560599b63bf43378d05d018ded42cdd");
+        SobotApi.setCustomRobotHelloWord(getActivity(), "您好，易康成客服很高兴为您服务，请问有什么可以帮助您的？");
+        SobotApi.startSobotChat(getActivity(), info);
+    }
+
+    @JavascriptInterface
+    public void goCar() {
+
+    }
+
+    /**
+     * 添加购物车
+     *
+     * @param data
+     */
+    @Override
+    public void success(Object data) {
+        Request request = (Request) data;
+        Toast.makeText(getActivity(), "" + request.getMessage(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void fail(ApiException e) {
+
+    }
+
+    /**
+     * 创建订单
+     */
+    private class OrderBuy implements ICoreInfe {
+        @Override
+        public void success(Object data) {
+
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
     }
 }

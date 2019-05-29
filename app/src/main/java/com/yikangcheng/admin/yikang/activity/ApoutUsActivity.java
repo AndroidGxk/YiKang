@@ -1,6 +1,7 @@
 package com.yikangcheng.admin.yikang.activity;
 
 import android.view.Display;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -13,24 +14,31 @@ import me.jessyan.autosize.internal.CustomAdapt;
 public class ApoutUsActivity extends BaseActivtiy implements CustomAdapt {
 
 
-    private ImageView mImgActivityApoutusFanhui;
+    private ImageView back_img;
     private RelativeLayout mToolbarActivityMyaccount;
     private int height;
 
     @Override
     protected void initView() {
-
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
         Display display = this.getWindowManager().getDefaultDisplay();
         height = display.getHeight();
-        mImgActivityApoutusFanhui = findViewById(R.id.img_activity_apoutus_fanhui);
+        back_img = findViewById(R.id.back_img);
         mToolbarActivityMyaccount = findViewById(R.id.activity_myaccount);
     }
 
     @Override
     protected void initEventData() {
-
+        /**
+         * 退出
+         */
+        back_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     @Override

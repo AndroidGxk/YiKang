@@ -22,6 +22,7 @@ public class FenLeiAdapter extends RecyclerView.Adapter<FenLeiAdapter.Vh> {
     private List<ClassifyListOneBean> stringList = new ArrayList<>();
     private int mPosition;
     private Context context;
+    private int id;
 
     public FenLeiAdapter(Context context) {
         this.context = context;
@@ -29,7 +30,9 @@ public class FenLeiAdapter extends RecyclerView.Adapter<FenLeiAdapter.Vh> {
 
     public void addAll(List<ClassifyListOneBean> stringList) {
         this.stringList.addAll(stringList);
+        notifyDataSetChanged();
     }
+
 
     @Override
     public Vh onCreateViewHolder(ViewGroup parent, int viewType) {

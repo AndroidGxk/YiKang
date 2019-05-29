@@ -16,11 +16,12 @@
         android:background="@drawable/toolbar">
 
         <ImageView
-            android:id="@+id/img_activity_apoutus_fanhui"
-            android:layout_width="11dp"
-            android:layout_height="20dp"
+            android:id="@+id/back_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
             android:src="@drawable/fanhuiactivity" />
 
         <TextView
@@ -50,14 +51,29 @@
         android:textColor="#999999"
         android:textSize="10sp" />
 
-    <TextView
-        android:layout_width="107dp"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="332dp"
-        android:gravity="center"
-        android:text="Copyright©2010-2020易康科技 版权所有"
-        android:textColor="#999999"
-        android:textSize="10sp" />
+        android:layout_marginTop="332dp">
 
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:gravity="left"
+            android:text="Copyright©2010-2020"
+            android:textColor="#999999"
+            android:textSize="10sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text"
+            android:layout_centerHorizontal="true"
+            android:gravity="left"
+            android:text="易康科技 版权所有"
+            android:textColor="#999999"
+            android:textSize="10sp" />
+    </RelativeLayout>
 </RelativeLayout>

@@ -148,8 +148,8 @@ public class ClassifyTwoBean {
         private int isavaliable;
         private String addtime;
         private int isPay;
-        private int sourceprice;
-        private int currentprice;
+        private double sourceprice;
+        private double currentprice;
         private String title;
         private String logo;
         private int losetype;
@@ -264,19 +264,19 @@ public class ClassifyTwoBean {
             this.isPay = isPay;
         }
 
-        public int getSourceprice() {
+        public double getSourceprice() {
             return sourceprice;
         }
 
-        public void setSourceprice(int sourceprice) {
+        public void setSourceprice(double sourceprice) {
             this.sourceprice = sourceprice;
         }
 
-        public int getCurrentprice() {
+        public double getCurrentprice() {
             return currentprice;
         }
 
-        public void setCurrentprice(int currentprice) {
+        public void setCurrentprice(double currentprice) {
             this.currentprice = currentprice;
         }
 

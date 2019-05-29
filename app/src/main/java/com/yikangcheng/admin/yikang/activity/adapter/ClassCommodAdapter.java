@@ -57,7 +57,7 @@ public class ClassCommodAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder vh, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder vh, final int position) {
         if (vh instanceof Vh) {
             ClassifyCommodityListBean.CommodityListBean commodityListBean = listBeanList.get(position);
             ((Vh) vh).title.setText(commodityListBean.getName());
@@ -66,6 +66,12 @@ public class ClassCommodAdapter extends RecyclerView.Adapter {
             ((Vh) vh).price.setText("内购价：¥" + commodityListBean.getCurrentprice());
             ((Vh) vh).yuanprice.setText("市场价：¥" + commodityListBean.getSourceprice());
             ((Vh) vh).buy_text.setText(commodityListBean.getBuycount() + "人已购");
+            ((Vh) vh).itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onClickLisetener.onclick(listBeanList.get(position).getId());
+                }
+            });
         } else if (vh instanceof Vhtwo) {
             ClassifyCommodityListBean.CommodityListBean commodityListBean = listBeanList.get(position);
             ((Vhtwo) vh).title.setText(commodityListBean.getName());
@@ -129,4 +135,13 @@ public class ClassCommodAdapter extends RecyclerView.Adapter {
         }
     }
 
+    public void setOnClickLisetener(ClassCommodAdapter.onClickLisetener onClickLisetener) {
+        this.onClickLisetener = onClickLisetener;
+    }
+
+    onClickLisetener onClickLisetener;
+
+    public interface onClickLisetener {
+        void onclick(int id);
+    }
 }

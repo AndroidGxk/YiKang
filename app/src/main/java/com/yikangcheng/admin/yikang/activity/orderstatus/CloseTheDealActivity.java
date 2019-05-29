@@ -26,13 +26,12 @@ import me.jessyan.autosize.internal.CustomAdapt;
 
 public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, ICoreInfe {
 
-    private ImageView mImgActivityWaitfrrpaymentFanhui;
     private Toolbar mToolbarActivityWaitfrrpayment;
     private TextView mTvActivityCloseName;
     private TextView mImgActivityCloseChakan;
     private RecyclerView mRlvActivityCloseShangPin;
     private TextView mTvActivityCloseBiaohao;
-    private ImageView mImgActivityCloseFizhi;
+    private ImageView mImgActivityCloseFizhi, back_img;
     private TextView mTvActivityCloseYunFei;
     private TextView mTvActivityCloseJinE;
     private TextView mTvActivityCloseZhongJi;
@@ -59,8 +58,6 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
         Intent intent = getIntent();
         int orderId = intent.getIntExtra("orderId", 0);
 
-        //返回按钮
-        mImgActivityWaitfrrpaymentFanhui = findViewById(R.id.img_activity_waitfrrpayment_fanhui);
         //ToolBar
         mToolbarActivityWaitfrrpayment = findViewById(R.id.toolbar_activity_waitfrrpayment);
         //用户名
@@ -97,13 +94,6 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
         //删除
         mChanchu = findViewById(R.id.tv_activity_closeThe_Deal_shanchu);
 
-        mImgActivityWaitfrrpaymentFanhui.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
         mToolbarActivityWaitfrrpayment.setTitle("");
         setSupportActionBar(mToolbarActivityWaitfrrpayment);
 
@@ -129,7 +119,15 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
 
     @Override
     protected void initEventData() {
-
+        /**
+         * 退出
+         */
+        back_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     @Override

@@ -5,6 +5,7 @@ import com.yikangcheng.admin.yikang.bean.AdvertisingBean;
 import com.yikangcheng.admin.yikang.bean.AllAddressBean;
 import com.yikangcheng.admin.yikang.bean.ClassifyListOneBean;
 import com.yikangcheng.admin.yikang.bean.ClassifyCommodityListBean;
+import com.yikangcheng.admin.yikang.bean.CreatOrderBean;
 import com.yikangcheng.admin.yikang.bean.CloseTheDealBean;
 import com.yikangcheng.admin.yikang.bean.DeleteOrderBean;
 import com.yikangcheng.admin.yikang.bean.DiscountBean;
@@ -153,7 +154,7 @@ public interface ApiService {
      */
     @POST("classification/commodityList")
     Observable<Request<ClassifyCommodityListBean>> commodityList(@Query("classificationId") int classificationId, @Query("order") int order,
-                                                                 @Query("condition") int condition, @Query("currentPage") int currentPage);
+                                                                 @Query("condition") String condition, @Query("currentPage") int currentPage);
 
     /**
      * 获取全部省市区
@@ -208,4 +209,32 @@ public interface ApiService {
      */
     @POST("deleteOrder")
     Observable<Request<DeleteOrderBean>> DeleteOrder(@Query("orderId") int orderId);
+
+    /**
+     * 删除用户地址
+     */
+    @POST("deleteAddress")
+    Observable<Request> deleteAddress(@Query("id") int id);
+
+    /**
+     * 删除购物车商品
+     */
+    @POST("shopCart/delete")
+    Observable<Request> deleteShopCar(@Query("userId") int userId, @Query("cartIds") String cartIds);
+
+    /**
+     * 添加购物车商品
+     */
+    @POST("shopCart/add")
+    Observable<Request> addShopCar(@Query("userId") int userId, @Query("dataIds") String dataIds, @Query("dataType") String dataType,
+                                   @Query("buyNum") String buyNum, @Query("price") String price);
+
+    /**
+     * 创建订单
+     */
+    @POST("order/buy")
+    Observable<Request<CreatOrderBean>> orderbuy(@Query("userId") int userId, @Query("commodityId") int commodityId, @Query("addressId") int addressId,
+                                                 @Query("buyNum") int buyNum, @Query("invoiceType") int invoiceType, @Query("invoiceFrom") int invoiceFrom,
+                                                 @Query("invoiceName") String invoiceName, @Query("invoiceNo") String invoiceNo, @Query("invoiceContent") String invoiceContent,
+                                                 @Query("invoiceEmail") String invoiceEmail, @Query("payType") String payType, @Query("orderForm") String orderForm);
 }

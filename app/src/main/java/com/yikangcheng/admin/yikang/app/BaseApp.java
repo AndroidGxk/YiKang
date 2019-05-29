@@ -85,6 +85,7 @@ public class BaseApp extends Application {
     public void onCreate() {
         super.onCreate();
         mAppInstance = this;
+
         SobotApi.initSobotSDK(this, "7560599b63bf43378d05d018ded42cdd", "");
     }
 

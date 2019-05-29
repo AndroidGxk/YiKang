@@ -19,8 +19,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.orderstatus.FackOfActivity"></activity>
+        <activity android:name=".activity.ClassifyHomeActivity"></activity>
+        <activity android:name=".activity.FindPwdActivity" />
+        <activity android:name=".activity.siteactivity.UserCompileActivity" />
         <activity android:name=".activity.obligation.DetailActivity" />
+        <activity android:name=".activity.orderstatus.FackOfActivity" />
         <activity android:name=".activity.obligation.CanceledActivity" />
         <activity android:name=".activity.orderstatus.CloseTheDealActivity" />
         <activity android:name=".activity.obligation.PaidActivity" />
@@ -123,6 +126,16 @@
         <activity
             android:name=".activity.obligation.DetailActivity"
             tools:ignore="DuplicateActivity" />
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind"></activity>
+        <activity
+            android:name="com.alipay.sdk.auth.AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind"></activity>
 
         <provider
             android:name="android.support.v4.content.FileProvider"

@@ -1,6 +1,8 @@
 package com.yikangcheng.admin.yikang.activity.fragment.introduction;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -28,6 +30,10 @@ public class Introduction_four extends BaseFragment {
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                SharedPreferences sp = getActivity().getSharedPreferences("stratapp", Context.MODE_PRIVATE);
+                SharedPreferences.Editor edit = sp.edit();
+                edit.putString("stratapp", "true");
+                edit.commit();
                 startActivity(new Intent(getActivity(), MainActivity.class));
                 getActivity().finish();
             }

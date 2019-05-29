@@ -11,7 +11,7 @@ import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
 public class DetailActivity extends BaseActivtiy {
-    private ImageView mImgActivityDetailFanhui;
+    private ImageView back_img;
     private Toolbar mToolbarActivityDetail;
     private ImageView mImgActivityDetailQiaobao;
     private TextView mTvActivityDeteilYuE;
@@ -22,7 +22,7 @@ public class DetailActivity extends BaseActivtiy {
     protected void initView() {
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
-        mImgActivityDetailFanhui = findViewById(R.id.img_activity_detail_fanhui);
+        back_img = findViewById(R.id.back_img);
         mToolbarActivityDetail = findViewById(R.id.toolbar_activity_detail);
         mImgActivityDetailQiaobao = findViewById(R.id.img_activity_detail_qiaobao);
         mTvActivityDeteilYuE = findViewById(R.id.tv_activity_deteil_YuE);
@@ -32,7 +32,7 @@ public class DetailActivity extends BaseActivtiy {
         /**
          * 点击返回按钮关闭当前页面
          */
-        mImgActivityDetailFanhui.setOnClickListener(new View.OnClickListener() {
+        back_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();

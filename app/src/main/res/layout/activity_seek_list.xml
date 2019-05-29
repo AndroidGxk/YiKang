@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#EBEBEB"
     android:clipToPadding="true"
     android:fitsSystemWindows="true"
-    android:background="#EBEBEB"
     tools:context=".activity.SeekListActivity">
 
     <RelativeLayout
@@ -17,12 +17,12 @@
 
         <ImageView
             android:id="@+id/back_img"
-            android:layout_width="11dp"
-            android:layout_height="20dp"
-            android:layout_marginLeft="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="13dp"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/fanhui_seek" />
+            android:paddingRight="10dp"
+            android:paddingLeft="15dp"
+            android:src="@drawable/fanhui_seek" />
 
 
         <EditText
@@ -115,17 +115,18 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="1dp"
                 android:layout_marginRight="60dp"
-                android:src="@drawable/qiehuan"
                 android:gravity="center"
-                android:padding="10dp" />
+                android:padding="10dp"
+                android:src="@drawable/qiehuan" />
         </LinearLayout>
     </RelativeLayout>
 
     <com.jcodecraeer.xrecyclerview.XRecyclerView
         android:id="@+id/xrecycler"
         android:layout_width="match_parent"
-        android:background="#EBEBEB"
         android:layout_height="match_parent"
         android:layout_below="@+id/table"
-        android:layout_marginRight="5dp" />
+        android:layout_marginRight="5dp"
+        android:background="#EBEBEB" />
+
 </RelativeLayout>

@@ -22,7 +22,7 @@ import java.util.List;
 
 public class OrderFormActivity extends BaseActivtiy {
 
-    private ImageView mImgActivityOrderfromFanhui;
+    private ImageView back_img;
     private Toolbar mToolbarActivityOrderfrom;
     private TabLayout mTabActivityOrderform;
     private ViewPager mViewPagerOrderform;
@@ -32,7 +32,7 @@ public class OrderFormActivity extends BaseActivtiy {
 
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
-        mImgActivityOrderfromFanhui = findViewById(R.id.img_activity_orderfrom_fanhui);
+        back_img = findViewById(R.id.back_img);
         mToolbarActivityOrderfrom = findViewById(R.id.toolbar_activity_orderfrom);
         mTabActivityOrderform = findViewById(R.id.tab_activity_orderform);
         mViewPagerOrderform = findViewById(R.id.viewPager_orderform);
@@ -43,7 +43,7 @@ public class OrderFormActivity extends BaseActivtiy {
         /**
          * 点击返回关闭当前页面
          */
-        mImgActivityOrderfromFanhui.setOnClickListener(new View.OnClickListener() {
+        back_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();

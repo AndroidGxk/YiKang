@@ -1,11 +1,10 @@
 package com.yikangcheng.admin.yikang.activity.fragment;
 
 import android.content.Intent;
-import android.support.v4.app.FragmentActivity;
+import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.RelativeLayout;
@@ -24,18 +23,22 @@ import com.yikangcheng.admin.yikang.bean.Request;
 import com.yikangcheng.admin.yikang.bean.ShopCarBean;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
 import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
+import com.yikangcheng.admin.yikang.presenter.DeleteShopPresenter;
 import com.yikangcheng.admin.yikang.presenter.RecommendPresenter;
 import com.yikangcheng.admin.yikang.presenter.ShopCarPresenter;
 import com.yikangcheng.admin.yikang.util.SpacesItemDecoration;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
 
-
+//todo 购物车返回页面问题
 public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.TotalPriceListener, ShopRecyclerAdapter.checkBoxTouchListener, ICoreInfe {
     private RecyclerView shop_recyclertwo, shop_recycler;
     private ShopRecyclerAdapter shopRecyclerAdapter;
     private RelativeLayout null_car;
+    private RelativeLayout diviline;
+    private RelativeLayout baseline;
+    private RelativeLayout base_btn;
     private CheckBox all_check;
     private TextView text_total, num_text, heji, dele_text;
     private TextView tv_toolBar_right;
@@ -45,6 +48,8 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
     private boolean isclick;
     private RecommendAdapter mRecommendAdapter;
     private RecommendPresenter recommendPresenter;
+    private DeleteShopPresenter deleteShopPresenter;
+    private String mId = "";
 
     @Override
     protected void initView(View view) {
@@ -52,12 +57,16 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
         shop_recyclertwo = view.findViewById(R.id.shop_recyclertwo);
         all_check = view.findViewById(R.id.all_check);
         num_text = view.findViewById(R.id.num_text);
+        diviline = view.findViewById(R.id.diviline);
+        baseline = view.findViewById(R.id.baseline);
         dele_text = view.findViewById(R.id.dele_text);
+        base_btn = view.findViewById(R.id.base_btn);
         null_car = view.findViewById(R.id.null_car);
         tv_toolBar_right = view.findViewById(R.id.tv_toolBar_right);
         heji = view.findViewById(R.id.heji);
         text_total = view.findViewById(R.id.text_total);
         shopCarPresenter = new ShopCarPresenter(this);
+        deleteShopPresenter = new DeleteShopPresenter(new DeleteShop());
         MainActivity activity = (MainActivity) getActivity();
         //编辑按钮回调
         activity.setOnClickListener(new MainActivity.onClickListener() {
@@ -84,10 +93,9 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
          */
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
         shop_recyclertwo.setLayoutManager(gridLayoutManager);
-        mRecommendAdapter = new RecommendAdapter( getContext());
+        mRecommendAdapter = new RecommendAdapter(getContext());
         shop_recyclertwo.setAdapter(mRecommendAdapter);
         recommendPresenter = new RecommendPresenter(new RecomICoreInfe());
-
         int spanCount = 2; // 3 columns
         int spacing = 20; // 50px
         boolean includeEdge = false;
@@ -150,7 +158,33 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
         num_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), CloseActivity.class));
+                if (num_text.getText().toString().equals("去结算(0)")) {
+                    Toast.makeText(getContext(), "请选择商品", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                List<ShopCarBean> shopList = shopRecyclerAdapter.getShopList();
+                Intent intent = new Intent(getActivity(), CloseActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("shopList", (Serializable) shopList);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+        /**
+         * 删除购物车商品
+         */
+        dele_text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                List<ShopCarBean> shopList = shopRecyclerAdapter.getShopList();
+                for (int i = 0; i < shopList.size(); i++) {
+                    int id = shopList.get(i).getId();
+                    mId += id + ",";
+                }
+                String substring = mId.substring(0, mId.length() - 1);
+                Toast.makeText(getContext(), "" + substring, Toast.LENGTH_SHORT).show();
+                deleteShopPresenter.request(getLogUser(getContext()).getId(), mId);
+                mId = "";
             }
         });
     }
@@ -186,6 +220,7 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
             shop_recycler.setVisibility(View.GONE);
         }
         shopRecyclerAdapter.remove();
+
         shopRecyclerAdapter.addAll(entity);
     }
 
@@ -215,8 +250,39 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
         super.onResume();
         LoginBean logUser = getLogUser(getContext());
         if (logUser != null) {
+            baseline.setVisibility(View.VISIBLE);
+            diviline.setVisibility(View.VISIBLE);
+            base_btn.setVisibility(View.VISIBLE);
+            shopRecyclerAdapter.checkAll(false);
+            shopRecyclerAdapter.remove();
             shopCarPresenter.request(logUser.getId());
             recommendPresenter.request(logUser.getId());
+        } else {
+            baseline.setVisibility(View.GONE);
+            diviline.setVisibility(View.GONE);
+            base_btn.setVisibility(View.GONE);
+        }
+    }
+
+    /**
+     * 删除购物车商品
+     */
+    private class DeleteShop implements ICoreInfe {
+        @Override
+        public void success(Object data) {
+            LoginBean logUser = getLogUser(getContext());
+            Request request = (Request) data;
+            Toast.makeText(getContext(), request.getMessage() + "", Toast.LENGTH_SHORT).show();
+            if (request.isSuccess()) {
+                if (logUser != null) {
+                    shopCarPresenter.request(logUser.getId());
+                }
+            }
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
         }
     }
 }
