@@ -23,9 +23,10 @@ import java.util.List;
  * WF
  */
 public class AccomplishAdapter_A extends RecyclerView.Adapter {
-    private  Context mContent;
-    public   ArrayList<PaidBean.OrderBean> mList;
+    private Context mContent;
+    public ArrayList<PaidBean.OrderBean> mList;
     private OnClickListener mListener;
+    private OnClickListenerDelete mListenerDelete;
 
     public AccomplishAdapter_A(ArrayList<PaidBean.OrderBean> orderBeans, Context context) {
         this.mList = orderBeans;
@@ -56,17 +57,16 @@ public class AccomplishAdapter_A extends RecyclerView.Adapter {
         accomplishAdapter_b.setOnClickListener(new AccomplishAdapter_B.OnClickListener() {
             @Override
             public void OnClickListener(View v, int orderId) {
-                mListener.OnClickListener(v,orderId);
+                mListener.OnClickListener(v, orderId);
             }
         });
 
-//        holder1.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mListener.OnClickListener(v, position);
-//            }
-//        });
-
+        holder1.mShanchu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListenerDelete.OnClickListener(v, position);
+            }
+        });
     }
 
     @Override
@@ -105,5 +105,13 @@ public class AccomplishAdapter_A extends RecyclerView.Adapter {
 
     public void setOnClickListener(OnClickListener listener) {
         this.mListener = listener;
+    }
+
+    public interface OnClickListenerDelete {
+        void OnClickListener(View v, int position);
+    }
+
+    public void setOnClickListenerDelete(OnClickListenerDelete listener) {
+        this.mListenerDelete = listener;
     }
 }

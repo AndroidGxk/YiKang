@@ -101,10 +101,10 @@ public class AllFragment extends BaseFragment implements ICoreInfe {
         mRlvFragmentAllDingdan.addItemDecoration(new SpacesItemDecoration(spanCount, spacing, includeEdge));
         if (orderBeans.size() < 0) {
             mRelativeLayout.setVisibility(View.VISIBLE);
-            mRlvFragmentAllDingdan.setVisibility(View.GONE);
+            mRefreshLayout.setVisibility(View.GONE);
         } else {
             mRelativeLayout.setVisibility(View.GONE);
-            mRlvFragmentAllDingdan.setVisibility(View.VISIBLE);
+            mRefreshLayout.setVisibility(View.VISIBLE);
         }
 
         initShuaXinJiaZai();

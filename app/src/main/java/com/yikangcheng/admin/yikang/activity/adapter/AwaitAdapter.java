@@ -21,9 +21,10 @@ import java.util.List;
  * WF
  */
 public class AwaitAdapter extends RecyclerView.Adapter {
-    private  Context mContent;
-    private  ArrayList<ObligationBean.OrderBean> mList;
+    private Context mContent;
+    public ArrayList<ObligationBean.OrderBean> mList;
     private OnClickListener mListener;
+    private OnClickListenerDelete mListenerDelete;
 
     public AwaitAdapter(ArrayList<ObligationBean.OrderBean> orderBeans, Context context) {
         this.mList = orderBeans;
@@ -38,7 +39,7 @@ public class AwaitAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ViewHolder holder1 = (ViewHolder) holder;
 
         holder1.mBianhao.setText("订单编号:" + mList.get(position).getOrderNo());
@@ -56,7 +57,13 @@ public class AwaitAdapter extends RecyclerView.Adapter {
         awaitAdapter_b.setOnClickListener(new AwaitAdapter_B.OnClickListener() {
             @Override
             public void OnClickListener(View v, int orderId) {
-                mListener.OnClickListener(v,orderId);
+                mListener.OnClickListener(v, orderId);
+            }
+        });
+        holder1.mShanchu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListenerDelete.OnClickListener(v, position);
             }
         });
     }
@@ -94,7 +101,16 @@ public class AwaitAdapter extends RecyclerView.Adapter {
     public interface OnClickListener {
         void OnClickListener(View v, int orderId);
     }
-    public void setOnClickListener(OnClickListener listener){
-        this.mListener=listener;
+
+    public void setOnClickListener(OnClickListener listener) {
+        this.mListener = listener;
+    }
+
+    public interface OnClickListenerDelete {
+        void OnClickListener(View v, int position);
+    }
+
+    public void setOnClickListenerDelete(OnClickListenerDelete listener) {
+        this.mListenerDelete = listener;
     }
 }

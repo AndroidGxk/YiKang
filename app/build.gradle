@@ -3,7 +3,7 @@ apply plugin: 'org.greenrobot.greendao'
 android {
     signingConfigs {
         yikangcheng {
-            storeFile file('C:\\Users\\admin\\Desktop\\yikangcheng.jks')
+            storeFile file('C:\\Users\\lenovo\\Desktop\\yikangcheng.jks')
             storePassword 'tongtong'
             keyAlias = 'yikangcheng'
             keyPassword 'tongtong'

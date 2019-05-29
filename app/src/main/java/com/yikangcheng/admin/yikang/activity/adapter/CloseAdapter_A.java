@@ -23,6 +23,7 @@ public class CloseAdapter_A extends RecyclerView.Adapter {
     private Context mContent;
     public List<CloseBean.OrderBean> mList;
     private OnClickListener mListener;
+    private OnClickListenerDelete mListenerDelete;
 
     public CloseAdapter_A(List<CloseBean.OrderBean> orderBeans, Context context) {
         this.mList = orderBeans;
@@ -54,6 +55,13 @@ public class CloseAdapter_A extends RecyclerView.Adapter {
             public void OnClickListener(View v, int orderId) {
 
                 mListener.OnClickListener(v, orderId);
+            }
+        });
+
+        holder1.mShanchu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListenerDelete.OnClickListener(v, position);
             }
         });
     }
@@ -94,5 +102,13 @@ public class CloseAdapter_A extends RecyclerView.Adapter {
 
     public void setOnClickListener(OnClickListener listener) {
         this.mListener = listener;
+    }
+
+    public interface OnClickListenerDelete {
+        void OnClickListener(View v, int position);
+    }
+
+    public void setOnClickListenerDelete(OnClickListenerDelete listener) {
+        this.mListenerDelete = listener;
     }
 }
