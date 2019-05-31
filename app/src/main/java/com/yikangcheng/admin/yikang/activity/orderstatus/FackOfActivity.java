@@ -7,16 +7,19 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.adapter.FackOfAdapter_A;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.CloseTheDealBean;
+import com.yikangcheng.admin.yikang.bean.DeleteOrderBean;
 import com.yikangcheng.admin.yikang.bean.Request;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
 import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
 import com.yikangcheng.admin.yikang.presenter.CloseTheDeallPresenter;
+import com.yikangcheng.admin.yikang.presenter.DeleteOrderIdPresenter;
 import com.yikangcheng.admin.yikang.util.SpacesItemDecoration;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
@@ -26,7 +29,7 @@ import me.jessyan.autosize.internal.CustomAdapt;
 
 public class FackOfActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt {
     private ImageView mImgActivityFackOfFanhui;
-    private Toolbar mToolbarActivityFackOf;
+    private RelativeLayout mToolbarActivityFackOf;
     private TextView mTvActivityFackOfName;
     private TextView mTvActivityFackOfProvinceStr;
     private TextView mTvActivityFackOfCityStr;
@@ -42,9 +45,10 @@ public class FackOfActivity extends BaseActivtiy implements ICoreInfe, CustomAda
     private TextView mTvActivityFackOfKeFu;
     private TextView mTvActivityFackOfFaPianLeiXing;
     private TextView mTvActivityFackOfNeiRong;
-    private RecyclerView mRlvActivityFackOfTuiJian;
     private TextView mTvActivityFackOfShanchu;
     private FackOfAdapter_A mFackOfAdapter_a;
+    private int mPosition;
+    private int mOrderId;
 
     @Override
     protected void initView() {
@@ -52,26 +56,29 @@ public class FackOfActivity extends BaseActivtiy implements ICoreInfe, CustomAda
         int orderId_fack = intent.getIntExtra("orderId_fack", 0);
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
-        mImgActivityFackOfFanhui = findViewById(R.id.img_activity_fack_of_fanhui);
-        mToolbarActivityFackOf = findViewById(R.id.toolbar_activity_fack_of);
-        mTvActivityFackOfName = findViewById(R.id.tv_activity_fack_of_name);
-        mTvActivityFackOfProvinceStr = findViewById(R.id.tv_activity_fack_of_provinceStr);
-        mTvActivityFackOfCityStr = findViewById(R.id.tv_activity_fack_of_cityStr);
-        mTvActivityFackOfTownStr = findViewById(R.id.tv_activity_fack_of_townStr);
-        mTvActivityFackOfAddress = findViewById(R.id.tv_activity_fack_of_address);
-        mRlvActivityFackOfShangPin = findViewById(R.id.rlv_activity_fack_of_shangPin);
-        mTvActivityFackOfBiaohao = findViewById(R.id.tv_activity_fack_of_biaohao);
-        mImgActivityFackOfFzhi = findViewById(R.id.img_activity_fack_of_fzhi);
-        mTvActivityFackOfYunFei = findViewById(R.id.tv_activity_fack_of_yunFei);
-        mTvActivityFackOfJinE = findViewById(R.id.tv_activity_fack_of_jinE);
-        mTvActivityFackOfZhongJi = findViewById(R.id.tv_activity_fack_of_zhongJi);
-        mTvActivityFackOfFangShi = findViewById(R.id.tv_activity_fack_of_fangShi);
-        mTvActivityFackOfKeFu = findViewById(R.id.tv_activity_fack_of_keFu);
-        mTvActivityFackOfFaPianLeiXing = findViewById(R.id.tv_activity_fack_of_FaPianLeiXing);
-        mTvActivityFackOfNeiRong = findViewById(R.id.tv_activity_fack_of_NeiRong);
-        mRlvActivityFackOfTuiJian = findViewById(R.id.rlv_activity_fack_of_TuiJian);
-        mTvActivityFackOfShanchu = findViewById(R.id.tv_activity_fack_of_shanchu);
+        mImgActivityFackOfFanhui = (ImageView) findViewById(R.id.img_activity_fack_of_fanhui);
+        mToolbarActivityFackOf = (RelativeLayout) findViewById(R.id.toolbar_activity_fack_of);
+        mTvActivityFackOfName = (TextView) findViewById(R.id.tv_activity_fack_of_name);
+        mTvActivityFackOfProvinceStr = (TextView) findViewById(R.id.tv_activity_fack_of_provinceStr);
+        mTvActivityFackOfCityStr = (TextView) findViewById(R.id.tv_activity_fack_of_cityStr);
+        mTvActivityFackOfTownStr = (TextView) findViewById(R.id.tv_activity_fack_of_townStr);
+        mTvActivityFackOfAddress = (TextView) findViewById(R.id.tv_activity_fack_of_address);
+        mRlvActivityFackOfShangPin = (RecyclerView) findViewById(R.id.rlv_activity_fack_of_shangPin);
+        mTvActivityFackOfBiaohao = (TextView) findViewById(R.id.tv_activity_fack_of_biaohao);
+        mImgActivityFackOfFzhi = (ImageView) findViewById(R.id.img_activity_fack_of_fzhi);
+        mTvActivityFackOfYunFei = (TextView) findViewById(R.id.tv_activity_fack_of_yunFei);
+        mTvActivityFackOfJinE = (TextView) findViewById(R.id.tv_activity_fack_of_jinE);
+        mTvActivityFackOfZhongJi = (TextView) findViewById(R.id.tv_activity_fack_of_zhongJi);
+        mTvActivityFackOfFangShi = (TextView) findViewById(R.id.tv_activity_fack_of_fangShi);
+        mTvActivityFackOfKeFu = (TextView) findViewById(R.id.tv_activity_fack_of_keFu);
+        mTvActivityFackOfFaPianLeiXing = (TextView) findViewById(R.id.tv_activity_fack_of_FaPianLeiXing);
+        mTvActivityFackOfNeiRong = (TextView) findViewById(R.id.tv_activity_fack_of_NeiRong);
+        mTvActivityFackOfShanchu = (TextView) findViewById(R.id.tv_activity_fack_of_shanchu);
 
+
+        /**
+         * 点击返回按钮关闭当前页面
+         */
         mImgActivityFackOfFanhui.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,8 +86,6 @@ public class FackOfActivity extends BaseActivtiy implements ICoreInfe, CustomAda
             }
         });
 
-        mToolbarActivityFackOf.setTitle("");
-        setSupportActionBar(mToolbarActivityFackOf);
 
         CloseTheDeallPresenter closeTheDeallPresenter = new CloseTheDeallPresenter(this);
         closeTheDeallPresenter.request(orderId_fack);
@@ -91,17 +96,43 @@ public class FackOfActivity extends BaseActivtiy implements ICoreInfe, CustomAda
         mFackOfAdapter_a = new FackOfAdapter_A(mShopSpecDetailedBeans, this);
         mRlvActivityFackOfShangPin.setAdapter(mFackOfAdapter_a);
 
+        mFackOfAdapter_a.setOnClickListener(new FackOfAdapter_A.OnClickListener() {
+            @Override
+            public void OnClickListener(View v, int position) {
+                mPosition = position;
+            }
+        });
+
+        //        //解决滑动不流畅
+        mRlvActivityFackOfShangPin.setHasFixedSize(true);
+        mRlvActivityFackOfShangPin.setNestedScrollingEnabled(false);
+
+
         int spanCount_tuijian = 1; // 3 columns
         int spacing_tuijian = 5; // 50px
         boolean includeEdge_tuijian = false;
         mRlvActivityFackOfShangPin.addItemDecoration(new SpacesItemDecoration(spanCount_tuijian, spacing_tuijian, includeEdge_tuijian));
 
+        //刪除訂單
+        initDelete();
 
+    }
+
+    //點擊按鈕刪除訂單
+    private void initDelete() {
+        mTvActivityFackOfShanchu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mOrderId = mFackOfAdapter_a.mList.get(mPosition).getOrderId();
+                DeleteOrderIdPresenter deleteOrderIdPresenter = new DeleteOrderIdPresenter(new delete());
+                deleteOrderIdPresenter.request(mOrderId);
+                finish();
+            }
+        });
     }
 
     @Override
     protected void initEventData() {
-
     }
 
     @Override
@@ -113,6 +144,27 @@ public class FackOfActivity extends BaseActivtiy implements ICoreInfe, CustomAda
     protected void createPresenter() {
 
     }
+
+    public class delete implements ICoreInfe {
+
+        public DeleteOrderBean mMEntity;
+
+        @Override
+        public void success(Object data) {
+            Request request = (Request) data;
+            mMEntity = (DeleteOrderBean) request.getEntity();
+            //有需要在这打印一下message的返回值现在返回的是空的  让后台看一下  做一个判断
+            // Log.e("aaa", "success: "+mMEntity.get );
+            mFackOfAdapter_a.mList.remove(mPosition);
+            mFackOfAdapter_a.notifyDataSetChanged();
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
+    }
+
 
     @Override
     public void success(Object data) {

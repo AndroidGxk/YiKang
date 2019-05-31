@@ -5,6 +5,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yikangcheng.admin.yikang.R;
@@ -17,7 +18,7 @@ public class NicknameActivity extends BaseActivtiy implements CustomAdapt {
 
 
     private ImageView mImgActivityNicknameFanhui;
-    private Toolbar mToolbarActivityNickname;
+    private RelativeLayout mToolbarActivityNickname;
     private EditText mEtActivityNickname;
     private TextView ok_btn;
 
@@ -25,10 +26,10 @@ public class NicknameActivity extends BaseActivtiy implements CustomAdapt {
     protected void initView() {
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
-        mImgActivityNicknameFanhui = findViewById(R.id.img_activity_nickname_fanhui);
-        mToolbarActivityNickname = findViewById(R.id.toolbar_activity_nickname);
-        mEtActivityNickname = findViewById(R.id.et_activity_nickname);
-        ok_btn = findViewById(R.id.ok_btn);
+        mImgActivityNicknameFanhui = (ImageView) findViewById(R.id.img_activity_nickname_fanhui);
+        mToolbarActivityNickname = (RelativeLayout) findViewById(R.id.toolbar_activity_nickname);
+        mEtActivityNickname = (EditText) findViewById(R.id.et_activity_nickname);
+        ok_btn = (TextView) findViewById(R.id.ok_btn);
 
 
         /**
@@ -40,11 +41,7 @@ public class NicknameActivity extends BaseActivtiy implements CustomAdapt {
                 finish();
             }
         });
-        /**
-         * Toolbar
-         */
-        mToolbarActivityNickname.setTitle("");
-        setSupportActionBar(mToolbarActivityNickname);
+
         /**
          * 保存
          */

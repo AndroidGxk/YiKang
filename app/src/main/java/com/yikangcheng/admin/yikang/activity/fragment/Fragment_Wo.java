@@ -10,6 +10,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.RequestOptions;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.ApoutUsActivity;
 import com.yikangcheng.admin.yikang.activity.LoginActivity;
@@ -23,6 +25,7 @@ import com.yikangcheng.admin.yikang.activity.obligation.CanceledActivity;
 import com.yikangcheng.admin.yikang.activity.obligation.DetailActivity;
 import com.yikangcheng.admin.yikang.activity.obligation.ObligationActivity;
 import com.yikangcheng.admin.yikang.activity.obligation.PaidActivity;
+import com.yikangcheng.admin.yikang.activity.particulars.ParticularsActivity;
 import com.yikangcheng.admin.yikang.activity.siteactivity.AiteActivity;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
 import com.yikangcheng.admin.yikang.bean.AdvertisingBean;
@@ -163,6 +166,15 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe {
         mRecommend_fragment_wo_adapter = new Recommend_Fragment_wo_Adapter(recommendBeans, getContext());
         //绑定适配器
         mRlvFragmentWo.setAdapter(mRecommend_fragment_wo_adapter);
+
+        mRecommend_fragment_wo_adapter.setOnClickListener(new Recommend_Fragment_wo_Adapter.OnClickListener() {
+            @Override
+            public void OnClickListener(View v, int id) {
+                Intent intent = new Intent(getActivity(), ParticularsActivity.class);
+                intent.putExtra("id", id);
+                startActivity(intent);
+            }
+        });
 
         /**
          *     解决滑动不流畅
@@ -383,7 +395,10 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe {
                 setUserInfo(getContext(), userCenter);
             }
             mTvFragmentWoName.setText(userCenter.getRealName());
-            Glide.with(getContext()).load("https://static.yikch.com" + userCenter.getAvatar()).into(mImgFragmentWoTouxiang);
+            //设置图片圆角角度
+            Glide.with(getContext()).load("https://static.yikch.com/upload/yizhilu/common/20190531/1559232521100468252.jpg")
+                    .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                    .into(mImgFragmentWoTouxiang);
         }
 
         @Override

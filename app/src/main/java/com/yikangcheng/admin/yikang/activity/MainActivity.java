@@ -64,28 +64,28 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
     protected void initView() {
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
-        radio = findViewById(R.id.radio_group);
+        radio = (RadioGroup) findViewById(R.id.radio_group);
         radio.check(R.id.shou);
-        mImg_activity_main_soushuo = findViewById(R.id.iv_toolBar_right);
-        shou_linear = findViewById(R.id.shou_linear);
-        fen_linear = findViewById(R.id.fen_linear);
-        shou_text = findViewById(R.id.shou_text);
-        fen_text = findViewById(R.id.fen_text);
-        log_text = findViewById(R.id.log_text);
-        line1 = findViewById(R.id.line1);
-        line4 = findViewById(R.id.line4);
-        line2 = findViewById(R.id.line2);
-        line5 = findViewById(R.id.line5);
-        line3 = findViewById(R.id.line3);
-        line6 = findViewById(R.id.line6);
-        header = findViewById(R.id.header);
-        my_name = findViewById(R.id.my_name);
-        miao_text = findViewById(R.id.miao_text);
-        gou_text = findViewById(R.id.gou_text);
-        wo_text = findViewById(R.id.wo_text);
-        miao_linear = findViewById(R.id.miao_linear);
-        gou_linear = findViewById(R.id.gou_linear);
-        wo_linear = findViewById(R.id.wo_linear);
+        mImg_activity_main_soushuo = (ImageView) findViewById(R.id.iv_toolBar_right);
+        shou_linear = (LinearLayout) findViewById(R.id.shou_linear);
+        fen_linear = (LinearLayout) findViewById(R.id.fen_linear);
+        shou_text = (TextView) findViewById(R.id.shou_text);
+        fen_text = (TextView) findViewById(R.id.fen_text);
+        log_text = (TextView) findViewById(R.id.log_text);
+        line1 = (LinearLayout) findViewById(R.id.line1);
+        line4 = (LinearLayout) findViewById(R.id.line4);
+        line2 = (LinearLayout) findViewById(R.id.line2);
+        line5 = (LinearLayout) findViewById(R.id.line5);
+        line3 = (LinearLayout) findViewById(R.id.line3);
+        line6 = (LinearLayout) findViewById(R.id.line6);
+        header = (ImageView) findViewById(R.id.header);
+        my_name = (TextView) findViewById(R.id.my_name);
+        miao_text = (TextView) findViewById(R.id.miao_text);
+        gou_text = (TextView) findViewById(R.id.gou_text);
+        wo_text = (TextView) findViewById(R.id.wo_text);
+        miao_linear = (LinearLayout) findViewById(R.id.miao_linear);
+        gou_linear = (LinearLayout) findViewById(R.id.gou_linear);
+        wo_linear = (LinearLayout) findViewById(R.id.wo_linear);
         toobar = findViewById(R.id.toobar);
         tv_toolBar_title = toobar.findViewById(R.id.tv_toolBar_title);
         tv_toolBar_right = toobar.findViewById(R.id.tv_toolBar_right);
@@ -119,9 +119,9 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         iv_toolBar_right = toobar.findViewById(R.id.iv_toolBar_right);
         iv_toolBar_right = toobar.findViewById(R.id.iv_toolBar_right);
         tv_toolBar_right = toobar.findViewById(R.id.tv_toolBar_right);
-        mDrawerLayout = findViewById(R.id.drawerLayout);
-        mNv = findViewById(R.id.nv);
-        mRelativeLayout = findViewById(R.id.relativeLayout);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        mNv = (RelativeLayout) findViewById(R.id.nv);
+        mRelativeLayout = (RelativeLayout) findViewById(R.id.relativeLayout);
         //抽屉滑出时,主界面被挤到右边
         mDrawerLayout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
             @Override
@@ -164,11 +164,11 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         /**
          * 切换页面
          */
-        shou = findViewById(R.id.shou);
-        fen = findViewById(R.id.fen);
-        miao = findViewById(R.id.miao);
-        gou = findViewById(R.id.gou);
-        wo = findViewById(R.id.wo);
+        shou = (RadioButton) findViewById(R.id.shou);
+        fen = (RadioButton) findViewById(R.id.fen);
+        miao = (RadioButton) findViewById(R.id.miao);
+        gou = (RadioButton) findViewById(R.id.gou);
+        wo = (RadioButton) findViewById(R.id.wo);
         shou_linear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

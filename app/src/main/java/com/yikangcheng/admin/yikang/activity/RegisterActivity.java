@@ -58,14 +58,14 @@ public class RegisterActivity extends BaseActivtiy implements ICoreInfe, CustomA
 
     @Override
     protected void initView() {
-        log_image = findViewById(R.id.log_image);
-        reg_phone_edit = findViewById(R.id.reg_phone_edit);
-        ver_btn = findViewById(R.id.ver_btn);
-        ver_pwd_edit = findViewById(R.id.ver_pwd_edit);
-        reg_pwd_edit = findViewById(R.id.reg_pwd_edit);
-        reg_two_pwd_edit = findViewById(R.id.reg_two_pwd_edit);
-        code_two_pwd_edit = findViewById(R.id.code_two_pwd_edit);
-        register_btn = findViewById(R.id.register_btn);
+        log_image = (ImageView) findViewById(R.id.log_image);
+        reg_phone_edit = (EditText) findViewById(R.id.reg_phone_edit);
+        ver_btn = (TextView) findViewById(R.id.ver_btn);
+        ver_pwd_edit = (EditText) findViewById(R.id.ver_pwd_edit);
+        reg_pwd_edit = (EditText) findViewById(R.id.reg_pwd_edit);
+        reg_two_pwd_edit = (EditText) findViewById(R.id.reg_two_pwd_edit);
+        code_two_pwd_edit = (EditText) findViewById(R.id.code_two_pwd_edit);
+        register_btn = (TextView) findViewById(R.id.register_btn);
         getMobileKeyPresenter = new GetMobileKeyPresenter(this);
         sendMobilePresenter = new SendMobilePresenter(new SendMobile());
         registerPresenter = new RegisterPresenter(new Register());

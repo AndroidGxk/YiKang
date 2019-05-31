@@ -139,7 +139,7 @@ public class AwaitFragment extends BaseFragment implements ICoreInfe {
      */
     private void initMvp(int page) {
         ObligationPresenter obligationPresenter = new ObligationPresenter(this);
-        obligationPresenter.request(11, page, "INIT");
+        obligationPresenter.request(getLogUser(getContext()).getId(), page, "INIT");
 
     }
 

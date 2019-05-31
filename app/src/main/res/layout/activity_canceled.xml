@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,7 +9,7 @@
     android:orientation="vertical"
     tools:context=".activity.obligation.ObligationActivity">
 
-    <android.support.v7.widget.Toolbar
+    <RelativeLayout
         android:id="@+id/toolbar_activity_canceled"
         android:layout_width="match_parent"
         android:layout_height="42dp"
@@ -18,25 +19,78 @@
             android:id="@+id/back_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:src="@drawable/fanhuiactivity" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:layout_centerInParent="true"
             android:text="已取消"
             android:textColor="#000000"
             android:textSize="19sp" />
 
-    </android.support.v7.widget.Toolbar>
+    </RelativeLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rlv_activity_canceled"
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="15dp" />
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:visibility="gone"
+        app:srlEnableFooterFollowWhenLoadFinished="true"
+        app:srlEnableScrollContentWhenLoaded="true">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rlv_activity_canceled"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="15dp" />
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/img_fragment_accomplish"
+            android:layout_width="120dp"
+            android:layout_height="80dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="102dp"
+            android:src="@drawable/dengdai" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="215dp"
+            android:text="暂时还没有对应的订单记录"
+            android:textColor="#ff999999"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/img_fragment_accomplish_quguanghuang"
+            android:layout_width="166dp"
+            android:layout_height="40dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="271dp"
+            android:src="@drawable/yuanjiao" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="283dp"
+            android:text="去逛逛吧"
+            android:textColor="#ffffffff"
+            android:textSize="14sp" />
+    </RelativeLayout>
 
 </LinearLayout>

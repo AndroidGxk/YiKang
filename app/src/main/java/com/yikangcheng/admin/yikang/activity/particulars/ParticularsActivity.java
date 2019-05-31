@@ -48,8 +48,8 @@ public class ParticularsActivity extends BaseActivtiy implements CustomAdapt, IC
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorTab);
         Fragment_Miao.getGoWeb();
         Fragment_Shou.getGoBack();
-        webView = findViewById(R.id.webvieww);
-        back_img = findViewById(R.id.back_img);
+        webView = (WebView) findViewById(R.id.webvieww);
+        back_img = (ImageView) findViewById(R.id.back_img);
         Intent intent = getIntent();
         id = intent.getIntExtra("id", 0);
         addShopPresenter = new AddShopPresenter(this);

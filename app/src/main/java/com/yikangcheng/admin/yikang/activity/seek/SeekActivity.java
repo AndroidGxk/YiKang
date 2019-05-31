@@ -40,15 +40,15 @@ public class SeekActivity extends BaseActivtiy {
     protected void initView() {
 
         //删除最近搜索按钮
-        mImgActivitySeekDelete = findViewById(R.id.img_activity_seek_delete);
+        mImgActivitySeekDelete = (ImageView) findViewById(R.id.img_activity_seek_delete);
         //取消搜索
-        mTvActivitySeekCancel = findViewById(R.id.tv_activity_seek_cancel);
+        mTvActivitySeekCancel = (TextView) findViewById(R.id.tv_activity_seek_cancel);
         //搜索EditText
-        mEditTixtActivitySeekSousuo = findViewById(R.id.EditTixt_activity_seek_sousuo);
+        mEditTixtActivitySeekSousuo = (EditText) findViewById(R.id.EditTixt_activity_seek_sousuo);
         //最近搜索
-        mFlowLayout_activity_seek = findViewById(R.id.FlowLayout_activity_seek);
+        mFlowLayout_activity_seek = (FlowLayout) findViewById(R.id.FlowLayout_activity_seek);
         //热门搜索
-        mRlvActivitySeekHot = findViewById(R.id.rlv_activity_seek_hot);
+        mRlvActivitySeekHot = (RecyclerView) findViewById(R.id.rlv_activity_seek_hot);
 
 
         /**

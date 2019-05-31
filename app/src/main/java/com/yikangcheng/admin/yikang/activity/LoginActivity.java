@@ -31,13 +31,13 @@ public class LoginActivity extends BaseActivtiy implements CustomAdapt, ICoreInf
 
     @Override
     protected void initView() {
-        reg_image = findViewById(R.id.reg_image);
+        reg_image = (ImageView) findViewById(R.id.reg_image);
         WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         height = wm.getDefaultDisplay().getHeight();
-        phone_edit = findViewById(R.id.phone_edit);
-        pwd_edit = findViewById(R.id.pwd_edit);
-        forget_pwd = findViewById(R.id.forget_pwd);
-        log_btn = findViewById(R.id.log_btn);
+        phone_edit = (EditText) findViewById(R.id.phone_edit);
+        pwd_edit = (EditText) findViewById(R.id.pwd_edit);
+        forget_pwd = (TextView) findViewById(R.id.forget_pwd);
+        log_btn = (TextView) findViewById(R.id.log_btn);
         loginPresenter = new LoginPresenter(this);
         //用户ID
         userInfo = getSharedPreferences("userInfo", MODE_PRIVATE);

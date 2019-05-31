@@ -26,6 +26,7 @@ import java.util.List;
 public class RecommendAdapter extends RecyclerView.Adapter {
     private final Context mContent;
     private final List<RecommendBean> mList = new ArrayList<>();
+    private OnClickListener mListener;
 
     public void removeAll() {
         mList.clear();
@@ -43,7 +44,7 @@ public class RecommendAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ViewHolder holder1 = (ViewHolder) holder;
         Glide.with(mContent).load(Constants.BASETUPIANSHANGCHUANURL + mList.get(position).getLogo()).into(holder1.mImg);
         holder1.mTv_name.setText(mList.get(position).getName());
@@ -54,6 +55,14 @@ public class RecommendAdapter extends RecyclerView.Adapter {
          * // 中间加横线 ， 添加Paint.ANTI_ALIAS_FLAG是线会变得清晰去掉锯齿
          */
         holder1.mBprice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
+
+        holder1.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int id = mList.get(position).getId();
+                mListener.OnClickListener(v,id);
+            }
+        });
     }
 
     @Override
@@ -87,5 +96,12 @@ public class RecommendAdapter extends RecyclerView.Adapter {
             mJiage = itemView.findViewById(R.id.tv_jiage);
             mBprice = itemView.findViewById(R.id.text_bprice);
         }
+    }
+
+    public interface OnClickListener {
+        void OnClickListener(View v, int id);
+    }
+    public void setOnClickListener(OnClickListener listener){
+        this.mListener=listener;
     }
 }

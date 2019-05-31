@@ -47,7 +47,7 @@ public class WelcomeActivity extends BaseActivtiy {
 
     @Override
     protected void initView() {
-        viewpage = findViewById(R.id.viewpage);
+        viewpage = (ViewPager) findViewById(R.id.viewpage);
         SharedPreferences startapp = getSharedPreferences("stratapp", MODE_PRIVATE);
         String start = startapp.getString("stratapp", "fasle");
         if (start.equals("true")) {

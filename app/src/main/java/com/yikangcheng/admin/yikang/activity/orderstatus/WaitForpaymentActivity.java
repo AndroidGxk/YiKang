@@ -7,16 +7,22 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.adapter.WaitForPaymentAdapter;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.CloseTheDealBean;
+import com.yikangcheng.admin.yikang.bean.DeleteOrderBean;
+import com.yikangcheng.admin.yikang.bean.NewOrderBean;
 import com.yikangcheng.admin.yikang.bean.Request;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
 import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
 import com.yikangcheng.admin.yikang.presenter.CloseTheDeallPresenter;
+import com.yikangcheng.admin.yikang.presenter.DeleteOrderIdPresenter;
+import com.yikangcheng.admin.yikang.presenter.NewOrderPresenter;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
 import java.util.ArrayList;
@@ -30,7 +36,7 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
 
 
     private ImageView mImgActivityWaitfrrpaymentFanhui;
-    private Toolbar mToolbarActivityWaitfrrpayment;
+    private RelativeLayout mToolbarActivityWaitfrrpayment;
     private TextView mTvActivityWaitfrrpaymentDaojishi;
     private TextView mTvActivityWaitfrrpaymentName;
     private TextView mTvActivityWaitfrrpaymentDizi;
@@ -44,15 +50,17 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
     private TextView mTvActivityWaitfrrpaymentKeFu;
     private TextView mTvActivityWaitfrrpaymentFaPianLeiXing;
     private TextView mTvActivityWaitfrrpaymentNeiRong;
-    private RecyclerView mRlvActivityWaitfrrpaymentTuiJian;
-    private ImageView mImgActivityWaitfrrpaymentShanchu;
-    private ImageView mImgActivityWaitfrrpaymentQueDing;
+    private TextView go_pay;
     private TextView mShanchu;
     private TextView mTvActivityFackOfProvinceStr;
     private TextView mTvActivityFackOfCityStr;
     private TextView mTvActivityFackOfTownStr;
     private TextView mTvActivityFackOfAddress;
     private WaitForPaymentAdapter mWaitForPaymentAdapter;
+    private NewOrderPresenter newOrderPresenter;
+    private int orderId;
+    private String orderType;
+    private int mPosition;
 
     @Override
     protected void initView() {
@@ -61,45 +69,93 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
         //ToolBar返回按钮
-        mImgActivityWaitfrrpaymentFanhui = findViewById(R.id.img_activity_waitfrrpayment_fanhui);
+        mImgActivityWaitfrrpaymentFanhui = (ImageView) findViewById(R.id.img_activity_waitfrrpayment_fanhui);
         //ToolBar
-        mToolbarActivityWaitfrrpayment = findViewById(R.id.toolbar_activity_waitfrrpayment);
+        mToolbarActivityWaitfrrpayment = (RelativeLayout) findViewById(R.id.toolbar_activity_waitfrrpayment);
         //倒计时
-        mTvActivityWaitfrrpaymentDaojishi = findViewById(R.id.tv_activity_waitfrrpayment_daojishi);
+        mTvActivityWaitfrrpaymentDaojishi = (TextView) findViewById(R.id.tv_activity_waitfrrpayment_daojishi);
         //用户姓名
-        mTvActivityWaitfrrpaymentName = findViewById(R.id.tv_activity_waitfrrpayment_name);
+        mTvActivityWaitfrrpaymentName = (TextView) findViewById(R.id.tv_activity_waitfrrpayment_name);
         //用户地址
-        mTvActivityFackOfProvinceStr = findViewById(R.id.tv_activity_fack_of_provinceStr);
-        mTvActivityFackOfCityStr = findViewById(R.id.tv_activity_fack_of_cityStr);
-        mTvActivityFackOfTownStr = findViewById(R.id.tv_activity_fack_of_townStr);
-        mTvActivityFackOfAddress = findViewById(R.id.tv_activity_fack_of_address);
+        mTvActivityFackOfProvinceStr = (TextView) findViewById(R.id.tv_activity_fack_of_provinceStr);
+        mTvActivityFackOfCityStr = (TextView) findViewById(R.id.tv_activity_fack_of_cityStr);
+        mTvActivityFackOfTownStr = (TextView) findViewById(R.id.tv_activity_fack_of_townStr);
+        mTvActivityFackOfAddress = (TextView) findViewById(R.id.tv_activity_fack_of_address);
         //rlv-商品
-        mRlvActivityWaitfrrpaymentShangPin = findViewById(R.id.rlv_activity_waitfrrpayment_shangPin);
+        mRlvActivityWaitfrrpaymentShangPin = (RecyclerView) findViewById(R.id.rlv_activity_waitfrrpayment_shangPin);
         //商品编号
-        mTvActivityWaitfrrpaymentBiaohao = findViewById(R.id.tv_activity_waitfrrpayment_biaohao);
+        mTvActivityWaitfrrpaymentBiaohao = (TextView) findViewById(R.id.tv_activity_waitfrrpayment_biaohao);
         //复制商品编号
-        mImgActivityWaitfrrpaymentFizhi = findViewById(R.id.img_activity_waitfrrpayment_fizhi);
+        mImgActivityWaitfrrpaymentFizhi = (ImageView) findViewById(R.id.img_activity_waitfrrpayment_fizhi);
         //商品运费
-        mTvActivityWaitfrrpaymentYunFei = findViewById(R.id.tv_activity_waitfrrpayment_yunFei);
+        mTvActivityWaitfrrpaymentYunFei = (TextView) findViewById(R.id.tv_activity_waitfrrpayment_yunFei);
         //应付金额
-        mTvActivityWaitfrrpaymentJinE = findViewById(R.id.tv_activity_waitfrrpayment_jinE);
+        mTvActivityWaitfrrpaymentJinE = (TextView) findViewById(R.id.tv_activity_waitfrrpayment_jinE);
         //总计金额
-        mTvActivityWaitfrrpaymentZhongJi = findViewById(R.id.tv_activity_waitfrrpayment_zhongJi);
+        mTvActivityWaitfrrpaymentZhongJi = (TextView) findViewById(R.id.tv_activity_waitfrrpayment_zhongJi);
         //支付方式
-        mTvActivityWaitfrrpaymentFangShi = findViewById(R.id.tv_activity_waitfrrpayment_fangShi);
+        mTvActivityWaitfrrpaymentFangShi = (TextView) findViewById(R.id.tv_activity_waitfrrpayment_fangShi);
         //联系客服
-        mTvActivityWaitfrrpaymentKeFu = findViewById(R.id.tv_activity_waitfrrpayment_keFu);
+        mTvActivityWaitfrrpaymentKeFu = (TextView) findViewById(R.id.tv_activity_waitfrrpayment_keFu);
         //发票类型
-        mTvActivityWaitfrrpaymentFaPianLeiXing = findViewById(R.id.tv_activity_waitfrrpayment_FaPianLeiXing);
+        mTvActivityWaitfrrpaymentFaPianLeiXing = (TextView) findViewById(R.id.tv_activity_waitfrrpayment_FaPianLeiXing);
         //发票内容
-        mTvActivityWaitfrrpaymentNeiRong = findViewById(R.id.tv_activity_waitfrrpayment_NeiRong);
-        //rlv---为你推荐
-        mRlvActivityWaitfrrpaymentTuiJian = findViewById(R.id.rlv_activity_waitfrrpayment_TuiJian);
+        mTvActivityWaitfrrpaymentNeiRong = (TextView) findViewById(R.id.tv_activity_waitfrrpayment_NeiRong);
         //删除订单
-        mShanchu = findViewById(R.id.tv_activity_wait_shanchu);
+        mShanchu = (TextView) findViewById(R.id.tv_activity_wait_shanchu);
         //去支付
-        mImgActivityWaitfrrpaymentQueDing = findViewById(R.id.img_activity_waitfrrpayment_queDing);
+        go_pay = (TextView) findViewById(R.id.go_pay);
 
+
+        //生成新的订单
+        newOrderPresenter = new NewOrderPresenter(new NewOrder());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        mRlvActivityWaitfrrpaymentShangPin.setLayoutManager(linearLayoutManager);
+        ArrayList<CloseTheDealBean.DetailsListBean> mShopSpecDetailedBeans = new ArrayList<>();
+        mWaitForPaymentAdapter = new WaitForPaymentAdapter(mShopSpecDetailedBeans, this);
+        mRlvActivityWaitfrrpaymentShangPin.setAdapter(mWaitForPaymentAdapter);
+
+        mWaitForPaymentAdapter.setOnClickListener(new WaitForPaymentAdapter.OnClickListener() {
+            @Override
+            public void OnClickListener(View v, int position) {
+                mPosition = position;
+            }
+        });
+
+        /**
+         * P层
+         */
+        CloseTheDeallPresenter closeTheDeallPresenter = new CloseTheDeallPresenter(this);
+        closeTheDeallPresenter.request(orderId_wait);
+        /**
+         * 去支付
+         */
+        go_pay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                newOrderPresenter.request(orderId, orderType);
+            }
+        });
+
+        //刪除
+        initDelete();
+    }
+
+    //點擊刪除訂單關閉當前Activity
+    private void initDelete() {
+        mShanchu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int orderId = mWaitForPaymentAdapter.mList.get(mPosition).getOrderId();
+                DeleteOrderIdPresenter deleteOrderIdPresenter = new DeleteOrderIdPresenter(new delete());
+                deleteOrderIdPresenter.request(orderId);
+                finish();
+            }
+        });
+    }
+
+    @Override
+    protected void initEventData() {
         /**
          * 点击返回按钮关闭当前页面
          */
@@ -109,30 +165,6 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
                 finish();
             }
         });
-        /**
-         * ToolBar
-         */
-        mToolbarActivityWaitfrrpayment.setTitle("");
-        setSupportActionBar(mToolbarActivityWaitfrrpayment);
-
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        mRlvActivityWaitfrrpaymentShangPin.setLayoutManager(linearLayoutManager);
-        ArrayList<CloseTheDealBean.DetailsListBean> mShopSpecDetailedBeans = new ArrayList<>();
-        mWaitForPaymentAdapter = new WaitForPaymentAdapter(mShopSpecDetailedBeans, this);
-        mRlvActivityWaitfrrpaymentShangPin.setAdapter(mWaitForPaymentAdapter);
-
-        /**
-         * P层
-         */
-        CloseTheDeallPresenter closeTheDeallPresenter = new CloseTheDeallPresenter(this);
-        closeTheDeallPresenter.request(orderId_wait);
-//        closeTheDeallPresenter.request(orderId_wait_2);
-    }
-
-    @Override
-    protected void initEventData() {
-
     }
 
     @Override
@@ -155,12 +187,34 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
         return 720;
     }
 
+    public class delete implements ICoreInfe {
+
+        public DeleteOrderBean mMEntity;
+
+        @Override
+        public void success(Object data) {
+            Request request = (Request) data;
+            mMEntity = (DeleteOrderBean) request.getEntity();
+            //有需要在这打印一下message的返回值现在返回的是空的  让后台看一下  做一个判断
+            // Log.e("aaa", "success: "+mMEntity.get );
+            mWaitForPaymentAdapter.mList.remove(mPosition);
+            mWaitForPaymentAdapter.notifyDataSetChanged();
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
+    }
+
     @Override
     public void success(Object data) {
         Request request = (Request) data;
         CloseTheDealBean entity = (CloseTheDealBean) request.getEntity();
         mWaitForPaymentAdapter.addAll(entity.getDetailsList());
-
+        //重新下单用到的Id
+        orderId = entity.getOrder().getOrderId();
+        orderType = entity.getOrder().getOrderType();
         //用户名
         mTvActivityWaitfrrpaymentName.setText(entity.getUserAddress().getReceiver());
         //地址
@@ -209,5 +263,22 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
     @Override
     public void fail(ApiException e) {
 
+    }
+
+    /**
+     * 生成新的订单号
+     */
+    private class NewOrder implements ICoreInfe {
+        @Override
+        public void success(Object data) {
+            Request request = (Request) data;
+            NewOrderBean orderBean = (NewOrderBean) request.getEntity();
+            Toast.makeText(WaitForpaymentActivity.this, "" + orderBean.getRequestId(), Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
     }
 }

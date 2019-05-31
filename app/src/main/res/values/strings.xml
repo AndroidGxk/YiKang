@@ -1,9 +1,10 @@
 <resources>
-    <string name="app_name">YiKang</string>
-    <string name="nearOverText">即将售罄</string>
-    <string name="overText">已售罄</string>
-    <string name="stratBtn">跳转</string>
+    <string name="app_name" translatable="false">YiKang</string>
+    <string name="nearOverText" translatable="false">即将售罄</string>
+    <string name="overText" translatable="false">已售罄</string>
+    <string name="stratBtn" translatable="false">跳转</string>
+    <string name="name" translatable="false">易启赢</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
 </resources>

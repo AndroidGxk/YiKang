@@ -16,7 +16,9 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:paddingLeft="15dp"
+            android:paddingTop="10dp"
             android:paddingRight="15dp"
+            android:paddingBottom="10dp"
             android:src="@drawable/fanhui_seek" />
 
         <TextView
@@ -51,8 +53,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/moblie_text"
             android:layout_marginLeft="100dp"
+            android:layout_toLeftOf="@+id/moblie_text"
             android:background="@null"
             android:hint="请输入手机号码"
             android:imeOptions="actionSearch"

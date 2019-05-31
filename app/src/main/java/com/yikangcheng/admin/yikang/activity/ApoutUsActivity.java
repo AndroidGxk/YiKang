@@ -24,8 +24,8 @@ public class ApoutUsActivity extends BaseActivtiy implements CustomAdapt {
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
         Display display = this.getWindowManager().getDefaultDisplay();
         height = display.getHeight();
-        back_img = findViewById(R.id.back_img);
-        mToolbarActivityMyaccount = findViewById(R.id.activity_myaccount);
+        back_img = (ImageView) findViewById(R.id.back_img);
+        mToolbarActivityMyaccount = (RelativeLayout) findViewById(R.id.activity_myaccount);
     }
 
     @Override

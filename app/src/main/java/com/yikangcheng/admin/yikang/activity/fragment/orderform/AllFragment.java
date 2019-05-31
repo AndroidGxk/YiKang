@@ -130,7 +130,7 @@ public class AllFragment extends BaseFragment implements ICoreInfe {
 
     private void initMvp(int page) {
         AllPresenter allPresenter = new AllPresenter(this);
-        allPresenter.request(11, page);
+        allPresenter.request(getLogUser(getContext()).getId(), page);
     }
 
     private void initShuaXinJiaZai() {
@@ -175,7 +175,7 @@ public class AllFragment extends BaseFragment implements ICoreInfe {
             Request request = (Request) data;
             mMEntity = (DeleteOrderBean) request.getEntity();
             //有需要在这打印一下message的返回值现在返回的是空的  让后台看一下  做一个判断
-           // Log.e("aaa", "success: "+mMEntity.get );
+            // Log.e("aaa", "success: "+mMEntity.get );
             mAll_a_adapter.mList.remove(mDeleteItemPostion);
             mAll_a_adapter.notifyDataSetChanged();
         }

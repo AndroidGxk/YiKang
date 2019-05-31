@@ -46,9 +46,9 @@ public class ClassifyHomeActivity extends BaseActivtiy implements ICoreInfe, Cus
         Toast.makeText(this, "" + id, Toast.LENGTH_SHORT).show();
         WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         height = wm.getDefaultDisplay().getHeight();
-        mRlvFragmentFenleiYou = findViewById(R.id.rlv__fragment_fenlei_you);
-        back_img = findViewById(R.id.back_img);
-        mRlvFragmentFenleiZuo = findViewById(R.id.rlv__fragment_fenlei_zuo);
+        mRlvFragmentFenleiYou = (RecyclerView) findViewById(R.id.rlv__fragment_fenlei_you);
+        back_img = (ImageView) findViewById(R.id.back_img);
+        mRlvFragmentFenleiZuo = (RecyclerView) findViewById(R.id.rlv__fragment_fenlei_zuo);
         classifyPresenter = new ClassifyPresenter(this);
         classifyPresenter.request();
         //左边

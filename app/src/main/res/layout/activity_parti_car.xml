@@ -2,9 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:clipToPadding="true"
-    android:fitsSystemWindows="true"
-    android:layout_height="match_parent">
+    android:fitsSystemWindows="true">
 
 
     <RelativeLayout
@@ -19,7 +19,9 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:paddingLeft="15dp"
+            android:paddingTop="10dp"
             android:paddingRight="15dp"
+            android:paddingBottom="10dp"
             android:src="@drawable/fanhui_seek" />
 
         <TextView
@@ -37,7 +39,9 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:paddingLeft="15dp"
+            android:paddingTop="10dp"
             android:paddingRight="15dp"
+            android:paddingBottom="10dp"
             android:text="编辑" />
     </RelativeLayout>
 

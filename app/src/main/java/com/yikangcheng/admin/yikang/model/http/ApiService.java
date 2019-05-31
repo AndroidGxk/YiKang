@@ -3,21 +3,22 @@ package com.yikangcheng.admin.yikang.model.http;
 import com.yikangcheng.admin.yikang.bean.ALLBean;
 import com.yikangcheng.admin.yikang.bean.AdvertisingBean;
 import com.yikangcheng.admin.yikang.bean.AllAddressBean;
-import com.yikangcheng.admin.yikang.bean.ClassifyListOneBean;
 import com.yikangcheng.admin.yikang.bean.ClassifyCommodityListBean;
-import com.yikangcheng.admin.yikang.bean.CreatOrderBean;
+import com.yikangcheng.admin.yikang.bean.ClassifyListOneBean;
+import com.yikangcheng.admin.yikang.bean.CloseBean;
 import com.yikangcheng.admin.yikang.bean.CloseTheDealBean;
+import com.yikangcheng.admin.yikang.bean.CreatOrderBean;
 import com.yikangcheng.admin.yikang.bean.DeleteOrderBean;
 import com.yikangcheng.admin.yikang.bean.DiscountBean;
 import com.yikangcheng.admin.yikang.bean.DiscountCouponBean;
-import com.yikangcheng.admin.yikang.bean.CloseBean;
 import com.yikangcheng.admin.yikang.bean.LikeBean;
 import com.yikangcheng.admin.yikang.bean.LoginBean;
+import com.yikangcheng.admin.yikang.bean.NewOrderBean;
 import com.yikangcheng.admin.yikang.bean.ObligationBean;
 import com.yikangcheng.admin.yikang.bean.PaidBean;
 import com.yikangcheng.admin.yikang.bean.ProvinceBean;
-import com.yikangcheng.admin.yikang.bean.RegisterBean;
 import com.yikangcheng.admin.yikang.bean.RecommendBean;
+import com.yikangcheng.admin.yikang.bean.RegisterBean;
 import com.yikangcheng.admin.yikang.bean.Request;
 import com.yikangcheng.admin.yikang.bean.SeckillBean;
 import com.yikangcheng.admin.yikang.bean.ShopCarBean;
@@ -28,8 +29,10 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
-import retrofit2.http.Body;
+import okhttp3.ResponseBody;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 public interface ApiService {
@@ -239,9 +242,17 @@ public interface ApiService {
                                                  @Query("buyNum") int buyNum, @Query("invoiceType") int invoiceType, @Query("invoiceFrom") int invoiceFrom,
                                                  @Query("invoiceName") String invoiceName, @Query("invoiceNo") String invoiceNo, @Query("invoiceContent") String invoiceContent,
                                                  @Query("invoiceEmail") String invoiceEmail, @Query("payType") String payType, @Query("orderForm") String orderForm);
+
     /**
      * 上传头像
      */
+    @Multipart
     @POST("goswf")
-    Observable<String> goswf(@Body MultipartBody body);
+    Observable<ResponseBody> goswf(@Part List<MultipartBody.Part> part);
+
+    /**
+     * 重新下单
+     */
+    @POST("order/repayUpdateOrder")
+    Observable<Request<NewOrderBean>> repayUpdateOrder(@Query("orderId") int orderId, @Query("payType") String payType);
 }

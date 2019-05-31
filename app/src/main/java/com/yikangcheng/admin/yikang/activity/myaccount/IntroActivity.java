@@ -18,7 +18,7 @@ import me.jessyan.autosize.internal.CustomAdapt;
 
 public class IntroActivity extends BaseActivtiy implements CustomAdapt {
     private ImageView back_img;
-    private Toolbar mToolbarActivityIntro;
+    private RelativeLayout mToolbarActivityIntro;
     private EditText mEtIntroActivityIntro;
     private TextView baocun_text;
 
@@ -26,12 +26,10 @@ public class IntroActivity extends BaseActivtiy implements CustomAdapt {
     protected void initView() {
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
-        back_img = findViewById(R.id.back_img);
-        mToolbarActivityIntro = findViewById(R.id.toolbar_activity_intro);
-        mEtIntroActivityIntro = findViewById(R.id.et_intro_activity_intro);
-        baocun_text = findViewById(R.id.baocun_text);
-        mToolbarActivityIntro.setTitle("");
-        setSupportActionBar(mToolbarActivityIntro);
+        back_img = (ImageView) findViewById(R.id.back_img);
+        mToolbarActivityIntro = (RelativeLayout) findViewById(R.id.toolbar_activity_intro);
+        mEtIntroActivityIntro = (EditText) findViewById(R.id.et_intro_activity_intro);
+        baocun_text = (TextView) findViewById(R.id.baocun_text);
         back_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

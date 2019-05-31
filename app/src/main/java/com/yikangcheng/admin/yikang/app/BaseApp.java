@@ -12,6 +12,7 @@ import android.content.Context;
 import com.example.sqlite.dao.DaoMaster;
 import com.example.sqlite.dao.DaoSession;
 import com.example.sqlite.dao.UserDetailBeanDao;
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreator;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreator;
@@ -32,6 +33,8 @@ import java.util.Set;
 public class BaseApp extends Application {
     public static BaseApp mAppInstance;
     private Set<Activity> mSet;
+
+
     /**
      * context 全局唯一的上下文
      */
@@ -85,8 +88,13 @@ public class BaseApp extends Application {
     public void onCreate() {
         super.onCreate();
         mAppInstance = this;
-
+//初始化Fresco
+        Fresco.initialize(this);
         SobotApi.initSobotSDK(this, "7560599b63bf43378d05d018ded42cdd", "");
+    }
+
+    public static Context getApp() {
+        return mAppInstance;
     }
 
     public void addActivtiy(Activity activity) {

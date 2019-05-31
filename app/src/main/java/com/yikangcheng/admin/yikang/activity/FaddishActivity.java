@@ -14,7 +14,7 @@ public class FaddishActivity extends BaseActivtiy {
     @Override
     protected void initView() {
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
-        back_img = findViewById(R.id.back_img);
+        back_img = (ImageView) findViewById(R.id.back_img);
     }
 
     @Override

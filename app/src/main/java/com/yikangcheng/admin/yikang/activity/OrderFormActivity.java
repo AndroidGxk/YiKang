@@ -6,6 +6,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 
 import com.yikangcheng.admin.yikang.R;
@@ -23,7 +24,7 @@ import java.util.List;
 public class OrderFormActivity extends BaseActivtiy {
 
     private ImageView back_img;
-    private Toolbar mToolbarActivityOrderfrom;
+    private RelativeLayout mToolbarActivityOrderfrom;
     private TabLayout mTabActivityOrderform;
     private ViewPager mViewPagerOrderform;
 
@@ -32,13 +33,11 @@ public class OrderFormActivity extends BaseActivtiy {
 
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
-        back_img = findViewById(R.id.back_img);
-        mToolbarActivityOrderfrom = findViewById(R.id.toolbar_activity_orderfrom);
-        mTabActivityOrderform = findViewById(R.id.tab_activity_orderform);
-        mViewPagerOrderform = findViewById(R.id.viewPager_orderform);
+        back_img = (ImageView) findViewById(R.id.back_img);
+        mToolbarActivityOrderfrom = (RelativeLayout) findViewById(R.id.toolbar_activity_orderfrom);
+        mTabActivityOrderform = (TabLayout) findViewById(R.id.tab_activity_orderform);
+        mViewPagerOrderform = (ViewPager) findViewById(R.id.viewPager_orderform);
 
-        mToolbarActivityOrderfrom.setTitle("");
-        setSupportActionBar(mToolbarActivityOrderfrom);
 
         /**
          * 点击返回关闭当前页面

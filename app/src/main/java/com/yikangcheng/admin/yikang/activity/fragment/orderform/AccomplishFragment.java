@@ -128,7 +128,7 @@ public class AccomplishFragment extends BaseFragment implements ICoreInfe {
     //p层
     private void initMvp(int page) {
         PaidPresenter paidPresenter = new PaidPresenter(this);
-        paidPresenter.request(11, page, "SUCCESS");
+        paidPresenter.request(getLogUser(getContext()).getId(), page, "SUCCESS");
     }
 
     //上拉加载

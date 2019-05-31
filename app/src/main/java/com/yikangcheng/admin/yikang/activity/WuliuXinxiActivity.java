@@ -33,11 +33,11 @@ public class WuliuXinxiActivity extends BaseActivtiy {
     protected void initView() {
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.clolrBAai);
-        xrecycler = findViewById(R.id.xrecycler);
-        check_btn = findViewById(R.id.check_btn);
-        back_img = findViewById(R.id.back_img);
-        compile_text = findViewById(R.id.compile_text);
-        rela = findViewById(R.id.rela);
+        xrecycler = (RecyclerView) findViewById(R.id.xrecycler);
+        check_btn = (CheckBox) findViewById(R.id.check_btn);
+        back_img = (ImageView) findViewById(R.id.back_img);
+        compile_text = (TextView) findViewById(R.id.compile_text);
+        rela = (RelativeLayout) findViewById(R.id.rela);
         xrecycler.setLayoutManager(new LinearLayoutManager(this));
         wuliuAdapter = new WuliuAdapter(this);
         xrecycler.setAdapter(wuliuAdapter);

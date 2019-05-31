@@ -54,19 +54,19 @@ public class PartiCarActivity extends BaseActivtiy implements ShopRecyclerAdapte
     @Override
     protected void initView() {
 
-        shop_recycler = findViewById(R.id.shop_recycler);
-        shop_recyclertwo = findViewById(R.id.shop_recyclertwo);
-        all_check = findViewById(R.id.all_check);
-        num_text = findViewById(R.id.num_text);
-        diviline = findViewById(R.id.diviline);
-        baseline = findViewById(R.id.baseline);
-        dele_text = findViewById(R.id.dele_text);
-        base_btn = findViewById(R.id.base_btn);
-        null_car = findViewById(R.id.null_car);
-        tv_toolBar_right = findViewById(R.id.tv_toolBar_right);
-        back_img = findViewById(R.id.back_img);
-        heji = findViewById(R.id.heji);
-        text_total = findViewById(R.id.text_total);
+        shop_recycler = (RecyclerView) findViewById(R.id.shop_recycler);
+        shop_recyclertwo = (RecyclerView) findViewById(R.id.shop_recyclertwo);
+        all_check = (CheckBox) findViewById(R.id.all_check);
+        num_text = (TextView) findViewById(R.id.num_text);
+        diviline = (RelativeLayout) findViewById(R.id.diviline);
+        baseline = (RelativeLayout) findViewById(R.id.baseline);
+        dele_text = (TextView) findViewById(R.id.dele_text);
+        base_btn = (RelativeLayout) findViewById(R.id.base_btn);
+        null_car = (RelativeLayout) findViewById(R.id.null_car);
+        tv_toolBar_right = (TextView) findViewById(R.id.tv_toolBar_right);
+        back_img = (ImageView) findViewById(R.id.back_img);
+        heji = (TextView) findViewById(R.id.heji);
+        text_total = (TextView) findViewById(R.id.text_total);
         shopCarPresenter = new ShopCarPresenter(this);
         deleteShopPresenter = new DeleteShopPresenter(new DeleteShop());
 

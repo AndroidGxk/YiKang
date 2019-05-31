@@ -21,9 +21,9 @@ public class PhoneActivity extends BaseActivtiy implements CustomAdapt {
     protected void initView() {
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
-        back_img = findViewById(R.id.back_img);
-        back_img = findViewById(R.id.back_img);
-        ok_btn = findViewById(R.id.ok_btn);
+        back_img = (ImageView) findViewById(R.id.back_img);
+        back_img = (ImageView) findViewById(R.id.back_img);
+        ok_btn = (TextView) findViewById(R.id.ok_btn);
     }
 
     @Override

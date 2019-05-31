@@ -120,7 +120,7 @@ public class CloseFragment extends BaseFragment implements ICoreInfe {
 
     private void initMvp(int page) {
         ClosePresenter closePresenter = new ClosePresenter(this);
-        closePresenter.request(11, page, "CANCEL");
+        closePresenter.request(getLogUser(getContext()).getId(), page, "CANCEL");
     }
 
     private void initShuaXinJiaZai() {

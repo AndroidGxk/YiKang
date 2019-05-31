@@ -23,8 +23,9 @@ import java.util.List;
  * WF
  */
 public class CloseTheDealAdapter extends RecyclerView.Adapter {
-    private  ArrayList<CloseTheDealBean.DetailsListBean> mList;
-    private  CloseTheDealActivity mContent;
+    public ArrayList<CloseTheDealBean.DetailsListBean> mList;
+    private CloseTheDealActivity mContent;
+    private OnClickListener mListener;
 
     public CloseTheDealAdapter(ArrayList<CloseTheDealBean.DetailsListBean> extraData, CloseTheDealActivity closeTheDealActivity) {
         this.mList = extraData;
@@ -39,13 +40,20 @@ public class CloseTheDealAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ViewHolder holder1 = (ViewHolder) holder;
-        Glide.with(mContent).load(Constants.BASETUPIANSHANGCHUANURL+mList.get(position).getShopSpecDetailed().getLogo()).into(holder1.mImg);
+        Glide.with(mContent).load(Constants.BASETUPIANSHANGCHUANURL + mList.get(position).getShopSpecDetailed().getLogo()).into(holder1.mImg);
         holder1.mName.setText(mList.get(position).getShopSpecDetailed().getCommodityName());
-        holder1.mNum.setText("X"+mList.get(position).getBuyNum());
+        holder1.mNum.setText("X" + mList.get(position).getBuyNum());
         holder1.mTitle.setText(mList.get(position).getShopSpecDetailed().getSpecNames());
         holder1.mPrice.setText(mList.get(position).getShopSpecDetailed().getRetailPrice() + "");
+
+        holder1.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.OnClickListener(v, position);
+            }
+        });
 
     }
 
@@ -77,5 +85,13 @@ public class CloseTheDealAdapter extends RecyclerView.Adapter {
             mNum = itemView.findViewById(R.id.tv_num);
             mShousou = itemView.findViewById(R.id.tv_item_closethedeal_shouhou);
         }
+    }
+
+    public interface OnClickListener {
+        void OnClickListener(View v, int position);
+    }
+
+    public void setOnClickListener(OnClickListener listener) {
+        this.mListener = listener;
     }
 }

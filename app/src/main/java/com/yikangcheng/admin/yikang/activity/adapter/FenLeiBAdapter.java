@@ -9,10 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.yikangcheng.admin.yikang.R;
-import com.yikangcheng.admin.yikang.bean.ClassifyBean;
 import com.yikangcheng.admin.yikang.bean.ClassifyListOneBean;
 
 import java.util.ArrayList;

@@ -49,23 +49,24 @@ public class SeekListActivity extends BaseActivtiy implements CustomAdapt, ICore
         final Intent intent = getIntent();
         count = intent.getStringExtra("count");
         id = intent.getIntExtra("id", 000);
-        xrecycler = findViewById(R.id.xrecycler);
+        xrecycler = (XRecyclerView) findViewById(R.id.xrecycler);
         //搜素框
-        edit_seek_sousuo = findViewById(R.id.EditTixt_activity_seek_sousuo);
-        zonghe = findViewById(R.id.zonghe);
-        price_text = findViewById(R.id.price_text);
-        back_img = findViewById(R.id.back_img);
+        edit_seek_sousuo = (EditText) findViewById(R.id.EditTixt_activity_seek_sousuo);
+        zonghe = (TextView) findViewById(R.id.zonghe);
+
+        price_text = (TextView) findViewById(R.id.price_text);
+        back_img = (ImageView) findViewById(R.id.back_img);
         zonghe.setOnClickListener(this);
-        xiaoliang = findViewById(R.id.xiaoliang);
+        xiaoliang = (TextView) findViewById(R.id.xiaoliang);
         xiaoliang.setOnClickListener(this);
-        price = findViewById(R.id.price);
+        price = (RelativeLayout) findViewById(R.id.price);
         price.setOnClickListener(this);
-        qiehuan = findViewById(R.id.qiehuan);
+        qiehuan = (ImageView) findViewById(R.id.qiehuan);
         qiehuan.setOnClickListener(this);
         edit_seek_sousuo.setText(count);
         commodityPresenter = new CommodityPresenter(this);
         if (count == null || count.equals("")) {
-            commodityPresenter.request(id, 1, "1", 1);
+            commodityPresenter.request(id, 1, "", 1);
         } else {
             commodityPresenter.request(id, 1, count, 1);
         }
@@ -141,7 +142,7 @@ public class SeekListActivity extends BaseActivtiy implements CustomAdapt, ICore
             case R.id.zonghe:
                 if (!zclick) {
                     if (count == null || count.equals("")) {
-                        commodityPresenter.request(id, 1, "1", 1);
+                        commodityPresenter.request(id, 1, "", 1);
                     } else {
                         commodityPresenter.request(id, 1, count, 1);
                     }
@@ -161,7 +162,7 @@ public class SeekListActivity extends BaseActivtiy implements CustomAdapt, ICore
             case R.id.xiaoliang:
                 if (!xclick) {
                     if (count == null || count.equals("")) {
-                        commodityPresenter.request(id, 5, "1", 1);
+                        commodityPresenter.request(id, 5, "", 1);
                     } else {
                         commodityPresenter.request(id, 5, count, 1);
                     }
@@ -187,7 +188,7 @@ public class SeekListActivity extends BaseActivtiy implements CustomAdapt, ICore
                     xclick = false;
                     if (pimgclick) {
                         if (count == null || count.equals("")) {
-                            commodityPresenter.request(id, 3, "1", 1);
+                            commodityPresenter.request(id, 3, "", 1);
                         } else {
                             commodityPresenter.request(id, 3, count, 1);
                         }
@@ -198,7 +199,7 @@ public class SeekListActivity extends BaseActivtiy implements CustomAdapt, ICore
                         pimgclick = false;
                     } else {
                         if (count == null || count.equals("")) {
-                            commodityPresenter.request(id, 4, "1", 1);
+                            commodityPresenter.request(id, 4, "", 1);
                         } else {
                             commodityPresenter.request(id, 4, count, 1);
                         }

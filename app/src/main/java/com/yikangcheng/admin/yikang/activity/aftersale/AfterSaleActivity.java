@@ -21,8 +21,8 @@ public class AfterSaleActivity extends BaseActivtiy implements CustomAdapt {
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
 
-        mImgActivityAftersaleFanhui = findViewById(R.id.img_activity_aftersale_fanhui);
-        mToolbarActivityMyaccount = findViewById(R.id.toolbar_activity_myaccount);
+        mImgActivityAftersaleFanhui = (ImageView) findViewById(R.id.img_activity_aftersale_fanhui);
+        mToolbarActivityMyaccount = (Toolbar) findViewById(R.id.toolbar_activity_myaccount);
 
         mToolbarActivityMyaccount.setTitle("");
         setSupportActionBar(mToolbarActivityMyaccount);

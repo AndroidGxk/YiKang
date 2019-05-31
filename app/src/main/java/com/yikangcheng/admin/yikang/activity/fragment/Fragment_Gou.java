@@ -16,6 +16,7 @@ import com.yikangcheng.admin.yikang.activity.CloseActivity;
 import com.yikangcheng.admin.yikang.activity.MainActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.RecommendAdapter;
 import com.yikangcheng.admin.yikang.activity.adapter.ShopRecyclerAdapter;
+import com.yikangcheng.admin.yikang.activity.particulars.ParticularsActivity;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
 import com.yikangcheng.admin.yikang.bean.LoginBean;
 import com.yikangcheng.admin.yikang.bean.RecommendBean;
@@ -95,6 +96,17 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
         shop_recyclertwo.setLayoutManager(gridLayoutManager);
         mRecommendAdapter = new RecommendAdapter(getContext());
         shop_recyclertwo.setAdapter(mRecommendAdapter);
+
+        mRecommendAdapter.setOnClickListener(new RecommendAdapter.OnClickListener() {
+            @Override
+            public void OnClickListener(View v, int id) {
+                Intent intent = new Intent(getActivity(), ParticularsActivity.class);
+                intent.putExtra("id", id);
+                startActivity(intent);
+            }
+        });
+
+
         recommendPresenter = new RecommendPresenter(new RecomICoreInfe());
         int spanCount = 2; // 3 columns
         int spacing = 20; // 50px
@@ -276,6 +288,12 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
             if (request.isSuccess()) {
                 if (logUser != null) {
                     shopCarPresenter.request(logUser.getId());
+                    heji.setVisibility(View.VISIBLE);
+                    text_total.setVisibility(View.VISIBLE);
+                    num_text.setVisibility(View.VISIBLE);
+                    dele_text.setVisibility(View.GONE);
+                    tv_toolBar_right.setText("编辑");
+                    judge = false;
                 }
             }
         }

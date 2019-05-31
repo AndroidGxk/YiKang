@@ -27,9 +27,9 @@ public class CouponActivity extends BaseActivtiy {
     @Override
     protected void initView() {
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
-        coupon_tab = findViewById(R.id.coupon_tab);
-        viewpage = findViewById(R.id.viewpage);
-        back_img = findViewById(R.id.back_img);
+        coupon_tab = (TabLayout) findViewById(R.id.coupon_tab);
+        viewpage = (ViewPager) findViewById(R.id.viewpage);
+        back_img = (ImageView) findViewById(R.id.back_img);
         ArrayList<String> strings = new ArrayList<>();
         strings.add("可使用");
         strings.add("已失效");

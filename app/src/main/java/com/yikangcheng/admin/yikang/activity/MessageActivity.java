@@ -22,11 +22,11 @@ public class MessageActivity extends BaseActivtiy {
     protected void initView() {
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
-        wuliu = findViewById(R.id.wuliu);
-        xrecycler = findViewById(R.id.xrecycler);
-        tongzhi = findViewById(R.id.tongzhi);
-        kefu = findViewById(R.id.kefu);
-        back_img = findViewById(R.id.back_img);
+        wuliu = (LinearLayout) findViewById(R.id.wuliu);
+        xrecycler = (XRecyclerView) findViewById(R.id.xrecycler);
+        tongzhi = (LinearLayout) findViewById(R.id.tongzhi);
+        kefu = (LinearLayout) findViewById(R.id.kefu);
+        back_img = (ImageView) findViewById(R.id.back_img);
         xrecycler.setLayoutManager(new LinearLayoutManager(this));
         xrecycler.setAdapter(new MessageListAdapter());
     }
