@@ -25,9 +25,11 @@
             android:paddingBottom="10dp"
             android:src="@drawable/fanhuiactivity" />
 
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:layout_gravity="center_horizontal"
             android:text="订单详情"
             android:layout_centerInParent="true"
@@ -192,7 +194,7 @@
                         android:id="@+id/img_activity_fack_of_fzhi"
                         android:layout_width="28dp"
                         android:layout_height="14dp"
-                        android:layout_marginLeft="202dp"
+                        android:layout_marginLeft="212dp"
                         android:layout_marginTop="11dp"
                         android:background="@drawable/fuzhi" />
 
@@ -345,22 +347,6 @@
                         android:textColor="#ff999999"
                         android:textSize="12sp" />
                 </RelativeLayout>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/tuijian" />
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rlv_activity_fack_of_TuiJian"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="15dp"
-                    android:nestedScrollingEnabled="false" />
 
 
             </LinearLayout>

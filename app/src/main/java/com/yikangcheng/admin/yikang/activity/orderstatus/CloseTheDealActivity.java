@@ -3,7 +3,6 @@ package com.yikangcheng.admin.yikang.activity.orderstatus;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,21 +12,25 @@ import android.widget.Toast;
 
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.adapter.CloseTheDealAdapter;
+import com.yikangcheng.admin.yikang.activity.copy.CopyButtonLibrary;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.CloseTheDealBean;
+import com.yikangcheng.admin.yikang.bean.DeleteOrderBean;
 import com.yikangcheng.admin.yikang.bean.Request;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
 import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
 import com.yikangcheng.admin.yikang.presenter.CloseTheDeallPresenter;
+import com.yikangcheng.admin.yikang.presenter.DeleteOrderIdPresenter;
+import com.yikangcheng.admin.yikang.util.SpacesItemDecoration;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import me.jessyan.autosize.internal.CustomAdapt;
 
 public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, ICoreInfe {
 
+    private RelativeLayout mToolbarActivityWaitfrrpayment;
     private TextView mTvActivityCloseName;
     private TextView mImgActivityCloseChakan;
     private RecyclerView mRlvActivityCloseShangPin;
@@ -40,6 +43,7 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
     private TextView mTvActivityCloseKeFu;
     private TextView mTvActivityCloseFaPianLeiXing;
     private TextView mTvActivityCloseNeiRong;
+    private ImageView mImgActivityCloseQueDing;
     private RecyclerView mRlvActivityCloseTuiJian;
     private TextView mChanchu;
     private TextView mAddress;
@@ -47,22 +51,29 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
     private TextView mCityStr;
     private TextView mTownStr;
     private CloseTheDealAdapter mCloseTheDealAdapter;
+    private int mPosition;
+    private Intent mIntent;
+    private int mOrderId;
 
 
     @Override
     protected void initView() {
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
-        Intent intent = getIntent();
-        int orderId = intent.getIntExtra("orderId", 0);
+        mIntent = getIntent();
+        mOrderId = mIntent.getIntExtra("orderId", 0);
+
+        //ToolBar
+        mToolbarActivityWaitfrrpayment = (RelativeLayout) findViewById(R.id.toolbar_activity_waitfrrpayment);
         //用户名
         mTvActivityCloseName = (TextView) findViewById(R.id.tv_activity_close_name);
         //用户地址
         mAddress = (TextView) findViewById(R.id.tv_activity_close_address);
         mProvinceStr = (TextView) findViewById(R.id.tv_activity_close_provinceStr);
         mCityStr = (TextView) findViewById(R.id.tv_activity_close_cityStr);
+        back_img = (ImageView) findViewById(R.id.back_img);
         mTownStr = (TextView) findViewById(R.id.tv_activity_close_townStr);
-        back_img = (ImageView) findViewById(R.id.back_imgs);
+        back_img = (ImageView) findViewById(R.id.back_img);
         //查看物流按钮
         mImgActivityCloseChakan = (TextView) findViewById(R.id.img_activity_close_chakan);
         //rlv商品
@@ -85,39 +96,78 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
         mTvActivityCloseFaPianLeiXing = (TextView) findViewById(R.id.tv_activity_close_FaPianLeiXing);
         //发票内容
         mTvActivityCloseNeiRong = (TextView) findViewById(R.id.tv_activity_close_NeiRong);
-        //rlv---商品推荐
-        mRlvActivityCloseTuiJian = (RecyclerView) findViewById(R.id.rlv_activity_close_TuiJian);
         //删除
         mChanchu = (TextView) findViewById(R.id.tv_activity_closeThe_Deal_shanchu);
 
-        back_img.setOnClickListener(new View.OnClickListener() {
+
+        //复制监听点击事件
+        mImgActivityCloseFizhi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                //传入需要复制的文字的控件
+                CopyButtonLibrary copyButtonLibrary = new CopyButtonLibrary(getApplicationContext(), mTvActivityCloseBiaohao);
+                copyButtonLibrary.init();
             }
         });
+
         /**
          * P层
          */
         CloseTheDeallPresenter closeTheDeallPresenter = new CloseTheDeallPresenter(this);
-        closeTheDeallPresenter.request(orderId);
+        closeTheDeallPresenter.request(mOrderId);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRlvActivityCloseShangPin.setLayoutManager(linearLayoutManager);
         ArrayList<CloseTheDealBean.DetailsListBean> mShopSpecDetailedBeans = new ArrayList<>();
         mCloseTheDealAdapter = new CloseTheDealAdapter(mShopSpecDetailedBeans, this);
         mRlvActivityCloseShangPin.setAdapter(mCloseTheDealAdapter);
 
+        mCloseTheDealAdapter.setOnClickListener(new CloseTheDealAdapter.OnClickListener() {
+            @Override
+            public void OnClickListener(View v, int position) {
+                mPosition = position;
+            }
+        });
+
         //        //解决滑动不流畅
         mRlvActivityCloseShangPin.setHasFixedSize(true);
         mRlvActivityCloseShangPin.setNestedScrollingEnabled(false);
 
-        mRlvActivityCloseTuiJian.setHasFixedSize(true);
-        mRlvActivityCloseTuiJian.setNestedScrollingEnabled(false);
+        int spanCount_tuijian = 1; // 3 columns
+        int spacing_tuijian = 5; // 50px
+        boolean includeEdge_tuijian = false;
+        mRlvActivityCloseShangPin.addItemDecoration(new SpacesItemDecoration(spanCount_tuijian, spacing_tuijian, includeEdge_tuijian));
+
+
+        //刪除
+        initDelete();
+
+    }
+
+    //點擊刪除按鈕刪除當前訂單並推出當前Activity
+    private void initDelete() {
+        mChanchu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DeleteOrderIdPresenter deleteOrderIdPresenter = new DeleteOrderIdPresenter(new delete());
+                deleteOrderIdPresenter.request(mOrderId);
+                mIntent.putExtra("delete", "delete");
+                setResult(4, mIntent);
+                finish();
+            }
+        });
     }
 
     @Override
     protected void initEventData() {
-
+        /**
+         * 退出
+         */
+        back_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     @Override
@@ -139,6 +189,27 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
     public float getSizeInDp() {
         return 720;
     }
+
+    public class delete implements ICoreInfe {
+
+        public DeleteOrderBean mMEntity;
+
+        @Override
+        public void success(Object data) {
+            Request request = (Request) data;
+            mMEntity = (DeleteOrderBean) request.getEntity();
+            //有需要在这打印一下message的返回值现在返回的是空的  让后台看一下  做一个判断
+            // Log.e("aaa", "success: "+mMEntity.get );
+            mCloseTheDealAdapter.mList.remove(mPosition);
+            mCloseTheDealAdapter.notifyDataSetChanged();
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
+    }
+
 
     @Override
     public void success(Object data) {

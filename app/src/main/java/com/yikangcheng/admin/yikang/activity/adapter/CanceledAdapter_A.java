@@ -20,9 +20,10 @@ import java.util.List;
  * WF
  */
 public class CanceledAdapter_A extends RecyclerView.Adapter {
-    private final List<CloseBean.OrderBean> mList;
-    private final CanceledActivity mCentent;
+    public   List<CloseBean.OrderBean> mList;
+    private  CanceledActivity mCentent;
     private OnClickListener mListener;
+    private OnClickListenerDelete mListenerDelete;
 
     public CanceledAdapter_A(List<CloseBean.OrderBean> orderBeans, CanceledActivity canceledActivity) {
         this.mList = orderBeans;
@@ -37,7 +38,7 @@ public class CanceledAdapter_A extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ViewHolder holder1 = (ViewHolder) holder;
         holder1.mBianhao.setText("订单编号:" + mList.get(position).getOrderNo());
         holder1.mData.setText("" + mList.get(position).getCreateTime());
@@ -46,12 +47,20 @@ public class CanceledAdapter_A extends RecyclerView.Adapter {
         }
         holder1.mPrice.setText("合计：¥" + mList.get(position).getRealPrice());
         holder1.mRlv.setLayoutManager(new LinearLayoutManager(mCentent));
-        CanceledAdapter_B canceledAdapter_b = new CanceledAdapter_B(mList.get(position).getOrderDetailsList(),mCentent);
+        CanceledAdapter_B canceledAdapter_b = new CanceledAdapter_B(mList.get(position).getOrderDetailsList(), mCentent);
         holder1.mRlv.setAdapter(canceledAdapter_b);
         canceledAdapter_b.setOnClickListener(new CanceledAdapter_B.OnClickListener() {
             @Override
             public void OnClickListener(View v, int orderId) {
-                mListener.OnClickListener(v,orderId);
+                mListener.OnClickListener(v, orderId,position);
+            }
+        });
+
+
+        holder1.mShanchu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListenerDelete.OnClickListener(v, position);
             }
         });
     }
@@ -87,9 +96,19 @@ public class CanceledAdapter_A extends RecyclerView.Adapter {
     }
 
     public interface OnClickListener {
-        void OnClickListener(View v, int orderId);
+        void OnClickListener(View v, int orderId,int position);
     }
-    public void setOnClickListener(OnClickListener listener){
-        this.mListener=listener;
+
+    public void setOnClickListener(OnClickListener listener) {
+        this.mListener = listener;
     }
+
+    public interface OnClickListenerDelete {
+        void OnClickListener(View v, int position);
+    }
+
+    public void setOnClickListenerDelete(OnClickListenerDelete listener) {
+        this.mListenerDelete = listener;
+    }
+
 }

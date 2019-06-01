@@ -16,6 +16,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.adapter.AccomplishAdapter_A;
 import com.yikangcheng.admin.yikang.activity.adapter.CloseAdapter_A;
+import com.yikangcheng.admin.yikang.activity.obligation.CanceledActivity;
 import com.yikangcheng.admin.yikang.activity.orderstatus.FackOfActivity;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
 import com.yikangcheng.admin.yikang.bean.CloseBean;
@@ -43,6 +44,7 @@ public class CloseFragment extends BaseFragment implements ICoreInfe {
     private RelativeLayout mRelativeLayout;
     private int mPage = 1;
     private int mDeleteItemPostion;
+    private int mDeletePosition;
 
     @Override
     protected void initView(View view) {
@@ -62,10 +64,11 @@ public class CloseFragment extends BaseFragment implements ICoreInfe {
         mRlvFragmentClose.setAdapter(mCloseAdapter_a);
         mCloseAdapter_a.setOnClickListener(new CloseAdapter_A.OnClickListener() {
             @Override
-            public void OnClickListener(View v, int orderId) {
+            public void OnClickListener(View v, int orderId, int position) {
+                mDeletePosition = position;
                 Intent intent = new Intent(getActivity(), FackOfActivity.class);
                 intent.putExtra("orderId_fack", orderId);
-                startActivity(intent);
+                startActivityForResult(intent, 5);
             }
         });
 
@@ -106,6 +109,18 @@ public class CloseFragment extends BaseFragment implements ICoreInfe {
         initDelete();
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 5 && resultCode == 6) {
+            String delete = data.getStringExtra("delete");
+            if (delete.equals("delete")) {
+                mCloseAdapter_a.mList.remove(mDeletePosition);
+                mCloseAdapter_a.notifyDataSetChanged();
+            }
+        }
+    }
+
     private void initDelete() {
         mCloseAdapter_a.setOnClickListenerDelete(new CloseAdapter_A.OnClickListenerDelete() {
             @Override
@@ -120,7 +135,7 @@ public class CloseFragment extends BaseFragment implements ICoreInfe {
 
     private void initMvp(int page) {
         ClosePresenter closePresenter = new ClosePresenter(this);
-        closePresenter.request(11, page, "CANCEL");
+        closePresenter.request(getLogUser(getContext()).getId(), page, "CANCEL");
     }
 
     private void initShuaXinJiaZai() {

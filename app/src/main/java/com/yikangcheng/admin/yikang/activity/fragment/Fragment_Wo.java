@@ -25,6 +25,7 @@ import com.yikangcheng.admin.yikang.activity.obligation.CanceledActivity;
 import com.yikangcheng.admin.yikang.activity.obligation.DetailActivity;
 import com.yikangcheng.admin.yikang.activity.obligation.ObligationActivity;
 import com.yikangcheng.admin.yikang.activity.obligation.PaidActivity;
+import com.yikangcheng.admin.yikang.activity.particulars.ParticularsActivity;
 import com.yikangcheng.admin.yikang.activity.siteactivity.AiteActivity;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
 import com.yikangcheng.admin.yikang.bean.AdvertisingBean;
@@ -112,6 +113,9 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe {
         mTvFragmentWoName = view.findViewById(R.id.tv__fragment_wo_name);
         //账户明细
         mMingxi = view.findViewById(R.id.relativeLayout_mingxi_fragment_wo);
+
+
+
         /**
          * 点击已取消 跳转页面
          */
@@ -165,6 +169,15 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe {
         mRecommend_fragment_wo_adapter = new Recommend_Fragment_wo_Adapter(recommendBeans, getContext());
         //绑定适配器
         mRlvFragmentWo.setAdapter(mRecommend_fragment_wo_adapter);
+
+        mRecommend_fragment_wo_adapter.setOnClickListener(new Recommend_Fragment_wo_Adapter.OnClickListener() {
+            @Override
+            public void OnClickListener(View v, int id) {
+                Intent intent = new Intent(getActivity(), ParticularsActivity.class);
+                intent.putExtra("id", id);
+                startActivity(intent);
+            }
+        });
 
         /**
          *     解决滑动不流畅

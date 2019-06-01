@@ -44,6 +44,7 @@ public class AllFragment extends BaseFragment implements ICoreInfe {
     private SmartRefreshLayout mRefreshLayout;
     private int mPage = 1;
     private int mDeleteItemPostion;
+    private int mDeletePosition;
 
 
     @Override
@@ -71,19 +72,20 @@ public class AllFragment extends BaseFragment implements ICoreInfe {
         mAll_a_adapter.setOnClickListener(new All_A_Adapter.OnClickListener() {
 
             @Override
-            public void OnClickListener(View v, int orderId, String orderState) {
+            public void OnClickListener(View v, int orderId, String orderState, int position) {
+                mDeletePosition = position;
                 if (orderState.equals("INIT")) {
                     Intent intent = new Intent(getActivity(), WaitForpaymentActivity.class);
                     intent.putExtra("orderId_wait", orderId);
-                    startActivity(intent);
+                    startActivityForResult(intent, 1);
                 } else if (orderState.equals("SUCCESS")) {
                     Intent intent = new Intent(getActivity(), CloseTheDealActivity.class);
                     intent.putExtra("orderId", orderId);
-                    startActivity(intent);
+                    startActivityForResult(intent, 3);
                 } else if (orderState.equals("CANCEL")) {
                     Intent intent = new Intent(getActivity(), FackOfActivity.class);
                     intent.putExtra("orderId_fack", orderId);
-                    startActivity(intent);
+                    startActivityForResult(intent, 5);
                 }
             }
         });
@@ -113,6 +115,35 @@ public class AllFragment extends BaseFragment implements ICoreInfe {
          * 点击垃圾桶删除订单
          */
         initDelete();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //待支付
+        if (requestCode == 1 && resultCode == 2) {
+            String delete = data.getStringExtra("delete");
+            if (delete.equals("delete")) {
+                mAll_a_adapter.mList.remove(mDeletePosition);
+                mAll_a_adapter.notifyDataSetChanged();
+            }
+        }
+        //已支付
+        if (requestCode == 3 && resultCode == 4) {
+            String delete = data.getStringExtra("delete");
+            if (delete.equals("delete")) {
+                mAll_a_adapter.mList.remove(mDeletePosition);
+                mAll_a_adapter.notifyDataSetChanged();
+            }
+        }
+        //已取消
+        if (requestCode == 5 && resultCode == 6) {
+            String delete = data.getStringExtra("delete");
+            if (delete.equals("delete")) {
+                mAll_a_adapter.mList.remove(mDeletePosition);
+                mAll_a_adapter.notifyDataSetChanged();
+            }
+        }
     }
 
     private void initDelete() {

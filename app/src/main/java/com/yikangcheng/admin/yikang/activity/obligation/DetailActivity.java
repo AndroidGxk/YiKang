@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
@@ -30,6 +31,8 @@ public class DetailActivity extends BaseActivtiy {
         mTvActivityDeteilWu = (TextView) findViewById(R.id.tv_activity_deteil_Wu);
         mRlvActivityDetail = (RecyclerView) findViewById(R.id.rlv_activity_detail);
 
+
+        Glide.with(DetailActivity.this).load(R.drawable.qianbao).into(mImgActivityDetailQiaobao);
         /**
          * 点击返回按钮关闭当前页面
          */

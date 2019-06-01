@@ -1,5 +1,6 @@
 package com.yikangcheng.admin.yikang.activity.orderstatus;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,16 +13,20 @@ import android.widget.TextView;
 
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.adapter.FackOfAdapter_A;
+import com.yikangcheng.admin.yikang.activity.copy.CopyButtonLibrary;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.CloseTheDealBean;
+import com.yikangcheng.admin.yikang.bean.DeleteOrderBean;
 import com.yikangcheng.admin.yikang.bean.Request;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
 import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
 import com.yikangcheng.admin.yikang.presenter.CloseTheDeallPresenter;
+import com.yikangcheng.admin.yikang.presenter.DeleteOrderIdPresenter;
 import com.yikangcheng.admin.yikang.util.SpacesItemDecoration;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import me.jessyan.autosize.internal.CustomAdapt;
 
@@ -43,14 +48,17 @@ public class FackOfActivity extends BaseActivtiy implements ICoreInfe, CustomAda
     private TextView mTvActivityFackOfKeFu;
     private TextView mTvActivityFackOfFaPianLeiXing;
     private TextView mTvActivityFackOfNeiRong;
-    private RecyclerView mRlvActivityFackOfTuiJian;
     private TextView mTvActivityFackOfShanchu;
     private FackOfAdapter_A mFackOfAdapter_a;
+    //    private int mPosition;
+//    private int mOrderId;
+    private Intent mIntent;
+    private int mOrderId_fack;
 
     @Override
     protected void initView() {
-        Intent intent = getIntent();
-        int orderId_fack = intent.getIntExtra("orderId_fack", 0);
+        mIntent = getIntent();
+        mOrderId_fack = mIntent.getIntExtra("orderId_fack", 0);
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
         mImgActivityFackOfFanhui = (ImageView) findViewById(R.id.img_activity_fack_of_fanhui);
@@ -70,19 +78,22 @@ public class FackOfActivity extends BaseActivtiy implements ICoreInfe, CustomAda
         mTvActivityFackOfKeFu = (TextView) findViewById(R.id.tv_activity_fack_of_keFu);
         mTvActivityFackOfFaPianLeiXing = (TextView) findViewById(R.id.tv_activity_fack_of_FaPianLeiXing);
         mTvActivityFackOfNeiRong = (TextView) findViewById(R.id.tv_activity_fack_of_NeiRong);
-        mRlvActivityFackOfTuiJian = (RecyclerView) findViewById(R.id.rlv_activity_fack_of_TuiJian);
         mTvActivityFackOfShanchu = (TextView) findViewById(R.id.tv_activity_fack_of_shanchu);
 
-        mImgActivityFackOfFanhui.setOnClickListener(new View.OnClickListener() {
+
+        //复制监听点击事件
+        mImgActivityFackOfFzhi.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                finish();
+            public void onClick(View view) {
+                //传入需要复制的文字的控件
+                CopyButtonLibrary copyButtonLibrary = new CopyButtonLibrary(getApplicationContext(), mTvActivityFackOfBiaohao);
+                copyButtonLibrary.init();
             }
         });
 
 
         CloseTheDeallPresenter closeTheDeallPresenter = new CloseTheDeallPresenter(this);
-        closeTheDeallPresenter.request(orderId_fack);
+        closeTheDeallPresenter.request(mOrderId_fack);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRlvActivityFackOfShangPin.setLayoutManager(linearLayoutManager);
@@ -90,17 +101,49 @@ public class FackOfActivity extends BaseActivtiy implements ICoreInfe, CustomAda
         mFackOfAdapter_a = new FackOfAdapter_A(mShopSpecDetailedBeans, this);
         mRlvActivityFackOfShangPin.setAdapter(mFackOfAdapter_a);
 
+        //解决滑动不流畅
+        mRlvActivityFackOfShangPin.setHasFixedSize(true);
+        mRlvActivityFackOfShangPin.setNestedScrollingEnabled(false);
+
+
+
+
         int spanCount_tuijian = 1; // 3 columns
         int spacing_tuijian = 5; // 50px
         boolean includeEdge_tuijian = false;
         mRlvActivityFackOfShangPin.addItemDecoration(new SpacesItemDecoration(spanCount_tuijian, spacing_tuijian, includeEdge_tuijian));
 
+        //刪除訂單
+        initDelete();
 
+    }
+
+
+    //點擊按鈕刪除訂單
+    private void initDelete() {
+        mTvActivityFackOfShanchu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DeleteOrderIdPresenter deleteOrderIdPresenter = new DeleteOrderIdPresenter(new delete());
+                deleteOrderIdPresenter.request(mOrderId_fack);
+                mIntent.putExtra("delete", "delete");
+                setResult(6, mIntent);
+                finish();
+            }
+        });
     }
 
     @Override
     protected void initEventData() {
-
+        /**
+         * 点击返回按钮关闭当前页面
+         */
+        mImgActivityFackOfFanhui.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FackOfActivity.this.finish();
+            }
+        });
     }
 
     @Override
@@ -112,6 +155,27 @@ public class FackOfActivity extends BaseActivtiy implements ICoreInfe, CustomAda
     protected void createPresenter() {
 
     }
+
+    public class delete implements ICoreInfe {
+
+        public DeleteOrderBean mMEntity;
+
+        @Override
+        public void success(Object data) {
+            Request request = (Request) data;
+            mMEntity = (DeleteOrderBean) request.getEntity();
+            //有需要在这打印一下message的返回值现在返回的是空的  让后台看一下  做一个判断
+            // Log.e("aaa", "success: "+mMEntity.get );
+//            mFackOfAdapter_a.mList.remove(mPosition);
+//            mFackOfAdapter_a.notifyDataSetChanged();
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
+    }
+
 
     @Override
     public void success(Object data) {
@@ -130,19 +194,19 @@ public class FackOfActivity extends BaseActivtiy implements ICoreInfe, CustomAda
         mTvActivityFackOfBiaohao.setText(entity.getOrder().getOrderNo());
         //运费
         mTvActivityFackOfYunFei.setText(entity.getOrder().getFreightPrice() + "");
-
         //金额
         mTvActivityFackOfJinE.setText(entity.getOrder().getRealPrice() + "");
         //总额
         mTvActivityFackOfZhongJi.setText(entity.getOrder().getSumPrice() + "");
         //支付方式
-        if (entity.getOrder().getOrderState().equals("CANCEL")) {
-            mTvActivityFackOfFangShi.setText("交易关闭");
+        if (entity.getOrder().getPayType().equals("WEIXIN")) {
+            mTvActivityFackOfFangShi.setText("微信");
+        } else if (entity.getOrder().getPayType().equals("ALIPAY")) {
+            mTvActivityFackOfFangShi.setText("支付宝");
         }
 
         //发票类型
         int invoiceType = entity.getOrderBook().getInvoiceType();
-        Log.e("tag", "success: " + invoiceType);
         if (entity.getOrderBook().getInvoiceType() == 1) {
             mTvActivityFackOfFaPianLeiXing.setText("电子发票");
         } else if (entity.getOrderBook().getInvoiceType() == 2) {
@@ -151,11 +215,12 @@ public class FackOfActivity extends BaseActivtiy implements ICoreInfe, CustomAda
             mTvActivityFackOfFaPianLeiXing.setText("无发票");
         }
 
+
         //发票内容
         if (entity.getOrderBook().getInvoiceContent() == 1) {
             mTvActivityFackOfNeiRong.setText("商品明细");
         } else {
-            mTvActivityFackOfFaPianLeiXing.setText("商品类别");
+            mTvActivityFackOfNeiRong.setText("商品类别");
         }
     }
 

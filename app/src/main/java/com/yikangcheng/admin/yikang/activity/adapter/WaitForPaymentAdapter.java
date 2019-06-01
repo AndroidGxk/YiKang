@@ -22,8 +22,9 @@ import java.util.List;
  * WF
  */
 public class WaitForPaymentAdapter extends RecyclerView.Adapter {
-    private final ArrayList<CloseTheDealBean.DetailsListBean> mList;
-    private final WaitForpaymentActivity mContent;
+    public   ArrayList<CloseTheDealBean.DetailsListBean> mList;
+    private  WaitForpaymentActivity mContent;
+    private OnClickListener mListener;
 
     public WaitForPaymentAdapter(ArrayList<CloseTheDealBean.DetailsListBean> mShopSpecDetailedBeans, WaitForpaymentActivity waitForpaymentActivity) {
         this.mList = mShopSpecDetailedBeans;
@@ -38,13 +39,19 @@ public class WaitForPaymentAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ViewHolder holder1 = (ViewHolder) holder;
         Glide.with(mContent).load(Constants.BASETUPIANSHANGCHUANURL + mList.get(position).getShopSpecDetailed().getLogo()).into(holder1.mImg);
         holder1.mName.setText(mList.get(position).getShopSpecDetailed().getCommodityName());
         holder1.mNum.setText("X" + mList.get(position).getBuyNum());
         holder1.mTitle.setText(mList.get(position).getShopSpecDetailed().getSpecNames());
         holder1.mPrice.setText(mList.get(position).getShopSpecDetailed().getRetailPrice() + "");
+        holder1.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.OnClickListener(v, position);
+            }
+        });
     }
 
     @Override
@@ -75,5 +82,13 @@ public class WaitForPaymentAdapter extends RecyclerView.Adapter {
             mNum = itemView.findViewById(R.id.tv_num);
             mShousou = itemView.findViewById(R.id.tv_item_closethedeal_shouhou);
         }
+    }
+
+    public interface OnClickListener {
+        void OnClickListener(View v, int position);
+    }
+
+    public void setOnClickListener(OnClickListener listener) {
+        this.mListener = listener;
     }
 }

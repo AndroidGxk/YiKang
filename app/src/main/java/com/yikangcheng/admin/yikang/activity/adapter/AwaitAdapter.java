@@ -57,7 +57,7 @@ public class AwaitAdapter extends RecyclerView.Adapter {
         awaitAdapter_b.setOnClickListener(new AwaitAdapter_B.OnClickListener() {
             @Override
             public void OnClickListener(View v, int orderId) {
-                mListener.OnClickListener(v, orderId);
+                mListener.OnClickListener(v, orderId, position);
             }
         });
         holder1.mShanchu.setOnClickListener(new View.OnClickListener() {
@@ -99,7 +99,7 @@ public class AwaitAdapter extends RecyclerView.Adapter {
     }
 
     public interface OnClickListener {
-        void OnClickListener(View v, int orderId);
+        void OnClickListener(View v, int orderId, int position);
     }
 
     public void setOnClickListener(OnClickListener listener) {

@@ -13,13 +13,18 @@ import android.widget.Toast;
 
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.adapter.WaitForPaymentAdapter;
+import com.yikangcheng.admin.yikang.activity.copy.CopyButtonLibrary;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.CloseTheDealBean;
+import com.yikangcheng.admin.yikang.bean.DeleteOrderBean;
+import com.yikangcheng.admin.yikang.bean.NewOrderBean;
 import com.yikangcheng.admin.yikang.bean.NewOrderBean;
 import com.yikangcheng.admin.yikang.bean.Request;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
 import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
 import com.yikangcheng.admin.yikang.presenter.CloseTheDeallPresenter;
+import com.yikangcheng.admin.yikang.presenter.NewOrderPresenter;
+import com.yikangcheng.admin.yikang.presenter.DeleteOrderIdPresenter;
 import com.yikangcheng.admin.yikang.presenter.NewOrderPresenter;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
@@ -48,8 +53,6 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
     private TextView mTvActivityWaitfrrpaymentKeFu;
     private TextView mTvActivityWaitfrrpaymentFaPianLeiXing;
     private TextView mTvActivityWaitfrrpaymentNeiRong;
-    private RecyclerView mRlvActivityWaitfrrpaymentTuiJian;
-    private ImageView mImgActivityWaitfrrpaymentShanchu;
     private TextView go_pay;
     private TextView mShanchu;
     private TextView mTvActivityFackOfProvinceStr;
@@ -60,11 +63,14 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
     private NewOrderPresenter newOrderPresenter;
     private int orderId;
     private String orderType;
+    private int mPosition;
+    private Intent mIntent;
+    private int mOrderId_wait;
 
     @Override
     protected void initView() {
-        Intent intent = getIntent();
-        int orderId_wait = intent.getIntExtra("orderId_wait", 0);
+        mIntent = getIntent();
+        mOrderId_wait = mIntent.getIntExtra("orderId_wait", 0);
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
         //ToolBar返回按钮
@@ -100,23 +106,21 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
         mTvActivityWaitfrrpaymentFaPianLeiXing = (TextView) findViewById(R.id.tv_activity_waitfrrpayment_FaPianLeiXing);
         //发票内容
         mTvActivityWaitfrrpaymentNeiRong = (TextView) findViewById(R.id.tv_activity_waitfrrpayment_NeiRong);
-        //rlv---为你推荐
-        mRlvActivityWaitfrrpaymentTuiJian = (RecyclerView) findViewById(R.id.rlv_activity_waitfrrpayment_TuiJian);
         //删除订单
         mShanchu = (TextView) findViewById(R.id.tv_activity_wait_shanchu);
         //去支付
         go_pay = (TextView) findViewById(R.id.go_pay);
 
-        /**
-         * 点击返回按钮关闭当前页面
-         */
-        mImgActivityWaitfrrpaymentFanhui.setOnClickListener(new View.OnClickListener() {
+
+        //复制监听点击事件
+        mImgActivityWaitfrrpaymentFizhi.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                finish();
+            public void onClick(View view) {
+                //传入需要复制的文字的控件
+                CopyButtonLibrary copyButtonLibrary = new CopyButtonLibrary(getApplicationContext(), mTvActivityWaitfrrpaymentBiaohao);
+                copyButtonLibrary.init();
             }
         });
-
 
         //生成新的订单
         newOrderPresenter = new NewOrderPresenter(new NewOrder());
@@ -126,12 +130,18 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
         mWaitForPaymentAdapter = new WaitForPaymentAdapter(mShopSpecDetailedBeans, this);
         mRlvActivityWaitfrrpaymentShangPin.setAdapter(mWaitForPaymentAdapter);
 
+        mWaitForPaymentAdapter.setOnClickListener(new WaitForPaymentAdapter.OnClickListener() {
+            @Override
+            public void OnClickListener(View v, int position) {
+                mPosition = position;
+            }
+        });
+
         /**
          * P层
          */
         CloseTheDeallPresenter closeTheDeallPresenter = new CloseTheDeallPresenter(this);
-        closeTheDeallPresenter.request(orderId_wait);
-//        closeTheDeallPresenter.request(orderId_wait_2);
+        closeTheDeallPresenter.request(mOrderId_wait);
         /**
          * 去支付
          */
@@ -141,11 +151,36 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
                 newOrderPresenter.request(orderId, orderType);
             }
         });
+
+        //刪除
+        initDelete();
+    }
+
+    //點擊刪除訂單關閉當前Activity
+    private void initDelete() {
+        mShanchu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DeleteOrderIdPresenter deleteOrderIdPresenter = new DeleteOrderIdPresenter(new delete());
+                deleteOrderIdPresenter.request(mOrderId_wait);
+                mIntent.putExtra("delete", "delete");
+                setResult(2, mIntent);
+                finish();
+            }
+        });
     }
 
     @Override
     protected void initEventData() {
-
+        /**
+         * 点击返回按钮关闭当前页面
+         */
+        mImgActivityWaitfrrpaymentFanhui.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override
@@ -166,6 +201,26 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
     @Override
     public float getSizeInDp() {
         return 720;
+    }
+
+    public class delete implements ICoreInfe {
+
+        public DeleteOrderBean mMEntity;
+
+        @Override
+        public void success(Object data) {
+            Request request = (Request) data;
+            mMEntity = (DeleteOrderBean) request.getEntity();
+            //有需要在这打印一下message的返回值现在返回的是空的  让后台看一下  做一个判断
+            // Log.e("aaa", "success: "+mMEntity.get );
+            mWaitForPaymentAdapter.mList.remove(mPosition);
+            mWaitForPaymentAdapter.notifyDataSetChanged();
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
     }
 
     @Override
@@ -202,7 +257,6 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
 
         //发票类型
         int invoiceType = entity.getOrderBook().getInvoiceType();
-        Log.e("tag", "success: " + invoiceType);
         if (entity.getOrderBook().getInvoiceType() == 1) {
             mTvActivityWaitfrrpaymentFaPianLeiXing.setText("电子发票");
         } else if (entity.getOrderBook().getInvoiceType() == 2) {

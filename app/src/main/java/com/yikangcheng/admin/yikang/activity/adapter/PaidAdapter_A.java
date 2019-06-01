@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.obligation.PaidActivity;
 import com.yikangcheng.admin.yikang.bean.PaidBean;
+
 import java.util.List;
 
 /**
@@ -19,9 +20,10 @@ import java.util.List;
  * WF
  */
 public class PaidAdapter_A extends RecyclerView.Adapter {
-    private List<PaidBean.OrderBean> mList;
+    public List<PaidBean.OrderBean> mList;
     private PaidActivity mContent;
     private OnClickListener mListener;
+    private OnClickListenerDelete mListenerDelete;
 
     public PaidAdapter_A(PaidActivity paidActivity, List<PaidBean.OrderBean> orderBeans) {
         this.mContent = paidActivity;
@@ -36,23 +38,30 @@ public class PaidAdapter_A extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ViewHolder holder1 = (ViewHolder) holder;
-        holder1.mBianhao.setText("订单编号:"+mList.get(position).getOrderNo());
-        holder1.mData.setText(""+mList.get(position).getCreateTime());
+        holder1.mBianhao.setText("订单编号:" + mList.get(position).getOrderNo());
+        holder1.mData.setText("" + mList.get(position).getCreateTime());
         if (mList.get(position).getOrderState().equals("SUCCESS")) {
             holder1.mZhuangtai.setText("已支付");
         }
         holder1.mPrice.setText("合计：¥" + mList.get(position).getRealPrice());
 
         holder1.mRlv.setLayoutManager(new LinearLayoutManager(mContent));
-        PaidAdapter_B paidAdapter_b = new PaidAdapter_B(mContent,mList.get(position).getOrderDetailsList());
+        PaidAdapter_B paidAdapter_b = new PaidAdapter_B(mContent, mList.get(position).getOrderDetailsList());
         holder1.mRlv.setAdapter(paidAdapter_b);
 
         paidAdapter_b.setOnClickListener(new PaidAdapter_B.OnClickListener() {
             @Override
             public void OnClickListener(View v, int orderId) {
-                mListener.OnClickListener(v,orderId);
+                mListener.OnClickListener(v, orderId, position);
+            }
+        });
+
+        holder1.mShanchu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListenerDelete.OnClickListener(v, position);
             }
         });
 
@@ -72,11 +81,11 @@ public class PaidAdapter_A extends RecyclerView.Adapter {
     class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView mBianhao;
-        private  ImageView mShanchu;
-        private  TextView mData;
-        private  TextView mPrice;
-        private  RecyclerView mRlv;
-        private  TextView mZhuangtai;
+        private ImageView mShanchu;
+        private TextView mData;
+        private TextView mPrice;
+        private RecyclerView mRlv;
+        private TextView mZhuangtai;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -90,9 +99,18 @@ public class PaidAdapter_A extends RecyclerView.Adapter {
     }
 
     public interface OnClickListener {
-        void OnClickListener(View v, int orderId);
+        void OnClickListener(View v, int orderId, int position);
     }
-    public void setOnClickListener(OnClickListener listener){
-        this.mListener=listener;
+
+    public void setOnClickListener(OnClickListener listener) {
+        this.mListener = listener;
+    }
+
+    public interface OnClickListenerDelete {
+        void OnClickListener(View v, int position);
+    }
+
+    public void setOnClickListenerDelete(OnClickListenerDelete listener) {
+        this.mListenerDelete = listener;
     }
 }

@@ -16,6 +16,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.adapter.AccomplishAdapter_A;
 import com.yikangcheng.admin.yikang.activity.orderstatus.CloseTheDealActivity;
+import com.yikangcheng.admin.yikang.activity.orderstatus.FackOfActivity;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
 import com.yikangcheng.admin.yikang.bean.DeleteOrderBean;
 import com.yikangcheng.admin.yikang.bean.PaidBean;
@@ -41,6 +42,7 @@ public class AccomplishFragment extends BaseFragment implements ICoreInfe {
     private int mPage = 1;
     private int mDeleteItemPostion;
     private SmartRefreshLayout mSmartRefreshLayout;
+    private int mDeletePosition;
 
     @Override
     protected void initView(View view) {
@@ -65,12 +67,14 @@ public class AccomplishFragment extends BaseFragment implements ICoreInfe {
         //接口回调 跳转页面
         mAccomplishAdapter_a.setOnClickListener(new AccomplishAdapter_A.OnClickListener() {
             @Override
-            public void OnClickListener(View v, int orderId) {
-                Intent intent = new Intent(getContext(), CloseTheDealActivity.class);
+            public void OnClickListener(View v, int orderId, int position) {
+                mDeletePosition = position;
+                Intent intent = new Intent(getActivity(), CloseTheDealActivity.class);
                 intent.putExtra("orderId", orderId);
-                startActivity(intent);
+                startActivityForResult(intent, 3);
             }
         });
+
 
         /**
          * P层
@@ -110,6 +114,18 @@ public class AccomplishFragment extends BaseFragment implements ICoreInfe {
 
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 3 && resultCode == 4) {
+            String delete = data.getStringExtra("delete");
+            if (delete.equals("delete")) {
+                mAccomplishAdapter_a.mList.remove(mDeletePosition);
+                mAccomplishAdapter_a.notifyDataSetChanged();
+            }
+        }
+    }
+
     /**
      * 删除订单
      */
@@ -128,7 +144,7 @@ public class AccomplishFragment extends BaseFragment implements ICoreInfe {
     //p层
     private void initMvp(int page) {
         PaidPresenter paidPresenter = new PaidPresenter(this);
-        paidPresenter.request(11, page, "SUCCESS");
+        paidPresenter.request(getLogUser(getContext()).getId(), page, "SUCCESS");
     }
 
     //上拉加载

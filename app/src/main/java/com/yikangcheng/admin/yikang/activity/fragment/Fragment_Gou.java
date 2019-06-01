@@ -98,6 +98,17 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
         shop_recyclertwo.setLayoutManager(gridLayoutManager);
         mRecommendAdapter = new RecommendAdapter(getContext());
         shop_recyclertwo.setAdapter(mRecommendAdapter);
+
+        mRecommendAdapter.setOnClickListener(new RecommendAdapter.OnClickListener() {
+            @Override
+            public void OnClickListener(View v, int id) {
+                Intent intent = new Intent(getActivity(), ParticularsActivity.class);
+                intent.putExtra("id", id);
+                startActivity(intent);
+            }
+        });
+
+
         recommendPresenter = new RecommendPresenter(new RecomICoreInfe());
         int spanCount = 2; // 3 columns
         int spacing = 20; // 50px

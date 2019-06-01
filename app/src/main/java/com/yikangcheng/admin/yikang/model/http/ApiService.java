@@ -252,6 +252,7 @@ public interface ApiService {
                                                     @Query("invoiceName") String invoiceName, @Query("invoiceNo") String invoiceNo, @Query("invoiceContent") String invoiceContent,
                                                     @Query("invoiceEmail") String invoiceEmail, @Query("payType") String payType, @Query("orderForm") String orderForm, @Query("dataType") String dataType);
 
+
     /**
      * 上传头像
      */
