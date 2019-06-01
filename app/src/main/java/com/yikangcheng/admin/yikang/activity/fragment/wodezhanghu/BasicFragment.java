@@ -9,16 +9,12 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
-import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -36,7 +32,6 @@ import com.yikangcheng.admin.yikang.app.BaseApp;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
 import com.yikangcheng.admin.yikang.bean.LoginBean;
 import com.yikangcheng.admin.yikang.bean.Request;
-import com.yikangcheng.admin.yikang.bean.Request;
 import com.yikangcheng.admin.yikang.bean.UserDetailBean;
 import com.yikangcheng.admin.yikang.bean.UserInfoBean;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
@@ -45,30 +40,15 @@ import com.yikangcheng.admin.yikang.presenter.GoswfPresenter;
 import com.yikangcheng.admin.yikang.presenter.UpdateUserMapperPresenter;
 import com.yikangcheng.admin.yikang.presenter.UserInfoPresenter;
 import com.yikangcheng.admin.yikang.util.CropUtils;
-import com.yikangcheng.admin.yikang.util.DialogPermission;
 import com.yikangcheng.admin.yikang.util.FileUtil;
-import com.yikangcheng.admin.yikang.util.PermissionUtil;
-import com.yikangcheng.admin.yikang.util.SharedPreferenceMark;
-import com.yikangcheng.admin.yikang.bean.UserInfoBean;
-import com.yikangcheng.admin.yikang.model.http.ApiException;
-import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
-import com.yikangcheng.admin.yikang.presenter.GoswfPresenter;
-import com.yikangcheng.admin.yikang.presenter.UserInfoPresenter;
-import com.yikangcheng.admin.yikang.util.CropUtils;
-import com.yikangcheng.admin.yikang.util.DialogPermission;
-import com.yikangcheng.admin.yikang.util.FileUtil;
-import com.yikangcheng.admin.yikang.util.PermissionUtil;
-import com.yikangcheng.admin.yikang.util.SharedPreferenceMark;
 
 import java.io.File;
 
-public class BasicFragment extends BaseFragment implements ICoreInfe {
 import me.leefeng.promptlibrary.PromptButton;
 import me.leefeng.promptlibrary.PromptButtonListener;
 import me.leefeng.promptlibrary.PromptDialog;
 
 public class BasicFragment extends BaseFragment implements ICoreInfe {
-
     private RelativeLayout mReLayoutFragmentBasicTouxiang;
     private RelativeLayout mReLayoutFragmentBasicSynopsis;
     private int width;
