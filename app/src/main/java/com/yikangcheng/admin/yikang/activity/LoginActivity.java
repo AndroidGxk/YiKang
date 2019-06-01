@@ -1,5 +1,6 @@
 package com.yikangcheng.admin.yikang.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,7 +9,6 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
@@ -19,6 +19,7 @@ import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
 import com.yikangcheng.admin.yikang.presenter.LoginPresenter;
 
 import me.jessyan.autosize.internal.CustomAdapt;
+import me.leefeng.promptlibrary.PromptDialog;
 
 public class LoginActivity extends BaseActivtiy implements CustomAdapt, ICoreInfe {
 
@@ -28,16 +29,22 @@ public class LoginActivity extends BaseActivtiy implements CustomAdapt, ICoreInf
     private EditText phone_edit, pwd_edit;
     private LoginPresenter loginPresenter;
     public SharedPreferences userInfo;
+    private PromptDialog promptDialog;
 
     @Override
     protected void initView() {
-        reg_image = findViewById(R.id.reg_image);
+        closeSwipeBack();
+        //创建对象
+        promptDialog = new PromptDialog(LoginActivity.this);
+        //设置自定义属性
+        promptDialog.getDefaultBuilder().touchAble(true).round(1).loadingDuration(1000);
+        reg_image = (ImageView) findViewById(R.id.reg_image);
         WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         height = wm.getDefaultDisplay().getHeight();
-        phone_edit = findViewById(R.id.phone_edit);
-        pwd_edit = findViewById(R.id.pwd_edit);
-        forget_pwd = findViewById(R.id.forget_pwd);
-        log_btn = findViewById(R.id.log_btn);
+        phone_edit = (EditText) findViewById(R.id.phone_edit);
+        pwd_edit = (EditText) findViewById(R.id.pwd_edit);
+        forget_pwd = (TextView) findViewById(R.id.forget_pwd);
+        log_btn = (TextView) findViewById(R.id.log_btn);
         loginPresenter = new LoginPresenter(this);
         //用户ID
         userInfo = getSharedPreferences("userInfo", MODE_PRIVATE);
@@ -64,6 +71,7 @@ public class LoginActivity extends BaseActivtiy implements CustomAdapt, ICoreInf
                 String phone = phone_edit.getText().toString();
                 String pwd = pwd_edit.getText().toString();
                 loginPresenter.request(phone, pwd);
+                promptDialog.showLoading("正在登录");
             }
         });
         /**
@@ -107,14 +115,16 @@ public class LoginActivity extends BaseActivtiy implements CustomAdapt, ICoreInf
             edit.commit();
             entity.setStatus(1);
             setLogUser(LoginActivity.this, entity);
+            promptDialog.showSuccess("登录成功");
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
             finish();
         } else {
-            Toast.makeText(this, "" + request.getMessage(), Toast.LENGTH_SHORT).show();
+            promptDialog.showError("登录失败");
         }
     }
 
     @Override
     public void fail(ApiException e) {
-
+        promptDialog.showError("登录失败");
     }
 }

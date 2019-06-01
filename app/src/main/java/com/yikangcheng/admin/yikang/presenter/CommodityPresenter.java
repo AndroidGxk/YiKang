@@ -21,6 +21,6 @@ public class CommodityPresenter extends BasePresenter {
     @Override
     protected Observable observable(Object... args) {
         ApiService apiService = NotWorkUtils.getInstance().create(ApiService.class);
-        return apiService.commodityList((int) args[0], (int) args[1], (String) args[2], (int) args[3]);
+        return apiService.commodityList((int) args[0], (int) args[1], (String) args[2], (int) args[3], (int) args[4]);
     }
 }

@@ -10,6 +10,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.RequestOptions;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.ApoutUsActivity;
 import com.yikangcheng.admin.yikang.activity.LoginActivity;
@@ -318,12 +320,11 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe {
     }
 
     public class AdvertisingICoreInfe implements ICoreInfe {
-
         @Override
         public void success(Object data) {
             Request request = (Request) data;
             AdvertisingBean entity = (AdvertisingBean) request.getEntity();
-            Glide.with(getContext()).load("https://www.yikch.com/upload/shop/details/20190505/1557022728545073351.jpg").into(mGuanggao);
+            Glide.with(getContext()).load("https://www.yikch.com" + entity.getPreviewUrl()).into(mGuanggao);
         }
 
         @Override
@@ -382,8 +383,11 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe {
             if (request.isSuccess()) {
                 setUserInfo(getContext(), userCenter);
             }
-            mTvFragmentWoName.setText(userCenter.getRealName());
-            Glide.with(getContext()).load("https://static.yikch.com" + userCenter.getAvatar()).into(mImgFragmentWoTouxiang);
+            mTvFragmentWoName.setText(userCenter.getNickName());
+            //设置图片圆角角度
+            Glide.with(getContext()).load("https://static.yikch.com" + userCenter.getAvatar())
+                    .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                    .into(mImgFragmentWoTouxiang);
         }
 
         @Override

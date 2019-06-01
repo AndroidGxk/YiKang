@@ -19,7 +19,9 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:paddingLeft="15dp"
+            android:paddingTop="10dp"
             android:paddingRight="15dp"
+            android:paddingBottom="10dp"
             android:src="@drawable/fanhui_seek" />
 
         <TextView
@@ -39,9 +41,8 @@
             android:id="@+id/rlv__fragment_fenlei_zuo"
             android:layout_width="96dp"
             android:layout_height="match_parent"
-            android:layout_marginBottom="42dp"
             android:background="#F7F7F7"
-            android:overScrollMode="never" />
+            android:overScrollMode="never"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rlv__fragment_fenlei_you"

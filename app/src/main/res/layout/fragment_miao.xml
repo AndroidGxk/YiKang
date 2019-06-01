@@ -148,10 +148,26 @@
     <!--android:layout_below="@+id/image"-->
     <!--android:background="@drawable/miao_recycler_shape" />-->
     <!--</RelativeLayout>-->
-    <WebView
-        android:id="@+id/webView"
+    <ProgressBar
+        android:id="@+id/pb_progress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:indeterminateOnly="false"
+        android:max="100"
+        android:progressDrawable="@drawable/progress_bar_states" />
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="50dp" />
+        android:layout_below="@+id/pb_progress">
 
+        <WebView
+            android:id="@+id/webView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/pb_progress"
+            android:layout_marginBottom="50dp" />
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </RelativeLayout>

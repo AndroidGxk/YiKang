@@ -3,6 +3,7 @@ package com.yikangcheng.admin.yikang.activity.fragment;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -15,14 +16,16 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.sobot.chat.SobotApi;
 import com.sobot.chat.api.model.Information;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.CloseActivity;
-import com.yikangcheng.admin.yikang.activity.MainActivity;
 import com.yikangcheng.admin.yikang.activity.PartiCarActivity;
 import com.yikangcheng.admin.yikang.activity.particulars.ParticularsActivity;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
@@ -40,12 +43,19 @@ public class Fragment_Miao extends BaseFragment implements ICoreInfe {
 //    private FirstSeckillRecyclerAdapter firstSeckillRecyclerAdapter;
     private AddShopPresenter addShopPresenter;
     private OrderBuyPresenter orderBuyPresenter;
+    private ProgressBar pbProgress;
+    private SmartRefreshLayout refreshLayout;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @SuppressLint("JavascriptInterface")
     @Override
     protected void initView(View view) {
+        //进度条
+        pbProgress = view.findViewById(R.id.pb_progress);
         addShopPresenter = new AddShopPresenter(this);
+        //加载刷新
+        refreshLayout = view.findViewById(R.id.refreshLayout);
+        refreshLayout.setEnableLoadMore(false);
         orderBuyPresenter = new OrderBuyPresenter(new OrderBuy());
 //        miao_one_btn = view.findViewById(R.id.miao_one_btn);
 //        recycler_one = view.findViewById(R.id.recycler_one);
@@ -107,10 +117,30 @@ public class Fragment_Miao extends BaseFragment implements ICoreInfe {
             public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
                 return super.onJsAlert(view, url, message, result);
             }
+
+            //进度发生变化
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                if (newProgress == 100) {
+                    // 网页加载完成
+                    pbProgress.setVisibility(View.GONE);
+                } else {
+                    // 加载中
+                    pbProgress.setProgress(newProgress);
+                }
+                super.onProgressChanged(view, newProgress);
+            }
         });
         webView.getSettings().setJavaScriptEnabled(true);
         webView.addJavascriptInterface(this, "ww");
         webView.loadUrl("https://www.yikch.com/mobile/appShow/activity?type=android");
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                webView.loadUrl("https://www.yikch.com/mobile/appShow/activity?type=android");
+                refreshLayout.finishRefresh();
+            }
+        });
     }
 
     @Override
@@ -135,7 +165,6 @@ public class Fragment_Miao extends BaseFragment implements ICoreInfe {
     @JavascriptInterface
     public void sayHello(String msg) {
         s += msg + ",";
-        Toast.makeText(getActivity(), s + "", Toast.LENGTH_SHORT).show();
         String[] split = s.split(",");
         if (split.length == 4) {
             int id = getLogUser(getContext()).getId();

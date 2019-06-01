@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yikangcheng.admin.yikang.R;
@@ -26,7 +27,7 @@ import me.jessyan.autosize.internal.CustomAdapt;
 
 public class FackOfActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt {
     private ImageView mImgActivityFackOfFanhui;
-    private Toolbar mToolbarActivityFackOf;
+    private RelativeLayout mToolbarActivityFackOf;
     private TextView mTvActivityFackOfName;
     private TextView mTvActivityFackOfProvinceStr;
     private TextView mTvActivityFackOfCityStr;
@@ -52,25 +53,25 @@ public class FackOfActivity extends BaseActivtiy implements ICoreInfe, CustomAda
         int orderId_fack = intent.getIntExtra("orderId_fack", 0);
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
-        mImgActivityFackOfFanhui = findViewById(R.id.img_activity_fack_of_fanhui);
-        mToolbarActivityFackOf = findViewById(R.id.toolbar_activity_fack_of);
-        mTvActivityFackOfName = findViewById(R.id.tv_activity_fack_of_name);
-        mTvActivityFackOfProvinceStr = findViewById(R.id.tv_activity_fack_of_provinceStr);
-        mTvActivityFackOfCityStr = findViewById(R.id.tv_activity_fack_of_cityStr);
-        mTvActivityFackOfTownStr = findViewById(R.id.tv_activity_fack_of_townStr);
-        mTvActivityFackOfAddress = findViewById(R.id.tv_activity_fack_of_address);
-        mRlvActivityFackOfShangPin = findViewById(R.id.rlv_activity_fack_of_shangPin);
-        mTvActivityFackOfBiaohao = findViewById(R.id.tv_activity_fack_of_biaohao);
-        mImgActivityFackOfFzhi = findViewById(R.id.img_activity_fack_of_fzhi);
-        mTvActivityFackOfYunFei = findViewById(R.id.tv_activity_fack_of_yunFei);
-        mTvActivityFackOfJinE = findViewById(R.id.tv_activity_fack_of_jinE);
-        mTvActivityFackOfZhongJi = findViewById(R.id.tv_activity_fack_of_zhongJi);
-        mTvActivityFackOfFangShi = findViewById(R.id.tv_activity_fack_of_fangShi);
-        mTvActivityFackOfKeFu = findViewById(R.id.tv_activity_fack_of_keFu);
-        mTvActivityFackOfFaPianLeiXing = findViewById(R.id.tv_activity_fack_of_FaPianLeiXing);
-        mTvActivityFackOfNeiRong = findViewById(R.id.tv_activity_fack_of_NeiRong);
-        mRlvActivityFackOfTuiJian = findViewById(R.id.rlv_activity_fack_of_TuiJian);
-        mTvActivityFackOfShanchu = findViewById(R.id.tv_activity_fack_of_shanchu);
+        mImgActivityFackOfFanhui = (ImageView) findViewById(R.id.img_activity_fack_of_fanhui);
+        mToolbarActivityFackOf = (RelativeLayout) findViewById(R.id.toolbar_activity_fack_of);
+        mTvActivityFackOfName = (TextView) findViewById(R.id.tv_activity_fack_of_name);
+        mTvActivityFackOfProvinceStr = (TextView) findViewById(R.id.tv_activity_fack_of_provinceStr);
+        mTvActivityFackOfCityStr = (TextView) findViewById(R.id.tv_activity_fack_of_cityStr);
+        mTvActivityFackOfTownStr = (TextView) findViewById(R.id.tv_activity_fack_of_townStr);
+        mTvActivityFackOfAddress = (TextView) findViewById(R.id.tv_activity_fack_of_address);
+        mRlvActivityFackOfShangPin = (RecyclerView) findViewById(R.id.rlv_activity_fack_of_shangPin);
+        mTvActivityFackOfBiaohao = (TextView) findViewById(R.id.tv_activity_fack_of_biaohao);
+        mImgActivityFackOfFzhi = (ImageView) findViewById(R.id.img_activity_fack_of_fzhi);
+        mTvActivityFackOfYunFei = (TextView) findViewById(R.id.tv_activity_fack_of_yunFei);
+        mTvActivityFackOfJinE = (TextView) findViewById(R.id.tv_activity_fack_of_jinE);
+        mTvActivityFackOfZhongJi = (TextView) findViewById(R.id.tv_activity_fack_of_zhongJi);
+        mTvActivityFackOfFangShi = (TextView) findViewById(R.id.tv_activity_fack_of_fangShi);
+        mTvActivityFackOfKeFu = (TextView) findViewById(R.id.tv_activity_fack_of_keFu);
+        mTvActivityFackOfFaPianLeiXing = (TextView) findViewById(R.id.tv_activity_fack_of_FaPianLeiXing);
+        mTvActivityFackOfNeiRong = (TextView) findViewById(R.id.tv_activity_fack_of_NeiRong);
+        mRlvActivityFackOfTuiJian = (RecyclerView) findViewById(R.id.rlv_activity_fack_of_TuiJian);
+        mTvActivityFackOfShanchu = (TextView) findViewById(R.id.tv_activity_fack_of_shanchu);
 
         mImgActivityFackOfFanhui.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,8 +80,6 @@ public class FackOfActivity extends BaseActivtiy implements ICoreInfe, CustomAda
             }
         });
 
-        mToolbarActivityFackOf.setTitle("");
-        setSupportActionBar(mToolbarActivityFackOf);
 
         CloseTheDeallPresenter closeTheDeallPresenter = new CloseTheDeallPresenter(this);
         closeTheDeallPresenter.request(orderId_fack);

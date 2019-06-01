@@ -99,7 +99,15 @@ public class AllAddressRecyclerAdapter extends RecyclerView.Adapter<AllAddressRe
                 }
             }
         }
-
+        /**
+         * 选择商品
+         */
+        vh.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                seleAddressOnClick.onClick(listUserAddressBean);
+            }
+        });
     }
 
     @Override
@@ -153,5 +161,15 @@ public class AllAddressRecyclerAdapter extends RecyclerView.Adapter<AllAddressRe
 
     public interface deleteOnClickListener {
         void onClick(int id, int position);
+    }
+
+    public interface SeleAddressOnClick {
+        void onClick(AllAddressBean.ListUserAddressBean userAddressBean);
+    }
+
+    SeleAddressOnClick seleAddressOnClick;
+
+    public void setSeleAddressOnClick(SeleAddressOnClick seleAddressOnClick) {
+        this.seleAddressOnClick = seleAddressOnClick;
     }
 }

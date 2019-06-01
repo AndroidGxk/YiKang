@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.yikangcheng.admin.yikang.R;
+import com.yikangcheng.admin.yikang.activity.LoginActivity;
 import com.yikangcheng.admin.yikang.activity.MainActivity;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
 
@@ -34,7 +35,7 @@ public class Introduction_two extends BaseFragment {
                 SharedPreferences.Editor edit = sp.edit();
                 edit.putString("stratapp", "true");
                 edit.commit();
-                startActivity(new Intent(getActivity(), MainActivity.class));
+                startActivity(new Intent(getActivity(), LoginActivity.class));
                 getActivity().finish();
             }
         });

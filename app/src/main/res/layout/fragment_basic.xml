@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -24,22 +25,12 @@
             android:textSize="15dp" />
 
         <ImageView
-            android:id="@+id/user_header"
+            android:id="@+id/user_avatar"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="5dp"
-            android:layout_toLeftOf="@+id/header_img"
-            android:src="@drawable/touxiang_2" />
-
-        <ImageView
-            android:id="@+id/header_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="15dp"
-            android:src="@drawable/right" />
+            android:layout_marginRight="15dp" />
     </RelativeLayout>
 
 
@@ -50,9 +41,11 @@
         android:layout_marginLeft="15dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="15dp"
-        android:background="@drawable/bai">
+        android:background="@drawable/bai"
+        android:focusable="false">
 
         <TextView
+            android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -60,26 +53,59 @@
             android:text="昵称"
             android:textSize="15dp" />
 
-        <TextView
+        <EditText
             android:id="@+id/name_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_centerVertical="true"
-            android:layout_marginRight="5dp"
-            android:layout_toLeftOf="@+id/name_image"
-            android:gravity="center"
-            android:text="昵称"
+            android:layout_toRightOf="@+id/name"
+            android:background="@null"
+            android:gravity="right"
+            android:hint="昵称"
+            android:paddingLeft="25dp"
+            android:paddingTop="10dp"
+            android:paddingRight="15dp"
+            android:paddingBottom="10dp"
             android:textColor="#999999"
             android:textSize="13sp" />
 
-        <ImageView
-            android:id="@+id/name_image"
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/reLayout_fragment_basic_youxiang"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/bai"
+        android:focusable="false">
+
+        <TextView
+            android:id="@+id/youxiang"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="15dp"
-            android:src="@drawable/right" />
+            android:layout_marginLeft="15dp"
+            android:text="邮箱"
+            android:textSize="15dp" />
+
+        <EditText
+            android:id="@+id/youxiang_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/youxiang"
+            android:background="@null"
+            android:gravity="right"
+            android:hint="邮箱"
+            android:paddingLeft="25dp"
+            android:paddingTop="10dp"
+            android:paddingRight="15dp"
+            android:paddingBottom="10dp"
+            android:textColor="#999999"
+            android:textSize="13sp" />
+
     </RelativeLayout>
 
     <RelativeLayout
@@ -89,9 +115,12 @@
         android:layout_marginLeft="15dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="15dp"
-        android:background="@drawable/bai">
+        android:background="@drawable/bai"
+        android:fadeScrollbars="false"
+        android:focusable="false">
 
         <TextView
+            android:id="@+id/r_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -99,27 +128,23 @@
             android:text="姓名"
             android:textSize="15dp" />
 
-        <TextView
+        <EditText
             android:id="@+id/rela_name_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_centerVertical="true"
-            android:layout_marginRight="5dp"
-            android:layout_toLeftOf="@+id/rela_imag"
-            android:gravity="center"
+            android:layout_toRightOf="@+id/r_name"
+            android:background="@null"
+            android:gravity="right"
             android:hint="请填写"
-            android:textColorHint="#FF0000"
+            android:paddingLeft="25dp"
+            android:paddingTop="10dp"
+            android:paddingRight="15dp"
+            android:paddingBottom="10dp"
             android:textColor="#999999"
+            android:textColorHint="#FF0000"
             android:textSize="13sp" />
 
-        <ImageView
-            android:id="@+id/rela_imag"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="15dp"
-            android:src="@drawable/right" />
     </RelativeLayout>
 
 
@@ -150,6 +175,7 @@
             android:orientation="horizontal">
 
             <RadioButton
+                android:id="@+id/nan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:button="@null"
@@ -159,6 +185,7 @@
                 android:textSize="13sp" />
 
             <RadioButton
+                android:id="@+id/nv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -196,8 +223,8 @@
             android:layout_toLeftOf="@+id/intro_img"
             android:gravity="center"
             android:hint="请填写"
-            android:textColorHint="#FF0000"
             android:textColor="#999999"
+            android:textColorHint="#FF0000"
             android:textSize="13sp" />
 
 
@@ -213,6 +240,7 @@
 
 
     <TextView
+        android:id="@+id/ok_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"

@@ -2,6 +2,7 @@ package com.yikangcheng.admin.yikang.activity;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
@@ -10,11 +11,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.particulars.ParticularsActivity;
+import com.yikangcheng.admin.yikang.activity.seek.SeekActivity;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.ClassifyCommodityListBean;
 import com.yikangcheng.admin.yikang.bean.Request;
@@ -26,13 +31,14 @@ import com.yikangcheng.admin.yikang.presenter.CommodityPresenter;
 import java.util.List;
 
 import me.jessyan.autosize.internal.CustomAdapt;
+import me.leefeng.promptlibrary.PromptDialog;
 
 /**
  * 搜索列表页面
  */
 public class SeekListActivity extends BaseActivtiy implements CustomAdapt, ICoreInfe, View.OnClickListener {
 
-    private EditText edit_seek_sousuo;
+    private TextView edit_seek_sousuo;
     private CommodityPresenter commodityPresenter;
     private XRecyclerView xrecycler;
     private ClassCommodAdapter classCommodAdapter;
@@ -40,34 +46,45 @@ public class SeekListActivity extends BaseActivtiy implements CustomAdapt, ICore
     private RelativeLayout price;
     private ImageView qiehuan, back_img;
     private boolean zclick = true, xclick, pclick, qclick = true, pimgclick = true;
-    private int state;
     private int id;
     private String count;
+    private SmartRefreshLayout refreshLayout;
+    private PromptDialog promptDialog;
+    private int record;
+    //页数
+    private int mPage;
 
     @Override
     protected void initView() {
+        //创建对象
+        promptDialog = new PromptDialog(SeekListActivity.this);
+        //设置自定义属性
+        promptDialog.getDefaultBuilder().touchAble(true).round(1).loadingDuration(1000);
+        promptDialog.showLoading("正在加载");
         final Intent intent = getIntent();
         count = intent.getStringExtra("count");
         id = intent.getIntExtra("id", 000);
-        xrecycler = findViewById(R.id.xrecycler);
+        xrecycler = (XRecyclerView) findViewById(R.id.xrecycler);
         //搜素框
-        edit_seek_sousuo = findViewById(R.id.EditTixt_activity_seek_sousuo);
-        zonghe = findViewById(R.id.zonghe);
-        price_text = findViewById(R.id.price_text);
-        back_img = findViewById(R.id.back_img);
+        edit_seek_sousuo = (TextView) findViewById(R.id.EditTixt_activity_seek_sousuo);
+        zonghe = (TextView) findViewById(R.id.zonghe);
+        //加载刷新
+        refreshLayout = (SmartRefreshLayout) findViewById(R.id.refreshLayout);
+        price_text = (TextView) findViewById(R.id.price_text);
+        back_img = (ImageView) findViewById(R.id.back_img);
         zonghe.setOnClickListener(this);
-        xiaoliang = findViewById(R.id.xiaoliang);
+        xiaoliang = (TextView) findViewById(R.id.xiaoliang);
         xiaoliang.setOnClickListener(this);
-        price = findViewById(R.id.price);
+        price = (RelativeLayout) findViewById(R.id.price);
         price.setOnClickListener(this);
-        qiehuan = findViewById(R.id.qiehuan);
+        qiehuan = (ImageView) findViewById(R.id.qiehuan);
         qiehuan.setOnClickListener(this);
         edit_seek_sousuo.setText(count);
         commodityPresenter = new CommodityPresenter(this);
         if (count == null || count.equals("")) {
-            commodityPresenter.request(id, 1, "1", 1);
+            commodityPresenter.request(id, 1, "", 1, 1);
         } else {
-            commodityPresenter.request(id, 1, count, 1);
+            commodityPresenter.request(id, 1, count, 1, 1);
         }
         xrecycler.setLayoutManager(new LinearLayoutManager(this));
         classCommodAdapter = new ClassCommodAdapter(this);
@@ -78,6 +95,23 @@ public class SeekListActivity extends BaseActivtiy implements CustomAdapt, ICore
                 Intent intent1 = new Intent(SeekListActivity.this, ParticularsActivity.class);
                 intent1.putExtra("id", id);
                 startActivity(intent1);
+            }
+        });
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                mPage = 1;
+                classCommodAdapter.removeAll();
+                commodityPresenter.request(id, record, "", 1, mPage);
+                refreshLayout.finishRefresh();
+            }
+        });
+        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                mPage++;
+                commodityPresenter.request(id, record, "", 1, mPage);
+                refreshLayout.finishLoadMore();
             }
         });
     }
@@ -92,6 +126,15 @@ public class SeekListActivity extends BaseActivtiy implements CustomAdapt, ICore
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+        /**
+         * 跳转
+         */
+        edit_seek_sousuo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(SeekListActivity.this, SeekActivity.class));
             }
         });
     }
@@ -118,10 +161,10 @@ public class SeekListActivity extends BaseActivtiy implements CustomAdapt, ICore
 
     @Override
     public void success(Object data) {
+        promptDialog.dismiss();
         Request request = (Request) data;
         ClassifyCommodityListBean classifyCommodityListBean = (ClassifyCommodityListBean) request.getEntity();
         List<ClassifyCommodityListBean.CommodityListBean> commodityList = classifyCommodityListBean.getCommodityList();
-        classCommodAdapter.removeAll();
         classCommodAdapter.addAll(commodityList);
     }
 
@@ -140,10 +183,13 @@ public class SeekListActivity extends BaseActivtiy implements CustomAdapt, ICore
         switch (view.getId()) {
             case R.id.zonghe:
                 if (!zclick) {
+                    classCommodAdapter.removeAll();
+                    record = 1;
+                    mPage=1;
                     if (count == null || count.equals("")) {
-                        commodityPresenter.request(id, 1, "1", 1);
+                        commodityPresenter.request(id, record, "", 1, 1);
                     } else {
-                        commodityPresenter.request(id, 1, count, 1);
+                        commodityPresenter.request(id, record, count, 1, 1);
                     }
                     zonghe.setTextColor(SeekListActivity.this.getResources().getColor(R.color.colorTab));
                     xiaoliang.setTextColor(SeekListActivity.this.getResources().getColor(R.color.colorText));
@@ -160,10 +206,13 @@ public class SeekListActivity extends BaseActivtiy implements CustomAdapt, ICore
                 break;
             case R.id.xiaoliang:
                 if (!xclick) {
+                    classCommodAdapter.removeAll();
+                    record = 5;
+                    mPage=1;
                     if (count == null || count.equals("")) {
-                        commodityPresenter.request(id, 5, "1", 1);
+                        commodityPresenter.request(id, record, "", 1, 1);
                     } else {
-                        commodityPresenter.request(id, 5, count, 1);
+                        commodityPresenter.request(id, record, count, 1, 1);
                     }
                     xiaoliang.setTextColor(SeekListActivity.this.getResources().getColor(R.color.colorTab));
                     zonghe.setTextColor(SeekListActivity.this.getResources().getColor(R.color.colorText));
@@ -186,10 +235,13 @@ public class SeekListActivity extends BaseActivtiy implements CustomAdapt, ICore
                     zclick = false;
                     xclick = false;
                     if (pimgclick) {
+                        classCommodAdapter.removeAll();
+                        record = 3;
+                        mPage=1;
                         if (count == null || count.equals("")) {
-                            commodityPresenter.request(id, 3, "1", 1);
+                            commodityPresenter.request(id, record, "", 1, 1);
                         } else {
-                            commodityPresenter.request(id, 3, count, 1);
+                            commodityPresenter.request(id, record, count, 1, 1);
                         }
                         Drawable drawable = mContext.getResources().getDrawable(R.drawable.price_top);
                         // 这一步必须要做,否则不会显示.
@@ -197,10 +249,13 @@ public class SeekListActivity extends BaseActivtiy implements CustomAdapt, ICore
                         price_text.setCompoundDrawables(null, null, drawable, null);
                         pimgclick = false;
                     } else {
+                        classCommodAdapter.removeAll();
+                        mPage=1;
+                        record = 4;
                         if (count == null || count.equals("")) {
-                            commodityPresenter.request(id, 4, "1", 1);
+                            commodityPresenter.request(id, record, "", 1, 1);
                         } else {
-                            commodityPresenter.request(id, 4, count, 1);
+                            commodityPresenter.request(id, record, count, 1, 1);
                         }
                         Drawable drawable = mContext.getResources().getDrawable(R.drawable.price_button);
                         // 这一步必须要做,否则不会显示.
@@ -225,4 +280,5 @@ public class SeekListActivity extends BaseActivtiy implements CustomAdapt, ICore
                 break;
         }
     }
+
 }

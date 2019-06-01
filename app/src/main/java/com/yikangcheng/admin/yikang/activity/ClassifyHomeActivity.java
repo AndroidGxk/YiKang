@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.adapter.FenLeiAAdapter;
@@ -21,6 +20,7 @@ import com.yikangcheng.admin.yikang.bean.Request;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
 import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
 import com.yikangcheng.admin.yikang.presenter.ClassifyPresenter;
+import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
 import java.util.List;
 
@@ -41,14 +41,15 @@ public class ClassifyHomeActivity extends BaseActivtiy implements ICoreInfe, Cus
 
     @Override
     protected void initView() {
+        //设置状态栏颜色
+        StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
-        Toast.makeText(this, "" + id, Toast.LENGTH_SHORT).show();
         WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         height = wm.getDefaultDisplay().getHeight();
-        mRlvFragmentFenleiYou = findViewById(R.id.rlv__fragment_fenlei_you);
-        back_img = findViewById(R.id.back_img);
-        mRlvFragmentFenleiZuo = findViewById(R.id.rlv__fragment_fenlei_zuo);
+        mRlvFragmentFenleiYou = (RecyclerView) findViewById(R.id.rlv__fragment_fenlei_you);
+        back_img = (ImageView) findViewById(R.id.back_img);
+        mRlvFragmentFenleiZuo = (RecyclerView) findViewById(R.id.rlv__fragment_fenlei_zuo);
         classifyPresenter = new ClassifyPresenter(this);
         classifyPresenter.request();
         //左边

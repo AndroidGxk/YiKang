@@ -2,7 +2,6 @@ package com.yikangcheng.admin.yikang.activity.fragment.coupon;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
-import android.widget.Toast;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.yikangcheng.admin.yikang.R;

@@ -36,7 +36,7 @@ import java.util.ArrayList;
 public class ObligationActivity extends BaseActivtiy implements ICoreInfe {
 
     private ImageView mImgActivityObligationFanhui;
-    private Toolbar mToolbarActivityObligation;
+    private RelativeLayout mToolbarActivityObligation;
     private RecyclerView mRlvActivityObligation;
     private ObligationAdapter mObligationAdapter;
     private int mPage = 1;
@@ -50,16 +50,14 @@ public class ObligationActivity extends BaseActivtiy implements ICoreInfe {
     protected void initView() {
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
-        mImgActivityObligationFanhui = findViewById(R.id.img_activity_obligation_fanhui);
-        mToolbarActivityObligation = findViewById(R.id.toolbar_activity_obligation);
-        mRlvActivityObligation = findViewById(R.id.rlv_activity_obligation);
-        mRefreshLayout = findViewById(R.id.refreshLayout);
-        mImgFragmentAccomplish = findViewById(R.id.img_fragment_accomplish);
-        mImgFragmentAccomplishQuguanghuang = findViewById(R.id.img_fragment_accomplish_quguanghuang);
-        mRelativeLayout = findViewById(R.id.relativeLayout);
+        mImgActivityObligationFanhui = (ImageView) findViewById(R.id.img_activity_obligation_fanhui);
+        mToolbarActivityObligation = (RelativeLayout) findViewById(R.id.toolbar_activity_obligation);
+        mRlvActivityObligation = (RecyclerView) findViewById(R.id.rlv_activity_obligation);
+        mRefreshLayout = (SmartRefreshLayout) findViewById(R.id.refreshLayout);
+        mImgFragmentAccomplish = (ImageView) findViewById(R.id.img_fragment_accomplish);
+        mImgFragmentAccomplishQuguanghuang = (ImageView) findViewById(R.id.img_fragment_accomplish_quguanghuang);
+        mRelativeLayout = (RelativeLayout) findViewById(R.id.relativeLayout);
 
-        mToolbarActivityObligation.setTitle("");
-        setSupportActionBar(mToolbarActivityObligation);
 
         /**
          * 点击返回图标关闭当前页面
@@ -105,7 +103,6 @@ public class ObligationActivity extends BaseActivtiy implements ICoreInfe {
         int spacing_tuijian = 20; // 50px
         boolean includeEdge_tuijian = false;
         mRlvActivityObligation.addItemDecoration(new SpacesItemDecoration(spanCount_tuijian, spacing_tuijian, includeEdge_tuijian));
-
         //设置显示隐藏
         if (orderBeans.size() < 0) {
             mRelativeLayout.setVisibility(View.VISIBLE);

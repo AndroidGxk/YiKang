@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.adapter.PaidAdapter_A;
@@ -29,7 +30,7 @@ public class PaidActivity extends BaseActivtiy implements ICoreInfe {
 
 
     private ImageView mImgActivityPaidFanhui;
-    private Toolbar mToolbarActivityPaid;
+    private RelativeLayout mToolbarActivityPaid;
     private RecyclerView mRlvActivityPaid;
     private PaidAdapter_A mPaidAdapter_a;
 
@@ -38,13 +39,10 @@ public class PaidActivity extends BaseActivtiy implements ICoreInfe {
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
 
-        mImgActivityPaidFanhui = findViewById(R.id.img_activity_paid_fanhui);
-        mToolbarActivityPaid = findViewById(R.id.toolbar_activity_paid);
-        mRlvActivityPaid = findViewById(R.id.rlv_activity_paid);
+        mImgActivityPaidFanhui = (ImageView) findViewById(R.id.img_activity_paid_fanhui);
+        mToolbarActivityPaid = (RelativeLayout) findViewById(R.id.toolbar_activity_paid);
+        mRlvActivityPaid = (RecyclerView) findViewById(R.id.rlv_activity_paid);
 
-
-        mToolbarActivityPaid.setTitle("");
-        setSupportActionBar(mToolbarActivityPaid);
 
         /**
          * 点击返回图标关闭当前页面

@@ -25,25 +25,27 @@
 
             <ImageView
                 android:id="@+id/img_fragment_wo_lingdang"
-                android:layout_width="26dp"
-                android:layout_height="26dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_marginTop="14dp"
                 android:layout_marginRight="14dp"
+                android:paddingLeft="15dp"
+                android:paddingTop="15dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="15dp"
                 android:src="@drawable/lingdang" />
 
             <ImageView
-                android:visibility="gone"
                 android:id="@+id/img__fragment_wo_hongyuanquan_a"
                 android:layout_width="13dp"
                 android:layout_height="13dp"
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="13dp"
                 android:layout_marginRight="14dp"
-                android:background="@drawable/hong" />
+                android:background="@drawable/hong"
+                android:visibility="gone" />
 
             <TextView
-                android:visibility="gone"
                 android:id="@+id/tv_fragment_wo_xiaoxi_a"
                 android:layout_width="13dp"
                 android:layout_height="14dp"
@@ -52,7 +54,8 @@
                 android:layout_marginRight="12dp"
                 android:text="01"
                 android:textColor="#FFFFFF"
-                android:textSize="9sp" />
+                android:textSize="9sp"
+                android:visibility="gone" />
 
             <ImageView
                 android:id="@+id/img_fragment_wo_touxiang"
@@ -76,7 +79,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="144dp"
+                android:layout_marginTop="134dp"
+                android:paddingTop="10dp"
                 android:text="全部订单"
                 android:textColor="#717171" />
 
@@ -85,8 +89,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_marginTop="144dp"
+                android:layout_marginTop="134dp"
                 android:layout_marginRight="27dp"
+                android:paddingTop="10dp"
                 android:text="查看全部订单"
                 android:textColor="#717171 " />
 
@@ -126,12 +131,11 @@
                             android:layout_width="13dp"
                             android:layout_height="14dp"
                             android:layout_marginLeft="38dp"
-                            android:visibility="gone"
                             android:layout_marginTop="9dp"
-                            android:src="@drawable/hong" />
+                            android:src="@drawable/hong"
+                            android:visibility="gone" />
 
                         <TextView
-                            android:visibility="gone"
                             android:id="@+id/tv_fragment_wo_xiaoxi_b"
                             android:layout_width="13dp"
                             android:layout_height="14dp"
@@ -139,7 +143,8 @@
                             android:layout_marginTop="9.5dp"
                             android:text="01"
                             android:textColor="#FFFFFF"
-                            android:textSize="9sp" />
+                            android:textSize="9sp"
+                            android:visibility="gone" />
 
                         <TextView
                             android:layout_width="wrap_content"

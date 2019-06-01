@@ -7,7 +7,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.adapter.MyAccountAdapter;
@@ -35,10 +34,10 @@ public class MyaccountActivity extends BaseActivtiy implements CustomAdapt {
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
 
 
-        mImgActivityMyaccountFanhui = findViewById(R.id.img_activity_myaccount_fanhui);
-        mToolbarActivityMyaccount = findViewById(R.id.toolbar_activity_myaccount);
-        mTabActivityMyaccount = findViewById(R.id.tab_activity_myaccount);
-        mViewPagerActivityMyaccount = findViewById(R.id.ViewPager_activity_myaccount);
+        mImgActivityMyaccountFanhui = (ImageView) findViewById(R.id.img_activity_myaccount_fanhui);
+        mToolbarActivityMyaccount = (RelativeLayout) findViewById(R.id.toolbar_activity_myaccount);
+        mTabActivityMyaccount = (TabLayout) findViewById(R.id.tab_activity_myaccount);
+        mViewPagerActivityMyaccount = (ViewPager) findViewById(R.id.ViewPager_activity_myaccount);
 
         ArrayList<String> strings = new ArrayList<>();
         strings.add("基本信息");

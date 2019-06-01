@@ -37,11 +37,11 @@ public class ConfirmActivity extends BaseActivtiy implements CustomAdapt {
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorTab);
         Display display = this.getWindowManager().getDefaultDisplay();
         height = display.getHeight();
-        back_img = findViewById(R.id.back_img);
-        pay_btn = findViewById(R.id.pay_btn);
-        order_number = findViewById(R.id.order_number);
-        money = findViewById(R.id.money);
-        order_pay = findViewById(R.id.order_pay);
+        back_img = (ImageView) findViewById(R.id.back_img);
+        pay_btn = (TextView) findViewById(R.id.pay_btn);
+        order_number = (TextView) findViewById(R.id.order_number);
+        money = (TextView) findViewById(R.id.money);
+        order_pay = (TextView) findViewById(R.id.order_pay);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         creatorder = (CreatOrderBean) bundle.getSerializable("creatorder");

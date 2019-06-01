@@ -18,6 +18,7 @@ import com.yikangcheng.admin.yikang.activity.fragment.introduction.Introduction_
 import com.yikangcheng.admin.yikang.activity.fragment.introduction.Introduction_three;
 import com.yikangcheng.admin.yikang.activity.fragment.introduction.Introduction_two;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
+import com.yikangcheng.admin.yikang.bean.LoginBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +38,12 @@ public class WelcomeActivity extends BaseActivtiy {
                 if (count > 0) {
                     handler.sendEmptyMessageDelayed(1, 1000);
                 } else {
-                    startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
+                    LoginBean logUser = getLogUser(WelcomeActivity.this);
+                    if(logUser==null){
+                        startActivity(new Intent(WelcomeActivity.this, LoginActivity.class));
+                    }else{
+                        startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
+                    }
                     finish();
                 }
 
@@ -47,15 +53,16 @@ public class WelcomeActivity extends BaseActivtiy {
 
     @Override
     protected void initView() {
-        viewpage = findViewById(R.id.viewpage);
+        closeSwipeBack();
+        viewpage = (ViewPager) findViewById(R.id.viewpage);
         SharedPreferences startapp = getSharedPreferences("stratapp", MODE_PRIVATE);
         String start = startapp.getString("stratapp", "fasle");
         if (start.equals("true")) {
             if (record != 1) {
                 viewpage.setVisibility(View.GONE);
-                handler.sendEmptyMessage(1);
                 setRecord();
             }
+            handler.sendEmptyMessage(1);
             return;
         }
         Introduction_one introduction_one = new Introduction_one();

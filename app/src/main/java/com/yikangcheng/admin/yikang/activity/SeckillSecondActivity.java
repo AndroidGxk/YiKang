@@ -29,8 +29,8 @@ public class SeckillSecondActivity extends BaseActivtiy implements XRecyclerView
     protected void initView() {
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
         seckillRecyclerAdapter = new SeckillRecyclerAdapter();
-        back_img = findViewById(R.id.back_img);
-        recycler = findViewById(R.id.recycler);
+        back_img = (ImageView) findViewById(R.id.back_img);
+        recycler = (XRecyclerView) findViewById(R.id.recycler);
         for (int i = 0; i < 10; i++) {
             stringList.add("s");
         }

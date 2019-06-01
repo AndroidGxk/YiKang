@@ -3,6 +3,7 @@ package com.yikangcheng.admin.yikang.activity.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,7 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<ShopRecyclerAdapte
         this.shopList.addAll(shopList);
         notifyDataSetChanged();
     }
+
     public void remove() {
         this.shopList.clear();
     }
@@ -89,6 +91,12 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<ShopRecyclerAdapte
         Glide.with(mContext).load(Constants.BASETUPIANSHANGCHUANURL + shopSpecDetailedBean.getLogo()).into(vh.shop_img);
         vh.shop_count.setText(shopSpecDetailedBean.getCommodityName());
         vh.num_text.setText(shopSpecDetailedBean.getSpecNames());
+        vh.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goParClickListener.onclick(shopList.get(position).getCommodityId());
+            }
+        });
     }
 
     @Override
@@ -192,6 +200,17 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<ShopRecyclerAdapte
     //内部类接口
     public interface checkBoxTouchListener {
         void checked(boolean isCheck);
+    }
+
+    goParClickListener goParClickListener;
+
+    public void setGoParClickListener(ShopRecyclerAdapter.goParClickListener goParClickListener) {
+        this.goParClickListener = goParClickListener;
+    }
+
+    //跳转详情页
+    public interface goParClickListener {
+        void onclick(int id);
     }
 }
 

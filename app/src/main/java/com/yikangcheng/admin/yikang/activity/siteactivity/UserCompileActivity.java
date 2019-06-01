@@ -75,17 +75,20 @@ public class UserCompileActivity extends BaseActivtiy implements ICoreInfe, Cust
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         listUserAddressBean = (AllAddressBean.ListUserAddressBean) bundle.get("listUserAddressBean");
-        name_edit = findViewById(R.id.name_edit);
-        phone_text = findViewById(R.id.phone_text);
-        relay_address = findViewById(R.id.relay_address);
-        address_text = findViewById(R.id.address_text);
-        back_img = findViewById(R.id.back_img);
-        add_address = findViewById(R.id.add_address);
-        check_btn = findViewById(R.id.check_btn);
+        name_edit = (EditText) findViewById(R.id.name_edit);
+        phone_text = (EditText) findViewById(R.id.phone_text);
+        relay_address = (EditText) findViewById(R.id.relay_address);
+        address_text = (TextView) findViewById(R.id.address_text);
+        back_img = (ImageView) findViewById(R.id.back_img);
+        add_address = (TextView) findViewById(R.id.add_address);
+        check_btn = (CheckBox) findViewById(R.id.check_btn);
         name_edit.setText(listUserAddressBean.getReceiver());
         phone_text.setText(listUserAddressBean.getMobile());
         relay_address.setText(listUserAddressBean.getAddress());
         address_text.setText(listUserAddressBean.getCityStr() + listUserAddressBean.getTownStr());
+        proId = listUserAddressBean.getProvinceId();
+        cityId = listUserAddressBean.getCityId();
+        countryId = listUserAddressBean.getTownId();
         if (listUserAddressBean.getIsFirst() == 1) {
             check_btn.setChecked(true);
         } else {
@@ -224,10 +227,8 @@ public class UserCompileActivity extends BaseActivtiy implements ICoreInfe, Cust
                 } else {
                     isFirst = 0;
                 }
-                LoginBean logUser = getLogUser(UserCompileActivity.this);
-                Toast.makeText(UserCompileActivity.this, "" + logUser.getId(), Toast.LENGTH_SHORT).show();
                 updateAddressPresenter.request(listUserAddressBean.getId(), getLogUser(UserCompileActivity.this).getId(),
-                        name, phone, address + xiangqing, isFirst,
+                        name, phone, xiangqing, isFirst,
                         proId, cityId, countryId);
             }
         });

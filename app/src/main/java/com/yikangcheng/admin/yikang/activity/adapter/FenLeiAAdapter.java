@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.yikangcheng.admin.yikang.R;
@@ -46,6 +47,7 @@ public class FenLeiAAdapter extends RecyclerView.Adapter<FenLeiAAdapter.Vh> {
     @Override
     public void onBindViewHolder(final Vh vh, final int position) {
         vh.textView.setText(stringList.get(position).getSubjectName());
+
         vh.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

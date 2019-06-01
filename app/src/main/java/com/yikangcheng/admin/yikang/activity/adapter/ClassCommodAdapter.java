@@ -1,6 +1,7 @@
 package com.yikangcheng.admin.yikang.activity.adapter;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -59,6 +60,10 @@ public class ClassCommodAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder vh, final int position) {
         if (vh instanceof Vh) {
+            /**
+             * // 中间加横线 ， 添加Paint.ANTI_ALIAS_FLAG是线会变得清晰去掉锯齿
+             */
+            ((Vh) vh).yuanprice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
             ClassifyCommodityListBean.CommodityListBean commodityListBean = listBeanList.get(position);
             ((Vh) vh).title.setText(commodityListBean.getName());
             ((Vh) vh).count.setText(commodityListBean.getTitle());
@@ -73,6 +78,10 @@ public class ClassCommodAdapter extends RecyclerView.Adapter {
                 }
             });
         } else if (vh instanceof Vhtwo) {
+            /**
+             * // 中间加横线 ， 添加Paint.ANTI_ALIAS_FLAG是线会变得清晰去掉锯齿
+             */
+            ((Vhtwo) vh).yuanprice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
             ClassifyCommodityListBean.CommodityListBean commodityListBean = listBeanList.get(position);
             ((Vhtwo) vh).title.setText(commodityListBean.getName());
             ((Vhtwo) vh).count.setText(commodityListBean.getTitle());
@@ -80,6 +89,12 @@ public class ClassCommodAdapter extends RecyclerView.Adapter {
             ((Vhtwo) vh).price.setText("内购价：¥" + commodityListBean.getCurrentprice());
             ((Vhtwo) vh).yuanprice.setText("市场价：¥" + commodityListBean.getSourceprice());
             ((Vhtwo) vh).buy_text.setText(commodityListBean.getBuycount() + "人已购");
+            ((Vhtwo) vh).itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onClickLisetener.onclick(listBeanList.get(position).getId());
+                }
+            });
         }
     }
 

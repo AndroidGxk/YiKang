@@ -32,6 +32,9 @@ import com.yikangcheng.admin.yikang.bean.LoginBean;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
 import me.jessyan.autosize.internal.CustomAdapt;
+import me.leefeng.promptlibrary.PromptButton;
+import me.leefeng.promptlibrary.PromptButtonListener;
+import me.leefeng.promptlibrary.PromptDialog;
 
 public class MainActivity extends BaseActivtiy implements CustomAdapt {
     private RadioGroup radio;
@@ -59,33 +62,40 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
     private Fragment_Fen fragment_fen;
     private Fragment_Gou fragment_gou;
     private Fragment_Wo fragment_wo;
+    private PromptDialog promptDialog;
 
     @Override
     protected void initView() {
+        closeSwipeBack();
+        //创建对象
+        promptDialog = new PromptDialog(this);
+        //设置自定义属性
+        promptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(3000);
+
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
-        radio = findViewById(R.id.radio_group);
+        radio = (RadioGroup) findViewById(R.id.radio_group);
         radio.check(R.id.shou);
-        mImg_activity_main_soushuo = findViewById(R.id.iv_toolBar_right);
-        shou_linear = findViewById(R.id.shou_linear);
-        fen_linear = findViewById(R.id.fen_linear);
-        shou_text = findViewById(R.id.shou_text);
-        fen_text = findViewById(R.id.fen_text);
-        log_text = findViewById(R.id.log_text);
-        line1 = findViewById(R.id.line1);
-        line4 = findViewById(R.id.line4);
-        line2 = findViewById(R.id.line2);
-        line5 = findViewById(R.id.line5);
-        line3 = findViewById(R.id.line3);
-        line6 = findViewById(R.id.line6);
-        header = findViewById(R.id.header);
-        my_name = findViewById(R.id.my_name);
-        miao_text = findViewById(R.id.miao_text);
-        gou_text = findViewById(R.id.gou_text);
-        wo_text = findViewById(R.id.wo_text);
-        miao_linear = findViewById(R.id.miao_linear);
-        gou_linear = findViewById(R.id.gou_linear);
-        wo_linear = findViewById(R.id.wo_linear);
+        mImg_activity_main_soushuo = (ImageView) findViewById(R.id.iv_toolBar_right);
+        shou_linear = (LinearLayout) findViewById(R.id.shou_linear);
+        fen_linear = (LinearLayout) findViewById(R.id.fen_linear);
+        shou_text = (TextView) findViewById(R.id.shou_text);
+        fen_text = (TextView) findViewById(R.id.fen_text);
+        log_text = (TextView) findViewById(R.id.log_text);
+        line1 = (LinearLayout) findViewById(R.id.line1);
+        line4 = (LinearLayout) findViewById(R.id.line4);
+        line2 = (LinearLayout) findViewById(R.id.line2);
+        line5 = (LinearLayout) findViewById(R.id.line5);
+        line3 = (LinearLayout) findViewById(R.id.line3);
+        line6 = (LinearLayout) findViewById(R.id.line6);
+        header = (ImageView) findViewById(R.id.header);
+        my_name = (TextView) findViewById(R.id.my_name);
+        miao_text = (TextView) findViewById(R.id.miao_text);
+        gou_text = (TextView) findViewById(R.id.gou_text);
+        wo_text = (TextView) findViewById(R.id.wo_text);
+        miao_linear = (LinearLayout) findViewById(R.id.miao_linear);
+        gou_linear = (LinearLayout) findViewById(R.id.gou_linear);
+        wo_linear = (LinearLayout) findViewById(R.id.wo_linear);
         toobar = findViewById(R.id.toobar);
         tv_toolBar_title = toobar.findViewById(R.id.tv_toolBar_title);
         tv_toolBar_right = toobar.findViewById(R.id.tv_toolBar_right);
@@ -94,12 +104,7 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
             @Override
             public void onClick(View view) {
                 mDrawerLayout.openDrawer(Gravity.LEFT);
-            }
-        });
-        tv_toolBar_title.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
+                Fragment_Gou.getSignY();
             }
         });
         //编辑
@@ -119,9 +124,9 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         iv_toolBar_right = toobar.findViewById(R.id.iv_toolBar_right);
         iv_toolBar_right = toobar.findViewById(R.id.iv_toolBar_right);
         tv_toolBar_right = toobar.findViewById(R.id.tv_toolBar_right);
-        mDrawerLayout = findViewById(R.id.drawerLayout);
-        mNv = findViewById(R.id.nv);
-        mRelativeLayout = findViewById(R.id.relativeLayout);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        mNv = (RelativeLayout) findViewById(R.id.nv);
+        mRelativeLayout = (RelativeLayout) findViewById(R.id.relativeLayout);
         //抽屉滑出时,主界面被挤到右边
         mDrawerLayout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
             @Override
@@ -139,6 +144,33 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
                 startActivity(intent);
             }
         });
+        line6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                promptDialog.showWarnAlert("你确定要退出登录？", new PromptButton("取消", new PromptButtonListener() {
+                    @Override
+                    public void onClick(PromptButton button) {
+                    }
+                }), confirm);
+            }
+        });
+    }
+
+    //按钮的定义，创建一个按钮的对象
+    final PromptButton confirm = new PromptButton("确定", new PromptButtonListener() {
+        @Override
+        public void onClick(PromptButton button) {
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            getDelete(MainActivity.this);
+            finish();
+        }
+    });
+
+    /**
+     * 购物车的商品数量
+     */
+    public void setCount(int count) {
+//        text_count.setText("" + count);
     }
 
     @Override
@@ -164,14 +196,15 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         /**
          * 切换页面
          */
-        shou = findViewById(R.id.shou);
-        fen = findViewById(R.id.fen);
-        miao = findViewById(R.id.miao);
-        gou = findViewById(R.id.gou);
-        wo = findViewById(R.id.wo);
+        shou = (RadioButton) findViewById(R.id.shou);
+        fen = (RadioButton) findViewById(R.id.fen);
+        miao = (RadioButton) findViewById(R.id.miao);
+        gou = (RadioButton) findViewById(R.id.gou);
+        wo = (RadioButton) findViewById(R.id.wo);
         shou_linear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Fragment_Gou.getSignY();
                 record_ac = 1;
                 toobar.setVisibility(View.VISIBLE);
                 tv_toolBar_right.setVisibility(View.GONE);
@@ -200,6 +233,7 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         fen_linear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Fragment_Gou.getSignY();
                 record_ac = 2;
                 toobar.setVisibility(View.VISIBLE);
                 tv_toolBar_right.setVisibility(View.GONE);
@@ -228,6 +262,7 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         miao_linear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Fragment_Gou.getSignY();
                 record_ac = 3;
                 toobar.setVisibility(View.VISIBLE);
                 tv_toolBar_right.setVisibility(View.GONE);
@@ -256,6 +291,7 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         gou_linear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Fragment_Gou.getSignY();
                 LoginBean logUser = getLogUser(MainActivity.this);
                 if (logUser == null) {
                     startActivity(new Intent(MainActivity.this, LoginActivity.class));
@@ -287,6 +323,7 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         wo_linear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Fragment_Gou.getSignY();
                 record_ac = 5;
                 toobar.setVisibility(View.VISIBLE);
                 tv_toolBar_right.setVisibility(View.GONE);
@@ -314,6 +351,7 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         shou.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Fragment_Gou.getSignY();
                 record_ac = 1;
                 toobar.setVisibility(View.VISIBLE);
                 tv_toolBar_right.setVisibility(View.GONE);
@@ -341,6 +379,7 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         fen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Fragment_Gou.getSignY();
                 record_ac = 2;
                 toobar.setVisibility(View.VISIBLE);
                 tv_toolBar_right.setVisibility(View.GONE);
@@ -368,6 +407,7 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         miao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Fragment_Gou.getSignY();
                 record_ac = 3;
                 toobar.setVisibility(View.VISIBLE);
                 tv_toolBar_right.setVisibility(View.GONE);
@@ -395,6 +435,7 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         gou.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Fragment_Gou.getSignY();
                 LoginBean logUser = getLogUser(MainActivity.this);
                 if (logUser == null) {
                     startActivity(new Intent(MainActivity.this, LoginActivity.class));
@@ -425,6 +466,7 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         wo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Fragment_Gou.getSignY();
                 record_ac = 5;
                 toobar.setVisibility(View.VISIBLE);
                 tv_toolBar_right.setVisibility(View.GONE);
@@ -537,10 +579,6 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         super.onConfigurationChanged(newConfig);
     }
 
-    public void setID(String id) {
-        Toast.makeText(this, "" + id, Toast.LENGTH_SHORT).show();
-    }
-
     @Override
     public Resources getResources() {//还原字体大小
         Resources res = super.getResources();
@@ -594,7 +632,6 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         }
 
     }
-
 
 
     @Override

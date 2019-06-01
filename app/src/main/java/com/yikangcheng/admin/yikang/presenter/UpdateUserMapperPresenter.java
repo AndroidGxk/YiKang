@@ -21,6 +21,6 @@ public class UpdateUserMapperPresenter extends BasePresenter {
     @Override
     protected Observable observable(Object... args) {
         ApiService apiService = NotWorkUtils.getInstance().create(ApiService.class);
-        return apiService.updateUserMapper((String) args[0], (String) args[1], (String) args[2], (String) args[3], (String) args[4], (String) args[5], (String) args[6], (String) args[7]);
+        return apiService.updateUserMapper((int) args[0], (String) args[1], (String) args[2], (String) args[3], (String) args[4], (int) args[5], (String) args[6]);
     }
 }

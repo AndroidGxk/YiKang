@@ -15,6 +15,5 @@ public class SearchListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search_list);
         Intent intent = getIntent();
         int id = intent.getIntExtra("id", 000);
-        Toast.makeText(this, "" + id, Toast.LENGTH_SHORT).show();
     }
 }

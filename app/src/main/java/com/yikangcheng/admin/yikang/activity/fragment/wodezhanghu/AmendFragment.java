@@ -134,7 +134,6 @@ public class AmendFragment extends BaseFragment implements ICoreInfe {
         @Override
         public void success(Object data) {
             Request request = (Request) data;
-            Toast.makeText(getContext(), "" + request.getMessage(), Toast.LENGTH_SHORT).show();
             if (request.isSuccess()) {
                 String entity = (String) request.getEntity();
                 String phone = phone_text.getText().toString();

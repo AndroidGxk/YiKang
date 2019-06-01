@@ -7,7 +7,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.adapter.CloseTheDealAdapter;
@@ -26,7 +28,6 @@ import me.jessyan.autosize.internal.CustomAdapt;
 
 public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, ICoreInfe {
 
-    private Toolbar mToolbarActivityWaitfrrpayment;
     private TextView mTvActivityCloseName;
     private TextView mImgActivityCloseChakan;
     private RecyclerView mRlvActivityCloseShangPin;
@@ -40,8 +41,6 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
     private TextView mTvActivityCloseFaPianLeiXing;
     private TextView mTvActivityCloseNeiRong;
     private RecyclerView mRlvActivityCloseTuiJian;
-    private ImageView mImgActivityCloseShanchu;
-    private ImageView mImgActivityCloseQueDing;
     private TextView mChanchu;
     private TextView mAddress;
     private TextView mProvinceStr;
@@ -52,54 +51,51 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
 
     @Override
     protected void initView() {
-
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
         Intent intent = getIntent();
         int orderId = intent.getIntExtra("orderId", 0);
-
-        //ToolBar
-        mToolbarActivityWaitfrrpayment = findViewById(R.id.toolbar_activity_waitfrrpayment);
         //用户名
-        mTvActivityCloseName = findViewById(R.id.tv_activity_close_name);
+        mTvActivityCloseName = (TextView) findViewById(R.id.tv_activity_close_name);
         //用户地址
-        mAddress = findViewById(R.id.tv_activity_close_address);
-        mProvinceStr = findViewById(R.id.tv_activity_close_provinceStr);
-        mCityStr = findViewById(R.id.tv_activity_close_cityStr);
-        back_img = findViewById(R.id.back_img);
-        mTownStr = findViewById(R.id.tv_activity_close_townStr);
-        back_img = findViewById(R.id.back_img);
+        mAddress = (TextView) findViewById(R.id.tv_activity_close_address);
+        mProvinceStr = (TextView) findViewById(R.id.tv_activity_close_provinceStr);
+        mCityStr = (TextView) findViewById(R.id.tv_activity_close_cityStr);
+        mTownStr = (TextView) findViewById(R.id.tv_activity_close_townStr);
+        back_img = (ImageView) findViewById(R.id.back_imgs);
         //查看物流按钮
-        mImgActivityCloseChakan = findViewById(R.id.img_activity_close_chakan);
+        mImgActivityCloseChakan = (TextView) findViewById(R.id.img_activity_close_chakan);
         //rlv商品
-        mRlvActivityCloseShangPin = findViewById(R.id.rlv_activity_close_shangPin);
+        mRlvActivityCloseShangPin = (RecyclerView) findViewById(R.id.rlv_activity_close_shangPin);
         //订单编号
-        mTvActivityCloseBiaohao = findViewById(R.id.tv_activity_close_biaohao);
+        mTvActivityCloseBiaohao = (TextView) findViewById(R.id.tv_activity_close_biaohao);
         //复制
-        mImgActivityCloseFizhi = findViewById(R.id.img_activity_close_fizhi);
+        mImgActivityCloseFizhi = (ImageView) findViewById(R.id.img_activity_close_fizhi);
         //运费
-        mTvActivityCloseYunFei = findViewById(R.id.tv_activity_close_yunFei);
+        mTvActivityCloseYunFei = (TextView) findViewById(R.id.tv_activity_close_yunFei);
         //应付金额
-        mTvActivityCloseJinE = findViewById(R.id.tv_activity_close_jinE);
+        mTvActivityCloseJinE = (TextView) findViewById(R.id.tv_activity_close_jinE);
         //总计金额
-        mTvActivityCloseZhongJi = findViewById(R.id.tv_activity_close_zhongJi);
+        mTvActivityCloseZhongJi = (TextView) findViewById(R.id.tv_activity_close_zhongJi);
         //支付方式
-        mTvActivityCloseFangShi = findViewById(R.id.tv_activity_close_fangShi);
+        mTvActivityCloseFangShi = (TextView) findViewById(R.id.tv_activity_close_fangShi);
         //联系客服
-        mTvActivityCloseKeFu = findViewById(R.id.tv_activity_close_keFu);
+        mTvActivityCloseKeFu = (TextView) findViewById(R.id.tv_activity_close_keFu);
         //发票类型
-        mTvActivityCloseFaPianLeiXing = findViewById(R.id.tv_activity_close_FaPianLeiXing);
+        mTvActivityCloseFaPianLeiXing = (TextView) findViewById(R.id.tv_activity_close_FaPianLeiXing);
         //发票内容
-        mTvActivityCloseNeiRong = findViewById(R.id.tv_activity_close_NeiRong);
+        mTvActivityCloseNeiRong = (TextView) findViewById(R.id.tv_activity_close_NeiRong);
         //rlv---商品推荐
-        mRlvActivityCloseTuiJian = findViewById(R.id.rlv_activity_close_TuiJian);
+        mRlvActivityCloseTuiJian = (RecyclerView) findViewById(R.id.rlv_activity_close_TuiJian);
         //删除
-        mChanchu = findViewById(R.id.tv_activity_closeThe_Deal_shanchu);
+        mChanchu = (TextView) findViewById(R.id.tv_activity_closeThe_Deal_shanchu);
 
-        mToolbarActivityWaitfrrpayment.setTitle("");
-        setSupportActionBar(mToolbarActivityWaitfrrpayment);
-
-
+        back_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         /**
          * P层
          */
@@ -121,15 +117,7 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
 
     @Override
     protected void initEventData() {
-        /**
-         * 退出
-         */
-        back_img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+
     }
 
     @Override
@@ -169,7 +157,7 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
         //订单编号
         mTvActivityCloseBiaohao.setText(entity.getOrder().getOrderNo());
         //运费
-        mTvActivityCloseYunFei.setText(entity.getOrder().getFreightPrice()+"");
+        mTvActivityCloseYunFei.setText(entity.getOrder().getFreightPrice() + "");
 
 
         //金额

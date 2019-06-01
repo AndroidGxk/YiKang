@@ -16,10 +16,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.adapter.CloseRecyclerAdapter;
+import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Gou;
 import com.yikangcheng.admin.yikang.activity.siteactivity.AiteActivity;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.AllAddressBean;
@@ -30,6 +30,7 @@ import com.yikangcheng.admin.yikang.bean.ShopCarBean;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
 import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
 import com.yikangcheng.admin.yikang.presenter.AllAddressPresenter;
+import com.yikangcheng.admin.yikang.presenter.OrderBuyArrayPresenter;
 import com.yikangcheng.admin.yikang.presenter.OrderBuyPresenter;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
@@ -37,6 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.jessyan.autosize.internal.CustomAdapt;
+import me.leefeng.promptlibrary.PromptDialog;
 
 /**
  * 结算页面
@@ -79,25 +81,32 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
     private OrderBuyPresenter orderBuyPresenter;
     private AllAddressBean.ListUserAddressBean listUserAddressBean;
     private PariticShopBean pariticShopBean;
+    private PromptDialog promptDialog;
+    private OrderBuyArrayPresenter orderBuyArrayPresenter;
 
     @Override
     protected void initView() {
+        Fragment_Gou.getSign();
+        //创建对象
+        promptDialog = new PromptDialog(this);
+        //设置自定义属性
+        promptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(100);
         //网络请求
         network();
         StatusBarUtil.setStatusBarMode(this, true, R.color.clolrBAai);
-        recycler = findViewById(R.id.recycler);
-        buy_img = findViewById(R.id.buy_img);
-        rela4 = findViewById(R.id.rela4);
-        rela2 = findViewById(R.id.rela2);
-        back_img = findViewById(R.id.back_img);
-        rela3 = findViewById(R.id.rela3);
-        user_name = findViewById(R.id.user_name);
-        user_phone = findViewById(R.id.user_phone);
-        user_address = findViewById(R.id.user_address);
-        youhuiquan = findViewById(R.id.youhuiquan);
-        heji_text = findViewById(R.id.heji_text);
-        good_num = findViewById(R.id.good_num);
-        total_money = findViewById(R.id.total_money);
+        recycler = (RecyclerView) findViewById(R.id.recycler);
+        buy_img = (ImageView) findViewById(R.id.buy_img);
+        rela4 = (RelativeLayout) findViewById(R.id.rela4);
+        rela2 = (RelativeLayout) findViewById(R.id.rela2);
+        back_img = (ImageView) findViewById(R.id.back_img);
+        rela3 = (RelativeLayout) findViewById(R.id.rela3);
+        user_name = (TextView) findViewById(R.id.user_name);
+        user_phone = (TextView) findViewById(R.id.user_phone);
+        user_address = (TextView) findViewById(R.id.user_address);
+        youhuiquan = (RelativeLayout) findViewById(R.id.youhuiquan);
+        heji_text = (TextView) findViewById(R.id.heji_text);
+        good_num = (TextView) findViewById(R.id.good_num);
+        total_money = (TextView) findViewById(R.id.total_money);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         shopCarBeans = (List<ShopCarBean>) bundle.get("shopList");
@@ -117,7 +126,7 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
             for (int i = 0; i < shopCarBeans.size(); i++) {
                 int buyNum = shopCarBeans.get(i).getBuyNum();
                 mBuyNum += buyNum;
-                mTotal += shopCarBeans.get(i).getShopSpecDetailed().getRetailPrice() * mBuyNum;
+                mTotal += shopCarBeans.get(i).getShopSpecDetailed().getRetailPrice() * buyNum;
             }
         }
         good_num.setText("x" + mBuyNum);
@@ -163,7 +172,9 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
         rela2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(CloseActivity.this, AiteActivity.class));
+                Intent addIntent = new Intent(CloseActivity.this, AiteActivity.class);
+                addIntent.putExtra("address","true");
+                startActivity(addIntent);
             }
         });
         /**
@@ -206,9 +217,9 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
      */
     private void network() {
         allAddressPresenter = new AllAddressPresenter(new AllAddress());
-        allAddressPresenter.request(getLogUser(CloseActivity.this).getId());
         //创建订单
         orderBuyPresenter = new OrderBuyPresenter(new OrderBuy());
+        orderBuyArrayPresenter = new OrderBuyArrayPresenter(new OrderBuy());
     }
 
     /**
@@ -390,11 +401,16 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
         buy_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                promptDialog.showLoading("");
                 if (shopCarBeans != null) {
+                    String str = "";
                     for (int i = 0; i < shopCarBeans.size(); i++) {
-                        int dataId = shopCarBeans.get(i).getDataId();
-                        orderBuyPresenter.request(getLogUser(CloseActivity.this).getId(), dataId,
-                                listUserAddressBean.getId(), 1, 1, 2, "易康成", "132", "2", "1724959985@qq.com", "ALIPAY", "Android");
+                        str += shopCarBeans.get(i).getId() + ",";
+                        if (i == shopCarBeans.size() - 1) {
+                            String substring = str.substring(0, str.length() - 1);
+                            orderBuyArrayPresenter.request(getLogUser(CloseActivity.this).getId(), substring,
+                                    listUserAddressBean.getId(), 1, 2, "易康成", "132", "2", "1724959985@qq.com", "ALIPAY", "Android", "COMMODITY");
+                        }
                     }
                 } else {
                     String id = pariticShopBean.getId();
@@ -447,7 +463,6 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
      */
     private class AllAddress implements ICoreInfe {
 
-
         @Override
         public void success(Object data) {
             Request request = (Request) data;
@@ -458,7 +473,7 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
                 if (listUserAddressBean.getIsFirst() == 1) {
                     user_name.setText(listUserAddressBean.getReceiver());
                     user_phone.setText(listUserAddressBean.getMobile());
-                    user_address.setText(listUserAddressBean.getAddress());
+                    user_address.setText(listUserAddressBean.getProvinceStr() + listUserAddressBean.getCityStr() + listUserAddressBean.getTownStr() + listUserAddressBean.getAddress());
                 }
             }
         }
@@ -483,6 +498,7 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
                 bundle.putSerializable("creatorder", entity);
                 intent.putExtras(bundle);
                 startActivity(intent);
+                promptDialog.dismiss();
             }
         }
 
@@ -490,5 +506,11 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
         public void fail(ApiException e) {
 
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        allAddressPresenter.request(getLogUser(CloseActivity.this).getId());
     }
 }

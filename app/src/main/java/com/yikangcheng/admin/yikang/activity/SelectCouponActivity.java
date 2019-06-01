@@ -28,9 +28,9 @@ public class SelectCouponActivity extends BaseActivtiy implements ICoreInfe {
     @Override
     protected void initView() {
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorTab);
-        xrecycler = findViewById(R.id.xrecycler);
-        back_img = findViewById(R.id.back_img);
-        youhuiquan_null = findViewById(R.id.youhuiquan_null);
+        xrecycler = (XRecyclerView) findViewById(R.id.xrecycler);
+        back_img = (ImageView) findViewById(R.id.back_img);
+        youhuiquan_null = (ImageView) findViewById(R.id.youhuiquan_null);
         xrecycler.setLayoutManager(new LinearLayoutManager(this));
         discountCouponPresenter = new DiscountCouponPresenter(this);
         discountCouponPresenter.request(11, 1);

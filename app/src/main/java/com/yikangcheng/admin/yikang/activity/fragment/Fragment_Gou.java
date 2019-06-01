@@ -16,6 +16,7 @@ import com.yikangcheng.admin.yikang.activity.CloseActivity;
 import com.yikangcheng.admin.yikang.activity.MainActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.RecommendAdapter;
 import com.yikangcheng.admin.yikang.activity.adapter.ShopRecyclerAdapter;
+import com.yikangcheng.admin.yikang.activity.particulars.ParticularsActivity;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
 import com.yikangcheng.admin.yikang.bean.LoginBean;
 import com.yikangcheng.admin.yikang.bean.RecommendBean;
@@ -44,12 +45,14 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
     private TextView tv_toolBar_right;
     private boolean judge = false;//判断编辑或完成
     private ShopCarPresenter shopCarPresenter;
-    private List<ShopCarBean> entity;
     private boolean isclick;
     private RecommendAdapter mRecommendAdapter;
     private RecommendPresenter recommendPresenter;
     private DeleteShopPresenter deleteShopPresenter;
     private String mId = "";
+    //标记
+    private static int sign = 0;
+    private MainActivity activity;
 
     @Override
     protected void initView(View view) {
@@ -67,7 +70,7 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
         text_total = view.findViewById(R.id.text_total);
         shopCarPresenter = new ShopCarPresenter(this);
         deleteShopPresenter = new DeleteShopPresenter(new DeleteShop());
-        MainActivity activity = (MainActivity) getActivity();
+        activity = (MainActivity) getActivity();
         //编辑按钮回调
         activity.setOnClickListener(new MainActivity.onClickListener() {
             @Override
@@ -181,10 +184,20 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
                     int id = shopList.get(i).getId();
                     mId += id + ",";
                 }
-                String substring = mId.substring(0, mId.length() - 1);
-                Toast.makeText(getContext(), "" + substring, Toast.LENGTH_SHORT).show();
+                mId.substring(0, mId.length() - 1);
                 deleteShopPresenter.request(getLogUser(getContext()).getId(), mId);
                 mId = "";
+            }
+        });
+        /**
+         * 跳转详情页面
+         */
+        shopRecyclerAdapter.setGoParClickListener(new ShopRecyclerAdapter.goParClickListener() {
+            @Override
+            public void onclick(int id) {
+                Intent intent = new Intent(getContext(), ParticularsActivity.class);
+                intent.putExtra("id", id);
+                startActivity(intent);
             }
         });
     }
@@ -218,7 +231,11 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
         if (entity.size() == 0) {
             null_car.setVisibility(View.VISIBLE);
             shop_recycler.setVisibility(View.GONE);
+        } else {
+            null_car.setVisibility(View.GONE);
+            shop_recycler.setVisibility(View.VISIBLE);
         }
+        activity.setCount(entity.size());
         shopRecyclerAdapter.remove();
 
         shopRecyclerAdapter.addAll(entity);
@@ -272,10 +289,15 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
         public void success(Object data) {
             LoginBean logUser = getLogUser(getContext());
             Request request = (Request) data;
-            Toast.makeText(getContext(), request.getMessage() + "", Toast.LENGTH_SHORT).show();
             if (request.isSuccess()) {
                 if (logUser != null) {
                     shopCarPresenter.request(logUser.getId());
+                    heji.setVisibility(View.VISIBLE);
+                    text_total.setVisibility(View.VISIBLE);
+                    num_text.setVisibility(View.VISIBLE);
+                    dele_text.setVisibility(View.GONE);
+                    tv_toolBar_right.setText("编辑");
+                    judge = false;
                 }
             }
         }
@@ -284,5 +306,16 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
         public void fail(ApiException e) {
 
         }
+    }
+
+    /**
+     * 设置标记
+     */
+    public static void getSign() {
+        sign = 1;
+    }
+
+    public static void getSignY() {
+        sign = 0;
     }
 }

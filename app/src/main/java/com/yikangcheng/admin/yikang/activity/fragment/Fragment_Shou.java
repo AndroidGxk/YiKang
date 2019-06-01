@@ -2,6 +2,7 @@ package com.yikangcheng.admin.yikang.activity.fragment;
 
 import android.content.Intent;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
@@ -11,8 +12,12 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.sobot.chat.SobotApi;
 import com.sobot.chat.api.model.Information;
 import com.yikangcheng.admin.yikang.R;
@@ -35,10 +40,17 @@ public class Fragment_Shou extends BaseFragment implements CustomAdapt, ICoreInf
     private static WebView webView;
     private String s;
     private AddShopPresenter addShopPresenter;
+    private SmartRefreshLayout refreshLayout;
+    private ProgressBar pbProgress;
 
     @Override
     protected void initView(View view) {
         webView = view.findViewById(R.id.webview);
+        //进度条
+        pbProgress = view.findViewById(R.id.pb_progress);
+        //加载刷新
+        refreshLayout = view.findViewById(R.id.refreshLayout);
+        refreshLayout.setEnableLoadMore(false);
         WebSettings webSettings = webView.getSettings();
         addShopPresenter = new AddShopPresenter(this);
         //设置WebView属性，能够执行Javascript脚本
@@ -82,10 +94,30 @@ public class Fragment_Shou extends BaseFragment implements CustomAdapt, ICoreInf
             public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
                 return super.onJsAlert(view, url, message, result);
             }
+
+            //进度发生变化
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                if (newProgress == 100) {
+                    // 网页加载完成
+                    pbProgress.setVisibility(View.GONE);
+                } else {
+                    // 加载中
+                    pbProgress.setProgress(newProgress);
+                }
+                super.onProgressChanged(view, newProgress);
+            }
         });
         webView.getSettings().setJavaScriptEnabled(true);
         webView.addJavascriptInterface(this, "ww");
         webView.loadUrl("https://www.yikch.com/mobile/appShow/index?type=android");
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                webView.loadUrl("https://www.yikch.com/mobile/appShow/index?type=android");
+                refreshLayout.finishRefresh();
+            }
+        });
     }
 
 

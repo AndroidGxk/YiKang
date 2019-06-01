@@ -8,32 +8,37 @@
     android:orientation="vertical"
     tools:context=".activity.orderstatus.WaitForpaymentActivity">
 
-    <android.support.v7.widget.Toolbar
+    <RelativeLayout
         android:id="@+id/toolbar_activity_waitfrrpayment"
         android:layout_width="match_parent"
         android:layout_height="42dp"
         android:background="@drawable/toolbar">
 
         <ImageView
-            android:id="@+id/back_img"
+            android:id="@+id/back_imgs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingLeft="15dp"
+            android:paddingTop="10dp"
             android:paddingRight="15dp"
-            android:src="@drawable/fanhuiactivity" />
+            android:paddingBottom="10dp"
+            android:src="@drawable/fanhui_seek" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:layout_centerInParent="true"
             android:text="订单详情"
             android:textColor="#000000"
             android:textSize="19sp" />
 
-    </android.support.v7.widget.Toolbar>
+    </RelativeLayout>
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar_activity_waitfrrpayment"
         android:fillViewport="true"
         android:overScrollMode="never">
 
@@ -44,7 +49,6 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="190dp"
-                android:layout_marginTop="42dp"
                 android:background="@drawable/wanceng">
 
                 <TextView
@@ -168,7 +172,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="244dp"
+                android:layout_marginTop="205dp"
                 android:orientation="vertical">
 
                 <android.support.v7.widget.RecyclerView
@@ -183,8 +187,8 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="125dp"
-                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="15dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginRight="15dp"
                     android:background="#FFFFFF">
 

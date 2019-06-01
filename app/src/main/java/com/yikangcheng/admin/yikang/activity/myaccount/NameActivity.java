@@ -18,7 +18,7 @@ public class NameActivity extends BaseActivtiy implements CustomAdapt {
 
 
     private ImageView mImgActivityNameFanhui;
-    private Toolbar mToolbarActivityName;
+    private RelativeLayout mToolbarActivityName;
     private EditText mEtActivityName;
     private TextView ok_btn;
 
@@ -26,10 +26,10 @@ public class NameActivity extends BaseActivtiy implements CustomAdapt {
     protected void initView() {
 //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
-        mImgActivityNameFanhui = findViewById(R.id.img_activity_name_fanhui);
-        mToolbarActivityName = findViewById(R.id.toolbar_activity_name);
-        mEtActivityName = findViewById(R.id.et_activity_name);
-        ok_btn = findViewById(R.id.ok_btn);
+        mImgActivityNameFanhui = (ImageView) findViewById(R.id.img_activity_name_fanhui);
+        mToolbarActivityName = (RelativeLayout) findViewById(R.id.toolbar_activity_name);
+        mEtActivityName = (EditText) findViewById(R.id.et_activity_name);
+        ok_btn = (TextView) findViewById(R.id.ok_btn);
         /**
          * 点击返回图标关闭当前页面
          */
@@ -39,11 +39,7 @@ public class NameActivity extends BaseActivtiy implements CustomAdapt {
                 finish();
             }
         });
-        /**
-         * Toolbar
-         */
-        mToolbarActivityName.setTitle("");
-        setSupportActionBar(mToolbarActivityName);
+
         /**
          * 保存
          */
@@ -52,7 +48,7 @@ public class NameActivity extends BaseActivtiy implements CustomAdapt {
             public void onClick(View view) {
                 SharedPreferences name = getSharedPreferences("name", MODE_PRIVATE);
                 SharedPreferences.Editor edit = name.edit();
-                edit.putString("name",mEtActivityName.getText().toString());
+                edit.putString("name", mEtActivityName.getText().toString());
                 edit.commit();
                 finish();
             }

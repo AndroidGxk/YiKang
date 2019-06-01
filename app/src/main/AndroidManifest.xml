@@ -23,19 +23,10 @@
         <activity android:name=".activity.ClassifyHomeActivity" />
         <activity android:name=".activity.FindPwdActivity" />
         <activity android:name=".activity.siteactivity.UserCompileActivity" />
-        <activity android:name=".activity.obligation.DetailActivity" />
         <activity android:name=".activity.orderstatus.FackOfActivity" />
-        <activity android:name=".activity.obligation.CanceledActivity" />
         <activity android:name=".activity.orderstatus.CloseTheDealActivity" />
-        <activity android:name=".activity.obligation.PaidActivity" />
-        <activity android:name=".activity.orderstatus.WaitForpaymentActivity" />
         <activity android:name=".activity.SelectCouponActivity" />
         <activity android:name=".activity.coupon.CouponActivity" />
-        <activity android:name=".activity.myaccount.IntroActivity" />
-        <activity android:name=".activity.myaccount.PhoneActivity" />
-        <activity android:name=".activity.myaccount.NameActivity" />
-        <activity android:name=".activity.myaccount.NicknameActivity" />
-        <activity android:name=".activity.obligation.ObligationActivity" />
         <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.CustomerActivity" />
         <activity android:name=".activity.SystemActivity" />
@@ -48,8 +39,9 @@
         <activity android:name=".activity.CloseActivity" />
         <activity android:name=".activity.MessageActivity" />
         <activity android:name=".activity.ConfirmActivity" />
-        <activity android:name=".activity.SeekListActivity" />
-        <activity android:name=".activity.aftersale.AfterSaleActivity" />
+        <activity
+            android:name=".activity.SeekListActivity"
+            android:launchMode="singleTask" />
         <activity
             android:name=".activity.orderstatus.FackOfActivity"
             tools:ignore="DuplicateActivity" />
@@ -60,8 +52,6 @@
             android:name=".activity.RegisterActivity"
             android:launchMode="singleTask" />
         <activity android:name=".activity.myaccount.MyaccountActivity" />
-        <activity android:name=".activity.seek.SeekActivity" />
-        <activity android:name=".activity.particulars.ParticularsActivity" />
         <activity android:name=".activity.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -83,6 +73,7 @@
             tools:ignore="DuplicateActivity" />
         <activity
             android:name=".activity.seek.SeekActivity"
+            android:launchMode="singleTask"
             tools:ignore="DuplicateActivity" />
         <activity android:name=".activity.SearchListActivity" />
         <activity
@@ -140,13 +131,14 @@
 
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.llk.study.activity.PhotoActivity"
+            android:authorities="com.yikangcheng.admin.yikang"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
     </application>
 
 </manifest>

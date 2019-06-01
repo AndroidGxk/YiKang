@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.adapter.CanceledAdapter_A;
@@ -25,7 +26,7 @@ import java.util.List;
 public class CanceledActivity extends BaseActivtiy implements ICoreInfe{
 
     private ImageView back_img;
-    private Toolbar mToolbarActivityCanceled;
+    private RelativeLayout mToolbarActivityCanceled;
     private RecyclerView mRlvActivityCanceled;
     private CanceledAdapter_A mCanceledAdapter_a;
 
@@ -33,12 +34,9 @@ public class CanceledActivity extends BaseActivtiy implements ICoreInfe{
     protected void initView() {
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
-        back_img = findViewById(R.id.back_img);
-        mToolbarActivityCanceled = findViewById(R.id.toolbar_activity_canceled);
-        mRlvActivityCanceled = findViewById(R.id.rlv_activity_canceled);
-
-        mToolbarActivityCanceled.setTitle("");
-        setSupportActionBar(mToolbarActivityCanceled);
+        back_img = (ImageView) findViewById(R.id.back_img);
+        mToolbarActivityCanceled = (RelativeLayout) findViewById(R.id.toolbar_activity_canceled);
+        mRlvActivityCanceled = (RecyclerView) findViewById(R.id.rlv_activity_canceled);
 
         /**
          * 点击返回图标关闭当前页面

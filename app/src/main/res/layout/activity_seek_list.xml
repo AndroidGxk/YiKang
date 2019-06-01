@@ -19,13 +19,14 @@
             android:id="@+id/back_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="13dp"
-            android:paddingRight="10dp"
             android:paddingLeft="15dp"
+            android:paddingTop="13dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"
             android:src="@drawable/fanhui_seek" />
 
 
-        <EditText
+        <TextView
             android:id="@+id/EditTixt_activity_seek_sousuo"
             android:layout_width="match_parent"
             android:layout_height="27dp"
@@ -35,29 +36,35 @@
             android:layout_toRightOf="@+id/back_img"
             android:background="@drawable/seek_edi_shape"
             android:focusable="false"
+            android:gravity="center_vertical"
             android:imeOptions="actionSearch"
-            android:paddingLeft="29dp"
+            android:paddingLeft="35dp"
             android:singleLine="true"
+            android:text="123"
             android:textColor="#848484"
             android:textSize="11sp" />
 
         <ImageView
-            android:layout_width="15dp"
-            android:layout_height="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="15dp"
             android:layout_toRightOf="@+id/back_img"
+            android:paddingLeft="5dp"
+            android:paddingTop="16dp"
+            android:paddingRight="5dp"
+            android:paddingBottom="5dp"
             android:src="@drawable/sousuo_2" />
 
         <ImageView
             android:id="@+id/xiaoxi"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginLeft="25dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="15dp"
-            android:background="@drawable/xiaoxi_seek" />
+            android:paddingLeft="25dp"
+            android:paddingTop="15dp"
+            android:paddingRight="15dp"
+            android:paddingBottom="15dp"
+            android:src="@drawable/xiaoxi_seek" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -68,7 +75,7 @@
             <TextView
                 android:id="@+id/zonghe"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:layout_marginLeft="25dp"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -79,7 +86,7 @@
             <TextView
                 android:id="@+id/xiaoliang"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:layout_toRightOf="@+id/zonghe"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -90,7 +97,7 @@
             <RelativeLayout
                 android:id="@+id/price"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:layout_toLeftOf="@+id/qiehuan"
                 android:layout_toRightOf="@+id/xiaoliang"
                 android:layout_weight="1"
@@ -100,6 +107,7 @@
                     android:id="@+id/price_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:drawableRight="@drawable/price_image"
                     android:gravity="center"
                     android:text="价格"
@@ -121,12 +129,19 @@
         </LinearLayout>
     </RelativeLayout>
 
-    <com.jcodecraeer.xrecyclerview.XRecyclerView
-        android:id="@+id/xrecycler"
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/table"
-        android:layout_marginRight="5dp"
-        android:background="#EBEBEB" />
+        android:background="@null">
+
+        <com.jcodecraeer.xrecyclerview.XRecyclerView
+            android:id="@+id/xrecycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="5dp"
+            android:background="#EBEBEB" />
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 </RelativeLayout>

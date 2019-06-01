@@ -6,10 +6,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import com.yikangcheng.admin.yikang.R;
-import com.yikangcheng.admin.yikang.activity.SearchListActivity;
 import com.yikangcheng.admin.yikang.activity.SeekListActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.FenLeiAdapter;
 import com.yikangcheng.admin.yikang.activity.adapter.FenLeiBAdapter;
@@ -23,6 +21,7 @@ import com.yikangcheng.admin.yikang.presenter.ClassifyPresenter;
 import java.util.List;
 
 import me.jessyan.autosize.internal.CustomAdapt;
+import me.leefeng.promptlibrary.PromptDialog;
 
 public class Fragment_Fen extends BaseFragment implements ICoreInfe, CustomAdapt {
     private RecyclerView mRlvFragmentFenleiYou;
@@ -33,11 +32,17 @@ public class Fragment_Fen extends BaseFragment implements ICoreInfe, CustomAdapt
     private List<ClassifyListOneBean.ChildSubjectListBeanX> childSubjectList;
     private List<ClassifyListOneBean> entity;
     private int height;
+    private PromptDialog promptDialog;
 
     @Override
     protected void initView(View view) {
+        //创建对象
+        promptDialog = new PromptDialog(getActivity());
+        //设置自定义属性
+        promptDialog.getDefaultBuilder().touchAble(true).round(1).loadingDuration(1000);
         WindowManager wm = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
         height = wm.getDefaultDisplay().getHeight();
+        promptDialog.showLoading("正在加载");
         mRlvFragmentFenleiYou = view.findViewById(R.id.rlv__fragment_fenlei_you);
         mRlvFragmentFenleiZuo = view.findViewById(R.id.rlv__fragment_fenlei_zuo);
         classifyPresenter = new ClassifyPresenter(this);
@@ -85,6 +90,7 @@ public class Fragment_Fen extends BaseFragment implements ICoreInfe, CustomAdapt
         mFenLeiAdapter.addAll(entity);
         childSubjectList = entity.get(0).getChildSubjectList();
         mFenLeiBAdapter.addData(childSubjectList);
+        promptDialog.dismiss();
     }
 
     @Override

@@ -11,7 +11,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.SeekListActivity;
@@ -40,15 +39,15 @@ public class SeekActivity extends BaseActivtiy {
     protected void initView() {
 
         //删除最近搜索按钮
-        mImgActivitySeekDelete = findViewById(R.id.img_activity_seek_delete);
+        mImgActivitySeekDelete = (ImageView) findViewById(R.id.img_activity_seek_delete);
         //取消搜索
-        mTvActivitySeekCancel = findViewById(R.id.tv_activity_seek_cancel);
+        mTvActivitySeekCancel = (TextView) findViewById(R.id.tv_activity_seek_cancel);
         //搜索EditText
-        mEditTixtActivitySeekSousuo = findViewById(R.id.EditTixt_activity_seek_sousuo);
+        mEditTixtActivitySeekSousuo = (EditText) findViewById(R.id.EditTixt_activity_seek_sousuo);
         //最近搜索
-        mFlowLayout_activity_seek = findViewById(R.id.FlowLayout_activity_seek);
+        mFlowLayout_activity_seek = (FlowLayout) findViewById(R.id.FlowLayout_activity_seek);
         //热门搜索
-        mRlvActivitySeekHot = findViewById(R.id.rlv_activity_seek_hot);
+        mRlvActivitySeekHot = (RecyclerView) findViewById(R.id.rlv_activity_seek_hot);
 
 
         /**
@@ -91,7 +90,6 @@ public class SeekActivity extends BaseActivtiy {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 if (i == EditorInfo.IME_ACTION_UNSPECIFIED) {
-                    Toast.makeText(SeekActivity.this, "你点击了回车", Toast.LENGTH_SHORT).show();
                     //隐藏软键盘
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);

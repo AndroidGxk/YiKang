@@ -3,21 +3,22 @@ package com.yikangcheng.admin.yikang.model.http;
 import com.yikangcheng.admin.yikang.bean.ALLBean;
 import com.yikangcheng.admin.yikang.bean.AdvertisingBean;
 import com.yikangcheng.admin.yikang.bean.AllAddressBean;
-import com.yikangcheng.admin.yikang.bean.ClassifyListOneBean;
 import com.yikangcheng.admin.yikang.bean.ClassifyCommodityListBean;
-import com.yikangcheng.admin.yikang.bean.CreatOrderBean;
+import com.yikangcheng.admin.yikang.bean.ClassifyListOneBean;
+import com.yikangcheng.admin.yikang.bean.CloseBean;
 import com.yikangcheng.admin.yikang.bean.CloseTheDealBean;
+import com.yikangcheng.admin.yikang.bean.CreatOrderBean;
 import com.yikangcheng.admin.yikang.bean.DeleteOrderBean;
 import com.yikangcheng.admin.yikang.bean.DiscountBean;
 import com.yikangcheng.admin.yikang.bean.DiscountCouponBean;
-import com.yikangcheng.admin.yikang.bean.CloseBean;
 import com.yikangcheng.admin.yikang.bean.LikeBean;
 import com.yikangcheng.admin.yikang.bean.LoginBean;
+import com.yikangcheng.admin.yikang.bean.NewOrderBean;
 import com.yikangcheng.admin.yikang.bean.ObligationBean;
 import com.yikangcheng.admin.yikang.bean.PaidBean;
 import com.yikangcheng.admin.yikang.bean.ProvinceBean;
-import com.yikangcheng.admin.yikang.bean.RegisterBean;
 import com.yikangcheng.admin.yikang.bean.RecommendBean;
+import com.yikangcheng.admin.yikang.bean.RegisterBean;
 import com.yikangcheng.admin.yikang.bean.Request;
 import com.yikangcheng.admin.yikang.bean.SeckillBean;
 import com.yikangcheng.admin.yikang.bean.ShopCarBean;
@@ -28,8 +29,10 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
-import retrofit2.http.Body;
+import okhttp3.ResponseBody;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 public interface ApiService {
@@ -119,10 +122,10 @@ public interface ApiService {
     /**
      * 修改个人信息
      */
-    @POST("updateUserMapper")
-    Observable<Request> updateUserMapper(@Query("userId") String userId, @Query("nickName") String nickName, @Query("avatar") String avatar,
-                                         @Query("realName") String realName, @Query("email") String email, @Query("gender") String gender,
-                                         @Query("userInfo") String userInfo, @Query("mobile") String mobile);
+    @POST("updateUserMessage")
+    Observable<Request> updateUserMapper(@Query("userId") int userId, @Query("nickName") String nickName, @Query("avatar") String avatar,
+                                         @Query("realName") String realName, @Query("email") String email, @Query("gender") int gender,
+                                         @Query("userInfo") String userInfo);
 
 
     /**
@@ -156,7 +159,7 @@ public interface ApiService {
      */
     @POST("classification/commodityList")
     Observable<Request<ClassifyCommodityListBean>> commodityList(@Query("classificationId") int classificationId, @Query("order") int order,
-                                                                 @Query("condition") String condition, @Query("currentPage") int currentPage);
+                                                                 @Query("condition") String condition, @Query("page") int page, @Query("currentPage") int currentPage);
 
     /**
      * 获取全部省市区
@@ -239,9 +242,26 @@ public interface ApiService {
                                                  @Query("buyNum") int buyNum, @Query("invoiceType") int invoiceType, @Query("invoiceFrom") int invoiceFrom,
                                                  @Query("invoiceName") String invoiceName, @Query("invoiceNo") String invoiceNo, @Query("invoiceContent") String invoiceContent,
                                                  @Query("invoiceEmail") String invoiceEmail, @Query("payType") String payType, @Query("orderForm") String orderForm);
+
+    /**
+     * 创建多个商品订单
+     */
+    @POST("order/create")
+    Observable<Request<CreatOrderBean>> createOrder(@Query("userId") int userId, @Query("cartIds") String cartIds, @Query("addressId") int addressId,
+                                                    @Query("invoiceType") int invoiceType, @Query("invoiceFrom") int invoiceFrom,
+                                                    @Query("invoiceName") String invoiceName, @Query("invoiceNo") String invoiceNo, @Query("invoiceContent") String invoiceContent,
+                                                    @Query("invoiceEmail") String invoiceEmail, @Query("payType") String payType, @Query("orderForm") String orderForm, @Query("dataType") String dataType);
+
     /**
      * 上传头像
      */
+    @Multipart
     @POST("goswf")
-    Observable<String> goswf(@Body MultipartBody body);
+    Observable<ResponseBody> goswf(@Part List<MultipartBody.Part> part);
+
+    /**
+     * 重新下单
+     */
+    @POST("order/repayUpdateOrder")
+    Observable<Request<NewOrderBean>> repayUpdateOrder(@Query("orderId") int orderId, @Query("payType") String payType);
 }

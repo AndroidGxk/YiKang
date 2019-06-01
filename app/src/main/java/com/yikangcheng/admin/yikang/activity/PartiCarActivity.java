@@ -27,6 +27,7 @@ import com.yikangcheng.admin.yikang.presenter.DeleteShopPresenter;
 import com.yikangcheng.admin.yikang.presenter.RecommendPresenter;
 import com.yikangcheng.admin.yikang.presenter.ShopCarPresenter;
 import com.yikangcheng.admin.yikang.util.SpacesItemDecoration;
+import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
 import java.io.Serializable;
 import java.util.List;
@@ -53,20 +54,21 @@ public class PartiCarActivity extends BaseActivtiy implements ShopRecyclerAdapte
 
     @Override
     protected void initView() {
-
-        shop_recycler = findViewById(R.id.shop_recycler);
-        shop_recyclertwo = findViewById(R.id.shop_recyclertwo);
-        all_check = findViewById(R.id.all_check);
-        num_text = findViewById(R.id.num_text);
-        diviline = findViewById(R.id.diviline);
-        baseline = findViewById(R.id.baseline);
-        dele_text = findViewById(R.id.dele_text);
-        base_btn = findViewById(R.id.base_btn);
-        null_car = findViewById(R.id.null_car);
-        tv_toolBar_right = findViewById(R.id.tv_toolBar_right);
-        back_img = findViewById(R.id.back_img);
-        heji = findViewById(R.id.heji);
-        text_total = findViewById(R.id.text_total);
+//设置状态栏颜色
+        StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        shop_recycler = (RecyclerView) findViewById(R.id.shop_recycler);
+        shop_recyclertwo = (RecyclerView) findViewById(R.id.shop_recyclertwo);
+        all_check = (CheckBox) findViewById(R.id.all_check);
+        num_text = (TextView) findViewById(R.id.num_text);
+        diviline = (RelativeLayout) findViewById(R.id.diviline);
+        baseline = (RelativeLayout) findViewById(R.id.baseline);
+        dele_text = (TextView) findViewById(R.id.dele_text);
+        base_btn = (RelativeLayout) findViewById(R.id.base_btn);
+        null_car = (RelativeLayout) findViewById(R.id.null_car);
+        tv_toolBar_right = (TextView) findViewById(R.id.tv_toolBar_right);
+        back_img = (ImageView) findViewById(R.id.back_img);
+        heji = (TextView) findViewById(R.id.heji);
+        text_total = (TextView) findViewById(R.id.text_total);
         shopCarPresenter = new ShopCarPresenter(this);
         deleteShopPresenter = new DeleteShopPresenter(new DeleteShop());
 
@@ -162,8 +164,7 @@ public class PartiCarActivity extends BaseActivtiy implements ShopRecyclerAdapte
                     int id = shopList.get(i).getId();
                     mId += id + ",";
                 }
-                String substring = mId.substring(0, mId.length() - 1);
-                Toast.makeText(PartiCarActivity.this, "" + substring, Toast.LENGTH_SHORT).show();
+                mId.substring(0, mId.length() - 1);
                 deleteShopPresenter.request(getLogUser(PartiCarActivity.this).getId(), mId);
                 mId = "";
             }

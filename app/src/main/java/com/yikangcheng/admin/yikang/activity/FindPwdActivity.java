@@ -57,12 +57,12 @@ public class FindPwdActivity extends BaseActivtiy implements CustomAdapt, ICoreI
     @Override
     protected void initView() {
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
-        updatebtn = findViewById(R.id.updatebtn);
-        moblie_text = findViewById(R.id.moblie_text);
-        phone_text = findViewById(R.id.EditTixt_activity_seek_sousuo);
-        moblie = findViewById(R.id.set_moblie);
-        newpwd_text = findViewById(R.id.newpwd);
-        newpwd_texts = findViewById(R.id.newpwds);
+        updatebtn = (RelativeLayout) findViewById(R.id.updatebtn);
+        moblie_text = (TextView) findViewById(R.id.moblie_text);
+        phone_text = (EditText) findViewById(R.id.EditTixt_activity_seek_sousuo);
+        moblie = (EditText) findViewById(R.id.set_moblie);
+        newpwd_text = (EditText) findViewById(R.id.newpwd);
+        newpwd_texts = (EditText) findViewById(R.id.newpwds);
         //修改密码
         retrievePwdPresenter = new RetrievePwdPresenter(this);
         //获取短信验证前的key

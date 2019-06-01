@@ -3,6 +3,7 @@ package com.yikangcheng.admin.yikang.activity.particulars;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -14,8 +15,12 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.sobot.chat.SobotApi;
 import com.sobot.chat.api.model.Information;
 import com.yikangcheng.admin.yikang.R;
@@ -23,7 +28,6 @@ import com.yikangcheng.admin.yikang.activity.CloseActivity;
 import com.yikangcheng.admin.yikang.activity.PartiCarActivity;
 import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Miao;
 import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Shou;
-import com.yikangcheng.admin.yikang.activity.obligation.PaidActivity;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.Request;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
@@ -41,6 +45,8 @@ public class ParticularsActivity extends BaseActivtiy implements CustomAdapt, IC
     private AddShopPresenter addShopPresenter;
     private ImageView back_img;
     private OrderBuyPresenter orderBuyPresenter;
+    private ProgressBar pbProgress;
+    private SmartRefreshLayout refreshLayout;
 
     @Override
     protected void initView() {
@@ -48,8 +54,13 @@ public class ParticularsActivity extends BaseActivtiy implements CustomAdapt, IC
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorTab);
         Fragment_Miao.getGoWeb();
         Fragment_Shou.getGoBack();
-        webView = findViewById(R.id.webvieww);
-        back_img = findViewById(R.id.back_img);
+        //加载刷新
+        refreshLayout = (SmartRefreshLayout) findViewById(R.id.refreshLayout);
+        refreshLayout.setEnableLoadMore(false);
+        //进度条
+        pbProgress = (ProgressBar) findViewById(R.id.pb_progress);
+        webView = (WebView) findViewById(R.id.webvieww);
+        back_img = (ImageView) findViewById(R.id.back_img);
         Intent intent = getIntent();
         id = intent.getIntExtra("id", 0);
         addShopPresenter = new AddShopPresenter(this);
@@ -119,10 +130,30 @@ public class ParticularsActivity extends BaseActivtiy implements CustomAdapt, IC
             public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
                 return super.onJsAlert(view, url, message, result);
             }
+
+            //进度发生变化
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                if (newProgress == 100) {
+                    // 网页加载完成
+                    pbProgress.setVisibility(View.GONE);
+                } else {
+                    // 加载中
+                    pbProgress.setProgress(newProgress);
+                }
+                super.onProgressChanged(view, newProgress);
+            }
         });
         webView.getSettings().setJavaScriptEnabled(true);
         webView.addJavascriptInterface(this, "ww");
         webView.loadUrl("https://www.yikch.com/mobile/appShow/proDetail/" + id + ".json?type=android");
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                webView.loadUrl("https://www.yikch.com/mobile/appShow/proDetail/" + id + ".json?type=android");
+                refreshLayout.finishRefresh();
+            }
+        });
     }
 
     @Override
@@ -169,7 +200,7 @@ public class ParticularsActivity extends BaseActivtiy implements CustomAdapt, IC
     }
 
     @JavascriptInterface
-    public void goCust() {
+    public void goCust(String msg) {
         Information info = new Information();
         info.setAppkey("7560599b63bf43378d05d018ded42cdd");
         SobotApi.setCustomRobotHelloWord(ParticularsActivity.this, "您好，易康成客服很高兴为您服务，请问有什么可以帮助您的？");

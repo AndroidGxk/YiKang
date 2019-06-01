@@ -5,16 +5,19 @@ import android.os.Bundle;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.yikangcheng.admin.yikang.R;
+import com.yikangcheng.admin.yikang.activity.CloseActivity;
+import com.yikangcheng.admin.yikang.activity.LoginActivity;
+import com.yikangcheng.admin.yikang.activity.MainActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.AllAddressRecyclerAdapter;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.AllAddressBean;
@@ -30,10 +33,13 @@ import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 import java.util.List;
 
 import me.jessyan.autosize.internal.CustomAdapt;
+import me.leefeng.promptlibrary.PromptButton;
+import me.leefeng.promptlibrary.PromptButtonListener;
+import me.leefeng.promptlibrary.PromptDialog;
 
 public class AiteActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt {
     private ImageView mImgActivityAiteFanhui, address_null, img_activity_aite_fanhui;
-    private Toolbar mToolbarActivityAite;
+    private RelativeLayout mToolbarActivityAite;
     private RecyclerView mRlvActivityAite;
     private TextView new_address, add_address, text;
     private AllAddressPresenter allAddressPresenter;
@@ -44,20 +50,28 @@ public class AiteActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
     private View view;
     private int height;
     private int width;
+    private String address = "";
+    private PromptDialog promptDialog;
 
     @Override
     protected void initView() {
+        //创建对象
+        promptDialog = new PromptDialog(this);
+        //设置自定义属性
+        promptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(3000);
+        Intent intent = getIntent();
+        address = intent.getStringExtra("address");
         allAddressPresenter = new AllAddressPresenter(this);
         allAddressRecyclerAdapter = new AllAddressRecyclerAdapter(this);
-        mImgActivityAiteFanhui = findViewById(R.id.img_activity_aite_fanhui);
-        mToolbarActivityAite = findViewById(R.id.toolbar_activity_aite);
-        mRlvActivityAite = findViewById(R.id.rlv_activity_aite);
-        address_null = findViewById(R.id.address_null);
-        new_address = findViewById(R.id.new_address);
-        add_address = findViewById(R.id.add_address);
-        img_activity_aite_fanhui = findViewById(R.id.img_activity_aite_fanhui);
-        nested = findViewById(R.id.nested);
-        text = findViewById(R.id.text);
+        mImgActivityAiteFanhui = (ImageView) findViewById(R.id.img_activity_aite_fanhui);
+        mToolbarActivityAite = (RelativeLayout) findViewById(R.id.toolbar_activity_aite);
+        mRlvActivityAite = (RecyclerView) findViewById(R.id.rlv_activity_aite);
+        address_null = (ImageView) findViewById(R.id.address_null);
+        new_address = (TextView) findViewById(R.id.new_address);
+        add_address = (TextView) findViewById(R.id.add_address);
+        img_activity_aite_fanhui = (ImageView) findViewById(R.id.img_activity_aite_fanhui);
+        nested = (NestedScrollView) findViewById(R.id.nested);
+        text = (TextView) findViewById(R.id.text);
         Display display = this.getWindowManager().getDefaultDisplay();
         width = display.getWidth();
         height = display.getHeight();
@@ -78,6 +92,14 @@ public class AiteActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
                         listUserAddressBean.getProvinceId(), listUserAddressBean.getCityId(), listUserAddressBean.getTownId());
             }
         });
+        allAddressRecyclerAdapter.setSeleAddressOnClick(new AllAddressRecyclerAdapter.SeleAddressOnClick() {
+            @Override
+            public void onClick(AllAddressBean.ListUserAddressBean userAddressBean) {
+                if (address != null && address.equals("true")) {
+
+                }
+            }
+        });
         /**
          * 跳转编辑页面
          */
@@ -96,20 +118,27 @@ public class AiteActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
          */
         allAddressRecyclerAdapter.setDeleteOnClickListener(new AllAddressRecyclerAdapter.deleteOnClickListener() {
             @Override
-            public void onClick(int id, int position) {
-//                deleteAddressPresenter.request(id);
-//                allAddressRecyclerAdapter.deletePosition(position);
+            public void onClick(final int id, final int position) {
+                promptDialog.showWarnAlert("确定要删除吗？", new PromptButton("取消", new PromptButtonListener() {
+                    @Override
+                    public void onClick(PromptButton button) {
+                    }
+                }), new PromptButton("确定", new PromptButtonListener() {
+                    @Override
+                    public void onClick(PromptButton button) {
+                        deleteAddressPresenter.request(id);
+                        allAddressRecyclerAdapter.deletePosition(position);
+                    }
+                }));
             }
         });
+
+
         /**
          *  设置状态栏颜色
          */
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
-        /**
-         * ToolBar
-         */
-        mToolbarActivityAite.setTitle("");
-        setSupportActionBar(mToolbarActivityAite);
+
         /**
          * 点击返回按钮关闭当前页面
          */
@@ -131,6 +160,14 @@ public class AiteActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
                 startActivity(intent);
             }
         });
+
+        add_address.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AiteActivity.this, CompileActivity.class);
+                startActivity(intent);
+            }
+        });
         //解决滑动不流畅
         mRlvActivityAite.setHasFixedSize(true);
         mRlvActivityAite.setNestedScrollingEnabled(false);
@@ -141,6 +178,7 @@ public class AiteActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
             }
         });
     }
+
 
     @Override
     protected void initEventData() {
@@ -168,6 +206,11 @@ public class AiteActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
             address_null.setVisibility(View.VISIBLE);
             text.setVisibility(View.VISIBLE);
             add_address.setVisibility(View.VISIBLE);
+        } else {
+            nested.setVisibility(View.VISIBLE);
+            address_null.setVisibility(View.GONE);
+            text.setVisibility(View.GONE);
+            add_address.setVisibility(View.GONE);
         }
         allAddressRecyclerAdapter.removeAll();
         allAddressRecyclerAdapter.addAll(listUserAddress);
