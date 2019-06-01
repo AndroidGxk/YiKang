@@ -15,6 +15,7 @@ import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.adapter.ObligationAdapter;
+import com.yikangcheng.admin.yikang.activity.orderstatus.FackOfActivity;
 import com.yikangcheng.admin.yikang.activity.orderstatus.WaitForpaymentActivity;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.DeleteOrderBean;
@@ -45,6 +46,7 @@ public class ObligationActivity extends BaseActivtiy implements ICoreInfe {
     private ImageView mImgFragmentAccomplish;
     private ImageView mImgFragmentAccomplishQuguanghuang;
     private RelativeLayout mRelativeLayout;
+    private int mDeletePosition;
 
     @Override
     protected void initView() {
@@ -83,10 +85,14 @@ public class ObligationActivity extends BaseActivtiy implements ICoreInfe {
 
         mObligationAdapter.setOnClickListener(new ObligationAdapter.OnClickListener() {
             @Override
-            public void OnClickListener(View v, int orderId) {
+            public void OnClickListener(View v, int orderId, int position) {
+                /**
+                 * 点击跳到详情的下标  删除后回来删除条目用到
+                 */
+                mDeletePosition = position;
                 Intent intent = new Intent(ObligationActivity.this, WaitForpaymentActivity.class);
                 intent.putExtra("orderId_wait", orderId);
-                startActivity(intent);
+                startActivityForResult(intent, 1);
             }
         });
 
@@ -126,6 +132,17 @@ public class ObligationActivity extends BaseActivtiy implements ICoreInfe {
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == 2) {
+            String delete = data.getStringExtra("delete");
+            if (delete.equals("delete")) {
+                mObligationAdapter.mList.remove(mDeletePosition);
+                mObligationAdapter.notifyDataSetChanged();
+            }
+        }
+    }
 
 
     //点击删除
@@ -140,6 +157,7 @@ public class ObligationActivity extends BaseActivtiy implements ICoreInfe {
             }
         });
     }
+
     private void initMvp(int page) {
         ObligationPresenter obligationPresenter = new ObligationPresenter(this);
         obligationPresenter.request(getLogUser(ObligationActivity.this).getId(), page, "INIT");

@@ -113,6 +113,9 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe {
         mTvFragmentWoName = view.findViewById(R.id.tv__fragment_wo_name);
         //账户明细
         mMingxi = view.findViewById(R.id.relativeLayout_mingxi_fragment_wo);
+
+
+
         /**
          * 点击已取消 跳转页面
          */

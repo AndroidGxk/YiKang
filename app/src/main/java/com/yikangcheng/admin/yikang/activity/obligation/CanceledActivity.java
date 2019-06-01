@@ -1,6 +1,7 @@
 package com.yikangcheng.admin.yikang.activity.obligation;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -42,6 +43,7 @@ public class CanceledActivity extends BaseActivtiy implements ICoreInfe {
     private RelativeLayout mRelativeLayout;
     private int mDeleteItemPostion;
     private int mPage = 1;
+    private int mDeletePosition;
 
     @Override
     protected void initView() {
@@ -78,13 +80,16 @@ public class CanceledActivity extends BaseActivtiy implements ICoreInfe {
 
         mCanceledAdapter_a.setOnClickListener(new CanceledAdapter_A.OnClickListener() {
             @Override
-            public void OnClickListener(View v, int orderId) {
+            public void OnClickListener(View v, int orderId,int position) {
+                /**
+                 * 点击跳到详情的下标  删除后回来删除条目用到
+                 */
+                mDeletePosition = position;
                 Intent intent = new Intent(CanceledActivity.this, FackOfActivity.class);
                 intent.putExtra("orderId_fack", orderId);
-                startActivity(intent);
+                startActivityForResult(intent,5);
             }
         });
-
 
         /**
          * P层
@@ -118,6 +123,18 @@ public class CanceledActivity extends BaseActivtiy implements ICoreInfe {
 
         initDelete();
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 5 && resultCode ==6){
+            String delete = data.getStringExtra("delete");
+            if (delete.equals("delete")){
+                mCanceledAdapter_a.mList.remove(mDeletePosition);
+                mCanceledAdapter_a.notifyDataSetChanged();
+            }
+        }
     }
 
     private void initDelete() {

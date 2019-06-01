@@ -25,8 +25,8 @@ import java.util.List;
  * WF
  */
 public class ObligationAdapter extends RecyclerView.Adapter {
-    private  ObligationActivity mContent;
-    public   ArrayList<ObligationBean.OrderBean> mList;
+    private ObligationActivity mContent;
+    public ArrayList<ObligationBean.OrderBean> mList;
     private ObligationAdapter_B mObligationAdapter_b;
     private OnClickListener mListener;
     private OnClickListenerDelete mListenerDelete;
@@ -63,7 +63,7 @@ public class ObligationAdapter extends RecyclerView.Adapter {
         mObligationAdapter_b.setOnClickListener(new ObligationAdapter_B.OnClickListener() {
             @Override
             public void OnClickListener(View v, int orderId) {
-                mListener.OnClickListener(v, orderId);
+                mListener.OnClickListener(v, orderId, position);
             }
         });
 
@@ -107,7 +107,7 @@ public class ObligationAdapter extends RecyclerView.Adapter {
     }
 
     public interface OnClickListener {
-        void OnClickListener(View v, int orderId);
+        void OnClickListener(View v, int orderId, int position);
     }
 
     public void setOnClickListener(OnClickListener listener) {

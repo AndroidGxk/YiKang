@@ -16,6 +16,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.adapter.PaidAdapter_A;
 import com.yikangcheng.admin.yikang.activity.orderstatus.CloseTheDealActivity;
+import com.yikangcheng.admin.yikang.activity.orderstatus.FackOfActivity;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.DeleteOrderBean;
 import com.yikangcheng.admin.yikang.bean.PaidBean;
@@ -43,6 +44,7 @@ public class PaidActivity extends BaseActivtiy implements ICoreInfe {
     private ImageView mImgFragmentAccomplish;
     private ImageView mImgFragmentAccomplishQuguanghuang;
     private RelativeLayout mRelativeLayout;
+    private int mDeletePosition;
 
     @Override
     protected void initView() {
@@ -79,10 +81,14 @@ public class PaidActivity extends BaseActivtiy implements ICoreInfe {
 
         mPaidAdapter_a.setOnClickListener(new PaidAdapter_A.OnClickListener() {
             @Override
-            public void OnClickListener(View v, int orderId) {
+            public void OnClickListener(View v, int orderId, int position) {
+                /**
+                 * 点击跳到详情的下标  删除后回来删除条目用到
+                 */
+                mDeletePosition = position;
                 Intent intent = new Intent(PaidActivity.this, CloseTheDealActivity.class);
                 intent.putExtra("orderId", orderId);
-                startActivity(intent);
+                startActivityForResult(intent, 3);
             }
         });
 
@@ -120,6 +126,18 @@ public class PaidActivity extends BaseActivtiy implements ICoreInfe {
          * 刪除
          */
         initDelete();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 3 && resultCode ==4){
+            String delete = data.getStringExtra("delete");
+            if (delete.equals("delete")){
+                mPaidAdapter_a.mList.remove(mDeletePosition);
+                mPaidAdapter_a.notifyDataSetChanged();
+            }
+        }
     }
 
     /**

@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.adapter.CloseTheDealAdapter;
+import com.yikangcheng.admin.yikang.activity.copy.CopyButtonLibrary;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.CloseTheDealBean;
 import com.yikangcheng.admin.yikang.bean.DeleteOrderBean;
@@ -49,6 +50,8 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
     private TextView mTownStr;
     private CloseTheDealAdapter mCloseTheDealAdapter;
     private int mPosition;
+    private Intent mIntent;
+    private int mOrderId;
 
 
     @Override
@@ -56,8 +59,8 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
 
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
-        Intent intent = getIntent();
-        int orderId = intent.getIntExtra("orderId", 0);
+        mIntent = getIntent();
+        mOrderId = mIntent.getIntExtra("orderId", 0);
 
         //ToolBar
         mToolbarActivityWaitfrrpayment = (RelativeLayout) findViewById(R.id.toolbar_activity_waitfrrpayment);
@@ -96,11 +99,21 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
         mChanchu = (TextView) findViewById(R.id.tv_activity_closeThe_Deal_shanchu);
 
 
+        //复制监听点击事件
+        mImgActivityCloseFizhi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //传入需要复制的文字的控件
+                CopyButtonLibrary copyButtonLibrary = new CopyButtonLibrary(getApplicationContext(), mTvActivityCloseBiaohao);
+                copyButtonLibrary.init();
+            }
+        });
+
         /**
          * P层
          */
         CloseTheDeallPresenter closeTheDeallPresenter = new CloseTheDeallPresenter(this);
-        closeTheDeallPresenter.request(orderId);
+        closeTheDeallPresenter.request(mOrderId);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRlvActivityCloseShangPin.setLayoutManager(linearLayoutManager);
         ArrayList<CloseTheDealBean.DetailsListBean> mShopSpecDetailedBeans = new ArrayList<>();
@@ -134,9 +147,10 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
         mChanchu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int orderId = mCloseTheDealAdapter.mList.get(mPosition).getOrderId();
                 DeleteOrderIdPresenter deleteOrderIdPresenter = new DeleteOrderIdPresenter(new delete());
-                deleteOrderIdPresenter.request(orderId);
+                deleteOrderIdPresenter.request(mOrderId);
+                mIntent.putExtra("delete", "delete");
+                setResult(4, mIntent);
                 finish();
             }
         });

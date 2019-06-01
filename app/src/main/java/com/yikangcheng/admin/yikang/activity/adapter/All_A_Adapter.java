@@ -85,14 +85,14 @@ public class All_A_Adapter extends RecyclerView.Adapter {
             @Override
             public void OnClickListener(View v, int orderId) {
                 String orderState = mList.get(position).getOrderState();
-                mListener.OnClickListener(v, orderId, orderState);
+                mListener.OnClickListener(v, orderId, orderState,position);
             }
         });
 
         holder1.mShanchu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListenerDelete.OnClickListener(v,position);
+                mListenerDelete.OnClickListener(v, position);
             }
         });
     }
@@ -130,7 +130,7 @@ public class All_A_Adapter extends RecyclerView.Adapter {
     }
 
     public interface OnClickListener {
-        void OnClickListener(View v, int orderId, String orderState);
+        void OnClickListener(View v, int orderId, String orderState, int position);
     }
 
     public void setOnClickListener(OnClickListener listener) {

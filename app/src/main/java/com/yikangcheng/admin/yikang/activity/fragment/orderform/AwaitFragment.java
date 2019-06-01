@@ -15,6 +15,7 @@ import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.adapter.AwaitAdapter;
+import com.yikangcheng.admin.yikang.activity.orderstatus.FackOfActivity;
 import com.yikangcheng.admin.yikang.activity.orderstatus.WaitForpaymentActivity;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
 import com.yikangcheng.admin.yikang.bean.DeleteOrderBean;
@@ -41,6 +42,7 @@ public class AwaitFragment extends BaseFragment implements ICoreInfe {
     private SmartRefreshLayout mSmartRefreshLayout;
     private int mDeleteItemPostion;
     private int mPage = 1;
+    private int mDeletePosition;
 
     @Override
     protected void initView(View view) {
@@ -70,10 +72,11 @@ public class AwaitFragment extends BaseFragment implements ICoreInfe {
          */
         mAwaitAdapter.setOnClickListener(new AwaitAdapter.OnClickListener() {
             @Override
-            public void OnClickListener(View v, int orderId) {
+            public void OnClickListener(View v, int orderId, int position) {
+                mDeletePosition = position;
                 Intent intent = new Intent(getActivity(), WaitForpaymentActivity.class);
                 intent.putExtra("orderId_wait", orderId);
-                startActivity(intent);
+                startActivityForResult(intent, 1);
             }
         });
         /**
@@ -114,6 +117,18 @@ public class AwaitFragment extends BaseFragment implements ICoreInfe {
          * 点击垃圾桶删除订单
          */
         initDelete();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == 2) {
+            String delete = data.getStringExtra("delete");
+            if (delete.equals("delete")) {
+                mAwaitAdapter.mList.remove(mDeletePosition);
+                mAwaitAdapter.notifyDataSetChanged();
+            }
+        }
     }
 
     /**
