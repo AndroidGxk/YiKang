@@ -5,136 +5,136 @@
     android:layout_height="match_parent"
     android:background="@drawable/seek_edi_shape">
 
-    <ImageView
-        android:id="@+id/good_img"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="26dp"
-        android:background="@drawable/ce4" />
+    <!--<ImageView-->
+        <!--android:id="@+id/good_img"-->
+        <!--android:layout_width="60dp"-->
+        <!--android:layout_height="60dp"-->
+        <!--android:layout_marginTop="26dp"-->
+        <!--android:background="@drawable/ce4" />-->
 
-    <TextView
-        android:id="@+id/xian_price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="26dp"
-        android:layout_toRightOf="@+id/good_img"
-        android:text="￥9212.00"
-        android:textColor="#ffff4e4e"
-        android:textSize="15sp" />
+    <!--<TextView-->
+        <!--android:id="@+id/xian_price"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="15dp"-->
+        <!--android:layout_marginTop="26dp"-->
+        <!--android:layout_toRightOf="@+id/good_img"-->
+        <!--android:text="￥9212.00"-->
+        <!--android:textColor="#ffff4e4e"-->
+        <!--android:textSize="15sp" />-->
 
-    <TextView
-        android:id="@+id/yuan_price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
-        android:layout_marginTop="29dp"
-        android:layout_toRightOf="@+id/xian_price"
-        android:text="￥9699.00"
-        android:textColor="#ff999999"
-        android:textSize="11sp" />
+    <!--<TextView-->
+        <!--android:id="@+id/yuan_price"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="12dp"-->
+        <!--android:layout_marginTop="29dp"-->
+        <!--android:layout_toRightOf="@+id/xian_price"-->
+        <!--android:text="￥9699.00"-->
+        <!--android:textColor="#ff999999"-->
+        <!--android:textSize="11sp" />-->
 
-    <TextView
-        android:id="@+id/inven_num"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/xian_price"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="5dp"
-        android:layout_toRightOf="@+id/good_img"
-        android:text="库存：4件"
-        android:textColor="#ff999999"
-        android:textSize="10sp" />
+    <!--<TextView-->
+        <!--android:id="@+id/inven_num"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/xian_price"-->
+        <!--android:layout_marginLeft="15dp"-->
+        <!--android:layout_marginTop="5dp"-->
+        <!--android:layout_toRightOf="@+id/good_img"-->
+        <!--android:text="库存：4件"-->
+        <!--android:textColor="#ff999999"-->
+        <!--android:textSize="10sp" />-->
 
-    <TextView
-        android:id="@+id/sele_good"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/inven_num"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="10dp"
-        android:layout_toRightOf="@+id/good_img"
-        android:text="已选：银色  512GB  1件"
-        android:textColor="#ff000000"
-        android:textSize="11sp" />
+    <!--<TextView-->
+        <!--android:id="@+id/sele_good"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/inven_num"-->
+        <!--android:layout_marginLeft="15dp"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:layout_toRightOf="@+id/good_img"-->
+        <!--android:text="已选：银色  512GB  1件"-->
+        <!--android:textColor="#ff000000"-->
+        <!--android:textSize="11sp" />-->
 
-    <TextView
-        android:id="@+id/color"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/good_img"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="25dp"
-        android:text="颜色"
-        android:textColor="#ff333333"
-        android:textSize="13sp" />
+    <!--<TextView-->
+        <!--android:id="@+id/color"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/good_img"-->
+        <!--android:layout_marginLeft="15dp"-->
+        <!--android:layout_marginTop="25dp"-->
+        <!--android:text="颜色"-->
+        <!--android:textColor="#ff333333"-->
+        <!--android:textSize="13sp" />-->
 
-    <com.zhy.view.flowlayout.TagFlowLayout
-        android:id="@+id/flow1"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:layout_below="@+id/color"
-        android:layout_marginTop="15dp"
-        android:paddingLeft="15dp"
-        zhy:max_select="1">
+    <!--&lt;!&ndash;<com.zhy.view.flowlayout.TagFlowLayout&ndash;&gt;-->
+        <!--&lt;!&ndash;android:id="@+id/flow1"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_height="55dp"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_below="@+id/color"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_marginTop="15dp"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:paddingLeft="15dp"&ndash;&gt;-->
+        <!--&lt;!&ndash;zhy:max_select="1">&ndash;&gt;-->
 
-    </com.zhy.view.flowlayout.TagFlowLayout>
+    <!--</com.zhy.view.flowlayout.TagFlowLayout>-->
 
-    <TextView
-        android:id="@+id/nei"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/flow1"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="25dp"
-        android:text="内存"
-        android:textColor="#ff333333"
-        android:textSize="13sp" />
+    <!--<TextView-->
+        <!--android:id="@+id/nei"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/flow1"-->
+        <!--android:layout_marginLeft="15dp"-->
+        <!--android:layout_marginTop="25dp"-->
+        <!--android:text="内存"-->
+        <!--android:textColor="#ff333333"-->
+        <!--android:textSize="13sp" />-->
 
-    <com.zhy.view.flowlayout.TagFlowLayout
-        android:id="@+id/flow2"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:layout_below="@+id/nei"
-        android:layout_marginTop="15dp"
-        android:paddingLeft="15dp"
-        zhy:max_select="1">
+    <!--&lt;!&ndash;<com.zhy.view.flowlayout.TagFlowLayout&ndash;&gt;-->
+        <!--&lt;!&ndash;android:id="@+id/flow2"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_height="55dp"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_below="@+id/nei"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_marginTop="15dp"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:paddingLeft="15dp"&ndash;&gt;-->
+        <!--&lt;!&ndash;zhy:max_select="1">&ndash;&gt;-->
 
-    </com.zhy.view.flowlayout.TagFlowLayout>
+    <!--</com.zhy.view.flowlayout.TagFlowLayout>-->
 
-    <TextView
-        android:id="@+id/num"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/flow2"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="25dp"
-        android:text="数量"
-        android:textColor="#ff000000"
-        android:textSize="13sp" />
+    <!--<TextView-->
+        <!--android:id="@+id/num"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/flow2"-->
+        <!--android:layout_marginLeft="15dp"-->
+        <!--android:layout_marginTop="25dp"-->
+        <!--android:text="数量"-->
+        <!--android:textColor="#ff000000"-->
+        <!--android:textSize="13sp" />-->
 
-    <com.yikangcheng.admin.yikang.util.AddSubLayout
-        android:layout_width="wrap_content"
-        android:layout_marginTop="25dp"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/flow2"
-        android:layout_marginRight="15dp"
-        android:layout_height="wrap_content" />
+    <!--<com.yikangcheng.admin.yikang.util.AddSubLayout-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_marginTop="25dp"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_below="@+id/flow2"-->
+        <!--android:layout_marginRight="15dp"-->
+        <!--android:layout_height="wrap_content" />-->
 
-    <ImageView
-        android:layout_width="156dp"
-        android:layout_height="40dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="15dp"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/jiarugouwuche" />
+    <!--<ImageView-->
+        <!--android:layout_width="156dp"-->
+        <!--android:layout_height="40dp"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_marginLeft="15dp"-->
+        <!--android:layout_marginBottom="20dp"-->
+        <!--android:background="@drawable/jiarugouwuche" />-->
 
-    <ImageView
-        android:layout_width="156dp"
-        android:layout_height="40dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginRight="15dp"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/lijigoumai1" />
+    <!--<ImageView-->
+        <!--android:layout_width="156dp"-->
+        <!--android:layout_height="40dp"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_marginRight="15dp"-->
+        <!--android:layout_marginBottom="20dp"-->
+        <!--android:background="@drawable/lijigoumai1" />-->
 </RelativeLayout>

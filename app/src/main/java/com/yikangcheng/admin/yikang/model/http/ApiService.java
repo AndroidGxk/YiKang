@@ -63,7 +63,7 @@ public interface ApiService {
      * 为你推荐
      */
     @POST("index/similarCommodityPage")
-    Observable<Request<List<RecommendBean>>> Recommend(@Query("userId") int userId);
+    Observable<Request<List<RecommendBean>>> Recommend(@Query("userId") int userId, @Query("page") int page,@Query("currentPage")int currentPage);
 
     /**
      * 我的页面-----广告图
@@ -265,4 +265,10 @@ public interface ApiService {
      */
     @POST("order/repayUpdateOrder")
     Observable<Request<NewOrderBean>> repayUpdateOrder(@Query("orderId") int orderId, @Query("payType") String payType);
+
+    /**
+     * 修改购物车商品数量
+     */
+    @POST("shopCart/updateBuyNum")
+    Observable<Request> updateBuyNum(@Query("userId") int userId, @Query("cartId") int cartId, @Query("buyNum") int buyNum);
 }

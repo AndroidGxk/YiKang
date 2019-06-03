@@ -48,13 +48,15 @@ public class AiteActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
     private NestedScrollView nested;
     private DeleteAddressPresenter deleteAddressPresenter;
     private View view;
-    private int height;
     private int width;
     private String address = "";
     private PromptDialog promptDialog;
 
     @Override
     protected void initView() {
+        Display display = this.getWindowManager().getDefaultDisplay();
+        width = display.getWidth();
+        int height = display.getHeight();
         //创建对象
         promptDialog = new PromptDialog(this);
         //设置自定义属性
@@ -72,9 +74,6 @@ public class AiteActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
         img_activity_aite_fanhui = (ImageView) findViewById(R.id.img_activity_aite_fanhui);
         nested = (NestedScrollView) findViewById(R.id.nested);
         text = (TextView) findViewById(R.id.text);
-        Display display = this.getWindowManager().getDefaultDisplay();
-        width = display.getWidth();
-        height = display.getHeight();
         //删除弹框
         view = View.inflate(this, R.layout.delete_popup_item, null);
 
@@ -96,7 +95,16 @@ public class AiteActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
             @Override
             public void onClick(AllAddressBean.ListUserAddressBean userAddressBean) {
                 if (address != null && address.equals("true")) {
-
+                    Intent intent = new Intent();
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("result", userAddressBean);
+                    intent.putExtras(bundle);
+                    /*
+                     * 调用setResult方法表示我将Intent对象返回给之前的那个Activity，这样就可以在onActivityResult方法中得到Intent对象，
+                     */
+                    setResult(1001, intent);
+                    //    结束当前这个Activity对象的生命
+                    finish();
                 }
             }
         });
@@ -228,7 +236,7 @@ public class AiteActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
 
     @Override
     public float getSizeInDp() {
-        return 720;
+        return width / 2;
     }
 
     @Override

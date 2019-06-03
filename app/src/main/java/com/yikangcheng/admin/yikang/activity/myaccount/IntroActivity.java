@@ -4,6 +4,7 @@ package com.yikangcheng.admin.yikang.activity.myaccount;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.widget.Toolbar;
+import android.view.Display;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -21,11 +22,16 @@ public class IntroActivity extends BaseActivtiy implements CustomAdapt {
     private RelativeLayout mToolbarActivityIntro;
     private EditText mEtIntroActivityIntro;
     private TextView baocun_text;
+    private int height;
+    private int width;
 
     @Override
     protected void initView() {
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        Display display = this.getWindowManager().getDefaultDisplay();
+        width = display.getWidth();
+        height = display.getHeight();
         back_img = (ImageView) findViewById(R.id.back_img);
         mToolbarActivityIntro = (RelativeLayout) findViewById(R.id.toolbar_activity_intro);
         mEtIntroActivityIntro = (EditText) findViewById(R.id.et_intro_activity_intro);
@@ -72,6 +78,6 @@ public class IntroActivity extends BaseActivtiy implements CustomAdapt {
 
     @Override
     public float getSizeInDp() {
-        return 720;
+        return width / 2;
     }
 }

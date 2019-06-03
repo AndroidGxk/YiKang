@@ -20,7 +20,7 @@ import java.util.List;
 public class AddressRecyclerAdapter extends RecyclerView.Adapter<AddressRecyclerAdapter.Vh> {
     List<ProvinceBean> stringList = new ArrayList<>();
     //记录下标
-    private int mPosition;
+    private int mPosition = 0;
     Context context;
 
     public AddressRecyclerAdapter(Context context) {
@@ -51,20 +51,18 @@ public class AddressRecyclerAdapter extends RecyclerView.Adapter<AddressRecycler
         vh.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mPosition = position;
                 AddressBean addressBean = new AddressBean();
                 addressBean.setAddress(areaName);
                 addressBean.setId(stringList.get(position).getId());
                 onClickListener.onclick(stringList.get(position).getId(), addressBean);
             }
         });
-        for (int i = 0; i < stringList.size(); i++) {
-            if (mPosition == position) {
-                vh.city_text.setTextColor(context.getResources().getColor(R.color.colorTab));
-            } else {
-                vh.city_text.setTextColor(context.getResources().getColor(R.color.colorText));
-            }
+        if (mPosition == position) {
+            vh.city_text.setTextColor(context.getResources().getColor(R.color.colorTab));
+        } else {
+            vh.city_text.setTextColor(context.getResources().getColor(R.color.colorText));
         }
+        mPosition = 0;
     }
 
     @Override

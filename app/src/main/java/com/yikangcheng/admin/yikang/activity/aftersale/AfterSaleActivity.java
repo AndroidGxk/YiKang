@@ -1,6 +1,7 @@
 package com.yikangcheng.admin.yikang.activity.aftersale;
 
 import android.support.v7.widget.Toolbar;
+import android.view.Display;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -15,12 +16,16 @@ public class AfterSaleActivity extends BaseActivtiy implements CustomAdapt {
 
     private ImageView mImgActivityAftersaleFanhui;
     private Toolbar mToolbarActivityMyaccount;
+    private int height;
+    private int width;
 
     @Override
     protected void initView() {
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
-
+        Display display = this.getWindowManager().getDefaultDisplay();
+        width = display.getWidth();
+        height = display.getHeight();
         mImgActivityAftersaleFanhui = (ImageView) findViewById(R.id.img_activity_aftersale_fanhui);
         mToolbarActivityMyaccount = (Toolbar) findViewById(R.id.toolbar_activity_myaccount);
 
@@ -59,6 +64,6 @@ public class AfterSaleActivity extends BaseActivtiy implements CustomAdapt {
 
     @Override
     public float getSizeInDp() {
-        return 720;
+        return width / 2;
     }
 }

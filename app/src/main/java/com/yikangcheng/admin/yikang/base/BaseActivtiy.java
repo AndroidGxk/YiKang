@@ -18,22 +18,17 @@ import com.example.sqlite.dao.DaoMaster;
 import com.example.sqlite.dao.DaoSession;
 import com.example.sqlite.dao.LoginBeanDao;
 import com.example.sqlite.dao.UserDetailBeanDao;
-import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.app.BaseApp;
 import com.yikangcheng.admin.yikang.bean.LoginBean;
 import com.yikangcheng.admin.yikang.bean.UserDetailBean;
-import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
 import java.util.List;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import me.imid.swipebacklayout.lib.SwipeBackLayout;
 import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
 
 public abstract class BaseActivtiy extends SwipeBackActivity {
-    private Unbinder mUnbinder;
     public static Context mContext;
     protected BasePresenter mPresenter;
     private FragmentManager mManager;
@@ -52,7 +47,6 @@ public abstract class BaseActivtiy extends SwipeBackActivity {
             //透明导航栏
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
-        mUnbinder = ButterKnife.bind(this);
         mManager = getSupportFragmentManager();
         mContext = this;
         BaseApp.getAppInstance().addActivtiy(this);

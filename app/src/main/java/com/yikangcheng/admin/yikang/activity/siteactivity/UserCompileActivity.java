@@ -11,6 +11,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -22,13 +23,11 @@ import com.yikangcheng.admin.yikang.activity.adapter.AddressRecyclerAdapter;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.AddressBean;
 import com.yikangcheng.admin.yikang.bean.AllAddressBean;
-import com.yikangcheng.admin.yikang.bean.LoginBean;
 import com.yikangcheng.admin.yikang.bean.ProvinceBean;
 import com.yikangcheng.admin.yikang.bean.Request;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
 import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
 import com.yikangcheng.admin.yikang.presenter.AddressPresenter;
-import com.yikangcheng.admin.yikang.presenter.InsertAddressPresenter;
 import com.yikangcheng.admin.yikang.presenter.UpdateAddressPresenter;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
@@ -158,6 +157,7 @@ public class UserCompileActivity extends BaseActivtiy implements ICoreInfe, Cust
                 }
             }
         });
+        //点击选择地址
         address_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -169,9 +169,13 @@ public class UserCompileActivity extends BaseActivtiy implements ICoreInfe, Cust
                 mDialog.getWindow().setGravity(Gravity.BOTTOM);
                 mDialog.setCanceledOnTouchOutside(true);
                 mDialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
+                WindowManager.LayoutParams params = mDialog.getWindow().getAttributes();
+                params.x = 0;
+                params.gravity = Gravity.BOTTOM;
                 mDialog.show();
             }
         });
+        //Tablayout
         mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -213,6 +217,7 @@ public class UserCompileActivity extends BaseActivtiy implements ICoreInfe, Cust
 
             }
         });
+        //点击事件
         add_address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -264,7 +269,7 @@ public class UserCompileActivity extends BaseActivtiy implements ICoreInfe, Cust
 
     @Override
     public float getSizeInDp() {
-        return 720;
+        return width / 2;
     }
 
     /**

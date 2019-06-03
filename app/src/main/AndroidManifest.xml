@@ -19,7 +19,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.PartiCarActivity"></activity>
+        <activity android:name=".activity.PayResultActivity"></activity>
+        <activity android:name=".activity.PartiCarActivity" />
         <activity android:name=".activity.ClassifyHomeActivity" />
         <activity android:name=".activity.FindPwdActivity" />
         <activity android:name=".activity.siteactivity.UserCompileActivity" />
@@ -138,7 +139,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-
     </application>
 
 </manifest>

@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -66,6 +67,7 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
     private int mPosition;
     private Intent mIntent;
     private int mOrderId_wait;
+    private int width;
 
     @Override
     protected void initView() {
@@ -73,6 +75,9 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
         mOrderId_wait = mIntent.getIntExtra("orderId_wait", 0);
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        Display display = this.getWindowManager().getDefaultDisplay();
+        width = display.getWidth();
+        int height = display.getHeight();
         //ToolBar返回按钮
         mImgActivityWaitfrrpaymentFanhui = (ImageView) findViewById(R.id.img_activity_waitfrrpayment_fanhui);
         //ToolBar
@@ -200,7 +205,7 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
 
     @Override
     public float getSizeInDp() {
-        return 720;
+        return width / 2;
     }
 
     public class delete implements ICoreInfe {

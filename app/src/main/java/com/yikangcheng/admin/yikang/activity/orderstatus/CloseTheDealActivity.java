@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -54,6 +55,7 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
     private int mPosition;
     private Intent mIntent;
     private int mOrderId;
+    private int width;
 
 
     @Override
@@ -62,7 +64,9 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
         mIntent = getIntent();
         mOrderId = mIntent.getIntExtra("orderId", 0);
-
+        Display display = this.getWindowManager().getDefaultDisplay();
+        width = display.getWidth();
+        int height = display.getHeight();
         //ToolBar
         mToolbarActivityWaitfrrpayment = (RelativeLayout) findViewById(R.id.toolbar_activity_waitfrrpayment);
         //用户名
@@ -186,7 +190,7 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
 
     @Override
     public float getSizeInDp() {
-        return 720;
+        return width / 2;
     }
 
     public class delete implements ICoreInfe {

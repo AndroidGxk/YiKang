@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -19,14 +20,21 @@ import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
 import java.util.ArrayList;
 
-public class CouponActivity extends BaseActivtiy {
+import me.jessyan.autosize.internal.CustomAdapt;
+
+public class CouponActivity extends BaseActivtiy implements CustomAdapt {
     private TabLayout coupon_tab;
     private ViewPager viewpage;
     private ImageView back_img;
+    private int height;
+    private int width;
 
     @Override
     protected void initView() {
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        Display display = this.getWindowManager().getDefaultDisplay();
+        width = display.getWidth();
+        height = display.getHeight();
         coupon_tab = (TabLayout) findViewById(R.id.coupon_tab);
         viewpage = (ViewPager) findViewById(R.id.viewpage);
         back_img = (ImageView) findViewById(R.id.back_img);
@@ -62,5 +70,15 @@ public class CouponActivity extends BaseActivtiy {
     @Override
     protected void createPresenter() {
 
+    }
+
+    @Override
+    public boolean isBaseOnWidth() {
+        return false;
+    }
+
+    @Override
+    public float getSizeInDp() {
+        return width / 2;
     }
 }

@@ -1,7 +1,9 @@
 package com.yikangcheng.admin.yikang.activity;
 
+import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -24,10 +26,14 @@ public class SeckillSecondActivity extends BaseActivtiy implements XRecyclerView
     private SeckillRecyclerAdapter seckillRecyclerAdapter;
     private List<String> stringList = new ArrayList<>();
     private ImageView back_img;
+    private int width;
 
     @Override
     protected void initView() {
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+        int height = wm.getDefaultDisplay().getHeight();
+        width = wm.getDefaultDisplay().getWidth();
         seckillRecyclerAdapter = new SeckillRecyclerAdapter();
         back_img = (ImageView) findViewById(R.id.back_img);
         recycler = (XRecyclerView) findViewById(R.id.recycler);
@@ -96,7 +102,7 @@ public class SeckillSecondActivity extends BaseActivtiy implements XRecyclerView
 
     @Override
     public float getSizeInDp() {
-        return 750;
+        return width/2;
     }
 
 }

@@ -65,6 +65,7 @@
     </android.support.v7.widget.Toolbar>
 
     <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nestedSV"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/toolBar"
@@ -159,7 +160,7 @@
                     android:background="#000000" />
             </RelativeLayout>
 
-            <android.support.v7.widget.RecyclerView
+            <com.jcodecraeer.xrecyclerview.XRecyclerView
                 android:id="@+id/shop_recyclertwo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

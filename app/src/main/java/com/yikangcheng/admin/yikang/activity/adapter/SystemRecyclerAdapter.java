@@ -77,7 +77,7 @@ public class SystemRecyclerAdapter extends RecyclerView.Adapter<SystemRecyclerAd
 
     @Override
     public int getItemCount() {
-        return 9;
+        return 0;
     }
 
     class Vh extends RecyclerView.ViewHolder {

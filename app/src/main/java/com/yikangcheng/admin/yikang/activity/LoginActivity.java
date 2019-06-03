@@ -30,6 +30,7 @@ public class LoginActivity extends BaseActivtiy implements CustomAdapt, ICoreInf
     private LoginPresenter loginPresenter;
     public SharedPreferences userInfo;
     private PromptDialog promptDialog;
+    private int width;
 
     @Override
     protected void initView() {
@@ -41,6 +42,7 @@ public class LoginActivity extends BaseActivtiy implements CustomAdapt, ICoreInf
         reg_image = (ImageView) findViewById(R.id.reg_image);
         WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         height = wm.getDefaultDisplay().getHeight();
+        width = wm.getDefaultDisplay().getWidth();
         phone_edit = (EditText) findViewById(R.id.phone_edit);
         pwd_edit = (EditText) findViewById(R.id.pwd_edit);
         forget_pwd = (TextView) findViewById(R.id.forget_pwd);
@@ -102,7 +104,7 @@ public class LoginActivity extends BaseActivtiy implements CustomAdapt, ICoreInf
 
     @Override
     public float getSizeInDp() {
-        return height / 2;
+        return width / 2;
     }
 
     @Override

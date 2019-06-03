@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Display;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -31,10 +32,12 @@ import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
 import java.util.ArrayList;
 
+import me.jessyan.autosize.internal.CustomAdapt;
+
 /**
  * 我的——————待付款页面
  */
-public class ObligationActivity extends BaseActivtiy implements ICoreInfe {
+public class ObligationActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt {
 
     private ImageView mImgActivityObligationFanhui;
     private RelativeLayout mToolbarActivityObligation;
@@ -47,11 +50,15 @@ public class ObligationActivity extends BaseActivtiy implements ICoreInfe {
     private ImageView mImgFragmentAccomplishQuguanghuang;
     private RelativeLayout mRelativeLayout;
     private int mDeletePosition;
+    private int width;
 
     @Override
     protected void initView() {
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        Display display = this.getWindowManager().getDefaultDisplay();
+        width = display.getWidth();
+        int height = display.getHeight();
         mImgActivityObligationFanhui = (ImageView) findViewById(R.id.img_activity_obligation_fanhui);
         mToolbarActivityObligation = (RelativeLayout) findViewById(R.id.toolbar_activity_obligation);
         mRlvActivityObligation = (RecyclerView) findViewById(R.id.rlv_activity_obligation);
@@ -200,6 +207,16 @@ public class ObligationActivity extends BaseActivtiy implements ICoreInfe {
     @Override
     protected void createPresenter() {
 
+    }
+
+    @Override
+    public boolean isBaseOnWidth() {
+        return false;
+    }
+
+    @Override
+    public float getSizeInDp() {
+        return width / 2;
     }
 
     public class delete implements ICoreInfe {

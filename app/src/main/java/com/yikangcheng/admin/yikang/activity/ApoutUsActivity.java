@@ -17,6 +17,7 @@ public class ApoutUsActivity extends BaseActivtiy implements CustomAdapt {
     private ImageView back_img;
     private RelativeLayout mToolbarActivityMyaccount;
     private int height;
+    private int width;
 
     @Override
     protected void initView() {
@@ -24,6 +25,7 @@ public class ApoutUsActivity extends BaseActivtiy implements CustomAdapt {
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
         Display display = this.getWindowManager().getDefaultDisplay();
         height = display.getHeight();
+        width = display.getWidth();
         back_img = (ImageView) findViewById(R.id.back_img);
         mToolbarActivityMyaccount = (RelativeLayout) findViewById(R.id.activity_myaccount);
     }
@@ -58,6 +60,6 @@ public class ApoutUsActivity extends BaseActivtiy implements CustomAdapt {
 
     @Override
     public float getSizeInDp() {
-        return height / 2;
+        return width / 2;
     }
 }

@@ -1,5 +1,6 @@
 package com.yikangcheng.admin.yikang.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -7,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -16,6 +18,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.RequestOptions;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.aftersale.AfterSaleActivity;
 import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Fen;
@@ -29,6 +34,12 @@ import com.yikangcheng.admin.yikang.activity.seek.SeekActivity;
 import com.yikangcheng.admin.yikang.activity.siteactivity.AiteActivity;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.LoginBean;
+import com.yikangcheng.admin.yikang.bean.Request;
+import com.yikangcheng.admin.yikang.bean.UserDetailBean;
+import com.yikangcheng.admin.yikang.bean.UserInfoBean;
+import com.yikangcheng.admin.yikang.model.http.ApiException;
+import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
+import com.yikangcheng.admin.yikang.presenter.UserInfoPresenter;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
 import me.jessyan.autosize.internal.CustomAdapt;
@@ -53,7 +64,7 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
     private View toobar;
     private boolean isclick;
     private Fragment_Miao fragment_miao;
-
+    private TextView text_count;
     /**
      * 记录上次点击的页面
      */
@@ -63,6 +74,8 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
     private Fragment_Gou fragment_gou;
     private Fragment_Wo fragment_wo;
     private PromptDialog promptDialog;
+    private UserInfoPresenter userInfoPresenter;
+    private int width;
 
     @Override
     protected void initView() {
@@ -71,9 +84,12 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         promptDialog = new PromptDialog(this);
         //设置自定义属性
         promptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(3000);
-
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        userInfoPresenter = new UserInfoPresenter(new UserInfo());
+        WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+        int height = wm.getDefaultDisplay().getHeight();
+        width = wm.getDefaultDisplay().getWidth();
         radio = (RadioGroup) findViewById(R.id.radio_group);
         radio.check(R.id.shou);
         mImg_activity_main_soushuo = (ImageView) findViewById(R.id.iv_toolBar_right);
@@ -89,6 +105,7 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         line3 = (LinearLayout) findViewById(R.id.line3);
         line6 = (LinearLayout) findViewById(R.id.line6);
         header = (ImageView) findViewById(R.id.header);
+        text_count = (TextView) findViewById(R.id.text_count);
         my_name = (TextView) findViewById(R.id.my_name);
         miao_text = (TextView) findViewById(R.id.miao_text);
         gou_text = (TextView) findViewById(R.id.gou_text);
@@ -107,6 +124,21 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
                 Fragment_Gou.getSignY();
             }
         });
+        //我的账号
+        line2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, MyaccountActivity.class));
+            }
+        });
+        //帮助中心
+        line5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, ApoutUsActivity.class));
+            }
+        });
+
         //编辑
         tv_toolBar_right.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -170,7 +202,12 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
      * 购物车的商品数量
      */
     public void setCount(int count) {
-//        text_count.setText("" + count);
+        if (count == 0) {
+            text_count.setVisibility(View.GONE);
+        } else {
+            text_count.setVisibility(View.VISIBLE);
+            text_count.setText("" + count);
+        }
     }
 
     @Override
@@ -557,7 +594,7 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
 
     @Override
     public float getSizeInDp() {
-        return 720;
+        return width / 2;
     }
 
     onClickListener onClickListener;
@@ -648,7 +685,9 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
             header.setVisibility(View.VISIBLE);
             my_name.setVisibility(View.VISIBLE);
             log_text.setVisibility(View.GONE);
-            my_name.setText(logUser.getNickname());
+            if (logUser != null) {
+                userInfoPresenter.request(logUser.getId());
+            }
         } else {
             line1.setVisibility(View.GONE);
             line2.setVisibility(View.GONE);
@@ -756,6 +795,29 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
                     fragmentTransaction5.commit();
                     break;
             }
+        }
+    }
+
+    /**
+     * 个人资料
+     */
+    private class UserInfo implements ICoreInfe {
+        @Override
+        public void success(Object data) {
+            Request request = (Request) data;
+            UserInfoBean entity = (UserInfoBean) request.getEntity();
+            UserDetailBean userCenter = (UserDetailBean) entity.getUserCenter();
+            //设置图片圆角角度
+            Glide.with(MainActivity.this).load("https://static.yikch.com" + userCenter.getAvatar())
+                    .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                    .into(header);
+            //名称
+            my_name.setText(userCenter.getNickName());
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
         }
     }
 }

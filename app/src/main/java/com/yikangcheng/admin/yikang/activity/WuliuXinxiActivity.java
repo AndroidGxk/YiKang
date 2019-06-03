@@ -1,8 +1,10 @@
 package com.yikangcheng.admin.yikang.activity;
 
+import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -18,7 +20,9 @@ import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WuliuXinxiActivity extends BaseActivtiy {
+import me.jessyan.autosize.internal.CustomAdapt;
+
+public class WuliuXinxiActivity extends BaseActivtiy implements CustomAdapt {
 
     private RecyclerView xrecycler;
     private TextView compile_text;
@@ -28,11 +32,15 @@ public class WuliuXinxiActivity extends BaseActivtiy {
     private boolean isclick;
     private List<TestBean> testBeans;
     private ImageView back_img;
+    private int width;
 
     @Override
     protected void initView() {
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.clolrBAai);
+        WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+        int height = wm.getDefaultDisplay().getHeight();
+        width = wm.getDefaultDisplay().getWidth();
         xrecycler = (RecyclerView) findViewById(R.id.xrecycler);
         check_btn = (CheckBox) findViewById(R.id.check_btn);
         back_img = (ImageView) findViewById(R.id.back_img);
@@ -81,5 +89,15 @@ public class WuliuXinxiActivity extends BaseActivtiy {
     @Override
     protected void createPresenter() {
 
+    }
+
+    @Override
+    public boolean isBaseOnWidth() {
+        return false;
+    }
+
+    @Override
+    public float getSizeInDp() {
+        return width / 2;
     }
 }

@@ -1,7 +1,9 @@
 package com.yikangcheng.admin.yikang.activity;
 
+import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -18,16 +20,22 @@ import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
 import java.util.List;
 
-public class SelectCouponActivity extends BaseActivtiy implements ICoreInfe {
+import me.jessyan.autosize.internal.CustomAdapt;
+
+public class SelectCouponActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt {
 
     private XRecyclerView xrecycler;
     private DiscountCouponPresenter discountCouponPresenter;
     private SelectCouponRecyclerAdapter selectCouponRecyclerAdapter;
     private ImageView youhuiquan_null, back_img;
+    private int width;
 
     @Override
     protected void initView() {
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorTab);
+        WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+        int height = wm.getDefaultDisplay().getHeight();
+        width = wm.getDefaultDisplay().getWidth();
         xrecycler = (XRecyclerView) findViewById(R.id.xrecycler);
         back_img = (ImageView) findViewById(R.id.back_img);
         youhuiquan_null = (ImageView) findViewById(R.id.youhuiquan_null);
@@ -76,5 +84,15 @@ public class SelectCouponActivity extends BaseActivtiy implements ICoreInfe {
     @Override
     public void fail(ApiException e) {
 
+    }
+
+    @Override
+    public boolean isBaseOnWidth() {
+        return false;
+    }
+
+    @Override
+    public float getSizeInDp() {
+        return width / 2;
     }
 }

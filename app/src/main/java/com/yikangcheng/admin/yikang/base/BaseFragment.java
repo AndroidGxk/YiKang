@@ -19,12 +19,9 @@ import com.yikangcheng.admin.yikang.bean.UserDetailBean;
 
 import java.util.List;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 
 public abstract class BaseFragment extends Fragment {
-    private Unbinder mButterKnife;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -37,7 +34,6 @@ public abstract class BaseFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        mButterKnife = ButterKnife.bind(this, view);
         initData();
         super.onViewCreated(view, savedInstanceState);
     }
@@ -51,8 +47,6 @@ public abstract class BaseFragment extends Fragment {
 
     @Override
     public void onDestroy() {
-        if (mButterKnife != null)
-            mButterKnife.unbind();
         super.onDestroy();
     }
 

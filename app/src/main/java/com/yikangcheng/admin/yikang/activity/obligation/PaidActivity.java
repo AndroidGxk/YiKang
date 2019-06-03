@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Display;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -31,7 +32,9 @@ import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PaidActivity extends BaseActivtiy implements ICoreInfe {
+import me.jessyan.autosize.internal.CustomAdapt;
+
+public class PaidActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt {
 
 
     private ImageView mImgActivityPaidFanhui;
@@ -45,12 +48,15 @@ public class PaidActivity extends BaseActivtiy implements ICoreInfe {
     private ImageView mImgFragmentAccomplishQuguanghuang;
     private RelativeLayout mRelativeLayout;
     private int mDeletePosition;
+    private int width;
 
     @Override
     protected void initView() {
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
-
+        Display display = this.getWindowManager().getDefaultDisplay();
+        width = display.getWidth();
+        int height = display.getHeight();
         mImgActivityPaidFanhui = (ImageView) findViewById(R.id.img_activity_paid_fanhui);
         mToolbarActivityPaid = (RelativeLayout) findViewById(R.id.toolbar_activity_paid);
         mRlvActivityPaid = (RecyclerView) findViewById(R.id.rlv_activity_paid);
@@ -131,9 +137,9 @@ public class PaidActivity extends BaseActivtiy implements ICoreInfe {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 3 && resultCode ==4){
+        if (requestCode == 3 && resultCode == 4) {
             String delete = data.getStringExtra("delete");
-            if (delete.equals("delete")){
+            if (delete.equals("delete")) {
                 mPaidAdapter_a.mList.remove(mDeletePosition);
                 mPaidAdapter_a.notifyDataSetChanged();
             }
@@ -202,6 +208,16 @@ public class PaidActivity extends BaseActivtiy implements ICoreInfe {
     @Override
     protected void createPresenter() {
 
+    }
+
+    @Override
+    public boolean isBaseOnWidth() {
+        return false;
+    }
+
+    @Override
+    public float getSizeInDp() {
+        return width / 2;
     }
 
     public class delete implements ICoreInfe {

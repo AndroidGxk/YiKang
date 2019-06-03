@@ -78,6 +78,7 @@ public class CompileActivity extends BaseActivtiy implements ICoreInfe, CustomAd
          *  设置状态栏颜色
          */
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+
         mInflate = LayoutInflater.from(CompileActivity.this).inflate(R.layout.site_compile, null);
         mTabLayout = mInflate.findViewById(R.id.tablayout);
         address_recycler = mInflate.findViewById(R.id.add_recycler);
@@ -260,7 +261,7 @@ public class CompileActivity extends BaseActivtiy implements ICoreInfe, CustomAd
 
     @Override
     public float getSizeInDp() {
-        return 720;
+        return width / 2;
     }
 
     /**

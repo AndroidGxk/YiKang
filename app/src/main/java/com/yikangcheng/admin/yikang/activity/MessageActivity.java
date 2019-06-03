@@ -1,9 +1,11 @@
 package com.yikangcheng.admin.yikang.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -13,15 +15,22 @@ import com.yikangcheng.admin.yikang.activity.adapter.MessageListAdapter;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
-public class MessageActivity extends BaseActivtiy {
+import me.jessyan.autosize.internal.CustomAdapt;
+
+public class MessageActivity extends BaseActivtiy implements CustomAdapt {
 
     private LinearLayout wuliu, tongzhi, kefu;
     private XRecyclerView xrecycler;
     private ImageView back_img;
+    private int width;
+
     @Override
     protected void initView() {
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+        int height = wm.getDefaultDisplay().getHeight();
+        width = wm.getDefaultDisplay().getWidth();
         wuliu = (LinearLayout) findViewById(R.id.wuliu);
         xrecycler = (XRecyclerView) findViewById(R.id.xrecycler);
         tongzhi = (LinearLayout) findViewById(R.id.tongzhi);
@@ -80,5 +89,15 @@ public class MessageActivity extends BaseActivtiy {
     @Override
     protected void createPresenter() {
 
+    }
+
+    @Override
+    public boolean isBaseOnWidth() {
+        return false;
+    }
+
+    @Override
+    public float getSizeInDp() {
+        return width / 2;
     }
 }

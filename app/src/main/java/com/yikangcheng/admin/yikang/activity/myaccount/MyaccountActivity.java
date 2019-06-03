@@ -4,6 +4,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.view.Display;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -27,12 +28,16 @@ public class MyaccountActivity extends BaseActivtiy implements CustomAdapt {
     private RelativeLayout mToolbarActivityMyaccount;
     private TabLayout mTabActivityMyaccount;
     private ViewPager mViewPagerActivityMyaccount;
+    private int width;
+    private int height;
 
     @Override
     protected void initView() {
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
-
+        Display display = this.getWindowManager().getDefaultDisplay();
+        width = display.getWidth();
+        height = display.getHeight();
 
         mImgActivityMyaccountFanhui = (ImageView) findViewById(R.id.img_activity_myaccount_fanhui);
         mToolbarActivityMyaccount = (RelativeLayout) findViewById(R.id.toolbar_activity_myaccount);
@@ -48,7 +53,6 @@ public class MyaccountActivity extends BaseActivtiy implements CustomAdapt {
         MyAccountAdapter myAccountAdapter = new MyAccountAdapter(getSupportFragmentManager(), strings, fragments);
         mViewPagerActivityMyaccount.setAdapter(myAccountAdapter);
         mTabActivityMyaccount.setupWithViewPager(mViewPagerActivityMyaccount);
-
 
 
         /**
@@ -84,6 +88,6 @@ public class MyaccountActivity extends BaseActivtiy implements CustomAdapt {
 
     @Override
     public float getSizeInDp() {
-        return 720;
+        return width / 2;
     }
 }

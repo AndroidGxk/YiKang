@@ -55,9 +55,13 @@ public class RegisterActivity extends BaseActivtiy implements ICoreInfe, CustomA
     private GetMobileKeyPresenter getMobileKeyPresenter;
     private SendMobilePresenter sendMobilePresenter;
     private RegisterPresenter registerPresenter;
+    private int width;
 
     @Override
     protected void initView() {
+        WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+        int height = wm.getDefaultDisplay().getHeight();
+        width = wm.getDefaultDisplay().getWidth();
         log_image = (ImageView) findViewById(R.id.log_image);
         reg_phone_edit = (EditText) findViewById(R.id.reg_phone_edit);
         ver_btn = (TextView) findViewById(R.id.ver_btn);
@@ -69,8 +73,6 @@ public class RegisterActivity extends BaseActivtiy implements ICoreInfe, CustomA
         getMobileKeyPresenter = new GetMobileKeyPresenter(this);
         sendMobilePresenter = new SendMobilePresenter(new SendMobile());
         registerPresenter = new RegisterPresenter(new Register());
-        WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
-        height = wm.getDefaultDisplay().getHeight();
     }
 
     @Override
@@ -138,7 +140,7 @@ public class RegisterActivity extends BaseActivtiy implements ICoreInfe, CustomA
 
     @Override
     public float getSizeInDp() {
-        return height / 2;
+        return width / 2;
     }
 
     /**

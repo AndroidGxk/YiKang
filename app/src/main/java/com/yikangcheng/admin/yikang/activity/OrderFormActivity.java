@@ -1,10 +1,12 @@
 package com.yikangcheng.admin.yikang.activity;
 
+import android.content.Context;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TableLayout;
@@ -21,18 +23,24 @@ import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderFormActivity extends BaseActivtiy {
+import me.jessyan.autosize.internal.CustomAdapt;
+
+public class OrderFormActivity extends BaseActivtiy implements CustomAdapt {
 
     private ImageView back_img;
     private RelativeLayout mToolbarActivityOrderfrom;
     private TabLayout mTabActivityOrderform;
     private ViewPager mViewPagerOrderform;
+    private int width;
 
     @Override
     protected void initView() {
 
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+        int height = wm.getDefaultDisplay().getHeight();
+        width = wm.getDefaultDisplay().getWidth();
         back_img = (ImageView) findViewById(R.id.back_img);
         mToolbarActivityOrderfrom = (RelativeLayout) findViewById(R.id.toolbar_activity_orderfrom);
         mTabActivityOrderform = (TabLayout) findViewById(R.id.tab_activity_orderform);
@@ -78,5 +86,15 @@ public class OrderFormActivity extends BaseActivtiy {
     @Override
     protected void createPresenter() {
 
+    }
+
+    @Override
+    public boolean isBaseOnWidth() {
+        return false;
+    }
+
+    @Override
+    public float getSizeInDp() {
+        return width / 2;
     }
 }

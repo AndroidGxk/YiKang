@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Display;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -13,31 +14,41 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yikangcheng.admin.yikang.R;
+import com.yikangcheng.admin.yikang.activity.MainActivity;
 import com.yikangcheng.admin.yikang.activity.SeekListActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.SeekHotAdapter;
+import com.yikangcheng.admin.yikang.activity.adapter.TagAdapter;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.SeekHotBean;
 import com.yikangcheng.admin.yikang.greendao.SoSuoDb;
 import com.yikangcheng.admin.yikang.greendao.Utils;
-import com.yikangcheng.admin.yikang.util.FlowLayout;
+import com.yikangcheng.admin.yikang.util.FlowTagLayout;
+import com.yikangcheng.admin.yikang.util.OnTagClickListener;
+import com.yikangcheng.admin.yikang.util.SerachUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SeekActivity extends BaseActivtiy {
+import me.jessyan.autosize.internal.CustomAdapt;
+
+public class SeekActivity extends BaseActivtiy implements CustomAdapt {
 
 
     private ImageView mImgActivitySeekDelete;
     private TextView mTvActivitySeekCancel;
     private EditText mEditTixtActivitySeekSousuo;
-    private RecyclerView mRlvActivitySeekRecently;
     private RecyclerView mRlvActivitySeekHot;
-    private FlowLayout mFlowLayout_activity_seek;
     private List<SoSuoDb> mSoSuoDbs;
+    private FlowTagLayout flowTagLayout;
+    private TagAdapter tagAdapter;
+    private List<String> searchHistory;//搜索历史
+    private int width;
 
     @Override
     protected void initView() {
-
+        Display display = this.getWindowManager().getDefaultDisplay();
+        width = display.getWidth();
+        int height = display.getHeight();
         //删除最近搜索按钮
         mImgActivitySeekDelete = (ImageView) findViewById(R.id.img_activity_seek_delete);
         //取消搜索
@@ -45,9 +56,27 @@ public class SeekActivity extends BaseActivtiy {
         //搜索EditText
         mEditTixtActivitySeekSousuo = (EditText) findViewById(R.id.EditTixt_activity_seek_sousuo);
         //最近搜索
-        mFlowLayout_activity_seek = (FlowLayout) findViewById(R.id.FlowLayout_activity_seek);
+        flowTagLayout = (FlowTagLayout) findViewById(R.id.FlowLayout_activity_seek);
         //热门搜索
         mRlvActivitySeekHot = (RecyclerView) findViewById(R.id.rlv_activity_seek_hot);
+
+        //获得搜索历史
+        searchHistory = SerachUtils.getInstance().getSearchList();
+        tagAdapter = new TagAdapter(this);
+        //设置这个模式意思是处理流标签点击事件
+        flowTagLayout.setTagCheckedMode(FlowTagLayout.FLOW_TAG_CHECKED_NONE);
+        flowTagLayout.setAdapter(tagAdapter);
+        tagAdapter.onlyAddAll(searchHistory);
+        //点击流标签让历史文字出现在EditText上,并执行搜索
+        flowTagLayout.setOnTagClickListener(new OnTagClickListener() {
+            @Override
+            public void onItemClick(FlowTagLayout parent, View view, int position) {
+                View view1 = parent.getAdapter().getView(position, null, null);
+                String tag = (String) view1.getTag();
+                mEditTixtActivitySeekSousuo.setText(tag);
+                startActivityToResult();
+            }
+        });
 
 
         /**
@@ -56,10 +85,10 @@ public class SeekActivity extends BaseActivtiy {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         mRlvActivitySeekHot.setLayoutManager(linearLayoutManager);
         ArrayList<SeekHotBean> seekHotBeans = new ArrayList<>();
-        seekHotBeans.add(new SeekHotBean(null,R.drawable.seekhot_a));
-        seekHotBeans.add(new SeekHotBean(null,R.drawable.seekhot_b));
-        seekHotBeans.add(new SeekHotBean(null,R.drawable.seekhot_c));
-        SeekHotAdapter seekHotAdapter = new SeekHotAdapter(this,seekHotBeans);
+        seekHotBeans.add(new SeekHotBean(null, R.drawable.seekhot_a));
+        seekHotBeans.add(new SeekHotBean(null, R.drawable.seekhot_b));
+        seekHotBeans.add(new SeekHotBean(null, R.drawable.seekhot_c));
+        SeekHotAdapter seekHotAdapter = new SeekHotAdapter(this, seekHotBeans);
         mRlvActivitySeekHot.setAdapter(seekHotAdapter);
 
 
@@ -68,20 +97,6 @@ public class SeekActivity extends BaseActivtiy {
          */
         seekFinish();
 
-        /**
-         * 这是点击回车键进行搜索
-         */
-        mEditTixtActivitySeekSousuo.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEND || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
-                    //do something;
-                    return true;
-                }
-                return false;
-            }
-
-        });
 
         /**
          * 这是回车键的监听
@@ -97,7 +112,8 @@ public class SeekActivity extends BaseActivtiy {
                     mSoSuoDbs = new ArrayList<>();
                     mSoSuoDbs.add(new SoSuoDb(null, s));
                     Utils.getInstance().insent(mSoSuoDbs);
-                    mFlowLayout_activity_seek.addTextView(s);
+                    tagAdapter.onlyAdd(mEditTixtActivitySeekSousuo.getText().toString());
+                    tagAdapter.notifyDataSetChanged();
                     Intent intent = new Intent(SeekActivity.this, SeekListActivity.class);
                     intent.putExtra("count", s);
                     startActivity(intent);
@@ -109,11 +125,17 @@ public class SeekActivity extends BaseActivtiy {
          * 这是清除历史搜索
          */
         deleteAllDb();
-        List<SoSuoDb> select = Utils.getInstance().select();
-        for (int i = 0; i < select.size(); i++) {
-            SoSuoDb soSuoDb = select.get(i);
-            mFlowLayout_activity_seek.addTextView(soSuoDb.getSeekTitle());
-        }
+
+    }
+
+    /**
+     * 去往搜索结果
+     */
+    private void startActivityToResult() {
+        Intent intent = new Intent(SeekActivity.this, SeekListActivity.class);
+        String s = mEditTixtActivitySeekSousuo.getText().toString();
+        intent.putExtra("count", s);
+        startActivity(intent);
     }
 
     /**
@@ -123,8 +145,13 @@ public class SeekActivity extends BaseActivtiy {
         mImgActivitySeekDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utils.getInstance().deleAAll();
-                mFlowLayout_activity_seek.removeAllViews();
+                List<SoSuoDb> select = Utils.getInstance().select();
+                for (int i = 0; i < select.size(); i++) {
+                    SerachUtils.getInstance().clear();
+                    searchHistory.clear();
+                    tagAdapter.clear();
+                    tagAdapter.notifyDataSetChanged();
+                }
             }
         });
     }
@@ -157,4 +184,13 @@ public class SeekActivity extends BaseActivtiy {
     }
 
 
+    @Override
+    public boolean isBaseOnWidth() {
+        return false;
+    }
+
+    @Override
+    public float getSizeInDp() {
+        return width / 2;
+    }
 }

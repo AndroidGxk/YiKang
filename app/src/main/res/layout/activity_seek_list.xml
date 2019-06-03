@@ -26,11 +26,10 @@
             android:src="@drawable/fanhui_seek" />
 
 
-        <TextView
+        <EditText
             android:id="@+id/EditTixt_activity_seek_sousuo"
             android:layout_width="match_parent"
             android:layout_height="27dp"
-            android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_toLeftOf="@+id/xiaoxi"
             android:layout_toRightOf="@+id/back_img"
@@ -45,9 +44,9 @@
             android:textSize="11sp" />
 
         <ImageView
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:layout_marginLeft="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:layout_toRightOf="@+id/back_img"
             android:paddingLeft="5dp"
             android:paddingTop="16dp"
@@ -60,7 +59,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:paddingLeft="25dp"
+            android:paddingLeft="10dp"
             android:paddingTop="15dp"
             android:paddingRight="15dp"
             android:paddingBottom="15dp"

@@ -2,6 +2,7 @@ package com.yikangcheng.admin.yikang.activity;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Display;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -12,18 +13,24 @@ import com.yikangcheng.admin.yikang.activity.adapter.CustomerRecyclerAdapter;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
-public class CustomerActivity extends BaseActivtiy {
+import me.jessyan.autosize.internal.CustomAdapt;
+
+public class CustomerActivity extends BaseActivtiy implements CustomAdapt {
     private RecyclerView xrecycler;
     private boolean isclick;
     private TextView compile_text;
     private CustomerRecyclerAdapter customerRecyclerAdapter;
     private RelativeLayout rela;
     private ImageView back_img;
+    private int width;
 
     @Override
     protected void initView() {
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.clolrBAai);
+        Display display = this.getWindowManager().getDefaultDisplay();
+        int height = display.getHeight();
+        width = display.getWidth();
         xrecycler = (RecyclerView) findViewById(R.id.xrecycler);
         compile_text = (TextView) findViewById(R.id.compile_text);
         back_img = (ImageView) findViewById(R.id.back_img);
@@ -71,5 +78,15 @@ public class CustomerActivity extends BaseActivtiy {
     @Override
     protected void createPresenter() {
 
+    }
+
+    @Override
+    public boolean isBaseOnWidth() {
+        return false;
+    }
+
+    @Override
+    public float getSizeInDp() {
+        return width / 2;
     }
 }

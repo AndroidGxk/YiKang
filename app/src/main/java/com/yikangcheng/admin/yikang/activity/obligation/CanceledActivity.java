@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Display;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -30,7 +31,9 @@ import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CanceledActivity extends BaseActivtiy implements ICoreInfe {
+import me.jessyan.autosize.internal.CustomAdapt;
+
+public class CanceledActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt {
 
     private ImageView back_img;
     private RelativeLayout mToolbarActivityCanceled;
@@ -44,11 +47,16 @@ public class CanceledActivity extends BaseActivtiy implements ICoreInfe {
     private int mDeleteItemPostion;
     private int mPage = 1;
     private int mDeletePosition;
+    private int height;
+    private int width;
 
     @Override
     protected void initView() {
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        Display display = this.getWindowManager().getDefaultDisplay();
+        width = display.getWidth();
+        height = display.getHeight();
         back_img = (ImageView) findViewById(R.id.back_img);
         mToolbarActivityCanceled = (RelativeLayout) findViewById(R.id.toolbar_activity_canceled);
         mRlvActivityCanceled = (RecyclerView) findViewById(R.id.rlv_activity_canceled);
@@ -80,14 +88,14 @@ public class CanceledActivity extends BaseActivtiy implements ICoreInfe {
 
         mCanceledAdapter_a.setOnClickListener(new CanceledAdapter_A.OnClickListener() {
             @Override
-            public void OnClickListener(View v, int orderId,int position) {
+            public void OnClickListener(View v, int orderId, int position) {
                 /**
                  * 点击跳到详情的下标  删除后回来删除条目用到
                  */
                 mDeletePosition = position;
                 Intent intent = new Intent(CanceledActivity.this, FackOfActivity.class);
                 intent.putExtra("orderId_fack", orderId);
-                startActivityForResult(intent,5);
+                startActivityForResult(intent, 5);
             }
         });
 
@@ -128,9 +136,9 @@ public class CanceledActivity extends BaseActivtiy implements ICoreInfe {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 5 && resultCode ==6){
+        if (requestCode == 5 && resultCode == 6) {
             String delete = data.getStringExtra("delete");
-            if (delete.equals("delete")){
+            if (delete.equals("delete")) {
                 mCanceledAdapter_a.mList.remove(mDeletePosition);
                 mCanceledAdapter_a.notifyDataSetChanged();
             }
@@ -192,6 +200,16 @@ public class CanceledActivity extends BaseActivtiy implements ICoreInfe {
     @Override
     protected void createPresenter() {
 
+    }
+
+    @Override
+    public boolean isBaseOnWidth() {
+        return false;
+    }
+
+    @Override
+    public float getSizeInDp() {
+        return width / 2;
     }
 
     public class delete implements ICoreInfe {

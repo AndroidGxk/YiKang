@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.adapter.CloseRecyclerAdapter;
@@ -34,6 +35,7 @@ import com.yikangcheng.admin.yikang.presenter.OrderBuyArrayPresenter;
 import com.yikangcheng.admin.yikang.presenter.OrderBuyPresenter;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,6 +85,42 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
     private PariticShopBean pariticShopBean;
     private PromptDialog promptDialog;
     private OrderBuyArrayPresenter orderBuyArrayPresenter;
+    private AllAddressBean.ListUserAddressBean userAddressBean;
+    //默认地址
+    private int id;
+    //发票类型
+    String invoicetype;
+    //发票抬头
+    int invoicetypetitle;
+    //发票内容
+    int invoicecount;
+    private TextView invoice_text;
+    private TextView wan1;
+
+    /**
+     * 回传值
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1000 && resultCode == 1001) {
+            Bundle bundle = data.getExtras();
+            userAddressBean = (AllAddressBean.ListUserAddressBean) bundle.getSerializable("result");
+            user_name.setText(userAddressBean.getReceiver());
+            String mobile = userAddressBean.getMobile();
+            if (mobile.length() >= 11) {
+                String frontMobile = mobile.substring(0, 3);
+                String frontStr = frontMobile + "****";
+                String AllMobile = frontStr + mobile.substring(7, mobile.length());
+                user_phone.setText(AllMobile);
+            }
+            user_address.setText(userAddressBean.getProvinceStr() + userAddressBean.getCityStr() + userAddressBean.getTownStr() + userAddressBean.getAddress());
+        }
+    }
 
     @Override
     protected void initView() {
@@ -94,6 +132,9 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
         //网络请求
         network();
         StatusBarUtil.setStatusBarMode(this, true, R.color.clolrBAai);
+        sele_pay_digo = LayoutInflater.from(this).inflate(R.layout.sele_pay_digo, null);
+        invoice_item = LayoutInflater.from(this).inflate(R.layout.invoice_item, null);
+        invoice_text = (TextView) findViewById(R.id.invoice_text);
         recycler = (RecyclerView) findViewById(R.id.recycler);
         buy_img = (ImageView) findViewById(R.id.buy_img);
         rela4 = (RelativeLayout) findViewById(R.id.rela4);
@@ -114,8 +155,6 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
         Display display = this.getWindowManager().getDefaultDisplay();
         width = display.getWidth();
         height = display.getHeight();
-        sele_pay_digo = LayoutInflater.from(this).inflate(R.layout.sele_pay_digo, null);
-        invoice_item = LayoutInflater.from(this).inflate(R.layout.invoice_item, null);
         recycler.setLayoutManager(new LinearLayoutManager(this));
         closeRecyclerAdapter = new CloseRecyclerAdapter(this);
         recycler.setAdapter(closeRecyclerAdapter);
@@ -139,18 +178,27 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
         recycler.setNestedScrollingEnabled(false);
         bottomDialog = new Dialog(this, R.style.BottomDialog);
         wechat_pay = sele_pay_digo.findViewById(R.id.wechat_pay);
+        wan1 = sele_pay_digo.findViewById(R.id.wan);
         zhi_rela = sele_pay_digo.findViewById(R.id.zhi_rela);
         wechat_pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (wechat) {
+                    Toast.makeText(CloseActivity.this, "微信支付暂不可用", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
+                    Toast.makeText(CloseActivity.this, "微信支付暂不可用", Toast.LENGTH_SHORT).show();
                     wechat = true;
                     zhi = false;
-                    wechat_pay.setBackgroundResource(R.drawable.yellow_pay_shape);
-                    zhi_rela.setBackgroundResource(R.drawable.gray_pay_shape);
+//                    wechat_pay.setBackgroundResource(R.drawable.yellow_pay_shape);
+//                    zhi_rela.setBackgroundResource(R.drawable.gray_pay_shape);
                 }
+            }
+        });
+        wan1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bottomDialog.dismiss();
             }
         });
         zhi_rela.setOnClickListener(new View.OnClickListener() {
@@ -173,8 +221,8 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
             @Override
             public void onClick(View view) {
                 Intent addIntent = new Intent(CloseActivity.this, AiteActivity.class);
-                addIntent.putExtra("address","true");
-                startActivity(addIntent);
+                addIntent.putExtra("address", "true");
+                startActivityForResult(addIntent, 1000);
             }
         });
         /**
@@ -249,6 +297,7 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
             @Override
             public void onClick(View view) {
                 bottomDialog.dismiss();
+                invoice_text.setText(invoicetype);
             }
         });
         /**
@@ -270,6 +319,7 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
             case R.id.no_invoice:
                 //不开发票
                 if (!n_invoice) {
+                    invoicetype = "不开发票";
                     n_invoice = true;
                     d_invoice = false;
                     z_invoice = false;
@@ -281,6 +331,7 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
             case R.id.dian_invoice:
                 //电子发票
                 if (!d_invoice) {
+                    invoicetype = "电子发票";
                     d_invoice = true;
                     n_invoice = false;
                     z_invoice = false;
@@ -293,6 +344,7 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
             case R.id.zhi_invoice:
                 //纸质发票
                 if (!z_invoice) {
+                    invoicetype = "纸质发票";
                     z_invoice = true;
                     d_invoice = false;
                     n_invoice = false;
@@ -388,13 +440,6 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
                 bottomDialog.show();
             }
         });
-        TextView wan = sele_pay_digo.findViewById(R.id.wan);
-        wan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                bottomDialog.dismiss();
-            }
-        });
         /***
          * 立即购买
          */
@@ -408,14 +453,24 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
                         str += shopCarBeans.get(i).getId() + ",";
                         if (i == shopCarBeans.size() - 1) {
                             String substring = str.substring(0, str.length() - 1);
-                            orderBuyArrayPresenter.request(getLogUser(CloseActivity.this).getId(), substring,
-                                    listUserAddressBean.getId(), 1, 2, "易康成", "132", "2", "1724959985@qq.com", "ALIPAY", "Android", "COMMODITY");
+                            if (userAddressBean == null) {
+                                orderBuyArrayPresenter.request(getLogUser(CloseActivity.this).getId(), substring,
+                                        id, 1, 2, "易康成", "132", "2", "1724959985@qq.com", "ALIPAY", "Android", "COMMODITY");
+                            } else {
+                                orderBuyArrayPresenter.request(getLogUser(CloseActivity.this).getId(), substring,
+                                        userAddressBean.getId(), 1, 2, "易康成", "132", "2", "1724959985@qq.com", "ALIPAY", "Android", "COMMODITY");
+                            }
                         }
                     }
                 } else {
-                    String id = pariticShopBean.getId();
-                    orderBuyPresenter.request(getLogUser(CloseActivity.this).getId(), Integer.parseInt(id),
-                            listUserAddressBean.getId(), 1, 1, 2, "易康成", "132", "2", "1724959985@qq.com", "ALIPAY", "Android");
+                    String ids = pariticShopBean.getId();
+                    if (userAddressBean == null) {
+                        orderBuyPresenter.request(getLogUser(CloseActivity.this).getId(), Integer.parseInt(ids),
+                                id, 1, 1, 2, "易康成", "132", "2", "1724959985@qq.com", "ALIPAY", "Android");
+                    } else {
+                        orderBuyPresenter.request(getLogUser(CloseActivity.this).getId(), Integer.parseInt(ids),
+                                userAddressBean.getId(), 1, 1, 2, "易康成", "132", "2", "1724959985@qq.com", "ALIPAY", "Android");
+                    }
                 }
             }
         });
@@ -455,13 +510,14 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
 
     @Override
     public float getSizeInDp() {
-        return height / 2;
+        return width / 2;
     }
 
     /**
      * 查询用户所有地址
      */
     private class AllAddress implements ICoreInfe {
+
 
         @Override
         public void success(Object data) {
@@ -471,8 +527,15 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
             for (int i = 0; i < listUserAddress.size(); i++) {
                 listUserAddressBean = listUserAddress.get(i);
                 if (listUserAddressBean.getIsFirst() == 1) {
+                    id = listUserAddressBean.getId();
                     user_name.setText(listUserAddressBean.getReceiver());
-                    user_phone.setText(listUserAddressBean.getMobile());
+                    String mobile = listUserAddressBean.getMobile();
+                    if (mobile.length() >= 11) {
+                        String frontMobile = mobile.substring(0, 3);
+                        String frontStr = frontMobile + "****";
+                        String AllMobile = frontStr + mobile.substring(7, mobile.length());
+                        user_phone.setText(AllMobile);
+                    }
                     user_address.setText(listUserAddressBean.getProvinceStr() + listUserAddressBean.getCityStr() + listUserAddressBean.getTownStr() + listUserAddressBean.getAddress());
                 }
             }
@@ -499,6 +562,7 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
                 intent.putExtras(bundle);
                 startActivity(intent);
                 promptDialog.dismiss();
+                finish();
             }
         }
 
@@ -511,6 +575,8 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
     @Override
     protected void onResume() {
         super.onResume();
-        allAddressPresenter.request(getLogUser(CloseActivity.this).getId());
+        if (userAddressBean == null) {
+            allAddressPresenter.request(getLogUser(CloseActivity.this).getId());
+        }
     }
 }

@@ -78,7 +78,7 @@ public class CustomerRecyclerAdapter extends RecyclerView.Adapter<CustomerRecycl
 
     @Override
     public int getItemCount() {
-        return 9;
+        return 0;
     }
 
     class Vh extends RecyclerView.ViewHolder {

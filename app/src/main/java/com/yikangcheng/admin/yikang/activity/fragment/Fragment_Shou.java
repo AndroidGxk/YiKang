@@ -3,6 +3,7 @@ package com.yikangcheng.admin.yikang.activity.fragment;
 import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
@@ -181,10 +182,18 @@ public class Fragment_Shou extends BaseFragment implements CustomAdapt, ICoreInf
 
     @JavascriptInterface
     public void partID(String msg) {
-        Intent intent = new Intent(getContext(), ParticularsActivity.class);
-        int id = Integer.parseInt(msg);
-        intent.putExtra("id", id);
-        startActivity(intent);
+        if (msg.indexOf(".json") != -1) {
+            String[] split = msg.split(".json");
+            Intent intent = new Intent(getContext(), ParticularsActivity.class);
+            int id = Integer.parseInt(split[0]);
+            intent.putExtra("id", id);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(getContext(), ParticularsActivity.class);
+            int id = Integer.parseInt(msg);
+            intent.putExtra("id", id);
+            startActivity(intent);
+        }
     }
 
     public static void getGoBack() {

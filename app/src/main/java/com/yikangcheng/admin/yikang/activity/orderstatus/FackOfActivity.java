@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -54,11 +55,15 @@ public class FackOfActivity extends BaseActivtiy implements ICoreInfe, CustomAda
 //    private int mOrderId;
     private Intent mIntent;
     private int mOrderId_fack;
+    private int width;
 
     @Override
     protected void initView() {
         mIntent = getIntent();
         mOrderId_fack = mIntent.getIntExtra("orderId_fack", 0);
+        Display display = this.getWindowManager().getDefaultDisplay();
+        width = display.getWidth();
+        int height = display.getHeight();
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
         mImgActivityFackOfFanhui = (ImageView) findViewById(R.id.img_activity_fack_of_fanhui);
@@ -68,6 +73,7 @@ public class FackOfActivity extends BaseActivtiy implements ICoreInfe, CustomAda
         mTvActivityFackOfCityStr = (TextView) findViewById(R.id.tv_activity_fack_of_cityStr);
         mTvActivityFackOfTownStr = (TextView) findViewById(R.id.tv_activity_fack_of_townStr);
         mTvActivityFackOfAddress = (TextView) findViewById(R.id.tv_activity_fack_of_address);
+
         mRlvActivityFackOfShangPin = (RecyclerView) findViewById(R.id.rlv_activity_fack_of_shangPin);
         mTvActivityFackOfBiaohao = (TextView) findViewById(R.id.tv_activity_fack_of_biaohao);
         mImgActivityFackOfFzhi = (ImageView) findViewById(R.id.img_activity_fack_of_fzhi);
@@ -104,8 +110,6 @@ public class FackOfActivity extends BaseActivtiy implements ICoreInfe, CustomAda
         //解决滑动不流畅
         mRlvActivityFackOfShangPin.setHasFixedSize(true);
         mRlvActivityFackOfShangPin.setNestedScrollingEnabled(false);
-
-
 
 
         int spanCount_tuijian = 1; // 3 columns
@@ -236,6 +240,6 @@ public class FackOfActivity extends BaseActivtiy implements ICoreInfe, CustomAda
 
     @Override
     public float getSizeInDp() {
-        return 720;
+        return width / 2;
     }
 }

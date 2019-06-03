@@ -84,6 +84,9 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<ShopRecyclerAdapte
             @Override
             public void addSub(int count) {
                 shopList.get(position).setBuyNum(count);
+                if(sumClickListener!=null){
+                    sumClickListener.onClick(count, shopList.get(position).getId());
+                }
                 //计算价格
                 sum();
             }
@@ -211,6 +214,17 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<ShopRecyclerAdapte
     //跳转详情页
     public interface goParClickListener {
         void onclick(int id);
+    }
+
+    sumClickListener sumClickListener;
+
+    public void setSumClickListener(ShopRecyclerAdapter.sumClickListener sumClickListener) {
+        this.sumClickListener = sumClickListener;
+    }
+
+    //总数请求接口
+    public interface sumClickListener {
+        void onClick(int count, int id);
     }
 }
 

@@ -8,6 +8,7 @@ import android.content.res.Resources;
 import android.os.Handler;
 import android.os.Looper;
 import android.content.Context;
+import android.support.multidex.MultiDex;
 
 import com.example.sqlite.dao.DaoMaster;
 import com.example.sqlite.dao.DaoSession;
@@ -88,6 +89,7 @@ public class BaseApp extends Application {
     public void onCreate() {
         super.onCreate();
         mAppInstance = this;
+        MultiDex.install(this);
 //初始化Fresco
         Fresco.initialize(this);
         SobotApi.initSobotSDK(this, "7560599b63bf43378d05d018ded42cdd", "");

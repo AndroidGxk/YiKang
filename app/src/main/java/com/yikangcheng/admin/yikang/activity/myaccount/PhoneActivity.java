@@ -2,6 +2,7 @@ package com.yikangcheng.admin.yikang.activity.myaccount;
 
 
 import android.content.SharedPreferences;
+import android.view.Display;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,11 +17,16 @@ public class PhoneActivity extends BaseActivtiy implements CustomAdapt {
 
     private ImageView back_img;
     private TextView ok_btn;
+    private int height;
+    private int width;
 
     @Override
     protected void initView() {
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        Display display = this.getWindowManager().getDefaultDisplay();
+        width = display.getWidth();
+        height = display.getHeight();
         back_img = (ImageView) findViewById(R.id.back_img);
         back_img = (ImageView) findViewById(R.id.back_img);
         ok_btn = (TextView) findViewById(R.id.ok_btn);
@@ -68,6 +74,6 @@ public class PhoneActivity extends BaseActivtiy implements CustomAdapt {
 
     @Override
     public float getSizeInDp() {
-        return 720;
+        return width/2;
     }
 }

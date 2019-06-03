@@ -1,11 +1,13 @@
 package com.yikangcheng.admin.yikang.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+import android.view.WindowManager;
 import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -53,6 +55,7 @@ public class SeekListActivity extends BaseActivtiy implements CustomAdapt, ICore
     private int record;
     //页数
     private int mPage;
+    private int width;
 
     @Override
     protected void initView() {
@@ -60,6 +63,9 @@ public class SeekListActivity extends BaseActivtiy implements CustomAdapt, ICore
         promptDialog = new PromptDialog(SeekListActivity.this);
         //设置自定义属性
         promptDialog.getDefaultBuilder().touchAble(true).round(1).loadingDuration(1000);
+        WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+        int height = wm.getDefaultDisplay().getHeight();
+        width = wm.getDefaultDisplay().getWidth();
         promptDialog.showLoading("正在加载");
         final Intent intent = getIntent();
         count = intent.getStringExtra("count");
@@ -102,7 +108,11 @@ public class SeekListActivity extends BaseActivtiy implements CustomAdapt, ICore
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 mPage = 1;
                 classCommodAdapter.removeAll();
-                commodityPresenter.request(id, record, "", 1, mPage);
+                if (count == null || count.equals("")) {
+                    commodityPresenter.request(id, record, "", 1, mPage);
+                } else {
+                    commodityPresenter.request(id, record, count, 1, mPage);
+                }
                 refreshLayout.finishRefresh();
             }
         });
@@ -110,7 +120,11 @@ public class SeekListActivity extends BaseActivtiy implements CustomAdapt, ICore
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 mPage++;
-                commodityPresenter.request(id, record, "", 1, mPage);
+                if (count == null || count.equals("")) {
+                    commodityPresenter.request(id, record, "", 1, mPage);
+                } else {
+                    commodityPresenter.request(id, record, count, 1, mPage);
+                }
                 refreshLayout.finishLoadMore();
             }
         });
@@ -156,7 +170,7 @@ public class SeekListActivity extends BaseActivtiy implements CustomAdapt, ICore
 
     @Override
     public float getSizeInDp() {
-        return 720;
+        return width / 2;
     }
 
     @Override
@@ -185,7 +199,7 @@ public class SeekListActivity extends BaseActivtiy implements CustomAdapt, ICore
                 if (!zclick) {
                     classCommodAdapter.removeAll();
                     record = 1;
-                    mPage=1;
+                    mPage = 1;
                     if (count == null || count.equals("")) {
                         commodityPresenter.request(id, record, "", 1, 1);
                     } else {
@@ -208,7 +222,7 @@ public class SeekListActivity extends BaseActivtiy implements CustomAdapt, ICore
                 if (!xclick) {
                     classCommodAdapter.removeAll();
                     record = 5;
-                    mPage=1;
+                    mPage = 1;
                     if (count == null || count.equals("")) {
                         commodityPresenter.request(id, record, "", 1, 1);
                     } else {
@@ -237,7 +251,7 @@ public class SeekListActivity extends BaseActivtiy implements CustomAdapt, ICore
                     if (pimgclick) {
                         classCommodAdapter.removeAll();
                         record = 3;
-                        mPage=1;
+                        mPage = 1;
                         if (count == null || count.equals("")) {
                             commodityPresenter.request(id, record, "", 1, 1);
                         } else {
@@ -250,7 +264,7 @@ public class SeekListActivity extends BaseActivtiy implements CustomAdapt, ICore
                         pimgclick = false;
                     } else {
                         classCommodAdapter.removeAll();
-                        mPage=1;
+                        mPage = 1;
                         record = 4;
                         if (count == null || count.equals("")) {
                             commodityPresenter.request(id, record, "", 1, 1);

@@ -214,11 +214,11 @@
 
                     <ImageView
                         android:id="@+id/img_activity_close_fizhi"
-                        android:layout_width="28dp"
-                        android:layout_height="14dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="202dp"
-                        android:layout_marginTop="11dp"
-                        android:background="@drawable/fuzhi" />
+                        android:src="@drawable/fuzhi"
+                        android:padding="11dp" />
 
                     <TextView
                         android:layout_width="wrap_content"

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.view.Display;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.JavascriptInterface;
@@ -22,6 +23,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.sobot.chat.SobotApi;
+import com.sobot.chat.api.model.ConsultingContent;
 import com.sobot.chat.api.model.Information;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.CloseActivity;
@@ -47,11 +49,16 @@ public class ParticularsActivity extends BaseActivtiy implements CustomAdapt, IC
     private OrderBuyPresenter orderBuyPresenter;
     private ProgressBar pbProgress;
     private SmartRefreshLayout refreshLayout;
+    String Cust = "";
+    private int width;
 
     @Override
     protected void initView() {
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorTab);
+        Display display = this.getWindowManager().getDefaultDisplay();
+        width = display.getWidth();
+        int height = display.getHeight();
         Fragment_Miao.getGoWeb();
         Fragment_Shou.getGoBack();
         //加载刷新
@@ -173,7 +180,7 @@ public class ParticularsActivity extends BaseActivtiy implements CustomAdapt, IC
 
     @Override
     public float getSizeInDp() {
-        return 720;
+        return width/2;
     }
 
     @JavascriptInterface
@@ -201,10 +208,30 @@ public class ParticularsActivity extends BaseActivtiy implements CustomAdapt, IC
 
     @JavascriptInterface
     public void goCust(String msg) {
-        Information info = new Information();
-        info.setAppkey("7560599b63bf43378d05d018ded42cdd");
-        SobotApi.setCustomRobotHelloWord(ParticularsActivity.this, "您好，易康成客服很高兴为您服务，请问有什么可以帮助您的？");
-        SobotApi.startSobotChat(ParticularsActivity.this, info);
+        Log.d("EE", msg);
+        Cust += msg + ",";
+        String[] split = Cust.split(",");
+        if (split.length == 3) {
+            Information info = new Information();
+            //咨询内容
+            ConsultingContent consultingContent = new ConsultingContent();
+            //咨询内容标题，必填
+            consultingContent.setSobotGoodsTitle(split[0]);
+            //咨询内容图片，选填 但必须是图片地址
+            consultingContent.setSobotGoodsImgUrl(split[1]);
+            //咨询来源页，必填
+            consultingContent.setSobotGoodsFromUrl(split[2]);
+            //描述，选填
+            consultingContent.setSobotGoodsDescribe(split[0]);
+            //标签，选填
+            consultingContent.setSobotGoodsLable("￥2150");
+            //可以设置为null
+            info.setConsultingContent(consultingContent);
+            info.setAppkey("7560599b63bf43378d05d018ded42cdd");
+            SobotApi.setCustomRobotHelloWord(ParticularsActivity.this, "您好，易康成客服很高兴为您服务，请问有什么可以帮助您的？");
+            SobotApi.startSobotChat(ParticularsActivity.this, info);
+            Cust = "";
+        }
     }
 
 

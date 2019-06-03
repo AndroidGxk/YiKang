@@ -3,6 +3,7 @@ package com.yikangcheng.admin.yikang.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.text.TextUtils;
 import android.view.Display;
@@ -15,11 +16,9 @@ import com.alipay.sdk.app.PayTask;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.CreatOrderBean;
-import com.yikangcheng.admin.yikang.paysdk.OrderInfoUtil2_0;
 import com.yikangcheng.admin.yikang.paysdk.PayResult;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
-import java.io.Serializable;
 import java.util.Map;
 
 import me.jessyan.autosize.internal.CustomAdapt;
@@ -30,6 +29,7 @@ public class ConfirmActivity extends BaseActivtiy implements CustomAdapt {
     private ImageView back_img;
     private TextView pay_btn, order_number, money, order_pay;
     private CreatOrderBean creatorder;
+    private int width;
 
     @Override
     protected void initView() {
@@ -37,6 +37,7 @@ public class ConfirmActivity extends BaseActivtiy implements CustomAdapt {
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorTab);
         Display display = this.getWindowManager().getDefaultDisplay();
         height = display.getHeight();
+        width = display.getWidth();
         back_img = (ImageView) findViewById(R.id.back_img);
         pay_btn = (TextView) findViewById(R.id.pay_btn);
         order_number = (TextView) findViewById(R.id.order_number);
@@ -104,12 +105,12 @@ public class ConfirmActivity extends BaseActivtiy implements CustomAdapt {
 
     @Override
     public float getSizeInDp() {
-        return height / 2;
+        return width / 2;
     }
 
     private static final int SDK_PAY_FLAG = 1;
     private static final int SDK_CHECK_FLAG = 2;
-    private Handler mHandler = new Handler() {
+    private Handler mHandler = new Handler(Looper.myLooper()) {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -117,25 +118,31 @@ public class ConfirmActivity extends BaseActivtiy implements CustomAdapt {
                     PayResult payResult = new PayResult((Map<String, String>) msg.obj);
                     // 支付宝返回此次支付结果及加签，建议对支付宝签名信息拿签约时支付宝提供的公钥做验签
                     String resultInfo = payResult.getResult();
-
                     String resultStatus = payResult.getResultStatus();
 
                     // 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
                     if (TextUtils.equals(resultStatus, "9000")) {
-                        Toast.makeText(ConfirmActivity.this, "支付成功",
-                                Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(ConfirmActivity.this, PayResultActivity.class);
+                        intent.putExtra("pay", 1);
+                        startActivity(intent);
+                        finish();
                     } else {
                         // 判断resultStatus 为非“9000”则代表可能支付失败
                         // “8000”代表支付结果因为支付渠道原因或者系统原因还在等待支付结果确认，最终交易是否成功以服务端异步通知为准（小概率状态）
                         if (TextUtils.equals(resultStatus, "8000")) {
                             Toast.makeText(ConfirmActivity.this, "支付结果确认中",
                                     Toast.LENGTH_SHORT).show();
-
+                            // 其他值就可以判断为支付失败，包括用户主动取消支付，或者系统返回的错误
+                            Intent intent = new Intent(ConfirmActivity.this, PayResultActivity.class);
+                            intent.putExtra("pay", 2);
+                            startActivity(intent);
+                            finish();
                         } else {
                             // 其他值就可以判断为支付失败，包括用户主动取消支付，或者系统返回的错误
-                            Toast.makeText(ConfirmActivity.this, "支付失败",
-                                    Toast.LENGTH_SHORT).show();
-
+                            Intent intent = new Intent(ConfirmActivity.this, PayResultActivity.class);
+                            intent.putExtra("pay", 2);
+                            startActivity(intent);
+                            finish();
                         }
                     }
                     break;

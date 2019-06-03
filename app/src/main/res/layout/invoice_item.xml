@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/seek_edi_shape">
+    android:background="@drawable/dialog_bg_shape">
 
 
     <TextView
@@ -19,12 +19,12 @@
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:overScrollMode="never"
         android:layout_height="match_parent"
         android:layout_above="@+id/wan"
-        android:background="#ffffff"
         android:layout_below="@+id/invoice_mesg"
-        android:layout_marginBottom="15dp">
+        android:layout_marginBottom="15dp"
+        android:background="#ffffff"
+        android:overScrollMode="never">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -66,7 +66,8 @@
                 android:gravity="center"
                 android:text="纸质发票"
                 android:textColor="#ff333333"
-                android:textSize="10sp" />
+                android:textSize="10sp"
+                android:visibility="gone" />
 
             <RelativeLayout
                 android:id="@+id/no_yes"

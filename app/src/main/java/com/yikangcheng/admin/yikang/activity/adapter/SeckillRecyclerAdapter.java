@@ -40,7 +40,7 @@ public class SeckillRecyclerAdapter extends RecyclerView.Adapter<SeckillRecycler
     @Override
     public void onBindViewHolder(@NonNull Vh vh, int position) {
         vh.mBprice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);  //中划线
-        vh.progressView.setTotalAndCurrentCount(100, i, 100);
+//        vh.progressView.setTotalAndCurrentCount(100, i, 100);
         i = i + 5;
     }
 
@@ -52,14 +52,14 @@ public class SeckillRecyclerAdapter extends RecyclerView.Adapter<SeckillRecycler
     class Vh extends RecyclerView.ViewHolder {
         TextView mPrice;
         TextView mBprice;
-        SaleProgressView progressView;
+//        SaleProgressView progressView;
         ImageView seckill_image;
 
         public Vh(View itemView) {
             super(itemView);
             mPrice = itemView.findViewById(R.id.text_price);
             mBprice = itemView.findViewById(R.id.b_price);
-            progressView = itemView.findViewById(R.id.spv);
+//            progressView = itemView.findViewById(R.id.spv);
             seckill_image = itemView.findViewById(R.id.seckill_image);
         }
     }

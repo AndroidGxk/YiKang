@@ -1,8 +1,10 @@
 package com.yikangcheng.admin.yikang.activity;
 
+import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -13,18 +15,24 @@ import com.yikangcheng.admin.yikang.activity.adapter.WuliuAdapter;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
-public class SystemActivity extends BaseActivtiy {
+import me.jessyan.autosize.internal.CustomAdapt;
+
+public class SystemActivity extends BaseActivtiy implements CustomAdapt {
     private RecyclerView xrecycler;
     private TextView compile_text;
     private boolean isclick;
     private SystemRecyclerAdapter systemRecyclerAdapter;
     private RelativeLayout rela;
     private ImageView back_img;
+    private int width;
 
     @Override
     protected void initView() {
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.clolrBAai);
+        WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+        int height = wm.getDefaultDisplay().getHeight();
+        width = wm.getDefaultDisplay().getWidth();
         xrecycler = (RecyclerView) findViewById(R.id.xrecycler);
         rela = (RelativeLayout) findViewById(R.id.rela);
         back_img = (ImageView) findViewById(R.id.back_img);
@@ -72,5 +80,15 @@ public class SystemActivity extends BaseActivtiy {
     @Override
     protected void createPresenter() {
 
+    }
+
+    @Override
+    public boolean isBaseOnWidth() {
+        return false;
+    }
+
+    @Override
+    public float getSizeInDp() {
+        return width / 2;
     }
 }

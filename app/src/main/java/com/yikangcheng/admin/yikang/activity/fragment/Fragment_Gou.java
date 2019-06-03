@@ -2,6 +2,7 @@ package com.yikangcheng.admin.yikang.activity.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.CloseActivity;
 import com.yikangcheng.admin.yikang.activity.MainActivity;
@@ -27,14 +29,18 @@ import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
 import com.yikangcheng.admin.yikang.presenter.DeleteShopPresenter;
 import com.yikangcheng.admin.yikang.presenter.RecommendPresenter;
 import com.yikangcheng.admin.yikang.presenter.ShopCarPresenter;
+import com.yikangcheng.admin.yikang.presenter.UpdateCountPresenter;
 import com.yikangcheng.admin.yikang.util.SpacesItemDecoration;
 
 import java.io.Serializable;
 import java.util.List;
 
+import me.leefeng.promptlibrary.PromptDialog;
+
 //todo 购物车返回页面问题
-public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.TotalPriceListener, ShopRecyclerAdapter.checkBoxTouchListener, ICoreInfe {
-    private RecyclerView shop_recyclertwo, shop_recycler;
+public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.TotalPriceListener, ShopRecyclerAdapter.checkBoxTouchListener, ICoreInfe, XRecyclerView.LoadingListener {
+    private RecyclerView shop_recycler;
+    private XRecyclerView shop_recyclertwo;
     private ShopRecyclerAdapter shopRecyclerAdapter;
     private RelativeLayout null_car;
     private RelativeLayout diviline;
@@ -53,9 +59,19 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
     //标记
     private static int sign = 0;
     private MainActivity activity;
+    private UpdateCountPresenter updateCountPresenter;
+    private PromptDialog promptDialog;
+    private NestedScrollView nestedSV;
+    private int mPage = 1;
+    private LoginBean logUser;
 
     @Override
     protected void initView(View view) {
+        logUser = getLogUser(getContext());
+        //创建对象
+        promptDialog = new PromptDialog(getActivity());
+        //设置自定义属性
+        promptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(100);
         shop_recycler = view.findViewById(R.id.shop_recycler);
         shop_recyclertwo = view.findViewById(R.id.shop_recyclertwo);
         all_check = view.findViewById(R.id.all_check);
@@ -63,6 +79,7 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
         diviline = view.findViewById(R.id.diviline);
         baseline = view.findViewById(R.id.baseline);
         dele_text = view.findViewById(R.id.dele_text);
+        nestedSV = view.findViewById(R.id.nestedSV);
         base_btn = view.findViewById(R.id.base_btn);
         null_car = view.findViewById(R.id.null_car);
         tv_toolBar_right = view.findViewById(R.id.tv_toolBar_right);
@@ -107,19 +124,33 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
                 startActivity(intent);
             }
         });
-
-
         recommendPresenter = new RecommendPresenter(new RecomICoreInfe());
         int spanCount = 2; // 3 columns
         int spacing = 20; // 50px
         boolean includeEdge = false;
         shop_recyclertwo.addItemDecoration(new SpacesItemDecoration(spanCount, spacing, includeEdge));
-
+        shop_recyclertwo.setLoadingListener(this);
+        //加载更多
+        if(logUser!=null){
+            recommendPresenter.request(logUser.getId(), 1, mPage);
+        }
+        nestedSV.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                //判断是否滑到的底部
+                if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
+                    shop_recyclertwo.setLoadingMoreEnabled(true);//调用刷新控件对应的加载更多方法
+                    onLoadMore();
+                }
+            }
+        });
     }
 
     @Override
     protected void initData() {
-//        //解决滑动不流畅
+        //修改数量
+        updateCountPresenter = new UpdateCountPresenter(new UpdateCount());
+        //解决滑动不流畅
         shop_recyclertwo.setHasFixedSize(true);
         shop_recyclertwo.setNestedScrollingEnabled(false);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext()) {
@@ -143,6 +174,18 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
             public void onClick(View view) {
                 boolean checked = all_check.isChecked();
                 shopRecyclerAdapter.checkAll(checked);
+            }
+        });
+
+        //请求数量接口
+        shopRecyclerAdapter.setSumClickListener(new ShopRecyclerAdapter.sumClickListener() {
+            @Override
+            public void onClick(int count, int id) {
+                LoginBean logUser = getLogUser(getContext());
+                if (logUser != null) {
+                    updateCountPresenter.request(logUser.getId(), id, count);
+                    promptDialog.showLoading("");
+                }
             }
         });
         tv_toolBar_right.setOnClickListener(new View.OnClickListener() {
@@ -257,14 +300,28 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
 
     }
 
+    @Override
+    public void onRefresh() {
+    }
+
+    @Override
+    public void onLoadMore() {
+        mPage++;
+        recommendPresenter.request(logUser.getId(), 1, mPage);
+    }
+
     public class RecomICoreInfe implements ICoreInfe {
 
         @Override
         public void success(Object data) {
             Request request = (Request) data;
             List<RecommendBean> entity1 = (List<RecommendBean>) request.getEntity();
-            mRecommendAdapter.removeAll();
-            mRecommendAdapter.addData(entity1);
+            if (entity1.size() == 0) {
+                baseline.setVisibility(View.VISIBLE);
+                diviline.setVisibility(View.VISIBLE);
+            } else {
+                mRecommendAdapter.addData(entity1);
+            }
         }
 
         @Override
@@ -276,19 +333,15 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
     @Override
     public void onResume() {
         super.onResume();
-        LoginBean logUser = getLogUser(getContext());
         if (logUser != null) {
-            baseline.setVisibility(View.VISIBLE);
-            diviline.setVisibility(View.VISIBLE);
-            base_btn.setVisibility(View.VISIBLE);
+            baseline.setVisibility(View.GONE);
+            diviline.setVisibility(View.GONE);
             shopRecyclerAdapter.checkAll(false);
             shopRecyclerAdapter.remove();
             shopCarPresenter.request(logUser.getId());
-            recommendPresenter.request(logUser.getId());
         } else {
             baseline.setVisibility(View.GONE);
             diviline.setVisibility(View.GONE);
-            base_btn.setVisibility(View.GONE);
         }
     }
 
@@ -328,5 +381,21 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
 
     public static void getSignY() {
         sign = 0;
+    }
+
+    //修改数量
+    private class UpdateCount implements ICoreInfe {
+        @Override
+        public void success(Object data) {
+            Request request = (Request) data;
+            if (request.isSuccess()) {
+                promptDialog.dismiss();
+            }
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
     }
 }

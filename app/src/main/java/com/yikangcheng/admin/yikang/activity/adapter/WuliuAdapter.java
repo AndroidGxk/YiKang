@@ -96,7 +96,7 @@ public class WuliuAdapter extends RecyclerView.Adapter<WuliuAdapter.Vh> {
 
     @Override
     public int getItemCount() {
-        return 9;
+        return 0;
     }
 
     class Vh extends RecyclerView.ViewHolder {

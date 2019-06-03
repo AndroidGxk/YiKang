@@ -2,6 +2,7 @@ package com.yikangcheng.admin.yikang.activity.myaccount;
 
 import android.content.SharedPreferences;
 import android.support.v7.widget.Toolbar;
+import android.view.Display;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -21,11 +22,16 @@ public class NicknameActivity extends BaseActivtiy implements CustomAdapt {
     private RelativeLayout mToolbarActivityNickname;
     private EditText mEtActivityNickname;
     private TextView ok_btn;
+    private int height;
+    private int width;
 
     @Override
     protected void initView() {
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        Display display = this.getWindowManager().getDefaultDisplay();
+        width = display.getWidth();
+        height = display.getHeight();
         mImgActivityNicknameFanhui = (ImageView) findViewById(R.id.img_activity_nickname_fanhui);
         mToolbarActivityNickname = (RelativeLayout) findViewById(R.id.toolbar_activity_nickname);
         mEtActivityNickname = (EditText) findViewById(R.id.et_activity_nickname);
@@ -80,6 +86,6 @@ public class NicknameActivity extends BaseActivtiy implements CustomAdapt {
 
     @Override
     public float getSizeInDp() {
-        return 720;
+        return width / 2;
     }
 }

@@ -1,6 +1,7 @@
 package com.yikangcheng.admin.yikang.activity.fragment;
 
 import android.content.Intent;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.ApoutUsActivity;
 import com.yikangcheng.admin.yikang.activity.LoginActivity;
@@ -44,7 +46,7 @@ import com.yikangcheng.admin.yikang.util.SpacesItemDecoration;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Fragment_Wo extends BaseFragment implements ICoreInfe {
+public class Fragment_Wo extends BaseFragment implements ICoreInfe, XRecyclerView.LoadingListener {
 
 
     private TextView mTvFragmentWoDingdan;
@@ -53,7 +55,7 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe {
     private LinearLayout mImgFragmentWoYizhifu;
     private LinearLayout mImgFragmentWoYituikuan;
     private TextView mTvFragmentWoXiaoxiA;
-    private RecyclerView mRlvFragmentWo;
+    private XRecyclerView mRlvFragmentWo;
     private TextView mTvFragmentWoXiaoxiB;
     private ImageView mImgFragmentWoTouxiang, tuijian;
     private ImageView mImgFragmentWoHongyuanquanB;
@@ -64,15 +66,22 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe {
     private LinearLayout mImgFragmentWoDizi;
     private LinearLayout mImgFragmentWoyouhuiquan;
     private TextView mTvFragmentWoName;
+    private RelativeLayout diviline;
+    private RelativeLayout baseline;
+    private RelativeLayout base_btn;
     private Recommend_Fragment_wo_Adapter mRecommend_fragment_wo_adapter;
     private ImageView mGuanggao;
     private UserInfoPresenter userInfoPresenter;
     private LoginBean logUser;
     private RelativeLayout mMingxi;
     private RecommendPresenter recommendPresenter;
+    int mPage = 1;
+    private NestedScrollView neste;
 
     @Override
     protected void initView(View view) {
+        //查询数据库中是否有用户
+        logUser = getLogUser(getContext());
         //广告图
         mGuanggao = view.findViewById(R.id.img_fragment_wo_guanggao);
         //为你推荐分割线
@@ -113,9 +122,12 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe {
         mTvFragmentWoName = view.findViewById(R.id.tv__fragment_wo_name);
         //账户明细
         mMingxi = view.findViewById(R.id.relativeLayout_mingxi_fragment_wo);
-
-
-
+        //滑动
+        neste = view.findViewById(R.id.Neste);
+        //底线
+        diviline = view.findViewById(R.id.diviline);
+        baseline = view.findViewById(R.id.baseline);
+        base_btn = view.findViewById(R.id.base_btn);
         /**
          * 点击已取消 跳转页面
          */
@@ -330,6 +342,30 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe {
                 }
             }
         });
+        if (logUser != null)
+            recommendPresenter.request(logUser.getId(), 1, mPage);
+        mRlvFragmentWo.setLoadingMoreEnabled(true);
+        neste.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                //判断是否滑到的底部
+                if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
+                    mRlvFragmentWo.setLoadingMoreEnabled(true);//调用刷新控件对应的加载更多方法
+                    onLoadMore();
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onRefresh() {
+        mRecommend_fragment_wo_adapter.removeAll();
+    }
+
+    @Override
+    public void onLoadMore() {
+        mPage++;
+        recommendPresenter.request(logUser.getId(), 1, mPage);
     }
 
     public class AdvertisingICoreInfe implements ICoreInfe {
@@ -360,8 +396,12 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe {
     public void success(Object data) {
         Request request = (Request) data;
         List<RecommendBean> entity = (List<RecommendBean>) request.getEntity();
-        mRecommend_fragment_wo_adapter.removeAll();
         mRecommend_fragment_wo_adapter.addData(entity);
+        if (entity.size() == 0) {
+            baseline.setVisibility(View.VISIBLE);
+            diviline.setVisibility(View.VISIBLE);
+            base_btn.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -372,13 +412,10 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe {
     @Override
     public void onResume() {
         super.onResume();
-        //查询数据库中是否有用户
-        logUser = getLogUser(getContext());
         if (logUser != null) {
             int userId = logUser.getId();
             tuijian.setVisibility(View.VISIBLE);
             userInfoPresenter.request(userId);
-            recommendPresenter.request(userId);
         } else {
             tuijian.setVisibility(View.GONE);
         }

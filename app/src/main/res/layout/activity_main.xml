@@ -128,20 +128,40 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <RadioButton
-                    android:id="@+id/gou"
-                    android:layout_width="29dp"
-                    android:layout_height="29dp"
-                    android:background="@drawable/radio_sele_gou"
-                    android:button="@null" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="center">
 
-                <TextView
-                    android:id="@+id/gou_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="购物车"
-                    android:textColor="#333333"
-                    android:textSize="10sp" />
+                    <RadioButton
+                        android:id="@+id/gou"
+                        android:layout_width="29dp"
+                        android:layout_height="29dp"
+                        android:layout_marginTop="-2dp"
+                        android:background="@drawable/radio_sele_gou"
+                        android:button="@null" />
+
+                    <TextView
+                        android:id="@+id/gou_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:text="购物车"
+                        android:textColor="#333333"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:layout_width="13dp"
+                        android:layout_height="13dp"
+                        android:id="@+id/text_count"
+                        android:layout_marginLeft="18dp"
+                        android:background="@drawable/red_btn_shape"
+                        android:gravity="center"
+                        android:text="01"
+                        android:textColor="@color/clolrBAai"
+                        android:textSize="9sp" />
+                </RelativeLayout>
+
             </LinearLayout>
 
             <LinearLayout

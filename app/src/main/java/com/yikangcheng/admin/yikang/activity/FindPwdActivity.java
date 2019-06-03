@@ -1,10 +1,12 @@
 package com.yikangcheng.admin.yikang.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -53,10 +55,14 @@ public class FindPwdActivity extends BaseActivtiy implements CustomAdapt, ICoreI
     private RetrievePwdPresenter retrievePwdPresenter;
     private GetMobileKeyPresenter getMobileKeyPresenter;
     private SendMobilePresenter sendMobilePresenter;
+    private int width;
 
     @Override
     protected void initView() {
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+        int height = wm.getDefaultDisplay().getHeight();
+        width = wm.getDefaultDisplay().getWidth();
         updatebtn = (RelativeLayout) findViewById(R.id.updatebtn);
         moblie_text = (TextView) findViewById(R.id.moblie_text);
         phone_text = (EditText) findViewById(R.id.EditTixt_activity_seek_sousuo);
@@ -128,7 +134,7 @@ public class FindPwdActivity extends BaseActivtiy implements CustomAdapt, ICoreI
 
     @Override
     public float getSizeInDp() {
-        return 720;
+        return width / 2;
     }
 
     @Override

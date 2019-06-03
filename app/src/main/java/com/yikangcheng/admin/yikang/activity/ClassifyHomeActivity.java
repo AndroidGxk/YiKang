@@ -38,6 +38,7 @@ public class ClassifyHomeActivity extends BaseActivtiy implements ICoreInfe, Cus
     private ImageView back_img;
     private String id;
     private int recI;
+    private int width;
 
     @Override
     protected void initView() {
@@ -47,6 +48,7 @@ public class ClassifyHomeActivity extends BaseActivtiy implements ICoreInfe, Cus
         id = intent.getStringExtra("id");
         WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         height = wm.getDefaultDisplay().getHeight();
+        width = wm.getDefaultDisplay().getWidth();
         mRlvFragmentFenleiYou = (RecyclerView) findViewById(R.id.rlv__fragment_fenlei_you);
         back_img = (ImageView) findViewById(R.id.back_img);
         mRlvFragmentFenleiZuo = (RecyclerView) findViewById(R.id.rlv__fragment_fenlei_zuo);
@@ -127,6 +129,6 @@ public class ClassifyHomeActivity extends BaseActivtiy implements ICoreInfe, Cus
 
     @Override
     public float getSizeInDp() {
-        return height / 2;
+        return width / 2;
     }
 }

@@ -58,7 +58,13 @@ public class AllAddressRecyclerAdapter extends RecyclerView.Adapter<AllAddressRe
         final AllAddressBean.ListUserAddressBean listUserAddressBean = stringList.get(position);
         vh.user_name.setText(listUserAddressBean.getReceiver());
         vh.user_address.setText(listUserAddressBean.getProvinceStr() + listUserAddressBean.getCityStr() + listUserAddressBean.getTownStr());
-        vh.user_phone.setText(listUserAddressBean.getMobile());
+        String mobile = listUserAddressBean.getMobile();
+        if (mobile.length() >= 11) {
+            String frontMobile = mobile.substring(0, 3);
+            String frontStr = frontMobile + "****";
+            String AllMobile = frontStr + mobile.substring(7, mobile.length());
+            vh.user_phone.setText(AllMobile);
+        }
         if (listUserAddressBean.getIsFirst() == 1) {
             vh.moren.setChecked(true);
         } else {
