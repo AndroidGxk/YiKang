@@ -162,6 +162,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/pb_progress">
+        <!--苹果水滴的样式-->
+        <com.scwang.smartrefresh.header.WaterDropHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
         <WebView
             android:id="@+id/webView"

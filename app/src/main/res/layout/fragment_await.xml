@@ -13,6 +13,9 @@
         android:visibility="gone"
         app:srlEnableScrollContentWhenLoaded="true">
 
+        <com.scwang.smartrefresh.header.WaterDropHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rlv_fragment_await_dingdan"
             android:layout_width="match_parent"

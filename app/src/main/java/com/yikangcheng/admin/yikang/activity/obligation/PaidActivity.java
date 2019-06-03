@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.bumptech.glide.Glide;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -115,10 +116,11 @@ public class PaidActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
         //设置显示隐藏
         if (orderBeans.size() < 0) {
             mRelativeLayout.setVisibility(View.VISIBLE);
-            mRefreshLayout.setVisibility(View.GONE);
+            mRlvActivityPaid.setVisibility(View.GONE);
+            Glide.with(PaidActivity.this).load(R.drawable.dongtu).into(mImgFragmentAccomplish);
         } else {
             mRelativeLayout.setVisibility(View.GONE);
-            mRefreshLayout.setVisibility(View.VISIBLE);
+            mRlvActivityPaid.setVisibility(View.VISIBLE);
         }
 
 
