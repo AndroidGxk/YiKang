@@ -11,6 +11,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sobot.chat.SobotApi;
+import com.sobot.chat.api.model.Information;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.adapter.CloseTheDealAdapter;
 import com.yikangcheng.admin.yikang.activity.copy.CopyButtonLibrary;
@@ -101,6 +103,18 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
         mTvActivityCloseNeiRong = (TextView) findViewById(R.id.tv_activity_close_NeiRong);
         //删除
         mChanchu = (TextView) findViewById(R.id.tv_activity_closeThe_Deal_shanchu);
+
+
+        //点击客服跳转页面
+        mTvActivityCloseKeFu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Information info = new Information();
+                info.setAppkey("7560599b63bf43378d05d018ded42cdd");
+                SobotApi.setCustomRobotHelloWord(CloseTheDealActivity.this, "您好，易康成客服很高兴为您服务，请问有什么可以帮助您的？");
+                SobotApi.startSobotChat(CloseTheDealActivity.this, info);
+            }
+        });
 
 
         //复制监听点击事件

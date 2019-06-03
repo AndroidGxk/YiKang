@@ -125,9 +125,9 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
             }
         });
         recommendPresenter = new RecommendPresenter(new RecomICoreInfe());
-        int spanCount = 2; // 3 columns
+        int spanCount = 1; // 3 columns
         int spacing = 20; // 50px
-        boolean includeEdge = false;
+        boolean includeEdge = true;
         shop_recyclertwo.addItemDecoration(new SpacesItemDecoration(spanCount, spacing, includeEdge));
         shop_recyclertwo.setLoadingListener(this);
         //加载更多

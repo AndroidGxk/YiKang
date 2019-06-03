@@ -56,13 +56,15 @@
 
     <ImageView
         android:id="@+id/recom_img"
-        android:scaleType="fitXY"
         android:layout_width="fill_parent"
-        android:layout_height="180dp"
+        android:layout_height="170dp"
+        android:scaleType="fitXY"
         app:layout_constraintBottom_toTopOf="@+id/img_bottom_line"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/recom_title"

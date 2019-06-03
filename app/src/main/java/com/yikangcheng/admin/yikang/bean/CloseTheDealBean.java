@@ -875,7 +875,7 @@ public class CloseTheDealBean {
             private String specIds;
             private String specNames;
             private double retailPrice;
-            private int marketPrice;
+            private double marketPrice;
             private int stock;
             private int status;
             private String commodityName;
@@ -924,11 +924,11 @@ public class CloseTheDealBean {
                 this.retailPrice = retailPrice;
             }
 
-            public int getMarketPrice() {
+            public double getMarketPrice() {
                 return marketPrice;
             }
 
-            public void setMarketPrice(int marketPrice) {
+            public void setMarketPrice(double marketPrice) {
                 this.marketPrice = marketPrice;
             }
 

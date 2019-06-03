@@ -16,6 +16,7 @@ import com.yikangcheng.admin.yikang.bean.LoginBean;
 import com.yikangcheng.admin.yikang.bean.NewOrderBean;
 import com.yikangcheng.admin.yikang.bean.ObligationBean;
 import com.yikangcheng.admin.yikang.bean.PaidBean;
+import com.yikangcheng.admin.yikang.bean.PayBean;
 import com.yikangcheng.admin.yikang.bean.ProvinceBean;
 import com.yikangcheng.admin.yikang.bean.RecommendBean;
 import com.yikangcheng.admin.yikang.bean.RegisterBean;
@@ -264,7 +265,7 @@ public interface ApiService {
      * 重新下单
      */
     @POST("order/repayUpdateOrder")
-    Observable<Request<NewOrderBean>> repayUpdateOrder(@Query("orderId") int orderId, @Query("payType") String payType);
+    Observable<Request<PayBean>> repayUpdateOrder(@Query("orderId") int orderId, @Query("payType") String payType);
 
     /**
      * 修改购物车商品数量

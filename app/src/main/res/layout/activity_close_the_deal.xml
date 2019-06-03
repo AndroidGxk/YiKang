@@ -217,15 +217,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="202dp"
-                        android:src="@drawable/fuzhi"
-                        android:padding="11dp" />
+                        android:padding="11dp"
+                        android:src="@drawable/fuzhi" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="33dp"
-                        android:text="运          费:"
+                        android:text="运        费:"
                         android:textColor="#ff333333"
                         android:textSize="12sp" />
 
@@ -261,9 +261,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="79dp"
-                        android:text="总          计:"
+                        android:layout_marginBottom="6dp"
+                        android:text="总        计:"
                         android:textColor="#ff333333"
                         android:textSize="12sp" />
 
