@@ -70,7 +70,7 @@ public class BaseApp extends Application {
         SmartRefreshLayout.setDefaultRefreshHeaderCreator(new DefaultRefreshHeaderCreator() {
             @Override
             public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout) {
-                layout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);//全局设置主题颜色
+                layout.setPrimaryColorsId(R.color.colorToolbar, android.R.color.white);//全局设置主题颜色
                 return new ClassicsHeader(context);//.setTimeFormat(new DynamicTimeFormat("更新于 %s"));//指定为经典Header，默认是 贝塞尔雷达Header
             }
         });
@@ -88,7 +88,7 @@ public class BaseApp extends Application {
     public void onCreate() {
         super.onCreate();
         mAppInstance = this;
-//初始化Fresco
+        //初始化Fresco
         Fresco.initialize(this);
         SobotApi.initSobotSDK(this, "7560599b63bf43378d05d018ded42cdd", "");
     }

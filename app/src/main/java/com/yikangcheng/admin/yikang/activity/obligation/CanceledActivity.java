@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.bumptech.glide.Glide;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -80,14 +81,14 @@ public class CanceledActivity extends BaseActivtiy implements ICoreInfe {
 
         mCanceledAdapter_a.setOnClickListener(new CanceledAdapter_A.OnClickListener() {
             @Override
-            public void OnClickListener(View v, int orderId,int position) {
+            public void OnClickListener(View v, int orderId, int position) {
                 /**
                  * 点击跳到详情的下标  删除后回来删除条目用到
                  */
                 mDeletePosition = position;
                 Intent intent = new Intent(CanceledActivity.this, FackOfActivity.class);
                 intent.putExtra("orderId_fack", orderId);
-                startActivityForResult(intent,5);
+                startActivityForResult(intent, 5);
             }
         });
 
@@ -109,6 +110,7 @@ public class CanceledActivity extends BaseActivtiy implements ICoreInfe {
         if (orderBeans.size() < 0) {
             mRelativeLayout.setVisibility(View.VISIBLE);
             mRefreshLayout.setVisibility(View.GONE);
+            Glide.with(CanceledActivity.this).load(R.drawable.dongtu).into(mImgFragmentAccomplish);
         } else {
             mRelativeLayout.setVisibility(View.GONE);
             mRefreshLayout.setVisibility(View.VISIBLE);
@@ -128,9 +130,9 @@ public class CanceledActivity extends BaseActivtiy implements ICoreInfe {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 5 && resultCode ==6){
+        if (requestCode == 5 && resultCode == 6) {
             String delete = data.getStringExtra("delete");
-            if (delete.equals("delete")){
+            if (delete.equals("delete")) {
                 mCanceledAdapter_a.mList.remove(mDeletePosition);
                 mCanceledAdapter_a.notifyDataSetChanged();
             }

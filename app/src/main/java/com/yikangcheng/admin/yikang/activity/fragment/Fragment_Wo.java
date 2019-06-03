@@ -115,7 +115,6 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe {
         mMingxi = view.findViewById(R.id.relativeLayout_mingxi_fragment_wo);
 
 
-
         /**
          * 点击已取消 跳转页面
          */

@@ -170,8 +170,8 @@ public class AllFragment extends BaseFragment implements ICoreInfe {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 //请求数据
-                mPage = 1;
-                initMvp(mPage);
+//                mPage = 1;
+//                initMvp(mPage);
                 refreshLayout.finishRefresh();  //刷新完成
             }
         });
