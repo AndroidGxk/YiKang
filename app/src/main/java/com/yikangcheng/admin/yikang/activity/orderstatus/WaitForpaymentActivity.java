@@ -1,15 +1,15 @@
 package com.yikangcheng.admin.yikang.activity.orderstatus;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
+import android.content.IntentFilter;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.widget.ImageView;
@@ -21,33 +21,30 @@ import com.alipay.sdk.app.PayTask;
 import com.sobot.chat.SobotApi;
 import com.sobot.chat.api.model.Information;
 import com.yikangcheng.admin.yikang.R;
-import com.yikangcheng.admin.yikang.activity.ConfirmActivity;
 import com.yikangcheng.admin.yikang.activity.PayResultActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.WaitForPaymentAdapter;
 import com.yikangcheng.admin.yikang.activity.copy.CopyButtonLibrary;
-import com.yikangcheng.admin.yikang.activity.particulars.ParticularsActivity;
+import com.yikangcheng.admin.yikang.activity.orderstatus.countdown.ClockService;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.CloseTheDealBean;
-import com.yikangcheng.admin.yikang.bean.CreatOrderBean;
 import com.yikangcheng.admin.yikang.bean.DeleteOrderBean;
-import com.yikangcheng.admin.yikang.bean.NewOrderBean;
-import com.yikangcheng.admin.yikang.bean.NewOrderBean;
 import com.yikangcheng.admin.yikang.bean.PayBean;
 import com.yikangcheng.admin.yikang.bean.Request;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
 import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
 import com.yikangcheng.admin.yikang.paysdk.PayResult;
 import com.yikangcheng.admin.yikang.presenter.CloseTheDeallPresenter;
-import com.yikangcheng.admin.yikang.presenter.NewOrderPresenter;
 import com.yikangcheng.admin.yikang.presenter.DeleteOrderIdPresenter;
 import com.yikangcheng.admin.yikang.presenter.NewOrderPresenter;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import me.jessyan.autosize.internal.CustomAdapt;
+import me.leefeng.promptlibrary.PromptButton;
+import me.leefeng.promptlibrary.PromptButtonListener;
+import me.leefeng.promptlibrary.PromptDialog;
 
 /**
  * 这是订单详情里面的----等待付款
@@ -86,6 +83,9 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
     private int width;
     private PayBean mEntity;
     private String mPayType;
+    private PromptDialog mPromptDialog;
+    public static String CLOCK_ACTION = "com.jereh.Clock_Action";
+    public static int TIME = 2 * 60 * 60 * 1000;//倒计时2个小时
 
     @Override
     protected void initView() {
@@ -93,6 +93,13 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
         mOrderId_wait = mIntent.getIntExtra("orderId_wait", 0);
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+
+        //创建对象
+        mPromptDialog = new PromptDialog(this);
+        //设置自定义属性
+        mPromptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(3000);
+
+
         Display display = this.getWindowManager().getDefaultDisplay();
         width = display.getWidth();
         int height = display.getHeight();
@@ -146,7 +153,6 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
         });
 
 
-
         //复制监听点击事件
         mImgActivityWaitfrrpaymentFizhi.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -192,6 +198,79 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
 
         //刪除
         initDelete();
+
+        regReceiver();//注册广播
+        startService(new Intent(this, ClockService.class));//启动计时服务
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        super.unregisterReceiver(clockReceiver);
+        TIME = 2 * 60 * 60 * 1000;
+        Intent intent = new Intent();
+        intent.setAction(ClockService.CLOCK_SERVICE_ACTION);
+        intent.putExtra("method", "stop");
+        super.sendBroadcast(intent);
+    }
+
+    private void regReceiver() {
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(CLOCK_ACTION);
+        super.registerReceiver(clockReceiver, intentFilter);
+    }
+
+    /**
+     * 广播接受者，接受来自ClockService（计时服务）的广播，ClockService每隔一秒
+     * 钟发一次广播
+     */
+    private BroadcastReceiver clockReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            changeTime();//改变TextView中的显示时间
+        }
+    };
+
+    //通过发送广播，控制计时服务
+    //继续计时
+    public void restart(View view) {
+        Intent intent = new Intent();
+        intent.setAction(ClockService.CLOCK_SERVICE_ACTION);
+        intent.putExtra("method", "continue");
+        super.sendBroadcast(intent);
+    }
+
+    //通过发送广播，控制计时服务
+    //暂停计时
+    public void pause(View view) {
+        Intent intent = new Intent();
+        intent.setAction(ClockService.CLOCK_SERVICE_ACTION);
+        intent.putExtra("method", "pause");
+        super.sendBroadcast(intent);
+    }
+
+    private void changeTime() {
+        String stime = "";
+        if (TIME == 0) {
+            stime = "计时结束";
+        } else {
+            int hour = TIME / (1000 * 60 * 60);
+            int minute = TIME % (1000 * 60 * 60) / (60 * 1000);
+            int second = (TIME % (1000 * 60 * 60)) % (60 * 1000) / 1000;
+            String shour = "" + hour, sminute = "" + minute, ssecond = "" + second;
+            if (hour <= 9) {
+                shour = "0" + hour;
+            }
+            if (minute <= 9) {
+                sminute = "0" + minute;
+            }
+            if (second <= 9) {
+                ssecond = "0" + second;
+            }
+            stime = shour + ":" + sminute + ":" + ssecond;
+        }
+        mTvActivityWaitfrrpaymentDaojishi.setText(stime);
     }
 
     //點擊刪除訂單關閉當前Activity
@@ -199,14 +278,27 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
         mShanchu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DeleteOrderIdPresenter deleteOrderIdPresenter = new DeleteOrderIdPresenter(new delete());
-                deleteOrderIdPresenter.request(mOrderId_wait);
-                mIntent.putExtra("delete", "delete");
-                setResult(2, mIntent);
-                finish();
+                mPromptDialog.showWarnAlert("你确定要删除订单吗？", new PromptButton("取消", new PromptButtonListener() {
+                    @Override
+                    public void onClick(PromptButton button) {
+                    }
+                }), confirm);
             }
         });
     }
+
+    //按钮的定义，创建一个按钮的对象
+    PromptButton confirm = new PromptButton("确定", new PromptButtonListener() {
+        @Override
+        public void onClick(PromptButton button) {
+            DeleteOrderIdPresenter deleteOrderIdPresenter = new DeleteOrderIdPresenter(new delete());
+            deleteOrderIdPresenter.request(mOrderId_wait);
+            mIntent.putExtra("delete", "delete");
+            setResult(2, mIntent);
+            finish();
+        }
+    });
+
 
     @Override
     protected void initEventData() {
@@ -365,7 +457,24 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
             mTvActivityWaitfrrpaymentNeiRong.setText("商品类别");
         }
 
-
+//        String createTime = entity.getOrder().getCreateTime();
+//
+//        AlphaAnimation animation = new AlphaAnimation(0.1f, 1.0f);
+//        animation.setFillAfter(true);
+//        animation.setDuration(300000);
+//        mTvActivityWaitfrrpaymentDaojishi.setAnimation(animation);
+//
+//        new CountDownTimer(300000, 1000) {
+//            @Override
+//            public void onTick(long millisUntilFinished) {
+//                mTvActivityWaitfrrpaymentDaojishi.setText("倒计时：" + millisUntilFinished / 1000 + "秒");
+//            }
+//
+//            @Override
+//            public void onFinish() {
+//
+//            }
+//        }.start();
     }
 
     @Override

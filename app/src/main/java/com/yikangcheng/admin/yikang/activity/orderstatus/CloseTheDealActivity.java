@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.sobot.chat.SobotApi;
 import com.sobot.chat.api.model.Information;
@@ -30,6 +29,9 @@ import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 import java.util.ArrayList;
 
 import me.jessyan.autosize.internal.CustomAdapt;
+import me.leefeng.promptlibrary.PromptButton;
+import me.leefeng.promptlibrary.PromptButtonListener;
+import me.leefeng.promptlibrary.PromptDialog;
 
 public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, ICoreInfe {
 
@@ -58,12 +60,20 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
     private Intent mIntent;
     private int mOrderId;
     private int width;
+    private PromptDialog mPromptDialog;
 
 
     @Override
     protected void initView() {
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+
+        //创建对象
+        mPromptDialog = new PromptDialog(this);
+        //设置自定义属性
+        mPromptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(3000);
+
+
         mIntent = getIntent();
         mOrderId = mIntent.getIntExtra("orderId", 0);
         Display display = this.getWindowManager().getDefaultDisplay();
@@ -165,14 +175,26 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
         mChanchu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DeleteOrderIdPresenter deleteOrderIdPresenter = new DeleteOrderIdPresenter(new delete());
-                deleteOrderIdPresenter.request(mOrderId);
-                mIntent.putExtra("delete", "delete");
-                setResult(4, mIntent);
-                finish();
+                mPromptDialog.showWarnAlert("你确定要删除订单吗？", new PromptButton("取消", new PromptButtonListener() {
+                    @Override
+                    public void onClick(PromptButton button) {
+                    }
+                }), confirm);
             }
         });
     }
+
+    //按钮的定义，创建一个按钮的对象
+    PromptButton confirm = new PromptButton("确定", new PromptButtonListener() {
+        @Override
+        public void onClick(PromptButton button) {
+            DeleteOrderIdPresenter deleteOrderIdPresenter = new DeleteOrderIdPresenter(new delete());
+            deleteOrderIdPresenter.request(mOrderId);
+            mIntent.putExtra("delete", "delete");
+            setResult(4, mIntent);
+            finish();
+        }
+    });
 
     @Override
     protected void initEventData() {

@@ -558,6 +558,7 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
                 Intent intent = new Intent(CloseActivity.this, ConfirmActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("creatorder", entity);
+                Log.e("weixin", entity.getSign());
                 intent.putExtras(bundle);
                 startActivity(intent);
                 promptDialog.dismiss();
