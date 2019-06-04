@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
@@ -54,6 +55,10 @@ public class IntroActivity extends BaseActivtiy implements CustomAdapt {
             @Override
             public void onClick(View view) {
                 String intro = mEtIntroActivityIntro.getText().toString();
+                if (intro.length() < 2) {
+                    Toast.makeText(IntroActivity.this, "简介太少啦", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 SharedPreferences sp = getSharedPreferences("intro", MODE_PRIVATE);
                 sp.edit().putString("intro", intro).commit();
                 finish();

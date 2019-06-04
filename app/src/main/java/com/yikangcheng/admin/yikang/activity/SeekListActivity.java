@@ -38,7 +38,7 @@ import me.leefeng.promptlibrary.PromptDialog;
 /**
  * 搜索列表页面
  */
-public class SeekListActivity extends BaseActivtiy implements CustomAdapt, ICoreInfe, View.OnClickListener {
+public class SeekListActivity extends BaseActivtiy implements  ICoreInfe, View.OnClickListener {
 
     private TextView edit_seek_sousuo;
     private CommodityPresenter commodityPresenter;
@@ -161,16 +161,6 @@ public class SeekListActivity extends BaseActivtiy implements CustomAdapt, ICore
     @Override
     protected void createPresenter() {
 
-    }
-
-    @Override
-    public boolean isBaseOnWidth() {
-        return false;
-    }
-
-    @Override
-    public float getSizeInDp() {
-        return width / 2;
     }
 
     @Override

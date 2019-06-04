@@ -180,11 +180,12 @@ public class ParticularsActivity extends BaseActivtiy implements CustomAdapt, IC
 
     @Override
     public float getSizeInDp() {
-        return width/2;
+        return width / 2;
     }
 
     @JavascriptInterface
     public void sayHello(String msg) {
+        Toast.makeText(this, "" + msg, Toast.LENGTH_SHORT).show();
         s += msg + ",";
         String[] split = s.split(",");
         if (split.length == 4) {
@@ -196,6 +197,7 @@ public class ParticularsActivity extends BaseActivtiy implements CustomAdapt, IC
 
     @JavascriptInterface
     public void orderBuy(String msg) {
+        Toast.makeText(this, "" + msg, Toast.LENGTH_SHORT).show();
         s += msg + ",";
         String[] split = s.split(",");
         if (split.length == 7) {
@@ -208,10 +210,10 @@ public class ParticularsActivity extends BaseActivtiy implements CustomAdapt, IC
 
     @JavascriptInterface
     public void goCust(String msg) {
-        Log.d("EE", msg);
+        Log.e("EE", msg);
         Cust += msg + ",";
         String[] split = Cust.split(",");
-        if (split.length == 3) {
+        if (split.length == 5) {
             Information info = new Information();
             //咨询内容
             ConsultingContent consultingContent = new ConsultingContent();
@@ -224,7 +226,7 @@ public class ParticularsActivity extends BaseActivtiy implements CustomAdapt, IC
             //描述，选填
             consultingContent.setSobotGoodsDescribe(split[0]);
             //标签，选填
-            consultingContent.setSobotGoodsLable("￥2150");
+            consultingContent.setSobotGoodsLable("¥" + split[3]);
             //可以设置为null
             info.setConsultingContent(consultingContent);
             info.setAppkey("7560599b63bf43378d05d018ded42cdd");
@@ -237,6 +239,7 @@ public class ParticularsActivity extends BaseActivtiy implements CustomAdapt, IC
 
     @JavascriptInterface
     public void goCar() {
+
         startActivity(new Intent(ParticularsActivity.this, PartiCarActivity.class));
     }
 

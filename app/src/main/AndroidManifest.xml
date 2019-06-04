@@ -28,7 +28,7 @@
         <activity android:name=".activity.orderstatus.CloseTheDealActivity" />
         <activity android:name=".activity.SelectCouponActivity" />
         <activity android:name=".activity.coupon.CouponActivity" />
-        <activity android:name=".activity.MainActivity" />
+        <activity android:name=".activity.SearchListActivity" />
         <activity android:name=".activity.CustomerActivity" />
         <activity android:name=".activity.SystemActivity" />
         <activity android:name=".activity.OrderFormActivity" />
@@ -76,7 +76,7 @@
             android:name=".activity.seek.SeekActivity"
             android:launchMode="singleTask"
             tools:ignore="DuplicateActivity" />
-        <activity android:name=".activity.SearchListActivity" />
+        <activity android:name=".activity.MainActivity" />
         <activity
             android:name=".activity.aftersale.AfterSaleActivity"
             tools:ignore="DuplicateActivity" />
@@ -129,7 +129,11 @@
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind" />
-
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.yikangcheng.admin.yikang"
@@ -139,6 +143,12 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+        <receiver android:name=".receiver.ApkInstallReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.DOWNLOAD_NOTIFICATION_CLICKED" />
+                <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

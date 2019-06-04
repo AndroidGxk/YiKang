@@ -56,7 +56,7 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
     private ImageView buy_img;
     private RelativeLayout wechat_pay, zhi_rela, youhuiquan;
     //选中未选中
-    private boolean wechat = true, zhi = false;
+    private boolean wechat = false, zhi = false;
     private FragmentTransaction fragmentTransaction;
     private RelativeLayout no_yes;
     private TextView zhi_invoice, wan;
@@ -184,14 +184,12 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
             @Override
             public void onClick(View view) {
                 if (wechat) {
-                    Toast.makeText(CloseActivity.this, "微信支付暂不可用", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
-                    Toast.makeText(CloseActivity.this, "微信支付暂不可用", Toast.LENGTH_SHORT).show();
                     wechat = true;
                     zhi = false;
-//                    wechat_pay.setBackgroundResource(R.drawable.yellow_pay_shape);
-//                    zhi_rela.setBackgroundResource(R.drawable.gray_pay_shape);
+                    wechat_pay.setBackgroundResource(R.drawable.yellow_pay_shape);
+                    zhi_rela.setBackgroundResource(R.drawable.gray_pay_shape);
                 }
             }
         });
@@ -455,10 +453,10 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
                             String substring = str.substring(0, str.length() - 1);
                             if (userAddressBean == null) {
                                 orderBuyArrayPresenter.request(getLogUser(CloseActivity.this).getId(), substring,
-                                        id, 1, 2, "易康成", "132", "2", "1724959985@qq.com", "ALIPAY", "Android", "COMMODITY");
+                                        id, 1, 2, "易康成", "132", "2", "1724959985@qq.com", zhi ? "ALIPAY" : "WEIXIN", "Android", "COMMODITY");
                             } else {
                                 orderBuyArrayPresenter.request(getLogUser(CloseActivity.this).getId(), substring,
-                                        userAddressBean.getId(), 1, 2, "易康成", "132", "2", "1724959985@qq.com", "ALIPAY", "Android", "COMMODITY");
+                                        userAddressBean.getId(), 1, 2, "易康成", "132", "2", "1724959985@qq.com", zhi ? "ALIPAY" : "WEIXIN", "Android", "COMMODITY");
                             }
                         }
                     }
@@ -466,10 +464,10 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
                     String ids = pariticShopBean.getId();
                     if (userAddressBean == null) {
                         orderBuyPresenter.request(getLogUser(CloseActivity.this).getId(), Integer.parseInt(ids),
-                                id, 1, 1, 2, "易康成", "132", "2", "1724959985@qq.com", "ALIPAY", "Android");
+                                id, 1, 1, 2, "易康成", "132", "2", "1724959985@qq.com", zhi ? "ALIPAY" : "WEIXIN", "Android");
                     } else {
                         orderBuyPresenter.request(getLogUser(CloseActivity.this).getId(), Integer.parseInt(ids),
-                                userAddressBean.getId(), 1, 1, 2, "易康成", "132", "2", "1724959985@qq.com", "ALIPAY", "Android");
+                                userAddressBean.getId(), 1, 1, 2, "易康成", "132", "2", "1724959985@qq.com", zhi ? "ALIPAY" : "WEIXIN", "Android");
                     }
                 }
             }
@@ -556,6 +554,7 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
             Request request = (Request) data;
             if (request.isSuccess()) {
                 CreatOrderBean entity = (CreatOrderBean) request.getEntity();
+                entity.setPayType(zhi ? "ALIPAY" : "WEIXIN");
                 Intent intent = new Intent(CloseActivity.this, ConfirmActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("creatorder", entity);

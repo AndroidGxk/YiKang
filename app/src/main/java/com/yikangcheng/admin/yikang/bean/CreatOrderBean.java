@@ -18,7 +18,7 @@ public class CreatOrderBean implements Serializable {
      * orderId : 212
      * sumPrice : 983
      */
-
+    private String payType;
     private String balance;
     private String orderNo;
     private String bankAmount;
@@ -29,6 +29,14 @@ public class CreatOrderBean implements Serializable {
     private int orderId;
     private double sumPrice;
     private String orderinfo;
+
+    public String getPayType() {
+        return payType;
+    }
+
+    public void setPayType(String payType) {
+        this.payType = payType;
+    }
 
     public String getOrderinfo() {
         return orderinfo;

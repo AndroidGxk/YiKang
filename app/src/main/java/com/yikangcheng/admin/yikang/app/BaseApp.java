@@ -23,6 +23,8 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.sobot.chat.SobotApi;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.bean.UserDetailBean;
 
@@ -65,6 +67,8 @@ public class BaseApp extends Application {
         return mAppInstance;
     }
 
+    public static IWXAPI mWxApi;
+
     //static 代码段可以防止内存泄露
     static {
         //设置全局的Header构建器
@@ -93,6 +97,7 @@ public class BaseApp extends Application {
 //初始化Fresco
         Fresco.initialize(this);
         SobotApi.initSobotSDK(this, "7560599b63bf43378d05d018ded42cdd", "");
+        getMainThreadLooper();
     }
 
     public static Context getApp() {
@@ -193,5 +198,11 @@ public class BaseApp extends Application {
         return mMainLooper;
     }
 
+    private void registToWX() {
+        //AppConst.WEIXIN.APP_ID是指你应用在微信开放平台上的AppID，记得替换。
+        mWxApi = WXAPIFactory.createWXAPI(this, "wx49c4b23b233d97ff", false);
+        // 将该app注册到微信
+        mWxApi.registerApp("wx49c4b23b233d97ff");
+    }
 
 }

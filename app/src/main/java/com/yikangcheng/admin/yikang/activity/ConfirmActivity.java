@@ -13,6 +13,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alipay.sdk.app.PayTask;
+import com.tencent.mm.opensdk.modelpay.PayReq;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.CreatOrderBean;
@@ -52,24 +55,41 @@ public class ConfirmActivity extends BaseActivtiy implements CustomAdapt {
         pay_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 调用支付接口，获取支付结果
-                Runnable payRunnable = new Runnable() {
-                    @Override
-                    public void run() {
-                        //todo 支付宝
-                        // 构造PayTask 对象
-                        PayTask alipay = new PayTask(ConfirmActivity.this);
-                        Map<String, String> result = alipay.payV2(creatorder.getOrderinfo(), true);
+                String payType = creatorder.getPayType();
+                if (payType.equals("ALIPAY")) {
+                    // 调用支付接口，获取支付结果
+                    Runnable payRunnable = new Runnable() {
+                        @Override
+                        public void run() {
+                            //todo 支付宝
+                            // 构造PayTask 对象
+                            PayTask alipay = new PayTask(ConfirmActivity.this);
+                            Map<String, String> result = alipay.payV2(creatorder.getOrderinfo(), true);
 //                        Map<String, String> result = alipay.payV2("alipay_sdk=alipay-sdk-java-3.7.26.ALL&app_id=2019030863469663&biz_content=%7B%22body%22%3A%22%E6%98%93%E5%BA%B7%E6%88%90%22%2C%22out_trade_no%22%3A%22NO155906963237992%22%2C%22product_code%22%3A%22QUICK_MSECURITY_PAY%22%2C%22subject%22%3A%22%E7%BE%8E%E5%A6%86%E6%B5%8B%E8%AF%95008%22%2C%22timeout_express%22%3A%2230m%22%2C%22total_amount%22%3A%220.01%22%7D&charset=utf-8&format=json&method=alipay.trade.app.pay&notify_url=https%3A%2F%2Fwww.yikch.com%2Fapi%2Forder%2FpaySuccess&sign=ndtQ6fc9XGCC6iZJ%2FX2UrDpFzHEtVehwJivhN%2BEEwZyNsBxYUIj2og0GvMo0JX3oEiVPB57SrMRFv03G%2Fz5Wl3n9HCCiZZF9X1WDfC7PJ3CNVHjMWQ%2FGC5oQ%2FE3NIfV%2FEVtkDRqBmOfChgJa%2F1dM%2BfT9mMFcKdH7ZYkJjwSwdMg4%2FtYy8FGifR%2FSphG41JujEEQMJ4IyOuKtxcROrKpQpF7NLT1hbrEI0dh0JKLsfwTks463%2FEpE5U0Gf5Fc9Ta5PrEkBTJFwWp2MtXtbgHEMtxCj9%2B17pgaEiowlX3Vfle8NvTuJlb7rz2glzzONgwwqRwkpzXhKE0ukaKUQ61tGw%3D%3D&sign_type=RSA2&timestamp=2019-05-29+02%3A53%3A52&version=1.0", true);
-                        Message msg = new Message();
-                        msg.what = SDK_PAY_FLAG;
-                        msg.obj = result;
-                        mHandler.sendMessage(msg);
-                    }
-                };
-                // 必须异步调用
-                Thread payThread = new Thread(payRunnable);
-                payThread.start();
+                            Message msg = new Message();
+                            msg.what = SDK_PAY_FLAG;
+                            msg.obj = result;
+                            mHandler.sendMessage(msg);
+                        }
+                    };
+                    // 必须异步调用
+                    Thread payThread = new Thread(payRunnable);
+                    payThread.start();
+                } else if (payType.equals("WEIXIN")) {
+                    IWXAPI api = WXAPIFactory.createWXAPI(ConfirmActivity.this, "wx49c4b23b233d97ff",false);//填写自己的APPID
+                    api.registerApp("wx49c4b23b233d97ff");//填写自己的APPID，注册本身APP
+                    PayReq req = new PayReq();//PayReq就是订单信息对象
+                    //给req对象赋值
+                    req.appId = "wx49c4b23b233d97ff";
+                    req.partnerId = "1528387611";
+                    req.prepayId= "1101000000140415649af9fc314aa427";
+                    req.packageValue = "Sign=WXPay";
+                    req.nonceStr= "5K8264ILTKCH16CQ2502SI8ZNMTM67VS";
+                    req.timeStamp= "1398746574";
+                    req.sign= "904ecfe88d35afdd5c494c19b23b2bfb";
+                    boolean b = api.sendReq(req);//将订单信息对象发送给微信服务器，即发送支付请求
+                    Toast.makeText(ConfirmActivity.this, ""+b, Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -156,7 +176,5 @@ public class ConfirmActivity extends BaseActivtiy implements CustomAdapt {
                     break;
             }
         }
-
-        ;
     };
 }

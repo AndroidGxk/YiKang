@@ -1,11 +1,15 @@
 package com.yikangcheng.admin.yikang.activity;
 
+import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -40,9 +44,12 @@ import com.yikangcheng.admin.yikang.bean.UserInfoBean;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
 import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
 import com.yikangcheng.admin.yikang.presenter.UserInfoPresenter;
+import com.yikangcheng.admin.yikang.updater.Updater;
+import com.yikangcheng.admin.yikang.updater.UpdaterConfig;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
 import me.jessyan.autosize.internal.CustomAdapt;
+import me.leefeng.promptlibrary.OnAdClickListener;
 import me.leefeng.promptlibrary.PromptButton;
 import me.leefeng.promptlibrary.PromptButtonListener;
 import me.leefeng.promptlibrary.PromptDialog;
@@ -76,6 +83,7 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
     private PromptDialog promptDialog;
     private UserInfoPresenter userInfoPresenter;
     private int width;
+    private static final String APK_URL = "https://www.yikch.com/static/app/yikang.apk";
 
     @Override
     protected void initView() {
@@ -186,6 +194,32 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
                 }), confirm);
             }
         });
+        try {
+            String versionName = getVersionName();
+            if (!versionName.equals("1.0")) {
+                promptDialog.showWarnAlert("发现新版本是否要更新", new PromptButton("取消", new PromptButtonListener() {
+                    @Override
+                    public void onClick(PromptButton button) {
+                        Toast.makeText(MainActivity.this, button.getText(), Toast.LENGTH_SHORT).show();
+                    }
+                }), newConfirm);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //更新软件
+
+    }
+
+    //查询当前App版本号
+    private String getVersionName() throws Exception {
+        // 获取packagemanager的实例
+        PackageManager packageManager = getPackageManager();
+        // getPackageName()是你当前类的包名，0代表是获取版本信息
+        PackageInfo packInfo = packageManager.getPackageInfo(getPackageName(), 0);
+        String version = packInfo.versionName;
+        return version;
     }
 
     //按钮的定义，创建一个按钮的对象
@@ -195,6 +229,22 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
             getDelete(MainActivity.this);
             finish();
+        }
+    });
+    //更新按钮
+    final PromptButton newConfirm = new PromptButton("更新", new PromptButtonListener() {
+        @Override
+        public void onClick(PromptButton button) {
+            Toast.makeText(MainActivity.this, "正在更新", Toast.LENGTH_SHORT).show();
+            UpdaterConfig config = new UpdaterConfig.Builder(MainActivity.this)
+                    .setTitle(getResources().getString(R.string.app_name))
+                    .setDescription("更新")
+                    .setFileUrl(APK_URL)
+                    .setCanMediaScanner(true)
+                    .setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE
+                            | DownloadManager.Request.NETWORK_WIFI)
+                    .build();
+            Updater.get().showLog(true).download(config);
         }
     });
 

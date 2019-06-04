@@ -17,6 +17,7 @@
         android:background="@color/colorTab">
 
         <ImageView
+            android:onClick="backImg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"

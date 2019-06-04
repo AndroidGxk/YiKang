@@ -54,6 +54,10 @@ public class PayResultActivity extends BaseActivtiy implements CustomAdapt {
 
     }
 
+    public void backImg(View view) {
+        finish();
+    }
+
     @Override
     public boolean isBaseOnWidth() {
         return false;
