@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.yikangcheng.admin.yikang.R;
@@ -80,12 +81,12 @@ public class AwaitAdapter extends RecyclerView.Adapter {
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        private final TextView mBianhao;
-        private final ImageView mShanchu;
-        private final TextView mData;
-        private final TextView mPrice;
-        private final RecyclerView mRlv;
-        private final TextView mZhuangtai;
+        private  TextView mBianhao;
+        private LinearLayout mShanchu;
+        private  TextView mData;
+        private  TextView mPrice;
+        private  RecyclerView mRlv;
+        private  TextView mZhuangtai;
 
         public ViewHolder(View itemView) {
             super(itemView);

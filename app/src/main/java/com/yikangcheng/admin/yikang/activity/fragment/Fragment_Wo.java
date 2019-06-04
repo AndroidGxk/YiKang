@@ -206,9 +206,9 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe, XRecyclerVie
         /**
          * item间距
          */
-        int spanCount_tuijian = 2; // 3 columns
+        int spanCount_tuijian = 1; // 3 columns
         int spacing_tuijian = 20; // 50px
-        boolean includeEdge_tuijian = false;
+        boolean includeEdge_tuijian = true;
         mRlvFragmentWo.addItemDecoration(new SpacesItemDecoration(spanCount_tuijian, spacing_tuijian, includeEdge_tuijian));
 
 

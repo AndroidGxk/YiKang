@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.yikangcheng.admin.yikang.R;
@@ -82,7 +83,7 @@ public class AccomplishAdapter_A extends RecyclerView.Adapter {
     class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView mBianhao;
-        private ImageView mShanchu;
+        private LinearLayout mShanchu;
         private TextView mData;
         private TextView mPrice;
         private RecyclerView mRlv;

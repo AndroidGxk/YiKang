@@ -32,10 +32,12 @@
     </android.support.v7.widget.Toolbar>
 
     <RelativeLayout
-        android:layout_width="330dp"
+        android:layout_width="match_parent"
         android:layout_height="97dp"
         android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="15dp"
         android:layout_marginTop="11dp"
+        android:layout_marginRight="15dp"
         android:background="@drawable/beijing">
 
         <ImageView
@@ -87,10 +89,12 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="330dp"
+        android:layout_width="match_parent"
         android:layout_height="55dp"
         android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="15dp"
         android:layout_marginTop="13dp"
+        android:layout_marginRight="15dp"
         android:background="@drawable/beijing">
 
         <ImageView
@@ -127,10 +131,12 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="330dp"
+        android:layout_width="match_parent"
         android:layout_height="55dp"
         android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="15dp"
         android:layout_marginTop="13dp"
+        android:layout_marginRight="15dp"
         android:background="@drawable/beijing">
 
         <ImageView

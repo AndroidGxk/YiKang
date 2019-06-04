@@ -202,7 +202,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="33dp"
-                        android:text="运          费:"
+                        android:text="运        费:"
                         android:textColor="#ff333333"
                         android:textSize="12sp" />
 
@@ -240,7 +240,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="79dp"
-                        android:text="总          计:"
+                        android:text="总        计:"
                         android:textColor="#ff333333"
                         android:textSize="12sp" />
 

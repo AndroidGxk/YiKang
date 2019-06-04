@@ -1,9 +1,14 @@
 package com.yikangcheng.admin.yikang.activity.orderstatus;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
@@ -12,17 +17,26 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alipay.sdk.app.PayTask;
+import com.sobot.chat.SobotApi;
+import com.sobot.chat.api.model.Information;
 import com.yikangcheng.admin.yikang.R;
+import com.yikangcheng.admin.yikang.activity.ConfirmActivity;
+import com.yikangcheng.admin.yikang.activity.PayResultActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.WaitForPaymentAdapter;
 import com.yikangcheng.admin.yikang.activity.copy.CopyButtonLibrary;
+import com.yikangcheng.admin.yikang.activity.particulars.ParticularsActivity;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.CloseTheDealBean;
+import com.yikangcheng.admin.yikang.bean.CreatOrderBean;
 import com.yikangcheng.admin.yikang.bean.DeleteOrderBean;
 import com.yikangcheng.admin.yikang.bean.NewOrderBean;
 import com.yikangcheng.admin.yikang.bean.NewOrderBean;
+import com.yikangcheng.admin.yikang.bean.PayBean;
 import com.yikangcheng.admin.yikang.bean.Request;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
 import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
+import com.yikangcheng.admin.yikang.paysdk.PayResult;
 import com.yikangcheng.admin.yikang.presenter.CloseTheDeallPresenter;
 import com.yikangcheng.admin.yikang.presenter.NewOrderPresenter;
 import com.yikangcheng.admin.yikang.presenter.DeleteOrderIdPresenter;
@@ -30,6 +44,8 @@ import com.yikangcheng.admin.yikang.presenter.NewOrderPresenter;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import me.jessyan.autosize.internal.CustomAdapt;
 
@@ -68,6 +84,8 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
     private Intent mIntent;
     private int mOrderId_wait;
     private int width;
+    private PayBean mEntity;
+    private String mPayType;
 
     @Override
     protected void initView() {
@@ -116,6 +134,18 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
         //去支付
         go_pay = (TextView) findViewById(R.id.go_pay);
 
+        //点击客服跳转页面
+        mTvActivityWaitfrrpaymentKeFu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Information info = new Information();
+                info.setAppkey("7560599b63bf43378d05d018ded42cdd");
+                SobotApi.setCustomRobotHelloWord(WaitForpaymentActivity.this, "您好，易康成客服很高兴为您服务，请问有什么可以帮助您的？");
+                SobotApi.startSobotChat(WaitForpaymentActivity.this, info);
+            }
+        });
+
+
 
         //复制监听点击事件
         mImgActivityWaitfrrpaymentFizhi.setOnClickListener(new View.OnClickListener() {
@@ -129,11 +159,14 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
 
         //生成新的订单
         newOrderPresenter = new NewOrderPresenter(new NewOrder());
+
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRlvActivityWaitfrrpaymentShangPin.setLayoutManager(linearLayoutManager);
         ArrayList<CloseTheDealBean.DetailsListBean> mShopSpecDetailedBeans = new ArrayList<>();
         mWaitForPaymentAdapter = new WaitForPaymentAdapter(mShopSpecDetailedBeans, this);
         mRlvActivityWaitfrrpaymentShangPin.setAdapter(mWaitForPaymentAdapter);
+
 
         mWaitForPaymentAdapter.setOnClickListener(new WaitForPaymentAdapter.OnClickListener() {
             @Override
@@ -153,7 +186,7 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
         go_pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                newOrderPresenter.request(orderId, orderType);
+                newOrderPresenter.request(mOrderId_wait, "ALIPAY");
             }
         });
 
@@ -187,6 +220,59 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
             }
         });
     }
+
+
+    private static final int SDK_PAY_FLAG = 1;
+    private static final int SDK_CHECK_FLAG = 2;
+    private Handler mHandler = new Handler(Looper.myLooper()) {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case SDK_PAY_FLAG: {
+                    PayResult payResult = new PayResult((Map<String, String>) msg.obj);
+                    // 支付宝返回此次支付结果及加签，建议对支付宝签名信息拿签约时支付宝提供的公钥做验签
+                    String resultInfo = payResult.getResult();
+                    String resultStatus = payResult.getResultStatus();
+
+                    // 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
+                    if (TextUtils.equals(resultStatus, "9000")) {
+                        Intent intent = new Intent(WaitForpaymentActivity.this, PayResultActivity.class);
+                        intent.putExtra("pay", 1);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        // 判断resultStatus 为非“9000”则代表可能支付失败
+                        // “8000”代表支付结果因为支付渠道原因或者系统原因还在等待支付结果确认，最终交易是否成功以服务端异步通知为准（小概率状态）
+                        if (TextUtils.equals(resultStatus, "8000")) {
+                            Toast.makeText(WaitForpaymentActivity.this, "支付结果确认中",
+                                    Toast.LENGTH_SHORT).show();
+                            // 其他值就可以判断为支付失败，包括用户主动取消支付，或者系统返回的错误
+                            Intent intent = new Intent(WaitForpaymentActivity.this, PayResultActivity.class);
+                            intent.putExtra("pay", 2);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            // 其他值就可以判断为支付失败，包括用户主动取消支付，或者系统返回的错误
+                            Intent intent = new Intent(WaitForpaymentActivity.this, PayResultActivity.class);
+                            intent.putExtra("pay", 2);
+                            startActivity(intent);
+                            finish();
+                        }
+                    }
+                    break;
+                }
+                case SDK_CHECK_FLAG: {
+                    Toast.makeText(WaitForpaymentActivity.this, "检查结果为：" + msg.obj,
+                            Toast.LENGTH_SHORT).show();
+                    break;
+                }
+                default:
+                    break;
+            }
+        }
+
+        ;
+    };
 
     @Override
     protected int getActivtiyLayoutId() {
@@ -253,10 +339,12 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
         mTvActivityWaitfrrpaymentJinE.setText(entity.getOrder().getRealPrice() + "");
         //总额
         mTvActivityWaitfrrpaymentZhongJi.setText(entity.getOrder().getSumPrice() + "");
+
+        mPayType = entity.getOrder().getPayType();
         //支付方式
-        if (entity.getOrder().getPayType().equals("WEIXIN")) {
+        if (mPayType.equals("WEIXIN")) {
             mTvActivityWaitfrrpaymentFangShi.setText("微信");
-        } else if (entity.getOrder().getPayType().equals("ALIPAY")) {
+        } else if (mPayType.equals("ALIPAY")) {
             mTvActivityWaitfrrpaymentFangShi.setText("支付宝");
         }
 
@@ -292,8 +380,27 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
         @Override
         public void success(Object data) {
             Request request = (Request) data;
-            NewOrderBean orderBean = (NewOrderBean) request.getEntity();
-            Toast.makeText(WaitForpaymentActivity.this, "" + orderBean.getRequestId(), Toast.LENGTH_SHORT).show();
+            mEntity = (PayBean) request.getEntity();
+            Toast.makeText(WaitForpaymentActivity.this, "" + mEntity.getOrderId(), Toast.LENGTH_SHORT).show();
+            //todo 支付宝
+            // 构造PayTask 对象
+            // 调用支付接口，获取支付结果
+            Runnable payRunnable = new Runnable() {
+                @Override
+                public void run() {
+                    PayTask alipay = new PayTask(WaitForpaymentActivity.this);
+                    Map<String, String> result = alipay.payV2(mEntity.getOrderinfo(), true);
+//                        Map<String, String> result = alipay.payV2("alipay_sdk=alipay-sdk-java-3.7.26.ALL&app_id=2019030863469663&biz_content=%7B%22body%22%3A%22%E6%98%93%E5%BA%B7%E6%88%90%22%2C%22out_trade_no%22%3A%22NO155906963237992%22%2C%22product_code%22%3A%22QUICK_MSECURITY_PAY%22%2C%22subject%22%3A%22%E7%BE%8E%E5%A6%86%E6%B5%8B%E8%AF%95008%22%2C%22timeout_express%22%3A%2230m%22%2C%22total_amount%22%3A%220.01%22%7D&charset=utf-8&format=json&method=alipay.trade.app.pay&notify_url=https%3A%2F%2Fwww.yikch.com%2Fapi%2Forder%2FpaySuccess&sign=ndtQ6fc9XGCC6iZJ%2FX2UrDpFzHEtVehwJivhN%2BEEwZyNsBxYUIj2og0GvMo0JX3oEiVPB57SrMRFv03G%2Fz5Wl3n9HCCiZZF9X1WDfC7PJ3CNVHjMWQ%2FGC5oQ%2FE3NIfV%2FEVtkDRqBmOfChgJa%2F1dM%2BfT9mMFcKdH7ZYkJjwSwdMg4%2FtYy8FGifR%2FSphG41JujEEQMJ4IyOuKtxcROrKpQpF7NLT1hbrEI0dh0JKLsfwTks463%2FEpE5U0Gf5Fc9Ta5PrEkBTJFwWp2MtXtbgHEMtxCj9%2B17pgaEiowlX3Vfle8NvTuJlb7rz2glzzONgwwqRwkpzXhKE0ukaKUQ61tGw%3D%3D&sign_type=RSA2&timestamp=2019-05-29+02%3A53%3A52&version=1.0", true);
+                    Message msg = new Message();
+                    msg.what = SDK_PAY_FLAG;
+                    msg.obj = result;
+                    mHandler.sendMessage(msg);
+                }
+            };
+            // 必须异步调用
+            Thread payThread = new Thread(payRunnable);
+            payThread.start();
+
         }
 
         @Override
