@@ -34,6 +34,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.jessyan.autosize.internal.CustomAdapt;
+import me.leefeng.promptlibrary.PromptButton;
+import me.leefeng.promptlibrary.PromptButtonListener;
+import me.leefeng.promptlibrary.PromptDialog;
 
 public class PaidActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt {
 
@@ -50,11 +53,19 @@ public class PaidActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
     private RelativeLayout mRelativeLayout;
     private int mDeletePosition;
     private int width;
+    private PromptDialog mPromptDialog;
 
     @Override
     protected void initView() {
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+
+        //创建对象
+        mPromptDialog = new PromptDialog(this);
+        //设置自定义属性
+        mPromptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(3000);
+
+
         Display display = this.getWindowManager().getDefaultDisplay();
         width = display.getWidth();
         int height = display.getHeight();
@@ -165,12 +176,27 @@ public class PaidActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
             @Override
             public void OnClickListener(View v, int position) {
                 mDeleteItemPostion = position;
-                int orderId = mPaidAdapter_a.mList.get(position).getOrderId();
-                DeleteOrderIdPresenter deleteOrderIdPresenter = new DeleteOrderIdPresenter(new delete());
-                deleteOrderIdPresenter.request(orderId);
+
+                mPromptDialog.showWarnAlert("你确定要删除订单吗？", new PromptButton("取消", new PromptButtonListener() {
+                    @Override
+                    public void onClick(PromptButton button) {
+                    }
+                }), confirm);
             }
         });
     }
+
+
+    //按钮的定义，创建一个按钮的对象
+    PromptButton confirm = new PromptButton("确定", new PromptButtonListener() {
+        @Override
+        public void onClick(PromptButton button) {
+            int orderId = mPaidAdapter_a.mList.get(mDeleteItemPostion).getOrderId();
+            DeleteOrderIdPresenter deleteOrderIdPresenter = new DeleteOrderIdPresenter(new delete());
+            deleteOrderIdPresenter.request(orderId);
+        }
+    });
+
 
     //上拉加载
     private void initShuaXinJiaZai() {

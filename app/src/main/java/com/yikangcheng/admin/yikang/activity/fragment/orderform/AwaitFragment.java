@@ -29,6 +29,10 @@ import com.yikangcheng.admin.yikang.util.SpacesItemDecoration;
 
 import java.util.ArrayList;
 
+import me.leefeng.promptlibrary.PromptButton;
+import me.leefeng.promptlibrary.PromptButtonListener;
+import me.leefeng.promptlibrary.PromptDialog;
+
 /**
  * Created by lenovo on 2019/5/20.
  * WF
@@ -43,9 +47,16 @@ public class AwaitFragment extends BaseFragment implements ICoreInfe {
     private int mDeleteItemPostion;
     private int mPage = 1;
     private int mDeletePosition;
+    private PromptDialog mPromptDialog;
 
     @Override
     protected void initView(View view) {
+
+        //创建对象
+        mPromptDialog = new PromptDialog(getActivity());
+        //设置自定义属性
+        mPromptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(3000);
+
         //动图
         mImgFragmentAwait = view.findViewById(R.id.img_fragment_await);
         mSmartRefreshLayout = view.findViewById(R.id.refreshLayout);
@@ -139,13 +150,24 @@ public class AwaitFragment extends BaseFragment implements ICoreInfe {
             @Override
             public void OnClickListener(View v, int position) {
                 mDeleteItemPostion = position;
-                int orderId = mAwaitAdapter.mList.get(position).getOrderId();
-                DeleteOrderIdPresenter deleteOrderIdPresenter = new DeleteOrderIdPresenter(new delete());
-                deleteOrderIdPresenter.request(orderId);
+
+                mPromptDialog.showWarnAlert("你确定要删除订单吗？", new PromptButton("取消", new PromptButtonListener() {
+                    @Override
+                    public void onClick(PromptButton button) {
+                    }
+                }), confirm);
             }
         });
     }
-
+    //按钮的定义，创建一个按钮的对象
+    PromptButton confirm = new PromptButton("确定", new PromptButtonListener() {
+        @Override
+        public void onClick(PromptButton button) {
+            int orderId = mAwaitAdapter.mList.get(mDeleteItemPostion).getOrderId();
+            DeleteOrderIdPresenter deleteOrderIdPresenter = new DeleteOrderIdPresenter(new delete());
+            deleteOrderIdPresenter.request(orderId);
+        }
+    });
 
     /**
      * 删除订单P层

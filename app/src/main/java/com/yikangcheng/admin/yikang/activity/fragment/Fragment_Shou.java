@@ -3,7 +3,6 @@ package com.yikangcheng.admin.yikang.activity.fragment;
 import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
@@ -12,7 +11,6 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -78,6 +76,14 @@ public class Fragment_Shou extends BaseFragment implements CustomAdapt, ICoreInf
                 return false;
             }
 
+//            @JavascriptInterface
+//            public void goBackIndex(String msg) {
+//                Intent intent = new Intent(getContext(), H5SecActivity.class);
+//                intent.putExtra("http", msg);
+//                startActivity(intent);
+//                Toast.makeText(getContext(), "" + msg, Toast.LENGTH_SHORT).show();
+//            }
+//
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
                 //返回false，意味着请求过程里，不管有多少次的跳转请求（即新的请求地址），均交给webView自己处理，这也是此方法的默认处理
@@ -171,6 +177,14 @@ public class Fragment_Shou extends BaseFragment implements CustomAdapt, ICoreInf
             startActivity(intent);
             s = "";
         }
+    }
+
+    @JavascriptInterface
+    public void goBackIndex(String msg) {
+        Intent intent = new Intent(getContext(), H5SecActivity.class);
+        intent.putExtra("http", msg);
+        startActivity(intent);
+        Toast.makeText(getContext(), "" + msg, Toast.LENGTH_SHORT).show();
     }
 
     @JavascriptInterface

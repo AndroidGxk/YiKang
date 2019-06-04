@@ -16,6 +16,8 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yikangcheng.admin.yikang.R;
+import com.yikangcheng.admin.yikang.activity.LoginActivity;
+import com.yikangcheng.admin.yikang.activity.MainActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.CanceledAdapter_A;
 import com.yikangcheng.admin.yikang.activity.orderstatus.FackOfActivity;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
@@ -33,6 +35,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.jessyan.autosize.internal.CustomAdapt;
+import me.leefeng.promptlibrary.PromptButton;
+import me.leefeng.promptlibrary.PromptButtonListener;
+import me.leefeng.promptlibrary.PromptDialog;
 
 public class CanceledActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt {
 
@@ -50,11 +55,18 @@ public class CanceledActivity extends BaseActivtiy implements ICoreInfe, CustomA
     private int mDeletePosition;
     private int height;
     private int width;
+    private PromptDialog mPromptDialog;
 
     @Override
     protected void initView() {
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+
+        //创建对象
+        mPromptDialog = new PromptDialog(this);
+        //设置自定义属性
+        mPromptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(3000);
+
         Display display = this.getWindowManager().getDefaultDisplay();
         width = display.getWidth();
         height = display.getHeight();
@@ -152,12 +164,27 @@ public class CanceledActivity extends BaseActivtiy implements ICoreInfe, CustomA
             @Override
             public void OnClickListener(View v, int position) {
                 mDeleteItemPostion = position;
-                int orderId = mCanceledAdapter_a.mList.get(position).getOrderId();
-                DeleteOrderIdPresenter deleteOrderIdPresenter = new DeleteOrderIdPresenter(new delete());
-                deleteOrderIdPresenter.request(orderId);
+
+                mPromptDialog.showWarnAlert("你确定要删除订单吗？", new PromptButton("取消", new PromptButtonListener() {
+                    @Override
+                    public void onClick(PromptButton button) {
+                    }
+                }), confirm);
+
             }
         });
     }
+
+
+    //按钮的定义，创建一个按钮的对象
+    PromptButton confirm = new PromptButton("确定", new PromptButtonListener() {
+        @Override
+        public void onClick(PromptButton button) {
+            int orderId = mCanceledAdapter_a.mList.get(mDeleteItemPostion).getOrderId();
+            DeleteOrderIdPresenter deleteOrderIdPresenter = new DeleteOrderIdPresenter(new delete());
+            deleteOrderIdPresenter.request(orderId);
+        }
+    });
 
 
     private void initMvp(int page) {

@@ -1,11 +1,8 @@
 package com.yikangcheng.admin.yikang.activity.orderstatus;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.widget.ImageView;
@@ -29,9 +26,11 @@ import com.yikangcheng.admin.yikang.util.SpacesItemDecoration;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import me.jessyan.autosize.internal.CustomAdapt;
+import me.leefeng.promptlibrary.PromptButton;
+import me.leefeng.promptlibrary.PromptButtonListener;
+import me.leefeng.promptlibrary.PromptDialog;
 
 public class FackOfActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt {
     private ImageView mImgActivityFackOfFanhui;
@@ -58,6 +57,7 @@ public class FackOfActivity extends BaseActivtiy implements ICoreInfe, CustomAda
     private Intent mIntent;
     private int mOrderId_fack;
     private int width;
+    private PromptDialog mPromptDialog;
 
     @Override
     protected void initView() {
@@ -68,6 +68,13 @@ public class FackOfActivity extends BaseActivtiy implements ICoreInfe, CustomAda
         int height = display.getHeight();
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+
+
+        //创建对象
+        mPromptDialog = new PromptDialog(this);
+        //设置自定义属性
+        mPromptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(3000);
+
         mImgActivityFackOfFanhui = (ImageView) findViewById(R.id.img_activity_fack_of_fanhui);
         mToolbarActivityFackOf = (RelativeLayout) findViewById(R.id.toolbar_activity_fack_of);
         mTvActivityFackOfName = (TextView) findViewById(R.id.tv_activity_fack_of_name);
@@ -141,14 +148,28 @@ public class FackOfActivity extends BaseActivtiy implements ICoreInfe, CustomAda
         mTvActivityFackOfShanchu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DeleteOrderIdPresenter deleteOrderIdPresenter = new DeleteOrderIdPresenter(new delete());
-                deleteOrderIdPresenter.request(mOrderId_fack);
-                mIntent.putExtra("delete", "delete");
-                setResult(6, mIntent);
-                finish();
+                mPromptDialog.showWarnAlert("你确定要删除订单吗？", new PromptButton("取消", new PromptButtonListener() {
+                    @Override
+                    public void onClick(PromptButton button) {
+                    }
+                }), confirm);
             }
         });
     }
+
+
+
+    //按钮的定义，创建一个按钮的对象
+    PromptButton confirm = new PromptButton("确定", new PromptButtonListener() {
+        @Override
+        public void onClick(PromptButton button) {
+            DeleteOrderIdPresenter deleteOrderIdPresenter = new DeleteOrderIdPresenter(new delete());
+            deleteOrderIdPresenter.request(mOrderId_fack);
+            mIntent.putExtra("delete", "delete");
+            setResult(6, mIntent);
+            finish();
+        }
+    });
 
     @Override
     protected void initEventData() {

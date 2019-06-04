@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.Display;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,7 +15,6 @@ import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.adapter.ObligationAdapter;
-import com.yikangcheng.admin.yikang.activity.orderstatus.FackOfActivity;
 import com.yikangcheng.admin.yikang.activity.orderstatus.WaitForpaymentActivity;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.DeleteOrderBean;
@@ -24,7 +22,6 @@ import com.yikangcheng.admin.yikang.bean.ObligationBean;
 import com.yikangcheng.admin.yikang.bean.Request;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
 import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
-import com.yikangcheng.admin.yikang.presenter.AllPresenter;
 import com.yikangcheng.admin.yikang.presenter.DeleteOrderIdPresenter;
 import com.yikangcheng.admin.yikang.presenter.ObligationPresenter;
 import com.yikangcheng.admin.yikang.util.SpacesItemDecoration;
@@ -33,6 +30,9 @@ import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 import java.util.ArrayList;
 
 import me.jessyan.autosize.internal.CustomAdapt;
+import me.leefeng.promptlibrary.PromptButton;
+import me.leefeng.promptlibrary.PromptButtonListener;
+import me.leefeng.promptlibrary.PromptDialog;
 
 /**
  * 我的——————待付款页面
@@ -51,11 +51,17 @@ public class ObligationActivity extends BaseActivtiy implements ICoreInfe, Custo
     private RelativeLayout mRelativeLayout;
     private int mDeletePosition;
     private int width;
+    private PromptDialog mPromptDialog;
 
     @Override
     protected void initView() {
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        //创建对象
+        mPromptDialog = new PromptDialog(this);
+        //设置自定义属性
+        mPromptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(3000);
+
         Display display = this.getWindowManager().getDefaultDisplay();
         width = display.getWidth();
         int height = display.getHeight();
@@ -157,12 +163,26 @@ public class ObligationActivity extends BaseActivtiy implements ICoreInfe, Custo
             @Override
             public void OnClickListener(View v, int position) {
                 mDeleteItemPostion = position;
-                int orderId = mObligationAdapter.mList.get(position).getOrderId();
-                DeleteOrderIdPresenter deleteOrderIdPresenter = new DeleteOrderIdPresenter(new delete());
-                deleteOrderIdPresenter.request(orderId);
+
+                mPromptDialog.showWarnAlert("你确定要删除订单吗？", new PromptButton("取消", new PromptButtonListener() {
+                    @Override
+                    public void onClick(PromptButton button) {
+                    }
+                }), confirm);
             }
         });
     }
+
+    //按钮的定义，创建一个按钮的对象
+    PromptButton confirm = new PromptButton("确定", new PromptButtonListener() {
+        @Override
+        public void onClick(PromptButton button) {
+            int orderId = mObligationAdapter.mList.get(mDeleteItemPostion).getOrderId();
+            DeleteOrderIdPresenter deleteOrderIdPresenter = new DeleteOrderIdPresenter(new delete());
+            deleteOrderIdPresenter.request(orderId);
+        }
+    });
+
 
     private void initMvp(int page) {
         ObligationPresenter obligationPresenter = new ObligationPresenter(this);
