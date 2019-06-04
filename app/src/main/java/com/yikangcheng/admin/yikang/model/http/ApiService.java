@@ -242,7 +242,7 @@ public interface ApiService {
     Observable<Request<CreatOrderBean>> orderbuy(@Query("userId") int userId, @Query("commodityId") int commodityId, @Query("addressId") int addressId,
                                                  @Query("buyNum") int buyNum, @Query("invoiceType") int invoiceType, @Query("invoiceFrom") int invoiceFrom,
                                                  @Query("invoiceName") String invoiceName, @Query("invoiceNo") String invoiceNo, @Query("invoiceContent") String invoiceContent,
-                                                 @Query("invoiceEmail") String invoiceEmail, @Query("payType") String payType, @Query("orderForm") String orderForm);
+                                                 @Query("invoiceEmail") String invoiceEmail, @Query("payType") String payType, @Query("orderForm") String orderForm,@Query("ipAddr")String ipAddr);
 
     /**
      * 创建多个商品订单

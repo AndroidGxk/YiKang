@@ -24,6 +24,7 @@ import com.sobot.chat.api.model.Information;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.ClassifyHomeActivity;
 import com.yikangcheng.admin.yikang.activity.CloseActivity;
+import com.yikangcheng.admin.yikang.activity.H5SecActivity;
 import com.yikangcheng.admin.yikang.activity.PartiCarActivity;
 import com.yikangcheng.admin.yikang.activity.particulars.ParticularsActivity;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
@@ -178,6 +179,14 @@ public class Fragment_Shou extends BaseFragment implements CustomAdapt, ICoreInf
         info.setAppkey("7560599b63bf43378d05d018ded42cdd");
         SobotApi.setCustomRobotHelloWord(getActivity(), "您好，易康成客服很高兴为您服务，请问有什么可以帮助您的？");
         SobotApi.startSobotChat(getActivity(), info);
+    }
+
+    @JavascriptInterface
+    public void goBackIndex(String msg) {
+        Intent intent = new Intent(getContext(), H5SecActivity.class);
+        intent.putExtra("http", msg);
+        startActivity(intent);
+        Toast.makeText(getContext(), "" + msg, Toast.LENGTH_SHORT).show();
     }
 
     @JavascriptInterface

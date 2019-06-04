@@ -196,11 +196,10 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         });
         try {
             String versionName = getVersionName();
-            if (!versionName.equals("1.0")) {
+            if (!versionName.equals("1.0.1")) {
                 promptDialog.showWarnAlert("发现新版本是否要更新", new PromptButton("取消", new PromptButtonListener() {
                     @Override
                     public void onClick(PromptButton button) {
-                        Toast.makeText(MainActivity.this, button.getText(), Toast.LENGTH_SHORT).show();
                     }
                 }), newConfirm);
 
@@ -208,8 +207,6 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        //更新软件
-
     }
 
     //查询当前App版本号

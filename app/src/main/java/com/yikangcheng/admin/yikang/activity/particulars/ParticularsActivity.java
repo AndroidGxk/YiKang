@@ -2,6 +2,8 @@ package com.yikangcheng.admin.yikang.activity.particulars;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -54,6 +56,7 @@ public class ParticularsActivity extends BaseActivtiy implements CustomAdapt, IC
 
     @Override
     protected void initView() {
+
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorTab);
         Display display = this.getWindowManager().getDefaultDisplay();
@@ -185,7 +188,6 @@ public class ParticularsActivity extends BaseActivtiy implements CustomAdapt, IC
 
     @JavascriptInterface
     public void sayHello(String msg) {
-        Toast.makeText(this, "" + msg, Toast.LENGTH_SHORT).show();
         s += msg + ",";
         String[] split = s.split(",");
         if (split.length == 4) {
@@ -197,12 +199,16 @@ public class ParticularsActivity extends BaseActivtiy implements CustomAdapt, IC
 
     @JavascriptInterface
     public void orderBuy(String msg) {
-        Toast.makeText(this, "" + msg, Toast.LENGTH_SHORT).show();
-        s += msg + ",";
+        if (!msg.equals("")) {
+            s += msg + ",";
+        }
+        Log.e("GTTTorderBuy", msg);
         String[] split = s.split(",");
+        Log.e("GTTTorderBuy", split.length + "");
         if (split.length == 7) {
             Intent intent = new Intent(ParticularsActivity.this, CloseActivity.class);
             intent.putExtra("goodinfo", s);
+            Log.e("GTTTorderBuy+++s-", s);
             startActivity(intent);
             s = "";
         }

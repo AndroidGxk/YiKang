@@ -2,6 +2,8 @@ package com.yikangcheng.admin.yikang.activity;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
@@ -34,6 +36,7 @@ import com.yikangcheng.admin.yikang.presenter.AllAddressPresenter;
 import com.yikangcheng.admin.yikang.presenter.OrderBuyArrayPresenter;
 import com.yikangcheng.admin.yikang.presenter.OrderBuyPresenter;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
+import com.yikangcheng.admin.yikang.util.UIUtils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -56,7 +59,7 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
     private ImageView buy_img;
     private RelativeLayout wechat_pay, zhi_rela, youhuiquan;
     //选中未选中
-    private boolean wechat = false, zhi = false;
+    private boolean wechat = false, zhi = true;
     private FragmentTransaction fragmentTransaction;
     private RelativeLayout no_yes;
     private TextView zhi_invoice, wan;
@@ -96,6 +99,7 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
     int invoicecount;
     private TextView invoice_text;
     private TextView wan1;
+    private String ipAddressString;
 
     /**
      * 回传值
@@ -124,6 +128,12 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
 
     @Override
     protected void initView() {
+        //获取Ip地址
+        ipAddressString = UIUtils.getIpAddressString();
+        WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
+        WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+//        int ipAddressString = wifiInfo.getIpAddress();
+        Toast.makeText(this, "" + ipAddressString, Toast.LENGTH_SHORT).show();
         Fragment_Gou.getSign();
         //创建对象
         promptDialog = new PromptDialog(this);
@@ -152,6 +162,7 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
         Bundle bundle = intent.getExtras();
         shopCarBeans = (List<ShopCarBean>) bundle.get("shopList");
         String goodinfo = intent.getStringExtra("goodinfo");
+        Log.e("GTTTgoodinfo", "" + goodinfo);
         Display display = this.getWindowManager().getDefaultDisplay();
         width = display.getWidth();
         height = display.getHeight();
@@ -237,6 +248,9 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
          */
         if (goodinfo != null) {
             String[] split = goodinfo.split(",");
+            for (int i = 0; i < split.length; i++) {
+                Log.e("GTTTsss", "" + split[i]);
+            }
             pariticShopBean = new PariticShopBean();
             pariticShopBean.setId(split[0]);
             pariticShopBean.setDataType(split[1]);
@@ -245,15 +259,14 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
             pariticShopBean.setCommodityName(split[4]);
             pariticShopBean.setLogo(split[5]);
             pariticShopBean.setDataType(split[6]);
-            Log.e("gy", pariticShopBean.toString());
             closeRecyclerAdapter.addAlls(pariticShopBean);
-            double num = Double.parseDouble(split[2]);
             double price = Double.parseDouble(split[3]);
             java.text.DecimalFormat myformat1 = new java.text.DecimalFormat("0.00");
-            String strs = myformat1.format(price * num);
+            String strs = myformat1.format(price * Integer.parseInt(split[2]));
             good_num.setText("x" + split[2]);
             total_money.setText("¥" + strs);
             heji_text.setText("合计：¥" + strs);
+            goodinfo = "";
         }
         invoice();
     }
@@ -453,10 +466,10 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
                             String substring = str.substring(0, str.length() - 1);
                             if (userAddressBean == null) {
                                 orderBuyArrayPresenter.request(getLogUser(CloseActivity.this).getId(), substring,
-                                        id, 1, 2, "易康成", "132", "2", "1724959985@qq.com", zhi ? "ALIPAY" : "WEIXIN", "Android", "COMMODITY");
+                                        id, 1, 2, "易康成", "132", "2", "1724959985@qq.com", zhi ? "ALIPAY" : "WEIXIN", "Android", "COMMODITY", zhi ? "" : ipAddressString);
                             } else {
                                 orderBuyArrayPresenter.request(getLogUser(CloseActivity.this).getId(), substring,
-                                        userAddressBean.getId(), 1, 2, "易康成", "132", "2", "1724959985@qq.com", zhi ? "ALIPAY" : "WEIXIN", "Android", "COMMODITY");
+                                        userAddressBean.getId(), 1, 2, "易康成", "132", "2", "1724959985@qq.com", zhi ? "ALIPAY" : "WEIXIN", "Android", "COMMODITY", zhi ? "" : ipAddressString);
                             }
                         }
                     }
@@ -464,10 +477,10 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
                     String ids = pariticShopBean.getId();
                     if (userAddressBean == null) {
                         orderBuyPresenter.request(getLogUser(CloseActivity.this).getId(), Integer.parseInt(ids),
-                                id, 1, 1, 2, "易康成", "132", "2", "1724959985@qq.com", zhi ? "ALIPAY" : "WEIXIN", "Android");
+                                id, 1, 1, 2, "易康成", "132", "2", "1724959985@qq.com", zhi ? "ALIPAY" : "WEIXIN", "Android", zhi ? "" : ipAddressString);
                     } else {
                         orderBuyPresenter.request(getLogUser(CloseActivity.this).getId(), Integer.parseInt(ids),
-                                userAddressBean.getId(), 1, 1, 2, "易康成", "132", "2", "1724959985@qq.com", zhi ? "ALIPAY" : "WEIXIN", "Android");
+                                userAddressBean.getId(), 1, 1, 2, "易康成", "132", "2", "1724959985@qq.com", zhi ? "ALIPAY" : "WEIXIN", "Android", zhi ? "" : ipAddressString);
                     }
                 }
             }

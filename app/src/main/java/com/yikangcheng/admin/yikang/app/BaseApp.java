@@ -98,6 +98,7 @@ public class BaseApp extends Application {
         Fresco.initialize(this);
         SobotApi.initSobotSDK(this, "7560599b63bf43378d05d018ded42cdd", "");
         getMainThreadLooper();
+        registToWX();
     }
 
     public static Context getApp() {
@@ -200,9 +201,9 @@ public class BaseApp extends Application {
 
     private void registToWX() {
         //AppConst.WEIXIN.APP_ID是指你应用在微信开放平台上的AppID，记得替换。
-        mWxApi = WXAPIFactory.createWXAPI(this, "wx49c4b23b233d97ff", false);
+        mWxApi = WXAPIFactory.createWXAPI(this, "wx38a0aef5df24fe50", false);
         // 将该app注册到微信
-        mWxApi.registerApp("wx49c4b23b233d97ff");
+        mWxApi.registerApp("wx38a0aef5df24fe50");
     }
 
 }

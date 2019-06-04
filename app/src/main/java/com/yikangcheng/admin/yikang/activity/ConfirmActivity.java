@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,6 +18,7 @@ import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.yikangcheng.admin.yikang.R;
+import com.yikangcheng.admin.yikang.app.BaseApp;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.CreatOrderBean;
 import com.yikangcheng.admin.yikang.paysdk.PayResult;
@@ -76,19 +78,18 @@ public class ConfirmActivity extends BaseActivtiy implements CustomAdapt {
                     Thread payThread = new Thread(payRunnable);
                     payThread.start();
                 } else if (payType.equals("WEIXIN")) {
-                    IWXAPI api = WXAPIFactory.createWXAPI(ConfirmActivity.this, "wx49c4b23b233d97ff",false);//填写自己的APPID
-                    api.registerApp("wx49c4b23b233d97ff");//填写自己的APPID，注册本身APP
                     PayReq req = new PayReq();//PayReq就是订单信息对象
                     //给req对象赋值
-                    req.appId = "wx49c4b23b233d97ff";
+                    req.appId = "wx38a0aef5df24fe50";
                     req.partnerId = "1528387611";
-                    req.prepayId= "1101000000140415649af9fc314aa427";
+                    req.prepayId = creatorder.getPrepayId();
                     req.packageValue = "Sign=WXPay";
-                    req.nonceStr= "5K8264ILTKCH16CQ2502SI8ZNMTM67VS";
-                    req.timeStamp= "1398746574";
-                    req.sign= "904ecfe88d35afdd5c494c19b23b2bfb";
-                    boolean b = api.sendReq(req);//将订单信息对象发送给微信服务器，即发送支付请求
-                    Toast.makeText(ConfirmActivity.this, ""+b, Toast.LENGTH_SHORT).show();
+                    req.nonceStr = creatorder.getNonceStr();
+                    req.timeStamp = creatorder.getTimeStamp();
+                    req.sign = "82BBAA8970CDF302294FD16286C77DE2";
+                    Log.e("SIGN",creatorder.getSign());
+                    Log.e("prepayId",creatorder.getPrepayId());
+                    BaseApp.mWxApi.sendReq(req);//将订单信息对象发送给微信服务器，即发送支付请求
                 }
             }
         });
@@ -139,7 +140,6 @@ public class ConfirmActivity extends BaseActivtiy implements CustomAdapt {
                     // 支付宝返回此次支付结果及加签，建议对支付宝签名信息拿签约时支付宝提供的公钥做验签
                     String resultInfo = payResult.getResult();
                     String resultStatus = payResult.getResultStatus();
-
                     // 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
                     if (TextUtils.equals(resultStatus, "9000")) {
                         Intent intent = new Intent(ConfirmActivity.this, PayResultActivity.class);
