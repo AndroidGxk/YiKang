@@ -38,7 +38,10 @@ import com.yikangcheng.admin.yikang.presenter.DeleteOrderIdPresenter;
 import com.yikangcheng.admin.yikang.presenter.NewOrderPresenter;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 
 import me.jessyan.autosize.internal.CustomAdapt;
@@ -85,7 +88,10 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
     private String mPayType;
     private PromptDialog mPromptDialog;
     public static String CLOCK_ACTION = "com.jereh.Clock_Action";
-    public static int TIME = 2 * 60 * 60 * 1000;//倒计时2个小时
+    public static int TIME = 30 * 60 * 1000;//倒计时2个小时
+    private String mStime;
+    private String mCreateTime;
+    private Date mCurDate;
 
     @Override
     protected void initView() {
@@ -140,6 +146,8 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
         mShanchu = (TextView) findViewById(R.id.tv_activity_wait_shanchu);
         //去支付
         go_pay = (TextView) findViewById(R.id.go_pay);
+        regReceiver();//注册广播
+//        startService(new Intent(this, ClockService.class));//启动计时服务
 
         //点击客服跳转页面
         mTvActivityWaitfrrpaymentKeFu.setOnClickListener(new View.OnClickListener() {
@@ -199,21 +207,45 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
         //刪除
         initDelete();
 
-        regReceiver();//注册广播
-        startService(new Intent(this, ClockService.class));//启动计时服务
+
+        //获取下单时间转换时间戳
+        try {
+            dateToStamp(mCreateTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
+        //获取当前系统时间
+        mCurDate = new Date(System.currentTimeMillis());
 
     }
+
+
+    /*
+     * 将时间转换为时间戳
+     */
+    public String dateToStamp(String s) throws ParseException {
+        String res;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(s);
+        Date date = simpleDateFormat.parse(s);
+        long ts = date.getTime();
+        res = String.valueOf(ts);
+        return res;
+    }
+
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         super.unregisterReceiver(clockReceiver);
-        TIME = 2 * 60 * 60 * 1000;
+        TIME = 30 * 60 * 1000;
         Intent intent = new Intent();
         intent.setAction(ClockService.CLOCK_SERVICE_ACTION);
         intent.putExtra("method", "stop");
         super.sendBroadcast(intent);
     }
+
 
     private void regReceiver() {
         IntentFilter intentFilter = new IntentFilter();
@@ -251,9 +283,9 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
     }
 
     private void changeTime() {
-        String stime = "";
+        mStime = "";
         if (TIME == 0) {
-            stime = "计时结束";
+            mStime = "计时结束";
         } else {
             int hour = TIME / (1000 * 60 * 60);
             int minute = TIME % (1000 * 60 * 60) / (60 * 1000);
@@ -268,9 +300,9 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
             if (second <= 9) {
                 ssecond = "0" + second;
             }
-            stime = shour + ":" + sminute + ":" + ssecond;
+            mStime = shour + ":" + sminute + ":" + ssecond;
         }
-        mTvActivityWaitfrrpaymentDaojishi.setText(stime);
+        mTvActivityWaitfrrpaymentDaojishi.setText(mStime + "");
     }
 
     //點擊刪除訂單關閉當前Activity
@@ -457,24 +489,13 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
             mTvActivityWaitfrrpaymentNeiRong.setText("商品类别");
         }
 
-//        String createTime = entity.getOrder().getCreateTime();
-//
-//        AlphaAnimation animation = new AlphaAnimation(0.1f, 1.0f);
-//        animation.setFillAfter(true);
-//        animation.setDuration(300000);
-//        mTvActivityWaitfrrpaymentDaojishi.setAnimation(animation);
-//
-//        new CountDownTimer(300000, 1000) {
-//            @Override
-//            public void onTick(long millisUntilFinished) {
-//                mTvActivityWaitfrrpaymentDaojishi.setText("倒计时：" + millisUntilFinished / 1000 + "秒");
-//            }
-//
-//            @Override
-//            public void onFinish() {
-//
-//            }
-//        }.start();
+        mCreateTime = entity.getOrder().getCreateTime();
+//        mTvActivityWaitfrrpaymentDaojishi.setText(mStime);
+        String orderState = entity.getOrder().getOrderState();
+        if (orderState.equals("INIT")) {
+            //启动计时服务这个方法
+            startService(new Intent(this, ClockService.class));
+        }
     }
 
     @Override

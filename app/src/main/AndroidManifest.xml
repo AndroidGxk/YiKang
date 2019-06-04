@@ -69,6 +69,7 @@
             android:value="640" />
 
         <activity android:name=".activity.SeckillSecondActivity" />
+        <service android:name=".activity.orderstatus.countdown.ClockService"/>
         <activity
             android:name=".activity.particulars.ParticularsActivity"
             tools:ignore="DuplicateActivity" />

@@ -196,14 +196,6 @@ public class Fragment_Shou extends BaseFragment implements CustomAdapt, ICoreInf
     }
 
     @JavascriptInterface
-    public void goBackIndex(String msg) {
-        Intent intent = new Intent(getContext(), H5SecActivity.class);
-        intent.putExtra("http", msg);
-        startActivity(intent);
-        Toast.makeText(getContext(), "" + msg, Toast.LENGTH_SHORT).show();
-    }
-
-    @JavascriptInterface
     public void partID(String msg) {
         if (msg.indexOf(".json") != -1) {
             String[] split = msg.split(".json");
