@@ -13,13 +13,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.adapter.AddressRecyclerAdapter;
+import com.yikangcheng.admin.yikang.activity.edittext_delete.ETextWithDelete;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.AddressBean;
 import com.yikangcheng.admin.yikang.bean.AllAddressBean;
@@ -42,7 +42,8 @@ import me.jessyan.autosize.internal.CustomAdapt;
 public class UserCompileActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt {
     private CheckBox check_btn;
     private ImageView back_img;
-    private EditText name_edit, phone_text, relay_address;
+    private ETextWithDelete name_edit;
+    private ETextWithDelete phone_text, relay_address;
     private TextView address_text, add_address;
     //选择地址
     private View mInflate;
@@ -74,9 +75,9 @@ public class UserCompileActivity extends BaseActivtiy implements ICoreInfe, Cust
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         listUserAddressBean = (AllAddressBean.ListUserAddressBean) bundle.get("listUserAddressBean");
-        name_edit = (EditText) findViewById(R.id.name_edit);
-        phone_text = (EditText) findViewById(R.id.phone_text);
-        relay_address = (EditText) findViewById(R.id.relay_address);
+        name_edit = (ETextWithDelete) findViewById(R.id.name_edit);
+        phone_text = (ETextWithDelete) findViewById(R.id.phone_text);
+        relay_address = (ETextWithDelete) findViewById(R.id.relay_address);
         address_text = (TextView) findViewById(R.id.address_text);
         back_img = (ImageView) findViewById(R.id.back_img);
         add_address = (TextView) findViewById(R.id.add_address);

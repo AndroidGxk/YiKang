@@ -3,7 +3,6 @@ package com.yikangcheng.admin.yikang.activity.fragment;
 import android.content.Intent;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -26,7 +25,7 @@ import com.yikangcheng.admin.yikang.activity.myaccount.MyaccountActivity;
 import com.yikangcheng.admin.yikang.activity.obligation.CanceledActivity;
 import com.yikangcheng.admin.yikang.activity.obligation.DetailActivity;
 import com.yikangcheng.admin.yikang.activity.obligation.ObligationActivity;
-import com.yikangcheng.admin.yikang.activity.obligation.PaidActivity;
+import com.yikangcheng.admin.yikang.activity.orderstatus.countdown.WaitForReceivingActivity;
 import com.yikangcheng.admin.yikang.activity.particulars.ParticularsActivity;
 import com.yikangcheng.admin.yikang.activity.siteactivity.AiteActivity;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
@@ -77,6 +76,7 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe, XRecyclerVie
     private RecommendPresenter recommendPresenter;
     int mPage = 1;
     private NestedScrollView neste;
+    private LinearLayout mImg_fragment_wo_daishouhuo;
 
     @Override
     protected void initView(View view) {
@@ -92,8 +92,10 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe, XRecyclerVie
         mImgFragmentWoMingxi = view.findViewById(R.id.img_fragment_wo_mingxi);
         //关于
         mImgFragmentWoguanyu = view.findViewById(R.id.img__fragment_wo_guanyu);
-        //已支付APP
-        mImgFragmentWoYizhifu = view.findViewById(R.id.img_fragment_wo_yizhifu);
+//        //已支付APP
+//        mImgFragmentWoYizhifu = view.findViewById(R.id.img_fragment_wo_yizhifu);
+        //待收货
+        mImg_fragment_wo_daishouhuo = view.findViewById(R.id.img_fragment_wo_daishouhuo);
         //已退款
         mImgFragmentWoYituikuan = view.findViewById(R.id.img_fragment_wo_yituikuan);
         //这是铃铛上面的提示消息
@@ -139,13 +141,23 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe, XRecyclerVie
             }
         });
 
+//        /**
+//         * 点击已支付跳转页面
+//         */
+//        mImgFragmentWoYizhifu.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getActivity(), PaidActivity.class);
+//                startActivity(intent);
+//            }
+//        });
         /**
-         * 点击已支付跳转页面
+         * 点击待收货跳转页面
          */
-        mImgFragmentWoYizhifu.setOnClickListener(new View.OnClickListener() {
+        mImg_fragment_wo_daishouhuo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), PaidActivity.class);
+                Intent intent = new Intent(getActivity(), WaitForReceivingActivity.class);
                 startActivity(intent);
             }
         });

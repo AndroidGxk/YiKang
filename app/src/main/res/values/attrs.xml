@@ -10,4 +10,11 @@
         <attr name="textSize" format="dimension" />
         <attr name="isNeedAnim" format="boolean" />
     </declare-styleable>
+    <!-- 可清空编辑框属性 -->
+    <declare-styleable name="ETWithDelete">
+        <attr name="delSrc" format="reference" />
+    </declare-styleable>
+    <declare-styleable name="DottedLine">
+        <attr name="dotColor" format="color" />
+    </declare-styleable>
 </resources>

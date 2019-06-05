@@ -19,7 +19,8 @@
         android:roundIcon="@mipmap/appbg"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.H5SecActivity"></activity>
+        <activity android:name=".activity.orderstatus.countdown.WaitForReceivingActivity"></activity>
+        <activity android:name=".activity.H5SecActivity" />
         <activity android:name=".activity.PayResultActivity" />
         <activity android:name=".activity.PartiCarActivity" />
         <activity android:name=".activity.ClassifyHomeActivity" />
@@ -69,6 +70,9 @@
             android:value="640" />
 
         <activity android:name=".activity.SeckillSecondActivity" />
+
+        <service android:name=".activity.orderstatus.countdown.ClockService" />
+
         <activity
             android:name=".activity.particulars.ParticularsActivity"
             tools:ignore="DuplicateActivity" />

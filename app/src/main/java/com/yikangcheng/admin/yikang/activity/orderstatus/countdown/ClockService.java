@@ -9,47 +9,39 @@ import android.os.IBinder;
 
 import com.yikangcheng.admin.yikang.activity.orderstatus.WaitForpaymentActivity;
 
-/**
- * Created by lenovo on 2019/6/4.
- * WF
- */
+
 public class ClockService extends Service {
-    public static final String CLOCK_SERVICE_ACTION = "clock_service_actoin";
-    private boolean controllOpt = true;
-
-    public ClockService() {
-    }
-
+    public static final String CLOCK_SERVICE_ACTION="clock_service_actoin";
+    private boolean controllOpt=true;
+    public ClockService() { }
     @Override
-    public void onCreate() {
-        IntentFilter intentFilter = new IntentFilter();
+    public   void onCreate(){
+        IntentFilter intentFilter=new IntentFilter();
         intentFilter.addAction(CLOCK_SERVICE_ACTION);
         //在service中注册广播（serviceController）,接受来自ClockActivity中
 //的广播信息，实现对计时服务的控制（暂停、继续）
-        super.registerReceiver(serviceController, intentFilter);
+        super.registerReceiver(serviceController,intentFilter);
     }
-
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
+    public int onStartCommand(Intent intent,int flags,int startId){
         countTime();//执行计时功能
         return Service.START_STICKY;
     }
-
     //实现计时功能，每隔一秒减少总时间并ClockActivity发送广播
-    private void countTime() {
+    private void countTime(){
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(WaitForpaymentActivity.CLOCK_ACTION);
-                while (controllOpt) {
+                Intent   intent= new Intent(WaitForpaymentActivity.CLOCK_ACTION);
+                while(controllOpt){
                     try {
                         Thread.sleep(1000);
-                        if (WaitForpaymentActivity.TIME <= 0) {
+                        if(WaitForpaymentActivity.TIME<=0){
                             sendBroadcast(intent);
                             stopSelf();
                             break;
                         }
-                        WaitForpaymentActivity.TIME -= 1000;
+                        WaitForpaymentActivity.TIME-=1000;
                         sendBroadcast(intent);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -58,35 +50,32 @@ public class ClockService extends Service {
             }
         }).start();
     }
-
     //广播接受者，接受来自ClockActivity的广播以便暂停、继续、停止广播
-    private BroadcastReceiver serviceController = new BroadcastReceiver() {
+    private BroadcastReceiver serviceController=new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            String method = intent.getStringExtra("method");
-            switch (method) {
+            String method=intent.getStringExtra("method");
+            switch (method){
                 case "pause":
-                    controllOpt = false;
+                    controllOpt=false;
                     break;
                 case "continue":
-                    controllOpt = true;
+                    controllOpt=true;
                     countTime();
                     break;
                 case "stop":
-                    controllOpt = false;
+                    controllOpt=false;
                     stopSelf();
                     break;
             }
         }
     };
-
     @Override
     public IBinder onBind(Intent intent) {
         throw new UnsupportedOperationException("Not yet implemented");
     }
-
     @Override
-    public void onDestroy() {
+    public void onDestroy(){
         super.unregisterReceiver(serviceController);
     }
 }

@@ -9,7 +9,6 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,6 +16,7 @@ import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.SeekListActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.SeekHotAdapter;
 import com.yikangcheng.admin.yikang.activity.adapter.TagAdapter;
+import com.yikangcheng.admin.yikang.activity.edittext_delete.ETextWithDelete;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.SeekHotBean;
 import com.yikangcheng.admin.yikang.greendao.SoSuoDb;
@@ -35,7 +35,7 @@ public class SeekActivity extends BaseActivtiy implements CustomAdapt {
 
     private ImageView mImgActivitySeekDelete;
     private TextView mTvActivitySeekCancel;
-    private EditText mEditTixtActivitySeekSousuo;
+    private ETextWithDelete mEditTixtActivitySeekSousuo;
     private RecyclerView mRlvActivitySeekHot;
     private List<SoSuoDb> mSoSuoDbs;
     private FlowTagLayout flowTagLayout;
@@ -53,7 +53,7 @@ public class SeekActivity extends BaseActivtiy implements CustomAdapt {
         //取消搜索
         mTvActivitySeekCancel = (TextView) findViewById(R.id.tv_activity_seek_cancel);
         //搜索EditText
-        mEditTixtActivitySeekSousuo = (EditText) findViewById(R.id.EditTixt_activity_seek_sousuo);
+        mEditTixtActivitySeekSousuo = (ETextWithDelete) findViewById(R.id.EditTixt_activity_seek_sousuo);
         //最近搜索
         flowTagLayout = (FlowTagLayout) findViewById(R.id.FlowLayout_activity_seek);
         //热门搜索
