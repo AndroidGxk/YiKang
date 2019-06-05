@@ -45,7 +45,7 @@ import com.yikangcheng.admin.yikang.util.SpacesItemDecoration;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Fragment_Wo extends BaseFragment implements ICoreInfe, XRecyclerView.LoadingListener {
+public class Fragment_Wo extends BaseFragment implements ICoreInfe, XRecyclerView.LoadingListener, View.OnClickListener {
 
 
     private TextView mTvFragmentWoDingdan;
@@ -130,16 +130,22 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe, XRecyclerVie
         diviline = view.findViewById(R.id.diviline);
         baseline = view.findViewById(R.id.baseline);
         base_btn = view.findViewById(R.id.base_btn);
+
         /**
-         * 点击已取消 跳转页面
+         * 点击监听
          */
-        mImgFragmentWoYiquxiao.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), CanceledActivity.class);
-                startActivity(intent);
-            }
-        });
+        mImgFragmentWoYiquxiao.setOnClickListener(this);
+        mImg_fragment_wo_daishouhuo.setOnClickListener(this);
+        mMingxi.setOnClickListener(this);
+        mImgFragmentWoDaifukuan.setOnClickListener(this);
+        mTvFragmentWoName.setOnClickListener(this);
+        mImgFragmentWoTouxiang.setOnClickListener(this);
+        mTvFragmentWoDingdan.setOnClickListener(this);
+        mImgFragmentWoyouhuiquan.setOnClickListener(this);
+        mImgFragmentWoDizi.setOnClickListener(this);
+        mImgFragmentWoYituikuan.setOnClickListener(this);
+        mImgFragmentWoguanyu.setOnClickListener(this);
+        mImgFragmentWoLingdang.setOnClickListener(this);
 
 //        /**
 //         * 点击已支付跳转页面
@@ -151,28 +157,6 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe, XRecyclerVie
 //                startActivity(intent);
 //            }
 //        });
-        /**
-         * 点击待收货跳转页面
-         */
-        mImg_fragment_wo_daishouhuo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), WaitForReceivingActivity.class);
-                startActivity(intent);
-            }
-        });
-
-
-        /**
-         * 点击账户明细 跳转页面
-         */
-        mMingxi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), DetailActivity.class);
-                startActivity(intent);
-            }
-        });
 
 
         //接口请求
@@ -194,6 +178,7 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe, XRecyclerVie
         //绑定适配器
         mRlvFragmentWo.setAdapter(mRecommend_fragment_wo_adapter);
 
+        //接口回调
         mRecommend_fragment_wo_adapter.setOnClickListener(new Recommend_Fragment_wo_Adapter.OnClickListener() {
             @Override
             public void OnClickListener(View v, int id) {
@@ -224,136 +209,6 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe, XRecyclerVie
         mRlvFragmentWo.addItemDecoration(new SpacesItemDecoration(spanCount_tuijian, spacing_tuijian, includeEdge_tuijian));
 
 
-        /**
-         * 点击 待付款 跳转页面
-         */
-        mImgFragmentWoDaifukuan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (logUser != null) {
-                    Intent intent = new Intent(getActivity(), ObligationActivity.class);
-                    startActivity(intent);
-                } else {
-                    startActivity(new Intent(getActivity(), LoginActivity.class));
-                }
-            }
-        });
-
-        /**
-         * 登录
-         */
-
-        mTvFragmentWoName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (logUser == null) {
-                    startActivity(new Intent(getActivity(), LoginActivity.class));
-                }
-            }
-        });
-
-        /**
-         * 点击收货地址跳转页面
-         */
-        mImgFragmentWoDizi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (logUser != null) {
-                    Intent intent = new Intent(getActivity(), AiteActivity.class);
-                    startActivity(intent);
-                } else {
-                    startActivity(new Intent(getActivity(), LoginActivity.class));
-                }
-            }
-        });
-
-        /**
-         * 点击头像跳转页面
-         */
-        mImgFragmentWoTouxiang.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (logUser != null) {
-                    Intent intent = new Intent(getActivity(), MyaccountActivity.class);
-                    startActivity(intent);
-                } else {
-                    startActivity(new Intent(getActivity(), LoginActivity.class));
-                }
-            }
-        });
-
-        /**
-         * 点击售后/退款 进行页面跳转
-         */
-        mImgFragmentWoYituikuan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (logUser != null) {
-                    Intent intent = new Intent(getActivity(), AfterSaleActivity.class);
-                    startActivity(intent);
-                } else {
-                    startActivity(new Intent(getActivity(), LoginActivity.class));
-                }
-            }
-        });
-
-        /**
-         * 消息页面·
-         */
-        mImgFragmentWoLingdang.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (logUser != null) {
-                    startActivity(new Intent(getActivity(), MessageActivity.class));
-                } else {
-                    startActivity(new Intent(getActivity(), LoginActivity.class));
-                }
-            }
-        });
-
-        /**
-         * 点击关于APP跳转页面
-         */
-        mImgFragmentWoguanyu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (logUser != null) {
-                    Intent intent = new Intent(getActivity(), ApoutUsActivity.class);
-                    startActivity(intent);
-                } else {
-                    startActivity(new Intent(getActivity(), LoginActivity.class));
-                }
-            }
-        });
-
-        /**
-         * 点击全部订单 跳转页面
-         */
-        mTvFragmentWoDingdan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (logUser != null) {
-                    Intent intent = new Intent(getActivity(), OrderFormActivity.class);
-                    startActivity(intent);
-                } else {
-                    startActivity(new Intent(getActivity(), LoginActivity.class));
-                }
-            }
-        });
-        /**
-         * 优惠券
-         */
-        mImgFragmentWoyouhuiquan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (logUser != null) {
-                    Intent intent = new Intent(getActivity(), CouponActivity.class);
-                    startActivity(intent);
-                } else {
-                    startActivity(new Intent(getActivity(), LoginActivity.class));
-                }
-            }
-        });
         if (logUser != null)
             recommendPresenter.request(logUser.getId(), 1, mPage);
         mRlvFragmentWo.setLoadingMoreEnabled(true);
@@ -378,6 +233,99 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe, XRecyclerVie
     public void onLoadMore() {
         mPage++;
         recommendPresenter.request(logUser.getId(), 1, mPage);
+    }
+
+    /**
+     * 点击事件
+     *
+     * @param
+     */
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            //已取消
+            case R.id.img__fragment_wo_yiquxiao:
+                startActivity(new Intent(getActivity(), CanceledActivity.class));
+                break;
+            //待收货
+            case R.id.img_fragment_wo_daishouhuo:
+                startActivity(new Intent(getActivity(), WaitForReceivingActivity.class));
+                break;
+            //账户明细
+            case R.id.relativeLayout_mingxi_fragment_wo:
+                startActivity(new Intent(getActivity(), DetailActivity.class));
+                break;
+            //待付款
+            case R.id.img_fragment_wo_daifukuan:
+                if (logUser != null) {
+                    startActivity(new Intent(getActivity(), ObligationActivity.class));
+                } else {
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                }
+                break;
+            //登录
+            case R.id.tv__fragment_wo_name:
+                if (logUser == null) {
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                }
+                break;
+            //头像
+            case R.id.img_fragment_wo_touxiang:
+                if (logUser != null) {
+                    startActivity(new Intent(getActivity(), MyaccountActivity.class));
+                } else {
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                }
+                break;
+            //全部订单
+            case R.id.tv_fragment_wo_dingdan:
+                if (logUser != null) {
+                    startActivity(new Intent(getActivity(), OrderFormActivity.class));
+                } else {
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                }
+                break;
+            //优惠劵
+            case R.id.img__fragment_wo_gouwuche:
+                if (logUser != null) {
+                    startActivity(new Intent(getActivity(), CouponActivity.class));
+                } else {
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                }
+                break;
+            //收货地址
+            case R.id.img_fragment_wo_dizi:
+                if (logUser != null) {
+                    startActivity(new Intent(getActivity(), AiteActivity.class));
+                } else {
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                }
+                break;
+            //售后/退款
+            case R.id.img_fragment_wo_yituikuan:
+                if (logUser != null) {
+                    startActivity(new Intent(getActivity(), AfterSaleActivity.class));
+                } else {
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                }
+                break;
+            //关于App
+            case R.id.img__fragment_wo_guanyu:
+                if (logUser != null) {
+                    startActivity(new Intent(getActivity(), ApoutUsActivity.class));
+                } else {
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                }
+                break;
+            //铃铛——消息页面
+            case R.id.img_fragment_wo_lingdang:
+                if (logUser != null) {
+                    startActivity(new Intent(getActivity(), MessageActivity.class));
+                } else {
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                }
+                break;
+        }
     }
 
     public class AdvertisingICoreInfe implements ICoreInfe {

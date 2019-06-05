@@ -33,7 +33,7 @@ import me.leefeng.promptlibrary.PromptButton;
 import me.leefeng.promptlibrary.PromptButtonListener;
 import me.leefeng.promptlibrary.PromptDialog;
 
-public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, ICoreInfe {
+public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, ICoreInfe, View.OnClickListener {
 
     private RelativeLayout mToolbarActivityWaitfrrpayment;
     private TextView mTvActivityCloseName;
@@ -67,18 +67,18 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
     protected void initView() {
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
-
         //创建对象
         mPromptDialog = new PromptDialog(this);
         //设置自定义属性
         mPromptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(3000);
-
 
         mIntent = getIntent();
         mOrderId = mIntent.getIntExtra("orderId", 0);
         Display display = this.getWindowManager().getDefaultDisplay();
         width = display.getWidth();
         int height = display.getHeight();
+
+
         //ToolBar
         mToolbarActivityWaitfrrpayment = (RelativeLayout) findViewById(R.id.toolbar_activity_waitfrrpayment);
         //用户名
@@ -115,27 +115,10 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
         mChanchu = (TextView) findViewById(R.id.tv_activity_closeThe_Deal_shanchu);
 
 
-        //点击客服跳转页面
-        mTvActivityCloseKeFu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Information info = new Information();
-                info.setAppkey("7560599b63bf43378d05d018ded42cdd");
-                SobotApi.setCustomRobotHelloWord(CloseTheDealActivity.this, "您好，易康成客服很高兴为您服务，请问有什么可以帮助您的？");
-                SobotApi.startSobotChat(CloseTheDealActivity.this, info);
-            }
-        });
+        //点击事件
+        mTvActivityCloseKeFu.setOnClickListener(this);
+        mImgActivityCloseFizhi.setOnClickListener(this);
 
-
-        //复制监听点击事件
-        mImgActivityCloseFizhi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //传入需要复制的文字的控件
-                CopyButtonLibrary copyButtonLibrary = new CopyButtonLibrary(getApplicationContext(), mTvActivityCloseBiaohao);
-                copyButtonLibrary.init();
-            }
-        });
 
         /**
          * P层
@@ -148,6 +131,7 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
         mCloseTheDealAdapter = new CloseTheDealAdapter(mShopSpecDetailedBeans, this);
         mRlvActivityCloseShangPin.setAdapter(mCloseTheDealAdapter);
 
+        //接口回调
         mCloseTheDealAdapter.setOnClickListener(new CloseTheDealAdapter.OnClickListener() {
             @Override
             public void OnClickListener(View v, int position) {
@@ -155,10 +139,11 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
             }
         });
 
-        //        //解决滑动不流畅
+        //解决滑动不流畅
         mRlvActivityCloseShangPin.setHasFixedSize(true);
         mRlvActivityCloseShangPin.setNestedScrollingEnabled(false);
 
+        //设置item间距
         int spanCount_tuijian = 1; // 3 columns
         int spacing_tuijian = 5; // 50px
         boolean includeEdge_tuijian = false;
@@ -182,6 +167,11 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
                 }), confirm);
             }
         });
+
+//        confirm.setTextColor(R.color.clolrBAai);
+//        PromptButton cancle = new PromptButton("取消", null);
+//        confirm.setTextColor(Color.parseColor("#FFFFFF"));
+//        confirm.setFocusBacColor(Color.parseColor("#ffaf00"));
     }
 
     //按钮的定义，创建一个按钮的对象
@@ -227,6 +217,25 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
     @Override
     public float getSizeInDp() {
         return width / 2;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            //点击跳转客服
+            case R.id.tv_activity_close_keFu:
+                Information info = new Information();
+                info.setAppkey("7560599b63bf43378d05d018ded42cdd");
+                SobotApi.setCustomRobotHelloWord(CloseTheDealActivity.this, "您好，易康成客服很高兴为您服务，请问有什么可以帮助您的？");
+                SobotApi.startSobotChat(CloseTheDealActivity.this, info);
+                break;
+            //复制订单编号
+            case R.id.img_activity_close_fizhi:
+                //传入需要复制的文字的控件
+                CopyButtonLibrary copyButtonLibrary = new CopyButtonLibrary(getApplicationContext(), mTvActivityCloseBiaohao);
+                copyButtonLibrary.init();
+                break;
+        }
     }
 
     public class delete implements ICoreInfe {
