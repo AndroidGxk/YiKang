@@ -110,6 +110,7 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
     private String mMail = "";
     private int s_invoiceInt = 1;
     private int mGood_type = 1;
+    private TextView text;
 
     /**
      * 回传值
@@ -162,6 +163,7 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
         rela3 = (RelativeLayout) findViewById(R.id.rela3);
         user_name = (TextView) findViewById(R.id.user_name);
         user_phone = (TextView) findViewById(R.id.user_phone);
+        text = (TextView) findViewById(R.id.text);
         user_address = (TextView) findViewById(R.id.user_address);
         youhuiquan = (RelativeLayout) findViewById(R.id.youhuiquan);
         heji_text = (TextView) findViewById(R.id.heji_text);
@@ -246,6 +248,7 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
                 startActivityForResult(addIntent, 1000);
             }
         });
+
         /**
          * 退出
          */
@@ -263,7 +266,6 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
             for (int i = 0; i < split.length; i++) {
                 Log.e("GTTTsss", "" + split[i]);
             }
-
             num = split[2];
             pariticShopBean = new PariticShopBean();
             pariticShopBean.setId(split[0]);
@@ -560,6 +562,7 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
         @Override
         public void success(Object data) {
             Request request = (Request) data;
+            int type = 0;
             AllAddressBean entity = (AllAddressBean) request.getEntity();
             List<AllAddressBean.ListUserAddressBean> listUserAddress = entity.getListUserAddress();
             for (int i = 0; i < listUserAddress.size(); i++) {
@@ -575,44 +578,50 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
                         user_phone.setText(AllMobile);
                     }
                     user_address.setText(listUserAddressBean.getProvinceStr() + listUserAddressBean.getCityStr() + listUserAddressBean.getTownStr() + listUserAddressBean.getAddress());
+                    type = 1;
+                    text.setVisibility(View.GONE);
                 }
             }
-        }
-
-        @Override
-        public void fail(ApiException e) {
-
-        }
-    }
-
-    /**
-     * 创建订单
-     */
-    private class OrderBuy implements ICoreInfe {
-        @Override
-        public void success(Object data) {
-            Request request = (Request) data;
-            if (request.isSuccess()) {
-                CreatOrderBean entity = (CreatOrderBean) request.getEntity();
-                entity.setPayType(zhi ? "ALIPAY" : "WEIXIN");
-                Intent intent = new Intent(CloseActivity.this, ConfirmActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("creatorder", entity);
-                intent.putExtras(bundle);
-                startActivity(intent);
-                promptDialog.dismiss();
-                finish();
-            } else {
-                Toast.makeText(CloseActivity.this, "" + request.getMessage(), Toast.LENGTH_SHORT).show();
-                promptDialog.dismiss();
+            if (type == 0) {
+                text.setVisibility(View.VISIBLE);
             }
-        }
+    }
 
-        @Override
-        public void fail(ApiException e) {
+    @Override
+    public void fail(ApiException e) {
 
+    }
+}
+
+/**
+ * 创建订单
+ */
+private class OrderBuy implements ICoreInfe {
+    @Override
+    public void success(Object data) {
+        Request request = (Request) data;
+        if (request.isSuccess()) {
+            CreatOrderBean entity = (CreatOrderBean) request.getEntity();
+            entity.setPayType(zhi ? "ALIPAY" : "WEIXIN");
+            Intent intent = new Intent(CloseActivity.this, ConfirmActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("creatorder", entity);
+            intent.putExtras(bundle);
+            startActivity(intent);
+            promptDialog.dismiss();
+            finish();
+        } else {
+            Toast.makeText(CloseActivity.this, "" + request.getMessage(), Toast.LENGTH_SHORT).show();
+            promptDialog.dismiss();
         }
     }
+
+    @Override
+    public void fail(ApiException e) {
+
+    }
+
+}
 
     @Override
     protected void onResume() {

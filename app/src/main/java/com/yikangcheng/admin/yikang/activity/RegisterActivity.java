@@ -20,6 +20,7 @@ import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
 import com.yikangcheng.admin.yikang.presenter.GetMobileKeyPresenter;
 import com.yikangcheng.admin.yikang.presenter.RegisterPresenter;
 import com.yikangcheng.admin.yikang.presenter.SendMobilePresenter;
+import com.yikangcheng.admin.yikang.util.UIUtils;
 
 import me.jessyan.autosize.internal.CustomAdapt;
 
@@ -90,8 +91,13 @@ public class RegisterActivity extends BaseActivtiy implements ICoreInfe, CustomA
             @Override
             public void onClick(View view) {
                 phone = reg_phone_edit.getText().toString();
-                getMobileKeyPresenter.request(phone, "Android");
-                handler.sendEmptyMessage(1);
+                boolean mobile = UIUtils.isMobile(phone);
+                if (mobile) {
+                    getMobileKeyPresenter.request(phone, "Android");
+                    handler.sendEmptyMessage(1);
+                } else {
+                    Toast.makeText(RegisterActivity.this, "请输入正确的手机号", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         /**
@@ -100,7 +106,6 @@ public class RegisterActivity extends BaseActivtiy implements ICoreInfe, CustomA
         register_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                ver_pwd_edit,reg_pwd_edit,reg_two_pwd_edit,code_two_pwd_edit
                 String code = ver_pwd_edit.getText().toString();
                 String reg_pwd = reg_pwd_edit.getText().toString();
                 String reg_two_pwd = reg_two_pwd_edit.getText().toString();

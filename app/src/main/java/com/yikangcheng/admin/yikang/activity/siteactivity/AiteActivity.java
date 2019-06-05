@@ -11,13 +11,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.yikangcheng.admin.yikang.R;
-import com.yikangcheng.admin.yikang.activity.CloseActivity;
-import com.yikangcheng.admin.yikang.activity.LoginActivity;
-import com.yikangcheng.admin.yikang.activity.MainActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.AllAddressRecyclerAdapter;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.AllAddressBean;
@@ -252,8 +248,6 @@ public class AiteActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
     private class UpdateAddress implements ICoreInfe {
         @Override
         public void success(Object data) {
-            Request request = (Request) data;
-            Toast.makeText(AiteActivity.this, "" + request.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
         @Override

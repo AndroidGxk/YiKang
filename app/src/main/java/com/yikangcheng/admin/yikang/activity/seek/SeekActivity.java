@@ -2,6 +2,7 @@ package com.yikangcheng.admin.yikang.activity.seek;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Display;
@@ -42,6 +43,7 @@ public class SeekActivity extends BaseActivtiy implements CustomAdapt {
     private TagAdapter tagAdapter;
     private List<String> searchHistory;//搜索历史
     private int width;
+    private SharedPreferences.Editor edit;
 
     @Override
     protected void initView() {
@@ -76,8 +78,11 @@ public class SeekActivity extends BaseActivtiy implements CustomAdapt {
                 startActivityToResult();
             }
         });
-
-
+        /**
+         * shaper
+         */
+        SharedPreferences sp = getSharedPreferences("seekCount", MODE_PRIVATE);
+        edit = sp.edit();
         /**
          * 热门搜索
          */
@@ -113,9 +118,12 @@ public class SeekActivity extends BaseActivtiy implements CustomAdapt {
                     Utils.getInstance().insent(mSoSuoDbs);
                     tagAdapter.onlyAdd(mEditTixtActivitySeekSousuo.getText().toString());
                     tagAdapter.notifyDataSetChanged();
+                    edit.putString("count", s);
+                    edit.commit();
                     Intent intent = new Intent(SeekActivity.this, SeekListActivity.class);
                     intent.putExtra("count", s);
                     startActivity(intent);
+
                 }
                 return false;
             }

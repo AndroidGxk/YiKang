@@ -445,11 +445,19 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe, XRecyclerVie
             if (request.isSuccess()) {
                 setUserInfo(getContext(), userCenter);
             }
-            mTvFragmentWoName.setText(userCenter.getNickName());
-            //设置图片圆角角度
-            Glide.with(getContext()).load("https://static.yikch.com" + userCenter.getAvatar())
-                    .apply(RequestOptions.bitmapTransform(new CircleCrop()))
-                    .into(mImgFragmentWoTouxiang);
+            if (userCenter.getNickName().equals("")) {
+                mTvFragmentWoName.setText(userCenter.getMobile() + "");
+            }else{
+                mTvFragmentWoName.setText(userCenter.getNickName());
+            }
+            if (userCenter.getAvatar().equals("")) {
+                mImgFragmentWoTouxiang.setBackgroundResource(R.drawable.touxiang_2);
+            }else{
+                //设置图片圆角角度
+                Glide.with(getContext()).load("https://static.yikch.com" + userCenter.getAvatar())
+                        .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                        .into(mImgFragmentWoTouxiang);
+            }
         }
 
         @Override

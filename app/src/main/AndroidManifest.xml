@@ -43,7 +43,7 @@
         <activity android:name=".activity.MessageActivity" />
         <activity android:name=".activity.ConfirmActivity" />
         <activity
-            android:name=".activity.SeekListActivity" />
+            android:name=".activity.SeekListActivity"/>
         <activity
             android:name=".activity.orderstatus.FackOfActivity"
             tools:ignore="DuplicateActivity" />
@@ -78,7 +78,7 @@
             tools:ignore="DuplicateActivity" />
         <activity
             android:name=".activity.seek.SeekActivity"
-            android:launchMode="singleTask"
+            android:launchMode="singleInstance"
             tools:ignore="DuplicateActivity" />
         <activity android:name=".activity.MainActivity" />
         <activity
@@ -136,7 +136,7 @@
         <activity
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

@@ -97,7 +97,7 @@
             android:layout_toRightOf="@+id/phone"
             android:background="@null"
             android:gravity="right"
-            android:hint="13366247385"
+            android:hint="请输入手机号"
             android:textColor="#999999"
             android:textSize="13sp" />
 
