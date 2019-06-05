@@ -1,13 +1,17 @@
 package com.yikangcheng.admin.yikang.activity;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.adapter.Orderform_ViewPagerAdapter;
@@ -19,6 +23,7 @@ import com.yikangcheng.admin.yikang.activity.fragment.orderform.WaitForReceiving
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,7 +61,7 @@ public class OrderFormActivity extends BaseActivtiy implements CustomAdapt {
             }
         });
 
-        List<String> strings = new ArrayList<>();
+        final List<String> strings = new ArrayList<>();
         strings.add("全部");
         strings.add("待付款");
         strings.add("待收货");
@@ -72,7 +77,101 @@ public class OrderFormActivity extends BaseActivtiy implements CustomAdapt {
         mViewPagerOrderform.setAdapter(orderform_viewPagerAdapter);
         mTabActivityOrderform.setupWithViewPager(mViewPagerOrderform);
 
+        //设置下划线长度
+        mTabActivityOrderform.post(new Runnable() {
+            @Override
+            public void run() {
+                setIndicator(mTabActivityOrderform, 10, 10);
+            }
+        });
+
+        /**
+         * 点击tab字体变大
+         */
+        mTabActivityOrderform.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            //这是选中状态
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                View view = tab.getCustomView();
+                if (null == view) {
+                    //寻找item布局
+                    tab.setCustomView(R.layout.custom_tab_layout_text);
+                }
+                //找控件
+                TextView textView = tab.getCustomView().findViewById(android.R.id.text1);
+                //设置文字加粗
+                textView.setTextColor(mTabActivityOrderform.getTabTextColors());
+                //设置文字字体大小
+                textView.setTextSize(15);
+                //这是设置字体
+//                textView.setTypeface(Typeface.DEFAULT_BOLD);
+            }
+
+            //未选中状态
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                View view = tab.getCustomView();
+                if (null == view) {
+                    //寻找item布局
+                    tab.setCustomView(R.layout.custom_tab_layout_text);
+                }
+                //找控件
+                TextView textView = tab.getCustomView().findViewById(android.R.id.text1);
+                //设置当未选中状态字体大小
+                textView.setTextSize(12);
+                //设置字体
+//                textView.setTypeface(Typeface.DEFAULT);
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+
     }
+
+
+    /**
+     * 设置指示器长度
+     */
+    /**
+     * 通过反射机制 修改TableLayout 的下划线长度
+     */
+
+    public void setIndicator(TabLayout tabs, int leftDip, int rightDip) {
+        //通过反射获取到
+        Class tabLayout = tabs.getClass();
+        Field tabStrip = null;
+        try {
+            tabStrip = tabLayout.getDeclaredField("mTabStrip");
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
+        //设置模式
+        tabStrip.setAccessible(true);
+        //获得tabview
+        LinearLayout llTab = null;
+        try {
+            llTab = (LinearLayout) tabStrip.get(tabs);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        //设置tabView的padding为0，并且设置了margin
+        int left = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, leftDip, Resources.getSystem().getDisplayMetrics());
+        int right = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, rightDip, Resources.getSystem().getDisplayMetrics());
+        for (int i = 0; i < llTab.getChildCount(); i++) {
+            View child = llTab.getChildAt(i);
+            child.setPadding(0, 0, 0, 0);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1);
+            params.leftMargin = left;
+            params.rightMargin = right;
+            child.setLayoutParams(params);
+            child.invalidate();
+        }
+    }
+
 
     @Override
     protected void initEventData() {
