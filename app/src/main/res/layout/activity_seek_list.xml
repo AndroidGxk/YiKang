@@ -135,6 +135,10 @@
         android:layout_below="@+id/table"
         android:background="@null">
 
+        <com.scwang.smartrefresh.header.WaterDropHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
         <com.jcodecraeer.xrecyclerview.XRecyclerView
             android:id="@+id/xrecycler"
             android:layout_width="match_parent"

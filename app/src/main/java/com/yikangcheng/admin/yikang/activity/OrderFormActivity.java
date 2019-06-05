@@ -4,12 +4,10 @@ import android.content.Context;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TableLayout;
 
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.adapter.Orderform_ViewPagerAdapter;
@@ -17,6 +15,7 @@ import com.yikangcheng.admin.yikang.activity.fragment.orderform.AccomplishFragme
 import com.yikangcheng.admin.yikang.activity.fragment.orderform.AllFragment;
 import com.yikangcheng.admin.yikang.activity.fragment.orderform.AwaitFragment;
 import com.yikangcheng.admin.yikang.activity.fragment.orderform.CloseFragment;
+import com.yikangcheng.admin.yikang.activity.fragment.orderform.WaitForReceivingFragment;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
@@ -59,12 +58,14 @@ public class OrderFormActivity extends BaseActivtiy implements CustomAdapt {
 
         List<String> strings = new ArrayList<>();
         strings.add("全部");
-        strings.add("等待付款");
-        strings.add("交易完成");
-        strings.add("交易关闭");
+        strings.add("待付款");
+        strings.add("待收货");
+        strings.add("已支付");
+        strings.add("已取消");
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(new AllFragment());
         fragments.add(new AwaitFragment());
+        fragments.add(new WaitForReceivingFragment());
         fragments.add(new AccomplishFragment());
         fragments.add(new CloseFragment());
         Orderform_ViewPagerAdapter orderform_viewPagerAdapter = new Orderform_ViewPagerAdapter(getSupportFragmentManager(), strings, fragments);

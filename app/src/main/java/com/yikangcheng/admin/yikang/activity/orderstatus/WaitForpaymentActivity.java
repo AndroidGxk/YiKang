@@ -38,8 +38,6 @@ import com.yikangcheng.admin.yikang.presenter.DeleteOrderIdPresenter;
 import com.yikangcheng.admin.yikang.presenter.NewOrderPresenter;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
@@ -208,31 +206,32 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
         initDelete();
 
 
-        //获取下单时间转换时间戳
-        try {
-            dateToStamp(mCreateTime);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-
-        //获取当前系统时间
-        mCurDate = new Date(System.currentTimeMillis());
+//        //获取下单时间转换时间戳
+//        try {
+//            dateToStamp(mCreateTime);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//
+//
+//        //获取当前系统时间
+//        mCurDate = new Date(System.currentTimeMillis());
 
     }
 
 
-    /*
-     * 将时间转换为时间戳
-     */
-    public String dateToStamp(String s) throws ParseException {
-        String res;
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(s);
-        Date date = simpleDateFormat.parse(s);
-        long ts = date.getTime();
-        res = String.valueOf(ts);
-        return res;
-    }
+//    /*
+//     * 将时间转换为时间戳
+//     */
+//    public String dateToStamp(String s) throws ParseException {
+//        String res;
+//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(mCreateTime);
+//        Date date = simpleDateFormat.parse(mCreateTime);
+//        long ts = date.getTime();
+//        res = String.valueOf(ts);
+//        Log.e("hahhaaha", res);
+//        return res;
+//    }
 
 
     @Override

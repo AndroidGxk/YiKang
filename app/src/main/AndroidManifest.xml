@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.yikangcheng.admin.yikang">
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -18,7 +19,8 @@
         android:roundIcon="@drawable/app_bg"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.H5SecActivity"></activity>
+        <activity android:name=".activity.orderstatus.countdown.WaitForReceivingActivity"></activity>
+        <activity android:name=".activity.H5SecActivity" />
         <activity android:name=".activity.PayResultActivity" />
         <activity android:name=".activity.PartiCarActivity" />
         <activity android:name=".activity.ClassifyHomeActivity" />
@@ -69,7 +71,9 @@
             android:value="640" />
 
         <activity android:name=".activity.SeckillSecondActivity" />
-        <service android:name=".activity.orderstatus.countdown.ClockService"/>
+
+        <service android:name=".activity.orderstatus.countdown.ClockService" />
+
         <activity
             android:name=".activity.particulars.ParticularsActivity"
             tools:ignore="DuplicateActivity" />

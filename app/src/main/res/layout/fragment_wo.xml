@@ -90,9 +90,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_marginTop="134dp"
+                android:layout_marginTop="129dp"
                 android:layout_marginRight="27dp"
-                android:paddingTop="10dp"
+                android:paddingTop="15dp"
                 android:text="查看全部订单"
                 android:textColor="#717171 " />
 
@@ -160,7 +160,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/img_fragment_wo_yizhifu"
+                    android:id="@+id/img_fragment_wo_daishouhuo"
                     android:layout_width="0dp"
                     android:layout_height="73dp"
                     android:layout_weight="1"
@@ -174,20 +174,50 @@
                             android:layout_width="46dp"
                             android:layout_height="46dp"
                             android:layout_centerHorizontal="true"
-                            android:layout_marginTop="5dp"
-                            android:src="@drawable/daifukuan" />
+                            android:layout_marginTop="8dp"
+                            android:src="@drawable/daishouhuo" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="54dp"
-                            android:text="已支付"
+                            android:text="待收货"
                             android:textColor="#333333"
                             android:textSize="11sp" />
 
                     </RelativeLayout>
                 </LinearLayout>
+
+                <!--<LinearLayout-->
+                <!--android:id="@+id/img_fragment_wo_yizhifu"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="73dp"-->
+                <!--android:layout_weight="1"-->
+                <!--android:gravity="center_horizontal">-->
+
+                <!--<RelativeLayout-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content">-->
+
+                <!--<ImageView-->
+                <!--android:layout_width="46dp"-->
+                <!--android:layout_height="46dp"-->
+                <!--android:layout_centerHorizontal="true"-->
+                <!--android:layout_marginTop="5dp"-->
+                <!--android:src="@drawable/daifukuan" />-->
+
+                <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_centerHorizontal="true"-->
+                <!--android:layout_marginTop="54dp"-->
+                <!--android:text="已支付"-->
+                <!--android:textColor="#333333"-->
+                <!--android:textSize="11sp" />-->
+
+                <!--</RelativeLayout>-->
+                <!--</LinearLayout>-->
 
                 <LinearLayout
                     android:id="@+id/img__fragment_wo_yiquxiao"
@@ -402,7 +432,7 @@
         <com.jcodecraeer.xrecyclerview.XRecyclerView
             android:id="@+id/rlv__fragment_wo"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:focusable="false"
@@ -412,15 +442,16 @@
             android:id="@+id/baseline"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="145dp"
+            android:layout_marginBottom="100dp"
             android:gravity="center_horizontal"
-            android:visibility="gone">
+            android:visibility="gone"
+            >
 
             <View
                 android:id="@+id/view3"
                 android:layout_width="100dp"
+                android:layout_marginTop="10dp"
                 android:layout_height="1dp"
-                android:layout_marginTop="27dp"
                 android:background="#000000" />
 
             <TextView
@@ -428,7 +459,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="14dp"
-                android:layout_marginTop="18dp"
                 android:layout_toRightOf="@+id/view3"
                 android:text="我是有底线的"
                 android:textColor="#000000"
@@ -439,7 +469,7 @@
                 android:layout_width="100dp"
                 android:layout_height="1dp"
                 android:layout_marginLeft="14dp"
-                android:layout_marginTop="27dp"
+                android:layout_marginTop="10dp"
                 android:layout_toRightOf="@+id/dixian"
                 android:background="#000000" />
         </RelativeLayout>

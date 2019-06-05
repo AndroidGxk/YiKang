@@ -1,27 +1,22 @@
 package com.yikangcheng.admin.yikang.activity.siteactivity;
 
 import android.app.Dialog;
-import android.content.SharedPreferences;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.adapter.AddressRecyclerAdapter;
+import com.yikangcheng.admin.yikang.activity.edittext_delete.ETextWithDelete;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.AddressBean;
 import com.yikangcheng.admin.yikang.bean.LoginBean;
@@ -45,10 +40,10 @@ public class CompileActivity extends BaseActivtiy implements ICoreInfe, CustomAd
 
     private CheckBox check_btn;
     private ImageView back_img;
-    private EditText name_edit;
-    private EditText phone_text;
+    private ETextWithDelete name_edit;
+    private ETextWithDelete phone_text;
     private TextView address_text, add_address;
-    private EditText relay_address;
+    private ETextWithDelete relay_address;
     private Dialog mDialog;
     private int width;
     private int height;
@@ -88,13 +83,13 @@ public class CompileActivity extends BaseActivtiy implements ICoreInfe, CustomAd
         address_recycler.setLayoutManager(new LinearLayoutManager(this));
         addressRecyclerAdapter = new AddressRecyclerAdapter(this);
         address_recycler.setAdapter(addressRecyclerAdapter);
-        name_edit = (EditText) findViewById(R.id.name_edit);
+        name_edit = (ETextWithDelete) findViewById(R.id.name_edit);
         back_img = (ImageView) findViewById(R.id.back_img);
         check_btn = (CheckBox) findViewById(R.id.check_btn);
-        phone_text = (EditText) findViewById(R.id.phone_text);
+        phone_text = (ETextWithDelete) findViewById(R.id.phone_text);
         address_text = (TextView) findViewById(R.id.address_text);
         add_address = (TextView) findViewById(R.id.add_address);
-        relay_address = (EditText) findViewById(R.id.relay_address);
+        relay_address = (ETextWithDelete) findViewById(R.id.relay_address);
         Display display = this.getWindowManager().getDefaultDisplay();
         width = display.getWidth();
         height = display.getHeight();

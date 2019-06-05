@@ -35,6 +35,8 @@ import com.yikangcheng.admin.yikang.util.SpacesItemDecoration;
 import java.io.Serializable;
 import java.util.List;
 
+import me.leefeng.promptlibrary.PromptButton;
+import me.leefeng.promptlibrary.PromptButtonListener;
 import me.leefeng.promptlibrary.PromptDialog;
 
 //todo 购物车返回页面问题
@@ -72,6 +74,8 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
         promptDialog = new PromptDialog(getActivity());
         //设置自定义属性
         promptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(100);
+
+
         shop_recycler = view.findViewById(R.id.shop_recycler);
         shop_recyclertwo = view.findViewById(R.id.shop_recyclertwo);
         all_check = view.findViewById(R.id.all_check);
@@ -131,7 +135,7 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
         shop_recyclertwo.addItemDecoration(new SpacesItemDecoration(spanCount, spacing, includeEdge));
         shop_recyclertwo.setLoadingListener(this);
         //加载更多
-        if(logUser!=null){
+        if (logUser != null) {
             recommendPresenter.request(logUser.getId(), 1, mPage);
         }
         nestedSV.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
@@ -230,19 +234,18 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
         /**
          * 删除购物车商品
          */
+
         dele_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                List<ShopCarBean> shopList = shopRecyclerAdapter.getShopList();
-                for (int i = 0; i < shopList.size(); i++) {
-                    int id = shopList.get(i).getId();
-                    mId += id + ",";
-                }
-                mId.substring(0, mId.length() - 1);
-                deleteShopPresenter.request(getLogUser(getContext()).getId(), mId);
-                mId = "";
+                promptDialog.showWarnAlert("你确定要删除订单吗？", new PromptButton("取消", new PromptButtonListener() {
+                    @Override
+                    public void onClick(PromptButton button) {
+                    }
+                }), confirm);
             }
         });
+
         /**
          * 跳转详情页面
          */
@@ -272,6 +275,23 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
         }
         num_text.setText("去结算(" + count + ")");
     }
+
+
+    //按钮的定义，创建一个按钮的对象
+
+    PromptButton confirm = new PromptButton("确定", new PromptButtonListener() {
+        @Override
+        public void onClick(PromptButton button) {
+            List<ShopCarBean> shopList = shopRecyclerAdapter.getShopList();
+            for (int i = 0; i < shopList.size(); i++) {
+                int id = shopList.get(i).getId();
+                mId += id + ",";
+            }
+            mId.substring(0, mId.length() - 1);
+            deleteShopPresenter.request(getLogUser(getContext()).getId(), mId);
+            mId = "";
+        }
+    });
 
     @Override
     public void checked(boolean isCheck) {
@@ -335,13 +355,13 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
         super.onResume();
         if (logUser != null) {
             baseline.setVisibility(View.GONE);
-            diviline.setVisibility(View.GONE);
+//            diviline.setVisibility(View.GONE);
             shopRecyclerAdapter.checkAll(false);
             shopRecyclerAdapter.remove();
             shopCarPresenter.request(logUser.getId());
         } else {
             baseline.setVisibility(View.GONE);
-            diviline.setVisibility(View.GONE);
+//            diviline.setVisibility(View.GONE);
         }
     }
 
