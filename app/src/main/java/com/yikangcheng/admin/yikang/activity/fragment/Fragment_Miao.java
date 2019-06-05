@@ -207,7 +207,9 @@ public class Fragment_Miao extends BaseFragment implements ICoreInfe {
     }
 
     public static void getGoWeb() {
-        webView.goBack();
+        if (webView != null) {
+            webView.goBack();
+        }
     }
 
     /**

@@ -21,6 +21,6 @@ public class NewOrderPresenter extends BasePresenter {
     @Override
     protected Observable observable(Object... args) {
         ApiService apiService = NotWorkUtils.getInstance().create(ApiService.class);
-        return apiService.repayUpdateOrder((int) args[0], (String) args[1]);
+        return apiService.repayUpdateOrder((int) args[0], (String) args[1], (String) args[2]);
     }
 }

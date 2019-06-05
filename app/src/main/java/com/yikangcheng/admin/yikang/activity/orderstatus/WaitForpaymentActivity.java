@@ -192,7 +192,7 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
         go_pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                newOrderPresenter.request(mOrderId_wait, "ALIPAY");
+                newOrderPresenter.request(mOrderId_wait, "ALIPAY", "");
             }
         });
 
@@ -273,7 +273,6 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
         mTvActivityWaitfrrpaymentDaojishi.setText(stime);
     }
 
-    //點擊刪除訂單關閉當前Activity
     private void initDelete() {
         mShanchu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -490,7 +489,6 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
         public void success(Object data) {
             Request request = (Request) data;
             mEntity = (PayBean) request.getEntity();
-            Toast.makeText(WaitForpaymentActivity.this, "" + mEntity.getOrderId(), Toast.LENGTH_SHORT).show();
             //todo 支付宝
             // 构造PayTask 对象
             // 调用支付接口，获取支付结果

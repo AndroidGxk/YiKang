@@ -76,7 +76,7 @@ public class Fragment_Shou extends BaseFragment implements CustomAdapt, ICoreInf
                 return false;
             }
 
-//            @JavascriptInterface
+            //            @JavascriptInterface
 //            public void goBackIndex(String msg) {
 //                Intent intent = new Intent(getContext(), H5SecActivity.class);
 //                intent.putExtra("http", msg);
@@ -184,7 +184,6 @@ public class Fragment_Shou extends BaseFragment implements CustomAdapt, ICoreInf
         Intent intent = new Intent(getContext(), H5SecActivity.class);
         intent.putExtra("http", msg);
         startActivity(intent);
-        Toast.makeText(getContext(), "" + msg, Toast.LENGTH_SHORT).show();
     }
 
     @JavascriptInterface
@@ -195,13 +194,6 @@ public class Fragment_Shou extends BaseFragment implements CustomAdapt, ICoreInf
         SobotApi.startSobotChat(getActivity(), info);
     }
 
-    @JavascriptInterface
-    public void goBackIndex(String msg) {
-        Intent intent = new Intent(getContext(), H5SecActivity.class);
-        intent.putExtra("http", msg);
-        startActivity(intent);
-        Toast.makeText(getContext(), "" + msg, Toast.LENGTH_SHORT).show();
-    }
 
     @JavascriptInterface
     public void partID(String msg) {
@@ -220,7 +212,9 @@ public class Fragment_Shou extends BaseFragment implements CustomAdapt, ICoreInf
     }
 
     public static void getGoBack() {
-        webView.goBack();
+        if (webView != null) {
+            webView.goBack();
+        }
     }
 
     @JavascriptInterface

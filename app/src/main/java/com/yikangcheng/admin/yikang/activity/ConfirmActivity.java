@@ -6,7 +6,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,8 +14,6 @@ import android.widget.Toast;
 
 import com.alipay.sdk.app.PayTask;
 import com.tencent.mm.opensdk.modelpay.PayReq;
-import com.tencent.mm.opensdk.openapi.IWXAPI;
-import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.app.BaseApp;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
@@ -52,8 +49,14 @@ public class ConfirmActivity extends BaseActivtiy implements CustomAdapt {
         Bundle bundle = intent.getExtras();
         creatorder = (CreatOrderBean) bundle.getSerializable("creatorder");
         order_number.setText(creatorder.getOrderNo());
-        money.setText((int) creatorder.get_sumPrice() + "");
-        order_pay.setText("支付宝");
+        money.setText((double) creatorder.getSumPrice() + "");
+        String payType = creatorder.getPayType();
+        if (payType.equals("ALIPAY")) {
+            order_pay.setText("支付宝");
+        } else if (payType.equals("WEIXIN")) {
+            order_pay.setText("微信");
+        }
+
         pay_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -86,11 +89,10 @@ public class ConfirmActivity extends BaseActivtiy implements CustomAdapt {
                     req.packageValue = "Sign=WXPay";
                     req.nonceStr = creatorder.getNonceStr();
                     req.timeStamp = creatorder.getTimeStamp();
-                    req.sign = "82BBAA8970CDF302294FD16286C77DE2";
-                    Log.e("SIGN",creatorder.getSign());
-                    Log.e("prepayId",creatorder.getPrepayId());
+                    req.sign = creatorder.getSign();
                     BaseApp.mWxApi.sendReq(req);//将订单信息对象发送给微信服务器，即发送支付请求
                 }
+                finish();
             }
         });
     }

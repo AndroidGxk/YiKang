@@ -38,7 +38,7 @@ import me.leefeng.promptlibrary.PromptDialog;
 /**
  * 搜索列表页面
  */
-public class SeekListActivity extends BaseActivtiy implements  ICoreInfe, View.OnClickListener {
+public class SeekListActivity extends BaseActivtiy implements ICoreInfe, View.OnClickListener {
 
     private TextView edit_seek_sousuo;
     private CommodityPresenter commodityPresenter;
@@ -56,6 +56,7 @@ public class SeekListActivity extends BaseActivtiy implements  ICoreInfe, View.O
     //页数
     private int mPage;
     private int width;
+    private EditText editTixt_activity_seek_sousuo;
 
     @Override
     protected void initView() {
@@ -149,6 +150,7 @@ public class SeekListActivity extends BaseActivtiy implements  ICoreInfe, View.O
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(SeekListActivity.this, SeekActivity.class));
+                finish();
             }
         });
     }

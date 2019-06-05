@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yikangcheng.admin.yikang.R;
-import com.yikangcheng.admin.yikang.activity.MainActivity;
 import com.yikangcheng.admin.yikang.activity.SeekListActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.SeekHotAdapter;
 import com.yikangcheng.admin.yikang.activity.adapter.TagAdapter;

@@ -3,6 +3,8 @@ package com.yikangcheng.admin.yikang.wxapi;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,24 +17,30 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.yikangcheng.admin.yikang.R;
 
 /**
- * @author happy_movie
- * @date 2019/1/27 11:35
- * QQ:45198565
- * 佛曰：永无BUG 盘他！
+ * 微信回调
  */
 public class WXPayEntryActivity extends AppCompatActivity implements IWXAPIEventHandler {
 
 
     private IWXAPI api;
-
-    private TextView payResult;
+    private ImageView back_img, img;
+    private TextView text;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pay_result);
+        setContentView(R.layout.pay_result);
+        back_img = findViewById(R.id.back_img);
+        img = findViewById(R.id.imgs);
+        text = findViewById(R.id.texts);
         api = WXAPIFactory.createWXAPI(this, "wx38a0aef5df24fe50");
         api.handleIntent(getIntent(), this);
+        back_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     @Override
@@ -51,17 +59,19 @@ public class WXPayEntryActivity extends AppCompatActivity implements IWXAPIEvent
         if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
             switch (resp.errCode) {
                 case BaseResp.ErrCode.ERR_OK:
-                    Toast.makeText(this, "成功", Toast.LENGTH_SHORT).show();
                     //支付成功后的逻辑
+                    img.setBackgroundResource(R.drawable.pay_succeed);
+                    text.setText("支付成功");
                     break;
                 case BaseResp.ErrCode.ERR_COMM:
-                    Toast.makeText(this, "失败"+BaseResp.ErrCode.ERR_COMM, Toast.LENGTH_SHORT).show();
+                    img.setBackgroundResource(R.drawable.pay_error);
+                    text.setText("支付失败");
                     break;
                 case BaseResp.ErrCode.ERR_USER_CANCEL:
-                    Toast.makeText(this, "失败2"+BaseResp.ErrCode.ERR_USER_CANCEL, Toast.LENGTH_SHORT).show();
+                    img.setBackgroundResource(R.drawable.pay_error);
+                    text.setText("支付失败");
                     break;
                 default:
-                    Toast.makeText(this, "失败3", Toast.LENGTH_SHORT).show();
                     break;
             }
         }

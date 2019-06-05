@@ -100,6 +100,16 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
     private TextView invoice_text;
     private TextView wan1;
     private String ipAddressString;
+    private String num;
+    private TextView pay_zhifu;
+    private ImageView pay_img;
+    private EditText mesg_phone;
+    private String mWorkuniit = "";
+    private String mNumBer = "";
+    private String mPhone = "";
+    private String mMail = "";
+    private int s_invoiceInt = 1;
+    private int mGood_type = 1;
 
     /**
      * 回传值
@@ -130,10 +140,7 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
     protected void initView() {
         //获取Ip地址
         ipAddressString = UIUtils.getIpAddressString();
-        WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
-        WifiInfo wifiInfo = wifiManager.getConnectionInfo();
-//        int ipAddressString = wifiInfo.getIpAddress();
-        Toast.makeText(this, "" + ipAddressString, Toast.LENGTH_SHORT).show();
+
         Fragment_Gou.getSign();
         //创建对象
         promptDialog = new PromptDialog(this);
@@ -145,8 +152,10 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
         sele_pay_digo = LayoutInflater.from(this).inflate(R.layout.sele_pay_digo, null);
         invoice_item = LayoutInflater.from(this).inflate(R.layout.invoice_item, null);
         invoice_text = (TextView) findViewById(R.id.invoice_text);
+        pay_zhifu = (TextView) findViewById(R.id.pay_zhifu);
         recycler = (RecyclerView) findViewById(R.id.recycler);
         buy_img = (ImageView) findViewById(R.id.buy_img);
+        pay_img = (ImageView) findViewById(R.id.pay_img);
         rela4 = (RelativeLayout) findViewById(R.id.rela4);
         rela2 = (RelativeLayout) findViewById(R.id.rela2);
         back_img = (ImageView) findViewById(R.id.back_img);
@@ -162,7 +171,6 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
         Bundle bundle = intent.getExtras();
         shopCarBeans = (List<ShopCarBean>) bundle.get("shopList");
         String goodinfo = intent.getStringExtra("goodinfo");
-        Log.e("GTTTgoodinfo", "" + goodinfo);
         Display display = this.getWindowManager().getDefaultDisplay();
         width = display.getWidth();
         height = display.getHeight();
@@ -201,6 +209,8 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
                     zhi = false;
                     wechat_pay.setBackgroundResource(R.drawable.yellow_pay_shape);
                     zhi_rela.setBackgroundResource(R.drawable.gray_pay_shape);
+                    pay_zhifu.setText("微信");
+                    pay_img.setBackgroundResource(R.drawable.weixinzhifu_sele);
                 }
             }
         });
@@ -220,6 +230,8 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
                     wechat_pay.setBackgroundResource(R.drawable.gray_pay_shape);
                     zhi = true;
                     wechat = false;
+                    pay_zhifu.setText("支付宝");
+                    pay_img.setBackgroundResource(R.drawable.zhifubaozhifu_sele);
                 }
             }
         });
@@ -251,6 +263,8 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
             for (int i = 0; i < split.length; i++) {
                 Log.e("GTTTsss", "" + split[i]);
             }
+
+            num = split[2];
             pariticShopBean = new PariticShopBean();
             pariticShopBean.setId(split[0]);
             pariticShopBean.setDataType(split[1]);
@@ -292,6 +306,7 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
         no_yes = invoice_item.findViewById(R.id.no_yes);
         work = invoice_item.findViewById(R.id.work);
         personage = invoice_item.findViewById(R.id.personage);
+        mesg_phone = invoice_item.findViewById(R.id.mesg_phone);
         mesg_mail = invoice_item.findViewById(R.id.mesg_mail);
         work_name = invoice_item.findViewById(R.id.work_name);
         mesg_na = invoice_item.findViewById(R.id.mesg_na);
@@ -309,6 +324,14 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
             public void onClick(View view) {
                 bottomDialog.dismiss();
                 invoice_text.setText(invoicetype);
+                //单位名称
+                mWorkuniit = work_name.getText().toString();
+                //纳税人识别号
+                mNumBer = mesg_na.getText().toString();
+                //收票人手机号
+                mPhone = mesg_phone.getText().toString();
+                //收票人邮箱
+                mMail = mesg_mail.getText().toString();
             }
         });
         /**
@@ -368,6 +391,7 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
             case R.id.personage:
                 //个人
                 if (!g_invoice) {
+                    s_invoiceInt = 1;
                     g_invoice = true;
                     w_invoice = false;
                     mesg_na.setVisibility(View.GONE);
@@ -383,6 +407,7 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
             case R.id.work:
                 //单位
                 if (!w_invoice) {
+                    s_invoiceInt = 2;
                     g_invoice = false;
                     w_invoice = true;
                     mesg_na.setVisibility(View.VISIBLE);
@@ -398,6 +423,7 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
             case R.id.good_detail:
                 //商品明细
                 if (!d_good) {
+                    mGood_type = 1;
                     t_good = false;
                     d_good = true;
                     good_detail.setBackgroundResource(R.drawable.shop_btn_shape);
@@ -411,6 +437,7 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
             case R.id.good_type:
                 //商品类型
                 if (!t_good) {
+                    mGood_type = 2;
                     d_good = false;
                     t_good = true;
                     good_type.setBackgroundResource(R.drawable.shop_btn_shape);
@@ -466,10 +493,10 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
                             String substring = str.substring(0, str.length() - 1);
                             if (userAddressBean == null) {
                                 orderBuyArrayPresenter.request(getLogUser(CloseActivity.this).getId(), substring,
-                                        id, 1, 2, "易康成", "132", "2", "1724959985@qq.com", zhi ? "ALIPAY" : "WEIXIN", "Android", "COMMODITY", zhi ? "" : ipAddressString);
+                                        id, s_invoiceInt, mGood_type, mWorkuniit, mNumBer, mPhone, mMail, zhi ? "ALIPAY" : "WEIXIN", "Android", "COMMODITY", zhi ? "" : ipAddressString);
                             } else {
                                 orderBuyArrayPresenter.request(getLogUser(CloseActivity.this).getId(), substring,
-                                        userAddressBean.getId(), 1, 2, "易康成", "132", "2", "1724959985@qq.com", zhi ? "ALIPAY" : "WEIXIN", "Android", "COMMODITY", zhi ? "" : ipAddressString);
+                                        userAddressBean.getId(), s_invoiceInt, mGood_type, mWorkuniit, mNumBer, mPhone, mMail, zhi ? "ALIPAY" : "WEIXIN", "Android", "COMMODITY", zhi ? "" : ipAddressString);
                             }
                         }
                     }
@@ -477,10 +504,10 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
                     String ids = pariticShopBean.getId();
                     if (userAddressBean == null) {
                         orderBuyPresenter.request(getLogUser(CloseActivity.this).getId(), Integer.parseInt(ids),
-                                id, 1, 1, 2, "易康成", "132", "2", "1724959985@qq.com", zhi ? "ALIPAY" : "WEIXIN", "Android", zhi ? "" : ipAddressString);
+                                id, Integer.parseInt(num), s_invoiceInt, mGood_type, mWorkuniit, mNumBer, mPhone, mMail, zhi ? "ALIPAY" : "WEIXIN", "Android", zhi ? "" : ipAddressString);
                     } else {
                         orderBuyPresenter.request(getLogUser(CloseActivity.this).getId(), Integer.parseInt(ids),
-                                userAddressBean.getId(), 1, 1, 2, "易康成", "132", "2", "1724959985@qq.com", zhi ? "ALIPAY" : "WEIXIN", "Android", zhi ? "" : ipAddressString);
+                                userAddressBean.getId(), Integer.parseInt(num), s_invoiceInt, mGood_type, mWorkuniit, mNumBer, mPhone, mMail, zhi ? "ALIPAY" : "WEIXIN", "Android", zhi ? "" : ipAddressString);
                     }
                 }
             }
@@ -571,11 +598,13 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
                 Intent intent = new Intent(CloseActivity.this, ConfirmActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("creatorder", entity);
-                Log.e("weixin", entity.getSign());
                 intent.putExtras(bundle);
                 startActivity(intent);
                 promptDialog.dismiss();
                 finish();
+            } else {
+                Toast.makeText(CloseActivity.this, "" + request.getMessage(), Toast.LENGTH_SHORT).show();
+                promptDialog.dismiss();
             }
         }
 

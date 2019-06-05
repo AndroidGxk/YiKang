@@ -10,7 +10,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.updater.Updater;
@@ -30,7 +29,6 @@ public class SearchListActivity extends AppCompatActivity {
         editText.setText(APK_URL);
         try {
             String versionName = getVersionName();
-            Toast.makeText(this, "" + versionName, Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -29,6 +29,7 @@ import com.sobot.chat.api.model.ConsultingContent;
 import com.sobot.chat.api.model.Information;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.CloseActivity;
+import com.yikangcheng.admin.yikang.activity.H5SecActivity;
 import com.yikangcheng.admin.yikang.activity.PartiCarActivity;
 import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Miao;
 import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Shou;
@@ -53,17 +54,25 @@ public class ParticularsActivity extends BaseActivtiy implements CustomAdapt, IC
     private SmartRefreshLayout refreshLayout;
     String Cust = "";
     private int width;
+    private String ss = "";
 
     @Override
     protected void initView() {
-
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorTab);
         Display display = this.getWindowManager().getDefaultDisplay();
         width = display.getWidth();
-        int height = display.getHeight();
-        Fragment_Miao.getGoWeb();
-        Fragment_Shou.getGoBack();
+        if (Fragment_Shou.class != null) {
+            Fragment_Shou.getGoBack();
+        }
+        if (Fragment_Miao.class != null) {
+            Fragment_Miao.getGoWeb();
+        }
+        Intent intent1 = getIntent();
+        String h5 = intent1.getStringExtra("h5");
+        if (h5 != null && h5.equals("true")) {
+            H5SecActivity.getGoBack();
+        }
         //加载刷新
         refreshLayout = (SmartRefreshLayout) findViewById(R.id.refreshLayout);
         refreshLayout.setEnableLoadMore(false);
@@ -188,6 +197,9 @@ public class ParticularsActivity extends BaseActivtiy implements CustomAdapt, IC
 
     @JavascriptInterface
     public void sayHello(String msg) {
+        if (msg.equals("")) {
+            msg = "1";
+        }
         s += msg + ",";
         String[] split = s.split(",");
         if (split.length == 4) {
@@ -199,24 +211,35 @@ public class ParticularsActivity extends BaseActivtiy implements CustomAdapt, IC
 
     @JavascriptInterface
     public void orderBuy(String msg) {
-        if (!msg.equals("")) {
-            s += msg + ",";
+        if (msg.equals("")) {
+            msg = "1";
         }
-        Log.e("GTTTorderBuy", msg);
-        String[] split = s.split(",");
-        Log.e("GTTTorderBuy", split.length + "");
-        if (split.length == 7) {
-            Intent intent = new Intent(ParticularsActivity.this, CloseActivity.class);
-            intent.putExtra("goodinfo", s);
-            Log.e("GTTTorderBuy+++s-", s);
-            startActivity(intent);
-            s = "";
+        ss += msg + ",";
+        String[] split = this.ss.split(",");
+        if (split.length == 8) {
+            if (split[7].equals("1")) {
+                Intent intent = new Intent(ParticularsActivity.this, CloseActivity.class);
+                intent.putExtra("goodinfo", this.ss);
+                startActivity(intent);
+                this.ss = "";
+            } else if (split[7].equals("noProInfo")) {
+                Toast.makeText(this, "该规格下暂无商品信息", Toast.LENGTH_SHORT).show();
+                this.ss = "";
+                return;
+            } else if (split[7].equals("pleaseWriteNum")) {
+                Toast.makeText(this, "请输入要购买的数量", Toast.LENGTH_SHORT).show();
+                this.ss = "";
+                return;
+            } else if (split[7].equals("numNotThan")) {
+                Toast.makeText(this, "购买数量不能大于当前库存", Toast.LENGTH_SHORT).show();
+                this.ss = "";
+                return;
+            }
         }
     }
 
     @JavascriptInterface
     public void goCust(String msg) {
-        Log.e("EE", msg);
         Cust += msg + ",";
         String[] split = Cust.split(",");
         if (split.length == 5) {
@@ -245,7 +268,6 @@ public class ParticularsActivity extends BaseActivtiy implements CustomAdapt, IC
 
     @JavascriptInterface
     public void goCar() {
-
         startActivity(new Intent(ParticularsActivity.this, PartiCarActivity.class));
     }
 

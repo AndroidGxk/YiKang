@@ -204,6 +204,7 @@
                         android:textSize="11sp" />
 
                     <ImageView
+                        android:id="@+id/pay_img"
                         android:layout_width="14dp"
                         android:layout_height="14dp"
                         android:layout_centerVertical="true"

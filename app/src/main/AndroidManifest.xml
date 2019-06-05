@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.yikangcheng.admin.yikang">
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -13,9 +14,9 @@
     <application
         android:name=".app.BaseApp"
         android:allowBackup="true"
-        android:icon="@drawable/app_bg"
+        android:icon="@mipmap/appbg"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/app_bg"
+        android:roundIcon="@mipmap/appbg"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activity.H5SecActivity"></activity>
@@ -41,8 +42,7 @@
         <activity android:name=".activity.MessageActivity" />
         <activity android:name=".activity.ConfirmActivity" />
         <activity
-            android:name=".activity.SeekListActivity"
-            android:launchMode="singleTask" />
+            android:name=".activity.SeekListActivity" />
         <activity
             android:name=".activity.orderstatus.FackOfActivity"
             tools:ignore="DuplicateActivity" />
@@ -132,15 +132,7 @@
         <activity
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
-            android:launchMode="singleTop">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <data android:scheme="wx38a0aef5df24fe50" />
-            </intent-filter>
-        </activity>
+            android:launchMode="singleTop"/>
 
         <provider
             android:name="android.support.v4.content.FileProvider"

@@ -41,17 +41,23 @@
         android:indeterminateOnly="false"
         android:max="100"
         android:progressDrawable="@drawable/progress_bar_states" />
+
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/pb_progress">
-    <WebView
-        android:id="@+id/webvieww"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/pb_progress"
-        android:overScrollMode="never" />
+        <!--苹果水滴的样式-->
+        <com.scwang.smartrefresh.header.WaterDropHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <WebView
+            android:id="@+id/webvieww"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/pb_progress"
+            android:overScrollMode="never" />
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 </RelativeLayout>

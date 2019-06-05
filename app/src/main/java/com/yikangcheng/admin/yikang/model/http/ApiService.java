@@ -64,7 +64,7 @@ public interface ApiService {
      * 为你推荐
      */
     @POST("index/similarCommodityPage")
-    Observable<Request<List<RecommendBean>>> Recommend(@Query("userId") int userId, @Query("page") int page,@Query("currentPage")int currentPage);
+    Observable<Request<List<RecommendBean>>> Recommend(@Query("userId") int userId, @Query("page") int page, @Query("currentPage") int currentPage);
 
     /**
      * 我的页面-----广告图
@@ -242,7 +242,7 @@ public interface ApiService {
     Observable<Request<CreatOrderBean>> orderbuy(@Query("userId") int userId, @Query("commodityId") int commodityId, @Query("addressId") int addressId,
                                                  @Query("buyNum") int buyNum, @Query("invoiceType") int invoiceType, @Query("invoiceFrom") int invoiceFrom,
                                                  @Query("invoiceName") String invoiceName, @Query("invoiceNo") String invoiceNo, @Query("invoiceContent") String invoiceContent,
-                                                 @Query("invoiceEmail") String invoiceEmail, @Query("payType") String payType, @Query("orderForm") String orderForm,@Query("ipAddr")String ipAddr);
+                                                 @Query("invoiceEmail") String invoiceEmail, @Query("payType") String payType, @Query("orderForm") String orderForm, @Query("ipAddr") String ipAddr);
 
     /**
      * 创建多个商品订单
@@ -251,7 +251,7 @@ public interface ApiService {
     Observable<Request<CreatOrderBean>> createOrder(@Query("userId") int userId, @Query("cartIds") String cartIds, @Query("addressId") int addressId,
                                                     @Query("invoiceType") int invoiceType, @Query("invoiceFrom") int invoiceFrom,
                                                     @Query("invoiceName") String invoiceName, @Query("invoiceNo") String invoiceNo, @Query("invoiceContent") String invoiceContent,
-                                                    @Query("invoiceEmail") String invoiceEmail, @Query("payType") String payType, @Query("orderForm") String orderForm, @Query("dataType") String dataType);
+                                                    @Query("invoiceEmail") String invoiceEmail, @Query("payType") String payType, @Query("orderForm") String orderForm, @Query("dataType") String dataType, @Query("ipAddr") String ipAddr);
 
 
     /**
@@ -265,7 +265,7 @@ public interface ApiService {
      * 重新下单
      */
     @POST("order/repayUpdateOrder")
-    Observable<Request<PayBean>> repayUpdateOrder(@Query("orderId") int orderId, @Query("payType") String payType);
+    Observable<Request<PayBean>> repayUpdateOrder(@Query("orderId") int orderId, @Query("payType") String payType, @Query("ipAddr") String ipAddr);
 
     /**
      * 修改购物车商品数量
