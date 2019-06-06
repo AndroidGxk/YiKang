@@ -211,16 +211,41 @@ public class ParticularsActivity extends BaseActivtiy implements CustomAdapt, IC
 
     @JavascriptInterface
     public void orderBuy(String msg) {
+        //todo 立即购买
         if (msg.equals("")) {
             msg = "1";
         }
         ss += msg + ",";
         String[] split = this.ss.split(",");
-//        Log.e("sp--------------", split[7]);
+        Log.e("sp--------------", split.length + "");
+
+        /**
+         * 这些太乱了 等我有时间了再调下 现在应该可以实现
+         */
+        if (split.length == 9) {
+            if (split[8].equals("1")) {
+                Log.e("ssssssssssss", ss);
+                Intent intent = new Intent(ParticularsActivity.this, CloseActivity.class);
+                intent.putExtra("goodinfo", this.ss);
+                startActivity(intent);
+                this.ss = "";
+            } else if (split[8].equals("noProInfo")) {
+                Toast.makeText(this, "该规格下暂无商品信息", Toast.LENGTH_SHORT).show();
+                this.ss = "";
+                return;
+            } else if (split[8].equals("pleaseWriteNum")) {
+                Toast.makeText(this, "请输入要购买的数量", Toast.LENGTH_SHORT).show();
+                this.ss = "";
+                return;
+            } else if (split[8].equals("numNotThan")) {
+                Toast.makeText(this, "购买数量不能大于当前库存", Toast.LENGTH_SHORT).show();
+                this.ss = "";
+                return;
+            }
+        }
         if (split.length == 8) {
 //            Log.e("wangfei--------------", ss);
 //            Log.e("spppppppppppp", split[7]);
-
             if (split[7].equals("1")) {
                 Log.e("ssssssssssss", ss);
                 Intent intent = new Intent(ParticularsActivity.this, CloseActivity.class);
