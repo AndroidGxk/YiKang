@@ -1,8 +1,10 @@
 package com.yikangcheng.admin.yikang.activity.fragment.wodezhanghu;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -10,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.yikangcheng.admin.yikang.R;
+import com.yikangcheng.admin.yikang.activity.LoginActivity;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
 import com.yikangcheng.admin.yikang.bean.Request;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
@@ -120,6 +123,7 @@ public class AmendFragment extends BaseFragment implements ICoreInfe {
         Request request = (Request) data;
         Toast.makeText(getContext(), "" + request.getMessage(), Toast.LENGTH_SHORT).show();
         if (request.isSuccess()) {
+            startActivity(new Intent(getContext(), LoginActivity.class));
             getActivity().finish();
         }
     }

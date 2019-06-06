@@ -39,11 +39,12 @@
         <activity android:name=".activity.ApoutUsActivity" />
         <activity android:name=".activity.WuliuXinxiActivity" />
         <activity android:name=".activity.FaddishActivity" />
-        <activity android:name=".activity.CloseActivity" />
+        <activity
+            android:name=".activity.CloseActivity"
+            android:launchMode="singleTask" />
         <activity android:name=".activity.MessageActivity" />
         <activity android:name=".activity.ConfirmActivity" />
-        <activity
-            android:name=".activity.SeekListActivity"/>
+        <activity android:name=".activity.SeekListActivity" />
         <activity
             android:name=".activity.orderstatus.FackOfActivity"
             tools:ignore="DuplicateActivity" />
