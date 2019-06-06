@@ -57,6 +57,7 @@ public class SeekListActivity extends BaseActivtiy implements ICoreInfe, View.On
     private int mPage;
     private int width;
     private EditText editTixt_activity_seek_sousuo;
+    private ImageView xiaoxi;
 
     @Override
     protected void initView() {
@@ -74,6 +75,7 @@ public class SeekListActivity extends BaseActivtiy implements ICoreInfe, View.On
         xrecycler = (XRecyclerView) findViewById(R.id.xrecycler);
         //搜素框
         edit_seek_sousuo = (TextView) findViewById(R.id.EditTixt_activity_seek_sousuo);
+        xiaoxi = (ImageView) findViewById(R.id.xiaoxi);
         zonghe = (TextView) findViewById(R.id.zonghe);
         //加载刷新
         refreshLayout = (SmartRefreshLayout) findViewById(R.id.refreshLayout);
@@ -127,6 +129,12 @@ public class SeekListActivity extends BaseActivtiy implements ICoreInfe, View.On
                     commodityPresenter.request(id, record, count, 1, mPage);
                 }
                 refreshLayout.finishLoadMore();
+            }
+        });
+        xiaoxi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(SeekListActivity.this, MessageActivity.class));
             }
         });
     }

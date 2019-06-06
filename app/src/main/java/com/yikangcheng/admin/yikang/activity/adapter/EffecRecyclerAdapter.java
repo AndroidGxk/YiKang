@@ -48,7 +48,7 @@ public class EffecRecyclerAdapter extends RecyclerView.Adapter<EffecRecyclerAdap
 
     @Override
     public int getItemCount() {
-        return 3;
+        return 0;
     }
 
     class Vh extends RecyclerView.ViewHolder {

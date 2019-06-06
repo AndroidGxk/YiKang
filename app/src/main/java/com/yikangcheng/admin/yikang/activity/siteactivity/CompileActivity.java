@@ -65,7 +65,7 @@ public class CompileActivity extends BaseActivtiy implements ICoreInfe, CustomAd
     private InsertAddressPresenter insertAddressPresenter;
     private int proId;
     private int cityId;
-    private int countryId;
+    private int countryId = 0;
 
     @Override
     protected void initView() {
@@ -216,7 +216,12 @@ public class CompileActivity extends BaseActivtiy implements ICoreInfe, CustomAd
                     isFirst = 0;
                 }
                 LoginBean logUser = getLogUser(CompileActivity.this);
-                insertAddressPresenter.request(logUser.getId(), name, phone, xiangqing, isFirst, proId, cityId, countryId);
+                if (name.equals("") || phone.equals("") || xiangqing.equals("") || countryId == 0) {
+                    Toast.makeText(CompileActivity.this, "请完善信息", Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
+                    insertAddressPresenter.request(logUser.getId(), name, phone, xiangqing, isFirst, proId, cityId, countryId);
+                }
             }
         });
     }
@@ -248,6 +253,7 @@ public class CompileActivity extends BaseActivtiy implements ICoreInfe, CustomAd
     public void fail(ApiException e) {
 
     }
+
 
     @Override
     public boolean isBaseOnWidth() {

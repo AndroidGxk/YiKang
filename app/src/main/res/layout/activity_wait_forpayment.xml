@@ -59,7 +59,7 @@
             android:layout_marginTop="60dp"
             android:text="剩余00分00秒系统将取消订单"
             android:textColor="#ffffffff"
-            android:textSize="10sp" />
+            android:textSize="10sp"/>
 
         <RelativeLayout
             android:layout_width="match_parent"

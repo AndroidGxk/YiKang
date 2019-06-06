@@ -163,7 +163,6 @@ public class ObligationActivity extends BaseActivtiy implements ICoreInfe, Custo
             @Override
             public void OnClickListener(View v, int position) {
                 mDeleteItemPostion = position;
-
                 mPromptDialog.showWarnAlert("你确定要删除订单吗？", new PromptButton("取消", new PromptButtonListener() {
                     @Override
                     public void onClick(PromptButton button) {

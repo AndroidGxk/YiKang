@@ -206,7 +206,7 @@
             android:layout_height="80dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="40dp"
-            android:src="@drawable/header_img"
+            android:src="@drawable/touxiang_2"
             android:visibility="gone" />
 
         <TextView
@@ -217,7 +217,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="7dp"
             android:layout_marginBottom="40dp"
-            android:text="雅静静"
+            android:text=""
             android:textColor="#ffffff"
             android:textSize="18sp"
             android:visibility="gone" />

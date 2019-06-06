@@ -15,6 +15,7 @@ import android.support.v4.content.FileProvider;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -76,6 +77,8 @@ public class BasicFragment extends BaseFragment implements ICoreInfe {
     private UpdateUserMapperPresenter updateUserMapperPresenter;
     private EditText youxiang_text;
     private PromptButton cancle;
+    private UserDetailBean userCenter;
+    int sex = 0;
 
     @Override
     protected void initView(View view) {
@@ -239,7 +242,6 @@ public class BasicFragment extends BaseFragment implements ICoreInfe {
         ok_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int sex = 0;
                 String name_str = name_text.getText().toString();
                 String rela_name_str = rela_name_text.getText().toString();
                 String jianjie_str = jianjie.getText().toString();
@@ -252,6 +254,9 @@ public class BasicFragment extends BaseFragment implements ICoreInfe {
                 //todo 修改个人信息
                 LoginBean logUser = getLogUser(getContext());
                 if (logUser != null) {
+                    if (path == null || path.equals("")) {
+                        path = userCenter.getAvatar();
+                    }
                     updateUserMapperPresenter.request(logUser.getId(), name_str, path, rela_name_str, email, sex, jianjie_str);
                     promptDialog.showLoading("正在保存");
                 }
@@ -411,7 +416,7 @@ public class BasicFragment extends BaseFragment implements ICoreInfe {
     public void success(Object data) {
         Request request = (Request) data;
         UserInfoBean entity = (UserInfoBean) request.getEntity();
-        UserDetailBean userCenter = (UserDetailBean) entity.getUserCenter();
+        userCenter = (UserDetailBean) entity.getUserCenter();
         rela_name_text.setText(userCenter.getRealName());
         name_text.setText(userCenter.getNickName());
         if (userCenter.getGender() == 0) {
@@ -444,6 +449,7 @@ public class BasicFragment extends BaseFragment implements ICoreInfe {
 
         @Override
         public void fail(ApiException e) {
+            promptDialog.showError("上传失败");
         }
     }
 
@@ -457,6 +463,9 @@ public class BasicFragment extends BaseFragment implements ICoreInfe {
             if (request.isSuccess()) {
                 promptDialog.showSuccess("修改成功");
                 getActivity().finish();
+            } else {
+                promptDialog.dismiss();
+                Toast.makeText(getContext(), "" + request.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }
 

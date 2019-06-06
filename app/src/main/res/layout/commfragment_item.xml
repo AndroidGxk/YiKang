@@ -4,11 +4,23 @@
     android:layout_height="match_parent"
     android:background="#F3F3F3">
 
-    <com.jcodecraeer.xrecyclerview.XRecyclerView
-        android:id="@+id/xrecycler"
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
+        android:visibility="gone"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dp" />
+        android:layout_below="@+id/pb_progress"
+        android:layout_marginBottom="10dp">
+        <!--苹果水滴的样式-->
+        <com.scwang.smartrefresh.header.WaterDropHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
     <ImageView
         android:id="@+id/zanwuyouhuiquan"
@@ -20,11 +32,11 @@
         android:visibility="gone" />
 
     <ImageView
+        android:id="@+id/zanwushixiao"
         android:layout_width="115dp"
         android:layout_height="102dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="140dp"
-        android:id="@+id/zanwushixiao"
         android:background="@drawable/zanwushixiao"
         android:visibility="gone" />
 </RelativeLayout>

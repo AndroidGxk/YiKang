@@ -80,10 +80,10 @@ public class AmendFragment extends BaseFragment implements ICoreInfe {
             public void onClick(View view) {
                 String phone = phone_text.getText().toString();
                 boolean mobile = UIUtils.isMobile(phone);
-                if(mobile){
+                if (mobile) {
                     getMobileKeyPresenter.request(phone, "Android");
                     handler.sendEmptyMessage(1);
-                }else{
+                } else {
                     Toast.makeText(getContext(), "请输入正确的手机号", Toast.LENGTH_SHORT).show();
                 }
 
@@ -119,6 +119,9 @@ public class AmendFragment extends BaseFragment implements ICoreInfe {
     public void success(Object data) {
         Request request = (Request) data;
         Toast.makeText(getContext(), "" + request.getMessage(), Toast.LENGTH_SHORT).show();
+        if (request.isSuccess()) {
+            getActivity().finish();
+        }
     }
 
     @Override
@@ -153,7 +156,8 @@ public class AmendFragment extends BaseFragment implements ICoreInfe {
     private class SendMobile implements ICoreInfe {
         @Override
         public void success(Object data) {
-
+            Request request = (Request) data;
+            Toast.makeText(getContext(), "" + request.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
         @Override

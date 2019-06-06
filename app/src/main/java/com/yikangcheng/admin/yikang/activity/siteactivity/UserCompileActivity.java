@@ -233,9 +233,15 @@ public class UserCompileActivity extends BaseActivtiy implements ICoreInfe, Cust
                 } else {
                     isFirst = 0;
                 }
-                updateAddressPresenter.request(listUserAddressBean.getId(), getLogUser(UserCompileActivity.this).getId(),
-                        name, phone, xiangqing, isFirst,
-                        proId, cityId, countryId);
+                if (name.equals("") || phone.equals("") || xiangqing.equals("") || countryId == 0) {
+                    Toast.makeText(UserCompileActivity.this, "请完善信息", Toast.LENGTH_SHORT).show();
+                    return;
+                }else {
+                    updateAddressPresenter.request(listUserAddressBean.getId(), getLogUser(UserCompileActivity.this).getId(),
+                            name, phone, xiangqing, isFirst,
+                            proId, cityId, countryId);
+                }
+
             }
         });
     }
@@ -280,9 +286,10 @@ public class UserCompileActivity extends BaseActivtiy implements ICoreInfe, Cust
         @Override
         public void success(Object data) {
             Request request = (Request) data;
-            Toast.makeText(UserCompileActivity.this, "" + request.getMessage(), Toast.LENGTH_SHORT).show();
             if (request.isSuccess()) {
                 finish();
+            }else{
+                Toast.makeText(UserCompileActivity.this, "" + request.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }
 

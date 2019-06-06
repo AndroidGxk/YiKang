@@ -60,6 +60,15 @@
                     android:background="#FFFFFF">
 
                     <TextView
+                        android:id="@+id/text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="请选择收货地址"
+                        android:textColor="#000000"
+                        android:textSize="19sp" />
+
+                    <TextView
                         android:id="@+id/user_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

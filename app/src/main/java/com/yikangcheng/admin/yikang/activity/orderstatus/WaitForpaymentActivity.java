@@ -10,6 +10,7 @@ import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.widget.ImageView;
@@ -36,8 +37,11 @@ import com.yikangcheng.admin.yikang.paysdk.PayResult;
 import com.yikangcheng.admin.yikang.presenter.CloseTheDeallPresenter;
 import com.yikangcheng.admin.yikang.presenter.DeleteOrderIdPresenter;
 import com.yikangcheng.admin.yikang.presenter.NewOrderPresenter;
+import com.yikangcheng.admin.yikang.util.Logger;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
@@ -90,6 +94,8 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
     private String mStime;
     private String mCreateTime;
     private Date mCurDate;
+    private String mTime;
+    private long ts;
 
     @Override
     protected void initView() {
@@ -204,35 +210,7 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
 
         //刪除
         initDelete();
-
-
-//        //获取下单时间转换时间戳
-//        try {
-//            dateToStamp(mCreateTime);
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//
-//
-//        //获取当前系统时间
-//        mCurDate = new Date(System.currentTimeMillis());
-
     }
-
-
-//    /*
-//     * 将时间转换为时间戳
-//     */
-//    public String dateToStamp(String s) throws ParseException {
-//        String res;
-//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(mCreateTime);
-//        Date date = simpleDateFormat.parse(mCreateTime);
-//        long ts = date.getTime();
-//        res = String.valueOf(ts);
-//        Log.e("hahhaaha", res);
-//        return res;
-//    }
-
 
     @Override
     protected void onDestroy() {
@@ -286,22 +264,23 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
         if (TIME == 0) {
             mStime = "计时结束";
         } else {
-            int hour = TIME / (1000 * 60 * 60);
-            int minute = TIME % (1000 * 60 * 60) / (60 * 1000);
-            int second = (TIME % (1000 * 60 * 60)) % (60 * 1000) / 1000;
-            String shour = "" + hour, sminute = "" + minute, ssecond = "" + second;
-            if (hour <= 9) {
-                shour = "0" + hour;
+            long l = System.currentTimeMillis();
+            long time = l - ts;
+            SimpleDateFormat sdf = new SimpleDateFormat("mm分ss");
+            //三十分钟
+            SimpleDateFormat simpleDateFormats = new SimpleDateFormat("mm:ss");
+            Date threeTime = null;
+            try {
+                threeTime = simpleDateFormats.parse("30:00");
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
-            if (minute <= 9) {
-                sminute = "0" + minute;
-            }
-            if (second <= 9) {
-                ssecond = "0" + second;
-            }
-            mStime = shour + ":" + sminute + ":" + ssecond;
+            long three_time = threeTime.getTime();
+            long sTime = three_time - time;
+            // 时间戳转换成时间
+            mTime = sdf.format(new Date(sTime));
         }
-        mTvActivityWaitfrrpaymentDaojishi.setText(mStime + "");
+        mTvActivityWaitfrrpaymentDaojishi.setText("剩余" + mTime + "秒系统将取消订单");
     }
 
     private void initDelete() {
@@ -392,8 +371,6 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
                     break;
             }
         }
-
-        ;
     };
 
     @Override
@@ -425,7 +402,6 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
             Request request = (Request) data;
             mMEntity = (DeleteOrderBean) request.getEntity();
             //有需要在这打印一下message的返回值现在返回的是空的  让后台看一下  做一个判断
-            // Log.e("aaa", "success: "+mMEntity.get );
             mWaitForPaymentAdapter.mList.remove(mPosition);
             mWaitForPaymentAdapter.notifyDataSetChanged();
         }
@@ -488,8 +464,32 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
         }
 
         mCreateTime = entity.getOrder().getCreateTime();
-//        mTvActivityWaitfrrpaymentDaojishi.setText(mStime);
         String orderState = entity.getOrder().getOrderState();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = null;
+        try {
+            date = simpleDateFormat.parse(mCreateTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        ts = date.getTime();
+        long l = System.currentTimeMillis();
+        long time = l - ts;
+        SimpleDateFormat sdf = new SimpleDateFormat("mm分ss");
+
+        //三十分钟
+        SimpleDateFormat simpleDateFormats = new SimpleDateFormat("mm:ss");
+        Date threeTime = null;
+        try {
+            threeTime = simpleDateFormats.parse("30:00");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        long three_time = threeTime.getTime();
+        long sTime = three_time - time;
+        // 时间戳转换成时间
+        mTime = sdf.format(new Date(sTime));
+        mTvActivityWaitfrrpaymentDaojishi.setText("剩余" + mTime + "秒系统将取消订单");
         if (orderState.equals("INIT")) {
             //启动计时服务这个方法
             startService(new Intent(this, ClockService.class));
