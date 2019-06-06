@@ -18,7 +18,6 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.adapter.PaidAdapter_A;
 import com.yikangcheng.admin.yikang.activity.orderstatus.CloseTheDealActivity;
-import com.yikangcheng.admin.yikang.activity.orderstatus.FackOfActivity;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.DeleteOrderBean;
 import com.yikangcheng.admin.yikang.bean.PaidBean;
@@ -59,16 +58,15 @@ public class PaidActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
     protected void initView() {
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
-
         //创建对象
         mPromptDialog = new PromptDialog(this);
         //设置自定义属性
         mPromptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(3000);
 
-
         Display display = this.getWindowManager().getDefaultDisplay();
         width = display.getWidth();
         int height = display.getHeight();
+        //找控件
         mImgActivityPaidFanhui = (ImageView) findViewById(R.id.img_activity_paid_fanhui);
         mToolbarActivityPaid = (RelativeLayout) findViewById(R.id.toolbar_activity_paid);
         mRlvActivityPaid = (RecyclerView) findViewById(R.id.rlv_activity_paid);

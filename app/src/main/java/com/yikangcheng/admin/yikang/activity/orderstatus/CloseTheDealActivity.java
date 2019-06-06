@@ -168,8 +168,7 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
             }
         });
 
-//        confirm.setTextColor(R.color.clolrBAai);
-//        PromptButton cancle = new PromptButton("取消", null);
+        //设置弹窗字体颜色
 //        confirm.setTextColor(Color.parseColor("#FFFFFF"));
 //        confirm.setFocusBacColor(Color.parseColor("#ffaf00"));
     }
@@ -189,7 +188,7 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
     @Override
     protected void initEventData() {
         /**
-         * 退出
+         * 退出当前Activity
          */
         back_img.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -219,6 +218,7 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
         return width / 2;
     }
 
+    //点击监听
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -238,8 +238,8 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
         }
     }
 
+    //Delete删除ICoreInfe
     public class delete implements ICoreInfe {
-
         public DeleteOrderBean mMEntity;
 
         @Override
@@ -263,9 +263,8 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
     public void success(Object data) {
         Request request = (Request) data;
         CloseTheDealBean entity = (CloseTheDealBean) request.getEntity();
-
+        //添加数据到适配器
         mCloseTheDealAdapter.addAll(entity.getDetailsList());
-
         //用户名
         mTvActivityCloseName.setText(entity.getUserAddress().getReceiver());
         //地址
@@ -277,18 +276,14 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
         mTvActivityCloseBiaohao.setText(entity.getOrder().getOrderNo());
         //运费
         mTvActivityCloseYunFei.setText(entity.getOrder().getFreightPrice() + "");
-
-
         //金额
         mTvActivityCloseJinE.setText(entity.getOrder().getRealPrice() + "");
         //总额
-
         mTvActivityCloseZhongJi.setText(entity.getOrder().getSumPrice() + "");
         //支付方式
         if (entity.getOrder().getOrderState().equals("SUCCESS")) {
             mTvActivityCloseFangShi.setText("支付成功");
         }
-
         //发票类型
         int invoiceType = entity.getOrderBook().getInvoiceType();
         Log.e("tag", "success: " + invoiceType);

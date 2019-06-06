@@ -2,8 +2,6 @@ package com.yikangcheng.admin.yikang.activity.particulars;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -175,6 +173,8 @@ public class ParticularsActivity extends BaseActivtiy implements CustomAdapt, IC
         });
     }
 
+//    http://192.168.0.138/mobile/appShow/index?type=android
+
     @Override
     protected int getActivtiyLayoutId() {
         return R.layout.activity_particulars;
@@ -216,8 +216,13 @@ public class ParticularsActivity extends BaseActivtiy implements CustomAdapt, IC
         }
         ss += msg + ",";
         String[] split = this.ss.split(",");
+//        Log.e("sp--------------", split[7]);
         if (split.length == 8) {
+//            Log.e("wangfei--------------", ss);
+//            Log.e("spppppppppppp", split[7]);
+
             if (split[7].equals("1")) {
+                Log.e("ssssssssssss", ss);
                 Intent intent = new Intent(ParticularsActivity.this, CloseActivity.class);
                 intent.putExtra("goodinfo", this.ss);
                 startActivity(intent);

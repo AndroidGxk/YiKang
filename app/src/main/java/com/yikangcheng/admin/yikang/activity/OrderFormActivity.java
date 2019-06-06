@@ -19,7 +19,6 @@ import com.yikangcheng.admin.yikang.activity.fragment.orderform.AccomplishFragme
 import com.yikangcheng.admin.yikang.activity.fragment.orderform.AllFragment;
 import com.yikangcheng.admin.yikang.activity.fragment.orderform.AwaitFragment;
 import com.yikangcheng.admin.yikang.activity.fragment.orderform.CloseFragment;
-import com.yikangcheng.admin.yikang.activity.fragment.orderform.WaitForReceivingFragment;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
@@ -64,13 +63,13 @@ public class OrderFormActivity extends BaseActivtiy implements CustomAdapt {
         final List<String> strings = new ArrayList<>();
         strings.add("全部");
         strings.add("待付款");
-        strings.add("待收货");
+//        strings.add("待收货");
         strings.add("已支付");
         strings.add("已取消");
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(new AllFragment());
         fragments.add(new AwaitFragment());
-        fragments.add(new WaitForReceivingFragment());
+//        fragments.add(new WaitForReceivingFragment());
         fragments.add(new AccomplishFragment());
         fragments.add(new CloseFragment());
         Orderform_ViewPagerAdapter orderform_viewPagerAdapter = new Orderform_ViewPagerAdapter(getSupportFragmentManager(), strings, fragments);

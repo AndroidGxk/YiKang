@@ -25,7 +25,7 @@ import com.yikangcheng.admin.yikang.activity.myaccount.MyaccountActivity;
 import com.yikangcheng.admin.yikang.activity.obligation.CanceledActivity;
 import com.yikangcheng.admin.yikang.activity.obligation.DetailActivity;
 import com.yikangcheng.admin.yikang.activity.obligation.ObligationActivity;
-import com.yikangcheng.admin.yikang.activity.orderstatus.countdown.WaitForReceivingActivity;
+import com.yikangcheng.admin.yikang.activity.obligation.PaidActivity;
 import com.yikangcheng.admin.yikang.activity.particulars.ParticularsActivity;
 import com.yikangcheng.admin.yikang.activity.siteactivity.AiteActivity;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
@@ -93,9 +93,9 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe, XRecyclerVie
         //关于
         mImgFragmentWoguanyu = view.findViewById(R.id.img__fragment_wo_guanyu);
 //        //已支付APP
-//        mImgFragmentWoYizhifu = view.findViewById(R.id.img_fragment_wo_yizhifu);
+        mImgFragmentWoYizhifu = view.findViewById(R.id.img_fragment_wo_yizhifu);
         //待收货
-        mImg_fragment_wo_daishouhuo = view.findViewById(R.id.img_fragment_wo_daishouhuo);
+//        mImg_fragment_wo_daishouhuo = view.findViewById(R.id.img_fragment_wo_daishouhuo);
         //已退款
         mImgFragmentWoYituikuan = view.findViewById(R.id.img_fragment_wo_yituikuan);
         //这是铃铛上面的提示消息
@@ -135,7 +135,7 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe, XRecyclerVie
          * 点击监听
          */
         mImgFragmentWoYiquxiao.setOnClickListener(this);
-        mImg_fragment_wo_daishouhuo.setOnClickListener(this);
+//        mImg_fragment_wo_daishouhuo.setOnClickListener(this);
         mMingxi.setOnClickListener(this);
         mImgFragmentWoDaifukuan.setOnClickListener(this);
         mTvFragmentWoName.setOnClickListener(this);
@@ -146,18 +146,7 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe, XRecyclerVie
         mImgFragmentWoYituikuan.setOnClickListener(this);
         mImgFragmentWoguanyu.setOnClickListener(this);
         mImgFragmentWoLingdang.setOnClickListener(this);
-
-//        /**
-//         * 点击已支付跳转页面
-//         */
-//        mImgFragmentWoYizhifu.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(getActivity(), PaidActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-
+        mImgFragmentWoYizhifu.setOnClickListener(this);
 
         //接口请求
         userInfoPresenter = new UserInfoPresenter(new UserInfo());
@@ -248,9 +237,9 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe, XRecyclerVie
                 startActivity(new Intent(getActivity(), CanceledActivity.class));
                 break;
             //待收货
-            case R.id.img_fragment_wo_daishouhuo:
-                startActivity(new Intent(getActivity(), WaitForReceivingActivity.class));
-                break;
+//            case R.id.img_fragment_wo_daishouhuo:
+//                startActivity(new Intent(getActivity(), WaitForReceivingActivity.class));
+//                break;
             //账户明细
             case R.id.relativeLayout_mingxi_fragment_wo:
                 startActivity(new Intent(getActivity(), DetailActivity.class));
@@ -324,6 +313,10 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe, XRecyclerVie
                 } else {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
                 }
+                break;
+            //已支付
+            case R.id.img_fragment_wo_yizhifu:
+                startActivity(new Intent(getActivity(), PaidActivity.class));
                 break;
         }
     }
