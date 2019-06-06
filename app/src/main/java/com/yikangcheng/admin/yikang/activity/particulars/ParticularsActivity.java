@@ -216,11 +216,10 @@ public class ParticularsActivity extends BaseActivtiy implements CustomAdapt, IC
         }
         ss += msg + ",";
         String[] split = this.ss.split(",");
-//        Log.e("sp--------------", split[7]);
+//            Log.e("sp--------------", split[7]);
         if (split.length == 8) {
 //            Log.e("wangfei--------------", ss);
 //            Log.e("spppppppppppp", split[7]);
-
             if (split[7].equals("1")) {
                 Log.e("ssssssssssss", ss);
                 Intent intent = new Intent(ParticularsActivity.this, CloseActivity.class);
