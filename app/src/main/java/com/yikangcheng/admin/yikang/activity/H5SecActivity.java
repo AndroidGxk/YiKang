@@ -120,7 +120,14 @@ public class H5SecActivity extends BaseActivtiy implements CustomAdapt {
         back_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                /**
+                 * 如果还有页面需要这样你就复制这些代码就可以了
+                 */
+                if (webview.canGoBack()) {
+                    webview.goBack();
+                } else {
+                    finish();
+                }
             }
         });
     }

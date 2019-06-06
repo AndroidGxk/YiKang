@@ -263,26 +263,43 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
          */
         if (goodinfo != null) {
             String[] split = goodinfo.split(",");
-            for (int i = 0; i < split.length; i++) {
-                Log.e("GTTTsss", "" + split[i]);
+            if (split.length == 9) {
+                num = split[3];
+                pariticShopBean = new PariticShopBean();
+                pariticShopBean.setId(split[1]);
+                pariticShopBean.setDataType(split[2]);
+                pariticShopBean.setBuyNum(split[3]);
+                pariticShopBean.setPrice(split[4]);
+                pariticShopBean.setCommodityName(split[5]);
+                pariticShopBean.setLogo(split[6]);
+                pariticShopBean.setDataType(split[7]);
+                closeRecyclerAdapter.addAlls(pariticShopBean);
+                double price = Double.parseDouble(split[4]);
+                java.text.DecimalFormat myformat1 = new java.text.DecimalFormat("0.00");
+                String strs = myformat1.format(price * Integer.parseInt(split[3]));
+                good_num.setText("x" + split[3]);
+                total_money.setText("¥" + strs);
+                heji_text.setText("合计：¥" + strs);
+                goodinfo = "";
+            }else{
+                num = split[2];
+                pariticShopBean = new PariticShopBean();
+                pariticShopBean.setId(split[0]);
+                pariticShopBean.setDataType(split[1]);
+                pariticShopBean.setBuyNum(split[2]);
+                pariticShopBean.setPrice(split[3]);
+                pariticShopBean.setCommodityName(split[4]);
+                pariticShopBean.setLogo(split[5]);
+                pariticShopBean.setDataType(split[6]);
+                closeRecyclerAdapter.addAlls(pariticShopBean);
+                double price = Double.parseDouble(split[3]);
+                java.text.DecimalFormat myformat1 = new java.text.DecimalFormat("0.00");
+                String strs = myformat1.format(price * Integer.parseInt(split[2]));
+                good_num.setText("x" + split[2]);
+                total_money.setText("¥" + strs);
+                heji_text.setText("合计：¥" + strs);
+                goodinfo = "";
             }
-            num = split[2];
-            pariticShopBean = new PariticShopBean();
-            pariticShopBean.setId(split[0]);
-            pariticShopBean.setDataType(split[1]);
-            pariticShopBean.setBuyNum(split[2]);
-            pariticShopBean.setPrice(split[3]);
-            pariticShopBean.setCommodityName(split[4]);
-            pariticShopBean.setLogo(split[5]);
-            pariticShopBean.setDataType(split[6]);
-            closeRecyclerAdapter.addAlls(pariticShopBean);
-            double price = Double.parseDouble(split[3]);
-            java.text.DecimalFormat myformat1 = new java.text.DecimalFormat("0.00");
-            String strs = myformat1.format(price * Integer.parseInt(split[2]));
-            good_num.setText("x" + split[2]);
-            total_money.setText("¥" + strs);
-            heji_text.setText("合计：¥" + strs);
-            goodinfo = "";
         }
         invoice();
     }
@@ -585,43 +602,43 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
             if (type == 0) {
                 text.setVisibility(View.VISIBLE);
             }
-    }
+        }
 
-    @Override
-    public void fail(ApiException e) {
+        @Override
+        public void fail(ApiException e) {
 
-    }
-}
-
-/**
- * 创建订单
- */
-private class OrderBuy implements ICoreInfe {
-    @Override
-    public void success(Object data) {
-        Request request = (Request) data;
-        if (request.isSuccess()) {
-            CreatOrderBean entity = (CreatOrderBean) request.getEntity();
-            entity.setPayType(zhi ? "ALIPAY" : "WEIXIN");
-            Intent intent = new Intent(CloseActivity.this, ConfirmActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("creatorder", entity);
-            intent.putExtras(bundle);
-            startActivity(intent);
-            promptDialog.dismiss();
-            finish();
-        } else {
-            Toast.makeText(CloseActivity.this, "" + request.getMessage(), Toast.LENGTH_SHORT).show();
-            promptDialog.dismiss();
         }
     }
 
-    @Override
-    public void fail(ApiException e) {
+    /**
+     * 创建订单
+     */
+    private class OrderBuy implements ICoreInfe {
+        @Override
+        public void success(Object data) {
+            Request request = (Request) data;
+            if (request.isSuccess()) {
+                CreatOrderBean entity = (CreatOrderBean) request.getEntity();
+                entity.setPayType(zhi ? "ALIPAY" : "WEIXIN");
+                Intent intent = new Intent(CloseActivity.this, ConfirmActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("creatorder", entity);
+                intent.putExtras(bundle);
+                startActivity(intent);
+                promptDialog.dismiss();
+                finish();
+            } else {
+                Toast.makeText(CloseActivity.this, "" + request.getMessage(), Toast.LENGTH_SHORT).show();
+                promptDialog.dismiss();
+            }
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
 
     }
-
-}
 
     @Override
     protected void onResume() {
