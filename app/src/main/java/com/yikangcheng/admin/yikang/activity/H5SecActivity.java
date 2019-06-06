@@ -132,6 +132,11 @@ public class H5SecActivity extends BaseActivtiy implements CustomAdapt {
         });
     }
 
+    /**
+     *
+     * @return
+     */
+
     @Override
     protected int getActivtiyLayoutId() {
         return R.layout.activity_h5_sec;
