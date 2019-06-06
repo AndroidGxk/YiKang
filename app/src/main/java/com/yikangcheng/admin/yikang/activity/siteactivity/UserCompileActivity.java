@@ -218,6 +218,32 @@ public class UserCompileActivity extends BaseActivtiy implements ICoreInfe, Cust
 
             }
         });
+
+
+//        //为EditText设置监听，注意监听类型为TextWatcher
+//        phone_text.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                String phone = phone_text.getText().toString();
+//                String REGEX_MOBILE_EXACT = "^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,3,5-8])|(18[0-9])|166|198|199|(147))\\d{8}$";
+//                if (phone_text.getText().toString().matches(REGEX_MOBILE_EXACT)){
+//
+//                }else if (!phone_text.getText().toString().matches(REGEX_MOBILE_EXACT)){
+//
+//                    Toast.makeText(UserCompileActivity.this, "请输入正确的手机号", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//            }
+//        });
+
+
         //点击事件
         add_address.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -228,6 +254,7 @@ public class UserCompileActivity extends BaseActivtiy implements ICoreInfe, Cust
                 String address = address_text.getText().toString();
                 String xiangqing = relay_address.getText().toString();
                 boolean checked = check_btn.isChecked();
+
                 if (checked) {
                     isFirst = 1;
                 } else {
@@ -236,10 +263,16 @@ public class UserCompileActivity extends BaseActivtiy implements ICoreInfe, Cust
                 if (name.equals("") || phone.equals("") || xiangqing.equals("") || countryId == 0) {
                     Toast.makeText(UserCompileActivity.this, "请完善信息", Toast.LENGTH_SHORT).show();
                     return;
-                }else {
-                    updateAddressPresenter.request(listUserAddressBean.getId(), getLogUser(UserCompileActivity.this).getId(),
-                            name, phone, xiangqing, isFirst,
-                            proId, cityId, countryId);
+                } else {
+                    String REGEX_MOBILE_EXACT = "^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,3,5-8])|(18[0-9])|166|198|199|(147))\\d{8}$";
+                    if (phone_text.getText().toString().matches(REGEX_MOBILE_EXACT)) {
+                        updateAddressPresenter.request(listUserAddressBean.getId(), getLogUser(UserCompileActivity.this).getId(),
+                                name, phone, xiangqing, isFirst,
+                                proId, cityId, countryId);
+                    } else if (!phone_text.getText().toString().matches(REGEX_MOBILE_EXACT)) {
+                        Toast.makeText(UserCompileActivity.this, "请输入正确的手机号", Toast.LENGTH_SHORT).show();
+                    }
+                    return;
                 }
 
             }
@@ -288,7 +321,7 @@ public class UserCompileActivity extends BaseActivtiy implements ICoreInfe, Cust
             Request request = (Request) data;
             if (request.isSuccess()) {
                 finish();
-            }else{
+            } else {
                 Toast.makeText(UserCompileActivity.this, "" + request.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }

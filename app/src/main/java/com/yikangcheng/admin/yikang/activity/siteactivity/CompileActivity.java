@@ -220,7 +220,13 @@ public class CompileActivity extends BaseActivtiy implements ICoreInfe, CustomAd
                     Toast.makeText(CompileActivity.this, "请完善信息", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
-                    insertAddressPresenter.request(logUser.getId(), name, phone, xiangqing, isFirst, proId, cityId, countryId);
+                    String REGEX_MOBILE_EXACT = "^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,3,5-8])|(18[0-9])|166|198|199|(147))\\d{8}$";
+                    if (phone_text.getText().toString().matches(REGEX_MOBILE_EXACT)) {
+                        insertAddressPresenter.request(logUser.getId(), name, phone, xiangqing, isFirst, proId, cityId, countryId);
+                    } else if (!phone_text.getText().toString().matches(REGEX_MOBILE_EXACT)) {
+                        Toast.makeText(CompileActivity.this, "请输入正确的手机号", Toast.LENGTH_SHORT).show();
+                    }
+                    return;
                 }
             }
         });

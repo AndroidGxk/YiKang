@@ -10,7 +10,6 @@ import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.widget.ImageView;
@@ -21,11 +20,13 @@ import android.widget.Toast;
 import com.alipay.sdk.app.PayTask;
 import com.sobot.chat.SobotApi;
 import com.sobot.chat.api.model.Information;
+import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.PayResultActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.WaitForPaymentAdapter;
 import com.yikangcheng.admin.yikang.activity.copy.CopyButtonLibrary;
 import com.yikangcheng.admin.yikang.activity.orderstatus.countdown.ClockService;
+import com.yikangcheng.admin.yikang.app.BaseApp;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.CloseTheDealBean;
 import com.yikangcheng.admin.yikang.bean.DeleteOrderBean;
@@ -37,7 +38,6 @@ import com.yikangcheng.admin.yikang.paysdk.PayResult;
 import com.yikangcheng.admin.yikang.presenter.CloseTheDeallPresenter;
 import com.yikangcheng.admin.yikang.presenter.DeleteOrderIdPresenter;
 import com.yikangcheng.admin.yikang.presenter.NewOrderPresenter;
-import com.yikangcheng.admin.yikang.util.Logger;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
 import java.text.ParseException;
@@ -204,7 +204,11 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
         go_pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                newOrderPresenter.request(mOrderId_wait, "ALIPAY", "");
+                if (mPayType.equals("ALIPAY")) {
+                    newOrderPresenter.request(mOrderId_wait, "ALIPAY", "");
+                } else if (mPayType.equals("WEIXIN")) {
+                    newOrderPresenter.request(mOrderId_wait, "WEIXIN", "");
+                }
             }
         });
 
@@ -334,7 +338,6 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
                     // 支付宝返回此次支付结果及加签，建议对支付宝签名信息拿签约时支付宝提供的公钥做验签
                     String resultInfo = payResult.getResult();
                     String resultStatus = payResult.getResultStatus();
-
                     // 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
                     if (TextUtils.equals(resultStatus, "9000")) {
                         Intent intent = new Intent(WaitForpaymentActivity.this, PayResultActivity.class);
@@ -509,25 +512,38 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
         public void success(Object data) {
             Request request = (Request) data;
             mEntity = (PayBean) request.getEntity();
-            //todo 支付宝
-            // 构造PayTask 对象
-            // 调用支付接口，获取支付结果
-            Runnable payRunnable = new Runnable() {
-                @Override
-                public void run() {
-                    PayTask alipay = new PayTask(WaitForpaymentActivity.this);
-                    Map<String, String> result = alipay.payV2(mEntity.getOrderinfo(), true);
+            if (mPayType.equals("ALIPAY")) {
+                //todo 支付宝
+                // 构造PayTask 对象
+                // 调用支付接口，获取支付结果
+                Runnable payRunnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        PayTask alipay = new PayTask(WaitForpaymentActivity.this);
+                        Map<String, String> result = alipay.payV2(mEntity.getOrderinfo(), true);
 //                        Map<String, String> result = alipay.payV2("alipay_sdk=alipay-sdk-java-3.7.26.ALL&app_id=2019030863469663&biz_content=%7B%22body%22%3A%22%E6%98%93%E5%BA%B7%E6%88%90%22%2C%22out_trade_no%22%3A%22NO155906963237992%22%2C%22product_code%22%3A%22QUICK_MSECURITY_PAY%22%2C%22subject%22%3A%22%E7%BE%8E%E5%A6%86%E6%B5%8B%E8%AF%95008%22%2C%22timeout_express%22%3A%2230m%22%2C%22total_amount%22%3A%220.01%22%7D&charset=utf-8&format=json&method=alipay.trade.app.pay&notify_url=https%3A%2F%2Fwww.yikch.com%2Fapi%2Forder%2FpaySuccess&sign=ndtQ6fc9XGCC6iZJ%2FX2UrDpFzHEtVehwJivhN%2BEEwZyNsBxYUIj2og0GvMo0JX3oEiVPB57SrMRFv03G%2Fz5Wl3n9HCCiZZF9X1WDfC7PJ3CNVHjMWQ%2FGC5oQ%2FE3NIfV%2FEVtkDRqBmOfChgJa%2F1dM%2BfT9mMFcKdH7ZYkJjwSwdMg4%2FtYy8FGifR%2FSphG41JujEEQMJ4IyOuKtxcROrKpQpF7NLT1hbrEI0dh0JKLsfwTks463%2FEpE5U0Gf5Fc9Ta5PrEkBTJFwWp2MtXtbgHEMtxCj9%2B17pgaEiowlX3Vfle8NvTuJlb7rz2glzzONgwwqRwkpzXhKE0ukaKUQ61tGw%3D%3D&sign_type=RSA2&timestamp=2019-05-29+02%3A53%3A52&version=1.0", true);
-                    Message msg = new Message();
-                    msg.what = SDK_PAY_FLAG;
-                    msg.obj = result;
-                    mHandler.sendMessage(msg);
-                }
-            };
-            // 必须异步调用
-            Thread payThread = new Thread(payRunnable);
-            payThread.start();
-
+                        Message msg = new Message();
+                        msg.what = SDK_PAY_FLAG;
+                        msg.obj = result;
+                        mHandler.sendMessage(msg);
+                    }
+                };
+                // 必须异步调用
+                Thread payThread = new Thread(payRunnable);
+                payThread.start();
+            } else if (mPayType.equals("WEIXIN")) {
+                PayReq req = new PayReq();//PayReq就是订单信息对象
+                //给req对象赋值
+                req.appId = "wx38a0aef5df24fe50";
+                req.partnerId = "1528387611";
+                req.prepayId = mEntity.getPrepayId();
+                req.packageValue = "Sign=WXPay";
+                req.nonceStr = mEntity.getNonceStr();
+                req.timeStamp = mEntity.getTimeStamp();
+                req.sign = mEntity.getSign();
+                BaseApp.mWxApi.sendReq(req);//将订单信息对象发送给微信服务器，即发送支付请求
+//                Toast.makeText(WaitForpaymentActivity.this, "haha", Toast.LENGTH_SHORT).show();
+            }
         }
 
         @Override

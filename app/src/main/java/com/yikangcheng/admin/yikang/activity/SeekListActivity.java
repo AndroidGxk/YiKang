@@ -8,7 +8,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.view.WindowManager;
-import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -20,6 +19,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yikangcheng.admin.yikang.R;
+import com.yikangcheng.admin.yikang.activity.adapter.ClassCommodAdapter;
 import com.yikangcheng.admin.yikang.activity.particulars.ParticularsActivity;
 import com.yikangcheng.admin.yikang.activity.seek.SeekActivity;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
@@ -27,12 +27,10 @@ import com.yikangcheng.admin.yikang.bean.ClassifyCommodityListBean;
 import com.yikangcheng.admin.yikang.bean.Request;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
 import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
-import com.yikangcheng.admin.yikang.activity.adapter.ClassCommodAdapter;
 import com.yikangcheng.admin.yikang.presenter.CommodityPresenter;
 
 import java.util.List;
 
-import me.jessyan.autosize.internal.CustomAdapt;
 import me.leefeng.promptlibrary.PromptDialog;
 
 /**
@@ -54,7 +52,7 @@ public class SeekListActivity extends BaseActivtiy implements ICoreInfe, View.On
     private PromptDialog promptDialog;
     private int record;
     //页数
-    private int mPage;
+    private int mPage=1;
     private int width;
     private EditText editTixt_activity_seek_sousuo;
     private ImageView xiaoxi;
@@ -69,7 +67,7 @@ public class SeekListActivity extends BaseActivtiy implements ICoreInfe, View.On
         int height = wm.getDefaultDisplay().getHeight();
         width = wm.getDefaultDisplay().getWidth();
         promptDialog.showLoading("正在加载");
-        final Intent intent = getIntent();
+        Intent intent = getIntent();
         count = intent.getStringExtra("count");
         id = intent.getIntExtra("id", 000);
         xrecycler = (XRecyclerView) findViewById(R.id.xrecycler);
@@ -89,12 +87,12 @@ public class SeekListActivity extends BaseActivtiy implements ICoreInfe, View.On
         qiehuan = (ImageView) findViewById(R.id.qiehuan);
         qiehuan.setOnClickListener(this);
         edit_seek_sousuo.setText(count);
-        commodityPresenter = new CommodityPresenter(this);
-        if (count == null || count.equals("")) {
-            commodityPresenter.request(id, 1, "", 1, 1);
-        } else {
-            commodityPresenter.request(id, 1, count, 1, 1);
-        }
+
+        /**
+         * P层
+         */
+        initMvp(mPage);
+
         xrecycler.setLayoutManager(new LinearLayoutManager(this));
         classCommodAdapter = new ClassCommodAdapter(this);
         xrecycler.setAdapter(classCommodAdapter);
@@ -109,13 +107,13 @@ public class SeekListActivity extends BaseActivtiy implements ICoreInfe, View.On
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                mPage = 1;
-                classCommodAdapter.removeAll();
-                if (count == null || count.equals("")) {
-                    commodityPresenter.request(id, record, "", 1, mPage);
-                } else {
-                    commodityPresenter.request(id, record, count, 1, mPage);
-                }
+//                mPage = 1;
+//                classCommodAdapter.removeAll();
+//                if (count == null || count.equals("")) {
+//                    commodityPresenter.request(id, record, "", 1, mPage);
+//                } else {
+//                    commodityPresenter.request(id, record, count, 1, mPage);
+//                }
                 refreshLayout.finishRefresh();
             }
         });
@@ -123,11 +121,12 @@ public class SeekListActivity extends BaseActivtiy implements ICoreInfe, View.On
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 mPage++;
-                if (count == null || count.equals("")) {
-                    commodityPresenter.request(id, record, "", 1, mPage);
-                } else {
-                    commodityPresenter.request(id, record, count, 1, mPage);
-                }
+//                if (count == null || count.equals("")) {
+//                    commodityPresenter.request(id, record, "", 1, mPage);
+//                } else {
+//                    commodityPresenter.request(id, record, count, 1, mPage);
+//                }
+                initMvp(mPage);
                 refreshLayout.finishLoadMore();
             }
         });
@@ -137,6 +136,14 @@ public class SeekListActivity extends BaseActivtiy implements ICoreInfe, View.On
                 startActivity(new Intent(SeekListActivity.this, MessageActivity.class));
             }
         });
+    }
+    private void initMvp(int page) {
+        commodityPresenter = new CommodityPresenter(this);
+        if (count == null || count.equals("")) {
+            commodityPresenter.request(id, 1, "", 1, page);
+        } else {
+            commodityPresenter.request(id, 1, count, 1, page);
+        }
     }
 
 

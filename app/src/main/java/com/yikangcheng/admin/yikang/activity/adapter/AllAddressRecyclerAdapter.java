@@ -6,16 +6,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
-import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yikangcheng.admin.yikang.R;
-import com.yikangcheng.admin.yikang.bean.AddressBean;
 import com.yikangcheng.admin.yikang.bean.AllAddressBean;
-import com.yikangcheng.admin.yikang.bean.ProvinceBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +53,7 @@ public class AllAddressRecyclerAdapter extends RecyclerView.Adapter<AllAddressRe
     public void onBindViewHolder(@NonNull Vh vh, final int position) {
         final AllAddressBean.ListUserAddressBean listUserAddressBean = stringList.get(position);
         vh.user_name.setText(listUserAddressBean.getReceiver());
-        vh.user_address.setText(listUserAddressBean.getProvinceStr() + listUserAddressBean.getCityStr() + listUserAddressBean.getTownStr());
+        vh.user_address.setText(listUserAddressBean.getProvinceStr() + listUserAddressBean.getCityStr() + listUserAddressBean.getTownStr()+listUserAddressBean.getAddress());
         String mobile = listUserAddressBean.getMobile();
         if (mobile.length() >= 11) {
             String frontMobile = mobile.substring(0, 3);
