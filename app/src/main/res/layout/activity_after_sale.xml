@@ -6,6 +6,7 @@
     android:clipToPadding="true"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
+    android:overScrollMode="never"
     tools:context=".activity.aftersale.AfterSaleActivity">
 
     <android.support.v7.widget.Toolbar

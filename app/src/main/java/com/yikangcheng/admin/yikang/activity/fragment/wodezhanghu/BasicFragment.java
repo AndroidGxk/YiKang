@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -51,7 +52,7 @@ import me.leefeng.promptlibrary.PromptDialog;
 
 public class BasicFragment extends BaseFragment implements ICoreInfe {
     private RelativeLayout mReLayoutFragmentBasicTouxiang;
-    private RelativeLayout mReLayoutFragmentBasicSynopsis;
+    private LinearLayout mReLayoutFragmentBasicSynopsis;
     private int width;
     private int height;
     private Dialog mDialog;
@@ -113,6 +114,7 @@ public class BasicFragment extends BaseFragment implements ICoreInfe {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), IntroActivity.class);
+                intent.putExtra("jianjie", jianjie.getText().toString());
                 startActivity(intent);
             }
         });

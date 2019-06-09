@@ -33,6 +33,8 @@ public class IntroActivity extends BaseActivtiy implements CustomAdapt {
         Display display = this.getWindowManager().getDefaultDisplay();
         width = display.getWidth();
         height = display.getHeight();
+        Intent intent = getIntent();
+        String jianjie = intent.getStringExtra("jianjie");
         back_img = (ImageView) findViewById(R.id.back_img);
         mToolbarActivityIntro = (RelativeLayout) findViewById(R.id.toolbar_activity_intro);
         mEtIntroActivityIntro = (EditText) findViewById(R.id.et_intro_activity_intro);
@@ -43,6 +45,7 @@ public class IntroActivity extends BaseActivtiy implements CustomAdapt {
                 finish();
             }
         });
+        mEtIntroActivityIntro.setText(jianjie);
     }
 
 

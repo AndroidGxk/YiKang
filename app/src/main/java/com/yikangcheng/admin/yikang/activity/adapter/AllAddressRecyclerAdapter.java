@@ -37,6 +37,11 @@ public class AllAddressRecyclerAdapter extends RecyclerView.Adapter<AllAddressRe
         notifyDataSetChanged();
     }
 
+
+    public int getSize() {
+        return stringList.size();
+    }
+
     public void deletePosition(int Position) {
         this.stringList.remove(Position);
         notifyDataSetChanged();
@@ -53,7 +58,7 @@ public class AllAddressRecyclerAdapter extends RecyclerView.Adapter<AllAddressRe
     public void onBindViewHolder(@NonNull Vh vh, final int position) {
         final AllAddressBean.ListUserAddressBean listUserAddressBean = stringList.get(position);
         vh.user_name.setText(listUserAddressBean.getReceiver());
-        vh.user_address.setText(listUserAddressBean.getProvinceStr() + listUserAddressBean.getCityStr() + listUserAddressBean.getTownStr()+listUserAddressBean.getAddress());
+        vh.user_address.setText(listUserAddressBean.getProvinceStr() + listUserAddressBean.getCityStr() + listUserAddressBean.getTownStr() + listUserAddressBean.getAddress());
         String mobile = listUserAddressBean.getMobile();
         if (mobile.length() >= 11) {
             String frontMobile = mobile.substring(0, 3);

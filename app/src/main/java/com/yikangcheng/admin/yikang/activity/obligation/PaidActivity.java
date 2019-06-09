@@ -77,7 +77,6 @@ public class PaidActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
         mRelativeLayout = (RelativeLayout) findViewById(R.id.relativeLayout);
         mImgBut = (ImageView) findViewById(R.id.imgBut);
 
-
         /**
          * 点击返回图标关闭当前页面
          */
@@ -148,16 +147,6 @@ public class PaidActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
         int spacing_tuijian = 20; // 50px
         boolean includeEdge_tuijian = false;
         mRlvActivityPaid.addItemDecoration(new SpacesItemDecoration(spanCount_tuijian, spacing_tuijian, includeEdge_tuijian));
-
-        //设置显示隐藏
-        if (orderBeans.size() < 0) {
-            mRelativeLayout.setVisibility(View.VISIBLE);
-            mRlvActivityPaid.setVisibility(View.GONE);
-            Glide.with(PaidActivity.this).load(R.drawable.dongtu).into(mImgFragmentAccomplish);
-        } else {
-            mRelativeLayout.setVisibility(View.GONE);
-            mRlvActivityPaid.setVisibility(View.VISIBLE);
-        }
 
 
         /**
@@ -299,6 +288,17 @@ public class PaidActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
         Request request = (Request) data;
         PaidBean entity = (PaidBean) request.getEntity();
         mPaidAdapter_a.addAll(entity.getOrder());
+        //设置显示隐藏
+        if (entity == null) {
+            mRelativeLayout.setVisibility(View.VISIBLE);
+            mRefreshLayout.setVisibility(View.GONE);
+            mRlvActivityPaid.setVisibility(View.GONE);
+            Glide.with(PaidActivity.this).load(R.drawable.dongtu).into(mImgFragmentAccomplish);
+        } else {
+            mRelativeLayout.setVisibility(View.GONE);
+            mRlvActivityPaid.setVisibility(View.VISIBLE);
+            mRefreshLayout.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

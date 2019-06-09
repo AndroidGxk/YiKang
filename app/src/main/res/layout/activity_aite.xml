@@ -5,12 +5,14 @@
     android:layout_height="match_parent"
     android:clipToPadding="true"
     android:fitsSystemWindows="true"
+    android:overScrollMode="never"
     tools:context=".activity.siteactivity.AiteActivity">
 
     <RelativeLayout
         android:id="@+id/toolbar_activity_aite"
         android:layout_width="match_parent"
         android:layout_height="42dp"
+        android:overScrollMode="never"
         android:background="@drawable/toolbar">
 
         <ImageView
@@ -49,6 +51,7 @@
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rlv_activity_aite"
+                android:overScrollMode="never"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
