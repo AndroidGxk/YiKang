@@ -1,7 +1,6 @@
 package com.yikangcheng.admin.yikang.activity.obligation;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,8 +15,6 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yikangcheng.admin.yikang.R;
-import com.yikangcheng.admin.yikang.activity.LoginActivity;
-import com.yikangcheng.admin.yikang.activity.MainActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.CanceledAdapter_A;
 import com.yikangcheng.admin.yikang.activity.orderstatus.FackOfActivity;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
@@ -56,6 +53,7 @@ public class CanceledActivity extends BaseActivtiy implements ICoreInfe, CustomA
     private int height;
     private int width;
     private PromptDialog mPromptDialog;
+    private ImageView mImgBut;
 
     @Override
     protected void initView() {
@@ -71,6 +69,7 @@ public class CanceledActivity extends BaseActivtiy implements ICoreInfe, CustomA
         width = display.getWidth();
         height = display.getHeight();
         back_img = (ImageView) findViewById(R.id.back_img);
+        mImgBut = (ImageView) findViewById(R.id.imgBut);
         mToolbarActivityCanceled = (RelativeLayout) findViewById(R.id.toolbar_activity_canceled);
         mRlvActivityCanceled = (RecyclerView) findViewById(R.id.rlv_activity_canceled);
         mRefreshLayout = (SmartRefreshLayout) findViewById(R.id.refreshLayout);
@@ -111,6 +110,32 @@ public class CanceledActivity extends BaseActivtiy implements ICoreInfe, CustomA
                 startActivityForResult(intent, 5);
             }
         });
+
+
+        /**
+         * 一键置顶
+         */
+        mRlvActivityCanceled.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            private int totalDy = 0;
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                totalDy -= dy;
+                if (totalDy < 0) {
+                    mImgBut.setVisibility(View.VISIBLE);
+                } else {
+                    mImgBut.setVisibility(View.GONE);
+                }
+            }
+        });
+        mImgBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mRlvActivityCanceled.smoothScrollToPosition(0);
+            }
+        });
+
 
         /**
          * P层

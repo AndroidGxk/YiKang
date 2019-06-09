@@ -15,7 +15,6 @@ import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.adapter.AwaitAdapter;
-import com.yikangcheng.admin.yikang.activity.orderstatus.FackOfActivity;
 import com.yikangcheng.admin.yikang.activity.orderstatus.WaitForpaymentActivity;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
 import com.yikangcheng.admin.yikang.bean.DeleteOrderBean;
@@ -48,6 +47,7 @@ public class AwaitFragment extends BaseFragment implements ICoreInfe {
     private int mPage = 1;
     private int mDeletePosition;
     private PromptDialog mPromptDialog;
+    private ImageView mImgBut;
 
     @Override
     protected void initView(View view) {
@@ -56,6 +56,9 @@ public class AwaitFragment extends BaseFragment implements ICoreInfe {
         mPromptDialog = new PromptDialog(getActivity());
         //设置自定义属性
         mPromptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(3000);
+
+
+        mImgBut = view.findViewById(R.id.imgBut);
 
         //动图
         mImgFragmentAwait = view.findViewById(R.id.img_fragment_await);
@@ -90,6 +93,31 @@ public class AwaitFragment extends BaseFragment implements ICoreInfe {
                 startActivityForResult(intent, 1);
             }
         });
+
+
+        mRlvFragmentAllDingdan.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            private int totalDy = 0;
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                totalDy -= dy;
+                if (totalDy < 0) {
+                    mImgBut.setVisibility(View.VISIBLE);
+                } else {
+                    mImgBut.setVisibility(View.GONE);
+                }
+            }
+        });
+        mImgBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mRlvFragmentAllDingdan.smoothScrollToPosition(0);
+            }
+        });
+
+
+
         /**
          * P层
          */

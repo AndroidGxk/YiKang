@@ -8,7 +8,9 @@ import android.view.Display;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -47,11 +49,14 @@ public class ObligationActivity extends BaseActivtiy implements ICoreInfe, Custo
     private int mDeleteItemPostion;
     private SmartRefreshLayout mRefreshLayout;
     private ImageView mImgFragmentAccomplish;
-    private ImageView mImgFragmentAccomplishQuguanghuang;
+    private RelativeLayout mImgFragmentAccomplishQuguanghuang;
     private RelativeLayout mRelativeLayout;
     private int mDeletePosition;
     private int width;
     private PromptDialog mPromptDialog;
+    private ImageView mImgBut;
+    private ArrayList<ObligationBean.OrderBean> mOrderBeans;
+    private TextView mTextView;
 
     @Override
     protected void initView() {
@@ -70,8 +75,10 @@ public class ObligationActivity extends BaseActivtiy implements ICoreInfe, Custo
         mRlvActivityObligation = (RecyclerView) findViewById(R.id.rlv_activity_obligation);
         mRefreshLayout = (SmartRefreshLayout) findViewById(R.id.refreshLayout);
         mImgFragmentAccomplish = (ImageView) findViewById(R.id.img_fragment_accomplish);
-        mImgFragmentAccomplishQuguanghuang = (ImageView) findViewById(R.id.img_fragment_accomplish_quguanghuang);
+        mImgFragmentAccomplishQuguanghuang = (RelativeLayout) findViewById(R.id.img_fragment_accomplish_quguanghuang);
         mRelativeLayout = (RelativeLayout) findViewById(R.id.relativeLayout);
+        mImgBut = (ImageView) findViewById(R.id.imgBut);
+        mTextView = (TextView) findViewById(R.id.tv);
 
 
         /**
@@ -90,9 +97,9 @@ public class ObligationActivity extends BaseActivtiy implements ICoreInfe, Custo
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRlvActivityObligation.setLayoutManager(linearLayoutManager);
 
-        ArrayList<ObligationBean.OrderBean> orderBeans = new ArrayList<>();
+        mOrderBeans = new ArrayList<>();
         //创建适配器
-        mObligationAdapter = new ObligationAdapter(this, orderBeans);
+        mObligationAdapter = new ObligationAdapter(this, mOrderBeans);
         //绑定适配器
         mRlvActivityObligation.setAdapter(mObligationAdapter);
 
@@ -109,6 +116,32 @@ public class ObligationActivity extends BaseActivtiy implements ICoreInfe, Custo
             }
         });
 
+
+        /**
+         * 一键置顶
+         */
+        mRlvActivityObligation.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            private int totalDy = 0;
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                totalDy -= dy;
+                if (totalDy < 0) {
+                    mImgBut.setVisibility(View.VISIBLE);
+                } else {
+                    mImgBut.setVisibility(View.GONE);
+                }
+            }
+        });
+        mImgBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mRlvActivityObligation.smoothScrollToPosition(0);
+            }
+        });
+
+
         /**
          * P层
          */
@@ -122,20 +155,22 @@ public class ObligationActivity extends BaseActivtiy implements ICoreInfe, Custo
         int spacing_tuijian = 20; // 50px
         boolean includeEdge_tuijian = false;
         mRlvActivityObligation.addItemDecoration(new SpacesItemDecoration(spanCount_tuijian, spacing_tuijian, includeEdge_tuijian));
-        //设置显示隐藏
-        if (orderBeans.size() < 0) {
-            mRelativeLayout.setVisibility(View.VISIBLE);
-            mRefreshLayout.setVisibility(View.GONE);
-        } else {
-            mRelativeLayout.setVisibility(View.GONE);
-            mRefreshLayout.setVisibility(View.VISIBLE);
-        }
+//        //设置显示隐藏
+//        if (mOrderBeans.size() == 0 || mOrderBeans == null) {
+//            Glide.with(this).load(R.drawable.dongtu).into(mImgFragmentAccomplish);
+//            mRefreshLayout.setVisibility(View.GONE);
+//            mImgBut.setVisibility(View.GONE);
+//            mImgFragmentAccomplish.setVisibility(View.VISIBLE);
+//            mImgFragmentAccomplishQuguanghuang.setVisibility(View.VISIBLE);
+//            mTextView.setVisibility(View.VISIBLE);
+//        } else {
+//            mImgFragmentAccomplish.setVisibility(View.GONE);
+//            mRefreshLayout.setVisibility(View.VISIBLE);
+//            mImgFragmentAccomplishQuguanghuang.setVisibility(View.GONE);
+//            mTextView.setVisibility(View.GONE);
+//        }
 
 
-        /**
-         * 上拉加载
-         */
-        initShuaXinJiaZai();
 
         /**
          * 点击垃圾桶删除订单
@@ -263,6 +298,26 @@ public class ObligationActivity extends BaseActivtiy implements ICoreInfe, Custo
     public void success(Object data) {
         Request request = (Request) data;
         ObligationBean entity = (ObligationBean) request.getEntity();
+        if (entity.getOrder().size() == 0 || entity.getOrder() == null) {
+            Glide.with(this).load(R.drawable.dongtu).into(mImgFragmentAccomplish);
+            mRefreshLayout.setVisibility(View.GONE);
+            mImgBut.setVisibility(View.GONE);
+            mImgFragmentAccomplish.setVisibility(View.VISIBLE);
+            mImgFragmentAccomplishQuguanghuang.setVisibility(View.VISIBLE);
+            mTextView.setVisibility(View.VISIBLE);
+        } else {
+            mImgFragmentAccomplish.setVisibility(View.GONE);
+            mRefreshLayout.setVisibility(View.VISIBLE);
+            mImgFragmentAccomplishQuguanghuang.setVisibility(View.GONE);
+            mTextView.setVisibility(View.GONE);
+
+            /**
+             * 上拉加载
+             */
+            initShuaXinJiaZai();
+        }
+
+
         mObligationAdapter.addAll(entity.getOrder());
     }
 

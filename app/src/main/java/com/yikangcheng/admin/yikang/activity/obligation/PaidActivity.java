@@ -53,6 +53,7 @@ public class PaidActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
     private int mDeletePosition;
     private int width;
     private PromptDialog mPromptDialog;
+    private ImageView mImgBut;
 
     @Override
     protected void initView() {
@@ -74,6 +75,7 @@ public class PaidActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
         mImgFragmentAccomplish = (ImageView) findViewById(R.id.img_fragment_accomplish);
         mImgFragmentAccomplishQuguanghuang = (ImageView) findViewById(R.id.img_fragment_accomplish_quguanghuang);
         mRelativeLayout = (RelativeLayout) findViewById(R.id.relativeLayout);
+        mImgBut = (ImageView) findViewById(R.id.imgBut);
 
 
         /**
@@ -107,6 +109,31 @@ public class PaidActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
                 startActivityForResult(intent, 3);
             }
         });
+
+        /**
+         * 一键置顶
+         */
+        mRlvActivityPaid.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            private int totalDy = 0;
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                totalDy -= dy;
+                if (totalDy < 0) {
+                    mImgBut.setVisibility(View.VISIBLE);
+                } else {
+                    mImgBut.setVisibility(View.GONE);
+                }
+            }
+        });
+        mImgBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mRlvActivityPaid.smoothScrollToPosition(0);
+            }
+        });
+
 
         /**
          * P层
