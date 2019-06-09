@@ -2,13 +2,10 @@ package com.yikangcheng.admin.yikang.activity;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -38,7 +35,6 @@ import com.yikangcheng.admin.yikang.presenter.OrderBuyPresenter;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 import com.yikangcheng.admin.yikang.util.UIUtils;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -281,7 +277,7 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
                 total_money.setText("¥" + strs);
                 heji_text.setText("合计：¥" + strs);
                 goodinfo = "";
-            }else{
+            } else {
                 num = split[2];
                 pariticShopBean = new PariticShopBean();
                 pariticShopBean.setId(split[0]);
@@ -597,10 +593,16 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
                     user_address.setText(listUserAddressBean.getProvinceStr() + listUserAddressBean.getCityStr() + listUserAddressBean.getTownStr() + listUserAddressBean.getAddress());
                     type = 1;
                     text.setVisibility(View.GONE);
+                    user_address.setVisibility(View.VISIBLE);
+                    user_phone.setVisibility(View.VISIBLE);
+                    user_name.setVisibility(View.VISIBLE);
                 }
             }
             if (type == 0) {
                 text.setVisibility(View.VISIBLE);
+                user_address.setVisibility(View.GONE);
+                user_phone.setVisibility(View.GONE);
+                user_name.setVisibility(View.GONE);
             }
         }
 

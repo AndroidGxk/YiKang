@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -50,6 +49,8 @@ public class AllFragment extends BaseFragment implements ICoreInfe {
     private int mDeleteItemPostion;
     private int mDeletePosition;
     private PromptDialog mPromptDialog;
+    private ImageView mImgBut;
+    private GoTopScrollView mScrollView;
 
 
     @Override
@@ -66,8 +67,11 @@ public class AllFragment extends BaseFragment implements ICoreInfe {
         mImgFragmentAllQuguanghuang = view.findViewById(R.id.img_fragment_all_quguanghuang);
         mRelativeLayout = view.findViewById(R.id.relativeLayout);
         mRefreshLayout = view.findViewById(R.id.refreshLayout);
+        mImgBut = view.findViewById(R.id.imgBut);
+        mScrollView = view.findViewById(R.id.scr);
 
         Glide.with(getContext()).load(R.drawable.dongtu).into(mImgFragmentAll);
+        mScrollView.setScrollListener(mImgBut); //里面的参数就是那张小图片
 
         //布局走向
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
@@ -127,6 +131,8 @@ public class AllFragment extends BaseFragment implements ICoreInfe {
          * 点击垃圾桶删除订单
          */
         initDelete();
+
+
     }
 
     @Override

@@ -4,56 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/registerbackground"
+    android:background="@drawable/dl"
     tools:context=".activity.RegisterActivity">
 
-
-    <TextView
-        android:id="@+id/zhuce_text"
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="55dp"
-        android:layout_marginRight="85dp"
-        android:text="注册"
-        android:textColor="#FFAB00"
-        android:textSize="16sp" />
-
-    <ImageView
-        android:id="@+id/reg_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/zhuce_text"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="15dp"
-        android:layout_marginRight="73dp"
-        android:background="@drawable/yuan_recycler_shape"
-        android:src="@drawable/jiantou2" />
-
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="55dp"
-        android:layout_height="57dp"
-        android:layout_marginLeft="55dp"
-        android:layout_marginTop="147dp"
-        android:background="@drawable/app_bg" />
-
-    <ImageView
-        android:id="@+id/name_image"
-        android:layout_width="133dp"
-        android:layout_height="12dp"
-        android:layout_below="@+id/logo"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="13dp"
-        android:background="@drawable/name" />
+        android:layout_marginLeft="41dp"
+        android:layout_marginTop="246dp"
+        android:src="@drawable/shouji" />
 
     <EditText
         android:id="@+id/phone_edit"
         android:layout_width="240dp"
         android:layout_height="25dp"
         android:layout_below="@+id/name_image"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="115dp"
+        android:layout_marginLeft="64dp"
+        android:layout_marginTop="246dp"
         android:background="@null"
         android:hint="请输入手机号码"
         android:inputType="number"
@@ -66,18 +33,25 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@+id/phone_edit"
-        android:layout_marginLeft="25dp"
+        android:layout_marginLeft="36dp"
         android:layout_marginTop="5dp"
-        android:layout_marginRight="95dp"
+        android:layout_marginRight="43dp"
         android:background="#CCCCCC" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="41dp"
+        android:layout_marginTop="320dp"
+        android:src="@drawable/mima" />
 
     <EditText
         android:id="@+id/pwd_edit"
         android:layout_width="240dp"
         android:layout_height="25dp"
         android:layout_below="@+id/view1"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="55dp"
+        android:layout_marginLeft="64dp"
+        android:layout_marginTop="42dp"
         android:background="@null"
         android:hint="请输入密码"
         android:inputType="textPassword"
@@ -89,9 +63,9 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@+id/pwd_edit"
-        android:layout_marginLeft="25dp"
+        android:layout_marginLeft="36dp"
         android:layout_marginTop="5dp"
-        android:layout_marginRight="95dp"
+        android:layout_marginRight="42dp"
         android:background="#CCCCCC" />
 
     <TextView
@@ -99,25 +73,52 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/view2"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="24dp"
+        android:layout_marginRight="40dp"
         android:paddingLeft="15dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="95dp"
         android:text="忘记密码？"
-        android:textColor="#FF6D7A" />
+        android:textColor="#999999"
+        android:textSize="11sp" />
 
-    <TextView
+    <LinearLayout
+        android:id="@+id/reg_image"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:layout_below="@+id/view2"
+        android:layout_marginLeft="36dp"
+        android:layout_marginTop="15dp"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="没有账号，"
+            android:textColor="#ff999999"
+            android:textSize="11sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="去注册"
+            android:textColor="#FE8674"
+            android:textSize="11sp" />
+    </LinearLayout>
+
+    <RelativeLayout
         android:id="@+id/log_btn"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="85dp"
-        android:layout_marginRight="65dp"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/log_btn"
-        android:gravity="center"
-        android:text="登录"
-        android:textColor="#FFAB00"
-        android:textSize="18sp" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="426dp"
+        android:background="@drawable/jianbian">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="登录"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp" />
+    </RelativeLayout>
 </RelativeLayout>

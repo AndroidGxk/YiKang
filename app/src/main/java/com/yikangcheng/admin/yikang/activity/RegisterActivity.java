@@ -8,7 +8,7 @@ import android.os.Message;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,7 +27,7 @@ import me.jessyan.autosize.internal.CustomAdapt;
 public class RegisterActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt {
 
     private String phone;
-    private ImageView log_image;
+    private LinearLayout log_image;
     private TextView ver_btn, register_btn;
     private EditText reg_phone_edit, ver_pwd_edit, reg_pwd_edit, reg_two_pwd_edit, code_two_pwd_edit;
     private int mCount = 60;
@@ -63,7 +63,7 @@ public class RegisterActivity extends BaseActivtiy implements ICoreInfe, CustomA
         WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         int height = wm.getDefaultDisplay().getHeight();
         width = wm.getDefaultDisplay().getWidth();
-        log_image = (ImageView) findViewById(R.id.log_image);
+        log_image = (LinearLayout) findViewById(R.id.log_image);
         reg_phone_edit = (EditText) findViewById(R.id.reg_phone_edit);
         ver_btn = (TextView) findViewById(R.id.ver_btn);
         ver_pwd_edit = (EditText) findViewById(R.id.ver_pwd_edit);

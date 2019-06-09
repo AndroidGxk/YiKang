@@ -11,6 +11,7 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -24,6 +25,7 @@ import com.yikangcheng.admin.yikang.activity.ClassifyHomeActivity;
 import com.yikangcheng.admin.yikang.activity.CloseActivity;
 import com.yikangcheng.admin.yikang.activity.H5SecActivity;
 import com.yikangcheng.admin.yikang.activity.PartiCarActivity;
+import com.yikangcheng.admin.yikang.activity.fragment.orderform.GoTopScrollView;
 import com.yikangcheng.admin.yikang.activity.particulars.ParticularsActivity;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
 import com.yikangcheng.admin.yikang.bean.Request;
@@ -42,6 +44,8 @@ public class Fragment_Shou extends BaseFragment implements CustomAdapt, ICoreInf
     private AddShopPresenter addShopPresenter;
     private SmartRefreshLayout refreshLayout;
     private ProgressBar pbProgress;
+    private GoTopScrollView mScrollView;
+    private ImageView mMImgBut;
 
     @Override
     protected void initView(View view) {
@@ -50,6 +54,12 @@ public class Fragment_Shou extends BaseFragment implements CustomAdapt, ICoreInf
         pbProgress = view.findViewById(R.id.pb_progress);
         //加载刷新
         refreshLayout = view.findViewById(R.id.refreshLayout);
+        mMImgBut = view.findViewById(R.id.imgBut);
+
+        mScrollView = view.findViewById(R.id.scr);
+        mScrollView.setScrollListener(mMImgBut); //里面的参数就是那张小图片
+
+
         refreshLayout.setEnableLoadMore(false);
         WebSettings webSettings = webView.getSettings();
         addShopPresenter = new AddShopPresenter(this);

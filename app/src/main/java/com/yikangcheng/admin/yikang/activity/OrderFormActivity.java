@@ -196,4 +196,5 @@ public class OrderFormActivity extends BaseActivtiy implements CustomAdapt {
     public float getSizeInDp() {
         return width / 2;
     }
+
 }

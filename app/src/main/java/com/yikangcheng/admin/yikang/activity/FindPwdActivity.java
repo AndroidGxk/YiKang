@@ -1,19 +1,18 @@
 package com.yikangcheng.admin.yikang.activity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.yikangcheng.admin.yikang.R;
-import com.yikangcheng.admin.yikang.activity.fragment.wodezhanghu.AmendFragment;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.Request;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
@@ -56,6 +55,7 @@ public class FindPwdActivity extends BaseActivtiy implements CustomAdapt, ICoreI
     private GetMobileKeyPresenter getMobileKeyPresenter;
     private SendMobilePresenter sendMobilePresenter;
     private int width;
+    private ImageView mFanhui;
 
     @Override
     protected void initView() {
@@ -68,6 +68,7 @@ public class FindPwdActivity extends BaseActivtiy implements CustomAdapt, ICoreI
         phone_text = (EditText) findViewById(R.id.EditTixt_activity_seek_sousuo);
         moblie = (EditText) findViewById(R.id.set_moblie);
         newpwd_text = (EditText) findViewById(R.id.newpwd);
+        mFanhui = (ImageView) findViewById(R.id.img_fanhui);
         newpwd_texts = (EditText) findViewById(R.id.newpwds);
         //修改密码
         retrievePwdPresenter = new RetrievePwdPresenter(this);
@@ -75,6 +76,14 @@ public class FindPwdActivity extends BaseActivtiy implements CustomAdapt, ICoreI
         getMobileKeyPresenter = new GetMobileKeyPresenter(new GetMobileKey());
         //获取短信验证码
         sendMobilePresenter = new SendMobilePresenter(new SendMobile());
+
+
+        mFanhui.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override

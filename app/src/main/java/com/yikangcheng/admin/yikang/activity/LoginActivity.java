@@ -1,14 +1,13 @@
 package com.yikangcheng.admin.yikang.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yikangcheng.admin.yikang.R;
@@ -24,9 +23,10 @@ import me.leefeng.promptlibrary.PromptDialog;
 
 public class LoginActivity extends BaseActivtiy implements CustomAdapt, ICoreInfe {
 
-    private ImageView reg_image;
+    private LinearLayout reg_image;
     private int height;
-    private TextView log_btn, forget_pwd;
+    private TextView forget_pwd;
+    private RelativeLayout log_btn;
     private EditText phone_edit, pwd_edit;
     private LoginPresenter loginPresenter;
     public SharedPreferences userInfo;
@@ -40,14 +40,14 @@ public class LoginActivity extends BaseActivtiy implements CustomAdapt, ICoreInf
         promptDialog = new PromptDialog(LoginActivity.this);
         //设置自定义属性
         promptDialog.getDefaultBuilder().touchAble(true).round(1).loadingDuration(1000);
-        reg_image = (ImageView) findViewById(R.id.reg_image);
+        reg_image = (LinearLayout) findViewById(R.id.reg_image);
         WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         height = wm.getDefaultDisplay().getHeight();
         width = wm.getDefaultDisplay().getWidth();
         phone_edit = (EditText) findViewById(R.id.phone_edit);
         pwd_edit = (EditText) findViewById(R.id.pwd_edit);
         forget_pwd = (TextView) findViewById(R.id.forget_pwd);
-        log_btn = (TextView) findViewById(R.id.log_btn);
+        log_btn = (RelativeLayout) findViewById(R.id.log_btn);
         loginPresenter = new LoginPresenter(this);
         //用户ID
         userInfo = getSharedPreferences("userInfo", MODE_PRIVATE);
