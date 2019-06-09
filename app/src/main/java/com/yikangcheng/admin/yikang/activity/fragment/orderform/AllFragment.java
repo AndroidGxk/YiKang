@@ -1,9 +1,11 @@
 package com.yikangcheng.admin.yikang.activity.fragment.orderform;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -42,17 +44,15 @@ public class AllFragment extends BaseFragment implements ICoreInfe {
     private RecyclerView mRlvFragmentAllDingdan;
     private All_A_Adapter mAll_a_adapter;
     private ImageView mImgFragmentAll;
-    private ImageView mImgFragmentAllQuguanghuang;
+    private ImageView imgBut;
     private RelativeLayout mRelativeLayout;
     private SmartRefreshLayout mRefreshLayout;
     private int mPage = 1;
     private int mDeleteItemPostion;
     private int mDeletePosition;
     private PromptDialog mPromptDialog;
-    private ImageView mImgBut;
-    private GoTopScrollView mScrollView;
 
-
+    @SuppressLint("NewApi")
     @Override
     protected void initView(View view) {
 
@@ -64,22 +64,36 @@ public class AllFragment extends BaseFragment implements ICoreInfe {
 
         mRlvFragmentAllDingdan = view.findViewById(R.id.rlv_fragment_all_dingdan);
         mImgFragmentAll = view.findViewById(R.id.img_fragment_all);
-        mImgFragmentAllQuguanghuang = view.findViewById(R.id.img_fragment_all_quguanghuang);
+        imgBut = view.findViewById(R.id.imgBut);
         mRelativeLayout = view.findViewById(R.id.relativeLayout);
         mRefreshLayout = view.findViewById(R.id.refreshLayout);
-        mImgBut = view.findViewById(R.id.imgBut);
-        mScrollView = view.findViewById(R.id.scr);
 
         Glide.with(getContext()).load(R.drawable.dongtu).into(mImgFragmentAll);
-        mScrollView.setScrollListener(mImgBut); //里面的参数就是那张小图片
-
         //布局走向
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mRlvFragmentAllDingdan.setLayoutManager(linearLayoutManager);
 
-
         ArrayList<ALLBean.OrderBean> orderBeans = new ArrayList<>();
+        mRlvFragmentAllDingdan.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            private int totalDy = 0;
 
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                totalDy -= dy;
+                if (totalDy < 0) {
+                    imgBut.setVisibility(View.VISIBLE);
+                } else {
+                    imgBut.setVisibility(View.GONE);
+                }
+            }
+        });
+        imgBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mRlvFragmentAllDingdan.smoothScrollToPosition(0);
+            }
+        });
         //创建适配器
         mAll_a_adapter = new All_A_Adapter(getContext(), orderBeans);
         //绑定适配器
