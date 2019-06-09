@@ -14,9 +14,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yikangcheng.admin.yikang.R;
-import com.yikangcheng.admin.yikang.activity.adapter.AccomplishAdapter_A;
 import com.yikangcheng.admin.yikang.activity.adapter.CloseAdapter_A;
-import com.yikangcheng.admin.yikang.activity.obligation.CanceledActivity;
 import com.yikangcheng.admin.yikang.activity.orderstatus.FackOfActivity;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
 import com.yikangcheng.admin.yikang.bean.CloseBean;
@@ -50,6 +48,7 @@ public class CloseFragment extends BaseFragment implements ICoreInfe {
     private int mDeleteItemPostion;
     private int mDeletePosition;
     private PromptDialog mPromptDialog;
+    private ImageView mImgBut;
 
     @Override
     protected void initView(View view) {
@@ -59,6 +58,7 @@ public class CloseFragment extends BaseFragment implements ICoreInfe {
         //设置自定义属性
         mPromptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(3000);
 
+        mImgBut = view.findViewById(R.id.imgBut);
         mRlvFragmentClose = view.findViewById(R.id.rlv_fragment_close);
         mRefreshLayout = view.findViewById(R.id.refreshLayout);
         mImgFragmentAccomplish = view.findViewById(R.id.img_fragment_accomplish);
@@ -82,6 +82,32 @@ public class CloseFragment extends BaseFragment implements ICoreInfe {
                 startActivityForResult(intent, 5);
             }
         });
+
+
+        /**
+         * 一键置顶
+         */
+        mRlvFragmentClose.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            private int totalDy = 0;
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                totalDy -= dy;
+                if (totalDy < 0) {
+                    mImgBut.setVisibility(View.VISIBLE);
+                } else {
+                    mImgBut.setVisibility(View.GONE);
+                }
+            }
+        });
+        mImgBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mRlvFragmentClose.smoothScrollToPosition(0);
+            }
+        });
+
 
         /**
          * P层

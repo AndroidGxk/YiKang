@@ -16,7 +16,6 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.adapter.AccomplishAdapter_A;
 import com.yikangcheng.admin.yikang.activity.orderstatus.CloseTheDealActivity;
-import com.yikangcheng.admin.yikang.activity.orderstatus.FackOfActivity;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
 import com.yikangcheng.admin.yikang.bean.DeleteOrderBean;
 import com.yikangcheng.admin.yikang.bean.PaidBean;
@@ -48,6 +47,7 @@ public class AccomplishFragment extends BaseFragment implements ICoreInfe {
     private SmartRefreshLayout mSmartRefreshLayout;
     private int mDeletePosition;
     private PromptDialog mPromptDialog;
+    private ImageView mImgbut;
 
     @Override
     protected void initView(View view) {
@@ -63,6 +63,7 @@ public class AccomplishFragment extends BaseFragment implements ICoreInfe {
         mImgFragmentAccomplishQuguanghuang = view.findViewById(R.id.img_fragment_accomplish_quguanghuang);
         mRelativeLayout = view.findViewById(R.id.relativeLayout);
         mSmartRefreshLayout = view.findViewById(R.id.refreshLayout);
+        mImgbut = view.findViewById(R.id.imgBut);
 
         Glide.with(getContext()).load(R.drawable.dongtu).into(mImgFragmentAccomplish);
 
@@ -84,6 +85,28 @@ public class AccomplishFragment extends BaseFragment implements ICoreInfe {
                 Intent intent = new Intent(getActivity(), CloseTheDealActivity.class);
                 intent.putExtra("orderId", orderId);
                 startActivityForResult(intent, 3);
+            }
+        });
+
+
+        mRlvFragmentAccomplish.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            private int totalDy = 0;
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                totalDy -= dy;
+                if (totalDy < 0) {
+                    mImgbut.setVisibility(View.VISIBLE);
+                } else {
+                    mImgbut.setVisibility(View.GONE);
+                }
+            }
+        });
+        mImgbut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mRlvFragmentAccomplish.smoothScrollToPosition(0);
             }
         });
 

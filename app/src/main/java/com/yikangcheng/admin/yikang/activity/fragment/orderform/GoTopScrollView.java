@@ -15,7 +15,7 @@ import android.widget.ScrollView;
 import com.yikangcheng.admin.yikang.R;
 
 public class GoTopScrollView extends ScrollView implements OnClickListener {
-    private ImageView goTopBtn;
+    public ImageView goTopBtn;
 
     private int screenHeight;
 
@@ -34,7 +34,7 @@ public class GoTopScrollView extends ScrollView implements OnClickListener {
         /**
          * 滑动距离超过500px,出现向上按钮,可以做为自定义属性
          */
-        if (t >= 100) {
+        if (t >= 500) {
             goTopBtn.setVisibility(View.VISIBLE);
         } else {
             goTopBtn.setVisibility(View.GONE);
