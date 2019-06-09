@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -214,6 +215,21 @@ public class ObligationActivity extends BaseActivtiy implements ICoreInfe, Custo
             int orderId = mObligationAdapter.mList.get(mDeleteItemPostion).getOrderId();
             DeleteOrderIdPresenter deleteOrderIdPresenter = new DeleteOrderIdPresenter(new delete());
             deleteOrderIdPresenter.request(orderId);
+            /**
+             * 先删除Adapter里的itme
+             */
+            mObligationAdapter.removeItem(mDeleteItemPostion);
+            /**
+             * 在获取现在有多少条item
+             */
+            int size = mObligationAdapter.getSize();
+            if(size==0){
+                mRefreshLayout.setVisibility(View.GONE);
+                mImgBut.setVisibility(View.GONE);
+                mImgFragmentAccomplish.setVisibility(View.VISIBLE);
+                mImgFragmentAccomplishQuguanghuang.setVisibility(View.VISIBLE);
+                mTextView.setVisibility(View.VISIBLE);
+            }
         }
     });
 
@@ -298,7 +314,8 @@ public class ObligationActivity extends BaseActivtiy implements ICoreInfe, Custo
     public void success(Object data) {
         Request request = (Request) data;
         ObligationBean entity = (ObligationBean) request.getEntity();
-        if (entity.getOrder().size() == 0 || entity.getOrder() == null) {
+
+        if (entity.getOrder() == null) {
             Glide.with(this).load(R.drawable.dongtu).into(mImgFragmentAccomplish);
             mRefreshLayout.setVisibility(View.GONE);
             mImgBut.setVisibility(View.GONE);
@@ -310,7 +327,6 @@ public class ObligationActivity extends BaseActivtiy implements ICoreInfe, Custo
             mRefreshLayout.setVisibility(View.VISIBLE);
             mImgFragmentAccomplishQuguanghuang.setVisibility(View.GONE);
             mTextView.setVisibility(View.GONE);
-
             /**
              * 上拉加载
              */

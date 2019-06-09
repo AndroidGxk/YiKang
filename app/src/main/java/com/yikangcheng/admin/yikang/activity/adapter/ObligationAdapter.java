@@ -44,6 +44,25 @@ public class ObligationAdapter extends RecyclerView.Adapter {
         return new ViewHolder(inflate);
     }
 
+    /**
+     * 获取Item条目
+     *
+     * @return
+     */
+    public int getSize() {
+        return mList.size();
+    }
+
+    /**
+     * 删除条目
+     *
+     * @param position
+     */
+    public void removeItem(int position) {
+        mList.remove(position);
+        notifyDataSetChanged();
+    }
+
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ViewHolder holder1 = (ViewHolder) holder;
