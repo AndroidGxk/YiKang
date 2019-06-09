@@ -10,8 +10,8 @@
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
         android:layout_below="@+id/toolbar"
+        android:visibility="gone"
         app:srlEnableFooterFollowWhenLoadFinished="true"
         app:srlEnableScrollContentWhenLoaded="true">
 
@@ -28,6 +28,14 @@
             android:layout_marginRight="15dp" />
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
+    <ImageView
+        android:id="@+id/imgBut"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="300dp"
+        android:layout_marginTop="500dp"
+        android:background="@drawable/fanhuidingbu"
+        android:visibility="gone" />
 
     <RelativeLayout
         android:id="@+id/relativeLayout"

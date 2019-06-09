@@ -16,6 +16,7 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -45,9 +46,10 @@ public class Fragment_Miao extends BaseFragment implements ICoreInfe {
     private OrderBuyPresenter orderBuyPresenter;
     private ProgressBar pbProgress;
     private SmartRefreshLayout refreshLayout;
+    private ImageView img_top;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    @SuppressLint("JavascriptInterface")
+    @SuppressLint({"JavascriptInterface", "NewApi"})
     @Override
     protected void initView(View view) {
         //进度条
@@ -56,6 +58,8 @@ public class Fragment_Miao extends BaseFragment implements ICoreInfe {
         //加载刷新
         refreshLayout = view.findViewById(R.id.refreshLayout);
         refreshLayout.setEnableLoadMore(false);
+        img_top = view.findViewById(R.id.img_top);
+
         orderBuyPresenter = new OrderBuyPresenter(new OrderBuy());
 //        miao_one_btn = view.findViewById(R.id.miao_one_btn);
 //        recycler_one = view.findViewById(R.id.recycler_one);
@@ -139,6 +143,22 @@ public class Fragment_Miao extends BaseFragment implements ICoreInfe {
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 webView.loadUrl("https://www.yikch.com/mobile/appShow/activity?type=android");
                 refreshLayout.finishRefresh();
+            }
+        });
+        webView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(View view, int i, int i1, int i2, int i3) {
+                if (i1 >= 100) {
+                    img_top.setVisibility(View.VISIBLE);
+                } else {
+                    img_top.setVisibility(View.GONE);
+                }
+            }
+        });
+        img_top.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                webView.scrollTo(0, 0);
             }
         });
     }

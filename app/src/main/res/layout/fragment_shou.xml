@@ -9,14 +9,13 @@
     android:focusableInTouchMode="true"
     android:overScrollMode="never">
 
-    <com.yikangcheng.admin.yikang.activity.fragment.orderform.GoTopScrollView
-        android:id="@+id/scr"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+    <ScrollView
+        android:id="@+id/my_scrollView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <ProgressBar
                 android:id="@+id/pb_progress"
@@ -27,39 +26,24 @@
                 android:max="100"
                 android:progressDrawable="@drawable/progress_bar_states"></ProgressBar>
 
-            <com.scwang.smartrefresh.layout.SmartRefreshLayout
-                android:id="@+id/refreshLayout"
+            <WebView
+                android:id="@+id/webview"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/pb_progress"
-                android:layout_marginBottom="10dp">
-                <!--苹果水滴的样式-->
-                <com.scwang.smartrefresh.header.WaterDropHeader
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <WebView
-                    android:id="@+id/webview"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="30dp"
-                    android:overScrollMode="never" />
-            </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-
-
-            <ImageView
-                android:id="@+id/imgBut"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginRight="30dp"
-                android:layout_marginBottom="40dp"
-                android:background="#f7d777"
-                android:visibility="visible" />
-
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:overScrollMode="never" />
         </RelativeLayout>
-    </com.yikangcheng.admin.yikang.activity.fragment.orderform.GoTopScrollView>
+    </ScrollView>
 
-
+    <ImageView
+        android:id="@+id/top_btn"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="6dp"
+        android:layout_marginBottom="80dp"
+        android:background="@drawable/fanhuidingbu"
+        android:gravity="center"
+        android:visibility="gone"/>
 </RelativeLayout>

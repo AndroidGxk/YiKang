@@ -11,21 +11,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="41dp"
-        android:layout_marginTop="246dp"
+        android:layout_marginTop="248dp"
         android:src="@drawable/shouji" />
 
     <EditText
         android:id="@+id/phone_edit"
         android:layout_width="240dp"
         android:layout_height="25dp"
-        android:layout_below="@+id/name_image"
         android:layout_marginLeft="64dp"
         android:layout_marginTop="246dp"
         android:background="@null"
         android:hint="请输入手机号码"
         android:inputType="number"
         android:maxLength="11"
-        android:textColorHint="#CCCCCC"
+        android:textColor="#666666"
+        android:textColorHint="#666666"
         android:textSize="13sp" />
 
     <View
@@ -42,7 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="41dp"
-        android:layout_marginTop="320dp"
+        android:layout_marginTop="322dp"
         android:src="@drawable/mima" />
 
     <EditText
@@ -54,8 +54,9 @@
         android:layout_marginTop="42dp"
         android:background="@null"
         android:hint="请输入密码"
+        android:textColor="#666666"
         android:inputType="textPassword"
-        android:textColorHint="#CCCCCC"
+        android:textColorHint="#666666"
         android:textSize="13sp" />
 
     <View

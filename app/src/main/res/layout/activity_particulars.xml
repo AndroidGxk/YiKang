@@ -60,4 +60,14 @@
             android:overScrollMode="never" />
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
+    <ImageView
+        android:id="@+id/img_top"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="70dp"
+        android:visibility="gone"
+        android:background="@drawable/fanhuidingbu" />
 </RelativeLayout>
