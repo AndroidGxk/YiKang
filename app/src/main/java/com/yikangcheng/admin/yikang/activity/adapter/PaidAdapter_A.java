@@ -43,8 +43,10 @@ public class PaidAdapter_A extends RecyclerView.Adapter {
         ViewHolder holder1 = (ViewHolder) holder;
         holder1.mBianhao.setText("订单编号:" + mList.get(position).getOrderNo());
         holder1.mData.setText("" + mList.get(position).getCreateTime());
-        if (mList.get(position).getOrderState().equals("SUCCESS")) {
+        String orderState = mList.get(position).getOrderState();
+        if (orderState.equals("SUCCESS")) {
             holder1.mZhuangtai.setText("已支付");
+            holder1.mQueren.setVisibility(View.VISIBLE);
         }
         holder1.mPrice.setText("合计：¥" + mList.get(position).getRealPrice());
 
@@ -87,6 +89,7 @@ public class PaidAdapter_A extends RecyclerView.Adapter {
         private TextView mPrice;
         private RecyclerView mRlv;
         private TextView mZhuangtai;
+        private final ImageView mQueren;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -96,6 +99,7 @@ public class PaidAdapter_A extends RecyclerView.Adapter {
             mPrice = itemView.findViewById(R.id.tv_fragment_all_price);
             mRlv = itemView.findViewById(R.id.rlv_fragment_all_item);
             mZhuangtai = itemView.findViewById(R.id.tv_fragment_all_zhuangtai);
+            mQueren = itemView.findViewById(R.id.img_querenshouhuo);
         }
     }
 

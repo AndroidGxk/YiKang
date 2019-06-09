@@ -72,7 +72,7 @@ public class PaidActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
         mToolbarActivityPaid = (RelativeLayout) findViewById(R.id.toolbar_activity_paid);
         mRlvActivityPaid = (RecyclerView) findViewById(R.id.rlv_activity_paid);
         mRefreshLayout = (SmartRefreshLayout) findViewById(R.id.refreshLayout);
-        mImgFragmentAccomplish = (ImageView) findViewById(R.id.img_fragment_accomplish);
+        mImgFragmentAccomplish = (ImageView) findViewById(R.id.img_activity_pard);
         mImgFragmentAccomplishQuguanghuang = (ImageView) findViewById(R.id.img_fragment_accomplish_quguanghuang);
         mRelativeLayout = (RelativeLayout) findViewById(R.id.relativeLayout);
         mImgBut = (ImageView) findViewById(R.id.imgBut);
@@ -109,30 +109,31 @@ public class PaidActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
                 startActivityForResult(intent, 3);
             }
         });
-//
-//        /**
-//         * 一键置顶
-//         */
-//        mRlvActivityPaid.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//            private int totalDy = 0;
-//
-//            @Override
-//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-//                super.onScrolled(recyclerView, dx, dy);
-//                totalDy -= dy;
-//                if (totalDy < 0) {
-//                    mImgBut.setVisibility(View.VISIBLE);
-//                } else {
-//                    mImgBut.setVisibility(View.GONE);
-//                }
-//            }
-//        });
-//        mImgBut.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                mRlvActivityPaid.smoothScrollToPosition(0);
-//            }
-//        });
+
+        /**
+         * 一键置顶
+         */
+        mRlvActivityPaid.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            private int totalDy = 0;
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                totalDy -= dy;
+
+                if (totalDy < 0) {
+                    mImgBut.setVisibility(View.VISIBLE);
+                } else {
+                    mImgBut.setVisibility(View.GONE);
+                }
+            }
+        });
+        mImgBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mRlvActivityPaid.smoothScrollToPosition(0);
+            }
+        });
 
 
         /**
@@ -148,16 +149,6 @@ public class PaidActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
         int spacing_tuijian = 20; // 50px
         boolean includeEdge_tuijian = false;
         mRlvActivityPaid.addItemDecoration(new SpacesItemDecoration(spanCount_tuijian, spacing_tuijian, includeEdge_tuijian));
-
-        //设置显示隐藏
-        if (orderBeans.size() < 0) {
-            mRelativeLayout.setVisibility(View.VISIBLE);
-            mRlvActivityPaid.setVisibility(View.GONE);
-            Glide.with(PaidActivity.this).load(R.drawable.dongtu).into(mImgFragmentAccomplish);
-        } else {
-            mRelativeLayout.setVisibility(View.GONE);
-            mRlvActivityPaid.setVisibility(View.VISIBLE);
-        }
 
 
         /**
@@ -298,6 +289,20 @@ public class PaidActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
     public void success(Object data) {
         Request request = (Request) data;
         PaidBean entity = (PaidBean) request.getEntity();
+        Glide.with(this).load(R.drawable.dongtu).into(mImgFragmentAccomplish);
+        if (entity.getOrder() == null) {
+            mRefreshLayout.setVisibility(View.GONE);
+            mImgBut.setVisibility(View.GONE);
+            mRelativeLayout.setVisibility(View.VISIBLE);
+        } else {
+            mRelativeLayout.setVisibility(View.GONE);
+            mRefreshLayout.setVisibility(View.VISIBLE);
+            /**
+             * 上拉加载
+             */
+            initShuaXinJiaZai();
+        }
+
         mPaidAdapter_a.addAll(entity.getOrder());
     }
 

@@ -45,6 +45,7 @@ public class AccomplishAdapter_B extends RecyclerView.Adapter {
         holder1.mTitle.setText(mList.get(position).getSpecNames());
         holder1.mPrice.setText(mList.get(position).getPrice() + "");
 
+
         holder1.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

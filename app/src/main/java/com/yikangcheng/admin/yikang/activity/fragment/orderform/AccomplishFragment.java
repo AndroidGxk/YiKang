@@ -128,13 +128,13 @@ public class AccomplishFragment extends BaseFragment implements ICoreInfe {
 
 
         //显示隐藏
-        if (orderBeans.size() < 0) {
-            mRelativeLayout.setVisibility(View.VISIBLE);
-            mSmartRefreshLayout.setVisibility(View.GONE);
-        } else {
-            mRelativeLayout.setVisibility(View.GONE);
-            mSmartRefreshLayout.setVisibility(View.VISIBLE);
-        }
+//        if (orderBeans.size() < 0) {
+//            mRelativeLayout.setVisibility(View.VISIBLE);
+//            mSmartRefreshLayout.setVisibility(View.GONE);
+//        } else {
+//            mRelativeLayout.setVisibility(View.GONE);
+//            mSmartRefreshLayout.setVisibility(View.VISIBLE);
+//        }
 
 
         /**
@@ -257,6 +257,19 @@ public class AccomplishFragment extends BaseFragment implements ICoreInfe {
     public void success(Object data) {
         Request request = (Request) data;
         PaidBean entity = (PaidBean) request.getEntity();
+        Glide.with(this).load(R.drawable.dongtu).into(mImgFragmentAccomplish);
+        if (entity.getOrder() == null) {
+            mSmartRefreshLayout.setVisibility(View.GONE);
+            mImgbut.setVisibility(View.GONE);
+            mRelativeLayout.setVisibility(View.VISIBLE);
+        } else {
+            mRelativeLayout.setVisibility(View.GONE);
+            mSmartRefreshLayout.setVisibility(View.VISIBLE);
+            /**
+             * 上拉加载
+             */
+            initShuaXinJiaZai();
+        }
         mAccomplishAdapter_a.addAll(entity.getOrder());
     }
 

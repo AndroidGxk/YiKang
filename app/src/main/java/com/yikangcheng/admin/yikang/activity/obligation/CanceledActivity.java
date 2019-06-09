@@ -151,16 +151,6 @@ public class CanceledActivity extends BaseActivtiy implements ICoreInfe, CustomA
         boolean includeEdge_tuijian = false;
         mRlvActivityCanceled.addItemDecoration(new SpacesItemDecoration(spanCount_tuijian, spacing_tuijian, includeEdge_tuijian));
 
-        //设置显示隐藏
-//        if (orderBeans.size() < 0) {
-//            mRelativeLayout.setVisibility(View.VISIBLE);
-//            mRefreshLayout.setVisibility(View.GONE);
-//            Glide.with(CanceledActivity.this).load(R.drawable.dongtu).into(mImgFragmentAccomplish);
-//        } else {
-//            mRelativeLayout.setVisibility(View.GONE);
-//            mRefreshLayout.setVisibility(View.VISIBLE);
-//        }
-
 
         /**
          * 上拉加载

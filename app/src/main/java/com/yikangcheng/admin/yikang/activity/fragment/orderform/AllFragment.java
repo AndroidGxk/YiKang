@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -131,13 +130,6 @@ public class AllFragment extends BaseFragment implements ICoreInfe {
         int spacing = 20; // 50px
         boolean includeEdge = false;
         mRlvFragmentAllDingdan.addItemDecoration(new SpacesItemDecoration(spanCount, spacing, includeEdge));
-        if (orderBeans.size() < 0) {
-            mRelativeLayout.setVisibility(View.VISIBLE);
-            mRefreshLayout.setVisibility(View.GONE);
-        } else {
-            mRelativeLayout.setVisibility(View.GONE);
-            mRefreshLayout.setVisibility(View.VISIBLE);
-        }
 
         initShuaXinJiaZai();
 
@@ -265,6 +257,22 @@ public class AllFragment extends BaseFragment implements ICoreInfe {
     public void success(Object data) {
         Request request = (Request) data;
         ALLBean entity = (ALLBean) request.getEntity();
+
+        Glide.with(this).load(R.drawable.dongtu).into(mImgFragmentAll);
+        if (entity.getOrder() == null) {
+            mRefreshLayout.setVisibility(View.GONE);
+            imgBut.setVisibility(View.GONE);
+            mRelativeLayout.setVisibility(View.VISIBLE);
+        } else {
+            mRelativeLayout.setVisibility(View.GONE);
+            mRefreshLayout.setVisibility(View.VISIBLE);
+            /**
+             * 上拉加载
+             */
+            initShuaXinJiaZai();
+        }
+
+
         mAll_a_adapter.allData(entity.getOrder());
 
 
