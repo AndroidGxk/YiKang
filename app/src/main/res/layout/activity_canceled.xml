@@ -65,12 +65,12 @@
         android:layout_marginRight="20dp"
         android:layout_marginTop="580dp"
         android:background="@drawable/fanhuidingbu"
-        android:visibility="visible" />
+        android:visibility="gone" />
 
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
-        android:layout_width="match_parent"
+        android:layout_width="350dp"
         android:layout_height="match_parent"
         android:visibility="visible">
 

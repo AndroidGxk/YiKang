@@ -109,30 +109,30 @@ public class PaidActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
                 startActivityForResult(intent, 3);
             }
         });
-
-        /**
-         * 一键置顶
-         */
-        mRlvActivityPaid.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            private int totalDy = 0;
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                totalDy -= dy;
-                if (totalDy < 0) {
-                    mImgBut.setVisibility(View.VISIBLE);
-                } else {
-                    mImgBut.setVisibility(View.GONE);
-                }
-            }
-        });
-        mImgBut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mRlvActivityPaid.smoothScrollToPosition(0);
-            }
-        });
+//
+//        /**
+//         * 一键置顶
+//         */
+//        mRlvActivityPaid.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            private int totalDy = 0;
+//
+//            @Override
+//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+//                super.onScrolled(recyclerView, dx, dy);
+//                totalDy -= dy;
+//                if (totalDy < 0) {
+//                    mImgBut.setVisibility(View.VISIBLE);
+//                } else {
+//                    mImgBut.setVisibility(View.GONE);
+//                }
+//            }
+//        });
+//        mImgBut.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                mRlvActivityPaid.smoothScrollToPosition(0);
+//            }
+//        });
 
 
         /**

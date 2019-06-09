@@ -152,14 +152,14 @@ public class CanceledActivity extends BaseActivtiy implements ICoreInfe, CustomA
         mRlvActivityCanceled.addItemDecoration(new SpacesItemDecoration(spanCount_tuijian, spacing_tuijian, includeEdge_tuijian));
 
         //设置显示隐藏
-        if (orderBeans.size() < 0) {
-            mRelativeLayout.setVisibility(View.VISIBLE);
-            mRefreshLayout.setVisibility(View.GONE);
-            Glide.with(CanceledActivity.this).load(R.drawable.dongtu).into(mImgFragmentAccomplish);
-        } else {
-            mRelativeLayout.setVisibility(View.GONE);
-            mRefreshLayout.setVisibility(View.VISIBLE);
-        }
+//        if (orderBeans.size() < 0) {
+//            mRelativeLayout.setVisibility(View.VISIBLE);
+//            mRefreshLayout.setVisibility(View.GONE);
+//            Glide.with(CanceledActivity.this).load(R.drawable.dongtu).into(mImgFragmentAccomplish);
+//        } else {
+//            mRelativeLayout.setVisibility(View.GONE);
+//            mRefreshLayout.setVisibility(View.VISIBLE);
+//        }
 
 
         /**
@@ -291,6 +291,20 @@ public class CanceledActivity extends BaseActivtiy implements ICoreInfe, CustomA
     public void success(Object data) {
         Request request = (Request) data;
         CloseBean entity = (CloseBean) request.getEntity();
+
+            Glide.with(this).load(R.drawable.dongtu).into(mImgFragmentAccomplish);
+            if (entity.getOrder() == null) {
+                mRefreshLayout.setVisibility(View.GONE);
+                mImgBut.setVisibility(View.GONE);
+                mRelativeLayout.setVisibility(View.VISIBLE);
+            } else {
+                mRelativeLayout.setVisibility(View.GONE);
+                mRefreshLayout.setVisibility(View.VISIBLE);
+                /**
+                 * 上拉加载
+                 */
+                initShuaXinJiaZai();
+            }
         mCanceledAdapter_a.allAll(entity.getOrder());
     }
 

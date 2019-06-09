@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -50,7 +49,7 @@ public class ObligationActivity extends BaseActivtiy implements ICoreInfe, Custo
     private int mDeleteItemPostion;
     private SmartRefreshLayout mRefreshLayout;
     private ImageView mImgFragmentAccomplish;
-    private RelativeLayout mImgFragmentAccomplishQuguanghuang;
+    private ImageView mImgFragmentAccomplishQuguanghuang;
     private RelativeLayout mRelativeLayout;
     private int mDeletePosition;
     private int width;
@@ -76,10 +75,9 @@ public class ObligationActivity extends BaseActivtiy implements ICoreInfe, Custo
         mRlvActivityObligation = (RecyclerView) findViewById(R.id.rlv_activity_obligation);
         mRefreshLayout = (SmartRefreshLayout) findViewById(R.id.refreshLayout);
         mImgFragmentAccomplish = (ImageView) findViewById(R.id.img_fragment_accomplish);
-        mImgFragmentAccomplishQuguanghuang = (RelativeLayout) findViewById(R.id.img_fragment_accomplish_quguanghuang);
+        mImgFragmentAccomplishQuguanghuang = (ImageView) findViewById(R.id.img_fragment_accomplish_quguanghuang);
         mRelativeLayout = (RelativeLayout) findViewById(R.id.relativeLayout);
         mImgBut = (ImageView) findViewById(R.id.imgBut);
-        mTextView = (TextView) findViewById(R.id.tv);
 
 
         /**
@@ -156,23 +154,14 @@ public class ObligationActivity extends BaseActivtiy implements ICoreInfe, Custo
         int spacing_tuijian = 20; // 50px
         boolean includeEdge_tuijian = false;
         mRlvActivityObligation.addItemDecoration(new SpacesItemDecoration(spanCount_tuijian, spacing_tuijian, includeEdge_tuijian));
-//        //设置显示隐藏
-//        if (mOrderBeans.size() == 0 || mOrderBeans == null) {
-//            Glide.with(this).load(R.drawable.dongtu).into(mImgFragmentAccomplish);
-//            mRefreshLayout.setVisibility(View.GONE);
-//            mImgBut.setVisibility(View.GONE);
-//            mImgFragmentAccomplish.setVisibility(View.VISIBLE);
-//            mImgFragmentAccomplishQuguanghuang.setVisibility(View.VISIBLE);
-//            mTextView.setVisibility(View.VISIBLE);
-//        } else {
-//            mImgFragmentAccomplish.setVisibility(View.GONE);
-//            mRefreshLayout.setVisibility(View.VISIBLE);
-//            mImgFragmentAccomplishQuguanghuang.setVisibility(View.GONE);
-//            mTextView.setVisibility(View.GONE);
-//        }
 
 
-
+//        mImgFragmentAccomplishQuguanghuang.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(ObligationActivity.this, Fragment_Shou.class));
+//            }
+//        });
         /**
          * 点击垃圾桶删除订单
          */
@@ -218,18 +207,18 @@ public class ObligationActivity extends BaseActivtiy implements ICoreInfe, Custo
             /**
              * 先删除Adapter里的itme
              */
-            mObligationAdapter.removeItem(mDeleteItemPostion);
+//            mObligationAdapter.removeItem(mDeleteItemPostion);
             /**
              * 在获取现在有多少条item
              */
-            int size = mObligationAdapter.getSize();
-            if(size==0){
-                mRefreshLayout.setVisibility(View.GONE);
-                mImgBut.setVisibility(View.GONE);
-                mImgFragmentAccomplish.setVisibility(View.VISIBLE);
-                mImgFragmentAccomplishQuguanghuang.setVisibility(View.VISIBLE);
-                mTextView.setVisibility(View.VISIBLE);
-            }
+//            int size = mObligationAdapter.getSize();
+//            if (size == 0) {
+//                mRefreshLayout.setVisibility(View.GONE);
+//                mImgBut.setVisibility(View.GONE);
+//                mImgFragmentAccomplish.setVisibility(View.VISIBLE);
+//                mImgFragmentAccomplishQuguanghuang.setVisibility(View.VISIBLE);
+//                mTextView.setVisibility(View.VISIBLE);
+//            }
         }
     });
 
@@ -314,19 +303,15 @@ public class ObligationActivity extends BaseActivtiy implements ICoreInfe, Custo
     public void success(Object data) {
         Request request = (Request) data;
         ObligationBean entity = (ObligationBean) request.getEntity();
-
+        Glide.with(this).load(R.drawable.dongtu).into(mImgFragmentAccomplish);
         if (entity.getOrder() == null) {
-            Glide.with(this).load(R.drawable.dongtu).into(mImgFragmentAccomplish);
+
             mRefreshLayout.setVisibility(View.GONE);
             mImgBut.setVisibility(View.GONE);
-            mImgFragmentAccomplish.setVisibility(View.VISIBLE);
-            mImgFragmentAccomplishQuguanghuang.setVisibility(View.VISIBLE);
-            mTextView.setVisibility(View.VISIBLE);
+            mRelativeLayout.setVisibility(View.VISIBLE);
         } else {
-            mImgFragmentAccomplish.setVisibility(View.GONE);
+            mRelativeLayout.setVisibility(View.GONE);
             mRefreshLayout.setVisibility(View.VISIBLE);
-            mImgFragmentAccomplishQuguanghuang.setVisibility(View.GONE);
-            mTextView.setVisibility(View.GONE);
             /**
              * 上拉加载
              */

@@ -38,8 +38,8 @@
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
         android:layout_below="@+id/toolbar_activity_paid"
+        android:visibility="gone"
         app:srlEnableFooterFollowWhenLoadFinished="true"
         app:srlEnableScrollContentWhenLoaded="true">
 
@@ -54,7 +54,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="15dp"
-            android:visibility="gone" />
+             />
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 
@@ -63,10 +63,10 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="20dp"
         android:layout_marginTop="580dp"
+        android:layout_marginRight="20dp"
         android:background="@drawable/fanhuidingbu"
-        android:visibility="visible" />
+        android:visibility="gone" />
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
