@@ -87,7 +87,7 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
     private int mOrderId_wait;
     private int width;
     private PayBean mEntity;
-    private String mPayType;
+    private String mPayType="";
     private PromptDialog mPromptDialog;
     public static String CLOCK_ACTION = "com.jereh.Clock_Action";
     public static int TIME = 30 * 60 * 1000;//倒计时2个小时
@@ -420,6 +420,7 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
         Request request = (Request) data;
         CloseTheDealBean entity = (CloseTheDealBean) request.getEntity();
         mWaitForPaymentAdapter.addAll(entity.getDetailsList());
+        mPayType = entity.getOrder().getPayType();
         //重新下单用到的Id
         orderId = entity.getOrder().getOrderId();
         orderType = entity.getOrder().getOrderType();
@@ -441,7 +442,6 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
         //总额
         mTvActivityWaitfrrpaymentZhongJi.setText(entity.getOrder().getSumPrice() + "");
 
-        mPayType = entity.getOrder().getPayType();
         //支付方式
         if (mPayType.equals("WEIXIN")) {
             mTvActivityWaitfrrpaymentFangShi.setText("微信");

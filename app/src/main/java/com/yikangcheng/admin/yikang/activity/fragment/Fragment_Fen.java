@@ -6,11 +6,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.SeekListActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.FenLeiAdapter;
 import com.yikangcheng.admin.yikang.activity.adapter.FenLeiBAdapter;
+import com.yikangcheng.admin.yikang.activity.seek.SeekActivity;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
 import com.yikangcheng.admin.yikang.bean.ClassifyListOneBean;
 import com.yikangcheng.admin.yikang.bean.Request;
@@ -23,7 +25,7 @@ import java.util.List;
 import me.jessyan.autosize.internal.CustomAdapt;
 import me.leefeng.promptlibrary.PromptDialog;
 
-public class Fragment_Fen extends BaseFragment implements ICoreInfe, CustomAdapt {
+public class Fragment_Fen extends BaseFragment implements ICoreInfe{
     private RecyclerView mRlvFragmentFenleiYou;
     private RecyclerView mRlvFragmentFenleiZuo;
     private FenLeiAdapter mFenLeiAdapter;
@@ -33,6 +35,7 @@ public class Fragment_Fen extends BaseFragment implements ICoreInfe, CustomAdapt
     private List<ClassifyListOneBean> entity;
     private int height;
     private PromptDialog promptDialog;
+    private TextView text_seek;
 
     @Override
     protected void initView(View view) {
@@ -44,6 +47,7 @@ public class Fragment_Fen extends BaseFragment implements ICoreInfe, CustomAdapt
         height = wm.getDefaultDisplay().getHeight();
         promptDialog.showLoading("正在加载");
         mRlvFragmentFenleiYou = view.findViewById(R.id.rlv__fragment_fenlei_you);
+        text_seek = view.findViewById(R.id.text_seek);
         mRlvFragmentFenleiZuo = view.findViewById(R.id.rlv__fragment_fenlei_zuo);
         classifyPresenter = new ClassifyPresenter(this);
         classifyPresenter.request();
@@ -73,6 +77,12 @@ public class Fragment_Fen extends BaseFragment implements ICoreInfe, CustomAdapt
                 startActivity(intent);
             }
         });
+        text_seek.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), SeekActivity.class));
+            }
+        });
     }
 
     @Override
@@ -97,15 +107,5 @@ public class Fragment_Fen extends BaseFragment implements ICoreInfe, CustomAdapt
     @Override
     public void fail(ApiException e) {
 
-    }
-
-    @Override
-    public boolean isBaseOnWidth() {
-        return false;
-    }
-
-    @Override
-    public float getSizeInDp() {
-        return height / 2;
     }
 }

@@ -9,11 +9,40 @@
     android:focusableInTouchMode="true"
     android:overScrollMode="never">
 
+    <RelativeLayout
+        android:id="@+id/rela"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/colorTab">
+
+
+        <TextView
+            android:id="@+id/text_seek"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/editext_gray_circular_shape"
+            android:gravity="center_vertical"
+            android:hint="搜索商品"
+            android:paddingLeft="30dp"
+            android:textSize="13sp" />
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="25dp"
+            android:background="@drawable/sousuo_2" />
+    </RelativeLayout>
+
     <ProgressBar
         android:id="@+id/pb_progress"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="2dp"
+        android:layout_below="@+id/rela"
         android:indeterminateOnly="false"
         android:max="100"
         android:progressDrawable="@drawable/progress_bar_states"></ProgressBar>

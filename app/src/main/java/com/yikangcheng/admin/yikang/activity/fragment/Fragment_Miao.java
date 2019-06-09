@@ -18,6 +18,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -29,6 +30,7 @@ import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.CloseActivity;
 import com.yikangcheng.admin.yikang.activity.PartiCarActivity;
 import com.yikangcheng.admin.yikang.activity.particulars.ParticularsActivity;
+import com.yikangcheng.admin.yikang.activity.seek.SeekActivity;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
 import com.yikangcheng.admin.yikang.bean.Request;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
@@ -47,6 +49,7 @@ public class Fragment_Miao extends BaseFragment implements ICoreInfe {
     private ProgressBar pbProgress;
     private SmartRefreshLayout refreshLayout;
     private ImageView img_top;
+    private TextView text_seek;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @SuppressLint({"JavascriptInterface", "NewApi"})
@@ -59,6 +62,7 @@ public class Fragment_Miao extends BaseFragment implements ICoreInfe {
         refreshLayout = view.findViewById(R.id.refreshLayout);
         refreshLayout.setEnableLoadMore(false);
         img_top = view.findViewById(R.id.img_top);
+        text_seek = view.findViewById(R.id.text_seek);
 
         orderBuyPresenter = new OrderBuyPresenter(new OrderBuy());
 //        miao_one_btn = view.findViewById(R.id.miao_one_btn);
@@ -159,6 +163,12 @@ public class Fragment_Miao extends BaseFragment implements ICoreInfe {
             @Override
             public void onClick(View view) {
                 webView.scrollTo(0, 0);
+            }
+        });
+        text_seek.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), SeekActivity.class));
             }
         });
     }
