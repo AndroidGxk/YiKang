@@ -63,4 +63,5 @@
         android:text="866999.00"
         android:textColor="#ffff0000"
         android:textSize="13sp" />
+
 </RelativeLayout>

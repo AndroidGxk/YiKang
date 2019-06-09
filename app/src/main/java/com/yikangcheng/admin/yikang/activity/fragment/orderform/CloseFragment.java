@@ -125,16 +125,6 @@ public class CloseFragment extends BaseFragment implements ICoreInfe {
         boolean includeEdge_tuijian = false;
         mRlvFragmentClose.addItemDecoration(new SpacesItemDecoration(spanCount_tuijian, spacing_tuijian, includeEdge_tuijian));
 
-
-        //显示隐藏
-        if (orderBeans.size() < 0) {
-            mRelativeLayout.setVisibility(View.VISIBLE);
-            mRefreshLayout.setVisibility(View.GONE);
-        } else {
-            mRelativeLayout.setVisibility(View.GONE);
-            mRefreshLayout.setVisibility(View.VISIBLE);
-        }
-
         /**
          * 上拉加载
          */
@@ -248,6 +238,20 @@ public class CloseFragment extends BaseFragment implements ICoreInfe {
     public void success(Object data) {
         Request request = (Request) data;
         CloseBean entity = (CloseBean) request.getEntity();
+
+        Glide.with(this).load(R.drawable.dongtu).into(mImgFragmentAccomplish);
+        if (entity.getOrder() == null) {
+            mRefreshLayout.setVisibility(View.GONE);
+            mImgBut.setVisibility(View.GONE);
+            mRelativeLayout.setVisibility(View.VISIBLE);
+        } else {
+            mRelativeLayout.setVisibility(View.GONE);
+            mRefreshLayout.setVisibility(View.VISIBLE);
+            /**
+             * 上拉加载
+             */
+            initShuaXinJiaZai();
+        }
         mCloseAdapter_a.AddAll(entity.getOrder());
     }
 

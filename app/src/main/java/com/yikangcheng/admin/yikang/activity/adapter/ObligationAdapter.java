@@ -6,17 +6,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.obligation.ObligationActivity;
 import com.yikangcheng.admin.yikang.bean.ObligationBean;
-import com.yikangcheng.admin.yikang.bean.Request;
-import com.yikangcheng.admin.yikang.model.http.ApiException;
-import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
-import com.yikangcheng.admin.yikang.presenter.AllPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,14 +39,14 @@ public class ObligationAdapter extends RecyclerView.Adapter {
         return new ViewHolder(inflate);
     }
 
-    /**
-     * 获取Item条目
-     *
-     * @return
-     */
-    public int getSize() {
-        return mList.size();
-    }
+//    /**
+//     * 获取Item条目
+//     *
+//     * @return
+//     */
+//    public int getSize() {
+//        return mList.size();
+//    }
 
     /**
      * 删除条目

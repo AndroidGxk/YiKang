@@ -12,20 +12,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.yikangcheng.admin.yikang.R;
-import com.yikangcheng.admin.yikang.activity.fragment.orderform.AllFragment;
 import com.yikangcheng.admin.yikang.bean.ALLBean;
-import com.yikangcheng.admin.yikang.bean.All_A_Bean;
-import com.yikangcheng.admin.yikang.bean.All_B_Bean;
-import com.yikangcheng.admin.yikang.bean.DeleteOrderBean;
-import com.yikangcheng.admin.yikang.bean.LoginBean;
-import com.yikangcheng.admin.yikang.bean.Request;
-import com.yikangcheng.admin.yikang.model.http.ApiException;
-import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
-import com.yikangcheng.admin.yikang.presenter.AllPresenter;
-import com.yikangcheng.admin.yikang.presenter.DeleteOrderIdPresenter;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -69,6 +58,7 @@ public class All_A_Adapter extends RecyclerView.Adapter {
 
         if (mList.get(position).getOrderState().equals("SUCCESS")) {
             holder1.mZhuangtai.setText("支付成功");
+            holder1.mQueren.setVisibility(View.VISIBLE);
         }
         if (mList.get(position).getOrderState().equals("REFUND")) {
             holder1.mZhuangtai.setText("退款");
@@ -86,7 +76,7 @@ public class All_A_Adapter extends RecyclerView.Adapter {
             @Override
             public void OnClickListener(View v, int orderId) {
                 String orderState = mList.get(position).getOrderState();
-                mListener.OnClickListener(v, orderId, orderState,position);
+                mListener.OnClickListener(v, orderId, orderState, position);
             }
         });
 
@@ -118,6 +108,7 @@ public class All_A_Adapter extends RecyclerView.Adapter {
         private TextView mPrice;
         private RecyclerView mRlv;
         private TextView mZhuangtai;
+        private final ImageView mQueren;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -127,6 +118,7 @@ public class All_A_Adapter extends RecyclerView.Adapter {
             mPrice = itemView.findViewById(R.id.tv_fragment_all_price);
             mRlv = itemView.findViewById(R.id.rlv_fragment_all_item);
             mZhuangtai = itemView.findViewById(R.id.tv_fragment_all_zhuangtai);
+            mQueren = itemView.findViewById(R.id.img_querenshouhuo);
         }
     }
 

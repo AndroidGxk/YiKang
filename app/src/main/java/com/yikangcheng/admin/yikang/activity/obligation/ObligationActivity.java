@@ -78,6 +78,7 @@ public class ObligationActivity extends BaseActivtiy implements ICoreInfe, Custo
         mImgFragmentAccomplishQuguanghuang = (ImageView) findViewById(R.id.img_fragment_accomplish_quguanghuang);
         mRelativeLayout = (RelativeLayout) findViewById(R.id.relativeLayout);
         mImgBut = (ImageView) findViewById(R.id.imgBut);
+//        mTextView = (TextView) findViewById(R.id.tv);
 
 
         /**
@@ -89,7 +90,6 @@ public class ObligationActivity extends BaseActivtiy implements ICoreInfe, Custo
                 finish();
             }
         });
-
         /**
          * 布局走向
          */
@@ -121,7 +121,6 @@ public class ObligationActivity extends BaseActivtiy implements ICoreInfe, Custo
          */
         mRlvActivityObligation.addOnScrollListener(new RecyclerView.OnScrollListener() {
             private int totalDy = 0;
-
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
@@ -156,12 +155,12 @@ public class ObligationActivity extends BaseActivtiy implements ICoreInfe, Custo
         mRlvActivityObligation.addItemDecoration(new SpacesItemDecoration(spanCount_tuijian, spacing_tuijian, includeEdge_tuijian));
 
 
-//        mImgFragmentAccomplishQuguanghuang.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startActivity(new Intent(ObligationActivity.this, Fragment_Shou.class));
-//            }
-//        });
+
+        /**
+         * 上拉加载
+         */
+        initShuaXinJiaZai();
+
         /**
          * 点击垃圾桶删除订单
          */
@@ -204,21 +203,6 @@ public class ObligationActivity extends BaseActivtiy implements ICoreInfe, Custo
             int orderId = mObligationAdapter.mList.get(mDeleteItemPostion).getOrderId();
             DeleteOrderIdPresenter deleteOrderIdPresenter = new DeleteOrderIdPresenter(new delete());
             deleteOrderIdPresenter.request(orderId);
-            /**
-             * 先删除Adapter里的itme
-             */
-//            mObligationAdapter.removeItem(mDeleteItemPostion);
-            /**
-             * 在获取现在有多少条item
-             */
-//            int size = mObligationAdapter.getSize();
-//            if (size == 0) {
-//                mRefreshLayout.setVisibility(View.GONE);
-//                mImgBut.setVisibility(View.GONE);
-//                mImgFragmentAccomplish.setVisibility(View.VISIBLE);
-//                mImgFragmentAccomplishQuguanghuang.setVisibility(View.VISIBLE);
-//                mTextView.setVisibility(View.VISIBLE);
-//            }
         }
     });
 
@@ -303,9 +287,9 @@ public class ObligationActivity extends BaseActivtiy implements ICoreInfe, Custo
     public void success(Object data) {
         Request request = (Request) data;
         ObligationBean entity = (ObligationBean) request.getEntity();
+
         Glide.with(this).load(R.drawable.dongtu).into(mImgFragmentAccomplish);
         if (entity.getOrder() == null) {
-
             mRefreshLayout.setVisibility(View.GONE);
             mImgBut.setVisibility(View.GONE);
             mRelativeLayout.setVisibility(View.VISIBLE);
@@ -317,8 +301,6 @@ public class ObligationActivity extends BaseActivtiy implements ICoreInfe, Custo
              */
             initShuaXinJiaZai();
         }
-
-
         mObligationAdapter.addAll(entity.getOrder());
     }
 

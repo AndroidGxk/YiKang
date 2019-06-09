@@ -1,7 +1,6 @@
 package com.yikangcheng.admin.yikang.activity.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,7 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.yikangcheng.admin.yikang.R;
-import com.yikangcheng.admin.yikang.activity.orderstatus.CloseTheDealActivity;
 import com.yikangcheng.admin.yikang.bean.PaidBean;
 
 import java.util.ArrayList;
@@ -28,6 +26,7 @@ public class AccomplishAdapter_A extends RecyclerView.Adapter {
     public ArrayList<PaidBean.OrderBean> mList;
     private OnClickListener mListener;
     private OnClickListenerDelete mListenerDelete;
+    public String mOrderState;
 
     public AccomplishAdapter_A(ArrayList<PaidBean.OrderBean> orderBeans, Context context) {
         this.mList = orderBeans;
@@ -46,8 +45,10 @@ public class AccomplishAdapter_A extends RecyclerView.Adapter {
         ViewHolder holder1 = (ViewHolder) holder;
         holder1.mBianhao.setText("订单编号:" + mList.get(position).getOrderNo());
         holder1.mData.setText("" + mList.get(position).getCreateTime());
-        if (mList.get(position).getOrderState().equals("SUCCESS")) {
+        mOrderState = mList.get(position).getOrderState();
+        if (mOrderState.equals("SUCCESS")) {
             holder1.mZhuangtai.setText("已支付");
+            holder1.mQueren.setVisibility(View.VISIBLE);
         }
         holder1.mPrice.setText("合计：¥" + mList.get(position).getRealPrice());
 
@@ -88,6 +89,7 @@ public class AccomplishAdapter_A extends RecyclerView.Adapter {
         private TextView mPrice;
         private RecyclerView mRlv;
         private TextView mZhuangtai;
+        private  ImageView mQueren;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -97,6 +99,7 @@ public class AccomplishAdapter_A extends RecyclerView.Adapter {
             mPrice = itemView.findViewById(R.id.tv_fragment_all_price);
             mRlv = itemView.findViewById(R.id.rlv_fragment_all_item);
             mZhuangtai = itemView.findViewById(R.id.tv_fragment_all_zhuangtai);
+            mQueren = itemView.findViewById(R.id.img_querenshouhuo);
         }
     }
 

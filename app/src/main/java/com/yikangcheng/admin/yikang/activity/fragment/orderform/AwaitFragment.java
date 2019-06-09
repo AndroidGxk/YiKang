@@ -139,14 +139,7 @@ public class AwaitFragment extends BaseFragment implements ICoreInfe {
         /**
          * 判断页面显示隐藏
          */
-        if (orderBeans.size() < 0) {
-            mRelativeLayout.setVisibility(View.VISIBLE);
-            mSmartRefreshLayout.setVisibility(View.GONE);
-        } else {
-            mRelativeLayout.setVisibility(View.GONE);
-            mSmartRefreshLayout.setVisibility(View.VISIBLE);
-        }
-
+//       
         /**
          * 上拉加载
          */
@@ -271,6 +264,21 @@ public class AwaitFragment extends BaseFragment implements ICoreInfe {
     public void success(Object data) {
         Request request = (Request) data;
         ObligationBean entity = (ObligationBean) request.getEntity();
+
+        Glide.with(this).load(R.drawable.dongtu).into(mImgFragmentAwait);
+        if (entity.getOrder() == null) {
+            mSmartRefreshLayout.setVisibility(View.GONE);
+            mImgBut.setVisibility(View.GONE);
+            mRelativeLayout.setVisibility(View.VISIBLE);
+        } else {
+            mRelativeLayout.setVisibility(View.GONE);
+            mSmartRefreshLayout.setVisibility(View.VISIBLE);
+            /**
+             * 上拉加载
+             */
+            initShuaXinJiaZai();
+        }
+
         mAwaitAdapter.addAll(entity.getOrder());
     }
 

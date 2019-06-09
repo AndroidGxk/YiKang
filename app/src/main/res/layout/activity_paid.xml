@@ -75,7 +75,7 @@
         android:visibility="visible">
 
         <ImageView
-            android:id="@+id/img_fragment_accomplish"
+            android:id="@+id/img_activity_pard"
             android:layout_width="120dp"
             android:layout_height="80dp"
             android:layout_centerHorizontal="true"

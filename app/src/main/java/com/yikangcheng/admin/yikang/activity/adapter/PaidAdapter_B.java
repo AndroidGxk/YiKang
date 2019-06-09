@@ -11,11 +11,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.obligation.PaidActivity;
-import com.yikangcheng.admin.yikang.bean.ObligationBean;
 import com.yikangcheng.admin.yikang.bean.PaidBean;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
