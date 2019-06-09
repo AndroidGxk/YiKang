@@ -13,13 +13,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alipay.sdk.app.PayTask;
+import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.yikangcheng.admin.yikang.R;
+import com.yikangcheng.admin.yikang.activity.obligation.ObligationActivity;
+import com.yikangcheng.admin.yikang.activity.obligation.PaidActivity;
 import com.yikangcheng.admin.yikang.app.BaseApp;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.CreatOrderBean;
 import com.yikangcheng.admin.yikang.paysdk.PayResult;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
+import com.yikangcheng.admin.yikang.wxapi.WXPayEntryActivity;
 
 import java.util.Map;
 
@@ -144,9 +148,8 @@ public class ConfirmActivity extends BaseActivtiy implements CustomAdapt {
                     String resultStatus = payResult.getResultStatus();
                     // 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
                     if (TextUtils.equals(resultStatus, "9000")) {
-                        Intent intent = new Intent(ConfirmActivity.this, PayResultActivity.class);
-                        intent.putExtra("pay", 1);
-                        startActivity(intent);
+                        //支付成功后的逻辑
+                        startActivity(new Intent(ConfirmActivity.this, PaidActivity.class));
                         finish();
                     } else {
                         // 判断resultStatus 为非“9000”则代表可能支付失败
@@ -154,16 +157,9 @@ public class ConfirmActivity extends BaseActivtiy implements CustomAdapt {
                         if (TextUtils.equals(resultStatus, "8000")) {
                             Toast.makeText(ConfirmActivity.this, "支付结果确认中",
                                     Toast.LENGTH_SHORT).show();
-                            // 其他值就可以判断为支付失败，包括用户主动取消支付，或者系统返回的错误
-                            Intent intent = new Intent(ConfirmActivity.this, PayResultActivity.class);
-                            intent.putExtra("pay", 2);
-                            startActivity(intent);
-                            finish();
                         } else {
                             // 其他值就可以判断为支付失败，包括用户主动取消支付，或者系统返回的错误
-                            Intent intent = new Intent(ConfirmActivity.this, PayResultActivity.class);
-                            intent.putExtra("pay", 2);
-                            startActivity(intent);
+                            startActivity(new Intent(ConfirmActivity.this, ObligationActivity.class));
                             finish();
                         }
                     }

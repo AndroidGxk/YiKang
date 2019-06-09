@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipToPadding="true"
+    android:overScrollMode="never"
     android:fitsSystemWindows="true"
     tools:context=".activity.coupon.CouponActivity">
 
@@ -12,6 +13,7 @@
         android:id="@+id/table"
         android:layout_width="match_parent"
         android:layout_height="42dp"
+        android:overScrollMode="never"
         android:background="@color/colorTab">
 
         <ImageView
@@ -37,11 +39,13 @@
         android:layout_width="match_parent"
         android:layout_height="38dp"
         android:layout_below="@+id/table"
+        android:overScrollMode="never"
         android:background="#FFFF"
         app:tabIndicatorColor="@color/colorToolbar" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpage"
+        android:overScrollMode="never"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/coupon_tab" />

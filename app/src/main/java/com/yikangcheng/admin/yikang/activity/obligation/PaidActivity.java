@@ -77,7 +77,6 @@ public class PaidActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
         mRelativeLayout = (RelativeLayout) findViewById(R.id.relativeLayout);
         mImgBut = (ImageView) findViewById(R.id.imgBut);
 
-
         /**
          * 点击返回图标关闭当前页面
          */
@@ -304,6 +303,17 @@ public class PaidActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
         }
 
         mPaidAdapter_a.addAll(entity.getOrder());
+        //设置显示隐藏
+        if (entity == null) {
+            mRelativeLayout.setVisibility(View.VISIBLE);
+            mRefreshLayout.setVisibility(View.GONE);
+            mRlvActivityPaid.setVisibility(View.GONE);
+            Glide.with(PaidActivity.this).load(R.drawable.dongtu).into(mImgFragmentAccomplish);
+        } else {
+            mRelativeLayout.setVisibility(View.GONE);
+            mRlvActivityPaid.setVisibility(View.VISIBLE);
+            mRefreshLayout.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

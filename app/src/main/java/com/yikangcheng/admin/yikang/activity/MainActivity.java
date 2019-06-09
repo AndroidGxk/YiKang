@@ -196,7 +196,7 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         });
         try {
             String versionName = getVersionName();
-            if (!versionName.equals("1.0.")) {
+            if (!versionName.equals("1.0.1")) {
                 promptDialog.showWarnAlert("发现新版本是否要更新", new PromptButton("取消", new PromptButtonListener() {
                     @Override
                     public void onClick(PromptButton button) {

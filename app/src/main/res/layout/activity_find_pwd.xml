@@ -103,6 +103,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="100dp"
             android:background="@null"
+            android:inputType="number"
             android:hint="请输入短信验证码"
             android:imeOptions="actionSearch"
             android:singleLine="true"

@@ -37,6 +37,7 @@
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
+        android:overScrollMode="never"
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar_activity_canceled"
         android:visibility="gone"
@@ -49,6 +50,7 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rlv_activity_canceled"
+            android:overScrollMode="never"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
@@ -70,7 +72,8 @@
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
-        android:layout_width="350dp"
+        android:layout_width="match_parent"
+        android:overScrollMode="never"
         android:layout_height="match_parent"
         android:visibility="visible">
 

@@ -193,6 +193,13 @@ public class AiteActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
         public void onClick(PromptButton button) {
             deleteAddressPresenter.request(mId);
             allAddressRecyclerAdapter.deletePosition(mPosition);
+            int size = allAddressRecyclerAdapter.getSize();
+            if(size==0){
+                nested.setVisibility(View.GONE);
+                address_null.setVisibility(View.VISIBLE);
+                text.setVisibility(View.VISIBLE);
+                add_address.setVisibility(View.VISIBLE);
+            }
         }
     });
 

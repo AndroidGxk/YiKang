@@ -197,20 +197,22 @@
         </RadioGroup>
     </RelativeLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/reLayout_fragment_basic_synopsis"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="15dp"
-        android:background="@drawable/bai">
+        android:background="@drawable/bai"
+        android:gravity="center_vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
+            android:layout_weight="1"
             android:text="简介"
             android:textSize="15dp" />
 
@@ -221,8 +223,11 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="5dp"
             android:layout_toLeftOf="@+id/intro_img"
+            android:ellipsize="end"
             android:gravity="center"
             android:hint="请填写"
+            android:lines="1"
+            android:maxWidth="150dp"
             android:textColor="#999999"
             android:textColorHint="#FF0000"
             android:textSize="13sp" />
@@ -236,7 +241,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="15dp"
             android:src="@drawable/right" />
-    </RelativeLayout>
+    </LinearLayout>
 
 
     <TextView
