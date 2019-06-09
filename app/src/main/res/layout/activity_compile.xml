@@ -96,6 +96,7 @@
             android:layout_marginRight="15dp"
             android:layout_toRightOf="@+id/phone"
             android:background="@null"
+            android:maxLength="11"
             android:gravity="right"
             android:hint="请输入手机号"
             android:textColor="#999999"

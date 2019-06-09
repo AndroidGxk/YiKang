@@ -81,7 +81,7 @@ public class AllFragment extends BaseFragment implements ICoreInfe {
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 totalDy -= dy;
-                if (totalDy < 0) {
+                if (totalDy < -100) {
                     imgBut.setVisibility(View.VISIBLE);
                 } else {
                     imgBut.setVisibility(View.GONE);

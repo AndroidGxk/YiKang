@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -52,11 +53,11 @@ public class SeekListActivity extends BaseActivtiy implements ICoreInfe, View.On
     private PromptDialog promptDialog;
     private int record;
     //页数
-    private int mPage=1;
+    private int mPage = 1;
     private int width;
     private EditText editTixt_activity_seek_sousuo;
     private ImageView xiaoxi;
-
+    private ImageView imgBut;
     @Override
     protected void initView() {
         //创建对象
@@ -75,6 +76,8 @@ public class SeekListActivity extends BaseActivtiy implements ICoreInfe, View.On
         edit_seek_sousuo = (TextView) findViewById(R.id.EditTixt_activity_seek_sousuo);
         xiaoxi = (ImageView) findViewById(R.id.xiaoxi);
         zonghe = (TextView) findViewById(R.id.zonghe);
+        imgBut = (ImageView) findViewById(R.id.imgBut);
+
         //加载刷新
         refreshLayout = (SmartRefreshLayout) findViewById(R.id.refreshLayout);
         price_text = (TextView) findViewById(R.id.price_text);
@@ -136,7 +139,28 @@ public class SeekListActivity extends BaseActivtiy implements ICoreInfe, View.On
                 startActivity(new Intent(SeekListActivity.this, MessageActivity.class));
             }
         });
+        xrecycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            private int totalDy = 0;
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                totalDy -= dy;
+                if (totalDy < -100) {
+                    imgBut.setVisibility(View.VISIBLE);
+                } else {
+                    imgBut.setVisibility(View.GONE);
+                }
+            }
+        });
+        imgBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                xrecycler.smoothScrollToPosition(0);
+            }
+        });
     }
+
     private void initMvp(int page) {
         commodityPresenter = new CommodityPresenter(this);
         if (count == null || count.equals("")) {

@@ -50,6 +50,7 @@ public class FackOfAdapter_A extends RecyclerView.Adapter {
         holder1.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 mListener.OnClickListener(v, position);
             }
         });

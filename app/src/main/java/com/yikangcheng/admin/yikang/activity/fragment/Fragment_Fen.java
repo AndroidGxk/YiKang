@@ -62,6 +62,7 @@ public class Fragment_Fen extends BaseFragment implements ICoreInfe, CustomAdapt
             public void onClick(int position) {
                 mFenLeiBAdapter.removeAll();
                 mFenLeiBAdapter.addData(entity.get(position).getChildSubjectList());
+                mRlvFragmentFenleiYou.smoothScrollToPosition(0);
             }
         });
         mFenLeiBAdapter.setOnClickListener(new FenLeiBAdapter.onClickListener() {

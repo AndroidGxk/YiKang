@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sobot.chat.SobotApi;
 import com.sobot.chat.api.model.Information;
@@ -136,7 +137,12 @@ public class FackOfActivity extends BaseActivtiy implements ICoreInfe, CustomAda
         int spacing_tuijian = 5; // 50px
         boolean includeEdge_tuijian = false;
         mRlvActivityFackOfShangPin.addItemDecoration(new SpacesItemDecoration(spanCount_tuijian, spacing_tuijian, includeEdge_tuijian));
-
+        mFackOfAdapter_a.setOnClickListener(new FackOfAdapter_A.OnClickListener() {
+            @Override
+            public void OnClickListener(View v, int position) {
+                Toast.makeText(FackOfActivity.this, "售后", Toast.LENGTH_SHORT).show();
+            }
+        });
         //刪除訂單
         initDelete();
 
@@ -156,7 +162,6 @@ public class FackOfActivity extends BaseActivtiy implements ICoreInfe, CustomAda
             }
         });
     }
-
 
 
     //按钮的定义，创建一个按钮的对象

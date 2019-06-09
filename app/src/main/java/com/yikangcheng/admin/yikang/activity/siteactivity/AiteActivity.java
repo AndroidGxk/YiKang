@@ -1,6 +1,7 @@
 package com.yikangcheng.admin.yikang.activity.siteactivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +15,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.yikangcheng.admin.yikang.R;
+import com.yikangcheng.admin.yikang.activity.LoginActivity;
+import com.yikangcheng.admin.yikang.activity.MainActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.AllAddressRecyclerAdapter;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.AllAddressBean;
@@ -47,6 +50,8 @@ public class AiteActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
     private int width;
     private String address = "";
     private PromptDialog promptDialog;
+    private int mPosition;
+    private int mId;
 
     @Override
     protected void initView() {
@@ -123,21 +128,13 @@ public class AiteActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
         allAddressRecyclerAdapter.setDeleteOnClickListener(new AllAddressRecyclerAdapter.deleteOnClickListener() {
             @Override
             public void onClick(final int id, final int position) {
-                promptDialog.showWarnAlert("确定要删除吗？", new PromptButton("取消", new PromptButtonListener() {
-                    @Override
-                    public void onClick(PromptButton button) {
-                    }
-                }), new PromptButton("确定", new PromptButtonListener() {
-                    @Override
-                    public void onClick(PromptButton button) {
-                        deleteAddressPresenter.request(id);
-                        allAddressRecyclerAdapter.deletePosition(position);
-                    }
-                }));
+                mId = id;
+                mPosition = position;
+                promptDialog.showWarnAlert("确定要删除吗？", confirm, Noconfirm);
             }
         });
-
-
+        confirm.setTextColor(Color.parseColor("#FFAF00"));
+        Noconfirm.setTextColor(Color.parseColor("#666666"));
         /**
          *  设置状态栏颜色
          */
@@ -182,6 +179,22 @@ public class AiteActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
             }
         });
     }
+
+    //取消按钮的定义，创建一个按钮的对象
+    final PromptButton Noconfirm = new PromptButton("取消", new PromptButtonListener() {
+        @Override
+        public void onClick(PromptButton button) {
+
+        }
+    });
+    //确定按钮的定义，创建一个按钮的对象
+    final PromptButton confirm = new PromptButton("删除", new PromptButtonListener() {
+        @Override
+        public void onClick(PromptButton button) {
+            deleteAddressPresenter.request(mId);
+            allAddressRecyclerAdapter.deletePosition(mPosition);
+        }
+    });
 
 
     @Override
@@ -243,7 +256,7 @@ public class AiteActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
     }
 
     /**
-     * 修改、删除用户地址
+     * 修改用户地址
      */
     private class UpdateAddress implements ICoreInfe {
         @Override

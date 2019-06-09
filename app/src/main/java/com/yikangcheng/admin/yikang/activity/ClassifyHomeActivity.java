@@ -69,6 +69,7 @@ public class ClassifyHomeActivity extends BaseActivtiy implements ICoreInfe, Cus
             public void onClick(int position) {
                 mFenLeiBAdapter.removeAll();
                 mFenLeiBAdapter.addData(entity.get(position).getChildSubjectList());
+                mRlvFragmentFenleiYou.smoothScrollToPosition(0);
             }
         });
         mFenLeiBAdapter.setOnClickListener(new FenLeiBAdapter.onClickListener() {

@@ -121,15 +121,21 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
         if (requestCode == 1000 && resultCode == 1001) {
             Bundle bundle = data.getExtras();
             userAddressBean = (AllAddressBean.ListUserAddressBean) bundle.getSerializable("result");
-            user_name.setText(userAddressBean.getReceiver());
-            String mobile = userAddressBean.getMobile();
-            if (mobile.length() >= 11) {
-                String frontMobile = mobile.substring(0, 3);
-                String frontStr = frontMobile + "****";
-                String AllMobile = frontStr + mobile.substring(7, mobile.length());
-                user_phone.setText(AllMobile);
+            if (userAddressBean != null) {
+                user_name.setVisibility(View.VISIBLE);
+                user_address.setVisibility(View.VISIBLE);
+                user_phone.setVisibility(View.VISIBLE);
+                text.setVisibility(View.GONE);
+                user_name.setText(userAddressBean.getReceiver());
+                String mobile = userAddressBean.getMobile();
+                if (mobile.length() >= 11) {
+                    String frontMobile = mobile.substring(0, 3);
+                    String frontStr = frontMobile + "****";
+                    String AllMobile = frontStr + mobile.substring(7, mobile.length());
+                    user_phone.setText(AllMobile);
+                }
+                user_address.setText(userAddressBean.getProvinceStr() + userAddressBean.getCityStr() + userAddressBean.getTownStr() + userAddressBean.getAddress());
             }
-            user_address.setText(userAddressBean.getProvinceStr() + userAddressBean.getCityStr() + userAddressBean.getTownStr() + userAddressBean.getAddress());
         }
     }
 
