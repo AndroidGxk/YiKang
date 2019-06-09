@@ -49,8 +49,8 @@ public class AllFragment extends BaseFragment implements ICoreInfe {
     private int mDeleteItemPostion;
     private int mDeletePosition;
     private PromptDialog mPromptDialog;
-    private ImageView mImgBut;
-    private GoTopScrollView mScrollView;
+//    private ImageView mImgBut;
+//    private GoTopScrollView mScrollView;
 
 
     @Override
@@ -61,17 +61,17 @@ public class AllFragment extends BaseFragment implements ICoreInfe {
         //设置自定义属性
         mPromptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(3000);
 
+//        mScrollView.setScrollListener(mImgBut); //里面的参数就是那张小图片
 
         mRlvFragmentAllDingdan = view.findViewById(R.id.rlv_fragment_all_dingdan);
         mImgFragmentAll = view.findViewById(R.id.img_fragment_all);
         mImgFragmentAllQuguanghuang = view.findViewById(R.id.img_fragment_all_quguanghuang);
         mRelativeLayout = view.findViewById(R.id.relativeLayout);
         mRefreshLayout = view.findViewById(R.id.refreshLayout);
-        mImgBut = view.findViewById(R.id.imgBut);
-        mScrollView = view.findViewById(R.id.scr);
+//        mImgBut = view.findViewById(R.id.imgBut);
+//        mScrollView = view.findViewById(R.id.scr);
 
         Glide.with(getContext()).load(R.drawable.dongtu).into(mImgFragmentAll);
-        mScrollView.setScrollListener(mImgBut); //里面的参数就是那张小图片
 
         //布局走向
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
