@@ -132,6 +132,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/rela"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:layout_gravity="center_horizontal"
@@ -143,7 +144,10 @@
         <ImageView
             android:layout_width="35dp"
             android:layout_height="35dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
+            android:layout_marginStart="14dp"
             android:layout_marginLeft="14dp"
             android:src="@drawable/tiaohuan" />
 

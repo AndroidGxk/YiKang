@@ -64,8 +64,8 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
         refreshLayout = view.findViewById(R.id.refreshLayout);
         text_seek = view.findViewById(R.id.text_seek);
         refreshLayout.setEnableLoadMore(false);
-        WebSettings webSettings = webView.getSettings();
         addShopPresenter = new AddShopPresenter(this);
+        WebSettings webSettings = webView.getSettings();
         //设置WebView属性，能够执行Javascript脚本
         webSettings.setJavaScriptEnabled(true);
         //扩大比例的缩放
