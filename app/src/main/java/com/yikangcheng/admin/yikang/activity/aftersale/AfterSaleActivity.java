@@ -1,11 +1,15 @@
 package com.yikangcheng.admin.yikang.activity.aftersale;
 
+import android.content.Intent;
 import android.support.v7.widget.Toolbar;
 import android.view.Display;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.yikangcheng.admin.yikang.R;
+import com.yikangcheng.admin.yikang.activity.BrterActivity;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
@@ -18,7 +22,7 @@ public class AfterSaleActivity extends BaseActivtiy implements CustomAdapt {
     private Toolbar mToolbarActivityMyaccount;
     private int height;
     private int width;
-
+    private RelativeLayout rela;
     @Override
     protected void initView() {
         //设置状态栏颜色
@@ -28,6 +32,7 @@ public class AfterSaleActivity extends BaseActivtiy implements CustomAdapt {
         height = display.getHeight();
         mImgActivityAftersaleFanhui = (ImageView) findViewById(R.id.img_activity_aftersale_fanhui);
         mToolbarActivityMyaccount = (Toolbar) findViewById(R.id.toolbar_activity_myaccount);
+        rela = (RelativeLayout) findViewById(R.id.rela);
 
         //ToolBar
         mToolbarActivityMyaccount.setTitle("");
@@ -39,6 +44,12 @@ public class AfterSaleActivity extends BaseActivtiy implements CustomAdapt {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+        rela.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(AfterSaleActivity.this, BrterActivity.class));
             }
         });
     }
