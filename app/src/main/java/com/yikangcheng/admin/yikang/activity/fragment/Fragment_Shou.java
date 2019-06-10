@@ -25,7 +25,6 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.sobot.chat.SobotApi;
 import com.sobot.chat.api.model.Information;
 import com.yikangcheng.admin.yikang.R;
-import com.yikangcheng.admin.yikang.activity.ClassifyHomeActivity;
 import com.yikangcheng.admin.yikang.activity.CloseActivity;
 import com.yikangcheng.admin.yikang.activity.H5SecActivity;
 import com.yikangcheng.admin.yikang.activity.PartiCarActivity;
@@ -37,8 +36,6 @@ import com.yikangcheng.admin.yikang.bean.Request;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
 import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
 import com.yikangcheng.admin.yikang.presenter.AddShopPresenter;
-
-import me.jessyan.autosize.internal.CustomAdapt;
 
 
 public class Fragment_Shou extends BaseFragment implements ICoreInfe {
@@ -109,7 +106,6 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
             public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
                 return super.onJsAlert(view, url, message, result);
             }
-
             //进度发生变化
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
