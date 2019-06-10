@@ -15,6 +15,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yikangcheng.admin.yikang.R;
+import com.yikangcheng.admin.yikang.activity.MainActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.CanceledAdapter_A;
 import com.yikangcheng.admin.yikang.activity.orderstatus.FackOfActivity;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
@@ -111,6 +112,14 @@ public class CanceledActivity extends BaseActivtiy implements ICoreInfe, CustomA
             }
         });
 
+        //点击去逛逛跳转首页
+        mImgFragmentAccomplishQuguanghuang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(CanceledActivity.this, MainActivity.class));
+            }
+        });
+
 
         /**
          * 一键置顶
@@ -135,7 +144,7 @@ public class CanceledActivity extends BaseActivtiy implements ICoreInfe, CustomA
                 mRlvActivityCanceled.smoothScrollToPosition(0);
             }
         });
-
+        Glide.with(this).load(R.drawable.dongtu).into(mImgFragmentAccomplish);
 
         /**
          * P层
@@ -282,19 +291,18 @@ public class CanceledActivity extends BaseActivtiy implements ICoreInfe, CustomA
         Request request = (Request) data;
         CloseBean entity = (CloseBean) request.getEntity();
 
-            Glide.with(this).load(R.drawable.dongtu).into(mImgFragmentAccomplish);
-            if (entity.getOrder() == null) {
-                mRefreshLayout.setVisibility(View.GONE);
-                mImgBut.setVisibility(View.GONE);
-                mRelativeLayout.setVisibility(View.VISIBLE);
-            } else {
-                mRelativeLayout.setVisibility(View.GONE);
-                mRefreshLayout.setVisibility(View.VISIBLE);
-                /**
-                 * 上拉加载
-                 */
-                initShuaXinJiaZai();
-            }
+        if (entity.getOrder() == null) {
+            mRefreshLayout.setVisibility(View.GONE);
+            mImgBut.setVisibility(View.GONE);
+            mRelativeLayout.setVisibility(View.VISIBLE);
+        } else {
+            mRelativeLayout.setVisibility(View.GONE);
+            mRefreshLayout.setVisibility(View.VISIBLE);
+            /**
+             * 上拉加载
+             */
+            initShuaXinJiaZai();
+        }
         mCanceledAdapter_a.allAll(entity.getOrder());
     }
 

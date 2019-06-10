@@ -60,7 +60,6 @@ public class SeekActivity extends BaseActivtiy implements CustomAdapt {
         flowTagLayout = (FlowTagLayout) findViewById(R.id.FlowLayout_activity_seek);
         //热门搜索
         mRlvActivitySeekHot = (RecyclerView) findViewById(R.id.rlv_activity_seek_hot);
-
         //获得搜索历史
         searchHistory = SerachUtils.getInstance().getSearchList();
         tagAdapter = new TagAdapter(this);

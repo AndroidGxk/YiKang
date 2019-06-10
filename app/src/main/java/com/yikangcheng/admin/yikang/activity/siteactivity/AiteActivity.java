@@ -15,8 +15,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.yikangcheng.admin.yikang.R;
-import com.yikangcheng.admin.yikang.activity.LoginActivity;
-import com.yikangcheng.admin.yikang.activity.MainActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.AllAddressRecyclerAdapter;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.AllAddressBean;
@@ -194,7 +192,7 @@ public class AiteActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
             deleteAddressPresenter.request(mId);
             allAddressRecyclerAdapter.deletePosition(mPosition);
             int size = allAddressRecyclerAdapter.getSize();
-            if(size==0){
+            if (size == 0) {
                 nested.setVisibility(View.GONE);
                 address_null.setVisibility(View.VISIBLE);
                 text.setVisibility(View.VISIBLE);
@@ -224,6 +222,7 @@ public class AiteActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
         Request request = (Request) data;
         AllAddressBean entity = (AllAddressBean) request.getEntity();
         List<AllAddressBean.ListUserAddressBean> listUserAddress = entity.getListUserAddress();
+        //显示隐藏
         if (listUserAddress.size() == 0 || listUserAddress == null) {
             Glide.with(this).load(R.drawable.dongtu).into(address_null);
             nested.setVisibility(View.GONE);

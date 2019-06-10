@@ -15,7 +15,7 @@ import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
 import me.jessyan.autosize.internal.CustomAdapt;
 
-public class CustomerActivity extends BaseActivtiy implements CustomAdapt {
+public class CustomerActivity extends BaseActivtiy implements CustomAdapt, View.OnClickListener {
     private RecyclerView xrecycler;
     private boolean isclick;
     private TextView compile_text;
@@ -42,32 +42,9 @@ public class CustomerActivity extends BaseActivtiy implements CustomAdapt {
 
     @Override
     protected void initEventData() {
-        /**
-         * 退出
-         */
-        back_img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-        //编辑
-        compile_text.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!isclick) {
-                    isclick = true;
-                    customerRecyclerAdapter.isclick(isclick);
-                    compile_text.setText("完成");
-                    rela.setVisibility(View.VISIBLE);
-                } else {
-                    isclick = false;
-                    customerRecyclerAdapter.isclick(isclick);
-                    compile_text.setText("编辑");
-                    rela.setVisibility(View.GONE);
-                }
-            }
-        });
+        //点击事件
+        back_img.setOnClickListener(this);
+        compile_text.setOnClickListener(this);
     }
 
     @Override
@@ -88,5 +65,34 @@ public class CustomerActivity extends BaseActivtiy implements CustomAdapt {
     @Override
     public float getSizeInDp() {
         return width / 2;
+    }
+
+    /**
+     * 点击事件
+     *
+     * @param v
+     */
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+//          退出
+            case R.id.back_img:
+                finish();
+                break;
+//          编辑
+            case R.id.compile_text:
+                if (!isclick) {
+                    isclick = true;
+                    customerRecyclerAdapter.isclick(isclick);
+                    compile_text.setText("完成");
+                    rela.setVisibility(View.VISIBLE);
+                } else {
+                    isclick = false;
+                    customerRecyclerAdapter.isclick(isclick);
+                    compile_text.setText("编辑");
+                    rela.setVisibility(View.GONE);
+                }
+                break;
+        }
     }
 }

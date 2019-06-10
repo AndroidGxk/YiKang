@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
-import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.JavascriptInterface;
@@ -110,7 +108,7 @@ public class Fragment_Miao extends BaseFragment implements ICoreInfe {
         webView.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-//这event.getAction() == KeyEvent.ACTION_DOWN表示是返回键事件   
+                //这event.getAction() == KeyEvent.ACTION_DOWN表示是返回键事件   
                 if (event.getAction() == KeyEvent.ACTION_DOWN) {
                     if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {//表示按返回键 时的操作  
                         webView.goBack();//后退    

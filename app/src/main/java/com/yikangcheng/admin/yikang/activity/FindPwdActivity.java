@@ -25,7 +25,7 @@ import com.yikangcheng.admin.yikang.util.UIUtils;
 
 import me.jessyan.autosize.internal.CustomAdapt;
 
-public class FindPwdActivity extends BaseActivtiy implements CustomAdapt, ICoreInfe {
+public class FindPwdActivity extends BaseActivtiy implements CustomAdapt, ICoreInfe, View.OnClickListener {
     private TextView moblie_text;
     private RelativeLayout updatebtn;
     private int mCount = 60;
@@ -77,13 +77,6 @@ public class FindPwdActivity extends BaseActivtiy implements CustomAdapt, ICoreI
         //获取短信验证码
         sendMobilePresenter = new SendMobilePresenter(new SendMobile());
 
-
-        mFanhui.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
     }
 
     @Override
@@ -94,36 +87,10 @@ public class FindPwdActivity extends BaseActivtiy implements CustomAdapt, ICoreI
 
     @Override
     protected void initEventData() {
-        /**
-         * 点击发送验证码
-         */
-        moblie_text.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String phone = phone_text.getText().toString();
-                boolean mobile = UIUtils.isMobile(phone);
-                if (mobile) {
-                    getMobileKeyPresenter.request(phone, "Android");
-                    handler.sendEmptyMessage(1);
-                } else {
-                    Toast.makeText(FindPwdActivity.this, "请输入正确的手机号", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        });
-        /**
-         * 修改
-         */
-        updatebtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String phone = phone_text.getText().toString();
-                String moblie_code = moblie.getText().toString();
-                String newpwd = newpwd_text.getText().toString();
-                String newpwds = newpwd_texts.getText().toString();
-                retrievePwdPresenter.request(phone, "mobile", moblie_code, newpwd, newpwds);
-            }
-        });
+        //点击事件
+        mFanhui.setOnClickListener(this);
+        moblie_text.setOnClickListener(this);
+        updatebtn.setOnClickListener(this);
     }
 
     @Override
@@ -158,6 +125,40 @@ public class FindPwdActivity extends BaseActivtiy implements CustomAdapt, ICoreI
     @Override
     public void fail(ApiException e) {
 
+    }
+
+    /**
+     * 点击事件
+     *
+     * @param v
+     */
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+//          关闭当前页面
+            case R.id.img_fanhui:
+                finish();
+                break;
+//          点击发送验证码
+            case R.id.moblie_text:
+                String phone = phone_text.getText().toString();
+                boolean mobile = UIUtils.isMobile(phone);
+                if (mobile) {
+                    getMobileKeyPresenter.request(phone, "Android");
+                    handler.sendEmptyMessage(1);
+                } else {
+                    Toast.makeText(FindPwdActivity.this, "请输入正确的手机号", Toast.LENGTH_SHORT).show();
+                }
+                break;
+//          修改
+            case R.id.updatebtn:
+                String phone_up = phone_text.getText().toString();
+                String moblie_code = moblie.getText().toString();
+                String newpwd = newpwd_text.getText().toString();
+                String newpwds = newpwd_texts.getText().toString();
+                retrievePwdPresenter.request(phone_up, "mobile", moblie_code, newpwd, newpwds);
+                break;
+        }
     }
 
     /**

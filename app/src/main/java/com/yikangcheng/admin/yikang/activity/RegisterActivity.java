@@ -24,7 +24,7 @@ import com.yikangcheng.admin.yikang.util.UIUtils;
 
 import me.jessyan.autosize.internal.CustomAdapt;
 
-public class RegisterActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt {
+public class RegisterActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt, View.OnClickListener {
 
     private String phone;
     private LinearLayout log_image;
@@ -78,41 +78,10 @@ public class RegisterActivity extends BaseActivtiy implements ICoreInfe, CustomA
 
     @Override
     protected void initEventData() {
-        log_image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
-            }
-        });
-        /**
-         * 点击发送验证码
-         */
-        ver_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                phone = reg_phone_edit.getText().toString();
-                boolean mobile = UIUtils.isMobile(phone);
-                if (mobile) {
-                    getMobileKeyPresenter.request(phone, "Android");
-                    handler.sendEmptyMessage(1);
-                } else {
-                    Toast.makeText(RegisterActivity.this, "请输入正确的手机号", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-        /**
-         * 注册
-         */
-        register_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String code = ver_pwd_edit.getText().toString();
-                String reg_pwd = reg_pwd_edit.getText().toString();
-                String reg_two_pwd = reg_two_pwd_edit.getText().toString();
-                String code_two = RegisterActivity.this.code_two_pwd_edit.getText().toString();
-                registerPresenter.request(phone, reg_pwd, reg_two_pwd, code, code_two);
-            }
-        });
+        //点击事件
+        log_image.setOnClickListener(this);
+        ver_btn.setOnClickListener(this);
+        register_btn.setOnClickListener(this);
     }
 
     @Override
@@ -146,6 +115,40 @@ public class RegisterActivity extends BaseActivtiy implements ICoreInfe, CustomA
     @Override
     public float getSizeInDp() {
         return width / 2;
+    }
+
+    /**
+     * 点击事件
+     *
+     * @param v
+     */
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+//            点击去登录
+            case R.id.log_image:
+                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                break;
+//            点击发送验证码
+            case R.id.ver_btn:
+                phone = reg_phone_edit.getText().toString();
+                boolean mobile = UIUtils.isMobile(phone);
+                if (mobile) {
+                    getMobileKeyPresenter.request(phone, "Android");
+                    handler.sendEmptyMessage(1);
+                } else {
+                    Toast.makeText(RegisterActivity.this, "请输入正确的手机号", Toast.LENGTH_SHORT).show();
+                }
+                break;
+//                注册
+            case R.id.register_btn:
+                String code = ver_pwd_edit.getText().toString();
+                String reg_pwd = reg_pwd_edit.getText().toString();
+                String reg_two_pwd = reg_two_pwd_edit.getText().toString();
+                String code_two = RegisterActivity.this.code_two_pwd_edit.getText().toString();
+                registerPresenter.request(phone, reg_pwd, reg_two_pwd, code, code_two);
+                break;
+        }
     }
 
     /**

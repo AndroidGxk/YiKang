@@ -2,7 +2,6 @@ package com.yikangcheng.admin.yikang.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.view.WindowManager;
@@ -17,7 +16,7 @@ import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
 import me.jessyan.autosize.internal.CustomAdapt;
 
-public class MessageActivity extends BaseActivtiy implements CustomAdapt {
+public class MessageActivity extends BaseActivtiy implements CustomAdapt, View.OnClickListener {
 
     private LinearLayout wuliu, tongzhi, kefu;
     private XRecyclerView xrecycler;
@@ -42,43 +41,11 @@ public class MessageActivity extends BaseActivtiy implements CustomAdapt {
 
     @Override
     protected void initEventData() {
-        /**
-         * 跳转到物流页面
-         */
-        wuliu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MessageActivity.this, WuliuXinxiActivity.class));
-            }
-        });
-
-        /**
-         * 跳转到系统通知
-         */
-        tongzhi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MessageActivity.this, SystemActivity.class));
-            }
-        });
-        /**
-         * 跳转到客服消息
-         */
-        kefu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MessageActivity.this, CustomerActivity.class));
-            }
-        });
-        /**
-         * 退出
-         */
-        back_img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        //点击事件
+        wuliu.setOnClickListener(this);
+        tongzhi.setOnClickListener(this);
+        kefu.setOnClickListener(this);
+        back_img.setOnClickListener(this);
     }
 
     @Override
@@ -99,5 +66,27 @@ public class MessageActivity extends BaseActivtiy implements CustomAdapt {
     @Override
     public float getSizeInDp() {
         return width / 2;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+//            跳转到物流页面
+            case R.id.wuliu:
+                startActivity(new Intent(MessageActivity.this, WuliuXinxiActivity.class));
+                break;
+//           跳转到系统通知
+            case R.id.tongzhi:
+                startActivity(new Intent(MessageActivity.this, SystemActivity.class));
+                break;
+//            跳转到客服消息
+            case R.id.kefu:
+                startActivity(new Intent(MessageActivity.this, CustomerActivity.class));
+                break;
+//            退出
+            case R.id.back_img:
+                finish();
+                break;
+        }
     }
 }

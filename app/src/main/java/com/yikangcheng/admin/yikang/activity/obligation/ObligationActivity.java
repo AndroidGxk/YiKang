@@ -16,6 +16,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yikangcheng.admin.yikang.R;
+import com.yikangcheng.admin.yikang.activity.MainActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.ObligationAdapter;
 import com.yikangcheng.admin.yikang.activity.orderstatus.WaitForpaymentActivity;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
@@ -78,9 +79,6 @@ public class ObligationActivity extends BaseActivtiy implements ICoreInfe, Custo
         mImgFragmentAccomplishQuguanghuang = (ImageView) findViewById(R.id.img_fragment_accomplish_quguanghuang);
         mRelativeLayout = (RelativeLayout) findViewById(R.id.relativeLayout);
         mImgBut = (ImageView) findViewById(R.id.imgBut);
-//        mTextView = (TextView) findViewById(R.id.tv);
-
-
         /**
          * 点击返回图标关闭当前页面
          */
@@ -115,12 +113,20 @@ public class ObligationActivity extends BaseActivtiy implements ICoreInfe, Custo
             }
         });
 
+        //点击去逛逛跳转首页
+        mImgFragmentAccomplishQuguanghuang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ObligationActivity.this, MainActivity.class));
+            }
+        });
 
         /**
          * 一键置顶
          */
         mRlvActivityObligation.addOnScrollListener(new RecyclerView.OnScrollListener() {
             private int totalDy = 0;
+
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
@@ -139,6 +145,7 @@ public class ObligationActivity extends BaseActivtiy implements ICoreInfe, Custo
             }
         });
 
+        Glide.with(this).load(R.drawable.dongtu).into(mImgFragmentAccomplish);
 
         /**
          * P层
@@ -153,7 +160,6 @@ public class ObligationActivity extends BaseActivtiy implements ICoreInfe, Custo
         int spacing_tuijian = 20; // 50px
         boolean includeEdge_tuijian = false;
         mRlvActivityObligation.addItemDecoration(new SpacesItemDecoration(spanCount_tuijian, spacing_tuijian, includeEdge_tuijian));
-
 
 
         /**
@@ -288,7 +294,6 @@ public class ObligationActivity extends BaseActivtiy implements ICoreInfe, Custo
         Request request = (Request) data;
         ObligationBean entity = (ObligationBean) request.getEntity();
 
-        Glide.with(this).load(R.drawable.dongtu).into(mImgFragmentAccomplish);
         if (entity.getOrder() == null) {
             mRefreshLayout.setVisibility(View.GONE);
             mImgBut.setVisibility(View.GONE);

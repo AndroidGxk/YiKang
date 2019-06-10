@@ -13,7 +13,6 @@ import com.yikangcheng.admin.yikang.bean.DiscountBean;
 import com.yikangcheng.admin.yikang.bean.DiscountCouponBean;
 import com.yikangcheng.admin.yikang.bean.LikeBean;
 import com.yikangcheng.admin.yikang.bean.LoginBean;
-import com.yikangcheng.admin.yikang.bean.NewOrderBean;
 import com.yikangcheng.admin.yikang.bean.ObligationBean;
 import com.yikangcheng.admin.yikang.bean.PaidBean;
 import com.yikangcheng.admin.yikang.bean.PayBean;
@@ -44,7 +43,6 @@ public interface ApiService {
      */
     @POST("classification/all")
     Observable<Request<List<ClassifyListOneBean>>> classify();
-
     /**
      * 购物车列表
      *

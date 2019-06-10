@@ -76,6 +76,8 @@
             android:layout_marginRight="65dp"
             android:text="合计：¥000000000.00"
             android:textColor="#333333"
+            android:layout_toLeftOf="@+id/img_querenshouhuo"
+            android:visibility="visible"
             android:textSize="10sp" />
 
 

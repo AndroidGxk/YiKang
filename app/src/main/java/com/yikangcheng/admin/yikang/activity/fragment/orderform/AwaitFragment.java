@@ -14,6 +14,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yikangcheng.admin.yikang.R;
+import com.yikangcheng.admin.yikang.activity.MainActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.AwaitAdapter;
 import com.yikangcheng.admin.yikang.activity.orderstatus.WaitForpaymentActivity;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
@@ -58,8 +59,8 @@ public class AwaitFragment extends BaseFragment implements ICoreInfe {
         mPromptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(3000);
 
 
+        //一键置顶图标
         mImgBut = view.findViewById(R.id.imgBut);
-
         //动图
         mImgFragmentAwait = view.findViewById(R.id.img_fragment_await);
         mSmartRefreshLayout = view.findViewById(R.id.refreshLayout);
@@ -67,9 +68,6 @@ public class AwaitFragment extends BaseFragment implements ICoreInfe {
         mImgFragmentAwaitQuguanghuang = view.findViewById(R.id.img_fragment_await_quguanghuang);
         mRelativeLayout = view.findViewById(R.id.relativeLayout);
         mRlvFragmentAllDingdan = view.findViewById(R.id.rlv_fragment_await_dingdan);
-        //加载动图
-        Glide.with(this).load(R.drawable.dongtu).into(mImgFragmentAwait);
-
 
         /**
          * 布局走向
@@ -77,9 +75,18 @@ public class AwaitFragment extends BaseFragment implements ICoreInfe {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mRlvFragmentAllDingdan.setLayoutManager(linearLayoutManager);
         ArrayList<ObligationBean.OrderBean> orderBeans = new ArrayList<>();
+        //创建适配器
         mAwaitAdapter = new AwaitAdapter(orderBeans, getContext());
+        //绑定适配器
         mRlvFragmentAllDingdan.setAdapter(mAwaitAdapter);
 
+        //点击去逛逛跳转首页
+        mImgFragmentAwaitQuguanghuang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), MainActivity.class));
+            }
+        });
 
         /**
          * 点击跳转订单详情页面
@@ -95,6 +102,9 @@ public class AwaitFragment extends BaseFragment implements ICoreInfe {
         });
 
 
+        /**
+         * 一键置顶
+         */
         mRlvFragmentAllDingdan.addOnScrollListener(new RecyclerView.OnScrollListener() {
             private int totalDy = 0;
 
@@ -116,7 +126,8 @@ public class AwaitFragment extends BaseFragment implements ICoreInfe {
             }
         });
 
-
+        //加载动图
+        Glide.with(this).load(R.drawable.dongtu).into(mImgFragmentAwait);
 
         /**
          * P层
@@ -135,11 +146,6 @@ public class AwaitFragment extends BaseFragment implements ICoreInfe {
         boolean includeEdge_tuijian = false;
         mRlvFragmentAllDingdan.addItemDecoration(new SpacesItemDecoration(spanCount_tuijian, spacing_tuijian, includeEdge_tuijian));
 
-
-        /**
-         * 判断页面显示隐藏
-         */
-//       
         /**
          * 上拉加载
          */
@@ -151,6 +157,13 @@ public class AwaitFragment extends BaseFragment implements ICoreInfe {
         initDelete();
     }
 
+    /**
+     * 回传值
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -180,6 +193,7 @@ public class AwaitFragment extends BaseFragment implements ICoreInfe {
             }
         });
     }
+
     //按钮的定义，创建一个按钮的对象
     PromptButton confirm = new PromptButton("确定", new PromptButtonListener() {
         @Override
@@ -265,7 +279,9 @@ public class AwaitFragment extends BaseFragment implements ICoreInfe {
         Request request = (Request) data;
         ObligationBean entity = (ObligationBean) request.getEntity();
 
-        Glide.with(this).load(R.drawable.dongtu).into(mImgFragmentAwait);
+        /**
+         * 显示隐藏
+         */
         if (entity.getOrder() == null) {
             mSmartRefreshLayout.setVisibility(View.GONE);
             mImgBut.setVisibility(View.GONE);
