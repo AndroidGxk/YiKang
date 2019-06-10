@@ -29,6 +29,7 @@ public class AfterSaleActivity extends BaseActivtiy implements CustomAdapt {
         mImgActivityAftersaleFanhui = (ImageView) findViewById(R.id.img_activity_aftersale_fanhui);
         mToolbarActivityMyaccount = (Toolbar) findViewById(R.id.toolbar_activity_myaccount);
 
+        //ToolBar
         mToolbarActivityMyaccount.setTitle("");
         setSupportActionBar(mToolbarActivityMyaccount);
         /**

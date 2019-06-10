@@ -95,15 +95,6 @@ public class CompileActivity extends BaseActivtiy implements ICoreInfe, CustomAd
         height = display.getHeight();
         mDialog = new Dialog(this, R.style.BottomDialog);
         /**
-         * 退出
-         */
-        back_img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-        /**
          * 请求数据
          */
         addressPresenter = new AddressPresenter(this);

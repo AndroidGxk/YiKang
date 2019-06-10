@@ -19,7 +19,6 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.adapter.RecommendAdapter;
 import com.yikangcheng.admin.yikang.activity.adapter.ShopRecyclerAdapter;
-import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Gou;
 import com.yikangcheng.admin.yikang.activity.particulars.ParticularsActivity;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.LoginBean;
@@ -67,7 +66,7 @@ public class PartiCarActivity extends BaseActivtiy implements ShopRecyclerAdapte
     @Override
     protected void initView() {
         logUser = getLogUser(PartiCarActivity.this);
-//设置状态栏颜色
+//      设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
         WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         int height = wm.getDefaultDisplay().getHeight();
@@ -135,6 +134,8 @@ public class PartiCarActivity extends BaseActivtiy implements ShopRecyclerAdapte
         shop_recycler.setAdapter(shopRecyclerAdapter);
         //为你推荐recyclerview
         shop_recyclertwo.setLayoutManager(new GridLayoutManager(PartiCarActivity.this, 2));
+        //点击事件
+
         all_check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

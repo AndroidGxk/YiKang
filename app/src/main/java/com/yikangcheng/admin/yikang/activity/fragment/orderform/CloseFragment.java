@@ -14,6 +14,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yikangcheng.admin.yikang.R;
+import com.yikangcheng.admin.yikang.activity.MainActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.CloseAdapter_A;
 import com.yikangcheng.admin.yikang.activity.orderstatus.FackOfActivity;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
@@ -64,15 +65,17 @@ public class CloseFragment extends BaseFragment implements ICoreInfe {
         mImgFragmentAccomplish = view.findViewById(R.id.img_fragment_accomplish);
         mImgFragmentAccomplishQuguanghuang = view.findViewById(R.id.img_fragment_accomplish_quguanghuang);
         mRelativeLayout = view.findViewById(R.id.relativeLayout);
-        Glide.with(getContext()).load(R.drawable.dongtu).into(mImgFragmentAccomplish);
 
         //布局走向
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mRlvFragmentClose.setLayoutManager(linearLayoutManager);
 
         List<CloseBean.OrderBean> orderBeans = new ArrayList<>();
+        //创建适配器
         mCloseAdapter_a = new CloseAdapter_A(orderBeans, getContext());
+        //绑定适配器
         mRlvFragmentClose.setAdapter(mCloseAdapter_a);
+        //跳转订单详情页面
         mCloseAdapter_a.setOnClickListener(new CloseAdapter_A.OnClickListener() {
             @Override
             public void OnClickListener(View v, int orderId, int position) {
@@ -80,6 +83,14 @@ public class CloseFragment extends BaseFragment implements ICoreInfe {
                 Intent intent = new Intent(getActivity(), FackOfActivity.class);
                 intent.putExtra("orderId_fack", orderId);
                 startActivityForResult(intent, 5);
+            }
+        });
+
+        //点击去逛逛跳转首页
+        mImgFragmentAccomplishQuguanghuang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), MainActivity.class));
             }
         });
 
@@ -108,6 +119,8 @@ public class CloseFragment extends BaseFragment implements ICoreInfe {
             }
         });
 
+        //加载动图
+        Glide.with(this).load(R.drawable.dongtu).into(mImgFragmentAccomplish);
 
         /**
          * P层
@@ -136,6 +149,13 @@ public class CloseFragment extends BaseFragment implements ICoreInfe {
         initDelete();
     }
 
+    /**
+     * 回传值
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -148,6 +168,7 @@ public class CloseFragment extends BaseFragment implements ICoreInfe {
         }
     }
 
+    //点击删除订单并提示弹窗
     private void initDelete() {
         mCloseAdapter_a.setOnClickListenerDelete(new CloseAdapter_A.OnClickListenerDelete() {
             @Override
@@ -172,11 +193,13 @@ public class CloseFragment extends BaseFragment implements ICoreInfe {
         }
     });
 
+    //P层
     private void initMvp(int page) {
         ClosePresenter closePresenter = new ClosePresenter(this);
         closePresenter.request(getLogUser(getContext()).getId(), page, "CANCEL");
     }
 
+    //上拉加载
     private void initShuaXinJiaZai() {
         //刷新的监听事件
         mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
@@ -239,7 +262,9 @@ public class CloseFragment extends BaseFragment implements ICoreInfe {
         Request request = (Request) data;
         CloseBean entity = (CloseBean) request.getEntity();
 
-        Glide.with(this).load(R.drawable.dongtu).into(mImgFragmentAccomplish);
+        /**
+         * 显示隐藏
+         */
         if (entity.getOrder() == null) {
             mRefreshLayout.setVisibility(View.GONE);
             mImgBut.setVisibility(View.GONE);

@@ -14,6 +14,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yikangcheng.admin.yikang.R;
+import com.yikangcheng.admin.yikang.activity.MainActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.AccomplishAdapter_A;
 import com.yikangcheng.admin.yikang.activity.orderstatus.CloseTheDealActivity;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
@@ -51,21 +52,17 @@ public class AccomplishFragment extends BaseFragment implements ICoreInfe {
 
     @Override
     protected void initView(View view) {
-
         //创建对象
         mPromptDialog = new PromptDialog(getActivity());
         //设置自定义属性
         mPromptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(3000);
-
-
+        //找控件
         mRlvFragmentAccomplish = view.findViewById(R.id.rlv_fragment_accomplish);
         mImgFragmentAccomplish = view.findViewById(R.id.img_fragment_accomplish);
         mImgFragmentAccomplishQuguanghuang = view.findViewById(R.id.img_fragment_accomplish_quguanghuang);
         mRelativeLayout = view.findViewById(R.id.relativeLayout);
         mSmartRefreshLayout = view.findViewById(R.id.refreshLayout);
         mImgbut = view.findViewById(R.id.imgBut);
-
-        Glide.with(getContext()).load(R.drawable.dongtu).into(mImgFragmentAccomplish);
 
         //布局走向
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
@@ -76,6 +73,15 @@ public class AccomplishFragment extends BaseFragment implements ICoreInfe {
         mAccomplishAdapter_a = new AccomplishAdapter_A(orderBeans, getContext());
         //绑定适配器
         mRlvFragmentAccomplish.setAdapter(mAccomplishAdapter_a);
+
+        //点击去逛逛跳转首页
+        mImgFragmentAccomplishQuguanghuang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), MainActivity.class));
+            }
+        });
+
 
         //接口回调 跳转页面
         mAccomplishAdapter_a.setOnClickListener(new AccomplishAdapter_A.OnClickListener() {
@@ -89,6 +95,9 @@ public class AccomplishFragment extends BaseFragment implements ICoreInfe {
         });
 
 
+        /**
+         * 一键置顶
+         */
         mRlvFragmentAccomplish.addOnScrollListener(new RecyclerView.OnScrollListener() {
             private int totalDy = 0;
 
@@ -110,7 +119,8 @@ public class AccomplishFragment extends BaseFragment implements ICoreInfe {
             }
         });
 
-
+        //加载动图
+        Glide.with(this).load(R.drawable.dongtu).into(mImgFragmentAccomplish);
         /**
          * P层
          */
@@ -126,17 +136,6 @@ public class AccomplishFragment extends BaseFragment implements ICoreInfe {
         boolean includeEdge_tuijian = false;
         mRlvFragmentAccomplish.addItemDecoration(new SpacesItemDecoration(spanCount_tuijian, spacing_tuijian, includeEdge_tuijian));
 
-
-        //显示隐藏
-//        if (orderBeans.size() < 0) {
-//            mRelativeLayout.setVisibility(View.VISIBLE);
-//            mSmartRefreshLayout.setVisibility(View.GONE);
-//        } else {
-//            mRelativeLayout.setVisibility(View.GONE);
-//            mSmartRefreshLayout.setVisibility(View.VISIBLE);
-//        }
-
-
         /**
          * 上拉加载
          */
@@ -149,6 +148,13 @@ public class AccomplishFragment extends BaseFragment implements ICoreInfe {
 
     }
 
+    /**
+     * 回传值
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -257,7 +263,9 @@ public class AccomplishFragment extends BaseFragment implements ICoreInfe {
     public void success(Object data) {
         Request request = (Request) data;
         PaidBean entity = (PaidBean) request.getEntity();
-        Glide.with(this).load(R.drawable.dongtu).into(mImgFragmentAccomplish);
+        /**
+         * 显示隐藏
+         */
         if (entity.getOrder() == null) {
             mSmartRefreshLayout.setVisibility(View.GONE);
             mImgbut.setVisibility(View.GONE);

@@ -10,6 +10,7 @@ import static android.content.Context.CLIPBOARD_SERVICE;
 
 /**
  * Created by elha on 3/19/2018.
+ * 这是一键复制的Demo---------------
  */
 public class CopyButtonLibrary {
 

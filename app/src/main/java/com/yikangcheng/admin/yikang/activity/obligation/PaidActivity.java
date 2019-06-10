@@ -16,6 +16,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yikangcheng.admin.yikang.R;
+import com.yikangcheng.admin.yikang.activity.MainActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.PaidAdapter_A;
 import com.yikangcheng.admin.yikang.activity.orderstatus.CloseTheDealActivity;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
@@ -108,6 +109,14 @@ public class PaidActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
                 startActivityForResult(intent, 3);
             }
         });
+        //点击去逛逛跳转首页
+        mImgFragmentAccomplishQuguanghuang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(PaidActivity.this, MainActivity.class));
+            }
+        });
+
 
         /**
          * 一键置顶
@@ -134,6 +143,7 @@ public class PaidActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
             }
         });
 
+        Glide.with(this).load(R.drawable.dongtu).into(mImgFragmentAccomplish);
 
         /**
          * P层
@@ -288,7 +298,6 @@ public class PaidActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
     public void success(Object data) {
         Request request = (Request) data;
         PaidBean entity = (PaidBean) request.getEntity();
-        Glide.with(this).load(R.drawable.dongtu).into(mImgFragmentAccomplish);
         if (entity.getOrder() == null) {
             mRefreshLayout.setVisibility(View.GONE);
             mImgBut.setVisibility(View.GONE);

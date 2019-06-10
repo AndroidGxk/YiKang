@@ -46,8 +46,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Fragment_Wo extends BaseFragment implements ICoreInfe, XRecyclerView.LoadingListener, View.OnClickListener {
-
-
     private TextView mTvFragmentWoDingdan;
     private LinearLayout mImgFragmentWoMingxi;
     private LinearLayout mImgFragmentWoguanyu;

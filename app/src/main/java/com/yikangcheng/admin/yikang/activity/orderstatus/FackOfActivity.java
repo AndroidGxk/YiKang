@@ -223,7 +223,7 @@ public class FackOfActivity extends BaseActivtiy implements ICoreInfe, CustomAda
     @Override
     public void success(Object data) {
         Request request = (Request) data;
-        CloseTheDealBean entity = (CloseTheDealBean) request.getEntity();
+        final CloseTheDealBean entity = (CloseTheDealBean) request.getEntity();
         mFackOfAdapter_a.addAll(entity.getDetailsList());
 
         //用户名
@@ -240,6 +240,13 @@ public class FackOfActivity extends BaseActivtiy implements ICoreInfe, CustomAda
         //金额
         mTvActivityFackOfJinE.setText(entity.getOrder().getRealPrice() + "");
         //总额
+        mTvActivityFackOfZhongJi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                double sumPrice = entity.getOrder().getSumPrice();
+                Toast.makeText(FackOfActivity.this, sumPrice + "", Toast.LENGTH_SHORT).show();
+            }
+        });
         mTvActivityFackOfZhongJi.setText(entity.getOrder().getSumPrice() + "");
         //支付方式
         if (entity.getOrder().getPayType().equals("WEIXIN")) {
@@ -249,7 +256,6 @@ public class FackOfActivity extends BaseActivtiy implements ICoreInfe, CustomAda
         }
 
         //发票类型
-        int invoiceType = entity.getOrderBook().getInvoiceType();
         if (entity.getOrderBook().getInvoiceType() == 1) {
             mTvActivityFackOfFaPianLeiXing.setText("电子发票");
         } else if (entity.getOrderBook().getInvoiceType() == 2) {

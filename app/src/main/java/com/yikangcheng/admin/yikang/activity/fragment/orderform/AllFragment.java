@@ -15,6 +15,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yikangcheng.admin.yikang.R;
+import com.yikangcheng.admin.yikang.activity.MainActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.All_A_Adapter;
 import com.yikangcheng.admin.yikang.activity.orderstatus.CloseTheDealActivity;
 import com.yikangcheng.admin.yikang.activity.orderstatus.FackOfActivity;
@@ -50,29 +51,43 @@ public class AllFragment extends BaseFragment implements ICoreInfe {
     private int mDeleteItemPostion;
     private int mDeletePosition;
     private PromptDialog mPromptDialog;
+    private ImageView mQuguanguang;
 
     @SuppressLint("NewApi")
     @Override
     protected void initView(View view) {
-
         //创建对象
         mPromptDialog = new PromptDialog(getActivity());
         //设置自定义属性
         mPromptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(3000);
-
-
+        //找控件
         mRlvFragmentAllDingdan = view.findViewById(R.id.rlv_fragment_all_dingdan);
         mImgFragmentAll = view.findViewById(R.id.img_fragment_all);
         imgBut = view.findViewById(R.id.imgBut);
         mRelativeLayout = view.findViewById(R.id.relativeLayout);
         mRefreshLayout = view.findViewById(R.id.refreshLayout);
-
-        Glide.with(getContext()).load(R.drawable.dongtu).into(mImgFragmentAll);
+        mQuguanguang = view.findViewById(R.id.img_fragment_all_quguanghuang);
         //布局走向
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mRlvFragmentAllDingdan.setLayoutManager(linearLayoutManager);
 
         ArrayList<ALLBean.OrderBean> orderBeans = new ArrayList<>();
+        //创建适配器
+        mAll_a_adapter = new All_A_Adapter(getContext(), orderBeans);
+        //绑定适配器
+        mRlvFragmentAllDingdan.setAdapter(mAll_a_adapter);
+
+        //点击去逛逛跳转首页
+        mQuguanguang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), MainActivity.class));
+            }
+        });
+
+        /**
+         * 一键置顶
+         */
         mRlvFragmentAllDingdan.addOnScrollListener(new RecyclerView.OnScrollListener() {
             private int totalDy = 0;
 
@@ -93,11 +108,8 @@ public class AllFragment extends BaseFragment implements ICoreInfe {
                 mRlvFragmentAllDingdan.smoothScrollToPosition(0);
             }
         });
-        //创建适配器
-        mAll_a_adapter = new All_A_Adapter(getContext(), orderBeans);
-        //绑定适配器
-        mRlvFragmentAllDingdan.setAdapter(mAll_a_adapter);
 
+        //判断订单状态
         mAll_a_adapter.setOnClickListener(new All_A_Adapter.OnClickListener() {
 
             @Override
@@ -118,6 +130,8 @@ public class AllFragment extends BaseFragment implements ICoreInfe {
                 }
             }
         });
+        //加载动图
+        Glide.with(this).load(R.drawable.dongtu).into(mImgFragmentAll);
         /**
          * P层
          */
@@ -137,10 +151,15 @@ public class AllFragment extends BaseFragment implements ICoreInfe {
          * 点击垃圾桶删除订单
          */
         initDelete();
-
-
     }
 
+    /**
+     * 回传值
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -170,6 +189,7 @@ public class AllFragment extends BaseFragment implements ICoreInfe {
         }
     }
 
+    //点击删除订单 弹出弹窗
     private void initDelete() {
         mAll_a_adapter.setOnClickListenerDelete(new All_A_Adapter.OnClickListenerDelete() {
             @Override
@@ -194,12 +214,15 @@ public class AllFragment extends BaseFragment implements ICoreInfe {
         }
     });
 
-
+    //P层
     private void initMvp(int page) {
         AllPresenter allPresenter = new AllPresenter(this);
         allPresenter.request(getLogUser(getContext()).getId(), page);
     }
 
+    /**
+     * 上拉加载
+     */
     private void initShuaXinJiaZai() {
         //刷新的监听事件
         mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
@@ -233,6 +256,7 @@ public class AllFragment extends BaseFragment implements ICoreInfe {
         return R.layout.fragment_all;
     }
 
+    //删除
     public class delete implements ICoreInfe {
 
         public DeleteOrderBean mMEntity;
@@ -257,8 +281,9 @@ public class AllFragment extends BaseFragment implements ICoreInfe {
     public void success(Object data) {
         Request request = (Request) data;
         ALLBean entity = (ALLBean) request.getEntity();
-
-        Glide.with(this).load(R.drawable.dongtu).into(mImgFragmentAll);
+        /**
+         * 显示隐藏
+         */
         if (entity.getOrder() == null) {
             mRefreshLayout.setVisibility(View.GONE);
             imgBut.setVisibility(View.GONE);

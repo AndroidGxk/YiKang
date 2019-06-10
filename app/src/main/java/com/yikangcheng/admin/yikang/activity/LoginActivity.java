@@ -21,7 +21,7 @@ import com.yikangcheng.admin.yikang.presenter.LoginPresenter;
 import me.jessyan.autosize.internal.CustomAdapt;
 import me.leefeng.promptlibrary.PromptDialog;
 
-public class LoginActivity extends BaseActivtiy implements CustomAdapt, ICoreInfe {
+public class LoginActivity extends BaseActivtiy implements CustomAdapt, ICoreInfe, View.OnClickListener {
 
     private LinearLayout reg_image;
     private int height;
@@ -55,36 +55,10 @@ public class LoginActivity extends BaseActivtiy implements CustomAdapt, ICoreInf
 
     @Override
     protected void initEventData() {
-        /**
-         * 注册
-         */
-        reg_image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
-            }
-        });
-        /**
-         *登录
-         */
-        log_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String phone = phone_edit.getText().toString();
-                String pwd = pwd_edit.getText().toString();
-                loginPresenter.request(phone, pwd);
-                promptDialog.showLoading("正在登录");
-            }
-        });
-        /**
-         * 忘记密码
-         */
-        forget_pwd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(LoginActivity.this, FindPwdActivity.class));
-            }
-        });
+        //点击事件
+        reg_image.setOnClickListener(this);
+        log_btn.setOnClickListener(this);
+        forget_pwd.setOnClickListener(this);
     }
 
     @Override
@@ -128,5 +102,31 @@ public class LoginActivity extends BaseActivtiy implements CustomAdapt, ICoreInf
     @Override
     public void fail(ApiException e) {
         promptDialog.showError("登录失败");
+    }
+
+    /**
+     * 点击事件
+     *
+     * @param v
+     */
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+//           注册
+            case R.id.reg_image:
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+                break;
+//           登录
+            case R.id.log_btn:
+                String phone = phone_edit.getText().toString();
+                String pwd = pwd_edit.getText().toString();
+                loginPresenter.request(phone, pwd);
+                promptDialog.showLoading("正在登录");
+                break;
+//          忘记密码
+            case R.id.forget_pwd:
+                startActivity(new Intent(LoginActivity.this, FindPwdActivity.class));
+                break;
+        }
     }
 }

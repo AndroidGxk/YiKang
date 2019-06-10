@@ -81,15 +81,6 @@ public class Fragment_Shou extends BaseFragment implements CustomAdapt, ICoreInf
                 }
                 return false;
             }
-
-            //            @JavascriptInterface
-//            public void goBackIndex(String msg) {
-//                Intent intent = new Intent(getContext(), H5SecActivity.class);
-//                intent.putExtra("http", msg);
-//                startActivity(intent);
-//                Toast.makeText(getContext(), "" + msg, Toast.LENGTH_SHORT).show();
-//            }
-//
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
                 //返回false，意味着请求过程里，不管有多少次的跳转请求（即新的请求地址），均交给webView自己处理，这也是此方法的默认处理

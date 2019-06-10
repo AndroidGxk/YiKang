@@ -13,7 +13,7 @@ import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
 import me.jessyan.autosize.internal.CustomAdapt;
 
-public class PhoneActivity extends BaseActivtiy implements CustomAdapt {
+public class PhoneActivity extends BaseActivtiy implements CustomAdapt, View.OnClickListener {
 
     private ImageView back_img;
     private TextView ok_btn;
@@ -28,33 +28,13 @@ public class PhoneActivity extends BaseActivtiy implements CustomAdapt {
         width = display.getWidth();
         height = display.getHeight();
         back_img = (ImageView) findViewById(R.id.back_img);
-        back_img = (ImageView) findViewById(R.id.back_img);
         ok_btn = (TextView) findViewById(R.id.ok_btn);
     }
 
     @Override
     protected void initEventData() {
-        /**
-         * 退出
-         */
-        back_img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-        /**
-         * 保存
-         */
-        ok_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SharedPreferences name = getSharedPreferences("name", MODE_PRIVATE);
-                SharedPreferences.Editor edit = name.edit();
-                edit.commit();
-                finish();
-            }
-        });
+        back_img.setOnClickListener(this);
+        ok_btn.setOnClickListener(this);
     }
 
     @Override
@@ -74,6 +54,23 @@ public class PhoneActivity extends BaseActivtiy implements CustomAdapt {
 
     @Override
     public float getSizeInDp() {
-        return width/2;
+        return width / 2;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            //关闭当前页面
+            case R.id.back_img:
+                finish();
+                //保存
+                break;
+            case R.id.ok_btn:
+                SharedPreferences name = getSharedPreferences("name", MODE_PRIVATE);
+                SharedPreferences.Editor edit = name.edit();
+                edit.commit();
+                finish();
+                break;
+        }
     }
 }
