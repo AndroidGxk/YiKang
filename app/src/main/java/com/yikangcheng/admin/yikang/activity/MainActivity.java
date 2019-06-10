@@ -62,14 +62,10 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
             gou_linear, wo_linear, line1, line4, line3, line2, line5, line6;
     private DrawerLayout mDrawerLayout;
     private RelativeLayout mNv;
-    //    private ImageView mImg_ceHua;
     private RelativeLayout mRelativeLayout;
-    private TextView tv_toolBar_title, tv_toolBar_right, log_text;
+    private TextView  log_text;
     private TextView shou_text, fen_text, miao_text, gou_text, wo_text, my_name;
-    private ImageView iv_toolBar_right, iv_toolBar_left;
-    private ImageView mImg_activity_main_soushuo, header;
-    private View toobar;
-    private boolean isclick;
+    private ImageView  header;
     private Fragment_Miao fragment_miao;
     private TextView text_count;
     /**
@@ -100,7 +96,6 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         width = wm.getDefaultDisplay().getWidth();
         radio = (RadioGroup) findViewById(R.id.radio_group);
         radio.check(R.id.shou);
-        mImg_activity_main_soushuo = (ImageView) findViewById(R.id.iv_toolBar_right);
         shou_linear = (LinearLayout) findViewById(R.id.shou_linear);
         fen_linear = (LinearLayout) findViewById(R.id.fen_linear);
         shou_text = (TextView) findViewById(R.id.shou_text);
@@ -121,17 +116,6 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         miao_linear = (LinearLayout) findViewById(R.id.miao_linear);
         gou_linear = (LinearLayout) findViewById(R.id.gou_linear);
         wo_linear = (LinearLayout) findViewById(R.id.wo_linear);
-        toobar = findViewById(R.id.toobar);
-        tv_toolBar_title = toobar.findViewById(R.id.tv_toolBar_title);
-        tv_toolBar_right = toobar.findViewById(R.id.tv_toolBar_right);
-        iv_toolBar_left = toobar.findViewById(R.id.iv_toolBar_left);
-        iv_toolBar_left.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mDrawerLayout.openDrawer(Gravity.LEFT);
-                Fragment_Gou.getSignY();
-            }
-        });
         //我的账号
         line2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,23 +131,7 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
             }
         });
 
-        //编辑
-        tv_toolBar_right.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!isclick) {
-                    tv_toolBar_right.setText("完成");
-                    isclick = true;
-                } else {
-                    tv_toolBar_right.setText("编辑");
-                    isclick = false;
-                }
-                onClickListener.onclick();
-            }
-        });
-        iv_toolBar_right = toobar.findViewById(R.id.iv_toolBar_right);
-        iv_toolBar_right = toobar.findViewById(R.id.iv_toolBar_right);
-        tv_toolBar_right = toobar.findViewById(R.id.tv_toolBar_right);
+
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         mNv = (RelativeLayout) findViewById(R.id.nv);
         mRelativeLayout = (RelativeLayout) findViewById(R.id.relativeLayout);
@@ -176,14 +144,6 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
             }
         });
         record_ac = 1;
-        //点击搜索图标跳转搜索页面
-        mImg_activity_main_soushuo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, SeekActivity.class);
-                startActivity(intent);
-            }
-        });
         line6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -290,11 +250,6 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
             public void onClick(View view) {
                 Fragment_Gou.getSignY();
                 record_ac = 1;
-                toobar.setVisibility(View.VISIBLE);
-                tv_toolBar_right.setVisibility(View.GONE);
-                iv_toolBar_right.setVisibility(View.VISIBLE);
-                tv_toolBar_title.setText("优选商城");
-//                private TextView shou_text,fen_text,miao_text,gou_text,wo_text;
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.hide(fragment_fen);
                 fragmentTransaction.hide(fragment_miao);
@@ -319,10 +274,6 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
             public void onClick(View view) {
                 Fragment_Gou.getSignY();
                 record_ac = 2;
-                toobar.setVisibility(View.VISIBLE);
-                tv_toolBar_right.setVisibility(View.GONE);
-                iv_toolBar_right.setVisibility(View.VISIBLE);
-                tv_toolBar_title.setText("分类");
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.hide(fragment_shou);
                 fragmentTransaction.hide(fragment_miao);
@@ -348,10 +299,6 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
             public void onClick(View view) {
                 Fragment_Gou.getSignY();
                 record_ac = 3;
-                toobar.setVisibility(View.VISIBLE);
-                tv_toolBar_right.setVisibility(View.GONE);
-                iv_toolBar_right.setVisibility(View.VISIBLE);
-                tv_toolBar_title.setText("秒杀专区");
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.hide(fragment_shou);
                 fragmentTransaction.hide(fragment_fen);
@@ -380,10 +327,6 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
                 if (logUser == null) {
                     startActivity(new Intent(MainActivity.this, LoginActivity.class));
                 }
-                toobar.setVisibility(View.VISIBLE);
-                tv_toolBar_right.setVisibility(View.VISIBLE);
-                iv_toolBar_right.setVisibility(View.GONE);
-                tv_toolBar_title.setText("我的购物车");
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.hide(fragment_shou);
                 fragmentTransaction.hide(fragment_fen);
@@ -409,10 +352,6 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
             public void onClick(View view) {
                 Fragment_Gou.getSignY();
                 record_ac = 5;
-                toobar.setVisibility(View.VISIBLE);
-                tv_toolBar_right.setVisibility(View.GONE);
-                iv_toolBar_right.setVisibility(View.VISIBLE);
-                tv_toolBar_title.setText("我的");
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.hide(fragment_shou);
                 fragmentTransaction.hide(fragment_fen);
@@ -437,10 +376,6 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
             public void onClick(View view) {
                 Fragment_Gou.getSignY();
                 record_ac = 1;
-                toobar.setVisibility(View.VISIBLE);
-                tv_toolBar_right.setVisibility(View.GONE);
-                iv_toolBar_right.setVisibility(View.VISIBLE);
-                tv_toolBar_title.setText("优选商城");
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.hide(fragment_fen);
                 fragmentTransaction.hide(fragment_miao);
@@ -465,10 +400,6 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
             public void onClick(View view) {
                 Fragment_Gou.getSignY();
                 record_ac = 2;
-                toobar.setVisibility(View.VISIBLE);
-                tv_toolBar_right.setVisibility(View.GONE);
-                iv_toolBar_right.setVisibility(View.VISIBLE);
-                tv_toolBar_title.setText("分类");
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.hide(fragment_shou);
                 fragmentTransaction.hide(fragment_miao);
@@ -493,10 +424,6 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
             public void onClick(View view) {
                 Fragment_Gou.getSignY();
                 record_ac = 3;
-                toobar.setVisibility(View.VISIBLE);
-                tv_toolBar_right.setVisibility(View.GONE);
-                iv_toolBar_right.setVisibility(View.VISIBLE);
-                tv_toolBar_title.setText("秒杀专区");
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.hide(fragment_shou);
                 fragmentTransaction.hide(fragment_fen);
@@ -524,10 +451,6 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
                 if (logUser == null) {
                     startActivity(new Intent(MainActivity.this, LoginActivity.class));
                 }
-                toobar.setVisibility(View.VISIBLE);
-                tv_toolBar_right.setVisibility(View.VISIBLE);
-                iv_toolBar_right.setVisibility(View.GONE);
-                tv_toolBar_title.setText("我的购物车");
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.hide(fragment_shou);
                 fragmentTransaction.hide(fragment_fen);
@@ -552,10 +475,6 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
             public void onClick(View view) {
                 Fragment_Gou.getSignY();
                 record_ac = 5;
-                toobar.setVisibility(View.VISIBLE);
-                tv_toolBar_right.setVisibility(View.GONE);
-                iv_toolBar_right.setVisibility(View.VISIBLE);
-                tv_toolBar_title.setText("我的");
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.hide(fragment_shou);
                 fragmentTransaction.hide(fragment_fen);
@@ -622,6 +541,12 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
             }
         });
+        fragment_wo.setOnClickListener(new Fragment_Wo.onClickListener() {
+            @Override
+            public void onclick() {
+                mDrawerLayout.openDrawer(Gravity.LEFT);
+            }
+        });
     }
 
     @Override
@@ -642,16 +567,6 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
     @Override
     public float getSizeInDp() {
         return width / 2;
-    }
-
-    onClickListener onClickListener;
-
-    public void setOnClickListener(MainActivity.onClickListener onClickListener) {
-        this.onClickListener = onClickListener;
-    }
-
-    public interface onClickListener {
-        void onclick();
     }
 
     @Override
@@ -750,10 +665,6 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
              */
             switch (record_ac) {
                 case 1:
-                    toobar.setVisibility(View.VISIBLE);
-                    tv_toolBar_right.setVisibility(View.GONE);
-                    iv_toolBar_right.setVisibility(View.VISIBLE);
-                    tv_toolBar_title.setText("优选商城");
                     shou.setChecked(true);
                     fen.setChecked(false);
                     gou.setChecked(false);
@@ -773,10 +684,6 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
                     fragmentTransaction1.commit();
                     break;
                 case 2:
-                    toobar.setVisibility(View.VISIBLE);
-                    tv_toolBar_right.setVisibility(View.GONE);
-                    iv_toolBar_right.setVisibility(View.VISIBLE);
-                    tv_toolBar_title.setText("分类");
                     shou.setChecked(false);
                     fen.setChecked(true);
                     gou.setChecked(false);
@@ -796,10 +703,6 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
                     fragmentTransaction2.commit();
                     break;
                 case 3:
-                    toobar.setVisibility(View.VISIBLE);
-                    tv_toolBar_right.setVisibility(View.GONE);
-                    iv_toolBar_right.setVisibility(View.VISIBLE);
-                    tv_toolBar_title.setText("秒杀专区");
                     shou.setChecked(false);
                     fen.setChecked(false);
                     gou.setChecked(false);
@@ -819,10 +722,6 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
                     fragmentTransaction3.commit();
                     break;
                 case 5:
-                    toobar.setVisibility(View.VISIBLE);
-                    tv_toolBar_right.setVisibility(View.GONE);
-                    iv_toolBar_right.setVisibility(View.VISIBLE);
-                    tv_toolBar_title.setText("我的");
                     shou.setChecked(false);
                     fen.setChecked(false);
                     gou.setChecked(false);

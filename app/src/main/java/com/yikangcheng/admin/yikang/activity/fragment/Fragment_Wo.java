@@ -27,6 +27,7 @@ import com.yikangcheng.admin.yikang.activity.obligation.DetailActivity;
 import com.yikangcheng.admin.yikang.activity.obligation.ObligationActivity;
 import com.yikangcheng.admin.yikang.activity.obligation.PaidActivity;
 import com.yikangcheng.admin.yikang.activity.particulars.ParticularsActivity;
+import com.yikangcheng.admin.yikang.activity.seek.SeekActivity;
 import com.yikangcheng.admin.yikang.activity.siteactivity.AiteActivity;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
 import com.yikangcheng.admin.yikang.bean.AdvertisingBean;
@@ -67,7 +68,7 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe, XRecyclerVie
     private RelativeLayout baseline;
     private RelativeLayout base_btn;
     private Recommend_Fragment_wo_Adapter mRecommend_fragment_wo_adapter;
-    private ImageView mGuanggao;
+    private ImageView mGuanggao, iv_toolBar_left, iv_toolBar_right;
     private UserInfoPresenter userInfoPresenter;
     private LoginBean logUser;
     private RelativeLayout mMingxi;
@@ -122,6 +123,10 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe, XRecyclerVie
         mTvFragmentWoName = view.findViewById(R.id.tv__fragment_wo_name);
         //账户明细
         mMingxi = view.findViewById(R.id.relativeLayout_mingxi_fragment_wo);
+        //侧滑
+        iv_toolBar_left = view.findViewById(R.id.iv_toolBar_left);
+        //搜索
+        iv_toolBar_right = view.findViewById(R.id.iv_toolBar_right);
         //滑动
         neste = view.findViewById(R.id.Neste);
         //底线
@@ -206,6 +211,20 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe, XRecyclerVie
                 if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
                     mRlvFragmentWo.setLoadingMoreEnabled(true);//调用刷新控件对应的加载更多方法
                     onLoadMore();
+                }
+            }
+        });
+        iv_toolBar_right.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), SeekActivity.class));
+            }
+        });
+        iv_toolBar_left.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (onClickListener != null) {
+                    onClickListener.onclick();
                 }
             }
         });
@@ -386,12 +405,12 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe, XRecyclerVie
             }
             if (userCenter.getNickName().equals("")) {
                 mTvFragmentWoName.setText(userCenter.getMobile() + "");
-            }else{
+            } else {
                 mTvFragmentWoName.setText(userCenter.getNickName());
             }
             if (userCenter.getAvatar().equals("")) {
                 mImgFragmentWoTouxiang.setBackgroundResource(R.drawable.touxiang_2);
-            }else{
+            } else {
                 //设置图片圆角角度
                 Glide.with(getContext()).load("https://static.yikch.com" + userCenter.getAvatar())
                         .apply(RequestOptions.bitmapTransform(new CircleCrop()))
@@ -405,4 +424,16 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe, XRecyclerVie
         }
     }
 
+    /**
+     * 侧滑
+     */
+    onClickListener onClickListener;
+
+    public void setOnClickListener(Fragment_Wo.onClickListener onClickListener) {
+        this.onClickListener = onClickListener;
+    }
+
+    public interface onClickListener {
+        void onclick();
+    }
 }

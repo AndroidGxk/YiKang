@@ -92,25 +92,6 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
         shopCarPresenter = new ShopCarPresenter(this);
         deleteShopPresenter = new DeleteShopPresenter(new DeleteShop());
         activity = (MainActivity) getActivity();
-        //编辑按钮回调
-        activity.setOnClickListener(new MainActivity.onClickListener() {
-            @Override
-            public void onclick() {
-                if (!isclick) {
-                    dele_text.setVisibility(View.VISIBLE);
-                    num_text.setVisibility(View.GONE);
-                    heji.setVisibility(View.GONE);
-                    text_total.setVisibility(View.GONE);
-                    isclick = true;
-                } else {
-                    dele_text.setVisibility(View.GONE);
-                    num_text.setVisibility(View.VISIBLE);
-                    heji.setVisibility(View.VISIBLE);
-                    text_total.setVisibility(View.VISIBLE);
-                    isclick = false;
-                }
-            }
-        });
 
         /**
          * 为你推荐
