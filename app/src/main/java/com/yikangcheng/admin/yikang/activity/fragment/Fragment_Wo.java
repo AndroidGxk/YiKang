@@ -296,9 +296,9 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe, XRecyclerVie
             //优惠劵
             case R.id.img__fragment_wo_gouwuche:
                 if (logUser != null) {
-                    startActivity(new Intent(getActivity(), CouponActivity.class));
+//                    startActivity(new Intent(getActivity(), CouponActivity.class));
                 } else {
-                    startActivity(new Intent(getActivity(), LoginActivity.class));
+//                    startActivity(new Intent(getActivity(), LoginActivity.class));
                 }
                 break;
             //收货地址
@@ -312,9 +312,9 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe, XRecyclerVie
             //售后/退款
             case R.id.img_fragment_wo_yituikuan:
                 if (logUser != null) {
-                    startActivity(new Intent(getActivity(), AfterSaleActivity.class));
+//                    startActivity(new Intent(getActivity(), AfterSaleActivity.class));
                 } else {
-                    startActivity(new Intent(getActivity(), LoginActivity.class));
+//                    startActivity(new Intent(getActivity(), LoginActivity.class));
                 }
                 break;
             //关于App
@@ -328,9 +328,9 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe, XRecyclerVie
             //铃铛——消息页面
             case R.id.img_fragment_wo_lingdang:
                 if (logUser != null) {
-                    startActivity(new Intent(getActivity(), MessageActivity.class));
+//                    startActivity(new Intent(getActivity(), MessageActivity.class));
                 } else {
-                    startActivity(new Intent(getActivity(), LoginActivity.class));
+//                    startActivity(new Intent(getActivity(), LoginActivity.class));
                 }
                 break;
             //已支付

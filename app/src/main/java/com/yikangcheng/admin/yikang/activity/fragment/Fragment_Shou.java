@@ -29,6 +29,7 @@ import com.yikangcheng.admin.yikang.activity.ClassifyHomeActivity;
 import com.yikangcheng.admin.yikang.activity.CloseActivity;
 import com.yikangcheng.admin.yikang.activity.H5SecActivity;
 import com.yikangcheng.admin.yikang.activity.PartiCarActivity;
+import com.yikangcheng.admin.yikang.activity.SeekListActivity;
 import com.yikangcheng.admin.yikang.activity.particulars.ParticularsActivity;
 import com.yikangcheng.admin.yikang.activity.seek.SeekActivity;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
@@ -40,7 +41,7 @@ import com.yikangcheng.admin.yikang.presenter.AddShopPresenter;
 import me.jessyan.autosize.internal.CustomAdapt;
 
 
-public class Fragment_Shou extends BaseFragment implements ICoreInfe{
+public class Fragment_Shou extends BaseFragment implements ICoreInfe {
 
 
     private static WebView webView;
@@ -179,8 +180,9 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe{
 
     @JavascriptInterface
     public void saySomeMenu(String msg) {
-        Intent intent = new Intent(getContext(), ClassifyHomeActivity.class);
-        intent.putExtra("id", msg);
+        Intent intent = new Intent(getContext(), SeekListActivity.class);
+        int i = Integer.parseInt(msg);
+        intent.putExtra("id", i);
         startActivity(intent);
     }
 

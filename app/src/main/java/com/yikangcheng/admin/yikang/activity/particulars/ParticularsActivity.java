@@ -234,14 +234,8 @@ public class ParticularsActivity extends BaseActivtiy implements CustomAdapt, IC
         }
         ss += msg + ",";
         String[] split = this.ss.split(",");
-        Log.e("sp--------------", split.length + "");
-
-        /**
-         * 这些太乱了 等我有时间了再调下 现在应该可以实现
-         */
         if (split.length == 9) {
             if (split[8].equals("1")) {
-                Log.e("ssssssssssss", ss);
                 Intent intent = new Intent(ParticularsActivity.this, CloseActivity.class);
                 intent.putExtra("goodinfo", this.ss);
                 startActivity(intent);
@@ -261,10 +255,7 @@ public class ParticularsActivity extends BaseActivtiy implements CustomAdapt, IC
             }
         }
         if (split.length == 8) {
-//            Log.e("wangfei--------------", ss);
-//            Log.e("spppppppppppp", split[7]);
             if (split[7].equals("1")) {
-                Log.e("ssssssssssss", ss);
                 Intent intent = new Intent(ParticularsActivity.this, CloseActivity.class);
                 intent.putExtra("goodinfo", this.ss);
                 startActivity(intent);

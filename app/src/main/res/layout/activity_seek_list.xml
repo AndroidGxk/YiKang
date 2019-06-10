@@ -6,6 +6,10 @@
     android:layout_height="match_parent"
     android:background="#EBEBEB"
     android:clipToPadding="true"
+    android:fillViewport="true"
+    android:focusableInTouchMode="true"
+    android:overScrollMode="never"
+    android:id="@+id/rela"
     android:fitsSystemWindows="true"
     tools:context=".activity.SeekListActivity">
 
@@ -124,7 +128,7 @@
                 android:layout_marginRight="60dp"
                 android:gravity="center"
                 android:padding="10dp"
-                android:src="@drawable/qiehuan" />
+                android:src="@drawable/shuqiehuan" />
         </LinearLayout>
     </RelativeLayout>
 
@@ -147,13 +151,21 @@
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
     <ImageView
+        android:id="@+id/noGood_img"
+        android:layout_width="125dp"
+        android:layout_height="160dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/nogood"
+        android:visibility="gone" />
+
+    <ImageView
         android:id="@+id/imgBut"
-        android:visibility="gone"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:layout_marginRight="15dp"
         android:layout_marginBottom="70dp"
-        android:background="@drawable/fanhuidingbu" />
+        android:background="@drawable/fanhuidingbu"
+        android:visibility="gone" />
 </RelativeLayout>

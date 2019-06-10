@@ -55,7 +55,7 @@
                 <RelativeLayout
                     android:id="@+id/rela2"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:background="#FFFFFF">
 
@@ -112,7 +112,6 @@
                         android:layout_marginBottom="10dp"
                         android:text=""
                         android:textColor="#000000"
-
                         android:textSize="10sp"
                         android:visibility="gone" />
 
@@ -129,10 +128,10 @@
                     android:id="@+id/recycler"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:overScrollMode="never"
                     android:layout_below="@+id/rela2"
                     android:layout_marginTop="10dp"
-                    android:background="#FFFFFF" />
+                    android:background="#FFFFFF"
+                    android:overScrollMode="never" />
 
                 <RelativeLayout
                     android:id="@+id/rela3"
@@ -169,7 +168,8 @@
                     android:layout_height="37dp"
                     android:layout_below="@+id/rela3"
                     android:layout_marginTop="10dp"
-                    android:background="#FFFFFF">
+                    android:background="#FFFFFF"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"

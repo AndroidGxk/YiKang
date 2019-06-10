@@ -128,7 +128,6 @@ public interface ApiService {
                                          @Query("realName") String realName, @Query("email") String email, @Query("gender") int gender,
                                          @Query("userInfo") String userInfo);
 
-
     /**
      * 查看全部订单
      */

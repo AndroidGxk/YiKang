@@ -139,7 +139,7 @@
                     android:background="@drawable/editext_gray_circular_shape"
                     android:hint="请填写纳税人识别号"
                     android:paddingLeft="10dp"
-                    android:textColorHint="#FF4E4E"
+                    android:textColorHint="#999999"
                     android:textSize="10sp"
                     android:visibility="gone" />
 
@@ -200,10 +200,13 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginRight="15dp"
+                    android:inputType="number"
+                    android:maxLength="11"
                     android:background="@drawable/editext_gray_circular_shape"
                     android:hint="请填写收票人手机号"
                     android:paddingLeft="10dp"
                     android:textColorHint="#999999"
+                    android:visibility="gone"
                     android:textSize="10sp" />
 
                 <EditText
@@ -217,6 +220,7 @@
                     android:background="@drawable/editext_gray_circular_shape"
                     android:hint="请填写收票人邮箱"
                     android:paddingLeft="10dp"
+                    android:inputType="textEmailAddress"
                     android:textColorHint="#999999"
                     android:textSize="10sp" />
             </RelativeLayout>

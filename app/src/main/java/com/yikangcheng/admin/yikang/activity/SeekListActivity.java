@@ -2,6 +2,7 @@ package com.yikangcheng.admin.yikang.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
@@ -29,6 +30,7 @@ import com.yikangcheng.admin.yikang.bean.Request;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
 import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
 import com.yikangcheng.admin.yikang.presenter.CommodityPresenter;
+import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
 import java.util.List;
 
@@ -44,7 +46,7 @@ public class SeekListActivity extends BaseActivtiy implements ICoreInfe, View.On
     private XRecyclerView xrecycler;
     private ClassCommodAdapter classCommodAdapter;
     private TextView zonghe, xiaoliang, price_text;
-    private RelativeLayout price;
+    private RelativeLayout price,relat_one;
     private ImageView qiehuan, back_img;
     private boolean zclick = true, xclick, pclick, qclick = true, pimgclick = true;
     private int id;
@@ -57,9 +59,11 @@ public class SeekListActivity extends BaseActivtiy implements ICoreInfe, View.On
     private int width;
     private EditText editTixt_activity_seek_sousuo;
     private ImageView xiaoxi;
-    private ImageView imgBut;
+    private ImageView imgBut, noGood_img;
+
     @Override
     protected void initView() {
+        StatusBarUtil.setStatusBarMode(this, true, R.color.colorTabG);
         //创建对象
         promptDialog = new PromptDialog(SeekListActivity.this);
         //设置自定义属性
@@ -77,7 +81,9 @@ public class SeekListActivity extends BaseActivtiy implements ICoreInfe, View.On
         xiaoxi = (ImageView) findViewById(R.id.xiaoxi);
         zonghe = (TextView) findViewById(R.id.zonghe);
         imgBut = (ImageView) findViewById(R.id.imgBut);
-
+        //暂无商品
+        noGood_img = (ImageView) findViewById(R.id.noGood_img);
+        relat_one = (RelativeLayout) findViewById(R.id.rela);
         //加载刷新
         refreshLayout = (SmartRefreshLayout) findViewById(R.id.refreshLayout);
         price_text = (TextView) findViewById(R.id.price_text);
@@ -210,7 +216,16 @@ public class SeekListActivity extends BaseActivtiy implements ICoreInfe, View.On
         Request request = (Request) data;
         ClassifyCommodityListBean classifyCommodityListBean = (ClassifyCommodityListBean) request.getEntity();
         List<ClassifyCommodityListBean.CommodityListBean> commodityList = classifyCommodityListBean.getCommodityList();
-        classCommodAdapter.addAll(commodityList);
+        if (commodityList == null) {
+            noGood_img.setVisibility(View.VISIBLE);
+            refreshLayout.setVisibility(View.GONE);
+            relat_one.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        } else {
+            classCommodAdapter.addAll(commodityList);
+            noGood_img.setVisibility(View.GONE);
+            refreshLayout.setVisibility(View.VISIBLE);
+            relat_one.setBackgroundColor(Color.parseColor("#EBEBEB"));
+        }
     }
 
     @Override

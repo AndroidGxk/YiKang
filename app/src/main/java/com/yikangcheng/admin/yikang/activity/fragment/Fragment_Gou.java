@@ -219,7 +219,7 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
         dele_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                promptDialog.showWarnAlert("你确定要删除订单吗？", new PromptButton("取消", new PromptButtonListener() {
+                promptDialog.showWarnAlert("确定要删除该商品吗？", new PromptButton("取消", new PromptButtonListener() {
                     @Override
                     public void onClick(PromptButton button) {
                     }
@@ -271,6 +271,9 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
             mId.substring(0, mId.length() - 1);
             deleteShopPresenter.request(getLogUser(getContext()).getId(), mId);
             mId = "";
+            all_check.setChecked(false);
+            shopRecyclerAdapter.checkAll(all_check.isChecked());
+
         }
     });
 

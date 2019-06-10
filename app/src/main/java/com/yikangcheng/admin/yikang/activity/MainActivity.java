@@ -63,9 +63,9 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
     private DrawerLayout mDrawerLayout;
     private RelativeLayout mNv;
     private RelativeLayout mRelativeLayout;
-    private TextView  log_text;
+    private TextView log_text;
     private TextView shou_text, fen_text, miao_text, gou_text, wo_text, my_name;
-    private ImageView  header;
+    private ImageView header;
     private Fragment_Miao fragment_miao;
     private TextView text_count;
     /**
@@ -213,7 +213,11 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
             text_count.setVisibility(View.GONE);
         } else {
             text_count.setVisibility(View.VISIBLE);
-            text_count.setText("" + count);
+            if (count >= 99) {
+                text_count.setText("99+");
+            }else{
+                text_count.setText("" + count);
+            }
         }
     }
 

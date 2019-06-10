@@ -1,6 +1,7 @@
 package com.yikangcheng.admin.yikang.activity;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -9,8 +10,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -89,6 +92,9 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
     private int id;
     //发票类型
     String invoicetype;
+
+    //发票类型Int
+    int invoicetypeInt = 1;
     //发票抬头
     int invoicetypetitle;
     //发票内容
@@ -105,7 +111,7 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
     private String mPhone = "";
     private String mMail = "";
     private int s_invoiceInt = 1;
-    private int mGood_type = 1;
+    private String mGood_type = "1";
     private TextView text;
 
     /**
@@ -375,6 +381,7 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
                 //不开发票
                 if (!n_invoice) {
                     invoicetype = "不开发票";
+                    invoicetypeInt = 3;
                     n_invoice = true;
                     d_invoice = false;
                     z_invoice = false;
@@ -387,6 +394,7 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
                 //电子发票
                 if (!d_invoice) {
                     invoicetype = "电子发票";
+                    invoicetypeInt = 1;
                     d_invoice = true;
                     n_invoice = false;
                     z_invoice = false;
@@ -400,6 +408,7 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
                 //纸质发票
                 if (!z_invoice) {
                     invoicetype = "纸质发票";
+                    invoicetypeInt = 2;
                     z_invoice = true;
                     d_invoice = false;
                     n_invoice = false;
@@ -444,7 +453,7 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
             case R.id.good_detail:
                 //商品明细
                 if (!d_good) {
-                    mGood_type = 1;
+                    mGood_type = "1";
                     t_good = false;
                     d_good = true;
                     good_detail.setBackgroundResource(R.drawable.shop_btn_shape);
@@ -458,7 +467,7 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
             case R.id.good_type:
                 //商品类型
                 if (!t_good) {
-                    mGood_type = 2;
+                    mGood_type = "2";
                     d_good = false;
                     t_good = true;
                     good_type.setBackgroundResource(R.drawable.shop_btn_shape);
@@ -514,10 +523,10 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
                             String substring = str.substring(0, str.length() - 1);
                             if (userAddressBean == null) {
                                 orderBuyArrayPresenter.request(getLogUser(CloseActivity.this).getId(), substring,
-                                        id, s_invoiceInt, mGood_type, mWorkuniit, mNumBer, mPhone, mMail, zhi ? "ALIPAY" : "WEIXIN", "Android", "COMMODITY", zhi ? "" : ipAddressString);
+                                        id, invoicetypeInt, s_invoiceInt, mWorkuniit, mNumBer, mGood_type, mMail, zhi ? "ALIPAY" : "WEIXIN", "Android", "COMMODITY", zhi ? "" : ipAddressString);
                             } else {
                                 orderBuyArrayPresenter.request(getLogUser(CloseActivity.this).getId(), substring,
-                                        userAddressBean.getId(), s_invoiceInt, mGood_type, mWorkuniit, mNumBer, mPhone, mMail, zhi ? "ALIPAY" : "WEIXIN", "Android", "COMMODITY", zhi ? "" : ipAddressString);
+                                        userAddressBean.getId(), invoicetypeInt, s_invoiceInt, mWorkuniit, mNumBer, mGood_type, mMail, zhi ? "ALIPAY" : "WEIXIN", "Android", "COMMODITY", zhi ? "" : ipAddressString);
                             }
                         }
                     }
@@ -525,10 +534,10 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
                     String ids = pariticShopBean.getId();
                     if (userAddressBean == null) {
                         orderBuyPresenter.request(getLogUser(CloseActivity.this).getId(), Integer.parseInt(ids),
-                                id, Integer.parseInt(num), s_invoiceInt, mGood_type, mWorkuniit, mNumBer, mPhone, mMail, zhi ? "ALIPAY" : "WEIXIN", "Android", zhi ? "" : ipAddressString);
+                                id, Integer.parseInt(num), invoicetypeInt, s_invoiceInt, mWorkuniit, mNumBer, mGood_type, mMail, zhi ? "ALIPAY" : "WEIXIN", "Android", zhi ? "" : ipAddressString);
                     } else {
                         orderBuyPresenter.request(getLogUser(CloseActivity.this).getId(), Integer.parseInt(ids),
-                                userAddressBean.getId(), Integer.parseInt(num), s_invoiceInt, mGood_type, mWorkuniit, mNumBer, mPhone, mMail, zhi ? "ALIPAY" : "WEIXIN", "Android", zhi ? "" : ipAddressString);
+                                userAddressBean.getId(), Integer.parseInt(num), invoicetypeInt, s_invoiceInt, mWorkuniit, mNumBer, mGood_type, mMail, zhi ? "ALIPAY" : "WEIXIN", "Android", zhi ? "" : ipAddressString);
                     }
                 }
             }
@@ -634,7 +643,6 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
                 intent.putExtras(bundle);
                 startActivity(intent);
                 promptDialog.dismiss();
-                finish();
             } else {
                 Toast.makeText(CloseActivity.this, "" + request.getMessage(), Toast.LENGTH_SHORT).show();
                 promptDialog.dismiss();
@@ -645,7 +653,6 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
         public void fail(ApiException e) {
 
         }
-
     }
 
     @Override

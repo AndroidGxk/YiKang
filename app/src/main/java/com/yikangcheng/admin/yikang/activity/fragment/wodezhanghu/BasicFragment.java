@@ -446,7 +446,11 @@ public class BasicFragment extends BaseFragment implements ICoreInfe {
         @Override
         public void success(Object data) {
             path = (String) data;
-            promptDialog.showSuccess("上传成功");
+            if (path != null && (!path.equals(""))) {
+                promptDialog.showSuccess("上传成功");
+            } else {
+                promptDialog.showSuccess("上传失败");
+            }
         }
 
         @Override
@@ -473,7 +477,7 @@ public class BasicFragment extends BaseFragment implements ICoreInfe {
 
         @Override
         public void fail(ApiException e) {
-
+            promptDialog.dismiss();
         }
     }
 }
