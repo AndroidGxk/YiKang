@@ -65,6 +65,9 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
     private int mOrderId;
     private int width;
     private PromptDialog mPromptDialog;
+    private CloseTheDealBean mEntity;
+    private TextView mTv_queRen;
+    private int mAfterSaleStatus;
 
 
     /**
@@ -120,6 +123,8 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
         mTvActivityCloseNeiRong = (TextView) findViewById(R.id.tv_activity_close_NeiRong);
         //删除
         mChanchu = (TextView) findViewById(R.id.tv_activity_closeThe_Deal_shanchu);
+        //确认收货
+        mTv_queRen = (TextView) findViewById(R.id.tv_QueRen);
 
 
         //点击事件
@@ -141,8 +146,9 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
         //接口回调
         mCloseTheDealAdapter.setOnClickListener(new CloseTheDealAdapter.OnClickListener() {
             @Override
-            public void OnClickListener(View v, int position) {
+            public void OnClickListener(View v, int position, int afterSaleStatus) {
                 mPosition = position;
+                mAfterSaleStatus = afterSaleStatus;
             }
         });
 
@@ -279,47 +285,60 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
     @Override
     public void success(Object data) {
         Request request = (Request) data;
-        CloseTheDealBean entity = (CloseTheDealBean) request.getEntity();
+        mEntity = (CloseTheDealBean) request.getEntity();
         //添加数据到适配器
-        mCloseTheDealAdapter.addAll(entity.getDetailsList());
+        mCloseTheDealAdapter.addAll(mEntity.getDetailsList());
         //用户名
-        mTvActivityCloseName.setText(entity.getUserAddress().getReceiver());
+        mTvActivityCloseName.setText(mEntity.getUserAddress().getReceiver());
         //地址
-        mAddress.setText(entity.getUserAddress().getAddress());
-        mCityStr.setText(entity.getUserAddress().getCityStr());
-        mTownStr.setText(entity.getUserAddress().getTownStr());
-        mProvinceStr.setText(entity.getUserAddress().getProvinceStr());
+        mAddress.setText(mEntity.getUserAddress().getAddress());
+        mCityStr.setText(mEntity.getUserAddress().getCityStr());
+        mTownStr.setText(mEntity.getUserAddress().getTownStr());
+        mProvinceStr.setText(mEntity.getUserAddress().getProvinceStr());
+        mTvActivityCloseBiaohao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String orderNo = mEntity.getOrder().getOrderNo();
+                Toast.makeText(CloseTheDealActivity.this, orderNo, Toast.LENGTH_SHORT).show();
+            }
+        });
+
         //订单编号
-        mTvActivityCloseBiaohao.setText(entity.getOrder().getOrderNo());
+        mTvActivityCloseBiaohao.setText(mEntity.getOrder().getOrderNo());
         //运费
-        mTvActivityCloseYunFei.setText(entity.getOrder().getFreightPrice() + "");
+        mTvActivityCloseYunFei.setText(mEntity.getOrder().getFreightPrice() + "");
         //金额
-        mTvActivityCloseJinE.setText(entity.getOrder().getRealPrice() + "");
+        mTvActivityCloseJinE.setText(mEntity.getOrder().getRealPrice() + "");
         //总额
-        mTvActivityCloseZhongJi.setText(entity.getOrder().getSumPrice() + "");
+        mTvActivityCloseZhongJi.setText(mEntity.getOrder().getSumPrice() + "");
         //支付方式
-        if (entity.getOrder().getOrderState().equals("SUCCESS")) {
+        if (mEntity.getOrder().getOrderState().equals("SUCCESS")) {
             mTvActivityCloseFangShi.setText("支付成功");
         }
         //发票类型
-        int invoiceType = entity.getOrderBook().getInvoiceType();
+        int invoiceType = mEntity.getOrderBook().getInvoiceType();
         Log.e("tag", "success: " + invoiceType);
-        if (entity.getOrderBook().getInvoiceType() == 1) {
+        if (mEntity.getOrderBook().getInvoiceType() == 1) {
             mTvActivityCloseFaPianLeiXing.setText("电子发票");
-        } else if (entity.getOrderBook().getInvoiceType() == 2) {
+        } else if (mEntity.getOrderBook().getInvoiceType() == 2) {
             mTvActivityCloseFaPianLeiXing.setText("纸质发票");
         } else {
             mTvActivityCloseFaPianLeiXing.setText("无发票");
         }
 
         //发票内容
-        if (entity.getOrderBook().getInvoiceContent() == 1) {
+        if (mEntity.getOrderBook().getInvoiceContent() == 1) {
             mTvActivityCloseNeiRong.setText("商品明细");
         } else {
             mTvActivityCloseNeiRong.setText("商品类别");
         }
 
-
+        //确认收货
+        if (mAfterSaleStatus != 0) {
+            mTv_queRen.setVisibility(View.GONE);
+        } else {
+            mTv_queRen.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

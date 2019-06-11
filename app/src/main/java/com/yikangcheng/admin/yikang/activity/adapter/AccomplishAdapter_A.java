@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -48,7 +47,6 @@ public class AccomplishAdapter_A extends RecyclerView.Adapter {
         mOrderState = mList.get(position).getOrderState();
         if (mOrderState.equals("SUCCESS")) {
             holder1.mZhuangtai.setText("已支付");
-            holder1.mQueren.setVisibility(View.VISIBLE);
         }
         holder1.mPrice.setText("合计：¥" + mList.get(position).getRealPrice());
 
@@ -89,7 +87,6 @@ public class AccomplishAdapter_A extends RecyclerView.Adapter {
         private TextView mPrice;
         private RecyclerView mRlv;
         private TextView mZhuangtai;
-        private  ImageView mQueren;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -99,7 +96,6 @@ public class AccomplishAdapter_A extends RecyclerView.Adapter {
             mPrice = itemView.findViewById(R.id.tv_fragment_all_price);
             mRlv = itemView.findViewById(R.id.rlv_fragment_all_item);
             mZhuangtai = itemView.findViewById(R.id.tv_fragment_all_zhuangtai);
-            mQueren = itemView.findViewById(R.id.img_querenshouhuo);
         }
     }
 
