@@ -1,7 +1,6 @@
 package com.yikangcheng.admin.yikang.activity.adapter;
 
 import android.support.annotation.NonNull;
-import android.support.v4.app.SupportActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,7 +50,8 @@ public class CloseTheDealAdapter extends RecyclerView.Adapter {
         holder1.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.OnClickListener(v, position);
+                int afterSaleStatus = mList.get(position).getAfterSaleStatus();
+                mListener.OnClickListener(v, position, afterSaleStatus);
             }
         });
 
@@ -88,7 +88,7 @@ public class CloseTheDealAdapter extends RecyclerView.Adapter {
     }
 
     public interface OnClickListener {
-        void OnClickListener(View v, int position);
+        void OnClickListener(View v, int position, int afterSaleStatus);
     }
 
     public void setOnClickListener(OnClickListener listener) {

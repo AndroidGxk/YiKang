@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -96,6 +97,7 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
     private Date mCurDate;
     private String mTime;
     private long ts;
+    private NestedScrollView mNestedScrollView;
 
     @Override
     protected void initView() {
@@ -150,8 +152,14 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
         mShanchu = (TextView) findViewById(R.id.tv_activity_wait_shanchu);
         //去支付
         go_pay = (TextView) findViewById(R.id.go_pay);
+        mNestedScrollView = (NestedScrollView) findViewById(R.id.nestedSV);
         regReceiver();//注册广播
 //        startService(new Intent(this, ClockService.class));//启动计时服务
+
+        //解决滑动不流畅
+        mRlvActivityWaitfrrpaymentShangPin.setHasFixedSize(true);
+        mRlvActivityWaitfrrpaymentShangPin.setNestedScrollingEnabled(false);
+
 
         //点击客服跳转页面
         mTvActivityWaitfrrpaymentKeFu.setOnClickListener(new View.OnClickListener() {
