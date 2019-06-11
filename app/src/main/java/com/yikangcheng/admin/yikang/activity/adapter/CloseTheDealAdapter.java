@@ -54,7 +54,12 @@ public class CloseTheDealAdapter extends RecyclerView.Adapter {
                 mListener.OnClickListener(v, position);
             }
         });
-
+        holder1.mShousou.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                afterOnClickListener.onAfterclick(mList.get(position).getId(), mList.get(position).getDataId(), mList.get(position).getOrderId());
+            }
+        });
     }
 
     @Override
@@ -93,5 +98,17 @@ public class CloseTheDealAdapter extends RecyclerView.Adapter {
 
     public void setOnClickListener(OnClickListener listener) {
         this.mListener = listener;
+    }
+
+
+    //点击售后
+    AfterOnClickListener afterOnClickListener;
+
+    public void setAfterOnClickListener(AfterOnClickListener afterOnClickListener) {
+        this.afterOnClickListener = afterOnClickListener;
+    }
+
+    public interface AfterOnClickListener {
+        void onAfterclick(int id, int sid, int ssid);
     }
 }

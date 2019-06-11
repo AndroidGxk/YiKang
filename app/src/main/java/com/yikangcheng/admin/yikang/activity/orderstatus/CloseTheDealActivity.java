@@ -9,11 +9,15 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sobot.chat.SobotApi;
 import com.sobot.chat.api.model.Information;
 import com.yikangcheng.admin.yikang.R;
+import com.yikangcheng.admin.yikang.activity.BarterActivity;
+import com.yikangcheng.admin.yikang.activity.SeleGoodActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.CloseTheDealAdapter;
+import com.yikangcheng.admin.yikang.activity.aftersale.AfterSaleActivity;
 import com.yikangcheng.admin.yikang.activity.copy.CopyButtonLibrary;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.CloseTheDealBean;
@@ -63,6 +67,9 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
     private PromptDialog mPromptDialog;
 
 
+    /**
+     * 已完成页面
+     */
     @Override
     protected void initView() {
         //设置状态栏颜色
@@ -136,6 +143,16 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
             @Override
             public void OnClickListener(View v, int position) {
                 mPosition = position;
+            }
+        });
+
+        //点击售后
+        mCloseTheDealAdapter.setAfterOnClickListener(new CloseTheDealAdapter.AfterOnClickListener() {
+            @Override
+            public void onAfterclick(int id, int sid, int ssid) {
+                Intent intent = new Intent(CloseTheDealActivity.this, SeleGoodActivity.class);
+                intent.putExtra("id", id);
+                startActivity(intent);
             }
         });
 

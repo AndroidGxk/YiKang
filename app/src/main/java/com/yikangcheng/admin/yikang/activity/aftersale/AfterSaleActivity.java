@@ -1,58 +1,208 @@
 package com.yikangcheng.admin.yikang.activity.aftersale;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.support.v7.widget.Toolbar;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
+import android.util.Log;
 import android.view.Display;
+import android.view.KeyEvent;
 import android.view.View;
+import android.webkit.JavascriptInterface;
+import android.webkit.JsResult;
+import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.webkit.WebViewClient;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.RequestOptions;
 import com.yikangcheng.admin.yikang.R;
-import com.yikangcheng.admin.yikang.activity.BrterActivity;
+import com.yikangcheng.admin.yikang.activity.BarterPayActivity;
+import com.yikangcheng.admin.yikang.activity.PhotoActivity;
+import com.yikangcheng.admin.yikang.activity.SeekListActivity;
+import com.yikangcheng.admin.yikang.app.BaseApp;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
-import com.yikangcheng.admin.yikang.util.StatusBarUtil;
+import com.yikangcheng.admin.yikang.bean.AllAddressBean;
+import com.yikangcheng.admin.yikang.bean.LoginBean;
+import com.yikangcheng.admin.yikang.bean.UserDetailBean;
+import com.yikangcheng.admin.yikang.util.CropUtils;
+import com.yikangcheng.admin.yikang.util.FileUtil;
+
+import java.io.File;
 
 import me.jessyan.autosize.internal.CustomAdapt;
+import me.leefeng.promptlibrary.PromptButton;
+import me.leefeng.promptlibrary.PromptButtonListener;
+import me.leefeng.promptlibrary.PromptDialog;
 
 public class AfterSaleActivity extends BaseActivtiy implements CustomAdapt {
 
 
-    private ImageView mImgActivityAftersaleFanhui;
-    private Toolbar mToolbarActivityMyaccount;
-    private int height;
+    /**
+     * 换货页面
+     */
+    private WebView webView;
+    private String phone;
+    private String pass;
+
+    //    private ImageView mImgActivityAftersaleFanhui;
+//    private Toolbar mToolbarActivityMyaccount;
+//    private int height;
     private int width;
-    private RelativeLayout rela;
+    private int id;
+    private String path;
+    int count = 1;
+    private String s = "";
+    private UserDetailBean logUser;
+    private String pwd;
+    private long mobile;
+
+    /**
+     * 回传值
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1000 && resultCode == 1001) {
+            path = data.getStringExtra("path");
+            Log.e("Path", path);
+            if (count == 1) {
+                count++;
+                webView.loadUrl("javascript:getImgSrc1('" + path + "')");
+            } else if (count == 2) {
+                count++;
+                webView.loadUrl("javascript:getImgSrc2('" + path + "')");
+            } else if (count == 3) {
+                count++;
+                webView.loadUrl("javascript:getImgSrc3('" + path + "')");
+            }
+        }
+    }
+
+    //    private RelativeLayout rela;
+    @SuppressLint("JavascriptInterface")
     @Override
     protected void initView() {
-        //设置状态栏颜色
-        StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+//        //设置状态栏颜色
+//        StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        logUser = getUserInfo(this);
         Display display = this.getWindowManager().getDefaultDisplay();
+        mobile = logUser.getMobile();
         width = display.getWidth();
-        height = display.getHeight();
-        mImgActivityAftersaleFanhui = (ImageView) findViewById(R.id.img_activity_aftersale_fanhui);
-        mToolbarActivityMyaccount = (Toolbar) findViewById(R.id.toolbar_activity_myaccount);
-        rela = (RelativeLayout) findViewById(R.id.rela);
+        phone = "15210957177";
+        pass = "111111";
+        Intent intent = getIntent();
+        SharedPreferences userId = getSharedPreferences("userInfo", MODE_PRIVATE);
+        pwd = userId.getString("pwd", "");
+        Toast.makeText(this, "" + pwd + "---" + mobile, Toast.LENGTH_SHORT).show();
+        //商品流水Id
+        id = intent.getIntExtra("id", 00);
+        Toast.makeText(this, "流水" + id, Toast.LENGTH_SHORT).show();
+//        height = display.getHeight();
+//        mImgActivityAftersaleFanhui = (ImageView) findViewById(R.id.img_activity_aftersale_fanhui);
+//        mToolbarActivityMyaccount = (Toolbar) findViewById(R.id.toolbar_activity_myaccount);
+//        rela = (RelativeLayout) findViewById(R.id.rela);
+//
+//        //ToolBar
+//        mToolbarActivityMyaccount.setTitle("");
+//        setSupportActionBar(mToolbarActivityMyaccount);
+//        /**
+//         * 点击返回图标关闭放前页面
+//         */
+//        mImgActivityAftersaleFanhui.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                finish();
+//            }
+//        });
+//        rela.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(new Intent(AfterSaleActivity.this, BrterActivity.class));
+//            }
+//        });
+        webView = (WebView) findViewById(R.id.webview);
+        WebSettings webSettings = webView.getSettings();
+        //设置WebView属性，能够执行Javascript脚本
+        webSettings.setJavaScriptEnabled(true);
+        //扩大比例的缩放
+        webView.getSettings().setUseWideViewPort(true);
+        //自适应屏幕
+        webView.getSettings().setLoadWithOverviewMode(true);
+        webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
+        //设置Web视图
+        //如果不设置WebViewClient，请求会跳转系统浏览器
+        webView.canGoBack();
+        webView.goBack();
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                //该方法在Build.VERSION_CODES.LOLLIPOP以前有效，从Build.VERSION_CODES.LOLLIPOP起，建议使用shouldOverrideUrlLoading(WebView, WebResourceRequest)} instead
+                //返回false，意味着请求过程里，不管有多少次的跳转请求（即新的请求地址），均交给webView自己处理，这也是此方法的默认处理
+                //返回true，说明你自己想根据url，做新的跳转，比如在判断url符合条件的情况下，我想让webView加载http://ask.csdn.net/questions/178242
+                if (url.toString().contains("sina.cn")) {
+                    webView.loadUrl("https://www.yikch.com/mobile/afterSale/lookSaleApply?detailsId=" + id + "&mobile=" + mobile + "&password=" + pwd + "&android");
+                    return true;
+                }
+                return false;
+            }
 
-        //ToolBar
-        mToolbarActivityMyaccount.setTitle("");
-        setSupportActionBar(mToolbarActivityMyaccount);
-        /**
-         * 点击返回图标关闭放前页面
-         */
-        mImgActivityAftersaleFanhui.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                finish();
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                //返回false，意味着请求过程里，不管有多少次的跳转请求（即新的请求地址），均交给webView自己处理，这也是此方法的默认处理
+                //返回true，说明你自己想根据url，做新的跳转，比如在判断url符合条件的情况下，我想让webView加载http://ask.csdn.net/questions/178242
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    if (request.getUrl().toString().contains("sina.cn")) {
+                        webView.loadUrl("https://www.yikch.com/mobile/afterSale/lookSaleApply?detailsId=" + id + "&mobile=" + mobile + "&password=" + pwd + "&android");
+                        return true;
+                    }
+                }
+                return false;
             }
         });
-        rela.setOnClickListener(new View.OnClickListener() {
+        webView.setOnKeyListener(new View.OnKeyListener() {
             @Override
-            public void onClick(View view) {
-                startActivity(new Intent(AfterSaleActivity.this, BrterActivity.class));
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                //这event.getAction() == KeyEvent.ACTION_DOWN表示是返回键事件   
+                if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                    if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {//表示按返回键 时的操作  
+                        webView.goBack();//后退    
+                        return true;//已处理     返回true表示被处理否则返回false    
+                    }
+                }
+                return false;
             }
         });
+        webView.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
+                return super.onJsAlert(view, url, message, result);
+            }
+        });
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.addJavascriptInterface(this, "ww");
+        webView.loadUrl("https://www.yikch.com/mobile/afterSale/lookSaleApply?detailsId=" + id + "&mobile=" + mobile + "&password=" + pwd + "&android");
     }
+
 
     @Override
     protected void initEventData() {
@@ -69,6 +219,7 @@ public class AfterSaleActivity extends BaseActivtiy implements CustomAdapt {
 
     }
 
+
     @Override
     public boolean isBaseOnWidth() {
         return false;
@@ -77,5 +228,28 @@ public class AfterSaleActivity extends BaseActivtiy implements CustomAdapt {
     @Override
     public float getSizeInDp() {
         return width / 2;
+    }
+
+    @JavascriptInterface
+    public void uploadRefundToAndroid() {
+        startActivityForResult(new Intent(AfterSaleActivity.this, PhotoActivity.class), 1000);
+    }
+
+    @JavascriptInterface
+    public void payMoneyToApp(String msg) {
+        s += msg + ",";
+        String[] split = s.split(",");
+        Toast.makeText(this, "" + split.length, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "" + msg, Toast.LENGTH_SHORT).show();
+        if (split.length == 2) {
+            Intent intent = new Intent(AfterSaleActivity.this, BarterPayActivity.class);
+            String id = split[0];
+            String money = split[1];
+            intent.putExtra("id", id);
+            intent.putExtra("money", money);
+            startActivity(intent);
+            s = "";
+        }
+
     }
 }

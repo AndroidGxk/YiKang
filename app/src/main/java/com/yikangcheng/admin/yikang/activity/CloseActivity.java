@@ -94,7 +94,7 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
     String invoicetype;
 
     //发票类型Int
-    int invoicetypeInt = 1;
+    int invoicetypeInt = 3;
     //发票抬头
     int invoicetypetitle;
     //发票内容

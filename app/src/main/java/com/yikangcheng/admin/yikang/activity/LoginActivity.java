@@ -87,7 +87,7 @@ public class LoginActivity extends BaseActivtiy implements CustomAdapt, ICoreInf
         if (request.isSuccess()) {
             SharedPreferences.Editor edit = userInfo.edit();
             LoginBean entity = (LoginBean) request.getEntity();
-            edit.putString("userId", String.valueOf(entity.getId()));
+            edit.putString("pwd", pwd_edit.getText().toString());
             edit.commit();
             entity.setStatus(1);
             setLogUser(LoginActivity.this, entity);

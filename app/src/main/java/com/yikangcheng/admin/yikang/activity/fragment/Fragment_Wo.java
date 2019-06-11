@@ -310,9 +310,9 @@ public class Fragment_Wo extends BaseFragment implements ICoreInfe, XRecyclerVie
             //售后/退款
             case R.id.img_fragment_wo_yituikuan:
                 if (logUser != null) {
-                    startActivity(new Intent(getActivity(), AfterSaleActivity.class));
+//                    startActivity(new Intent(getActivity(), AfterSaleActivity.class));
                 } else {
-                    startActivity(new Intent(getActivity(), LoginActivity.class));
+//                    startActivity(new Intent(getActivity(), LoginActivity.class));
                 }
                 break;
             //关于App
