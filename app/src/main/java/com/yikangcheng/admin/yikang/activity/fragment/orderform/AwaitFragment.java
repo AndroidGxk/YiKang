@@ -11,7 +11,7 @@ import android.widget.RelativeLayout;
 import com.bumptech.glide.Glide;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.MainActivity;
@@ -57,8 +57,6 @@ public class AwaitFragment extends BaseFragment implements ICoreInfe {
         mPromptDialog = new PromptDialog(getActivity());
         //设置自定义属性
         mPromptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(3000);
-
-
         //一键置顶图标
         mImgBut = view.findViewById(R.id.imgBut);
         //动图
@@ -84,7 +82,10 @@ public class AwaitFragment extends BaseFragment implements ICoreInfe {
         mImgFragmentAwaitQuguanghuang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), MainActivity.class));
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+
             }
         });
 
@@ -229,14 +230,14 @@ public class AwaitFragment extends BaseFragment implements ICoreInfe {
                 refreshLayout.finishRefresh();  //刷新完成
             }
         });
+
         //加载的监听事件
-        mSmartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+        mSmartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+            public void onLoadmore(RefreshLayout refreshlayout) {
                 mPage++;
                 initMvp(mPage);
-                refreshLayout.finishLoadMore();      //加载完成
-                //refreshLayout.finishLoadMoreWithNoMoreData();  //全部加载完成,没有数据了调用此方法  这个方法调用了就加载一夜再也不加载了
+                refreshlayout.finishLoadmore();      //加载完成
             }
         });
     }
@@ -300,6 +301,8 @@ public class AwaitFragment extends BaseFragment implements ICoreInfe {
 
     @Override
     public void fail(ApiException e) {
-
+        mSmartRefreshLayout.setVisibility(View.GONE);
+        mImgBut.setVisibility(View.GONE);
+        mRelativeLayout.setVisibility(View.VISIBLE);
     }
 }

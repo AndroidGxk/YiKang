@@ -11,4 +11,6 @@
     <string name="miaosha" translatable="false">秒杀</string>
     <string name="gouwu" translatable="false">购物车</string>
     <string name="wode" translatable="false">我的</string>
+    <string name="pageBehavior" translatable="false">com.yikangcheng.admin.yikang.activity.fragment.goodfragment.page.PageBehavior</string>
+
 </resources>

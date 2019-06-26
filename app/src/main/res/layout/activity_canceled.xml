@@ -75,7 +75,7 @@
         android:layout_width="match_parent"
         android:overScrollMode="never"
         android:layout_height="match_parent"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/img_fragment_accomplish"
@@ -111,5 +111,9 @@
             android:textColor="#ffffffff"
             android:textSize="14sp" />
     </RelativeLayout>
-
+    <com.yikangcheng.admin.yikang.util.TwoBallRotationProgressBar
+        android:layout_width="match_parent"
+        android:id="@+id/progress"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true" />
 </RelativeLayout>

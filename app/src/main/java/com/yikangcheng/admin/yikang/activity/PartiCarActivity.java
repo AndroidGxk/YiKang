@@ -2,7 +2,9 @@ package com.yikangcheng.admin.yikang.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -30,15 +32,19 @@ import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
 import com.yikangcheng.admin.yikang.presenter.DeleteShopPresenter;
 import com.yikangcheng.admin.yikang.presenter.RecommendPresenter;
 import com.yikangcheng.admin.yikang.presenter.ShopCarPresenter;
+import com.yikangcheng.admin.yikang.presenter.UpdateCountPresenter;
 import com.yikangcheng.admin.yikang.util.SpacesItemDecoration;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
+import com.yikangcheng.admin.yikang.util.TwoBallRotationProgressBar;
 
 import java.io.Serializable;
 import java.util.List;
 
-import me.jessyan.autosize.internal.CustomAdapt;
+import me.leefeng.promptlibrary.PromptButton;
+import me.leefeng.promptlibrary.PromptButtonListener;
+import me.leefeng.promptlibrary.PromptDialog;
 
-public class PartiCarActivity extends BaseActivtiy implements ShopRecyclerAdapter.TotalPriceListener, ShopRecyclerAdapter.checkBoxTouchListener, ICoreInfe, XRecyclerView.LoadingListener, CustomAdapt {
+public class PartiCarActivity extends BaseActivtiy implements ShopRecyclerAdapter.TotalPriceListener, ShopRecyclerAdapter.checkBoxTouchListener, ICoreInfe, XRecyclerView.LoadingListener {
     private RecyclerView shop_recycler;
     private XRecyclerView shop_recyclertwo;
     private ShopRecyclerAdapter shopRecyclerAdapter;
@@ -50,7 +56,7 @@ public class PartiCarActivity extends BaseActivtiy implements ShopRecyclerAdapte
     private TextView text_total, num_text, heji, dele_text;
     private TextView tv_toolBar_right;
     private boolean judge = false;//判断编辑或完成
-    private ShopCarPresenter shopCarPresenter;
+    private static ShopCarPresenter shopCarPresenter;
     private List<ShopCarBean> entity;
     private boolean isclick;
     private RecommendAdapter mRecommendAdapter;
@@ -58,13 +64,20 @@ public class PartiCarActivity extends BaseActivtiy implements ShopRecyclerAdapte
     private DeleteShopPresenter deleteShopPresenter;
     private String mId = "";
     private ImageView back_img;
-    private LoginBean logUser;
+    private static LoginBean logUser;
     private int mPage = 1;
     private NestedScrollView nestedSV;
     private int width;
+    private PromptDialog promptDialog;
+    private UpdateCountPresenter updateCountPresenter;
+    private TwoBallRotationProgressBar progress;
 
     @Override
     protected void initView() {
+//创建对象
+        promptDialog = new PromptDialog(PartiCarActivity.this);
+        //设置自定义属性
+        promptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(100);
         logUser = getLogUser(PartiCarActivity.this);
 //      设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
@@ -80,6 +93,7 @@ public class PartiCarActivity extends BaseActivtiy implements ShopRecyclerAdapte
         nestedSV = (NestedScrollView) findViewById(R.id.nestedSV);
         dele_text = (TextView) findViewById(R.id.dele_text);
         base_btn = (RelativeLayout) findViewById(R.id.base_btn);
+        progress = (TwoBallRotationProgressBar) findViewById(R.id.progress);
         null_car = (RelativeLayout) findViewById(R.id.null_car);
         tv_toolBar_right = (TextView) findViewById(R.id.tv_toolBar_right);
         back_img = (ImageView) findViewById(R.id.back_img);
@@ -110,12 +124,14 @@ public class PartiCarActivity extends BaseActivtiy implements ShopRecyclerAdapte
         boolean includeEdge = false;
         shop_recyclertwo.addItemDecoration(new SpacesItemDecoration(spanCount, spacing, includeEdge));
         if (logUser != null) {
-            recommendPresenter.request(logUser.getId(), 1, mPage);
+            recommendPresenter.request(logUser.getId(), 10, mPage);
         }
     }
 
     @Override
     protected void initEventData() {
+        //修改数量
+        updateCountPresenter = new UpdateCountPresenter(new UpdateCount());
         shop_recyclertwo.setHasFixedSize(true);
         shop_recyclertwo.setNestedScrollingEnabled(false);
         LinearLayoutManager layoutManager = new LinearLayoutManager(PartiCarActivity.this) {
@@ -134,6 +150,17 @@ public class PartiCarActivity extends BaseActivtiy implements ShopRecyclerAdapte
         shop_recycler.setAdapter(shopRecyclerAdapter);
         //为你推荐recyclerview
         shop_recyclertwo.setLayoutManager(new GridLayoutManager(PartiCarActivity.this, 2));
+        //请求数量接口
+        shopRecyclerAdapter.setSumClickListener(new ShopRecyclerAdapter.sumClickListener() {
+            @Override
+            public void onClick(int count, int id) {
+                LoginBean logUser = getLogUser(PartiCarActivity.this);
+                if (logUser != null) {
+                    updateCountPresenter.request(logUser.getId(), id, count);
+                    promptDialog.showLoading("");
+                }
+            }
+        });
         //点击事件
 
         all_check.setOnClickListener(new View.OnClickListener() {
@@ -188,14 +215,11 @@ public class PartiCarActivity extends BaseActivtiy implements ShopRecyclerAdapte
         dele_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                List<ShopCarBean> shopList = shopRecyclerAdapter.getShopList();
-                for (int i = 0; i < shopList.size(); i++) {
-                    int id = shopList.get(i).getId();
-                    mId += id + ",";
-                }
-                mId.substring(0, mId.length() - 1);
-                deleteShopPresenter.request(getLogUser(PartiCarActivity.this).getId(), mId);
-                mId = "";
+                promptDialog.showWarnAlert("确定要删除该商品吗？", new PromptButton("取消", new PromptButtonListener() {
+                    @Override
+                    public void onClick(PromptButton button) {
+                    }
+                }), confirm);
             }
         });
         /**
@@ -217,7 +241,36 @@ public class PartiCarActivity extends BaseActivtiy implements ShopRecyclerAdapte
                 }
             }
         });
+        progress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                return;
+            }
+        });
     }
+    //按钮的定义，创建一个按钮的对象
+
+    PromptButton confirm = new PromptButton("确定", new PromptButtonListener() {
+        @Override
+        public void onClick(PromptButton button) {
+            List<ShopCarBean> shopList = shopRecyclerAdapter.getShopList();
+            for (int i = 0; i < shopList.size(); i++) {
+                int id = shopList.get(i).getId();
+                mId += id + ",";
+            }
+            if (mId == null || mId.equals("")) {
+                all_check.setChecked(false);
+                shopRecyclerAdapter.checkAll(all_check.isChecked());
+                return;
+            }
+            mId.substring(0, mId.length() - 1);
+            deleteShopPresenter.request(getLogUser(PartiCarActivity.this).getId(), mId);
+            mId = "";
+            all_check.setChecked(false);
+            shopRecyclerAdapter.checkAll(all_check.isChecked());
+
+        }
+    });
 
     @Override
     protected int getActivtiyLayoutId() {
@@ -244,7 +297,6 @@ public class PartiCarActivity extends BaseActivtiy implements ShopRecyclerAdapte
     @Override
     public void checked(boolean isCheck) {
         all_check.setChecked(isCheck);
-
     }
 
     @Override
@@ -258,27 +310,50 @@ public class PartiCarActivity extends BaseActivtiy implements ShopRecyclerAdapte
         shopRecyclerAdapter.remove();
 
         shopRecyclerAdapter.addAll(entity);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                progress.setVisibility(View.GONE);
+                progress.stopAnimator();
+            }
+        }, 500);
     }
 
     @Override
     public void fail(ApiException e) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                progress.setVisibility(View.GONE);
+                progress.stopAnimator();
+            }
+        }, 500);
+    }
 
+    public static void getRequest() {
+        shopCarPresenter.request(logUser.getId());
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (logUser != null) {
-            baseline.setVisibility(View.VISIBLE);
-            diviline.setVisibility(View.VISIBLE);
-            base_btn.setVisibility(View.VISIBLE);
-            shopRecyclerAdapter.checkAll(false);
-            shopRecyclerAdapter.remove();
-            shopCarPresenter.request(logUser.getId());
+        SharedPreferences close = getSharedPreferences("close", Context.MODE_PRIVATE);
+        boolean aBoolean = close.getBoolean("close", false);
+        if (aBoolean) {
+            if (close.getBoolean("closes", false)) {
+                checked(false);
+                totalPrice(0.0, 0);
+            }
+            return;
         } else {
-            baseline.setVisibility(View.GONE);
-            diviline.setVisibility(View.GONE);
-            base_btn.setVisibility(View.GONE);
+            if (logUser != null) {
+                base_btn.setVisibility(View.VISIBLE);
+                shopRecyclerAdapter.checkAll(false);
+                shopRecyclerAdapter.remove();
+                shopCarPresenter.request(logUser.getId());
+            } else {
+                base_btn.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -291,16 +366,6 @@ public class PartiCarActivity extends BaseActivtiy implements ShopRecyclerAdapte
     public void onLoadMore() {
         mPage++;
         recommendPresenter.request(logUser.getId(), 1, mPage);
-    }
-
-    @Override
-    public boolean isBaseOnWidth() {
-        return false;
-    }
-
-    @Override
-    public float getSizeInDp() {
-        return width / 2;
     }
 
     /**
@@ -332,11 +397,25 @@ public class PartiCarActivity extends BaseActivtiy implements ShopRecyclerAdapte
             Request request = (Request) data;
             List<RecommendBean> entity1 = (List<RecommendBean>) request.getEntity();
             if (entity1.size() == 0) {
-                baseline.setVisibility(View.VISIBLE);
-                diviline.setVisibility(View.VISIBLE);
                 base_btn.setVisibility(View.VISIBLE);
             } else {
                 mRecommendAdapter.addData(entity1);
+            }
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
+    }
+
+    //修改数量
+    private class UpdateCount implements ICoreInfe {
+        @Override
+        public void success(Object data) {
+            Request request = (Request) data;
+            if (request.isSuccess()) {
+                promptDialog.dismiss();
             }
         }
 

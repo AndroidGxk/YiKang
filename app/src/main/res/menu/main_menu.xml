@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/search"
-        app:showAsAction="always"
         android:icon="@android:drawable/ic_menu_search"
-        android:title="haha"/>
+        android:title="haha"
+        app:showAsAction="always" />
     <item
-        app:showAsAction="always"
         android:id="@+id/home"
         android:icon="@drawable/dizi"
-        android:title="heheh"/>
+        android:title="heheh" />
+
 </menu>

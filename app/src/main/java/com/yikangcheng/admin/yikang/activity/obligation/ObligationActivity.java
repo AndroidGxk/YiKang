@@ -1,6 +1,7 @@
 package com.yikangcheng.admin.yikang.activity.obligation;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -8,12 +9,11 @@ import android.view.Display;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.MainActivity;
@@ -29,6 +29,7 @@ import com.yikangcheng.admin.yikang.presenter.DeleteOrderIdPresenter;
 import com.yikangcheng.admin.yikang.presenter.ObligationPresenter;
 import com.yikangcheng.admin.yikang.util.SpacesItemDecoration;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
+import com.yikangcheng.admin.yikang.util.TwoBallRotationProgressBar;
 
 import java.util.ArrayList;
 
@@ -57,7 +58,7 @@ public class ObligationActivity extends BaseActivtiy implements ICoreInfe, Custo
     private PromptDialog mPromptDialog;
     private ImageView mImgBut;
     private ArrayList<ObligationBean.OrderBean> mOrderBeans;
-    private TextView mTextView;
+    private TwoBallRotationProgressBar progress;
 
     @Override
     protected void initView() {
@@ -66,14 +67,13 @@ public class ObligationActivity extends BaseActivtiy implements ICoreInfe, Custo
         //创建对象
         mPromptDialog = new PromptDialog(this);
         //设置自定义属性
-        mPromptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(3000);
-
+        mPromptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(1000);
         Display display = this.getWindowManager().getDefaultDisplay();
         width = display.getWidth();
-        int height = display.getHeight();
         mImgActivityObligationFanhui = (ImageView) findViewById(R.id.img_activity_obligation_fanhui);
         mToolbarActivityObligation = (RelativeLayout) findViewById(R.id.toolbar_activity_obligation);
         mRlvActivityObligation = (RecyclerView) findViewById(R.id.rlv_activity_obligation);
+        progress = (TwoBallRotationProgressBar) findViewById(R.id.progress);
         mRefreshLayout = (SmartRefreshLayout) findViewById(R.id.refreshLayout);
         mImgFragmentAccomplish = (ImageView) findViewById(R.id.img_fragment_accomplish);
         mImgFragmentAccomplishQuguanghuang = (ImageView) findViewById(R.id.img_fragment_accomplish_quguanghuang);
@@ -88,6 +88,7 @@ public class ObligationActivity extends BaseActivtiy implements ICoreInfe, Custo
                 finish();
             }
         });
+
         /**
          * 布局走向
          */
@@ -117,7 +118,9 @@ public class ObligationActivity extends BaseActivtiy implements ICoreInfe, Custo
         mImgFragmentAccomplishQuguanghuang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ObligationActivity.this, MainActivity.class));
+                Intent intent = new Intent(ObligationActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
             }
         });
 
@@ -171,7 +174,6 @@ public class ObligationActivity extends BaseActivtiy implements ICoreInfe, Custo
          * 点击垃圾桶删除订单
          */
         initDelete();
-
     }
 
     @Override
@@ -231,21 +233,26 @@ public class ObligationActivity extends BaseActivtiy implements ICoreInfe, Custo
             }
         });
         //加载的监听事件
-        mRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+        mRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+            public void onLoadmore(RefreshLayout refreshlayout) {
                 mPage++;
                 initMvp(mPage);
-                refreshLayout.finishLoadMore();      //加载完成
-                //refreshLayout.finishLoadMoreWithNoMoreData();  //全部加载完成,没有数据了调用此方法  这个方法调用了就加载一夜再也不加载了
+                refreshlayout.finishLoadmore();      //加载完成
             }
         });
+
     }
 
 
     @Override
     protected void initEventData() {
-
+        progress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                return;
+            }
+        });
     }
 
     @Override
@@ -292,8 +299,14 @@ public class ObligationActivity extends BaseActivtiy implements ICoreInfe, Custo
     @Override
     public void success(Object data) {
         Request request = (Request) data;
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                progress.setVisibility(View.GONE);
+                progress.stopAnimator();
+            }
+        }, 500);
         ObligationBean entity = (ObligationBean) request.getEntity();
-
         if (entity.getOrder() == null) {
             mRefreshLayout.setVisibility(View.GONE);
             mImgBut.setVisibility(View.GONE);
@@ -307,10 +320,20 @@ public class ObligationActivity extends BaseActivtiy implements ICoreInfe, Custo
             initShuaXinJiaZai();
         }
         mObligationAdapter.addAll(entity.getOrder());
+
     }
 
     @Override
     public void fail(ApiException e) {
-
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                progress.setVisibility(View.GONE);
+                progress.stopAnimator();
+            }
+        }, 500);
+        mRefreshLayout.setVisibility(View.GONE);
+        mImgBut.setVisibility(View.GONE);
+        mRelativeLayout.setVisibility(View.VISIBLE);
     }
 }

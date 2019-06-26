@@ -1,11 +1,14 @@
 package com.yikangcheng.admin.yikang.activity.fragment;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.RelativeLayout;
@@ -35,6 +38,7 @@ import com.yikangcheng.admin.yikang.util.SpacesItemDecoration;
 import java.io.Serializable;
 import java.util.List;
 
+import me.jessyan.autosize.internal.CustomAdapt;
 import me.leefeng.promptlibrary.PromptButton;
 import me.leefeng.promptlibrary.PromptButtonListener;
 import me.leefeng.promptlibrary.PromptDialog;
@@ -52,7 +56,7 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
     private TextView text_total, num_text, heji, dele_text;
     private TextView tv_toolBar_right;
     private boolean judge = false;//判断编辑或完成
-    private ShopCarPresenter shopCarPresenter;
+    private static ShopCarPresenter shopCarPresenter;
     private boolean isclick;
     private RecommendAdapter mRecommendAdapter;
     private RecommendPresenter recommendPresenter;
@@ -65,7 +69,7 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
     private PromptDialog promptDialog;
     private NestedScrollView nestedSV;
     private int mPage = 1;
-    private LoginBean logUser;
+    private static LoginBean logUser;
 
     @Override
     protected void initView(View view) {
@@ -74,8 +78,6 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
         promptDialog = new PromptDialog(getActivity());
         //设置自定义属性
         promptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(100);
-
-
         shop_recycler = view.findViewById(R.id.shop_recycler);
         shop_recyclertwo = view.findViewById(R.id.shop_recyclertwo);
         all_check = view.findViewById(R.id.all_check);
@@ -96,8 +98,8 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
         /**
          * 为你推荐
          */
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
-        shop_recyclertwo.setLayoutManager(gridLayoutManager);
+        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        shop_recyclertwo.setLayoutManager(staggeredGridLayoutManager);
         mRecommendAdapter = new RecommendAdapter(getContext());
         shop_recyclertwo.setAdapter(mRecommendAdapter);
 
@@ -129,6 +131,7 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
                 }
             }
         });
+
     }
 
     @Override
@@ -161,7 +164,6 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
                 shopRecyclerAdapter.checkAll(checked);
             }
         });
-
         //请求数量接口
         shopRecyclerAdapter.setSumClickListener(new ShopRecyclerAdapter.sumClickListener() {
             @Override
@@ -238,6 +240,14 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
                 startActivity(intent);
             }
         });
+        if (logUser != null) {
+            baseline.setVisibility(View.GONE);
+            shopRecyclerAdapter.checkAll(false);
+            shopRecyclerAdapter.remove();
+            shopCarPresenter.request(logUser.getId());
+        } else {
+            baseline.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -267,6 +277,11 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
             for (int i = 0; i < shopList.size(); i++) {
                 int id = shopList.get(i).getId();
                 mId += id + ",";
+            }
+            if (mId == null || mId.equals("")) {
+                all_check.setChecked(false);
+                shopRecyclerAdapter.checkAll(all_check.isChecked());
+                return;
             }
             mId.substring(0, mId.length() - 1);
             deleteShopPresenter.request(getLogUser(getContext()).getId(), mId);
@@ -306,6 +321,7 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
 
     @Override
     public void onRefresh() {
+
     }
 
     @Override
@@ -314,6 +330,7 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
         recommendPresenter.request(logUser.getId(), 1, mPage);
     }
 
+
     public class RecomICoreInfe implements ICoreInfe {
 
         @Override
@@ -321,8 +338,8 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
             Request request = (Request) data;
             List<RecommendBean> entity1 = (List<RecommendBean>) request.getEntity();
             if (entity1.size() == 0) {
-                baseline.setVisibility(View.VISIBLE);
-                diviline.setVisibility(View.VISIBLE);
+//                baseline.setVisibility(View.VISIBLE);
+//                diviline.setVisibility(View.VISIBLE);
             } else {
                 mRecommendAdapter.addData(entity1);
             }
@@ -334,18 +351,58 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
         }
     }
 
+    public static void getRequest() {
+        shopCarPresenter.request(logUser.getId());
+    }
+
     @Override
     public void onResume() {
         super.onResume();
-        if (logUser != null) {
-            baseline.setVisibility(View.GONE);
-//            diviline.setVisibility(View.GONE);
-            shopRecyclerAdapter.checkAll(false);
-            shopRecyclerAdapter.remove();
-            shopCarPresenter.request(logUser.getId());
+        SharedPreferences close = getContext().getSharedPreferences("close", Context.MODE_PRIVATE);
+        boolean aBoolean = close.getBoolean("close", false);
+        if (aBoolean) {
+            if (close.getBoolean("closes", false)) {
+                checked(false);
+                totalPrice(0.0, 0);
+            }
+            return;
         } else {
-            baseline.setVisibility(View.GONE);
-//            diviline.setVisibility(View.GONE);
+            if (logUser != null) {
+                baseline.setVisibility(View.GONE);
+                shopRecyclerAdapter.checkAll(false);
+                shopRecyclerAdapter.remove();
+                shopCarPresenter.request(logUser.getId());
+            } else {
+                baseline.setVisibility(View.GONE);
+            }
+        }
+    }
+
+    @Override
+    public void onHiddenChanged(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            //相当于Fragment的onResume，为true时，Fragment已经可见
+            SharedPreferences close = getContext().getSharedPreferences("close", Context.MODE_PRIVATE);
+            boolean aBoolean = close.getBoolean("close", false);
+            if (aBoolean) {
+                if (close.getBoolean("closes", false)) {
+                    checked(false);
+                    totalPrice(0.0, 0);
+                }
+                return;
+            } else {
+                if (logUser != null) {
+                    baseline.setVisibility(View.GONE);
+                    shopRecyclerAdapter.checkAll(false);
+                    shopRecyclerAdapter.remove();
+                    shopCarPresenter.request(logUser.getId());
+                } else {
+                    baseline.setVisibility(View.GONE);
+                }
+            }
+        } else {
+            //相当于Fragment的onPause，为false时，Fragment不可见
         }
     }
 

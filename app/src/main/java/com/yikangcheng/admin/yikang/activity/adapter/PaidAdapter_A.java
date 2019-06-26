@@ -39,6 +39,12 @@ public class PaidAdapter_A extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ViewHolder holder1 = (ViewHolder) holder;
+        if (position == getItemCount() - 1) {
+            LinearLayout.LayoutParams layout = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            layout.setMargins(0, 0, 0, 85);
+            holder1.itemView.setLayoutParams(layout);
+        }
         holder1.mBianhao.setText("订单编号:" + mList.get(position).getOrderNo());
         holder1.mData.setText("" + mList.get(position).getCreateTime());
         String orderState = mList.get(position).getOrderState();

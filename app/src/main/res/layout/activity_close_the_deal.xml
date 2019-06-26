@@ -39,21 +39,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar_activity_waitfrrpayment"
+        android:layout_marginBottom="60dp"
         android:fillViewport="true"
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:overScrollMode="never">
 
         <RelativeLayout
+            android:id="@+id/rela1"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="190dp"
-                android:background="@drawable/wanceng">
+                android:layout_height="141dp"
+                android:background="@drawable/wancheng">
 
                 <TextView
+                    android:id="@+id/state_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
@@ -63,6 +67,7 @@
                     android:textSize="24sp" />
 
                 <TextView
+                    android:id="@+id/state_ding"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
@@ -73,7 +78,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="116dp"
+                    android:layout_height="67dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="84dp"
                     android:layout_marginRight="15dp"
@@ -94,7 +99,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="45dp"
                         android:layout_marginTop="11dp"
-                        android:text="15226116161"
+                        android:text=""
                         android:textColor="#ff333333"
                         android:textSize="12sp" />
 
@@ -111,36 +116,11 @@
                             android:id="@+id/tv_activity_close_provinceStr"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="北京市"
+                            android:text=""
                             android:textColor="#ff333333"
                             android:textSize="10sp" />
 
-                        <TextView
-                            android:id="@+id/tv_activity_close_cityStr"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="5dp"
-                            android:text="北京辖区"
-                            android:textColor="#ff333333"
-                            android:textSize="10sp" />
 
-                        <TextView
-                            android:id="@+id/tv_activity_close_townStr"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="5dp"
-                            android:text="石景山区"
-                            android:textColor="#ff333333"
-                            android:textSize="10sp" />
-
-                        <TextView
-                            android:id="@+id/tv_activity_close_address"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="5dp"
-                            android:text="八角北里"
-                            android:textColor="#ff333333"
-                            android:textSize="10sp" />
                     </LinearLayout>
 
                     <TextView
@@ -151,22 +131,22 @@
                         android:layout_marginRight="15dp"
                         android:background="#F3F3F3" />
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="73dp"
-                        android:background="@drawable/cahkan" />
+                    <!--<ImageView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_centerHorizontal="true"-->
+                    <!--android:layout_marginTop="73dp"-->
+                    <!--android:background="@drawable/cahkan" />-->
 
-                    <TextView
-                        android:id="@+id/img_activity_close_chakan"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="79dp"
-                        android:text="查看物流"
-                        android:textColor="#ffff0000"
-                        android:textSize="12sp" />
+                    <!--<TextView-->
+                    <!--android:id="@+id/img_activity_close_chakan"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_centerHorizontal="true"-->
+                    <!--android:layout_marginTop="79dp"-->
+                    <!--android:text="查看物流"-->
+                    <!--android:textColor="#ffff0000"-->
+                    <!--android:textSize="12sp" />-->
 
                 </RelativeLayout>
             </RelativeLayout>
@@ -174,7 +154,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="205dp"
+                android:layout_marginTop="155dp"
                 android:orientation="vertical">
 
                 <android.support.v7.widget.RecyclerView
@@ -199,7 +179,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="10dp"
-                        android:text="运单编号:"
+                        android:text="订单编号:"
                         android:textColor="#ff333333"
                         android:textSize="12sp" />
 
@@ -210,7 +190,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="80dp"
                         android:layout_marginTop="10dp"
-                        android:text="NO1234567890123"
+                        android:text=""
                         android:textColor="#ff999999"
                         android:textSize="12sp" />
 
@@ -218,7 +198,7 @@
                         android:id="@+id/img_activity_close_fizhi"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="202dp"
+                        android:layout_toRightOf="@+id/tv_activity_close_biaohao"
                         android:padding="11dp"
                         android:src="@drawable/fuzhi" />
 
@@ -237,7 +217,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="80dp"
                         android:layout_marginTop="33dp"
-                        android:text="¥0000.00"
+                        android:text=""
                         android:textColor="#ff999999"
                         android:textSize="12sp" />
 
@@ -256,7 +236,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="80dp"
                         android:layout_marginTop="55dp"
-                        android:text="¥0000.00"
+                        android:text=""
                         android:textColor="#ff999999"
                         android:textSize="12sp" />
 
@@ -277,7 +257,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="80dp"
                         android:layout_marginTop="79dp"
-                        android:text="¥0000.00"
+                        android:text=""
                         android:textColor="#ff999999"
                         android:textSize="12sp" />
 
@@ -296,15 +276,15 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="80dp"
                         android:layout_marginTop="101dp"
-                        android:text="111"
+                        android:text=""
                         android:textColor="#ff999999"
                         android:textSize="12sp" />
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/tv_activity_close_keFu"
                     android:layout_width="match_parent"
                     android:layout_height="33dp"
-
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="15dp"
@@ -318,7 +298,6 @@
                         android:background="@drawable/kefu_huang" />
 
                     <TextView
-                        android:id="@+id/tv_activity_close_keFu"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -379,10 +358,12 @@
     </android.support.v4.widget.NestedScrollView>
 
     <RelativeLayout
+        android:id="@+id/rela2"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        android:background="#FFFFFF">
+        android:background="#FFFFFF"
+        android:visibility="gone">
 
 
         <TextView
@@ -415,4 +396,9 @@
 
     </RelativeLayout>
 
+    <com.yikangcheng.admin.yikang.util.TwoBallRotationProgressBar
+    android:id="@+id/progress"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerInParent="true" />
 </RelativeLayout>

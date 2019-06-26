@@ -22,9 +22,9 @@
         android:id="@+id/shop_img"
         android:layout_width="70dp"
         android:layout_height="70dp"
+        android:src="@drawable/inco_log"
         android:layout_marginTop="8dp"
-        android:layout_toRightOf="@+id/check_btn"
-        android:src="@drawable/ce4" />
+        android:layout_toRightOf="@+id/check_btn" />
 
     <TextView
         android:id="@+id/shop_count"
@@ -36,7 +36,6 @@
         android:ellipsize="end"
         android:maxEms="28"
         android:singleLine="true"
-        android:text="韩国JM牛油果精油面膜男女 韩国JM牛油果精油面膜男女"
         android:textSize="12sp" />
 
     <TextView
@@ -51,7 +50,6 @@
         android:gravity="center"
         android:minWidth="60dp"
         android:padding="3dp"
-        android:text="1件  10片"
         android:textSize="10sp" />
 
     <TextView
@@ -63,7 +61,6 @@
         android:layout_marginTop="6dp"
         android:layout_marginBottom="8dp"
         android:layout_toRightOf="@+id/shop_img"
-        android:text="¥ 85.00"
         android:textColor="#FF0000"
         android:textSize="13sp" />
 

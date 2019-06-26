@@ -40,17 +40,21 @@
     <android.support.v4.widget.NestedScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="60dp"
         android:fillViewport="true"
         android:layout_below="@+id/toolbar_activity_fack_of"
         android:overScrollMode="never">
 
         <RelativeLayout
+            android:id="@+id/rela1"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="141dp"
+
                 android:background="@drawable/ganbi">
 
                 <TextView
@@ -84,8 +88,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="11dp"
-                        android:text="姓名"
                         android:textColor="#ff333333"
+                        android:text="姓名"
                         android:textSize="12sp" />
 
                     <TextView
@@ -94,7 +98,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="45dp"
                         android:layout_marginTop="11dp"
-                        android:text="15226116161"
                         android:textColor="#ff333333"
                         android:textSize="12sp" />
 
@@ -111,36 +114,9 @@
                             android:id="@+id/tv_activity_fack_of_provinceStr"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="北京市"
                             android:textColor="#ff333333"
                             android:textSize="10sp" />
 
-                        <TextView
-                            android:id="@+id/tv_activity_fack_of_cityStr"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="5dp"
-                            android:text="北京辖区"
-                            android:textColor="#ff333333"
-                            android:textSize="10sp" />
-
-                        <TextView
-                            android:id="@+id/tv_activity_fack_of_townStr"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="5dp"
-                            android:text="石景山区"
-                            android:textColor="#ff333333"
-                            android:textSize="10sp" />
-
-                        <TextView
-                            android:id="@+id/tv_activity_fack_of_address"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="5dp"
-                            android:text="八角北里"
-                            android:textColor="#ff333333"
-                            android:textSize="10sp" />
                     </LinearLayout>
 
                 </RelativeLayout>
@@ -174,7 +150,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="10dp"
-                        android:text="运单编号:"
+                        android:text="订单编号:"
                         android:textColor="#ff333333"
                         android:textSize="12sp" />
 
@@ -185,7 +161,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="80dp"
                         android:layout_marginTop="10dp"
-                        android:text="NO1234567890123"
                         android:textColor="#ff999999"
                         android:textSize="12sp" />
 
@@ -193,7 +168,7 @@
                         android:id="@+id/img_activity_fack_of_fzhi"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="212dp"
+                        android:layout_toRightOf="@+id/tv_activity_fack_of_biaohao"
                         android:padding="11dp"
                         android:src="@drawable/fuzhi" />
 
@@ -212,7 +187,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="80dp"
                         android:layout_marginTop="33dp"
-                        android:text="¥0000.00"
                         android:textColor="#ff999999"
                         android:textSize="12sp" />
 
@@ -231,7 +205,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="80dp"
                         android:layout_marginTop="55dp"
-                        android:text="¥0000.00"
                         android:textColor="#ff999999"
                         android:textSize="12sp" />
 
@@ -250,7 +223,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="80dp"
                         android:layout_marginTop="79dp"
-                        android:text="¥0000.00"
                         android:textColor="#ff999999"
                         android:textSize="12sp" />
 
@@ -269,12 +241,12 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="80dp"
                         android:layout_marginTop="101dp"
-                        android:text="未支付"
                         android:textColor="#ff999999"
                         android:textSize="12sp" />
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/tv_activity_fack_of_keFu"
                     android:layout_width="match_parent"
                     android:layout_height="33dp"
                     android:layout_marginLeft="15dp"
@@ -290,7 +262,6 @@
                         android:background="@drawable/kefu_huang" />
 
                     <TextView
-                        android:id="@+id/tv_activity_fack_of_keFu"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -323,7 +294,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="73dp"
                         android:layout_marginTop="11dp"
-                        android:text="电子发票——个人"
                         android:textColor="#ff999999"
                         android:textSize="12sp" />
 
@@ -342,7 +312,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="73dp"
                         android:layout_marginTop="32dp"
-                        android:text="商品明细"
                         android:textColor="#ff999999"
                         android:textSize="12sp" />
                 </RelativeLayout>
@@ -354,6 +323,8 @@
     </android.support.v4.widget.NestedScrollView>
 
     <RelativeLayout
+        android:id="@+id/rela2"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
@@ -376,4 +347,9 @@
 
     </RelativeLayout>
 
+    <com.yikangcheng.admin.yikang.util.TwoBallRotationProgressBar
+        android:id="@+id/progress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true" />
 </RelativeLayout>

@@ -27,13 +27,15 @@ import com.sobot.chat.api.model.Information;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.CloseActivity;
 import com.yikangcheng.admin.yikang.activity.PartiCarActivity;
+import com.yikangcheng.admin.yikang.activity.SeleGoodActivity;
+import com.yikangcheng.admin.yikang.activity.aftersale.AfterSaleActivity;
 import com.yikangcheng.admin.yikang.activity.particulars.ParticularsActivity;
+import com.yikangcheng.admin.yikang.activity.seek.SeckillActivity;
 import com.yikangcheng.admin.yikang.activity.seek.SeekActivity;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
 import com.yikangcheng.admin.yikang.bean.Request;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
 import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
-import com.yikangcheng.admin.yikang.presenter.AddShopPresenter;
 import com.yikangcheng.admin.yikang.presenter.OrderBuyPresenter;
 
 public class Fragment_Miao extends BaseFragment implements ICoreInfe {
@@ -41,8 +43,6 @@ public class Fragment_Miao extends BaseFragment implements ICoreInfe {
     private String s = "";
     //    private ImageView miao_one_btn;
 //    private RecyclerView recycler_one;
-//    private FirstSeckillRecyclerAdapter firstSeckillRecyclerAdapter;
-    private AddShopPresenter addShopPresenter;
     private OrderBuyPresenter orderBuyPresenter;
     private ProgressBar pbProgress;
     private SmartRefreshLayout refreshLayout;
@@ -55,17 +55,16 @@ public class Fragment_Miao extends BaseFragment implements ICoreInfe {
     protected void initView(View view) {
         //进度条
         pbProgress = view.findViewById(R.id.pb_progress);
-        addShopPresenter = new AddShopPresenter(this);
         //加载刷新
         refreshLayout = view.findViewById(R.id.refreshLayout);
-        refreshLayout.setEnableLoadMore(false);
+        refreshLayout.setEnableLoadmore(false);
         img_top = view.findViewById(R.id.img_top);
         text_seek = view.findViewById(R.id.text_seek);
 
         orderBuyPresenter = new OrderBuyPresenter(new OrderBuy());
 //        miao_one_btn = view.findViewById(R.id.miao_one_btn);
 //        recycler_one = view.findViewById(R.id.recycler_one);
-//        firstSeckillRecyclerAdapter = new FirstSeckillRecyclerAdapter();
+
         webView = view.findViewById(R.id.webView);
         WebSettings webSettings = webView.getSettings();
         //设置WebView属性，能够执行Javascript脚本
@@ -143,7 +142,8 @@ public class Fragment_Miao extends BaseFragment implements ICoreInfe {
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                webView.loadUrl("https://www.yikch.com/mobile/appShow/activity?type=android");
+                String url = webView.getUrl();
+                webView.loadUrl(url);
                 refreshLayout.finishRefresh();
             }
         });
@@ -154,6 +154,37 @@ public class Fragment_Miao extends BaseFragment implements ICoreInfe {
                     img_top.setVisibility(View.VISIBLE);
                 } else {
                     img_top.setVisibility(View.GONE);
+                }
+            }
+        });
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            // 在点击请求的是链接是才会调用，重写此方法返回true表明点击网页里面的链接还是在当前的webview里跳转，不跳到浏览器那边。这个函数我们可以做很多操作，比如我们读取到某些特殊的URL，于是就可以不打开地址，取消这个操作，进行预先定义的其他操作，这对一个程序是非常必要的。
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                // 判断url链接中是否含有某个字段，如果有就执行指定的跳转（不执行跳转url链接），如果没有就加载url链接
+                if (url.contains("appShow/activityResidue?activitiesId=1")) {
+                    Intent i = new Intent(getActivity(), SeckillActivity.class);
+                    i.putExtra("url", "https://www.yikch.com/mobile/appShow/activityResidue?activitiesId=1&time=0&type=android");
+                    startActivity(i);
+                    return true;
+                } else if (url.contains("appShow/activityResidue?activitiesId=2")) {
+                    Intent i = new Intent(getActivity(), SeckillActivity.class);
+                    i.putExtra("url", "https://www.yikch.com/mobile/appShow/activityResidue?activitiesId=2&time=0&type=android");
+                    startActivity(i);
+                    return true;
+                } else if (url.contains("appShow/activityResidue?activitiesId=3")) {
+                    Intent i = new Intent(getActivity(), SeckillActivity.class);
+                    i.putExtra("url", "https://www.yikch.com/mobile/appShow/activityResidue?activitiesId=3&time=0&type=android");
+                    startActivity(i);
+                    return true;
+                } else if (url.contains("/appShow/proDetail")) {
+                    Intent intent = new Intent(getContext(), ParticularsActivity.class);
+//                    int id = Integer.parseInt(msg);
+                    intent.putExtra("id", url);
+                    startActivity(intent);
+                    return true;
+                } else {
+                    return false;
                 }
             }
         });
@@ -192,13 +223,13 @@ public class Fragment_Miao extends BaseFragment implements ICoreInfe {
 
     @JavascriptInterface
     public void sayHello(String msg) {
-        s += msg + ",";
-        String[] split = s.split(",");
-        if (split.length == 4) {
-            int id = getLogUser(getContext()).getId();
-            addShopPresenter.request(id, split[0], split[1], split[2], split[3]);
-            s = "";
-        }
+//        s += msg + ",";
+//        String[] split = s.split(",");
+//        if (split.length == 4) {
+//            int id = getLogUser(getContext()).getId();
+//            addShopPresenter.request(id, split[0], split[1], split[2], split[3]);
+//            s = "";
+//        }
     }
 
     @JavascriptInterface
@@ -226,13 +257,13 @@ public class Fragment_Miao extends BaseFragment implements ICoreInfe {
         startActivity(new Intent(getContext(), PartiCarActivity.class));
     }
 
-    @JavascriptInterface
-    public void partID(String msg) {
-        Intent intent = new Intent(getContext(), ParticularsActivity.class);
-        int id = Integer.parseInt(msg);
-        intent.putExtra("id", id);
-        startActivity(intent);
-    }
+//    @JavascriptInterface
+//    public void partID(String msg) {
+//        Intent intent = new Intent(getContext(), ParticularsActivity.class);
+//        int id = Integer.parseInt(msg);
+//        intent.putExtra("id", id);
+//        startActivity(intent);
+//    }
 
     public static void getGoWeb() {
         if (webView != null) {

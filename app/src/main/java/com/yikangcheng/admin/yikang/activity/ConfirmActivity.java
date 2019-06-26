@@ -29,6 +29,9 @@ import java.util.Map;
 
 import me.jessyan.autosize.internal.CustomAdapt;
 
+/**
+ * 支付页面
+ */
 public class ConfirmActivity extends BaseActivtiy implements CustomAdapt {
 
     private int height;
@@ -39,6 +42,7 @@ public class ConfirmActivity extends BaseActivtiy implements CustomAdapt {
 
     @Override
     protected void initView() {
+        closeSwipeBack();
         //设置标题栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorTab);
         Display display = this.getWindowManager().getDefaultDisplay();
@@ -110,9 +114,16 @@ public class ConfirmActivity extends BaseActivtiy implements CustomAdapt {
         back_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                startActivity(new Intent(ConfirmActivity.this, ObligationActivity.class));
                 finish();
             }
         });
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(ConfirmActivity.this, ObligationActivity.class));
+        finish();
     }
 
     @Override

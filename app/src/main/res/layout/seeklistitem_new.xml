@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/clolrBAai">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constrain"
+        android:layout_width="match_parent"
+        android:layout_height="130dp">
+
+        <android.support.constraint.Guideline
+            android:id="@+id/img_top_line"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.06" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/img_bottom_line"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.93" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/img_left_line"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.027" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/img_right_line"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.38" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/text_left_line"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.43" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/pricetext_left_line"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.41" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/text_right_line"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.97" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/text_top_line"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.13" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/price_top_line"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.60" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/marprice_top_line"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.77" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/pricetext_top_line"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.64" />
+
+
+        <ImageView
+            android:id="@+id/good_img"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:src="@drawable/inco_log"
+            app:layout_constraintBottom_toTopOf="@+id/img_bottom_line"
+            app:layout_constraintLeft_toRightOf="@id/img_left_line"
+            app:layout_constraintRight_toLeftOf="@id/img_right_line"
+            app:layout_constraintTop_toBottomOf="@id/img_top_line" />
+
+        <TextView
+            android:id="@+id/good_title"
+            android:layout_width="202dp"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:textColor="#ff272727"
+            android:textSize="15sp"
+            android:ellipsize="end"
+            app:layout_constraintLeft_toRightOf="@id/pricetext_left_line"
+            app:layout_constraintRight_toLeftOf="@id/text_right_line"
+            app:layout_constraintTop_toBottomOf="@id/text_top_line" />
+
+        <TextView
+            android:layout_width="7dp"
+            android:layout_height="wrap_content"
+            android:text="¥"
+            android:textColor="#ffff0000"
+            android:textSize="12sp"
+            app:layout_constraintLeft_toRightOf="@id/pricetext_left_line"
+            app:layout_constraintTop_toBottomOf="@id/pricetext_top_line" />
+
+        <TextView
+            android:id="@+id/good_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ffff0000"
+            android:textSize="18sp"
+            app:layout_constraintLeft_toRightOf="@id/text_left_line"
+            app:layout_constraintTop_toBottomOf="@id/price_top_line" />
+
+        <TextView
+            android:id="@+id/good_marprice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ff999999"
+            android:textSize="13sp"
+            app:layout_constraintLeft_toRightOf="@id/pricetext_left_line"
+            app:layout_constraintTop_toBottomOf="@id/marprice_top_line" />
+
+        <TextView
+            android:id="@+id/good_buynum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ff333333"
+            android:textSize="12sp"
+            app:layout_constraintRight_toLeftOf="@id/text_right_line"
+            app:layout_constraintTop_toBottomOf="@id/marprice_top_line" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/constrain"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/fengexian_shape" />
+</RelativeLayout>

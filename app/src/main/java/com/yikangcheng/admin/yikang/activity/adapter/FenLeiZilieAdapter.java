@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.app.Constants;
 import com.yikangcheng.admin.yikang.bean.ClassifyListOneBean;
@@ -41,7 +42,19 @@ public class FenLeiZilieAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ViewHolder holder1 = (ViewHolder) holder;
         holder1.right_text.setText(mList.get(position).getSubjectName());
-        Glide.with(mContent).load(Constants.BASETUPIANSHANGCHUANURL + mList.get(position).getIcon()).into(holder1.image);
+        RequestOptions requestOptions = new RequestOptions();
+        requestOptions.placeholder(R.drawable.inco_log);
+        requestOptions.fallback(R.drawable.inco_log);
+        String icon = mList.get(position).getIcon();
+        if (icon != null) {
+            if (icon.contains("http://") || icon.contains("https://")) {
+                Glide.with(mContent).load(icon).apply(requestOptions).into(holder1.image);
+            } else {
+                Glide.with(mContent).load(Constants.BASETUPIANSHANGCHUANURL + icon).apply(requestOptions).into(holder1.image);
+            }
+        }else{
+            Glide.with(mContent).load(icon).apply(requestOptions).into(holder1.image);
+        }
         holder1.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

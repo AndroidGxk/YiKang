@@ -11,6 +11,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterInside;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.app.Constants;
 import com.yikangcheng.admin.yikang.bean.RecommendBean;
@@ -46,11 +50,24 @@ public class RecommendAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ViewHolder holder1 = (ViewHolder) holder;
-        Glide.with(mContent).load(Constants.BASETUPIANSHANGCHUANURL + mList.get(position).getLogo()).into(holder1.mImg);
+        //设置图片圆角角度
+        RequestOptions requestOptions = new RequestOptions();
+        requestOptions.placeholder(R.drawable.inco_log);
+        if (mList.get(position).getLogo().contains("http://") || mList.get(position).getLogo().contains("https://")) {
+            Glide.with(mContent).load(mList.get(position).getLogo())
+                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(20)))
+                    .apply(requestOptions)
+                    .into(holder1.mImg);
+        } else {
+            Glide.with(mContent).load(Constants.BASETUPIANSHANGCHUANURL + mList.get(position).getLogo())
+                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(20)))
+                    .apply(requestOptions)
+                    .into(holder1.mImg);
+        }
         holder1.mTv_name.setText(mList.get(position).getName());
-        holder1.mTitle.setText(mList.get(position).getTitle());
-        holder1.mJiage.setText(mList.get(position).getCurrentprice() + "");
-        holder1.mBprice.setText("市场价：" + mList.get(position).getSourceprice());
+//        holder1.buymun.setText(mList.get(position).getTitle());
+        holder1.mJiage.setText("市场价:¥" + mList.get(position).getSourceprice());
+        holder1.mBprice.setText(mList.get(position).getCurrentprice() + "");
         /**
          * // 中间加横线 ， 添加Paint.ANTI_ALIAS_FLAG是线会变得清晰去掉锯齿
          */
@@ -60,7 +77,7 @@ public class RecommendAdapter extends RecyclerView.Adapter {
             @Override
             public void onClick(View v) {
                 int id = mList.get(position).getId();
-                mListener.OnClickListener(v,id);
+                mListener.OnClickListener(v, id);
             }
         });
     }
@@ -84,15 +101,15 @@ public class RecommendAdapter extends RecyclerView.Adapter {
 
         private final ImageView mImg;
         private final TextView mTv_name;
-        private final TextView mTitle;
+        private final TextView buymun;
         private final TextView mJiage;
         private final TextView mBprice;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            mImg = itemView.findViewById(R.id.recom_img);
+            mImg = itemView.findViewById(R.id.good_img);
             mTv_name = itemView.findViewById(R.id.recom_title);
-            mTitle = itemView.findViewById(R.id.recom_count);
+            buymun = itemView.findViewById(R.id.recom_count);
             mJiage = itemView.findViewById(R.id.tv_jiage);
             mBprice = itemView.findViewById(R.id.text_bprice);
         }
@@ -101,7 +118,8 @@ public class RecommendAdapter extends RecyclerView.Adapter {
     public interface OnClickListener {
         void OnClickListener(View v, int id);
     }
-    public void setOnClickListener(OnClickListener listener){
-        this.mListener=listener;
+
+    public void setOnClickListener(OnClickListener listener) {
+        this.mListener = listener;
     }
 }

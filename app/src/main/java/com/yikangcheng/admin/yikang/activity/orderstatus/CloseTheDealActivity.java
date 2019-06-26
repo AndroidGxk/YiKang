@@ -1,6 +1,7 @@
 package com.yikangcheng.admin.yikang.activity.orderstatus;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,21 +15,23 @@ import android.widget.Toast;
 import com.sobot.chat.SobotApi;
 import com.sobot.chat.api.model.Information;
 import com.yikangcheng.admin.yikang.R;
-import com.yikangcheng.admin.yikang.activity.BarterActivity;
+import com.yikangcheng.admin.yikang.activity.H5SecActivity;
 import com.yikangcheng.admin.yikang.activity.SeleGoodActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.CloseTheDealAdapter;
-import com.yikangcheng.admin.yikang.activity.aftersale.AfterSaleActivity;
 import com.yikangcheng.admin.yikang.activity.copy.CopyButtonLibrary;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
-import com.yikangcheng.admin.yikang.bean.CloseTheDealBean;
 import com.yikangcheng.admin.yikang.bean.DeleteOrderBean;
+import com.yikangcheng.admin.yikang.bean.LoginBean;
 import com.yikangcheng.admin.yikang.bean.Request;
+import com.yikangcheng.admin.yikang.bean.WaliDealBean;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
 import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
 import com.yikangcheng.admin.yikang.presenter.CloseTheDeallPresenter;
 import com.yikangcheng.admin.yikang.presenter.DeleteOrderIdPresenter;
+import com.yikangcheng.admin.yikang.presenter.SignOrderPresenter;
 import com.yikangcheng.admin.yikang.util.SpacesItemDecoration;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
+import com.yikangcheng.admin.yikang.util.TwoBallRotationProgressBar;
 
 import java.util.ArrayList;
 
@@ -41,7 +44,6 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
 
     private RelativeLayout mToolbarActivityWaitfrrpayment;
     private TextView mTvActivityCloseName;
-    private TextView mImgActivityCloseChakan;
     private RecyclerView mRlvActivityCloseShangPin;
     private TextView mTvActivityCloseBiaohao;
     private ImageView mImgActivityCloseFizhi, back_img;
@@ -49,25 +51,24 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
     private TextView mTvActivityCloseJinE;
     private TextView mTvActivityCloseZhongJi;
     private TextView mTvActivityCloseFangShi;
-    private TextView mTvActivityCloseKeFu;
+    private RelativeLayout mTvActivityCloseKeFu;
     private TextView mTvActivityCloseFaPianLeiXing;
     private TextView mTvActivityCloseNeiRong;
-    private ImageView mImgActivityCloseQueDing;
-    private RecyclerView mRlvActivityCloseTuiJian;
     private TextView mChanchu;
-    private TextView mAddress;
     private TextView mProvinceStr;
-    private TextView mCityStr;
-    private TextView mTownStr;
     private CloseTheDealAdapter mCloseTheDealAdapter;
     private int mPosition;
     private Intent mIntent;
     private int mOrderId;
     private int width;
     private PromptDialog mPromptDialog;
-    private CloseTheDealBean mEntity;
+    private WaliDealBean mEntity;
     private TextView mTv_queRen;
     private int mAfterSaleStatus;
+    private SignOrderPresenter signOrderPresenter;
+    private LoginBean logUser;
+    private TwoBallRotationProgressBar progress;
+    private RelativeLayout rela1, rela2;
 
 
     /**
@@ -80,27 +81,25 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
         //创建对象
         mPromptDialog = new PromptDialog(this);
         //设置自定义属性
-        mPromptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(3000);
+        mPromptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(500);
 
         mIntent = getIntent();
         mOrderId = mIntent.getIntExtra("orderId", 0);
         Display display = this.getWindowManager().getDefaultDisplay();
         width = display.getWidth();
-        int height = display.getHeight();
-
-
         //ToolBar
         mToolbarActivityWaitfrrpayment = (RelativeLayout) findViewById(R.id.toolbar_activity_waitfrrpayment);
+
+        rela1 = (RelativeLayout) findViewById(R.id.rela1);
+        rela2 = (RelativeLayout) findViewById(R.id.rela2);
         //用户名
         mTvActivityCloseName = (TextView) findViewById(R.id.tv_activity_close_name);
         //用户地址
-        mAddress = (TextView) findViewById(R.id.tv_activity_close_address);
         mProvinceStr = (TextView) findViewById(R.id.tv_activity_close_provinceStr);
-        mCityStr = (TextView) findViewById(R.id.tv_activity_close_cityStr);
-        mTownStr = (TextView) findViewById(R.id.tv_activity_close_townStr);
+
         back_img = (ImageView) findViewById(R.id.back_imgs);
         //查看物流按钮
-        mImgActivityCloseChakan = (TextView) findViewById(R.id.img_activity_close_chakan);
+//        mImgActivityCloseChakan = (TextView) findViewById(R.id.img_activity_close_chakan);
         //rlv商品
         mRlvActivityCloseShangPin = (RecyclerView) findViewById(R.id.rlv_activity_close_shangPin);
         //订单编号
@@ -116,7 +115,7 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
         //支付方式
         mTvActivityCloseFangShi = (TextView) findViewById(R.id.tv_activity_close_fangShi);
         //联系客服
-        mTvActivityCloseKeFu = (TextView) findViewById(R.id.tv_activity_close_keFu);
+        mTvActivityCloseKeFu = (RelativeLayout) findViewById(R.id.tv_activity_close_keFu);
         //发票类型
         mTvActivityCloseFaPianLeiXing = (TextView) findViewById(R.id.tv_activity_close_FaPianLeiXing);
         //发票内容
@@ -125,8 +124,10 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
         mChanchu = (TextView) findViewById(R.id.tv_activity_closeThe_Deal_shanchu);
         //确认收货
         mTv_queRen = (TextView) findViewById(R.id.tv_QueRen);
-
-
+        //进度条
+        progress = (TwoBallRotationProgressBar) findViewById(R.id.progress);
+        //用户数据库
+        logUser = getLogUser(CloseTheDealActivity.this);
         //点击事件
         mTvActivityCloseKeFu.setOnClickListener(this);
         mImgActivityCloseFizhi.setOnClickListener(this);
@@ -135,11 +136,11 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
         /**
          * P层
          */
-        CloseTheDeallPresenter closeTheDeallPresenter = new CloseTheDeallPresenter(this);
+        final CloseTheDeallPresenter closeTheDeallPresenter = new CloseTheDeallPresenter(this);
         closeTheDeallPresenter.request(mOrderId);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRlvActivityCloseShangPin.setLayoutManager(linearLayoutManager);
-        ArrayList<CloseTheDealBean.DetailsListBean> mShopSpecDetailedBeans = new ArrayList<>();
+        ArrayList<WaliDealBean.DetailsListBean> mShopSpecDetailedBeans = new ArrayList<>();
         mCloseTheDealAdapter = new CloseTheDealAdapter(mShopSpecDetailedBeans, this);
         mRlvActivityCloseShangPin.setAdapter(mCloseTheDealAdapter);
 
@@ -161,7 +162,48 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
                 startActivity(intent);
             }
         });
+        signOrderPresenter = new SignOrderPresenter(new SignOrder());
+        //确认收货
+        mCloseTheDealAdapter.setOkBtnOnClickListener(new CloseTheDealAdapter.OkBtnOnClickListener() {
+            @Override
+            public void onOkBtnListener(final int id) {
+                mPromptDialog.showWarnAlert("确定要收货吗？", new PromptButton("取消", new PromptButtonListener() {
+                    @Override
+                    public void onClick(PromptButton button) {
+                    }
+                }), new PromptButton("确定", new PromptButtonListener() {
+                    @Override
+                    public void onClick(PromptButton button) {
+                        if (logUser != null) {
+                            signOrderPresenter.request(logUser.getId(), id);
+                            mPromptDialog.showLoading("加载中...");
+                            mCloseTheDealAdapter.removeAll();
+                            closeTheDeallPresenter.request(mOrderId);
+                        }
+                    }
+                }));
 
+            }
+        });
+        //查看物流
+        mCloseTheDealAdapter.setLooklog(new CloseTheDealAdapter.Looklog() {
+            @Override
+            public void onclick(int id) {
+                Intent intent = new Intent(CloseTheDealActivity.this, H5SecActivity.class);
+                intent.putExtra("http", "https://www.yikch.com/mobile/appShow/orderLogistics?orderDetailsId=" + id + "&type=android");
+                intent.putExtra("title", "物流状态");
+                startActivity(new Intent(intent));
+            }
+        });
+        //跳转详情
+//        mCloseTheDealAdapter.setToGoodParitual(new CloseTheDealAdapter.toGoodParitual() {
+//            @Override
+//            public void onclick(int id) {
+//                Intent intent = new Intent(CloseTheDealActivity.this,ParticularsActivity.class);
+//                intent.putExtra("id", id);
+//                startActivity(intent);
+//            }
+//        });
         //解决滑动不流畅
         mRlvActivityCloseShangPin.setHasFixedSize(true);
         mRlvActivityCloseShangPin.setNestedScrollingEnabled(false);
@@ -171,8 +213,6 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
         int spacing_tuijian = 5; // 50px
         boolean includeEdge_tuijian = false;
         mRlvActivityCloseShangPin.addItemDecoration(new SpacesItemDecoration(spanCount_tuijian, spacing_tuijian, includeEdge_tuijian));
-
-
         //刪除
         initDelete();
 
@@ -217,6 +257,12 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+        progress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                return;
             }
         });
     }
@@ -285,24 +331,20 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
     @Override
     public void success(Object data) {
         Request request = (Request) data;
-        mEntity = (CloseTheDealBean) request.getEntity();
+        mEntity = (WaliDealBean) request.getEntity();
         //添加数据到适配器
         mCloseTheDealAdapter.addAll(mEntity.getDetailsList());
-        //用户名
-        mTvActivityCloseName.setText(mEntity.getUserAddress().getReceiver());
-        //地址
-        mAddress.setText(mEntity.getUserAddress().getAddress());
-        mCityStr.setText(mEntity.getUserAddress().getCityStr());
-        mTownStr.setText(mEntity.getUserAddress().getTownStr());
-        mProvinceStr.setText(mEntity.getUserAddress().getProvinceStr());
-        mTvActivityCloseBiaohao.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String orderNo = mEntity.getOrder().getOrderNo();
-                Toast.makeText(CloseTheDealActivity.this, orderNo, Toast.LENGTH_SHORT).show();
-            }
-        });
-
+        if (mEntity.getOrderBook().getReceiver().equals("")) {
+            //用户名
+            mTvActivityCloseName.setText(mEntity.getUserAddress().getReceiver());
+            //地址
+            mProvinceStr.setText(mEntity.getUserAddress().getAddress());
+        } else {
+            //用户名
+            mTvActivityCloseName.setText(mEntity.getOrderBook().getReceiver());
+            //地址
+            mProvinceStr.setText(mEntity.getOrderBook().getAddress());
+        }
         //订单编号
         mTvActivityCloseBiaohao.setText(mEntity.getOrder().getOrderNo());
         //运费
@@ -333,16 +375,49 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
             mTvActivityCloseNeiRong.setText("商品类别");
         }
 
-        //确认收货
-        if (mAfterSaleStatus != 0) {
-            mTv_queRen.setVisibility(View.GONE);
-        } else {
-            mTv_queRen.setVisibility(View.VISIBLE);
-        }
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                progress.setVisibility(View.GONE);
+                progress.stopAnimator();
+                rela1.setVisibility(View.VISIBLE);
+                rela2.setVisibility(View.VISIBLE);
+            }
+        }, 500);
     }
 
     @Override
     public void fail(ApiException e) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                progress.setVisibility(View.GONE);
+                progress.stopAnimator();
+            }
+        }, 500);
+        Toast.makeText(this, "加载失败,请重试", Toast.LENGTH_SHORT).show();
+    }
 
+    /**
+     * 确认收货
+     */
+    private class SignOrder implements ICoreInfe {
+        @Override
+        public void success(Object data) {
+            Request request = (Request) data;
+            if (request.isSuccess()) {
+                mCloseTheDealAdapter.notifyDataSetChanged();
+                mPromptDialog.showSuccess(request.getMessage());
+
+            } else {
+                Toast.makeText(CloseTheDealActivity.this, "" + request.getMessage(), Toast.LENGTH_SHORT).show();
+                mPromptDialog.showSuccess(request.getMessage());
+            }
+        }
+
+        @Override
+        public void fail(ApiException e) {
+            mPromptDialog.dismiss();
+        }
     }
 }

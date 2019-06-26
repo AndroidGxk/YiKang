@@ -1,19 +1,21 @@
 package com.yikangcheng.admin.yikang.activity;
 
+import android.annotation.SuppressLint;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
-import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
-import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -25,8 +27,14 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
+import com.mylhyl.circledialog.CircleDialog;
+import com.mylhyl.circledialog.callback.ConfigButton;
+import com.mylhyl.circledialog.callback.ConfigDialog;
+import com.mylhyl.circledialog.callback.ConfigText;
+import com.mylhyl.circledialog.params.ButtonParams;
+import com.mylhyl.circledialog.params.DialogParams;
+import com.mylhyl.circledialog.params.TextParams;
 import com.yikangcheng.admin.yikang.R;
-import com.yikangcheng.admin.yikang.activity.aftersale.AfterSaleActivity;
 import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Fen;
 import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Gou;
 import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Miao;
@@ -34,27 +42,26 @@ import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Shou;
 import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Wo;
 import com.yikangcheng.admin.yikang.activity.myaccount.MyaccountActivity;
 import com.yikangcheng.admin.yikang.activity.obligation.DetailActivity;
-import com.yikangcheng.admin.yikang.activity.seek.SeekActivity;
 import com.yikangcheng.admin.yikang.activity.siteactivity.AiteActivity;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
+import com.yikangcheng.admin.yikang.bean.AppUpdateBean;
 import com.yikangcheng.admin.yikang.bean.LoginBean;
 import com.yikangcheng.admin.yikang.bean.Request;
 import com.yikangcheng.admin.yikang.bean.UserDetailBean;
 import com.yikangcheng.admin.yikang.bean.UserInfoBean;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
 import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
+import com.yikangcheng.admin.yikang.presenter.CheckupdatePresenter;
 import com.yikangcheng.admin.yikang.presenter.UserInfoPresenter;
 import com.yikangcheng.admin.yikang.updater.Updater;
 import com.yikangcheng.admin.yikang.updater.UpdaterConfig;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
-import me.jessyan.autosize.internal.CustomAdapt;
-import me.leefeng.promptlibrary.OnAdClickListener;
 import me.leefeng.promptlibrary.PromptButton;
 import me.leefeng.promptlibrary.PromptButtonListener;
 import me.leefeng.promptlibrary.PromptDialog;
 
-public class MainActivity extends BaseActivtiy implements CustomAdapt {
+public class MainActivity extends BaseActivtiy {
     private RadioGroup radio;
     private FragmentTransaction transaction;
     private RadioButton shou, fen, miao, gou, wo;
@@ -79,7 +86,7 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
     private PromptDialog promptDialog;
     private UserInfoPresenter userInfoPresenter;
     private int width;
-    private static final String APK_URL = "https://www.yikch.com/static/app/yikang.apk";
+    private CheckupdatePresenter checkupdatePresenter;
 
     @Override
     protected void initView() {
@@ -131,7 +138,8 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
             }
         });
 
-
+        checkupdatePresenter = new CheckupdatePresenter(new UpdateApp());
+        checkupdatePresenter.request("android");
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         mNv = (RelativeLayout) findViewById(R.id.nv);
         mRelativeLayout = (RelativeLayout) findViewById(R.id.relativeLayout);
@@ -154,19 +162,7 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
                 }), confirm);
             }
         });
-        try {
-            String versionName = getVersionName();
-            if (!versionName.equals("1.0.1")) {
-                promptDialog.showWarnAlert("发现新版本是否要更新", new PromptButton("取消", new PromptButtonListener() {
-                    @Override
-                    public void onClick(PromptButton button) {
-                    }
-                }), newConfirm);
 
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     //查询当前App版本号
@@ -188,22 +184,22 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
             finish();
         }
     });
-    //更新按钮
-    final PromptButton newConfirm = new PromptButton("更新", new PromptButtonListener() {
-        @Override
-        public void onClick(PromptButton button) {
-            Toast.makeText(MainActivity.this, "正在更新", Toast.LENGTH_SHORT).show();
-            UpdaterConfig config = new UpdaterConfig.Builder(MainActivity.this)
-                    .setTitle(getResources().getString(R.string.app_name))
-                    .setDescription("更新")
-                    .setFileUrl(APK_URL)
-                    .setCanMediaScanner(true)
-                    .setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE
-                            | DownloadManager.Request.NETWORK_WIFI)
-                    .build();
-            Updater.get().showLog(true).download(config);
-        }
-    });
+//    //更新按钮
+//    final PromptButton newConfirm = new PromptButton("更新", new PromptButtonListener() {
+//        @Override
+//        public void onClick(PromptButton button) {
+//            Toast.makeText(MainActivity.this, "正在更新", Toast.LENGTH_SHORT).show();
+//            UpdaterConfig config = new UpdaterConfig.Builder(MainActivity.this)
+//                    .setTitle(getResources().getString(R.string.app_name))
+//                    .setDescription("更新")
+//                    .setFileUrl(APK_URL)
+//                    .setCanMediaScanner(true)
+//                    .setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE
+//                            | DownloadManager.Request.NETWORK_WIFI)
+//                    .build();
+//            Updater.get().showLog(true).download(config);
+//        }
+//    });
 
     /**
      * 购物车的商品数量
@@ -215,7 +211,7 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
             text_count.setVisibility(View.VISIBLE);
             if (count >= 99) {
                 text_count.setText("99+");
-            }else{
+            } else {
                 text_count.setText("" + count);
             }
         }
@@ -326,6 +322,11 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         gou_linear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                SharedPreferences close = getSharedPreferences("close", MODE_PRIVATE);
+                SharedPreferences.Editor edit = close.edit();
+                edit.putBoolean("close", false);
+                edit.putBoolean("closes", false);
+                edit.commit();
                 Fragment_Gou.getSignY();
                 LoginBean logUser = getLogUser(MainActivity.this);
                 if (logUser == null) {
@@ -451,6 +452,11 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
             @Override
             public void onClick(View view) {
                 Fragment_Gou.getSignY();
+                SharedPreferences close = getSharedPreferences("close", MODE_PRIVATE);
+                SharedPreferences.Editor edit = close.edit();
+                edit.putBoolean("close", false);
+                edit.putBoolean("closes", false);
+                edit.commit();
                 LoginBean logUser = getLogUser(MainActivity.this);
                 if (logUser == null) {
                     startActivity(new Intent(MainActivity.this, LoginActivity.class));
@@ -563,15 +569,6 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
 
     }
 
-    @Override
-    public boolean isBaseOnWidth() {
-        return false;
-    }
-
-    @Override
-    public float getSizeInDp() {
-        return width / 2;
-    }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
@@ -640,6 +637,7 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
     @Override
     protected void onResume() {
         super.onResume();
+
         LoginBean logUser = getLogUser(this);
         if (logUser != null) {
             line1.setVisibility(View.VISIBLE);
@@ -748,6 +746,12 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
         }
     }
 
+    @SuppressLint("MissingSuperCall")
+    public void onSaveInstanceState(Bundle outState) {
+        // TODO Auto-generated method stub
+        //super.onSaveInstanceState(outState);   //将这一行注释掉，阻止activity保存fragment的状态
+    }
+
     /**
      * 个人资料
      */
@@ -763,6 +767,106 @@ public class MainActivity extends BaseActivtiy implements CustomAdapt {
                     .into(header);
             //名称
             my_name.setText(userCenter.getNickName());
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
+    }
+
+    /**
+     * 更新APP
+     */
+    private class UpdateApp implements ICoreInfe {
+        private String versionName;
+        @Override
+        public void success(Object data) {
+            Request request = (Request) data;
+            final AppUpdateBean entity = (AppUpdateBean) request.getEntity();
+            try {
+                versionName = getVersionName();
+                if(versionName!=null&&entity.getVersionNo()!=null){
+                    if (!versionName.equals(entity.getVersionNo())) {
+                        new CircleDialog.Builder()
+                                .setMaxHeight(0.8f)
+                                .setCanceledOnTouchOutside(false)
+                                .setCancelable(false)
+                                .configDialog(new ConfigDialog() {
+                                    @Override
+                                    public void onConfig(DialogParams params) {
+//                            params.backgroundColor = Color.DKGRAY;
+//                            params.backgroundColorPress = Color.BLUE;
+
+                                    }
+                                })
+                                .setTitle("发现新版本")
+                                .setText(entity.getDepict())
+                                .configText(new ConfigText() {
+                                    @Override
+                                    public void onConfig(TextParams params) {
+                                        params.gravity = Gravity.LEFT | Gravity.TOP;
+                                    }
+                                })
+                                .setNegative("取消", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        String versionNo = entity.getVersionNo();
+                                        String versionNostr = versionNo.substring(0, 1);
+                                        String versionNamestr = versionName.substring(0, 1);
+                                        if (versionNamestr.equals(versionNamestr)) {
+                                            String versionNostr2 = versionNo.substring(2, 3);
+                                            String versionNamestr2 = versionName.substring(2, 3);
+                                            if (versionNostr2.equals(versionNamestr2)) {
+                                                String versionNostr3 = versionNo.substring(versionNo.length() - 1, versionNo.length());
+                                                String versionNamestr3 = versionName.substring(versionName.length() - 1, versionName.length());
+                                                if (versionNamestr3.equals(versionNostr3)) {
+                                                    return;
+                                                } else {
+                                                    return;
+                                                }
+                                            } else {
+                                                finish();
+                                            }
+                                            return;
+                                        } else {
+                                            finish();
+                                        }
+                                    }
+                                })
+                                .setPositive("确定", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        Toast.makeText(MainActivity.this, "正在更新", Toast.LENGTH_SHORT).show();
+                                        UpdaterConfig config = new UpdaterConfig.Builder(MainActivity.this)
+                                                .setTitle(getResources().getString(R.string.app_name))
+                                                .setDescription(entity.getDepict())
+                                                .setFileUrl(entity.getDownloadUrl())
+                                                .setCanMediaScanner(true)
+                                                .setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE
+                                                        | DownloadManager.Request.NETWORK_WIFI)
+                                                .build();
+                                        Updater.get().showLog(true).download(config);
+                                    }
+                                })
+                                .configPositive(new ConfigButton() {
+                                    @Override
+                                    public void onConfig(ButtonParams params) {
+                                        params.backgroundColorPress = Color.RED;
+                                    }
+                                })
+                                .show(getSupportFragmentManager());
+//                promptDialog.showWarnAlert("发现新版本是否要更新", new PromptButton("取消", new PromptButtonListener() {
+//                    @Override
+//                    public void onClick(PromptButton button) {
+//                        finish();
+//                    }
+//                }), newConfirm);
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         @Override

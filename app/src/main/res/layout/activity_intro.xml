@@ -44,7 +44,7 @@
         android:layout_marginLeft="15dp"
         android:layout_marginTop="12dp"
         android:layout_marginRight="15dp"
-        android:background="@drawable/seek_edi_shape"
+        android:background="@drawable/recommtion_recycler_shape"
         android:gravity="left"
         android:hint="请输入个人简介"
         android:maxLength="200"

@@ -69,12 +69,24 @@
             android:textSize="10sp" />
 
         <TextView
+            android:id="@+id/text_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/text"
             android:layout_centerHorizontal="true"
             android:gravity="left"
             android:text="易康科技 版权所有"
+            android:textColor="#999999"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/versions_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_name"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:gravity="left"
             android:textColor="#999999"
             android:textSize="10sp" />
     </RelativeLayout>

@@ -142,7 +142,7 @@
             android:paddingRight="15dp"
             android:paddingBottom="10dp"
             android:textColor="#999999"
-            android:textColorHint="#FF0000"
+            android:textColorHint="#999999"
             android:textSize="13sp" />
 
     </RelativeLayout>
@@ -229,7 +229,7 @@
             android:lines="1"
             android:maxWidth="150dp"
             android:textColor="#999999"
-            android:textColorHint="#FF0000"
+            android:textColorHint="#999999"
             android:textSize="13sp" />
 
 

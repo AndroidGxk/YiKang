@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="2.5dp"
+    android:background="@drawable/recommtion_recycler_shape">
+
+
+    <ImageView
+        android:id="@+id/good_img"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/inco_log" />
+
+    <TextView
+        android:id="@+id/good_title"
+        android:layout_width="131dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/good_img"
+        android:layout_marginLeft="10dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="JMSOLUTIO蜂蜜蚕丝面...."
+        android:textColor="#ff333333"
+        android:textSize="11sp" />
+
+    <TextView
+        android:id="@+id/good_count"
+        android:layout_width="135dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/good_title"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="JMSOLUTION蜂蜜蚕丝面膜网..."
+        android:textColor="#ff999999"
+        android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/good_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/good_count"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:text="内购价：￥286"
+        android:textColor="#ffff1a1a"
+        android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/good_marprice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/good_price"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
+        android:text="市场价：￥286"
+        android:textColor="#ff999999"
+        android:textSize="9sp" />
+
+    <TextView
+        android:id="@+id/good_buynum"
+        android:layout_marginTop="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/good_price"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="7dp"
+        android:text="1234人已购"
+        android:textColor="#ff999999"
+        android:textSize="10sp" />
+</RelativeLayout>

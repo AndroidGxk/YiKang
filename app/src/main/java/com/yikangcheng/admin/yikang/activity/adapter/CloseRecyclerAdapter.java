@@ -55,24 +55,28 @@ public class CloseRecyclerAdapter extends RecyclerView.Adapter<CloseRecyclerAdap
         if (position == getItemCount() - 1) {
             vh.view_ge.setVisibility(View.GONE);
         }
-       if(stringList.size()!=0){
-           ShopCarBean shopCarBean = stringList.get(position);
-           ShopCarBean.ShopSpecDetailedBean shopSpecDetailed = shopCarBean.getShopSpecDetailed();
-           vh.close_title.setText(shopSpecDetailed.getCommodityName());
-           vh.close_gui.setText(shopSpecDetailed.getSpecNames());
-           java.text.DecimalFormat myformat = new java.text.DecimalFormat("0.00");
-           String str = myformat.format(shopSpecDetailed.getRetailPrice());
-           vh.close_price.setText("¥" + str);
-           vh.close_num.setText("x" + shopCarBean.getBuyNum());
-           Glide.with(mContext).load(Constants.BASETUPIANSHANGCHUANURL + shopSpecDetailed.getLogo()).into(vh.close_img);
-       }else if(stringLists.size()!=0){
-           PariticShopBean pariticShopBean = stringLists.get(position);
-           vh.close_title.setText(pariticShopBean.getCommodityName());
-           vh.close_gui.setText(pariticShopBean.getDataType());
-           vh.close_price.setText("¥" + pariticShopBean.getPrice());
-           vh.close_num.setText("x" + pariticShopBean.getBuyNum());
-           Glide.with(mContext).load(pariticShopBean.getLogo()).into(vh.close_img);
-       }
+        if (stringList.size() != 0) {
+            ShopCarBean shopCarBean = stringList.get(position);
+            ShopCarBean.ShopSpecDetailedBean shopSpecDetailed = shopCarBean.getShopSpecDetailed();
+            vh.close_title.setText(shopSpecDetailed.getCommodityName());
+            vh.close_gui.setText(shopSpecDetailed.getSpecNames());
+            java.text.DecimalFormat myformat = new java.text.DecimalFormat("0.00");
+            String str = myformat.format(shopSpecDetailed.getRetailPrice());
+            vh.close_price.setText("¥" + str);
+            vh.close_num.setText("x" + shopCarBean.getBuyNum());
+            if (shopSpecDetailed.getLogo().contains("http://") || shopSpecDetailed.getLogo().contains("https://")) {
+                Glide.with(mContext).load(shopSpecDetailed.getLogo()).into(vh.close_img);
+            } else {
+                Glide.with(mContext).load(Constants.BASETUPIANSHANGCHUANURL + shopSpecDetailed.getLogo()).into(vh.close_img);
+            }
+        } else if (stringLists.size() != 0) {
+            PariticShopBean pariticShopBean = stringLists.get(position);
+            vh.close_title.setText(pariticShopBean.getCommodityName());
+            vh.close_gui.setText(pariticShopBean.getDataType());
+            vh.close_price.setText("¥" + pariticShopBean.getPrice());
+            vh.close_num.setText("x" + pariticShopBean.getBuyNum());
+            Glide.with(mContext).load(pariticShopBean.getLogo()).into(vh.close_img);
+        }
 
     }
 

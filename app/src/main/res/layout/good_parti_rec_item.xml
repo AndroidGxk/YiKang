@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="158dp"
+    android:layout_gravity="center"
+    android:background="@drawable/moblie_editext_5_shape_left">
+
+
+    <ImageView
+        android:id="@+id/good_img"
+        android:layout_width="100dp"
+        android:src="@drawable/ceshi"
+        android:layout_height="100dp"
+        android:scaleType="fitXY" />
+
+    <TextView
+        android:id="@+id/good_title"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/good_img"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:text="Anessa安热沙资生堂水能户外防晒喷雾...."
+        android:textColor="#ff333333"
+        android:textSize="11sp" />
+
+
+    <TextView
+        android:id="@+id/good_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/good_title"
+        android:layout_marginTop="5dp"
+        android:text="¥ 130"
+        android:textColor="#ffb5773c"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/good_price"
+        android:layout_width="27dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/good_title"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="8dp"
+        android:text=" ¥399 "
+        android:textColor="#ffb3b3b3"
+        android:textSize="10sp" />
+</RelativeLayout>

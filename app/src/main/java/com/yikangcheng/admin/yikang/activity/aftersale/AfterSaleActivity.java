@@ -26,31 +26,21 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CircleCrop;
-import com.bumptech.glide.request.RequestOptions;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.BarterPayActivity;
 import com.yikangcheng.admin.yikang.activity.PhotoActivity;
-import com.yikangcheng.admin.yikang.activity.SeekListActivity;
-import com.yikangcheng.admin.yikang.app.BaseApp;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
-import com.yikangcheng.admin.yikang.bean.AllAddressBean;
-import com.yikangcheng.admin.yikang.bean.LoginBean;
+import com.yikangcheng.admin.yikang.bean.Request;
 import com.yikangcheng.admin.yikang.bean.UserDetailBean;
-import com.yikangcheng.admin.yikang.util.CropUtils;
-import com.yikangcheng.admin.yikang.util.FileUtil;
-
-import java.io.File;
+import com.yikangcheng.admin.yikang.model.http.ApiException;
+import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
+import com.yikangcheng.admin.yikang.presenter.AfterSaleStatusPresenter;
+import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
 import me.jessyan.autosize.internal.CustomAdapt;
-import me.leefeng.promptlibrary.PromptButton;
-import me.leefeng.promptlibrary.PromptButtonListener;
-import me.leefeng.promptlibrary.PromptDialog;
 
-public class AfterSaleActivity extends BaseActivtiy implements CustomAdapt {
+public class AfterSaleActivity extends BaseActivtiy implements CustomAdapt, ICoreInfe {
 
 
     /**
@@ -71,6 +61,7 @@ public class AfterSaleActivity extends BaseActivtiy implements CustomAdapt {
     private UserDetailBean logUser;
     private String pwd;
     private long mobile;
+    private AfterSaleStatusPresenter afterSaleStatusPresenter;
 
     /**
      * 回传值
@@ -103,7 +94,8 @@ public class AfterSaleActivity extends BaseActivtiy implements CustomAdapt {
     @Override
     protected void initView() {
 //        //设置状态栏颜色
-//        StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        afterSaleStatusPresenter = new AfterSaleStatusPresenter(this);
         logUser = getUserInfo(this);
         Display display = this.getWindowManager().getDefaultDisplay();
         mobile = logUser.getMobile();
@@ -113,10 +105,9 @@ public class AfterSaleActivity extends BaseActivtiy implements CustomAdapt {
         Intent intent = getIntent();
         SharedPreferences userId = getSharedPreferences("userInfo", MODE_PRIVATE);
         pwd = userId.getString("pwd", "");
-        Toast.makeText(this, "" + pwd + "---" + mobile, Toast.LENGTH_SHORT).show();
         //商品流水Id
         id = intent.getIntExtra("id", 00);
-        Toast.makeText(this, "流水" + id, Toast.LENGTH_SHORT).show();
+        afterSaleStatusPresenter.request(logUser.getUserId(), id);
 //        height = display.getHeight();
 //        mImgActivityAftersaleFanhui = (ImageView) findViewById(R.id.img_activity_aftersale_fanhui);
 //        mToolbarActivityMyaccount = (Toolbar) findViewById(R.id.toolbar_activity_myaccount);
@@ -153,32 +144,6 @@ public class AfterSaleActivity extends BaseActivtiy implements CustomAdapt {
         //如果不设置WebViewClient，请求会跳转系统浏览器
         webView.canGoBack();
         webView.goBack();
-        webView.setWebViewClient(new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                //该方法在Build.VERSION_CODES.LOLLIPOP以前有效，从Build.VERSION_CODES.LOLLIPOP起，建议使用shouldOverrideUrlLoading(WebView, WebResourceRequest)} instead
-                //返回false，意味着请求过程里，不管有多少次的跳转请求（即新的请求地址），均交给webView自己处理，这也是此方法的默认处理
-                //返回true，说明你自己想根据url，做新的跳转，比如在判断url符合条件的情况下，我想让webView加载http://ask.csdn.net/questions/178242
-                if (url.toString().contains("sina.cn")) {
-                    webView.loadUrl("https://www.yikch.com/mobile/afterSale/lookSaleApply?detailsId=" + id + "&mobile=" + mobile + "&password=" + pwd + "&android");
-                    return true;
-                }
-                return false;
-            }
-
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                //返回false，意味着请求过程里，不管有多少次的跳转请求（即新的请求地址），均交给webView自己处理，这也是此方法的默认处理
-                //返回true，说明你自己想根据url，做新的跳转，比如在判断url符合条件的情况下，我想让webView加载http://ask.csdn.net/questions/178242
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    if (request.getUrl().toString().contains("sina.cn")) {
-                        webView.loadUrl("https://www.yikch.com/mobile/afterSale/lookSaleApply?detailsId=" + id + "&mobile=" + mobile + "&password=" + pwd + "&android");
-                        return true;
-                    }
-                }
-                return false;
-            }
-        });
         webView.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -200,7 +165,6 @@ public class AfterSaleActivity extends BaseActivtiy implements CustomAdapt {
         });
         webView.getSettings().setJavaScriptEnabled(true);
         webView.addJavascriptInterface(this, "ww");
-        webView.loadUrl("https://www.yikch.com/mobile/afterSale/lookSaleApply?detailsId=" + id + "&mobile=" + mobile + "&password=" + pwd + "&android");
     }
 
 
@@ -231,16 +195,19 @@ public class AfterSaleActivity extends BaseActivtiy implements CustomAdapt {
     }
 
     @JavascriptInterface
-    public void uploadRefundToAndroid() {
+    public void uploadChangeToAndroid() {
         startActivityForResult(new Intent(AfterSaleActivity.this, PhotoActivity.class), 1000);
+    }
+
+    @JavascriptInterface
+    public void goBackAndroid(String msg) {
+        finish();
     }
 
     @JavascriptInterface
     public void payMoneyToApp(String msg) {
         s += msg + ",";
         String[] split = s.split(",");
-        Toast.makeText(this, "" + split.length, Toast.LENGTH_SHORT).show();
-        Toast.makeText(this, "" + msg, Toast.LENGTH_SHORT).show();
         if (split.length == 2) {
             Intent intent = new Intent(AfterSaleActivity.this, BarterPayActivity.class);
             String id = split[0];
@@ -250,6 +217,56 @@ public class AfterSaleActivity extends BaseActivtiy implements CustomAdapt {
             startActivity(intent);
             s = "";
         }
+
+    }
+
+    @Override
+    public void success(Object data) {
+        Request request = (Request) data;
+        final String stitu = (String) request.getEntity();
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                //该方法在Build.VERSION_CODES.LOLLIPOP以前有效，从Build.VERSION_CODES.LOLLIPOP起，建议使用shouldOverrideUrlLoading(WebView, WebResourceRequest)} instead
+                //返回false，意味着请求过程里，不管有多少次的跳转请求（即新的请求地址），均交给webView自己处理，这也是此方法的默认处理
+                //返回true，说明你自己想根据url，做新的跳转，比如在判断url符合条件的情况下，我想让webView加载http://ask.csdn.net/questions/178242
+                if (url.toString().contains("sina.cn")) {
+                    if (stitu.equals("0")) {
+                        webView.loadUrl("https://www.yikch.com/mobile/afterSale/applyChange?detailsId=" + id + "&mobile=" + mobile + "&password=" + pwd + "&type=android");
+                    } else {
+                        webView.loadUrl("https://www.yikch.com/mobile/afterSale/lookSaleApply?detailsId=" + id + "&mobile=" + mobile + "&password=" + pwd + "&type=android");
+                    }
+                    return true;
+                }
+                return false;
+            }
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                //返回false，意味着请求过程里，不管有多少次的跳转请求（即新的请求地址），均交给webView自己处理，这也是此方法的默认处理
+                //返回true，说明你自己想根据url，做新的跳转，比如在判断url符合条件的情况下，我想让webView加载http://ask.csdn.net/questions/178242
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    if (request.getUrl().toString().contains("sina.cn")) {
+                        if (stitu.equals("0")) {
+                            webView.loadUrl("https://www.yikch.com/mobile/afterSale/applyChange?detailsId=" + id + "&mobile=" + mobile + "&password=" + pwd + "&type=android");
+                        } else {
+                            webView.loadUrl("https://www.yikch.com/mobile/afterSale/lookSaleApply?detailsId=" + id + "&mobile=" + mobile + "&password=" + pwd + "&type=android");
+                        }
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
+        if (stitu.equals("0")) {
+            webView.loadUrl("https://www.yikch.com/mobile/afterSale/applyChange?detailsId=" + id + "&mobile=" + mobile + "&password=" + pwd + "&type=android");
+        } else {
+            webView.loadUrl("https://www.yikch.com/mobile/afterSale/lookSaleApply?detailsId=" + id + "&mobile=" + mobile + "&password=" + pwd + "&type=android");
+        }
+    }
+
+    @Override
+    public void fail(ApiException e) {
 
     }
 }

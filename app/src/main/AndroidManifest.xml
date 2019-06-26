@@ -2,11 +2,35 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.yikangcheng.admin.yikang">
-
+    <!-- Required -->
+    <permission
+        android:name="com.yikangcheng.admin.yikang.permission.JPUSH_MESSAGE"
+        android:protectionLevel="signature" /> <!-- Required  一些系统要求的权限，如访问网络等 -->
+    <uses-permission android:name="com.yikangcheng.admin.yikang.permission.JPUSH_MESSAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission
+        android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission
+        android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- Optional for location -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /> <!-- 用于开启 debug 版本的应用在6.0 系统上 层叠窗口权限 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission
         android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
         tools:ignore="ProtectedPermissions" />
@@ -19,7 +43,11 @@
         android:roundIcon="@mipmap/appbg"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.SeleGoodActivity"></activity>
+        <activity android:name=".activity.h5activity.InsideActivity"></activity>
+        <activity android:name=".activity.seek.SeckillActivity" />
+        <activity android:name=".activity.particulars.GoodParticularsActivity" />
+        <activity android:name=".activity.particulars.CustomParticularActivity" />
+        <activity android:name=".activity.SeleGoodActivity" />
         <activity android:name=".activity.BarterPayActivity" />
         <activity android:name=".activity.BarterActivity" />
         <activity android:name=".activity.PhotoActivity" />
@@ -35,7 +63,6 @@
         <activity android:name=".activity.orderstatus.CloseTheDealActivity" />
         <activity android:name=".activity.SelectCouponActivity" />
         <activity android:name=".activity.coupon.CouponActivity" />
-        <activity android:name=".activity.SearchListActivity" />
         <activity android:name=".activity.CustomerActivity" />
         <activity android:name=".activity.SystemActivity" />
         <activity android:name=".activity.OrderFormActivity" />
@@ -43,13 +70,13 @@
         <activity android:name=".activity.siteactivity.AiteActivity" />
         <activity android:name=".activity.ApoutUsActivity" />
         <activity android:name=".activity.WuliuXinxiActivity" />
-        <activity android:name=".activity.FaddishActivity" />
         <activity
             android:name=".activity.CloseActivity"
             android:launchMode="singleTask" />
         <activity android:name=".activity.MessageActivity" />
         <activity android:name=".activity.ConfirmActivity" />
         <activity android:name=".activity.SeekListActivity" />
+        <activity android:name=".activity.SeekListNewActivity" />
         <activity
             android:name=".activity.orderstatus.FackOfActivity"
             tools:ignore="DuplicateActivity" />
@@ -60,7 +87,9 @@
             android:name=".activity.RegisterActivity"
             android:launchMode="singleTask" />
         <activity android:name=".activity.myaccount.MyaccountActivity" />
-        <activity android:name=".activity.WelcomeActivity">
+        <activity
+            android:name=".activity.WelcomeActivity"
+            android:theme="@style/AppTheme.StartingWindowTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -74,9 +103,12 @@
         <meta-data
             android:name="design_height_in_dp"
             android:value="640" />
-
-        <activity android:name=".activity.SeckillSecondActivity" />
-
+        <meta-data
+            android:name="JPUSH_CHANNEL"
+            android:value="developer-default" />
+        <meta-data
+            android:name="JPUSH_APPKEY"
+            android:value="96c1e5c685835f94d4a0e3a0" /> <!-- </>值来自开发者平台取得的AppKey -->
         <service android:name=".activity.orderstatus.countdown.ClockService" />
 
         <activity
@@ -101,22 +133,12 @@
             tools:ignore="DuplicateActivity" />
         <activity
             android:name=".activity.obligation.ObligationActivity"
-            tools:ignore="DuplicateActivity" />
-        <activity
-            android:name=".activity.myaccount.NicknameActivity"
-            tools:ignore="DuplicateActivity" />
-        <activity
-            android:name=".activity.myaccount.NameActivity"
-            tools:ignore="DuplicateActivity" />
-        <activity
-            android:name=".activity.myaccount.PhoneActivity"
+            android:launchMode="singleTask"
             tools:ignore="DuplicateActivity" />
         <activity
             android:name=".activity.myaccount.IntroActivity"
             tools:ignore="DuplicateActivity" />
-        <activity
-            android:name=".activity.orderstatus.WaitForpaymentActivity"
-            tools:ignore="DuplicateActivity" />
+        <activity android:name=".activity.orderstatus.WaitForpaymentActivity" />
         <activity
             android:name=".activity.obligation.PaidActivity"
             tools:ignore="DuplicateActivity" />
@@ -158,6 +180,98 @@
             <intent-filter>
                 <action android:name="android.intent.action.DOWNLOAD_NOTIFICATION_CLICKED" />
                 <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
+            </intent-filter>
+        </receiver> <!-- 推送功能配置 -->
+        <!-- Rich push 核心功能 since 2.0.6 -->
+        <activity
+            android:name="cn.jpush.android.ui.PopWinActivity"
+            android:exported="false"
+            android:theme="@style/MyDialogStyle" /> <!-- Required SDK核心功能 -->
+        <activity
+            android:name="cn.jpush.android.ui.PushActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:exported="false"
+            android:theme="@android:style/Theme.NoTitleBar">
+            <intent-filter>
+                <action android:name="cn.jpush.android.ui.PushActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="com.yikangcheng.admin.yikang" />
+            </intent-filter>
+        </activity> <!-- Required SDK 核心功能 -->
+        <!-- 可配置android:process参数将PushService放在其他进程中 -->
+        <service
+            android:name="cn.jpush.android.service.PushService"
+            android:exported="false"
+            android:process=":pushcore">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.REGISTER" />
+                <action android:name="cn.jpush.android.intent.REPORT" />
+                <action android:name="cn.jpush.android.intent.PushService" />
+                <action android:name="cn.jpush.android.intent.PUSH_TIME" />
+            </intent-filter>
+        </service> <!-- since 3.0.9 Required SDK 核心功能 -->
+        <provider
+            android:name="cn.jpush.android.service.DataProvider"
+            android:authorities="com.yikangcheng.admin.yikang.DataProvider"
+            android:exported="false"
+            android:process=":pushcore" /> <!-- since 1.8.0 option 可选项。用于同一设备中不同应用的JPush服务相互拉起的功能。 -->
+        <!-- 若不启用该功能可删除该组件，将不拉起其他应用也不能被其他应用拉起 -->
+        <service
+            android:name="cn.jpush.android.service.DaemonService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.DaemonService" />
+
+                <category android:name="com.yikangcheng.admin.yikang" />
+            </intent-filter>
+        </service> <!-- since 3.1.0 Required SDK 核心功能 -->
+        <provider
+            android:name="cn.jpush.android.service.DownloadProvider"
+            android:authorities="com.yikangcheng.admin.yikang.DownloadProvider"
+            android:exported="true" /> <!-- Required SDK核心功能 -->
+        <receiver
+            android:name="cn.jpush.android.service.PushReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter android:priority="1000">
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" /> <!-- Required  显示通知栏 -->
+                <category android:name="com.yikangcheng.admin.yikang" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+            <!-- Optional -->
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver> <!-- Required SDK核心功能 -->
+        <receiver
+            android:name="cn.jpush.android.service.AlarmReceiver"
+            android:exported="false" /> <!-- User defined.  For test only  用户自定义的广播接收器 -->
+        <receiver
+            android:name=".activity.Jpush.MyReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.REGISTRATION" /> <!-- Required  用户注册SDK的intent -->
+                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" /> <!-- Required  用户接收SDK消息的intent -->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" /> <!-- Required  用户接收SDK通知栏信息的intent -->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" /> <!-- Required  用户打开自定义通知栏的intent -->
+                <action android:name="cn.jpush.android.intent.CONNECTION" /> <!-- 接收网络变化 连接/断开 since 1.6.3 -->
+                <category android:name="com.yikangcheng.admin.yikang" />
+            </intent-filter>
+        </receiver> <!-- User defined.  For test only  用户自定义接收消息器,3.0.7开始支持,目前新tag/alias接口设置结果会在该广播接收器对应的方法中回调 -->
+        <receiver android:name=".activity.Jpush.MyJPushMessageReceiver">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.RECEIVE_MESSAGE" />
+
+                <category android:name="com.yikangcheng.admin.yikang" />
             </intent-filter>
         </receiver>
     </application>

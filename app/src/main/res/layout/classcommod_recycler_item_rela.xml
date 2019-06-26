@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_marginBottom="5dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/moblie_editext_5_shape_left">
+
+
+    <ImageView
+        android:id="@+id/good_img"
+        android:layout_width="95dp"
+        android:layout_height="95dp"
+        android:scaleType="fitXY"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="15dp" />
+
+    <TextView
+        android:id="@+id/good_title"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="10dp"
+        android:layout_toRightOf="@+id/good_img"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textColor="#333333"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/good_count"
+        android:layout_width="198dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/good_title"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
+        android:layout_toRightOf="@+id/good_img"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textColor="#ff999999"
+        android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/good_count"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/good_img"
+        android:textColor="#ffff4e4e"
+        android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/yuanprice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/price"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@id/good_img"
+        android:textColor="#ff999999"
+        android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/buy_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/price"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/yuanprice"
+        android:textColor="#ff999999"
+        android:textSize="10sp" />
+
+    <ImageView
+        android:layout_width="13dp"
+        android:layout_height="13dp"
+        android:layout_below="@id/price"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="25dp"
+        android:background="@drawable/gouwuche" />
+</RelativeLayout>

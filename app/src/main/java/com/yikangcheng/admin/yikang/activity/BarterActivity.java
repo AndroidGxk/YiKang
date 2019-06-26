@@ -1,10 +1,8 @@
 package com.yikangcheng.admin.yikang.activity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -17,14 +15,21 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.yikangcheng.admin.yikang.R;
+import com.yikangcheng.admin.yikang.base.BaseActivtiy;
+import com.yikangcheng.admin.yikang.bean.UserDetailBean;
+import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
 /**
  * 退货
  */
-public class BarterActivity extends AppCompatActivity {
+public class BarterActivity extends BaseActivtiy {
     private String path;
     int count = 1;
     private WebView webView;
+    private String pwd;
+    private long mobile;
+    private int id;
+    private UserDetailBean logUser;
 
     /**
      * 回传值
@@ -52,12 +57,17 @@ public class BarterActivity extends AppCompatActivity {
         }
     }
 
-    @SuppressLint("JavascriptInterface")
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_barter);
-        webView = findViewById(R.id.webView);
+    protected void initView() {
+        StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        webView = (WebView) findViewById(R.id.webView);
+        Intent intent = getIntent();
+        SharedPreferences userId = getSharedPreferences("userInfo", MODE_PRIVATE);
+        pwd = userId.getString("pwd", "");
+        logUser = getUserInfo(this);
+        mobile = logUser.getMobile();
+        //商品流水Id
+        id = intent.getIntExtra("id", 00);
         WebSettings webSettings = webView.getSettings();
         //设置WebView属性，能够执行Javascript脚本
         webSettings.setJavaScriptEnabled(true);
@@ -77,7 +87,7 @@ public class BarterActivity extends AppCompatActivity {
                 //返回false，意味着请求过程里，不管有多少次的跳转请求（即新的请求地址），均交给webView自己处理，这也是此方法的默认处理
                 //返回true，说明你自己想根据url，做新的跳转，比如在判断url符合条件的情况下，我想让webView加载http://ask.csdn.net/questions/178242
                 if (url.toString().contains("sina.cn")) {
-                    webView.loadUrl("http://192.168.0.137/mobile/afterSale/applyRefund?detailsId=315&mobile=15210597177&password=111111&android");
+                    webView.loadUrl("https://www.yikch.com/mobile/afterSale/applyRefund?detailsId=" + id + "&mobile=" + mobile + "&password=" + pwd + "&type=android");
                     return true;
                 }
                 return false;
@@ -89,7 +99,7 @@ public class BarterActivity extends AppCompatActivity {
                 //返回true，说明你自己想根据url，做新的跳转，比如在判断url符合条件的情况下，我想让webView加载http://ask.csdn.net/questions/178242
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     if (request.getUrl().toString().contains("sina.cn")) {
-                        webView.loadUrl("http://192.168.0.137/mobile/afterSale/applyRefund?detailsId=315&mobile=15210597177&password=111111&android");
+                        webView.loadUrl("https://www.yikch.com/mobile/afterSale/applyRefund?detailsId=" + id + "&mobile=" + mobile + "&password=" + pwd + "&type=android");
                         return true;
                     }
                 }
@@ -117,11 +127,30 @@ public class BarterActivity extends AppCompatActivity {
         });
         webView.getSettings().setJavaScriptEnabled(true);
         webView.addJavascriptInterface(this, "ww");
-        webView.loadUrl("http://192.168.0.137/mobile/afterSale/applyRefund?detailsId=315&mobile=15210597177&password=111111&android");
+        webView.loadUrl("https://www.yikch.com/mobile/afterSale/applyRefund?detailsId=" + id + "&mobile=" + mobile + "&password=" + pwd + "&type=android");
+    }
+
+    @Override
+    protected void initEventData() {
+
+    }
+
+    @Override
+    protected int getActivtiyLayoutId() {
+        return R.layout.activity_barter;
+    }
+
+    @Override
+    protected void createPresenter() {
+
     }
 
     @JavascriptInterface
-    public void uploadChangeToAndroid() {
+    public void goBackAndroid(String msg) {
+        finish();
+    }
+    @JavascriptInterface
+    public void uploadRefundToAndroid() {
         startActivityForResult(new Intent(BarterActivity.this, PhotoActivity.class), 1000);
     }
 }

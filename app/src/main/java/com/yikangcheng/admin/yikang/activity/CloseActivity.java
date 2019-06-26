@@ -3,7 +3,9 @@ package com.yikangcheng.admin.yikang.activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -36,6 +38,7 @@ import com.yikangcheng.admin.yikang.presenter.AllAddressPresenter;
 import com.yikangcheng.admin.yikang.presenter.OrderBuyArrayPresenter;
 import com.yikangcheng.admin.yikang.presenter.OrderBuyPresenter;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
+import com.yikangcheng.admin.yikang.util.TwoBallRotationProgressBar;
 import com.yikangcheng.admin.yikang.util.UIUtils;
 
 import java.util.ArrayList;
@@ -113,6 +116,7 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
     private int s_invoiceInt = 1;
     private String mGood_type = "1";
     private TextView text;
+    private TwoBallRotationProgressBar progress;
 
     /**
      * 回传值
@@ -149,7 +153,10 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
     protected void initView() {
         //获取Ip地址
         ipAddressString = UIUtils.getIpAddressString();
-
+        SharedPreferences close = getSharedPreferences("close", MODE_PRIVATE);
+        SharedPreferences.Editor edit = close.edit();
+        edit.putBoolean("close", true);
+        edit.commit();
         Fragment_Gou.getSign();
         //创建对象
         promptDialog = new PromptDialog(this);
@@ -169,6 +176,8 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
         rela2 = (RelativeLayout) findViewById(R.id.rela2);
         back_img = (ImageView) findViewById(R.id.back_img);
         rela3 = (RelativeLayout) findViewById(R.id.rela3);
+        //进度条
+        progress = (TwoBallRotationProgressBar) findViewById(R.id.progress);
         user_name = (TextView) findViewById(R.id.user_name);
         user_phone = (TextView) findViewById(R.id.user_phone);
         text = (TextView) findViewById(R.id.text);
@@ -493,6 +502,13 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
 
     @Override
     protected void initEventData() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                progress.setVisibility(View.GONE);
+                progress.stopAnimator();
+            }
+        }, 1500);
         /**
          * 选择支付方式
          */
@@ -543,6 +559,15 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
             }
         });
 
+        /**
+         * 进度条
+         */
+        progress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                return;
+            }
+        });
         /**
          * 开发票
          */
@@ -643,9 +668,28 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
                 intent.putExtras(bundle);
                 startActivity(intent);
                 promptDialog.dismiss();
+                SharedPreferences close = getSharedPreferences("close", MODE_PRIVATE);
+                SharedPreferences.Editor edit = close.edit();
+                edit.putBoolean("close", true);
+                edit.putBoolean("closes", true);
+                edit.commit();
+                finish();
+                Fragment_Gou.getRequest();
+                if (PartiCarActivity.class != null) {
+                    PartiCarActivity.getRequest();
+                }
             } else {
-                Toast.makeText(CloseActivity.this, "" + request.getMessage(), Toast.LENGTH_SHORT).show();
                 promptDialog.dismiss();
+                Toast.makeText(CloseActivity.this, "" + request.getMessage(), Toast.LENGTH_SHORT).show();
+                SharedPreferences close = getSharedPreferences("close", MODE_PRIVATE);
+                SharedPreferences.Editor edit = close.edit();
+                edit.putBoolean("close", true);
+                edit.putBoolean("closes", true);
+                edit.commit();
+                Fragment_Gou.getRequest();
+                if (PartiCarActivity.class != null) {
+                    PartiCarActivity.getRequest();
+                }
             }
         }
 

@@ -13,6 +13,7 @@ import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.orderstatus.WaitForpaymentActivity;
 import com.yikangcheng.admin.yikang.app.Constants;
 import com.yikangcheng.admin.yikang.bean.CloseTheDealBean;
+import com.yikangcheng.admin.yikang.bean.WaliDealBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,11 +23,11 @@ import java.util.List;
  * WF
  */
 public class WaitForPaymentAdapter extends RecyclerView.Adapter {
-    public   ArrayList<CloseTheDealBean.DetailsListBean> mList;
-    private  WaitForpaymentActivity mContent;
+    public ArrayList<WaliDealBean.DetailsListBean> mList;
+    private WaitForpaymentActivity mContent;
     private OnClickListener mListener;
 
-    public WaitForPaymentAdapter(ArrayList<CloseTheDealBean.DetailsListBean> mShopSpecDetailedBeans, WaitForpaymentActivity waitForpaymentActivity) {
+    public WaitForPaymentAdapter(ArrayList<WaliDealBean.DetailsListBean> mShopSpecDetailedBeans, WaitForpaymentActivity waitForpaymentActivity) {
         this.mList = mShopSpecDetailedBeans;
         this.mContent = waitForpaymentActivity;
     }
@@ -45,13 +46,15 @@ public class WaitForPaymentAdapter extends RecyclerView.Adapter {
         holder1.mName.setText(mList.get(position).getShopSpecDetailed().getCommodityName());
         holder1.mNum.setText("X" + mList.get(position).getBuyNum());
         holder1.mTitle.setText(mList.get(position).getShopSpecDetailed().getSpecNames());
-        holder1.mPrice.setText(mList.get(position).getShopSpecDetailed().getRetailPrice() + "");
+        holder1.mPrice.setText(+mList.get(position).getShopSpecDetailed().getRetailPrice() + "");
         holder1.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mListener.OnClickListener(v, position);
             }
         });
+        holder1.mShousou.setVisibility(View.GONE);
+        holder1.look_log.setVisibility(View.GONE);
     }
 
     @Override
@@ -59,7 +62,7 @@ public class WaitForPaymentAdapter extends RecyclerView.Adapter {
         return mList.size();
     }
 
-    public void addAll(List<CloseTheDealBean.DetailsListBean> detailsList) {
+    public void addAll(List<WaliDealBean.DetailsListBean> detailsList) {
         mList.addAll(detailsList);
         notifyDataSetChanged();
     }
@@ -72,6 +75,7 @@ public class WaitForPaymentAdapter extends RecyclerView.Adapter {
         private TextView mPrice;
         private TextView mNum;
         private TextView mShousou;
+        private TextView look_log;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -81,6 +85,7 @@ public class WaitForPaymentAdapter extends RecyclerView.Adapter {
             mPrice = itemView.findViewById(R.id.tv_item_closethedeal_price);
             mNum = itemView.findViewById(R.id.tv_num);
             mShousou = itemView.findViewById(R.id.tv_item_closethedeal_shouhou);
+            look_log = itemView.findViewById(R.id.look_log);
         }
     }
 
@@ -91,4 +96,5 @@ public class WaitForPaymentAdapter extends RecyclerView.Adapter {
     public void setOnClickListener(OnClickListener listener) {
         this.mListener = listener;
     }
+
 }

@@ -29,7 +29,7 @@ public class All_B_Adapter extends RecyclerView.Adapter {
 
     public All_B_Adapter(Context content, List<ALLBean.OrderBean.OrderDetailsListBean> orderDetailsList) {
         this.mContent = content;
-        this.mList=orderDetailsList;
+        this.mList = orderDetailsList;
     }
 
     @NonNull
@@ -42,7 +42,11 @@ public class All_B_Adapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ViewHolder holder1 = (ViewHolder) holder;
-        Glide.with(mContent).load(Constants.BASETUPIANSHANGCHUANURL + mList.get(position).getShopImg()).into(holder1.mImg);
+        if (mList.get(position).getShopImg().contains("https://") || mList.get(position).getShopImg().contains("http://")) {
+            Glide.with(mContent).load(mList.get(position).getShopImg()).into(holder1.mImg);
+        } else {
+            Glide.with(mContent).load(Constants.BASETUPIANSHANGCHUANURL + mList.get(position).getShopImg()).into(holder1.mImg);
+        }
         holder1.mName.setText(mList.get(position).getShopName());
         holder1.mTitle.setText(mList.get(position).getSpecNames());
         holder1.mNum.setText("X" + mList.get(position).getBuyNum() + "");
@@ -52,7 +56,7 @@ public class All_B_Adapter extends RecyclerView.Adapter {
             @Override
             public void onClick(View v) {
                 int orderId = mList.get(position).getOrderId();
-                mListener.OnClickListener(v,orderId);
+                mListener.OnClickListener(v, orderId);
             }
         });
 
@@ -66,11 +70,11 @@ public class All_B_Adapter extends RecyclerView.Adapter {
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        private  ImageView mImg;
-        private  TextView mName;
-        private  TextView mTitle;
-        private  TextView mPrice;
-        private  TextView mNum;
+        private ImageView mImg;
+        private TextView mName;
+        private TextView mTitle;
+        private TextView mPrice;
+        private TextView mNum;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -85,7 +89,8 @@ public class All_B_Adapter extends RecyclerView.Adapter {
     public interface OnClickListener {
         void OnClickListener(View v, int orderId);
     }
-    public void setOnClickListener(OnClickListener listener){
-        this.mListener=listener;
+
+    public void setOnClickListener(OnClickListener listener) {
+        this.mListener = listener;
     }
 }

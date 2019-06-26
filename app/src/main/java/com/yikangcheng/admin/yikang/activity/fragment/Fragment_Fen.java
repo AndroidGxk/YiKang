@@ -9,7 +9,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.yikangcheng.admin.yikang.R;
-import com.yikangcheng.admin.yikang.activity.SeekListActivity;
+import com.yikangcheng.admin.yikang.activity.SeekListNewActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.FenLeiAdapter;
 import com.yikangcheng.admin.yikang.activity.adapter.FenLeiBAdapter;
 import com.yikangcheng.admin.yikang.activity.seek.SeekActivity;
@@ -22,10 +22,10 @@ import com.yikangcheng.admin.yikang.presenter.ClassifyPresenter;
 
 import java.util.List;
 
-import me.jessyan.autosize.internal.CustomAdapt;
+import me.jessyan.autosize.AutoSizeConfig;
 import me.leefeng.promptlibrary.PromptDialog;
 
-public class Fragment_Fen extends BaseFragment implements ICoreInfe{
+public class Fragment_Fen extends BaseFragment implements ICoreInfe {
     private RecyclerView mRlvFragmentFenleiYou;
     private RecyclerView mRlvFragmentFenleiZuo;
     private FenLeiAdapter mFenLeiAdapter;
@@ -36,16 +36,19 @@ public class Fragment_Fen extends BaseFragment implements ICoreInfe{
     private int height;
     private PromptDialog promptDialog;
     private TextView text_seek;
+    private int width;
 
     @Override
     protected void initView(View view) {
+        AutoSizeConfig.getInstance().setCustomFragment(true);
         //创建对象
         promptDialog = new PromptDialog(getActivity());
         //设置自定义属性
         promptDialog.getDefaultBuilder().touchAble(true).round(1).loadingDuration(1000);
         WindowManager wm = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
         height = wm.getDefaultDisplay().getHeight();
-        promptDialog.showLoading("正在加载");
+        width = wm.getDefaultDisplay().getWidth();
+        promptDialog.showLoading("加载中...");
         mRlvFragmentFenleiYou = view.findViewById(R.id.rlv__fragment_fenlei_you);
         text_seek = view.findViewById(R.id.text_seek);
         mRlvFragmentFenleiZuo = view.findViewById(R.id.rlv__fragment_fenlei_zuo);
@@ -66,13 +69,13 @@ public class Fragment_Fen extends BaseFragment implements ICoreInfe{
             public void onClick(int position) {
                 mFenLeiBAdapter.removeAll();
                 mFenLeiBAdapter.addData(entity.get(position).getChildSubjectList());
-                mRlvFragmentFenleiYou.smoothScrollToPosition(0);
+                mRlvFragmentFenleiYou.scrollToPosition(0);
             }
         });
         mFenLeiBAdapter.setOnClickListener(new FenLeiBAdapter.onClickListener() {
             @Override
             public void onClick(int id) {
-                Intent intent = new Intent(getContext(), SeekListActivity.class);
+                Intent intent = new Intent(getContext(), SeekListNewActivity.class);
                 intent.putExtra("id", id);
                 startActivity(intent);
             }
@@ -106,6 +109,6 @@ public class Fragment_Fen extends BaseFragment implements ICoreInfe{
 
     @Override
     public void fail(ApiException e) {
-
+        promptDialog.showError("加载失败");
     }
 }

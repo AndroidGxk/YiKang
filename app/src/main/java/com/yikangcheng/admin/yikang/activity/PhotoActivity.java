@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -14,7 +13,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.yikangcheng.admin.yikang.R;
-import com.yikangcheng.admin.yikang.activity.fragment.wodezhanghu.BasicFragment;
 import com.yikangcheng.admin.yikang.app.BaseApp;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
@@ -22,6 +20,7 @@ import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
 import com.yikangcheng.admin.yikang.presenter.GoswfPresenter;
 import com.yikangcheng.admin.yikang.util.CropUtils;
 import com.yikangcheng.admin.yikang.util.FileUtil;
+import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
 import java.io.File;
 
@@ -43,6 +42,7 @@ public class PhotoActivity extends BaseActivtiy {
 
     @Override
     protected void initView() {
+        StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
         //创建对象
         promptDialog = new PromptDialog(PhotoActivity.this);
         //设置自定义属性
@@ -142,8 +142,6 @@ public class PhotoActivity extends BaseActivtiy {
         intent.putExtra("crop", "true");// crop=true 有这句才能出来最后的裁剪页面.
         intent.putExtra("aspectX", 1);// 这两项为裁剪框的比例.
         intent.putExtra("aspectY", 1);// x:y=1:1
-//        intent.putExtra("outputX", 400);//图片输出大小
-//        intent.putExtra("outputY", 400);
         intent.putExtra("output", Uri.fromFile(file));
         intent.putExtra("outputFormat", "JPEG");// 返回格式
         startActivityForResult(intent, REQUEST_CODE_CROUP_PHOTO);
@@ -154,11 +152,8 @@ public class PhotoActivity extends BaseActivtiy {
         switch (requestCode) {
             case 1:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    //这里已经获取到了摄像头的权限，想干嘛干嘛了可以
                     uploadAvatarFromPhotoRequest();
                 } else {
-                    //这里是拒绝给APP摄像头权限，给个提示什么的说明一下都可以
-                    // 。
                     if (ContextCompat.checkSelfPermission(PhotoActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ||
                             ContextCompat.checkSelfPermission(PhotoActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
                     ) {

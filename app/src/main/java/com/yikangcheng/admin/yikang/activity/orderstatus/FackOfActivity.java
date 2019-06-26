@@ -1,6 +1,7 @@
 package com.yikangcheng.admin.yikang.activity.orderstatus;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Display;
@@ -15,16 +16,19 @@ import com.sobot.chat.api.model.Information;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.adapter.FackOfAdapter_A;
 import com.yikangcheng.admin.yikang.activity.copy.CopyButtonLibrary;
+import com.yikangcheng.admin.yikang.activity.particulars.ParticularsActivity;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.CloseTheDealBean;
 import com.yikangcheng.admin.yikang.bean.DeleteOrderBean;
 import com.yikangcheng.admin.yikang.bean.Request;
+import com.yikangcheng.admin.yikang.bean.WaliDealBean;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
 import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
 import com.yikangcheng.admin.yikang.presenter.CloseTheDeallPresenter;
 import com.yikangcheng.admin.yikang.presenter.DeleteOrderIdPresenter;
 import com.yikangcheng.admin.yikang.util.SpacesItemDecoration;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
+import com.yikangcheng.admin.yikang.util.TwoBallRotationProgressBar;
 
 import java.util.ArrayList;
 
@@ -38,9 +42,6 @@ public class FackOfActivity extends BaseActivtiy implements ICoreInfe, CustomAda
     private RelativeLayout mToolbarActivityFackOf;
     private TextView mTvActivityFackOfName;
     private TextView mTvActivityFackOfProvinceStr;
-    private TextView mTvActivityFackOfCityStr;
-    private TextView mTvActivityFackOfTownStr;
-    private TextView mTvActivityFackOfAddress;
     private RecyclerView mRlvActivityFackOfShangPin;
     private TextView mTvActivityFackOfBiaohao;
     private ImageView mImgActivityFackOfFzhi;
@@ -48,7 +49,7 @@ public class FackOfActivity extends BaseActivtiy implements ICoreInfe, CustomAda
     private TextView mTvActivityFackOfJinE;
     private TextView mTvActivityFackOfZhongJi;
     private TextView mTvActivityFackOfFangShi;
-    private TextView mTvActivityFackOfKeFu;
+    private RelativeLayout mTvActivityFackOfKeFu;
     private TextView mTvActivityFackOfFaPianLeiXing;
     private TextView mTvActivityFackOfNeiRong;
     private TextView mTvActivityFackOfShanchu;
@@ -59,6 +60,8 @@ public class FackOfActivity extends BaseActivtiy implements ICoreInfe, CustomAda
     private int mOrderId_fack;
     private int width;
     private PromptDialog mPromptDialog;
+    private TwoBallRotationProgressBar progress;
+    private RelativeLayout rela1, rela2;
 
     @Override
     protected void initView() {
@@ -66,23 +69,18 @@ public class FackOfActivity extends BaseActivtiy implements ICoreInfe, CustomAda
         mOrderId_fack = mIntent.getIntExtra("orderId_fack", 0);
         Display display = this.getWindowManager().getDefaultDisplay();
         width = display.getWidth();
-        int height = display.getHeight();
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
-
-
         //创建对象
         mPromptDialog = new PromptDialog(this);
         //设置自定义属性
         mPromptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(3000);
-
         mImgActivityFackOfFanhui = (ImageView) findViewById(R.id.img_activity_fack_of_fanhui);
         mToolbarActivityFackOf = (RelativeLayout) findViewById(R.id.toolbar_activity_fack_of);
+        rela1 = (RelativeLayout) findViewById(R.id.rela1);
+        rela2 = (RelativeLayout) findViewById(R.id.rela2);
         mTvActivityFackOfName = (TextView) findViewById(R.id.tv_activity_fack_of_name);
         mTvActivityFackOfProvinceStr = (TextView) findViewById(R.id.tv_activity_fack_of_provinceStr);
-        mTvActivityFackOfCityStr = (TextView) findViewById(R.id.tv_activity_fack_of_cityStr);
-        mTvActivityFackOfTownStr = (TextView) findViewById(R.id.tv_activity_fack_of_townStr);
-        mTvActivityFackOfAddress = (TextView) findViewById(R.id.tv_activity_fack_of_address);
 
         mRlvActivityFackOfShangPin = (RecyclerView) findViewById(R.id.rlv_activity_fack_of_shangPin);
         mTvActivityFackOfBiaohao = (TextView) findViewById(R.id.tv_activity_fack_of_biaohao);
@@ -91,10 +89,12 @@ public class FackOfActivity extends BaseActivtiy implements ICoreInfe, CustomAda
         mTvActivityFackOfJinE = (TextView) findViewById(R.id.tv_activity_fack_of_jinE);
         mTvActivityFackOfZhongJi = (TextView) findViewById(R.id.tv_activity_fack_of_zhongJi);
         mTvActivityFackOfFangShi = (TextView) findViewById(R.id.tv_activity_fack_of_fangShi);
-        mTvActivityFackOfKeFu = (TextView) findViewById(R.id.tv_activity_fack_of_keFu);
+        mTvActivityFackOfKeFu = (RelativeLayout) findViewById(R.id.tv_activity_fack_of_keFu);
         mTvActivityFackOfFaPianLeiXing = (TextView) findViewById(R.id.tv_activity_fack_of_FaPianLeiXing);
         mTvActivityFackOfNeiRong = (TextView) findViewById(R.id.tv_activity_fack_of_NeiRong);
         mTvActivityFackOfShanchu = (TextView) findViewById(R.id.tv_activity_fack_of_shanchu);
+        //进度条
+        progress = (TwoBallRotationProgressBar) findViewById(R.id.progress);
 
 
         //点击客服跳转页面
@@ -124,7 +124,7 @@ public class FackOfActivity extends BaseActivtiy implements ICoreInfe, CustomAda
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRlvActivityFackOfShangPin.setLayoutManager(linearLayoutManager);
-        ArrayList<CloseTheDealBean.DetailsListBean> mShopSpecDetailedBeans = new ArrayList<>();
+        ArrayList<WaliDealBean.DetailsListBean> mShopSpecDetailedBeans = new ArrayList<>();
         mFackOfAdapter_a = new FackOfAdapter_A(mShopSpecDetailedBeans, this);
         mRlvActivityFackOfShangPin.setAdapter(mFackOfAdapter_a);
 
@@ -133,21 +133,23 @@ public class FackOfActivity extends BaseActivtiy implements ICoreInfe, CustomAda
         mRlvActivityFackOfShangPin.setNestedScrollingEnabled(false);
 
 
+//        //详情
+//        mFackOfAdapter_a.setToGoodPritaul(new FackOfAdapter_A.toGoodPritaul() {
+//            @Override
+//            public void onclick(int id) {
+//                Intent intent = new Intent(FackOfActivity.this,ParticularsActivity.class);
+//                Toast.makeText(FackOfActivity.this, ""+id, Toast.LENGTH_SHORT).show();
+//                intent.putExtra("id", id);
+//                startActivity(intent);
+//            }
+//        });
         int spanCount_tuijian = 1; // 3 columns
         int spacing_tuijian = 5; // 50px
         boolean includeEdge_tuijian = false;
         mRlvActivityFackOfShangPin.addItemDecoration(new SpacesItemDecoration(spanCount_tuijian, spacing_tuijian, includeEdge_tuijian));
-        mFackOfAdapter_a.setOnClickListener(new FackOfAdapter_A.OnClickListener() {
-            @Override
-            public void OnClickListener(View v, int position) {
-                Toast.makeText(FackOfActivity.this, "售后", Toast.LENGTH_SHORT).show();
-            }
-        });
         //刪除訂單
         initDelete();
-
     }
-
 
     //點擊按鈕刪除訂單
     private void initDelete() {
@@ -187,6 +189,13 @@ public class FackOfActivity extends BaseActivtiy implements ICoreInfe, CustomAda
                 FackOfActivity.this.finish();
             }
         });
+
+        progress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                return;
+            }
+        });
     }
 
     @Override
@@ -223,16 +232,17 @@ public class FackOfActivity extends BaseActivtiy implements ICoreInfe, CustomAda
     @Override
     public void success(Object data) {
         Request request = (Request) data;
-        final CloseTheDealBean entity = (CloseTheDealBean) request.getEntity();
+        final WaliDealBean entity = (WaliDealBean) request.getEntity();
         mFackOfAdapter_a.addAll(entity.getDetailsList());
-
         //用户名
-        mTvActivityFackOfName.setText(entity.getUserAddress().getReceiver());
+        String receiver = entity.getOrderBook().getReceiver();
+        if (receiver == null || receiver.equals("")) {
+            mTvActivityFackOfName.setText("匿名");
+        } else {
+            mTvActivityFackOfName.setText(receiver);
+        }
         //地址
-        mTvActivityFackOfAddress.setText(entity.getUserAddress().getAddress());
-        mTvActivityFackOfCityStr.setText(entity.getUserAddress().getCityStr());
-        mTvActivityFackOfTownStr.setText(entity.getUserAddress().getTownStr());
-        mTvActivityFackOfProvinceStr.setText(entity.getUserAddress().getProvinceStr());
+        mTvActivityFackOfProvinceStr.setText(entity.getOrderBook().getAddress());
         //订单编号
         mTvActivityFackOfBiaohao.setText(entity.getOrder().getOrderNo());
         //运费
@@ -271,11 +281,26 @@ public class FackOfActivity extends BaseActivtiy implements ICoreInfe, CustomAda
         } else {
             mTvActivityFackOfNeiRong.setText("商品类别");
         }
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                progress.setVisibility(View.GONE);
+                progress.stopAnimator();
+                rela1.setVisibility(View.VISIBLE);
+                rela2.setVisibility(View.VISIBLE);
+            }
+        }, 500);
     }
 
     @Override
     public void fail(ApiException e) {
-
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                progress.setVisibility(View.GONE);
+                progress.stopAnimator();
+            }
+        }, 500);
     }
 
     @Override

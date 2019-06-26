@@ -13,6 +13,7 @@ import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.orderstatus.FackOfActivity;
 import com.yikangcheng.admin.yikang.app.Constants;
 import com.yikangcheng.admin.yikang.bean.CloseTheDealBean;
+import com.yikangcheng.admin.yikang.bean.WaliDealBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +24,9 @@ import java.util.List;
  */
 public class FackOfAdapter_A extends RecyclerView.Adapter {
     private FackOfActivity mContent;
-    public ArrayList<CloseTheDealBean.DetailsListBean> mList;
-    private OnClickListener mListener;
+    public ArrayList<WaliDealBean.DetailsListBean> mList;
 
-    public FackOfAdapter_A(ArrayList<CloseTheDealBean.DetailsListBean> mShopSpecDetailedBeans, FackOfActivity fackOfActivity) {
+    public FackOfAdapter_A(ArrayList<WaliDealBean.DetailsListBean> mShopSpecDetailedBeans, FackOfActivity fackOfActivity) {
         this.mList = mShopSpecDetailedBeans;
         this.mContent = fackOfActivity;
     }
@@ -46,15 +46,16 @@ public class FackOfAdapter_A extends RecyclerView.Adapter {
         holder1.mNum.setText("X" + mList.get(position).getBuyNum());
         holder1.mTitle.setText(mList.get(position).getShopSpecDetailed().getSpecNames());
         holder1.mPrice.setText(mList.get(position).getShopSpecDetailed().getRetailPrice() + "");
-
+        holder1.mShousou.setVisibility(View.GONE);
         holder1.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-
-                mListener.OnClickListener(v, position);
+            public void onClick(View view) {
+                if (toGoodPritaul != null) {
+                    toGoodPritaul.onclick(mList.get(position).getId());
+                }
             }
         });
-
+        holder1.look_log.setVisibility(View.GONE);
     }
 
     @Override
@@ -62,7 +63,7 @@ public class FackOfAdapter_A extends RecyclerView.Adapter {
         return mList.size();
     }
 
-    public void addAll(List<CloseTheDealBean.DetailsListBean> detailsList) {
+    public void addAll(List<WaliDealBean.DetailsListBean> detailsList) {
         this.mList.addAll(detailsList);
         notifyDataSetChanged();
     }
@@ -75,6 +76,7 @@ public class FackOfAdapter_A extends RecyclerView.Adapter {
         private TextView mPrice;
         private TextView mNum;
         private TextView mShousou;
+        private TextView look_log;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -84,14 +86,18 @@ public class FackOfAdapter_A extends RecyclerView.Adapter {
             mPrice = itemView.findViewById(R.id.tv_item_closethedeal_price);
             mNum = itemView.findViewById(R.id.tv_num);
             mShousou = itemView.findViewById(R.id.tv_item_closethedeal_shouhou);
+            look_log = itemView.findViewById(R.id.look_log);
         }
     }
 
-    public interface OnClickListener {
-        void OnClickListener(View v, int position);
+    toGoodPritaul toGoodPritaul;
+
+    public void setToGoodPritaul(FackOfAdapter_A.toGoodPritaul toGoodPritaul) {
+        this.toGoodPritaul = toGoodPritaul;
     }
 
-    public void setOnClickListener(OnClickListener listener) {
-        this.mListener = listener;
+    //详情
+    public interface toGoodPritaul {
+        void onclick(int id);
     }
 }

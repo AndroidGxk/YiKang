@@ -3,12 +3,14 @@ package com.yikangcheng.admin.yikang.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
@@ -95,12 +97,13 @@ public class LoginActivity extends BaseActivtiy implements CustomAdapt, ICoreInf
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
             finish();
         } else {
-            promptDialog.showError("登录失败");
+            promptDialog.showError(request.getMessage());
         }
     }
 
     @Override
     public void fail(ApiException e) {
+        Log.d("GTT", e.toString());
         promptDialog.showError("登录失败");
     }
 
@@ -112,18 +115,22 @@ public class LoginActivity extends BaseActivtiy implements CustomAdapt, ICoreInf
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-//           注册
+            //注册
             case R.id.reg_image:
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
                 break;
-//           登录
+            //登录
             case R.id.log_btn:
                 String phone = phone_edit.getText().toString();
                 String pwd = pwd_edit.getText().toString();
+                if (phone.equals("") || pwd.equals("")) {
+                    Toast.makeText(this, "账号或密码不能为空", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 loginPresenter.request(phone, pwd);
                 promptDialog.showLoading("正在登录");
                 break;
-//          忘记密码
+            //忘记密码
             case R.id.forget_pwd:
                 startActivity(new Intent(LoginActivity.this, FindPwdActivity.class));
                 break;

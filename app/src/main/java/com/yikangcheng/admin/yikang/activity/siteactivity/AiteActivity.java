@@ -3,6 +3,7 @@ package com.yikangcheng.admin.yikang.activity.siteactivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,6 +27,7 @@ import com.yikangcheng.admin.yikang.presenter.AllAddressPresenter;
 import com.yikangcheng.admin.yikang.presenter.DeleteAddressPresenter;
 import com.yikangcheng.admin.yikang.presenter.UpdateAddressPresenter;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
+import com.yikangcheng.admin.yikang.util.TwoBallRotationProgressBar;
 
 import java.util.List;
 
@@ -44,22 +46,21 @@ public class AiteActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
     private UpdateAddressPresenter updateAddressPresenter;
     private NestedScrollView nested;
     private DeleteAddressPresenter deleteAddressPresenter;
-    private View view;
     private int width;
     private String address = "";
     private PromptDialog promptDialog;
     private int mPosition;
     private int mId;
+    private TwoBallRotationProgressBar progress;
 
     @Override
     protected void initView() {
         Display display = this.getWindowManager().getDefaultDisplay();
         width = display.getWidth();
-        int height = display.getHeight();
         //创建对象
         promptDialog = new PromptDialog(this);
         //设置自定义属性
-        promptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(3000);
+        promptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(1000);
         Intent intent = getIntent();
         address = intent.getStringExtra("address");
         allAddressPresenter = new AllAddressPresenter(this);
@@ -70,12 +71,10 @@ public class AiteActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
         address_null = (ImageView) findViewById(R.id.address_null);
         new_address = (TextView) findViewById(R.id.new_address);
         add_address = (TextView) findViewById(R.id.add_address);
+        progress = (TwoBallRotationProgressBar) findViewById(R.id.progress);
         img_activity_aite_fanhui = (ImageView) findViewById(R.id.img_activity_aite_fanhui);
         nested = (NestedScrollView) findViewById(R.id.nested);
         text = (TextView) findViewById(R.id.text);
-        //删除弹框
-        view = View.inflate(this, R.layout.delete_popup_item, null);
-
         updateAddressPresenter = new UpdateAddressPresenter(new UpdateAddress());
         deleteAddressPresenter = new DeleteAddressPresenter(new UpdateAddress());
         mRlvActivityAite.setLayoutManager(new LinearLayoutManager(this));
@@ -84,10 +83,10 @@ public class AiteActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
         allAddressRecyclerAdapter.setOnClickListener(new AllAddressRecyclerAdapter.onClickListener() {
             @Override
             public void onClick(AllAddressBean.ListUserAddressBean listUserAddressBean) {
-                Log.d("address-------", listUserAddressBean.toString());
                 updateAddressPresenter.request(listUserAddressBean.getId(), getLogUser(AiteActivity.this).getId(),
                         listUserAddressBean.getReceiver(), listUserAddressBean.getMobile(), listUserAddressBean.getAddress(), 1,
                         listUserAddressBean.getProvinceId(), listUserAddressBean.getCityId(), listUserAddressBean.getTownId());
+                promptDialog.showLoading("加载中...");
             }
         });
         allAddressRecyclerAdapter.setSeleAddressOnClick(new AllAddressRecyclerAdapter.SeleAddressOnClick() {
@@ -137,7 +136,6 @@ public class AiteActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
          *  设置状态栏颜色
          */
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
-
         /**
          * 点击返回按钮关闭当前页面
          */
@@ -204,7 +202,12 @@ public class AiteActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
 
     @Override
     protected void initEventData() {
-
+        progress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                return;
+            }
+        });
     }
 
     @Override
@@ -237,6 +240,14 @@ public class AiteActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
         }
         allAddressRecyclerAdapter.removeAll();
         allAddressRecyclerAdapter.addAll(listUserAddress);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                progress.setVisibility(View.GONE);
+                progress.stopAnimator();
+            }
+        }, 500);
+
     }
 
     @Override
@@ -267,11 +278,12 @@ public class AiteActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
     private class UpdateAddress implements ICoreInfe {
         @Override
         public void success(Object data) {
+            promptDialog.dismiss();
         }
 
         @Override
         public void fail(ApiException e) {
-
+            promptDialog.dismiss();
         }
     }
 

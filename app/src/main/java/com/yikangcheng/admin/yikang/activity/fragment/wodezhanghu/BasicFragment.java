@@ -259,6 +259,10 @@ public class BasicFragment extends BaseFragment implements ICoreInfe {
                     if (path == null || path.equals("")) {
                         path = userCenter.getAvatar();
                     }
+                    if (name_str.equals("") || rela_name_str.equals("") || jianjie_str.equals("")||email.equals("")) {
+                        Toast.makeText(getContext(), "请完善信息", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     updateUserMapperPresenter.request(logUser.getId(), name_str, path, rela_name_str, email, sex, jianjie_str);
                     promptDialog.showLoading("正在保存");
                 }

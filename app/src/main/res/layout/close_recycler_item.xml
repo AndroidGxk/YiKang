@@ -9,8 +9,7 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginLeft="23dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/ce4" />
+        android:layout_marginTop="10dp"/>
 
     <TextView
         android:id="@+id/close_title"
@@ -22,7 +21,6 @@
         android:ellipsize="end"
         android:maxEms="18"
         android:singleLine="true"
-        android:text="韩国JM牛油果精油面膜男女急救补水保湿救补水保湿"
         android:textColor="#ff333333"
         android:textSize="13sp" />
 
@@ -34,7 +32,6 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_toRightOf="@+id/close_img"
-        android:text="规格：1件 10片"
         android:textColor="#ff333333"
         android:textSize="11sp" />
 
@@ -47,7 +44,6 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:layout_toRightOf="@+id/close_img"
-        android:text="¥85.00"
         android:textColor="#ffff0000"
         android:textSize="10sp" />
 
@@ -59,7 +55,6 @@
         android:layout_alignParentRight="true"
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
-        android:text="x1"
         android:textColor="#ff333333"
         android:textSize="11sp" />
 

@@ -69,8 +69,8 @@ public class AddSubLayout extends LinearLayout implements View.OnClickListener {
                 mNumText.setText(number + "");
                 break;
             case R.id.btn_sub:
-                if (number == 0) {
-                    Toast.makeText(getContext(), "数量不能小于0", Toast.LENGTH_LONG).show();
+                if (number == 1) {
+                    Toast.makeText(getContext(), "数量不能小于1", Toast.LENGTH_LONG).show();
                     return;
                 }
                 number--;

@@ -21,14 +21,14 @@
             android:textColor="#333333"
             android:textSize="15sp" />
 
-        <EditText
+        <TextView
             android:id="@+id/EditTixt_activity_seek_sousuo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="100dp"
-            android:layout_toLeftOf="@+id/moblie_text"
+            android:layout_marginLeft="50dp"
             android:background="@null"
+            android:gravity="center"
             android:hint="请输入手机号码"
             android:imeOptions="actionSearch"
             android:inputType="number"
@@ -36,19 +36,6 @@
             android:singleLine="true"
             android:textSize="13sp" />
 
-        <TextView
-            android:id="@+id/moblie_text"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:background="@drawable/text_item_shape"
-            android:gravity="center"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:text="获取短信验证码"
-            android:textColor="#FFFFFF"
-            android:textSize="12sp" />
 
     </RelativeLayout>
 
@@ -70,6 +57,7 @@
 
         <EditText
             android:id="@+id/set_moblie"
+            android:layout_toLeftOf="@+id/moblie_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
@@ -80,6 +68,20 @@
             android:inputType="number"
             android:singleLine="true"
             android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/moblie_text"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/text_item_shape"
+            android:gravity="center"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="获取短信验证码"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -136,7 +138,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="100dp"
             android:background="@null"
-            android:hint="请输入短信验证码"
+            android:hint="再次输入新密码"
             android:imeOptions="actionSearch"
             android:inputType="textPassword"
             android:singleLine="true"

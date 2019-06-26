@@ -1,7 +1,6 @@
 package com.yikangcheng.admin.yikang.activity.obligation;
 
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.Display;
 import android.view.View;
 import android.widget.ImageView;

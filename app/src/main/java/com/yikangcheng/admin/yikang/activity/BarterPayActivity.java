@@ -6,6 +6,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +23,7 @@ import com.yikangcheng.admin.yikang.model.http.ApiException;
 import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
 import com.yikangcheng.admin.yikang.paysdk.PayResult;
 import com.yikangcheng.admin.yikang.presenter.NewOrderPresenter;
+import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 import com.yikangcheng.admin.yikang.util.UIUtils;
 
 import java.util.Map;
@@ -40,14 +42,18 @@ public class BarterPayActivity extends BaseActivtiy implements ICoreInfe {
     private Double moneyDou;
     private String ipAddressString;
     private String type;
+    private ImageView back_img;
     private PayBean mEntity;
 
     @Override
     protected void initView() {
+        //设置状态栏颜色
+        StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
         //获取Ip地址
         ipAddressString = UIUtils.getIpAddressString();
         money_count = (TextView) findViewById(R.id.money_count);
         alpay_rela = (RelativeLayout) findViewById(R.id.alpay_rela);
+        back_img = (ImageView) findViewById(R.id.back_img);
         wechat_rela = (RelativeLayout) findViewById(R.id.wechat_rela);
         Intent intent = getIntent();
         String id = intent.getStringExtra("id");
@@ -60,6 +66,13 @@ public class BarterPayActivity extends BaseActivtiy implements ICoreInfe {
 
     @Override
     protected void initEventData() {
+        //退出
+        back_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         //支付宝
         alpay_rela.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,7 +120,6 @@ public class BarterPayActivity extends BaseActivtiy implements ICoreInfe {
     @Override
     public void success(Object data) {
         Request request = (Request) data;
-        Toast.makeText(this, "" + request.getMessage(), Toast.LENGTH_SHORT).show();
         if (request.isSuccess()) {
 
             mEntity = (PayBean) request.getEntity();

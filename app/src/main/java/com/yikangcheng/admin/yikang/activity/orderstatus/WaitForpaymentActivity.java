@@ -26,13 +26,14 @@ import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.PayResultActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.WaitForPaymentAdapter;
 import com.yikangcheng.admin.yikang.activity.copy.CopyButtonLibrary;
+import com.yikangcheng.admin.yikang.activity.obligation.PaidActivity;
 import com.yikangcheng.admin.yikang.activity.orderstatus.countdown.ClockService;
 import com.yikangcheng.admin.yikang.app.BaseApp;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
-import com.yikangcheng.admin.yikang.bean.CloseTheDealBean;
 import com.yikangcheng.admin.yikang.bean.DeleteOrderBean;
 import com.yikangcheng.admin.yikang.bean.PayBean;
 import com.yikangcheng.admin.yikang.bean.Request;
+import com.yikangcheng.admin.yikang.bean.WaliDealBean;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
 import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
 import com.yikangcheng.admin.yikang.paysdk.PayResult;
@@ -40,6 +41,7 @@ import com.yikangcheng.admin.yikang.presenter.CloseTheDeallPresenter;
 import com.yikangcheng.admin.yikang.presenter.DeleteOrderIdPresenter;
 import com.yikangcheng.admin.yikang.presenter.NewOrderPresenter;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
+import com.yikangcheng.admin.yikang.util.TwoBallRotationProgressBar;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -70,15 +72,12 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
     private TextView mTvActivityWaitfrrpaymentJinE;
     private TextView mTvActivityWaitfrrpaymentZhongJi;
     private TextView mTvActivityWaitfrrpaymentFangShi;
-    private TextView mTvActivityWaitfrrpaymentKeFu;
+    private RelativeLayout mTvActivityWaitfrrpaymentKeFu;
     private TextView mTvActivityWaitfrrpaymentFaPianLeiXing;
     private TextView mTvActivityWaitfrrpaymentNeiRong;
     private TextView go_pay;
     private TextView mShanchu;
     private TextView mTvActivityFackOfProvinceStr;
-    private TextView mTvActivityFackOfCityStr;
-    private TextView mTvActivityFackOfTownStr;
-    private TextView mTvActivityFackOfAddress;
     private WaitForPaymentAdapter mWaitForPaymentAdapter;
     private NewOrderPresenter newOrderPresenter;
     private int orderId;
@@ -88,16 +87,17 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
     private int mOrderId_wait;
     private int width;
     private PayBean mEntity;
-    private String mPayType="";
+    private String mPayType = "";
     private PromptDialog mPromptDialog;
     public static String CLOCK_ACTION = "com.jereh.Clock_Action";
     public static int TIME = 30 * 60 * 1000;//倒计时2个小时
     private String mStime;
     private String mCreateTime;
-    private Date mCurDate;
     private String mTime;
     private long ts;
     private NestedScrollView mNestedScrollView;
+    private TwoBallRotationProgressBar progress;
+    private RelativeLayout rela1, rela2;
 
     @Override
     protected void initView() {
@@ -105,29 +105,24 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
         mOrderId_wait = mIntent.getIntExtra("orderId_wait", 0);
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
-
         //创建对象
         mPromptDialog = new PromptDialog(this);
         //设置自定义属性
         mPromptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(3000);
-
-
         Display display = this.getWindowManager().getDefaultDisplay();
         width = display.getWidth();
-        int height = display.getHeight();
         //ToolBar返回按钮
         mImgActivityWaitfrrpaymentFanhui = (ImageView) findViewById(R.id.img_activity_waitfrrpayment_fanhui);
         //ToolBar
         mToolbarActivityWaitfrrpayment = (RelativeLayout) findViewById(R.id.toolbar_activity_waitfrrpayment);
+        rela1 = (RelativeLayout) findViewById(R.id.rela1);
+        rela2 = (RelativeLayout) findViewById(R.id.rela2);
         //倒计时
         mTvActivityWaitfrrpaymentDaojishi = (TextView) findViewById(R.id.tv_activity_waitfrrpayment_daojishi);
         //用户姓名
         mTvActivityWaitfrrpaymentName = (TextView) findViewById(R.id.tv_activity_waitfrrpayment_name);
         //用户地址
         mTvActivityFackOfProvinceStr = (TextView) findViewById(R.id.tv_activity_fack_of_provinceStr);
-        mTvActivityFackOfCityStr = (TextView) findViewById(R.id.tv_activity_fack_of_cityStr);
-        mTvActivityFackOfTownStr = (TextView) findViewById(R.id.tv_activity_fack_of_townStr);
-        mTvActivityFackOfAddress = (TextView) findViewById(R.id.tv_activity_fack_of_address);
         //rlv-商品
         mRlvActivityWaitfrrpaymentShangPin = (RecyclerView) findViewById(R.id.rlv_activity_waitfrrpayment_shangPin);
         //商品编号
@@ -143,7 +138,7 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
         //支付方式
         mTvActivityWaitfrrpaymentFangShi = (TextView) findViewById(R.id.tv_activity_waitfrrpayment_fangShi);
         //联系客服
-        mTvActivityWaitfrrpaymentKeFu = (TextView) findViewById(R.id.tv_activity_waitfrrpayment_keFu);
+        mTvActivityWaitfrrpaymentKeFu = (RelativeLayout) findViewById(R.id.tv_activity_waitfrrpayment_keFu);
         //发票类型
         mTvActivityWaitfrrpaymentFaPianLeiXing = (TextView) findViewById(R.id.tv_activity_waitfrrpayment_FaPianLeiXing);
         //发票内容
@@ -152,15 +147,13 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
         mShanchu = (TextView) findViewById(R.id.tv_activity_wait_shanchu);
         //去支付
         go_pay = (TextView) findViewById(R.id.go_pay);
+        //进度条
+        progress = (TwoBallRotationProgressBar) findViewById(R.id.progress);
         mNestedScrollView = (NestedScrollView) findViewById(R.id.nestedSV);
         regReceiver();//注册广播
-//        startService(new Intent(this, ClockService.class));//启动计时服务
-
         //解决滑动不流畅
         mRlvActivityWaitfrrpaymentShangPin.setHasFixedSize(true);
         mRlvActivityWaitfrrpaymentShangPin.setNestedScrollingEnabled(false);
-
-
         //点击客服跳转页面
         mTvActivityWaitfrrpaymentKeFu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,8 +164,6 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
                 SobotApi.startSobotChat(WaitForpaymentActivity.this, info);
             }
         });
-
-
         //复制监听点击事件
         mImgActivityWaitfrrpaymentFizhi.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -182,25 +173,29 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
                 copyButtonLibrary.init();
             }
         });
-
         //生成新的订单
         newOrderPresenter = new NewOrderPresenter(new NewOrder());
-
-
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRlvActivityWaitfrrpaymentShangPin.setLayoutManager(linearLayoutManager);
-        ArrayList<CloseTheDealBean.DetailsListBean> mShopSpecDetailedBeans = new ArrayList<>();
+        ArrayList<WaliDealBean.DetailsListBean> mShopSpecDetailedBeans = new ArrayList<>();
         mWaitForPaymentAdapter = new WaitForPaymentAdapter(mShopSpecDetailedBeans, this);
         mRlvActivityWaitfrrpaymentShangPin.setAdapter(mWaitForPaymentAdapter);
-
-
         mWaitForPaymentAdapter.setOnClickListener(new WaitForPaymentAdapter.OnClickListener() {
             @Override
             public void OnClickListener(View v, int position) {
                 mPosition = position;
             }
         });
-
+//        //详情
+//        mWaitForPaymentAdapter.setToGoodParticula(new WaitForPaymentAdapter.toGoodParticula() {
+//            @Override
+//            public void onclick(int id) {
+//                Intent intent = new Intent(WaitForpaymentActivity.this,ParticularsActivity.class);
+//                Toast.makeText(WaitForpaymentActivity.this, ""+id, Toast.LENGTH_SHORT).show();
+//                intent.putExtra("id", id);
+//                startActivity(intent);
+//            }
+//        });
         /**
          * P层
          */
@@ -216,10 +211,11 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
                     newOrderPresenter.request(mOrderId_wait, "ALIPAY", "");
                 } else if (mPayType.equals("WEIXIN")) {
                     newOrderPresenter.request(mOrderId_wait, "WEIXIN", "");
+                } else {
+                    Toast.makeText(WaitForpaymentActivity.this, "系统错误,支付失败", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-
         //刪除
         initDelete();
     }
@@ -292,6 +288,7 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
             // 时间戳转换成时间
             mTime = sdf.format(new Date(sTime));
         }
+
         mTvActivityWaitfrrpaymentDaojishi.setText("剩余" + mTime + "秒系统将取消订单");
     }
 
@@ -332,6 +329,12 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
                 finish();
             }
         });
+        progress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                return;
+            }
+        });
     }
 
 
@@ -348,8 +351,8 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
                     String resultStatus = payResult.getResultStatus();
                     // 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
                     if (TextUtils.equals(resultStatus, "9000")) {
-                        Intent intent = new Intent(WaitForpaymentActivity.this, PayResultActivity.class);
-                        intent.putExtra("pay", 1);
+                        Intent intent = new Intent(WaitForpaymentActivity.this, PaidActivity.class);
+//                        intent.putExtra("pay", 1);
                         startActivity(intent);
                         finish();
                     } else {
@@ -359,15 +362,15 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
                             Toast.makeText(WaitForpaymentActivity.this, "支付结果确认中",
                                     Toast.LENGTH_SHORT).show();
                             // 其他值就可以判断为支付失败，包括用户主动取消支付，或者系统返回的错误
-                            Intent intent = new Intent(WaitForpaymentActivity.this, PayResultActivity.class);
-                            intent.putExtra("pay", 2);
-                            startActivity(intent);
+//                            Intent intent = new Intent(WaitForpaymentActivity.this, PayResultActivity.class);
+//                            intent.putExtra("pay", 2);
+//                            startActivity(intent);
                             finish();
                         } else {
-                            // 其他值就可以判断为支付失败，包括用户主动取消支付，或者系统返回的错误
-                            Intent intent = new Intent(WaitForpaymentActivity.this, PayResultActivity.class);
-                            intent.putExtra("pay", 2);
-                            startActivity(intent);
+//                            // 其他值就可以判断为支付失败，包括用户主动取消支付，或者系统返回的错误
+//                            Intent intent = new Intent(WaitForpaymentActivity.this, PayResultActivity.class);
+//                            intent.putExtra("pay", 2);
+//                            startActivity(intent);
                             finish();
                         }
                     }
@@ -426,19 +429,16 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
     @Override
     public void success(Object data) {
         Request request = (Request) data;
-        CloseTheDealBean entity = (CloseTheDealBean) request.getEntity();
+        WaliDealBean entity = (WaliDealBean) request.getEntity();
         mWaitForPaymentAdapter.addAll(entity.getDetailsList());
         mPayType = entity.getOrder().getPayType();
         //重新下单用到的Id
         orderId = entity.getOrder().getOrderId();
         orderType = entity.getOrder().getOrderType();
         //用户名
-        mTvActivityWaitfrrpaymentName.setText(entity.getUserAddress().getReceiver());
+        mTvActivityWaitfrrpaymentName.setText(entity.getOrderBook().getReceiver());
         //地址
-        mTvActivityFackOfAddress.setText(entity.getUserAddress().getAddress());
-        mTvActivityFackOfCityStr.setText(entity.getUserAddress().getCityStr());
-        mTvActivityFackOfTownStr.setText(entity.getUserAddress().getTownStr());
-        mTvActivityFackOfProvinceStr.setText(entity.getUserAddress().getProvinceStr());
+        mTvActivityFackOfProvinceStr.setText(entity.getOrderBook().getAddress());
         //订单编号
         mTvActivityWaitfrrpaymentBiaohao.setText(entity.getOrder().getOrderNo());
         //运费
@@ -487,7 +487,6 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
         long l = System.currentTimeMillis();
         long time = l - ts;
         SimpleDateFormat sdf = new SimpleDateFormat("mm分ss");
-
         //三十分钟
         SimpleDateFormat simpleDateFormats = new SimpleDateFormat("mm:ss");
         Date threeTime = null;
@@ -505,11 +504,26 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
             //启动计时服务这个方法
             startService(new Intent(this, ClockService.class));
         }
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                progress.setVisibility(View.GONE);
+                progress.stopAnimator();
+                rela1.setVisibility(View.VISIBLE);
+                rela2.setVisibility(View.VISIBLE);
+            }
+        }, 500);
     }
 
     @Override
     public void fail(ApiException e) {
-
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                progress.setVisibility(View.GONE);
+                progress.stopAnimator();
+            }
+        }, 500);
     }
 
     /**
@@ -519,38 +533,43 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
         @Override
         public void success(Object data) {
             Request request = (Request) data;
-            mEntity = (PayBean) request.getEntity();
-            if (mPayType.equals("ALIPAY")) {
-                //todo 支付宝
-                // 构造PayTask 对象
-                // 调用支付接口，获取支付结果
-                Runnable payRunnable = new Runnable() {
-                    @Override
-                    public void run() {
-                        PayTask alipay = new PayTask(WaitForpaymentActivity.this);
-                        Map<String, String> result = alipay.payV2(mEntity.getOrderinfo(), true);
-//                        Map<String, String> result = alipay.payV2("alipay_sdk=alipay-sdk-java-3.7.26.ALL&app_id=2019030863469663&biz_content=%7B%22body%22%3A%22%E6%98%93%E5%BA%B7%E6%88%90%22%2C%22out_trade_no%22%3A%22NO155906963237992%22%2C%22product_code%22%3A%22QUICK_MSECURITY_PAY%22%2C%22subject%22%3A%22%E7%BE%8E%E5%A6%86%E6%B5%8B%E8%AF%95008%22%2C%22timeout_express%22%3A%2230m%22%2C%22total_amount%22%3A%220.01%22%7D&charset=utf-8&format=json&method=alipay.trade.app.pay&notify_url=https%3A%2F%2Fwww.yikch.com%2Fapi%2Forder%2FpaySuccess&sign=ndtQ6fc9XGCC6iZJ%2FX2UrDpFzHEtVehwJivhN%2BEEwZyNsBxYUIj2og0GvMo0JX3oEiVPB57SrMRFv03G%2Fz5Wl3n9HCCiZZF9X1WDfC7PJ3CNVHjMWQ%2FGC5oQ%2FE3NIfV%2FEVtkDRqBmOfChgJa%2F1dM%2BfT9mMFcKdH7ZYkJjwSwdMg4%2FtYy8FGifR%2FSphG41JujEEQMJ4IyOuKtxcROrKpQpF7NLT1hbrEI0dh0JKLsfwTks463%2FEpE5U0Gf5Fc9Ta5PrEkBTJFwWp2MtXtbgHEMtxCj9%2B17pgaEiowlX3Vfle8NvTuJlb7rz2glzzONgwwqRwkpzXhKE0ukaKUQ61tGw%3D%3D&sign_type=RSA2&timestamp=2019-05-29+02%3A53%3A52&version=1.0", true);
-                        Message msg = new Message();
-                        msg.what = SDK_PAY_FLAG;
-                        msg.obj = result;
-                        mHandler.sendMessage(msg);
-                    }
-                };
-                // 必须异步调用
-                Thread payThread = new Thread(payRunnable);
-                payThread.start();
-            } else if (mPayType.equals("WEIXIN")) {
-                PayReq req = new PayReq();//PayReq就是订单信息对象
-                //给req对象赋值
-                req.appId = "wx38a0aef5df24fe50";
-                req.partnerId = "1528387611";
-                req.prepayId = mEntity.getPrepayId();
-                req.packageValue = "Sign=WXPay";
-                req.nonceStr = mEntity.getNonceStr();
-                req.timeStamp = mEntity.getTimeStamp();
-                req.sign = mEntity.getSign();
-                BaseApp.mWxApi.sendReq(req);//将订单信息对象发送给微信服务器，即发送支付请求
-//                Toast.makeText(WaitForpaymentActivity.this, "haha", Toast.LENGTH_SHORT).show();
+            if (request.isSuccess()) {
+                mEntity = (PayBean) request.getEntity();
+                if (mPayType.equals("ALIPAY")) {
+                    //todo 支付宝
+                    // 构造PayTask 对象
+                    // 调用支付接口，获取支付结果
+                    Runnable payRunnable = new Runnable() {
+                        @Override
+                        public void run() {
+                            PayTask alipay = new PayTask(WaitForpaymentActivity.this);
+                            if (mEntity.getOrderinfo() == null || mEntity.getOrderinfo().equals("")) {
+                                return;
+                            }
+                            Map<String, String> result = alipay.payV2(mEntity.getOrderinfo(), true);
+                            Message msg = new Message();
+                            msg.what = SDK_PAY_FLAG;
+                            msg.obj = result;
+                            mHandler.sendMessage(msg);
+                        }
+                    };
+                    // 必须异步调用
+                    Thread payThread = new Thread(payRunnable);
+                    payThread.start();
+                } else if (mPayType.equals("WEIXIN")) {
+                    PayReq req = new PayReq();//PayReq就是订单信息对象
+                    //给req对象赋值
+                    req.appId = "wx38a0aef5df24fe50";
+                    req.partnerId = "1528387611";
+                    req.prepayId = mEntity.getPrepayId();
+                    req.packageValue = "Sign=WXPay";
+                    req.nonceStr = mEntity.getNonceStr();
+                    req.timeStamp = mEntity.getTimeStamp();
+                    req.sign = mEntity.getSign();
+                    BaseApp.mWxApi.sendReq(req);//将订单信息对象发送给微信服务器，即发送支付请求
+                } else {
+                    Toast.makeText(WaitForpaymentActivity.this, "系统错误,支付失败", Toast.LENGTH_SHORT).show();
+                }
             }
         }
 

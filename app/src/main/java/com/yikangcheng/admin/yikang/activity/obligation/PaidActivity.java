@@ -1,7 +1,6 @@
 package com.yikangcheng.admin.yikang.activity.obligation;
-
-
 import android.content.Intent;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,11 +8,10 @@ import android.view.Display;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-
 import com.bumptech.glide.Glide;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.MainActivity;
@@ -29,6 +27,7 @@ import com.yikangcheng.admin.yikang.presenter.DeleteOrderIdPresenter;
 import com.yikangcheng.admin.yikang.presenter.PaidPresenter;
 import com.yikangcheng.admin.yikang.util.SpacesItemDecoration;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
+import com.yikangcheng.admin.yikang.util.TwoBallRotationProgressBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +54,7 @@ public class PaidActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
     private int width;
     private PromptDialog mPromptDialog;
     private ImageView mImgBut;
+    private TwoBallRotationProgressBar progress;
 
     @Override
     protected void initView() {
@@ -63,11 +63,9 @@ public class PaidActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
         //创建对象
         mPromptDialog = new PromptDialog(this);
         //设置自定义属性
-        mPromptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(3000);
-
+        mPromptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(1000);
         Display display = this.getWindowManager().getDefaultDisplay();
         width = display.getWidth();
-        int height = display.getHeight();
         //找控件
         mImgActivityPaidFanhui = (ImageView) findViewById(R.id.img_activity_paid_fanhui);
         mToolbarActivityPaid = (RelativeLayout) findViewById(R.id.toolbar_activity_paid);
@@ -76,6 +74,7 @@ public class PaidActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
         mImgFragmentAccomplish = (ImageView) findViewById(R.id.img_activity_pard);
         mImgFragmentAccomplishQuguanghuang = (ImageView) findViewById(R.id.img_fragment_accomplish_quguanghuang);
         mRelativeLayout = (RelativeLayout) findViewById(R.id.relativeLayout);
+        progress = (TwoBallRotationProgressBar) findViewById(R.id.progress);
         mImgBut = (ImageView) findViewById(R.id.imgBut);
 
         /**
@@ -87,8 +86,6 @@ public class PaidActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
                 finish();
             }
         });
-
-
         //布局走向
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRlvActivityPaid.setLayoutManager(linearLayoutManager);
@@ -113,10 +110,11 @@ public class PaidActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
         mImgFragmentAccomplishQuguanghuang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(PaidActivity.this, MainActivity.class));
+                Intent intent = new Intent(PaidActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
             }
         });
-
 
         /**
          * 一键置顶
@@ -152,8 +150,6 @@ public class PaidActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
         //解决滑动不流畅
         mRlvActivityPaid.setHasFixedSize(true);
         mRlvActivityPaid.setNestedScrollingEnabled(false);
-
-        //item之間間距
         int spanCount_tuijian = 1; // 3 columns
         int spacing_tuijian = 20; // 50px
         boolean includeEdge_tuijian = false;
@@ -235,14 +231,14 @@ public class PaidActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
                 refreshLayout.finishRefresh();  //刷新完成
             }
         });
+
         //加载的监听事件
-        mRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+        mRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+            public void onLoadmore(RefreshLayout refreshlayout) {
                 mPage++;
                 initMvp(mPage);
-                refreshLayout.finishLoadMore();      //加载完成
-                //refreshLayout.finishLoadMoreWithNoMoreData();  //全部加载完成,没有数据了调用此方法  这个方法调用了就加载一夜再也不加载了
+                refreshlayout.finishLoadmore();      //加载完成
             }
         });
     }
@@ -250,7 +246,12 @@ public class PaidActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
 
     @Override
     protected void initEventData() {
-
+        progress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                return;
+            }
+        });
     }
 
     @Override
@@ -298,7 +299,7 @@ public class PaidActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
     public void success(Object data) {
         Request request = (Request) data;
         PaidBean entity = (PaidBean) request.getEntity();
-        if (entity.getOrder() == null) {
+        if (entity == null) {
             mRefreshLayout.setVisibility(View.GONE);
             mImgBut.setVisibility(View.GONE);
             mRelativeLayout.setVisibility(View.VISIBLE);
@@ -310,7 +311,13 @@ public class PaidActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
              */
             initShuaXinJiaZai();
         }
-
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                progress.setVisibility(View.GONE);
+                progress.stopAnimator();
+            }
+        }, 500);
         mPaidAdapter_a.addAll(entity.getOrder());
         //设置显示隐藏
         if (entity == null) {
@@ -327,6 +334,15 @@ public class PaidActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
 
     @Override
     public void fail(ApiException e) {
-
+        mRefreshLayout.setVisibility(View.GONE);
+        mImgBut.setVisibility(View.GONE);
+        mRelativeLayout.setVisibility(View.VISIBLE);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                progress.setVisibility(View.GONE);
+                progress.stopAnimator();
+            }
+        }, 500);
     }
 }

@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.webkit.JavascriptInterface;
@@ -28,14 +30,20 @@ import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.CloseActivity;
 import com.yikangcheng.admin.yikang.activity.H5SecActivity;
 import com.yikangcheng.admin.yikang.activity.PartiCarActivity;
-import com.yikangcheng.admin.yikang.activity.SeekListActivity;
+import com.yikangcheng.admin.yikang.activity.SeekListNewActivity;
+import com.yikangcheng.admin.yikang.activity.SeleGoodActivity;
+import com.yikangcheng.admin.yikang.activity.aftersale.AfterSaleActivity;
+import com.yikangcheng.admin.yikang.activity.h5activity.InsideActivity;
 import com.yikangcheng.admin.yikang.activity.particulars.ParticularsActivity;
+import com.yikangcheng.admin.yikang.activity.seek.SeckillActivity;
 import com.yikangcheng.admin.yikang.activity.seek.SeekActivity;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
 import com.yikangcheng.admin.yikang.bean.Request;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
 import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
-import com.yikangcheng.admin.yikang.presenter.AddShopPresenter;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 
 
 public class Fragment_Shou extends BaseFragment implements ICoreInfe {
@@ -43,19 +51,15 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
 
     private static WebView webView;
     private String s;
-    private AddShopPresenter addShopPresenter;
     private SmartRefreshLayout refreshLayout;
     private ProgressBar pbProgress;
     private ImageView imgBut;
-    private int height;
     private TextView text_seek;
 
     @SuppressLint("NewApi")
     @Override
     protected void initView(View view) {
         webView = view.findViewById(R.id.webview);
-        WindowManager wm = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
-        height = wm.getDefaultDisplay().getHeight();
         //返回顶部按钮
         imgBut = view.findViewById(R.id.imgBut);
         //进度条
@@ -63,8 +67,7 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
         //加载刷新
         refreshLayout = view.findViewById(R.id.refreshLayout);
         text_seek = view.findViewById(R.id.text_seek);
-        refreshLayout.setEnableLoadMore(false);
-        addShopPresenter = new AddShopPresenter(this);
+        refreshLayout.setEnableLoadmore(false);
         WebSettings webSettings = webView.getSettings();
         //设置WebView属性，能够执行Javascript脚本
         webSettings.setJavaScriptEnabled(true);
@@ -88,6 +91,7 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
                 }
                 return false;
             }
+
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
                 //返回false，意味着请求过程里，不管有多少次的跳转请求（即新的请求地址），均交给webView自己处理，这也是此方法的默认处理
@@ -106,6 +110,7 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
             public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
                 return super.onJsAlert(view, url, message, result);
             }
+
             //进度发生变化
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
@@ -119,14 +124,29 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
                 super.onProgressChanged(view, newProgress);
             }
         });
+
         webView.getSettings().setJavaScriptEnabled(true);
         webView.addJavascriptInterface(this, "ww");
         webView.loadUrl("https://www.yikch.com/mobile/appShow/index?type=android");
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                webView.loadUrl("https://www.yikch.com/mobile/appShow/index?type=android");
+                String url = webView.getUrl();
+                webView.loadUrl(url);
                 refreshLayout.finishRefresh();
+            }
+        });
+        webView.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                //这event.getAction() == KeyEvent.ACTION_DOWN表示是返回键事件   
+                if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                    if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {//表示按返回键 时的操作  
+                        webView.goBack();//后退    
+                        return true;//已处理     返回true表示被处理否则返回false    
+                    }
+                }
+                return false;
             }
         });
         webView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
@@ -151,6 +171,82 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
                 startActivity(new Intent(getContext(), SeekActivity.class));
             }
         });
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            // 在点击请求的是链接是才会调用，重写此方法返回true表明点击网页里面的链接还是在当前的webview里跳转，不跳到浏览器那边。这个函数我们可以做很多操作，比如我们读取到某些特殊的URL，于是就可以不打开地址，取消这个操作，进行预先定义的其他操作，这对一个程序是非常必要的。
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                // 判断url链接中是否含有某个字段，如果有就执行指定的跳转（不执行跳转url链接），如果没有就加载url链接
+                if (url.contains("/appShow/proDetail")) {
+                    Intent intent = new Intent(getActivity(), ParticularsActivity.class);
+                    intent.putExtra("id", url);
+                    startActivity(intent);
+                    return true;
+                } else if (url.contains("/appShow/recommendList")) {
+                    Intent intent = new Intent(getContext(), H5SecActivity.class);
+                    intent.putExtra("http", url);
+                    startActivity(intent);
+                    return true;
+                } else if (url.contains("appShow/proSomeList")) {
+                    try {
+                        //URL中文乱码转换
+                        String decode = URLDecoder.decode(new String(url.getBytes("ISO-8859-1"), "UTF-8"), "UTF-8");
+                        String reg = "[^\u4e00-\u9fa5]";
+                        decode = decode.replaceAll(reg, "");
+                        Intent intent1 = new Intent(getContext(), SeekListNewActivity.class);
+                        intent1.putExtra("count", decode);
+                        startActivity(intent1);
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                    return true;
+                } else if (url.contains("appShow/advertorial")) {
+                    Intent intent = new Intent(getContext(), H5SecActivity.class);
+                    intent.putExtra("http", url);
+                    startActivity(intent);
+                    return true;
+                } else if (url.contains("appShow/activity")) {
+                    Intent intent = new Intent(getContext(), H5SecActivity.class);
+                    intent.putExtra("http", url);
+                    startActivity(intent);
+                    return true;
+                } else if (url.contains("appShow/majorcredit")) {
+                    Intent intent = new Intent(getContext(), H5SecActivity.class);
+                    intent.putExtra("http", url);
+                    startActivity(intent);
+                    return true;
+                } else if (url.contains("appShow/sixoneeight")) {
+                    Intent intent = new Intent(getContext(), H5SecActivity.class);
+                    intent.putExtra("http", url);
+                    startActivity(intent);
+                    return true;
+                } else if (url.contains("appShow/internalActivity")) {
+                    Intent intent = new Intent(getContext(), InsideActivity.class);
+                    intent.putExtra("http", url);
+                    startActivity(intent);
+                    return true;
+                } else if (url.contains("mobile/appShow")) {
+                    if (url.contains("market")) {
+                        Intent intent = new Intent(getContext(), H5SecActivity.class);
+                        intent.putExtra("http", url);
+                        intent.putExtra("title", "挚友超市");
+                        startActivity(intent);
+                        return true;
+                    } else if (url.contains("xiazhi")) {
+                        Intent intent = new Intent(getContext(), H5SecActivity.class);
+                        intent.putExtra("http", url);
+                        intent.putExtra("title", "夏至福利");
+                        startActivity(intent);
+                        return true;
+                    }
+                    Intent intent = new Intent(getContext(), H5SecActivity.class);
+                    intent.putExtra("http", url);
+                    startActivity(intent);
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        });
     }
 
 
@@ -167,7 +263,7 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
 
     @JavascriptInterface
     public void saySomeMenu(String msg) {
-        Intent intent = new Intent(getContext(), SeekListActivity.class);
+        Intent intent = new Intent(getContext(), SeekListNewActivity.class);
         int i = Integer.parseInt(msg);
         intent.putExtra("id", i);
         startActivity(intent);
@@ -175,13 +271,13 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
 
     @JavascriptInterface
     public void sayHello(String msg) {
-        s += msg + ",";
-        String[] split = s.split(",");
-        if (split.length == 4) {
-            int id = getLogUser(getContext()).getId();
-            addShopPresenter.request(id, split[0], split[1], split[2], split[3]);
-            s = "";
-        }
+//        s += msg + ",";
+//        String[] split = s.split(",");
+//        if (split.length == 4) {
+//            int id = getLogUser(getContext()).getId();
+//            addShopPresenter.request(id, split[0], split[1], split[2], split[3]);
+//            s = "";
+//        }
     }
 
     @JavascriptInterface
@@ -211,22 +307,22 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
         SobotApi.startSobotChat(getActivity(), info);
     }
 
-
-    @JavascriptInterface
-    public void partID(String msg) {
-        if (msg.indexOf(".json") != -1) {
-            String[] split = msg.split(".json");
-            Intent intent = new Intent(getContext(), ParticularsActivity.class);
-            int id = Integer.parseInt(split[0]);
-            intent.putExtra("id", id);
-            startActivity(intent);
-        } else {
-            Intent intent = new Intent(getContext(), ParticularsActivity.class);
-            int id = Integer.parseInt(msg);
-            intent.putExtra("id", id);
-            startActivity(intent);
-        }
-    }
+//
+//    @JavascriptInterface
+//    public void partID(String msg) {
+//        if (msg.indexOf(".json") != -1) {
+//            String[] split = msg.split(".json");
+//            Intent intent = new Intent(getContext(), ParticularsActivity.class);
+//            int id = Integer.parseInt(split[0]);
+//            intent.putExtra("id", id);
+//            startActivity(intent);
+//        } else {
+//            Intent intent = new Intent(getContext(), ParticularsActivity.class);
+//            int id = Integer.parseInt(msg);
+//            intent.putExtra("id", id);
+//            startActivity(intent);
+//        }
+//    }
 
     public static void getGoBack() {
         if (webView != null) {

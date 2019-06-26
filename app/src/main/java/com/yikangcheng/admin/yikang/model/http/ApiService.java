@@ -3,6 +3,7 @@ package com.yikangcheng.admin.yikang.model.http;
 import com.yikangcheng.admin.yikang.bean.ALLBean;
 import com.yikangcheng.admin.yikang.bean.AdvertisingBean;
 import com.yikangcheng.admin.yikang.bean.AllAddressBean;
+import com.yikangcheng.admin.yikang.bean.AppUpdateBean;
 import com.yikangcheng.admin.yikang.bean.ClassifyCommodityListBean;
 import com.yikangcheng.admin.yikang.bean.ClassifyListOneBean;
 import com.yikangcheng.admin.yikang.bean.CloseBean;
@@ -24,6 +25,7 @@ import com.yikangcheng.admin.yikang.bean.SeckillBean;
 import com.yikangcheng.admin.yikang.bean.ShopCarBean;
 import com.yikangcheng.admin.yikang.bean.UserDetailBean;
 import com.yikangcheng.admin.yikang.bean.UserInfoBean;
+import com.yikangcheng.admin.yikang.bean.WaliDealBean;
 
 import java.util.List;
 
@@ -43,6 +45,7 @@ public interface ApiService {
      */
     @POST("classification/all")
     Observable<Request<List<ClassifyListOneBean>>> classify();
+
     /**
      * 购物车列表
      *
@@ -63,6 +66,7 @@ public interface ApiService {
      */
     @POST("index/similarCommodityPage")
     Observable<Request<List<RecommendBean>>> Recommend(@Query("userId") int userId, @Query("page") int page, @Query("currentPage") int currentPage);
+
 
     /**
      * 我的页面-----广告图
@@ -153,7 +157,7 @@ public interface ApiService {
 
 
     /**
-     * 分类子类接口
+     * 分类商品子类接口
      */
     @POST("classification/commodityList")
     Observable<Request<ClassifyCommodityListBean>> commodityList(@Query("classificationId") int classificationId, @Query("order") int order,
@@ -205,7 +209,7 @@ public interface ApiService {
      * 订单详情
      */
     @POST("userOrderDetails")
-    Observable<Request<CloseTheDealBean>> CloseTheDealBean(@Query("orderId") int orderId);
+    Observable<Request<WaliDealBean>> CloseTheDealBean(@Query("orderId") int orderId);
 
     /**
      * 删除订单
@@ -269,4 +273,28 @@ public interface ApiService {
      */
     @POST("shopCart/updateBuyNum")
     Observable<Request> updateBuyNum(@Query("userId") int userId, @Query("cartId") int cartId, @Query("buyNum") int buyNum);
+
+    /**
+     * 查询售后状态
+     */
+    @POST("afterSale/afterSaleStatus")
+    Observable<Request> afterSaleStatus(@Query("userId") int userId, @Query("detailsId") int detailsId);
+
+    /**
+     * 确认收货
+     */
+    @POST("signOrder")
+    Observable<Request> signOrder(@Query("userId") int userId, @Query("orderDetailsId") int orderDetailsId);
+
+    /**
+     * APP检查更新接口
+     */
+    @POST("check/update")
+    Observable<Request<AppUpdateBean>> update(@Query("type") String kType);
+
+    /**
+     * 查看待付款数据个数
+     */
+    @POST("initOrderCount")
+    Observable<Request> initOrderCount(@Query("userId") int userId);
 }

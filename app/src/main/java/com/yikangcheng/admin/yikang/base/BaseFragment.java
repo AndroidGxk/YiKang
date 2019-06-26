@@ -102,4 +102,12 @@ public abstract class BaseFragment extends Fragment {
         }
         return null;
     }
+    /**
+     * 删除用户登录数据库
+     */
+    public void getDelete(Context context) {
+        DaoSession daoSession = DaoMaster.newDevSession(context, LoginBeanDao.TABLENAME);
+        LoginBeanDao loginBeanDao = daoSession.getLoginBeanDao();
+        loginBeanDao.deleteAll();
+    }
 }

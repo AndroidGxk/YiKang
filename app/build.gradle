@@ -13,13 +13,24 @@ android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.yikangcheng.admin.yikang"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 27
         versionCode 1
-        versionName "1.0.1"
+        versionName "1.0.4"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.yikangcheng
+        ndk {
+            //选择要添加的对应 cpu 类型的 .so 库。
+            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
+            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
+        }
+
+        manifestPlaceholders = [
+                JPUSH_PKGNAME: applicationId,
+                JPUSH_APPKEY : "96c1e5c685835f94d4a0e3a0", //JPush 上注册的包名对应的 Appkey.
+                JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
+        ]
     }
     buildTypes {
         release {
@@ -63,14 +74,12 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'        //网络请求   Retrofit
     implementation 'com.android.support:design:27.1.1'                          //   TabLayout组件
-    implementation 'com.github.bumptech.glide:glide:4.7.1'        //图片加载	一般这两个都加
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'    //制作圆形图片
+    implementation 'com.github.bumptech.glide:glide:4.8.0'        //图片加载	一般这两个都加
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'    //制作圆形图片
     implementation 'com.android.support:recyclerview-v7:27.1.1'
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
     implementation 'io.reactivex.rxjava2:rxjava:2.1.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-    implementation 'com.jude:rollviewpager:1.4.5'        //	自动轮播图
-    implementation 'com.youth.banner:banner:1.4.10'                   //              banner依赖 轮播图
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
     implementation 'me.jessyan:autosize:0.9.5'//今日头条适配
     implementation('com.jcodecraeer:xrecyclerview:1.5.9') {
@@ -81,21 +90,26 @@ dependencies {
     //改变状态栏颜色依赖
     implementation 'com.readystatesoftware.systembartint:systembartint:1.0.3'
     implementation 'org.greenrobot:greendao:3.2.0'
-    implementation project(path: ':sobotsdk-mall')
-//1.1.0 API改动过大，老用户升级需谨慎
-    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-14'
-    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-14'//没有使用特殊Header，可以不加这行
+    implementation 'com.android.support:cardview-v7:27.1.1'
+    //1.1.0 API改动过大，老用户升级需谨慎
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-7'
 
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.4-7'//没有使用特殊Header，可以不加这行
     implementation 'com.ashokvarma.android:bottom-navigation-bar:1.4.1'
-
-    implementation 'com.facebook.fresco:fresco:1.11.0'
     implementation 'com.squareup.retrofit2:converter-scalars:2.0.0'    //导入scalars包
     implementation 'me.imid.swipebacklayout.lib:library:1.1.0'
     implementation files('libs/fastjson-1.2.6.jar')
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:1.1.6'
+    implementation 'com.facebook.fresco:fresco:1.11.0'
 
     implementation 'com.github.limxing:Android-PromptDialog:1.1.3'
-
-
+    implementation project(path: ':sobotsdk')
+    implementation 'com.youth.banner:banner:1.4.9'
+    implementation 'com.bigkoo:convenientbanner:2.0.5'
+    implementation 'com.gxz.pagerslidingtabstrip:library:1.3'
+    //极光推送
+    implementation 'cn.jiguang.sdk:jpush:3.1.6'  // 此处以JPush 3.1.6 版本为例。
+    implementation 'cn.jiguang.sdk:jcore:1.2.5'  // 此处以JCore 1.2.5 版本为例。
+    implementation 'com.mylhyl:circleDialog:3.0.4'
 }

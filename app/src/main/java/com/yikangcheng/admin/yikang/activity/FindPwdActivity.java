@@ -156,6 +156,13 @@ public class FindPwdActivity extends BaseActivtiy implements CustomAdapt, ICoreI
                 String moblie_code = moblie.getText().toString();
                 String newpwd = newpwd_text.getText().toString();
                 String newpwds = newpwd_texts.getText().toString();
+                if(moblie_code.equals("")){
+                    Toast.makeText(FindPwdActivity.this, "请输入验证码", Toast.LENGTH_SHORT).show();
+                }
+                if (newpwd.equals("") || newpwds.equals("")) {
+                    Toast.makeText(FindPwdActivity.this, "请输入新密码", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 retrievePwdPresenter.request(phone_up, "mobile", moblie_code, newpwd, newpwds);
                 break;
         }

@@ -49,7 +49,7 @@ public class ClassCommodAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (viewType == 1) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.classcommod_recycler_item, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.classcommod_recycler_item_rela, parent, false);
             return new Vh(view);
         } else {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.classcommod_recycler_two_item, parent, false);
@@ -74,7 +74,8 @@ public class ClassCommodAdapter extends RecyclerView.Adapter {
             ((Vh) vh).itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    onClickLisetener.onclick(listBeanList.get(position).getId());
+                    if (onClickLisetener != null)
+                        onClickLisetener.onclick(listBeanList.get(position).getId());
                 }
             });
         } else if (vh instanceof Vhtwo) {
@@ -92,7 +93,8 @@ public class ClassCommodAdapter extends RecyclerView.Adapter {
             ((Vhtwo) vh).itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    onClickLisetener.onclick(listBeanList.get(position).getId());
+                    if (onClickLisetener != null)
+                        onClickLisetener.onclick(listBeanList.get(position).getId());
                 }
             });
         }

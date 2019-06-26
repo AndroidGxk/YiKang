@@ -7,7 +7,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="19dp"
+        android:layout_height="wrap_content"
         android:background="#FFFFFF">
 
         <TextView
@@ -25,7 +25,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="130dp"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@id/tv_fragment_all_bianhao"
             android:text="2019-05-25 00:00"
             android:textColor="#333333"
             android:textSize="8.5sp" />
@@ -34,10 +35,9 @@
             android:id="@+id/tv_fragment_all_zhuangtai"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="22dp"
             android:text="交易关闭"
+            android:layout_toLeftOf="@id/img_fragment_all_shanchu"
             android:textColor="@color/colorToolbar"
             android:textSize="10sp" />
 

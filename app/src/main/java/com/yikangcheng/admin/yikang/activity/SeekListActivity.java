@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,13 +13,14 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.adapter.ClassCommodAdapter;
@@ -31,9 +33,11 @@ import com.yikangcheng.admin.yikang.model.http.ApiException;
 import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
 import com.yikangcheng.admin.yikang.presenter.CommodityPresenter;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
+import com.yikangcheng.admin.yikang.util.TwoBallRotationProgressBar;
 
 import java.util.List;
 
+import me.jessyan.autosize.internal.CustomAdapt;
 import me.leefeng.promptlibrary.PromptDialog;
 
 /**
@@ -46,32 +50,26 @@ public class SeekListActivity extends BaseActivtiy implements ICoreInfe, View.On
     private XRecyclerView xrecycler;
     private ClassCommodAdapter classCommodAdapter;
     private TextView zonghe, xiaoliang, price_text;
-    private RelativeLayout price,relat_one;
+    private RelativeLayout price;
+    private RelativeLayout relat_one;
     private ImageView qiehuan, back_img;
     private boolean zclick = true, xclick, pclick, qclick = true, pimgclick = true;
     private int id;
     private String count;
     private SmartRefreshLayout refreshLayout;
-    private PromptDialog promptDialog;
     private int record;
     //页数
     private int mPage = 1;
     private int width;
-    private EditText editTixt_activity_seek_sousuo;
     private ImageView xiaoxi;
     private ImageView imgBut, noGood_img;
+    private TwoBallRotationProgressBar progress;
 
     @Override
     protected void initView() {
-        StatusBarUtil.setStatusBarMode(this, true, R.color.colorTabG);
-        //创建对象
-        promptDialog = new PromptDialog(SeekListActivity.this);
-        //设置自定义属性
-        promptDialog.getDefaultBuilder().touchAble(true).round(1).loadingDuration(1000);
+        StatusBarUtil.setStatusBarMode(this, true, R.color.colorTab);
         WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
-        int height = wm.getDefaultDisplay().getHeight();
         width = wm.getDefaultDisplay().getWidth();
-        promptDialog.showLoading("正在加载");
         Intent intent = getIntent();
         count = intent.getStringExtra("count");
         id = intent.getIntExtra("id", 000);
@@ -81,6 +79,8 @@ public class SeekListActivity extends BaseActivtiy implements ICoreInfe, View.On
         xiaoxi = (ImageView) findViewById(R.id.xiaoxi);
         zonghe = (TextView) findViewById(R.id.zonghe);
         imgBut = (ImageView) findViewById(R.id.imgBut);
+        //加载进度
+        progress = (TwoBallRotationProgressBar) findViewById(R.id.progress);
         //暂无商品
         noGood_img = (ImageView) findViewById(R.id.noGood_img);
         relat_one = (RelativeLayout) findViewById(R.id.rela);
@@ -126,17 +126,13 @@ public class SeekListActivity extends BaseActivtiy implements ICoreInfe, View.On
                 refreshLayout.finishRefresh();
             }
         });
-        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+        //加载的监听事件
+        refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+            public void onLoadmore(RefreshLayout refreshlayout) {
                 mPage++;
-//                if (count == null || count.equals("")) {
-//                    commodityPresenter.request(id, record, "", 1, mPage);
-//                } else {
-//                    commodityPresenter.request(id, record, count, 1, mPage);
-//                }
                 initMvp(mPage);
-                refreshLayout.finishLoadMore();
+                refreshlayout.finishLoadmore();      //加载完成
             }
         });
         xiaoxi.setOnClickListener(new View.OnClickListener() {
@@ -198,6 +194,15 @@ public class SeekListActivity extends BaseActivtiy implements ICoreInfe, View.On
                 finish();
             }
         });
+        /**
+         * 进度条显示时
+         */
+        progress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                return;
+            }
+        });
     }
 
     @Override
@@ -212,7 +217,6 @@ public class SeekListActivity extends BaseActivtiy implements ICoreInfe, View.On
 
     @Override
     public void success(Object data) {
-        promptDialog.dismiss();
         Request request = (Request) data;
         ClassifyCommodityListBean classifyCommodityListBean = (ClassifyCommodityListBean) request.getEntity();
         List<ClassifyCommodityListBean.CommodityListBean> commodityList = classifyCommodityListBean.getCommodityList();
@@ -226,11 +230,24 @@ public class SeekListActivity extends BaseActivtiy implements ICoreInfe, View.On
             refreshLayout.setVisibility(View.VISIBLE);
             relat_one.setBackgroundColor(Color.parseColor("#EBEBEB"));
         }
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                progress.setVisibility(View.GONE);
+                progress.stopAnimator();
+            }
+        }, 1500);
     }
 
     @Override
     public void fail(ApiException e) {
-
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                progress.setVisibility(View.GONE);
+                progress.stopAnimator();
+            }
+        }, 1500);
     }
 
     /**

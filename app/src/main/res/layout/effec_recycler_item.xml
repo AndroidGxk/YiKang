@@ -95,7 +95,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="全类目商品满500元可减50元"
         android:textColor="#CACACA"
         android:textSize="14sp"
         app:layout_constraintLeft_toRightOf="@+id/text_left_line"
@@ -106,7 +105,6 @@
         android:layout_height="20dp"
         android:background="@drawable/effec_man_shape"
         android:gravity="center"
-        android:text="满500可用"
         android:textColor="#CACACA"
         android:textSize="10sp"
         app:layout_constraintLeft_toRightOf="@id/man_left_line"
@@ -115,7 +113,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="2019/5/6 — 2019/6/6"
         android:textColor="#CACACA"
         android:textSize="10sp"
         app:layout_constraintLeft_toRightOf="@id/text_left_line"
@@ -133,7 +130,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="50"
         android:textColor="#CACACA"
         android:textSize="29sp"
         app:layout_constraintLeft_toRightOf="@id/price_left_line"
@@ -144,7 +140,6 @@
         android:layout_height="15dp"
         android:background="@drawable/emanjian_shape"
         android:gravity="center"
-        android:text="满减券"
         android:textColor="#FFFFFF"
         android:textSize="10sp"
         app:layout_constraintLeft_toRightOf="@+id/qian_left_line"

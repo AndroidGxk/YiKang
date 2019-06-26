@@ -39,7 +39,11 @@ public class CloseAdapter_B extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ViewHolder holder1 = (ViewHolder) holder;
-        Glide.with(mContent).load("https://static.yikch.com" + mList.get(position).getShopImg()).into(holder1.mImg);
+        if (mList.get(position).getShopImg().contains("https://") || mList.get(position).getShopImg().contains("http://")) {
+            Glide.with(mContent).load(mList.get(position).getShopImg()).into(holder1.mImg);
+        } else {
+            Glide.with(mContent).load("https://static.yikch.com" + mList.get(position).getShopImg()).into(holder1.mImg);
+        }
         holder1.mName.setText(mList.get(position).getShopName());
         holder1.mNum.setText("X" + mList.get(position).getBuyNum());
         holder1.mTitle.setText(mList.get(position).getSpecNames());
@@ -48,7 +52,7 @@ public class CloseAdapter_B extends RecyclerView.Adapter {
             @Override
             public void onClick(View v) {
                 int orderId = mList.get(position).getOrderId();
-                mListener.OnClickListener(v,orderId);
+                mListener.OnClickListener(v, orderId);
             }
         });
     }

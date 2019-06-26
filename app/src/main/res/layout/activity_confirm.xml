@@ -79,7 +79,6 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/order_number_text"
-            android:text="12345678910"
             android:textColor="#333333"
             android:textSize="13sp" />
     </RelativeLayout>
@@ -106,7 +105,6 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/order_money_text"
-            android:text="¥170.00"
             android:textColor="#333333"
             android:textSize="13sp" />
     </RelativeLayout>
@@ -133,7 +131,6 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/order_pay_text"
-            android:text="支付宝支付"
             android:textColor="#333333"
             android:textSize="12sp" />
     </RelativeLayout>

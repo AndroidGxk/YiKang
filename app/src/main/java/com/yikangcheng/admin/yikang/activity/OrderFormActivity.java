@@ -2,6 +2,7 @@ package com.yikangcheng.admin.yikang.activity;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -21,12 +22,14 @@ import com.yikangcheng.admin.yikang.activity.fragment.orderform.AwaitFragment;
 import com.yikangcheng.admin.yikang.activity.fragment.orderform.CloseFragment;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
+import com.yikangcheng.admin.yikang.util.TwoBallRotationProgressBar;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
 import me.jessyan.autosize.internal.CustomAdapt;
+import me.leefeng.promptlibrary.PromptDialog;
 
 public class OrderFormActivity extends BaseActivtiy implements CustomAdapt {
 
@@ -35,20 +38,19 @@ public class OrderFormActivity extends BaseActivtiy implements CustomAdapt {
     private TabLayout mTabActivityOrderform;
     private ViewPager mViewPagerOrderform;
     private int width;
+    private TwoBallRotationProgressBar progress;
 
     @Override
     protected void initView() {
-
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
         WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
-        int height = wm.getDefaultDisplay().getHeight();
         width = wm.getDefaultDisplay().getWidth();
         back_img = (ImageView) findViewById(R.id.back_img);
         mToolbarActivityOrderfrom = (RelativeLayout) findViewById(R.id.toolbar_activity_orderfrom);
         mTabActivityOrderform = (TabLayout) findViewById(R.id.tab_activity_orderform);
         mViewPagerOrderform = (ViewPager) findViewById(R.id.viewPager_orderform);
-
+        progress = (TwoBallRotationProgressBar) findViewById(R.id.progress);
 
         /**
          * 点击返回关闭当前页面
@@ -64,18 +66,23 @@ public class OrderFormActivity extends BaseActivtiy implements CustomAdapt {
         strings.add("全部");
         strings.add("待付款");
 //        strings.add("待收货");
-        strings.add("已支付");
+        strings.add("已付款");
         strings.add("已取消");
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(new AllFragment());
         fragments.add(new AwaitFragment());
-//        fragments.add(new WaitForReceivingFragment());
         fragments.add(new AccomplishFragment());
         fragments.add(new CloseFragment());
         Orderform_ViewPagerAdapter orderform_viewPagerAdapter = new Orderform_ViewPagerAdapter(getSupportFragmentManager(), strings, fragments);
         mViewPagerOrderform.setAdapter(orderform_viewPagerAdapter);
         mTabActivityOrderform.setupWithViewPager(mViewPagerOrderform);
-
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                progress.setVisibility(View.GONE);
+                progress.stopAnimator();
+            }
+        }, 500);
         //设置下划线长度
         mTabActivityOrderform.post(new Runnable() {
             @Override
@@ -174,7 +181,12 @@ public class OrderFormActivity extends BaseActivtiy implements CustomAdapt {
 
     @Override
     protected void initEventData() {
-
+        progress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                return;
+            }
+        });
     }
 
     @Override

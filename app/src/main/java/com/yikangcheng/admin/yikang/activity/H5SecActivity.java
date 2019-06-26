@@ -13,6 +13,9 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -25,13 +28,15 @@ import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
 import me.jessyan.autosize.internal.CustomAdapt;
 
-public class H5SecActivity extends BaseActivtiy implements CustomAdapt {
+public class H5SecActivity extends BaseActivtiy  {
 
     private static WebView webview;
-    private String http;
+    private String http, title;
     private ImageView back_img;
     private ProgressBar pbProgress;
     private SmartRefreshLayout refreshLayout;
+    private TextView title_text;
+    private RelativeLayout tabl;
 
     @Override
     protected void initView() {
@@ -41,12 +46,22 @@ public class H5SecActivity extends BaseActivtiy implements CustomAdapt {
         pbProgress = (ProgressBar) findViewById(R.id.pb_progress);
         webview = (WebView) findViewById(R.id.webView);
         back_img = (ImageView) findViewById(R.id.back_img);
+        tabl = (RelativeLayout) findViewById(R.id.tabl);
+        title_text = (TextView) findViewById(R.id.title_text);
         //加载刷新
         refreshLayout = (SmartRefreshLayout) findViewById(R.id.refreshLayout);
-        refreshLayout.setEnableLoadMore(false);
+        refreshLayout.setEnableLoadmore(false);
         Fragment_Shou.getGoBack();
         Intent intent = getIntent();
         http = intent.getStringExtra("http");
+        title = intent.getStringExtra("title");
+        if (title != null && !title.equals("")) {
+            title_text.setText(title);
+        }
+        if (title != null) {
+            if (title.equals("夏至福利") || title.equals("挚友超市"))
+                tabl.setVisibility(View.GONE);
+        }
         WebSettings webSettings = webview.getSettings();
         //设置WebView属性，能够执行Javascript脚本
         webSettings.setJavaScriptEnabled(true);
@@ -113,6 +128,24 @@ public class H5SecActivity extends BaseActivtiy implements CustomAdapt {
                 refreshLayout.finishRefresh();
             }
         });
+        webview.setWebViewClient(new WebViewClient() {
+            @Override
+            // 在点击请求的是链接是才会调用，重写此方法返回true表明点击网页里面的链接还是在当前的webview里跳转，不跳到浏览器那边。这个函数我们可以做很多操作，比如我们读取到某些特殊的URL，于是就可以不打开地址，取消这个操作，进行预先定义的其他操作，这对一个程序是非常必要的。
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                // 判断url链接中是否含有某个字段，如果有就执行指定的跳转（不执行跳转url链接），如果没有就加载url链接
+                if (url.contains("/appShow/proDetail")) {
+                    Intent intent = new Intent(H5SecActivity.this, ParticularsActivity.class);
+                    intent.putExtra("id", url);
+                    startActivity(intent);
+                    return true;
+                } else if (url.contains("/login")) {
+                    finish();
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        });
     }
 
     @Override
@@ -133,7 +166,6 @@ public class H5SecActivity extends BaseActivtiy implements CustomAdapt {
     }
 
     /**
-     *
      * @return
      */
 
@@ -164,18 +196,7 @@ public class H5SecActivity extends BaseActivtiy implements CustomAdapt {
             startActivity(intent);
         }
     }
-
-    @Override
-    public boolean isBaseOnWidth() {
-        return false;
-    }
-
     public static void getGoBack() {
         webview.goBack();
-    }
-
-    @Override
-    public float getSizeInDp() {
-        return 0;
     }
 }

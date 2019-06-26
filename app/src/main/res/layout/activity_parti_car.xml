@@ -4,6 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipToPadding="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:fitsSystemWindows="true">
 
 
@@ -63,7 +65,7 @@
                 android:id="@+id/shop_recycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="250dp"
+                android:layout_marginBottom="100dp"
                 android:nestedScrollingEnabled="false"
                 android:visibility="visible" />
 
@@ -147,6 +149,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/view2"
+                android:visibility="gone"
                 android:layout_centerHorizontal="true"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="22dp"
@@ -275,4 +278,9 @@
             android:visibility="gone" />
     </RelativeLayout>
 
+    <com.yikangcheng.admin.yikang.util.TwoBallRotationProgressBar
+        android:id="@+id/progress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true" />
 </RelativeLayout>

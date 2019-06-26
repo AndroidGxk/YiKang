@@ -12,11 +12,12 @@ import android.widget.RelativeLayout;
 import com.bumptech.glide.Glide;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.MainActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.All_A_Adapter;
+import com.yikangcheng.admin.yikang.activity.obligation.ObligationActivity;
 import com.yikangcheng.admin.yikang.activity.orderstatus.CloseTheDealActivity;
 import com.yikangcheng.admin.yikang.activity.orderstatus.FackOfActivity;
 import com.yikangcheng.admin.yikang.activity.orderstatus.WaitForpaymentActivity;
@@ -32,6 +33,8 @@ import com.yikangcheng.admin.yikang.util.SpacesItemDecoration;
 
 import java.util.ArrayList;
 
+import me.jessyan.autosize.AutoSizeConfig;
+import me.jessyan.autosize.internal.CustomAdapt;
 import me.leefeng.promptlibrary.PromptButton;
 import me.leefeng.promptlibrary.PromptButtonListener;
 import me.leefeng.promptlibrary.PromptDialog;
@@ -40,7 +43,7 @@ import me.leefeng.promptlibrary.PromptDialog;
  * Created by lenovo on 2019/5/20.
  * WF
  */
-public class AllFragment extends BaseFragment implements ICoreInfe {
+public class AllFragment extends BaseFragment implements ICoreInfe, CustomAdapt {
     private RecyclerView mRlvFragmentAllDingdan;
     private All_A_Adapter mAll_a_adapter;
     private ImageView mImgFragmentAll;
@@ -56,10 +59,11 @@ public class AllFragment extends BaseFragment implements ICoreInfe {
     @SuppressLint("NewApi")
     @Override
     protected void initView(View view) {
+        AutoSizeConfig.getInstance().setCustomFragment(true);
         //创建对象
         mPromptDialog = new PromptDialog(getActivity());
         //设置自定义属性
-        mPromptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(3000);
+        mPromptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(1000);
         //找控件
         mRlvFragmentAllDingdan = view.findViewById(R.id.rlv_fragment_all_dingdan);
         mImgFragmentAll = view.findViewById(R.id.img_fragment_all);
@@ -81,7 +85,9 @@ public class AllFragment extends BaseFragment implements ICoreInfe {
         mQuguanguang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), MainActivity.class));
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
             }
         });
 
@@ -234,14 +240,14 @@ public class AllFragment extends BaseFragment implements ICoreInfe {
                 refreshLayout.finishRefresh();  //刷新完成
             }
         });
+
         //加载的监听事件
-        mRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+        mRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+            public void onLoadmore(RefreshLayout refreshlayout) {
                 mPage++;
                 initMvp(mPage);
-                refreshLayout.finishLoadMore();      //加载完成
-                //refreshLayout.finishLoadMoreWithNoMoreData();  //全部加载完成,没有数据了调用此方法  这个方法调用了就加载一夜再也不加载了
+                refreshlayout.finishLoadmore();      //加载完成
             }
         });
     }
@@ -254,6 +260,16 @@ public class AllFragment extends BaseFragment implements ICoreInfe {
     @Override
     protected int getFragmentLayoutId() {
         return R.layout.fragment_all;
+    }
+
+    @Override
+    public boolean isBaseOnWidth() {
+        return false;
+    }
+
+    @Override
+    public float getSizeInDp() {
+        return 720;
     }
 
     //删除
@@ -296,17 +312,14 @@ public class AllFragment extends BaseFragment implements ICoreInfe {
              */
             initShuaXinJiaZai();
         }
-
-
         mAll_a_adapter.allData(entity.getOrder());
-
-
     }
 
     @Override
     public void fail(ApiException e) {
-
+        mRefreshLayout.setVisibility(View.GONE);
+        imgBut.setVisibility(View.GONE);
+        mRelativeLayout.setVisibility(View.VISIBLE);
     }
-
 
 }

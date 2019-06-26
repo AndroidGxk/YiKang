@@ -73,7 +73,7 @@
                 android:id="@+id/shop_recycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:layout_marginBottom="120dp"
                 android:nestedScrollingEnabled="false"
                 android:visibility="visible" />
 
@@ -119,6 +119,7 @@
 
             <RelativeLayout
                 android:id="@+id/diviline"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
@@ -156,10 +157,11 @@
                 android:id="@+id/shop_recyclertwo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingRight="5dp"
+                android:paddingLeft="5dp"
+                android:visibility="gone"
                 android:layout_below="@+id/view2"
                 android:layout_centerHorizontal="true"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
                 android:nestedScrollingEnabled="false"
                 android:overScrollMode="never" />
 

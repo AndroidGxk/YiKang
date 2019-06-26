@@ -217,4 +217,5 @@
         android:text="注册"
         android:textColor="#FFFFFF"
         android:textSize="18sp" />
+
 </RelativeLayout>

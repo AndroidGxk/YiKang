@@ -529,7 +529,7 @@ public class ALLBean {
             private int dataId;
             private int userId;
             private String dataType;
-            private double buyNum;
+            private int buyNum;
             private String createTime;
             private String payTime;
             private String payState;
@@ -593,11 +593,11 @@ public class ALLBean {
                 this.dataType = dataType;
             }
 
-            public double getBuyNum() {
+            public int getBuyNum() {
                 return buyNum;
             }
 
-            public void setBuyNum(double buyNum) {
+            public void setBuyNum(int buyNum) {
                 this.buyNum = buyNum;
             }
 

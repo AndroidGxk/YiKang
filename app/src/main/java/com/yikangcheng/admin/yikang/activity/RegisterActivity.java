@@ -1,10 +1,18 @@
 package com.yikangcheng.admin.yikang.activity;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -22,7 +30,10 @@ import com.yikangcheng.admin.yikang.presenter.RegisterPresenter;
 import com.yikangcheng.admin.yikang.presenter.SendMobilePresenter;
 import com.yikangcheng.admin.yikang.util.UIUtils;
 
+import java.util.List;
+
 import me.jessyan.autosize.internal.CustomAdapt;
+import me.leefeng.promptlibrary.PromptDialog;
 
 public class RegisterActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt, View.OnClickListener {
 
@@ -52,17 +63,24 @@ public class RegisterActivity extends BaseActivtiy implements ICoreInfe, CustomA
             }
         }
     };
-    private int height;
     private GetMobileKeyPresenter getMobileKeyPresenter;
     private SendMobilePresenter sendMobilePresenter;
     private RegisterPresenter registerPresenter;
     private int width;
+    private LocationManager locationManager;
+    private String locationProvider;
+    private String address;
+    private PromptDialog promptDialog;
 
     @Override
     protected void initView() {
+        getLocation(getApplicationContext());
         WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
-        int height = wm.getDefaultDisplay().getHeight();
         width = wm.getDefaultDisplay().getWidth();
+        //创建对象
+        promptDialog = new PromptDialog(RegisterActivity.this);
+        //设置自定义属性
+        promptDialog.getDefaultBuilder().touchAble(true).round(1).loadingDuration(1000);
         log_image = (LinearLayout) findViewById(R.id.log_image);
         reg_phone_edit = (EditText) findViewById(R.id.reg_phone_edit);
         ver_btn = (TextView) findViewById(R.id.ver_btn);
@@ -135,7 +153,6 @@ public class RegisterActivity extends BaseActivtiy implements ICoreInfe, CustomA
                 boolean mobile = UIUtils.isMobile(phone);
                 if (mobile) {
                     getMobileKeyPresenter.request(phone, "Android");
-                    handler.sendEmptyMessage(1);
                 } else {
                     Toast.makeText(RegisterActivity.this, "请输入正确的手机号", Toast.LENGTH_SHORT).show();
                 }
@@ -145,21 +162,96 @@ public class RegisterActivity extends BaseActivtiy implements ICoreInfe, CustomA
                 String code = ver_pwd_edit.getText().toString();
                 String reg_pwd = reg_pwd_edit.getText().toString();
                 String reg_two_pwd = reg_two_pwd_edit.getText().toString();
+                phone = reg_phone_edit.getText().toString();
                 String code_two = RegisterActivity.this.code_two_pwd_edit.getText().toString();
+                if (phone.equals("") || reg_pwd.equals("") || reg_two_pwd.equals("")) {
+                    Toast.makeText(this, "账号或密码不能为空", Toast.LENGTH_SHORT).show();
+                    return;
+                } else if (code.equals("") || code_two.equals("")) {
+                    Toast.makeText(this, "验证码或邀请码不能为空", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 registerPresenter.request(phone, reg_pwd, reg_two_pwd, code, code_two);
+                promptDialog.showLoading("加载中...");
                 break;
         }
     }
+
+    private void getLocation(Context context) {
+        //1.获取位置管理器
+        locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        //2.获取位置提供器，GPS或是NetWork
+        List<String> providers = locationManager.getProviders(true);
+        if (providers.contains(LocationManager.NETWORK_PROVIDER)) {
+            //如果是网络定位
+            locationProvider = LocationManager.NETWORK_PROVIDER;
+            Log.e("main", "网络");
+        } else if (providers.contains(LocationManager.GPS_PROVIDER)) {
+            //如果是GPS定位
+            locationProvider = LocationManager.GPS_PROVIDER;
+            Log.e("main", "gps");
+        } else {
+            Toast.makeText(this, "没有可用的位置提供器", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        //3.获取上次的位置，一般第一次运行，此值为null
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+
+            return;
+        }
+        Location location = locationManager.getLastKnownLocation(locationProvider);
+        if (location != null) {
+            showLocation(location);
+        } else {
+            // 监视地理位置变化，第二个和第三个参数分别为更新的最短时间minTime和最短距离minDistace
+            locationManager.requestLocationUpdates(locationProvider, 0, 0, mListener);
+        }
+    }
+
+    private void showLocation(Location location) {
+        address = "纬度：" + location.getLatitude() + "经度：" + location.getLongitude();
+    }
+
+    LocationListener mListener = new LocationListener() {
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+        }
+
+        // 如果位置发生变化，重新显示
+        @Override
+        public void onLocationChanged(Location location) {
+            showLocation(location);
+        }
+    };
+
 
     /**
      * 发送短信
      */
     public class SendMobile implements ICoreInfe {
-
         @Override
         public void success(Object data) {
             Request request = (Request) data;
             Toast.makeText(RegisterActivity.this, "" + request.getMessage(), Toast.LENGTH_SHORT).show();
+            if (request.isSuccess()) {
+                handler.sendEmptyMessage(1);
+            }
         }
 
         @Override
@@ -177,13 +269,16 @@ public class RegisterActivity extends BaseActivtiy implements ICoreInfe, CustomA
         public void success(Object data) {
             Request request = (Request) data;
             if (request.isSuccess()) {
+                promptDialog.showSuccess(request.getMessage());
                 finish();
+            } else {
+                promptDialog.showError(request.getMessage());
             }
         }
 
         @Override
         public void fail(ApiException e) {
-
+            promptDialog.showError("注册失败");
         }
     }
 

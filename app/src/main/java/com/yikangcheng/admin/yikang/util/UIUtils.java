@@ -9,6 +9,9 @@ import android.graphics.BitmapFactory;
 import android.graphics.BitmapFactory.Options;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.RelativeSizeSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -396,5 +399,17 @@ public class UIUtils {
         }
         return "0.0.0.0";
     }
-
+    /**
+     * 小数点前后大小不一致
+     *
+     * @param value
+     * @return
+     */
+    public static SpannableString changTVsize(String value) {
+        SpannableString spannableString = new SpannableString(value);
+        if (value.contains(".")) {
+            spannableString.setSpan(new RelativeSizeSpan(0.8f), value.indexOf("."), value.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+        return spannableString;
+    }
 }

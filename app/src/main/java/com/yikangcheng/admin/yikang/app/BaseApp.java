@@ -3,20 +3,14 @@ package com.yikangcheng.admin.yikang.app;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.Handler;
 import android.os.Looper;
-import android.content.Context;
 import android.support.multidex.MultiDex;
 
-import com.example.sqlite.dao.DaoMaster;
-import com.example.sqlite.dao.DaoSession;
-import com.example.sqlite.dao.UserDetailBeanDao;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreator;
-import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreator;
+import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreater;
+import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreater;
 import com.scwang.smartrefresh.layout.api.RefreshFooter;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -31,6 +25,8 @@ import com.yikangcheng.admin.yikang.bean.UserDetailBean;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import cn.jpush.android.api.JPushInterface;
 
 
 public class BaseApp extends Application {
@@ -72,7 +68,7 @@ public class BaseApp extends Application {
     //static 代码段可以防止内存泄露
     static {
         //设置全局的Header构建器
-        SmartRefreshLayout.setDefaultRefreshHeaderCreator(new DefaultRefreshHeaderCreator() {
+        SmartRefreshLayout.setDefaultRefreshHeaderCreater(new DefaultRefreshHeaderCreater() {
             @Override
             public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout) {
                 layout.setPrimaryColorsId(R.color.colorToolbar, android.R.color.white);//全局设置主题颜色
@@ -80,7 +76,7 @@ public class BaseApp extends Application {
             }
         });
         //设置全局的Footer构建器
-        SmartRefreshLayout.setDefaultRefreshFooterCreator(new DefaultRefreshFooterCreator() {
+        SmartRefreshLayout.setDefaultRefreshFooterCreater(new DefaultRefreshFooterCreater() {
             @Override
             public RefreshFooter createRefreshFooter(Context context, RefreshLayout layout) {
                 //指定为经典Footer，默认是 BallPulseFooter
@@ -94,11 +90,12 @@ public class BaseApp extends Application {
         super.onCreate();
         mAppInstance = this;
         MultiDex.install(this);
-//初始化Fresco
-        Fresco.initialize(this);
-        SobotApi.initSobotSDK(this, "7560599b63bf43378d05d018ded42cdd", "");
+        SobotApi.initSobotSDK(this, "7560599b63bf43378d05d018ded42cdd", "92");
         getMainThreadLooper();
         registToWX();
+        JPushInterface.setDebugMode(false);    // 设置开启日志,发布时请关闭日志
+        JPushInterface.init(this);            // 初始化 JPush
+        Fresco.initialize(this);
     }
 
     public static Context getApp() {
@@ -161,7 +158,7 @@ public class BaseApp extends Application {
     //static 代码段可以防止内存泄露
     static {
         //设置全局的Header构建器
-        SmartRefreshLayout.setDefaultRefreshHeaderCreator(new DefaultRefreshHeaderCreator() {
+        SmartRefreshLayout.setDefaultRefreshHeaderCreater(new DefaultRefreshHeaderCreater() {
             @Override
             public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout) {
                 layout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);//全局设置主题颜色
@@ -169,7 +166,7 @@ public class BaseApp extends Application {
             }
         });
         //设置全局的Footer构建器
-        SmartRefreshLayout.setDefaultRefreshFooterCreator(new DefaultRefreshFooterCreator() {
+        SmartRefreshLayout.setDefaultRefreshFooterCreater(new DefaultRefreshFooterCreater() {
             @Override
             public RefreshFooter createRefreshFooter(Context context, RefreshLayout layout) {
                 //指定为经典Footer，默认是 BallPulseFooter

@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.SeekListActivity;
+import com.yikangcheng.admin.yikang.activity.SeekListNewActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.SeekHotAdapter;
 import com.yikangcheng.admin.yikang.activity.adapter.TagAdapter;
 import com.yikangcheng.admin.yikang.activity.edittext_delete.ETextWithDelete;
@@ -119,7 +120,7 @@ public class SeekActivity extends BaseActivtiy implements CustomAdapt {
                     tagAdapter.notifyDataSetChanged();
                     edit.putString("count", s);
                     edit.commit();
-                    Intent intent = new Intent(SeekActivity.this, SeekListActivity.class);
+                    Intent intent = new Intent(SeekActivity.this, SeekListNewActivity.class);
                     intent.putExtra("count", s);
                     startActivity(intent);
 
@@ -138,7 +139,7 @@ public class SeekActivity extends BaseActivtiy implements CustomAdapt {
      * 去往搜索结果
      */
     private void startActivityToResult() {
-        Intent intent = new Intent(SeekActivity.this, SeekListActivity.class);
+        Intent intent = new Intent(SeekActivity.this, SeekListNewActivity.class);
         String s = mEditTixtActivitySeekSousuo.getText().toString();
         intent.putExtra("count", s);
         startActivity(intent);

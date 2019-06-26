@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -242,7 +243,6 @@ public class UserCompileActivity extends BaseActivtiy implements ICoreInfe, Cust
 //            public void afterTextChanged(Editable s) {
 //            }
 //        });
-
 
         //点击事件
         add_address.setOnClickListener(new View.OnClickListener() {
