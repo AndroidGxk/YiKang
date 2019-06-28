@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.orderstatus.CloseTheDealActivity;
 import com.yikangcheng.admin.yikang.app.Constants;
@@ -47,8 +48,11 @@ public class CloseTheDealAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ViewHolder holder1 = (ViewHolder) holder;
+        RequestOptions requestOptions = new RequestOptions();
+        requestOptions.placeholder(R.drawable.inco_log);
+        requestOptions.fallback(R.drawable.inco_log);
         if (mList.get(position).getShopSpecDetailed().getLogo().contains("http://") || mList.get(position).getShopSpecDetailed().getLogo().contains("https://")) {
-            Glide.with(mContent).load( mList.get(position).getShopSpecDetailed().getLogo()).into(holder1.mImg);
+            Glide.with(mContent).load(mList.get(position).getShopSpecDetailed().getLogo()).into(holder1.mImg);
 
         } else {
             Glide.with(mContent).load(Constants.BASETUPIANSHANGCHUANURL + mList.get(position).getShopSpecDetailed().getLogo()).into(holder1.mImg);
@@ -102,6 +106,14 @@ public class CloseTheDealAdapter extends RecyclerView.Adapter {
             public void onClick(View view) {
                 if (looklog != null) {
                     looklog.onclick(mList.get(position).getId());
+                }
+            }
+        });
+        holder1.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (toGoodParitual != null) {
+                    toGoodParitual.onclick(mList.get(position).getShopSpecDetailed().getCommodityId());
                 }
             }
         });

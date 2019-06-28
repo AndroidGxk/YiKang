@@ -26,9 +26,8 @@ import com.yikangcheng.admin.yikang.activity.particulars.ParticularsActivity;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
-import me.jessyan.autosize.internal.CustomAdapt;
 
-public class H5SecActivity extends BaseActivtiy  {
+public class H5SecActivity extends BaseActivtiy {
 
     private static WebView webview;
     private String http, title;
@@ -37,9 +36,12 @@ public class H5SecActivity extends BaseActivtiy  {
     private SmartRefreshLayout refreshLayout;
     private TextView title_text;
     private RelativeLayout tabl;
+    private String none;
 
     @Override
     protected void initView() {
+        //不允许侧滑退出
+        closeSwipeBack();
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorTab);
         //进度条
@@ -54,6 +56,15 @@ public class H5SecActivity extends BaseActivtiy  {
         Fragment_Shou.getGoBack();
         Intent intent = getIntent();
         http = intent.getStringExtra("http");
+        none = intent.getStringExtra("none");
+        if (http == null) {
+                http = "https://www.yikch.com/mobile/appShow/activity?type=android";
+        }
+        if (none != null) {
+            if (none.equals("yes")) {
+                tabl.setVisibility(View.GONE);
+            }
+        }
         title = intent.getStringExtra("title");
         if (title != null && !title.equals("")) {
             title_text.setText(title);
@@ -124,7 +135,8 @@ public class H5SecActivity extends BaseActivtiy  {
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                webview.loadUrl(http);
+                String url = webview.getUrl();
+                webview.loadUrl(url);
                 refreshLayout.finishRefresh();
             }
         });
@@ -154,7 +166,7 @@ public class H5SecActivity extends BaseActivtiy  {
             @Override
             public void onClick(View view) {
                 /**
-                 * 如果还有页面需要这样你就复制这些代码就可以了
+                 * 判断网页是否还可以返回
                  */
                 if (webview.canGoBack()) {
                     webview.goBack();
@@ -196,6 +208,7 @@ public class H5SecActivity extends BaseActivtiy  {
             startActivity(intent);
         }
     }
+
     public static void getGoBack() {
         webview.goBack();
     }

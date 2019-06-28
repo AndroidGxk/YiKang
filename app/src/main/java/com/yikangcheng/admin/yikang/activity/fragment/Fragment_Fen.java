@@ -23,7 +23,6 @@ import com.yikangcheng.admin.yikang.presenter.ClassifyPresenter;
 import java.util.List;
 
 import me.jessyan.autosize.AutoSizeConfig;
-import me.leefeng.promptlibrary.PromptDialog;
 
 public class Fragment_Fen extends BaseFragment implements ICoreInfe {
     private RecyclerView mRlvFragmentFenleiYou;
@@ -34,21 +33,17 @@ public class Fragment_Fen extends BaseFragment implements ICoreInfe {
     private List<ClassifyListOneBean.ChildSubjectListBeanX> childSubjectList;
     private List<ClassifyListOneBean> entity;
     private int height;
-    private PromptDialog promptDialog;
     private TextView text_seek;
     private int width;
 
     @Override
     protected void initView(View view) {
         AutoSizeConfig.getInstance().setCustomFragment(true);
-        //创建对象
-        promptDialog = new PromptDialog(getActivity());
-        //设置自定义属性
-        promptDialog.getDefaultBuilder().touchAble(true).round(1).loadingDuration(1000);
+
         WindowManager wm = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
         height = wm.getDefaultDisplay().getHeight();
         width = wm.getDefaultDisplay().getWidth();
-        promptDialog.showLoading("加载中...");
+//        promptDialog.showLoading("加载中...");
         mRlvFragmentFenleiYou = view.findViewById(R.id.rlv__fragment_fenlei_you);
         text_seek = view.findViewById(R.id.text_seek);
         mRlvFragmentFenleiZuo = view.findViewById(R.id.rlv__fragment_fenlei_zuo);
@@ -104,11 +99,9 @@ public class Fragment_Fen extends BaseFragment implements ICoreInfe {
         mFenLeiAdapter.addAll(entity);
         childSubjectList = entity.get(0).getChildSubjectList();
         mFenLeiBAdapter.addData(childSubjectList);
-        promptDialog.dismiss();
     }
 
     @Override
     public void fail(ApiException e) {
-        promptDialog.showError("加载失败");
     }
 }

@@ -16,7 +16,6 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yikangcheng.admin.yikang.R;
-import com.yikangcheng.admin.yikang.activity.LoginActivity;
 import com.yikangcheng.admin.yikang.activity.MainActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.CanceledAdapter_A;
 import com.yikangcheng.admin.yikang.activity.orderstatus.FackOfActivity;
@@ -40,6 +39,9 @@ import me.leefeng.promptlibrary.PromptButton;
 import me.leefeng.promptlibrary.PromptButtonListener;
 import me.leefeng.promptlibrary.PromptDialog;
 
+/**
+ * 已取消订单详情
+ */
 public class CanceledActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt {
 
     private ImageView back_img;

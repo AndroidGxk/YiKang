@@ -28,7 +28,7 @@ android {
 
         manifestPlaceholders = [
                 JPUSH_PKGNAME: applicationId,
-                JPUSH_APPKEY : "96c1e5c685835f94d4a0e3a0", //JPush 上注册的包名对应的 Appkey.
+                JPUSH_APPKEY : "71b4c79e15237f0558f34528", //JPush 上注册的包名对应的 Appkey.
                 JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
         ]
     }
@@ -112,4 +112,6 @@ dependencies {
     implementation 'cn.jiguang.sdk:jpush:3.1.6'  // 此处以JPush 3.1.6 版本为例。
     implementation 'cn.jiguang.sdk:jcore:1.2.5'  // 此处以JCore 1.2.5 版本为例。
     implementation 'com.mylhyl:circleDialog:3.0.4'
+    implementation 'com.github.tianma8023:NetDetector:v0.2.0'
+
 }

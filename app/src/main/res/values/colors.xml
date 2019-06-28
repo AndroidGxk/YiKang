@@ -11,5 +11,6 @@
     <color name="colorText">#333333</color>
     <color name="colorTabG">#EBEBEB</color>
     <color name="white">#FFFFFF</color>
+    <color name="transparent">#00FFFFFF</color>
     <color name="startingwindow_bgcolor">#FF7A64</color>
 </resources>

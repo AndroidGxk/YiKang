@@ -142,12 +142,12 @@ public class FindPwdActivity extends BaseActivtiy implements CustomAdapt, ICoreI
 //          点击发送验证码
             case R.id.moblie_text:
                 String phone = phone_text.getText().toString();
-                boolean mobile = UIUtils.isMobile(phone);
-                if (mobile) {
+                if (phone.equals("")) {
+                    Toast.makeText(FindPwdActivity.this, "请输入正确的手机号", Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
                     getMobileKeyPresenter.request(phone, "Android");
                     handler.sendEmptyMessage(1);
-                } else {
-                    Toast.makeText(FindPwdActivity.this, "请输入正确的手机号", Toast.LENGTH_SHORT).show();
                 }
                 break;
 //          修改
@@ -156,7 +156,7 @@ public class FindPwdActivity extends BaseActivtiy implements CustomAdapt, ICoreI
                 String moblie_code = moblie.getText().toString();
                 String newpwd = newpwd_text.getText().toString();
                 String newpwds = newpwd_texts.getText().toString();
-                if(moblie_code.equals("")){
+                if (moblie_code.equals("")) {
                     Toast.makeText(FindPwdActivity.this, "请输入验证码", Toast.LENGTH_SHORT).show();
                 }
                 if (newpwd.equals("") || newpwds.equals("")) {

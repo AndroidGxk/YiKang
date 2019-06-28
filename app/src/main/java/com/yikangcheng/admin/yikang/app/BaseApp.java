@@ -19,8 +19,8 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.sobot.chat.SobotApi;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+import com.tianma.netdetector.lib.NetStateChangeReceiver;
 import com.yikangcheng.admin.yikang.R;
-import com.yikangcheng.admin.yikang.bean.UserDetailBean;
 
 import java.util.HashSet;
 import java.util.List;
@@ -96,6 +96,14 @@ public class BaseApp extends Application {
         JPushInterface.setDebugMode(false);    // 设置开启日志,发布时请关闭日志
         JPushInterface.init(this);            // 初始化 JPush
         Fresco.initialize(this);
+        NetStateChangeReceiver.registerReceiver(this);
+    }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        // 取消BroadcastReceiver注册
+        NetStateChangeReceiver.unregisterReceiver(this);
     }
 
     public static Context getApp() {

@@ -43,6 +43,7 @@ import com.yikangcheng.admin.yikang.presenter.UpdateUserMapperPresenter;
 import com.yikangcheng.admin.yikang.presenter.UserInfoPresenter;
 import com.yikangcheng.admin.yikang.util.CropUtils;
 import com.yikangcheng.admin.yikang.util.FileUtil;
+import com.yikangcheng.admin.yikang.util.UIUtils;
 
 import java.io.File;
 
@@ -257,14 +258,26 @@ public class BasicFragment extends BaseFragment implements ICoreInfe {
                 LoginBean logUser = getLogUser(getContext());
                 if (logUser != null) {
                     if (path == null || path.equals("")) {
-                        path = userCenter.getAvatar();
+                        if (userCenter.getAvatar() != null && userCenter.getAvatar().equals("")) {
+                            path = userCenter.getAvatar();
+                        }
                     }
-                    if (name_str.equals("") || rela_name_str.equals("") || jianjie_str.equals("")||email.equals("")) {
+                    if (name_str.equals("") || rela_name_str.equals("") || jianjie_str.equals("") || email.equals("")) {
                         Toast.makeText(getContext(), "请完善信息", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    updateUserMapperPresenter.request(logUser.getId(), name_str, path, rela_name_str, email, sex, jianjie_str);
-                    promptDialog.showLoading("正在保存");
+                    boolean contain = UIUtils.containsEmoji(name_str);
+                    boolean contains = UIUtils.containsEmoji(rela_name_str);
+                    if (!contain) {
+                        if(!contains){
+                            updateUserMapperPresenter.request(logUser.getId(), name_str, path, rela_name_str, email, sex, jianjie_str);
+                            promptDialog.showLoading("正在保存");
+                        }else{
+                            Toast.makeText(getContext(), "姓名不能包含特殊符号", Toast.LENGTH_SHORT).show();
+                        }
+                    }else{
+                        Toast.makeText(getContext(), "昵称不能包含特殊符号", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
@@ -433,9 +446,16 @@ public class BasicFragment extends BaseFragment implements ICoreInfe {
         jianjie.setText(userCenter.getUserInfo());
         youxiang_text.setText(userCenter.getEmail());
         //设置图片圆角角度
-        Glide.with(getContext()).load("https://static.yikch.com" + userCenter.getAvatar())
-                .apply(RequestOptions.bitmapTransform(new CircleCrop()))
-                .into(user_header);
+        if (userCenter.getAvatar().contains("https://") || userCenter.getAvatar().contains("http://")) {
+            Glide.with(getContext()).load(userCenter.getAvatar())
+                    .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                    .into(user_header);
+        } else {
+            Glide.with(getContext()).load("https://static.yikch.com" + userCenter.getAvatar())
+                    .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                    .into(user_header);
+        }
+
     }
 
     @Override

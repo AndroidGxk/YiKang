@@ -2,13 +2,13 @@ package com.yikangcheng.admin.yikang.activity.fragment;
 
 import android.content.Intent;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
@@ -22,24 +22,20 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.ApoutUsActivity;
+import com.yikangcheng.admin.yikang.activity.H5SecActivity;
+import com.yikangcheng.admin.yikang.activity.LoginActivity;
 import com.yikangcheng.admin.yikang.activity.OrderFormActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.Orderform_ViewPagerAdapter;
+import com.yikangcheng.admin.yikang.activity.coupon.CouponActivity;
 import com.yikangcheng.admin.yikang.activity.fragment.goodsrecommtion.Good_Recommiton_Day;
 import com.yikangcheng.admin.yikang.activity.fragment.goodsrecommtion.Good_Recommiton_Home;
 import com.yikangcheng.admin.yikang.activity.fragment.goodsrecommtion.Good_Recommiton_Three;
 import com.yikangcheng.admin.yikang.activity.fragment.goodsrecommtion.Good_Recommiton_fash;
 import com.yikangcheng.admin.yikang.activity.fragment.goodsrecommtion.Good_Recommiton_snack;
-import com.yikangcheng.admin.yikang.activity.fragment.orderform.AccomplishFragment;
-import com.yikangcheng.admin.yikang.activity.fragment.orderform.AllFragment;
-import com.yikangcheng.admin.yikang.activity.fragment.orderform.AwaitFragment;
-import com.yikangcheng.admin.yikang.activity.fragment.orderform.CloseFragment;
 import com.yikangcheng.admin.yikang.activity.myaccount.MyaccountActivity;
 import com.yikangcheng.admin.yikang.activity.obligation.CanceledActivity;
-import com.yikangcheng.admin.yikang.activity.obligation.DetailActivity;
 import com.yikangcheng.admin.yikang.activity.obligation.ObligationActivity;
 import com.yikangcheng.admin.yikang.activity.obligation.PaidActivity;
-import com.yikangcheng.admin.yikang.activity.particulars.CustomParticularActivity;
-import com.yikangcheng.admin.yikang.activity.particulars.GoodParticularsActivity;
 import com.yikangcheng.admin.yikang.activity.seek.SeekActivity;
 import com.yikangcheng.admin.yikang.activity.siteactivity.AiteActivity;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
@@ -59,6 +55,10 @@ import com.yikangcheng.admin.yikang.presenter.UserInfoPresenter;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+
+import me.leefeng.promptlibrary.PromptButton;
+import me.leefeng.promptlibrary.PromptButtonListener;
+import me.leefeng.promptlibrary.PromptDialog;
 
 public class Fragment_Wo extends BaseFragment implements View.OnClickListener {
     private TextView mTvFragmentWoDingdan;
@@ -82,8 +82,8 @@ public class Fragment_Wo extends BaseFragment implements View.OnClickListener {
     private LoginBean logUser;
     private RelativeLayout mMingxi, tou_rela;
     private LinearLayout tou_lin, tou_lin2;
-    private LinearLayout shop_btn, gobuy_btn, seckill_btn, booking_btn;
-    private ImageView tou_lin3, tou_lin4;
+    private LinearLayout shop_btn, gobuy_btn, seckill_btn, booking_btn, ge_line;
+    private ImageView tou_lin3, bo_phone;
     private TextView text_fuli, tou_text, tv_toolBar_title;
     private InitOrderCountPresenter initOrderCountPresenter;
     private ImageView shop_car, shop_buy, shop_booking, shop_seckill, si_geren_qun;
@@ -94,10 +94,15 @@ public class Fragment_Wo extends BaseFragment implements View.OnClickListener {
     private double mViewHeight;
     private double mViewHeight2;
     private RecommendPresenter recommendPresenter;
+    private PromptDialog promptDialog;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void initView(View view) {
+        //创建对象
+        promptDialog = new PromptDialog(getActivity());
+        //设置自定义属性
+        promptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(3000);
         //查询数据库中是否有用户
         logUser = getLogUser(getContext());
         //广告图
@@ -106,6 +111,7 @@ public class Fragment_Wo extends BaseFragment implements View.OnClickListener {
         neste = view.findViewById(R.id.Neste);
         //查看全部订单
         mTvFragmentWoDingdan = view.findViewById(R.id.tv_fragment_wo_dingdan);
+        ge_line = view.findViewById(R.id.ge_line);
         //账号明细
         mImgFragmentWoMingxi = view.findViewById(R.id.img_fragment_wo_mingxi);
         //关于
@@ -156,7 +162,7 @@ public class Fragment_Wo extends BaseFragment implements View.OnClickListener {
         tou_rela = view.findViewById(R.id.tou_rela);
         tou_lin = view.findViewById(R.id.tou_lin);
         tou_lin2 = view.findViewById(R.id.tou_lin2);
-        tou_lin4 = view.findViewById(R.id.tou_lin4);
+        bo_phone = view.findViewById(R.id.bo_phone);
         tou_lin3 = view.findViewById(R.id.tou_lin3);
         text_fuli = view.findViewById(R.id.text_fuli);
         tou_text = view.findViewById(R.id.tou_text);
@@ -180,7 +186,6 @@ public class Fragment_Wo extends BaseFragment implements View.OnClickListener {
                 .into(shop_booking);
         Glide.with(getContext()).load(R.drawable.si_grenzhongxin)
                 .into(si_geren_qun);
-
         //tabLayout
         final List<String> strings = new ArrayList<>();
         strings.add("家电");
@@ -338,7 +343,9 @@ public class Fragment_Wo extends BaseFragment implements View.OnClickListener {
         booking_btn.setOnClickListener(this);
         gobuy_btn.setOnClickListener(this);
         seckill_btn.setOnClickListener(this);
+        si_geren_qun.setOnClickListener(this);
         shop_btn.setOnClickListener(this);
+        bo_phone.setOnClickListener(this);
         //查询待付款个数
         initOrderCountPresenter = new InitOrderCountPresenter(new InitOrder());
         //接口请求
@@ -395,7 +402,8 @@ public class Fragment_Wo extends BaseFragment implements View.OnClickListener {
                 break;
             //账户明细
             case R.id.relativeLayout_mingxi_fragment_wo:
-                startActivity(new Intent(getActivity(), DetailActivity.class));
+//                startActivity(new Intent(getActivity(), DetailActivity.class));
+                Toast.makeText(getContext(), "敬请期待", Toast.LENGTH_SHORT).show();
                 break;
             //待付款
             case R.id.img_fragment_wo_daifukuan:
@@ -420,6 +428,7 @@ public class Fragment_Wo extends BaseFragment implements View.OnClickListener {
                 break;
             //优惠劵
             case R.id.img__fragment_wo_gouwuche:
+                startActivity(new Intent(getActivity(), CouponActivity.class));
                 break;
             //收货地址
             case R.id.img_fragment_wo_dizi:
@@ -430,7 +439,8 @@ public class Fragment_Wo extends BaseFragment implements View.OnClickListener {
             //全部订单
             case R.id.img_fragment_wo_yituikuan:
                 if (logUser != null) {
-                    startActivity(new Intent(getActivity(), OrderFormActivity.class));
+//                    startActivity(new Intent(getActivity(), OrderFormActivity.class));
+                    Toast.makeText(getContext(), "敬请期待", Toast.LENGTH_SHORT).show();
                 }
                 break;
             //关于App
@@ -448,22 +458,59 @@ public class Fragment_Wo extends BaseFragment implements View.OnClickListener {
                 break;
             //挚友超市
             case R.id.shop_btn:
-                Toast.makeText(getContext(), "敬请期待", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getContext(), H5SecActivity.class);
+                intent.putExtra("none", "yes");
+                intent.putExtra("http", "https://www.yikch.com/mobile/appShow/market?type=android");
+                startActivity(intent);
                 break;
             //超惠购
             case R.id.gobuy_btn:
-                Toast.makeText(getContext(), "敬请期待", Toast.LENGTH_SHORT).show();
+                Intent gobuy_btn = new Intent(getContext(), H5SecActivity.class);
+                gobuy_btn.putExtra("none", "yes");
+                gobuy_btn.putExtra("http", "https://www.yikch.com/mobile/appShow/superToday?type=android");
+                startActivity(gobuy_btn);
                 break;
             //周秒杀
             case R.id.seckill_btn:
-                Toast.makeText(getContext(), "敬请期待", Toast.LENGTH_SHORT).show();
+                Intent seckill_btn = new Intent(getContext(), H5SecActivity.class);
+                seckill_btn.putExtra("http", "https://www.yikch.com/mobile/appShow/activity?type=android");
+                startActivity(seckill_btn);
                 break;
             //拼团
             case R.id.booking_btn:
-                Toast.makeText(getContext(), "敬请期待", Toast.LENGTH_SHORT).show();
+                Intent booking_btn = new Intent(getContext(), H5SecActivity.class);
+                booking_btn.putExtra("http", "https://www.yikch.com/mobile/appShow/activity1?type=android");
+                startActivity(booking_btn);
+                break;
+            /**
+             * 会员福利社
+             */
+            case R.id.si_geren_qun:
+                Intent tou_lin3 = new Intent(getContext(), H5SecActivity.class);
+                tou_lin3.putExtra("title", "会员福利社");
+                tou_lin3.putExtra("http", "https://www.yikch.com/mobile/appShow/memberBenefits?type=android");
+                startActivity(tou_lin3);
+                break;
+            /**
+             * 拨打营养师号码
+             */
+            case R.id.bo_phone:
+                Intent bo_phone = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "010-57690370"));
+                startActivity(bo_phone);
                 break;
         }
     }
+
+    //按钮的定义，创建一个按钮的对象
+    final PromptButton confirm = new PromptButton("确定", new PromptButtonListener() {
+        @Override
+        public void onClick(PromptButton button) {
+            Intent intent = new Intent(getContext(), LoginActivity.class);
+            startActivity(intent);
+            getDelete(getContext());
+            getActivity().finish();
+        }
+    });
 
     public class AdvertisingICoreInfe implements ICoreInfe {
         @Override
@@ -481,7 +528,8 @@ public class Fragment_Wo extends BaseFragment implements View.OnClickListener {
 
     @Override
     protected void initData() {
-        recommendPresenter.request(logUser.getId(), 1, 1);
+        if (logUser != null)
+            recommendPresenter.request(logUser.getId(), 1, 1);
     }
 
     @Override
@@ -496,9 +544,7 @@ public class Fragment_Wo extends BaseFragment implements View.OnClickListener {
             int userId = logUser.getId();
             userInfoPresenter.request(userId);
             initOrderCountPresenter.request(logUser.getId());
-
         } else {
-            tuijian.setVisibility(View.GONE);
         }
     }
 
@@ -523,9 +569,15 @@ public class Fragment_Wo extends BaseFragment implements View.OnClickListener {
                 mImgFragmentWoTouxiang.setBackgroundResource(R.drawable.touxiang_2);
             } else {
                 //设置图片圆角角度
-                Glide.with(getContext()).load("https://static.yikch.com" + userCenter.getAvatar())
-                        .apply(RequestOptions.bitmapTransform(new CircleCrop()))
-                        .into(mImgFragmentWoTouxiang);
+                if (userCenter.getAvatar().contains("http://") || userCenter.getAvatar().contains("https://")) {
+                    Glide.with(getContext()).load(userCenter.getAvatar())
+                            .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                            .into(mImgFragmentWoTouxiang);
+                } else {
+                    Glide.with(getContext()).load("https://static.yikch.com" + userCenter.getAvatar())
+                            .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                            .into(mImgFragmentWoTouxiang);
+                }
             }
         }
 

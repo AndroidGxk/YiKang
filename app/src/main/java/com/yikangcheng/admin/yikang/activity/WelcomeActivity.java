@@ -19,6 +19,7 @@ import android.widget.ImageView;
 
 import com.example.sqlite.dao.DaoMaster;
 import com.example.sqlite.dao.DaoSession;
+import com.example.sqlite.dao.LoginBeanDao;
 import com.example.sqlite.dao.UserDetailBeanDao;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.fragment.introduction.Introduction_four;
@@ -38,6 +39,8 @@ public class WelcomeActivity extends AppCompatActivity {
     List<Fragment> list_frag = new ArrayList<>();
     private int count = 3;
     private static int record;
+    private LoginBean loginBean;
+
     Handler handler = new Handler(Looper.myLooper()) {
         @Override
         public void handleMessage(Message msg) {
@@ -47,15 +50,14 @@ public class WelcomeActivity extends AppCompatActivity {
                 if (count > 0) {
                     handler.sendEmptyMessageDelayed(1, 1000);
                 } else {
-                    DaoSession daoSession = DaoMaster.newDevSession(WelcomeActivity.this, UserDetailBeanDao.TABLENAME);
-                    UserDetailBeanDao userDetailBeanDao = daoSession.getUserDetailBeanDao();
-//        List<UserDetailBean> list = userDetailBeanDao.queryBuilder().where(UserDetailBeanDao.Properties.Statu.eq("1"))
-//                .build().list();
-                    List<UserDetailBean> list = userDetailBeanDao.loadAll();
+                    DaoSession daoSession = DaoMaster.newDevSession(WelcomeActivity.this, LoginBeanDao.TABLENAME);
+                    LoginBeanDao loginBeanDao = daoSession.getLoginBeanDao();
+                    List<LoginBean> list = loginBeanDao.queryBuilder().where(LoginBeanDao.Properties.Status.eq("1"))
+                            .build().list();
                     if (list.size() > 0) {
-                        userDetailBean = list.get(0);
+                        loginBean = list.get(0);
                     }
-                    if (userDetailBean == null) {
+                    if (loginBean == null) {
                         startActivity(new Intent(WelcomeActivity.this, LoginActivity.class));
                     } else {
                         startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
@@ -66,9 +68,7 @@ public class WelcomeActivity extends AppCompatActivity {
             }
         }
     };
-    private UserDetailBean userDetailBean;
     private ImageView image;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

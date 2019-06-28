@@ -16,13 +16,13 @@
         android:id="@+id/table"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorTab">
+        android:background="#CCCCCC">
 
         <TextView
             android:id="@+id/EditTixt_activity_seek_sousuo"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_marginTop="10dp"
+            android:background="@color/colorTab"
             android:focusable="false"
             android:gravity="center"
             android:imeOptions="actionSearch"
@@ -46,14 +46,14 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_below="@+id/EditTixt_activity_seek_sousuo"
-            android:background="@color/clolrBAai"
+            android:background="@drawable/newlistbg"
             android:gravity="center_vertical">
 
             <LinearLayout
                 android:id="@+id/zonghe_line"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -61,7 +61,6 @@
                     android:id="@+id/zonghe"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
-                    android:layout_weight="1"
                     android:gravity="center"
                     android:text="综合"
                     android:textColor="@color/colorTab"
@@ -80,7 +79,7 @@
                 android:id="@+id/xiaoliang_line"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="1.5"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -107,8 +106,6 @@
                 android:id="@+id/price_rela"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@+id/qiehuan"
-                android:layout_toRightOf="@+id/xiaoliang"
                 android:layout_weight="1"
                 android:gravity="center_horizontal">
 
@@ -150,7 +147,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/table"
-        android:layout_marginTop="-5dp"
         android:background="@color/clolrBAai">
 
         <com.scwang.smartrefresh.header.WaterDropHeader
@@ -185,8 +181,8 @@
         android:visibility="gone" />
 
     <com.yikangcheng.admin.yikang.util.TwoBallRotationProgressBar
-        android:id="@+id/progress"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerInParent="true" />
+    android:id="@+id/progress"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerInParent="true" />
 </RelativeLayout>

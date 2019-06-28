@@ -7,17 +7,19 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-
+import android.widget.Toast;
 
 import com.example.sqlite.dao.DaoMaster;
 import com.example.sqlite.dao.DaoSession;
 import com.example.sqlite.dao.LoginBeanDao;
 import com.example.sqlite.dao.UserDetailBeanDao;
+import com.tianma.netdetector.lib.NetStateChangeObserver;
+import com.tianma.netdetector.lib.NetStateChangeReceiver;
+import com.tianma.netdetector.lib.NetworkType;
 import com.yikangcheng.admin.yikang.app.BaseApp;
 import com.yikangcheng.admin.yikang.bean.LoginBean;
 import com.yikangcheng.admin.yikang.bean.UserDetailBean;
@@ -28,9 +30,8 @@ import me.imid.swipebacklayout.lib.SwipeBackLayout;
 import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
 
-public abstract class BaseActivtiy extends SwipeBackActivity {
+public abstract class BaseActivtiy extends SwipeBackActivity implements NetStateChangeObserver {
     public static Context mContext;
-    protected BasePresenter mPresenter;
     private FragmentManager mManager;
     /**
      * 右滑退出
@@ -156,6 +157,7 @@ public abstract class BaseActivtiy extends SwipeBackActivity {
         LoginBeanDao loginBeanDao = daoSession.getLoginBeanDao();
         loginBeanDao.deleteAll();
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -163,6 +165,7 @@ public abstract class BaseActivtiy extends SwipeBackActivity {
 
     /**
      * 解决修改系统字体大小APP字体跟着变大的问题
+     *
      * @param newConfig
      */
     @Override
@@ -182,6 +185,7 @@ public abstract class BaseActivtiy extends SwipeBackActivity {
         }
         return res;
     }
+
     /**
      * 初始化右滑退出
      */
@@ -200,5 +204,36 @@ public abstract class BaseActivtiy extends SwipeBackActivity {
      */
     protected void closeSwipeBack() {
         setSwipeBackEnable(false);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (needRegisterNetworkChangeObserver()) {
+            NetStateChangeReceiver.registerObserver(this);
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (needRegisterNetworkChangeObserver()) {
+            NetStateChangeReceiver.unregisterObserver(this);
+        }
+    }
+
+    /**
+     * 是否需要注册网络变化的Observer,如果不需要监听网络变化,则返回false;否则返回true.默认返回false
+     */
+    protected boolean needRegisterNetworkChangeObserver() {
+        return false;
+    }
+
+    @Override
+    public void onNetDisconnected() {
+    }
+
+    @Override
+    public void onNetConnected(NetworkType networkType) {
     }
 }

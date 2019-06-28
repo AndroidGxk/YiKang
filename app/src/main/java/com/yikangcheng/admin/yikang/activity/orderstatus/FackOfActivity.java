@@ -128,21 +128,21 @@ public class FackOfActivity extends BaseActivtiy implements ICoreInfe, CustomAda
         mFackOfAdapter_a = new FackOfAdapter_A(mShopSpecDetailedBeans, this);
         mRlvActivityFackOfShangPin.setAdapter(mFackOfAdapter_a);
 
+
         //解决滑动不流畅
         mRlvActivityFackOfShangPin.setHasFixedSize(true);
         mRlvActivityFackOfShangPin.setNestedScrollingEnabled(false);
 
 
-//        //详情
-//        mFackOfAdapter_a.setToGoodPritaul(new FackOfAdapter_A.toGoodPritaul() {
-//            @Override
-//            public void onclick(int id) {
-//                Intent intent = new Intent(FackOfActivity.this,ParticularsActivity.class);
-//                Toast.makeText(FackOfActivity.this, ""+id, Toast.LENGTH_SHORT).show();
-//                intent.putExtra("id", id);
-//                startActivity(intent);
-//            }
-//        });
+        //详情
+        mFackOfAdapter_a.setToGoodPritaul(new FackOfAdapter_A.toGoodPritaul() {
+            @Override
+            public void onclick(int id) {
+                Intent intent = new Intent(FackOfActivity.this,ParticularsActivity.class);
+                intent.putExtra("id", id);
+                startActivity(intent);
+            }
+        });
         int spanCount_tuijian = 1; // 3 columns
         int spacing_tuijian = 5; // 50px
         boolean includeEdge_tuijian = false;

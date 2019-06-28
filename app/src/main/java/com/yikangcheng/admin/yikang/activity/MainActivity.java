@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -34,6 +35,7 @@ import com.mylhyl.circledialog.callback.ConfigText;
 import com.mylhyl.circledialog.params.ButtonParams;
 import com.mylhyl.circledialog.params.DialogParams;
 import com.mylhyl.circledialog.params.TextParams;
+import com.tianma.netdetector.lib.NetworkType;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Fen;
 import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Gou;
@@ -57,6 +59,7 @@ import com.yikangcheng.admin.yikang.updater.Updater;
 import com.yikangcheng.admin.yikang.updater.UpdaterConfig;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
+import me.leefeng.promptlibrary.OnAdClickListener;
 import me.leefeng.promptlibrary.PromptButton;
 import me.leefeng.promptlibrary.PromptButtonListener;
 import me.leefeng.promptlibrary.PromptDialog;
@@ -163,6 +166,7 @@ public class MainActivity extends BaseActivtiy {
             }
         });
 
+
     }
 
     //查询当前App版本号
@@ -215,6 +219,20 @@ public class MainActivity extends BaseActivtiy {
                 text_count.setText("" + count);
             }
         }
+    }
+
+    @Override
+    protected boolean needRegisterNetworkChangeObserver() {
+        return true;
+    }
+
+    @Override
+    public void onNetConnected(NetworkType networkType) {
+    }
+
+    @Override
+    public void onNetDisconnected() {
+        Toast.makeText(this, "当前网络不可用", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -761,10 +779,17 @@ public class MainActivity extends BaseActivtiy {
             Request request = (Request) data;
             UserInfoBean entity = (UserInfoBean) request.getEntity();
             UserDetailBean userCenter = (UserDetailBean) entity.getUserCenter();
-            //设置图片圆角角度
-            Glide.with(MainActivity.this).load("https://static.yikch.com" + userCenter.getAvatar())
-                    .apply(RequestOptions.bitmapTransform(new CircleCrop()))
-                    .into(header);
+            if (userCenter.getAvatar().contains("https://") || userCenter.getAvatar().contains("http://")) {
+                //设置图片圆角角度
+                Glide.with(MainActivity.this).load(userCenter.getAvatar())
+                        .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                        .into(header);
+            } else {
+                //设置图片圆角角度
+                Glide.with(MainActivity.this).load("https://static.yikch.com" + userCenter.getAvatar())
+                        .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                        .into(header);
+            }
             //名称
             my_name.setText(userCenter.getNickName());
         }
@@ -780,13 +805,14 @@ public class MainActivity extends BaseActivtiy {
      */
     private class UpdateApp implements ICoreInfe {
         private String versionName;
+
         @Override
         public void success(Object data) {
             Request request = (Request) data;
             final AppUpdateBean entity = (AppUpdateBean) request.getEntity();
             try {
                 versionName = getVersionName();
-                if(versionName!=null&&entity.getVersionNo()!=null){
+                if (versionName != null && entity.getVersionNo() != null) {
                     if (!versionName.equals(entity.getVersionNo())) {
                         new CircleDialog.Builder()
                                 .setMaxHeight(0.8f)

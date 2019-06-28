@@ -45,7 +45,7 @@ public class UIUtils {
 
     // 两次点击按钮之间的点击间隔不能少于1000毫秒
     private static final int MIN_CLICK_DELAY_TIME = 1000;
-    private static long lastClickTime=0L;
+    private static long lastClickTime = 0L;
 
     /**
      * dip转换px
@@ -105,6 +105,7 @@ public class UIUtils {
         }
         return null;
     }
+
     //防止过快点击造成多次事件执行
     public static boolean isFastClick() {
         boolean flag = false;
@@ -260,6 +261,7 @@ public class UIUtils {
             Toast.makeText(frontActivity, str, Toast.LENGTH_LONG).show();
         }
     }
+
     /**
      * 正则表达式：验证用户名
      */
@@ -273,7 +275,7 @@ public class UIUtils {
     /**
      * 正则表达式：验证手机号
      */
-    public static final String REGEX_MOBILE = "^((17[0-9])|(14[0-9])|(13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$";
+    public static final String REGEX_MOBILE = "^((17[0-9])|(14[0-9])|(13[0-9])|(15[^4,\\D])|(18[0-9]))\\d{8}$";
 
     /**
      * 正则表达式：验证邮箱
@@ -351,6 +353,38 @@ public class UIUtils {
     }
 
     /**
+     * 判断是否是Emoji
+     *
+     * @param source
+     * @return
+     */
+    public static boolean containsEmoji(String source) {
+        int len = source.length();
+
+        for (int i = 0; i < len; i++) {
+            char codePoint = source.charAt(i);
+            if (!isEmojiCharacter(codePoint)) { //如果不能匹配,则该字符是Emoji表情
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 判断是否有表情
+     *
+     * @param codePoint
+     * @return
+     */
+    private static boolean isEmojiCharacter(char codePoint) {
+
+        return (codePoint == 0x0) || (codePoint == 0x9) || (codePoint == 0xA) ||
+                (codePoint == 0xD) || ((codePoint >= 0x20) && (codePoint <= 0xD7FF)) ||
+                ((codePoint >= 0xE000) && (codePoint <= 0xFFFD)) || ((codePoint >= 0x10000)
+                && (codePoint <= 0x10FFFF));
+    }
+
+    /**
      * 校验身份证
      *
      * @param idCard
@@ -399,6 +433,7 @@ public class UIUtils {
         }
         return "0.0.0.0";
     }
+
     /**
      * 小数点前后大小不一致
      *

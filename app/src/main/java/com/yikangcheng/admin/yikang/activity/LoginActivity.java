@@ -94,6 +94,10 @@ public class LoginActivity extends BaseActivtiy implements CustomAdapt, ICoreInf
             entity.setStatus(1);
             setLogUser(LoginActivity.this, entity);
             promptDialog.showSuccess("登录成功");
+            SharedPreferences sp = getSharedPreferences("activity", MODE_PRIVATE);
+            SharedPreferences.Editor activit = sp.edit();
+            activit.putString("acti", "login");
+            activit.commit();
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
             finish();
         } else {

@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -52,6 +54,9 @@ public class Recommtion_Good_Adapter extends RecyclerView.Adapter<Recommtion_Goo
 
     @Override
     public void onBindViewHolder(@NonNull Vh vh, final int position) {
+        RequestOptions requestOptions = new RequestOptions();
+        requestOptions.placeholder(R.drawable.inco_log);
+        requestOptions.fallback(R.drawable.inco_log);
         final RecommendBean recommendBean = recommendBeans.get(position);
         //设置图片圆角角度
         if (recommendBean.getLogo().contains("https://") || recommendBean.getLogo().contains("http://")) {

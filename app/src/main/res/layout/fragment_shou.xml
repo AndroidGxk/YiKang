@@ -37,6 +37,7 @@
             android:background="@drawable/sousuo_2" />
     </RelativeLayout>
 
+
     <ProgressBar
         android:id="@+id/pb_progress"
         style="?android:attr/progressBarStyleHorizontal"

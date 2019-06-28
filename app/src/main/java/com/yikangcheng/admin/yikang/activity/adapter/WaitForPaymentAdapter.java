@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.orderstatus.WaitForpaymentActivity;
 import com.yikangcheng.admin.yikang.app.Constants;
@@ -42,7 +43,14 @@ public class WaitForPaymentAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ViewHolder holder1 = (ViewHolder) holder;
-        Glide.with(mContent).load(Constants.BASETUPIANSHANGCHUANURL + mList.get(position).getShopSpecDetailed().getLogo()).into(holder1.mImg);
+        RequestOptions requestOptions = new RequestOptions();
+        requestOptions.placeholder(R.drawable.inco_log);
+        requestOptions.fallback(R.drawable.inco_log);
+        if (mList.get(position).getShopSpecDetailed().getLogo().contains("http://") || mList.get(position).getShopSpecDetailed().getLogo().contains("https://")) {
+            Glide.with(mContent).load(mList.get(position).getShopSpecDetailed().getLogo()).into(holder1.mImg);
+        } else {
+            Glide.with(mContent).load(Constants.BASETUPIANSHANGCHUANURL + mList.get(position).getShopSpecDetailed().getLogo()).into(holder1.mImg);
+        }
         holder1.mName.setText(mList.get(position).getShopSpecDetailed().getCommodityName());
         holder1.mNum.setText("X" + mList.get(position).getBuyNum());
         holder1.mTitle.setText(mList.get(position).getShopSpecDetailed().getSpecNames());
@@ -51,6 +59,12 @@ public class WaitForPaymentAdapter extends RecyclerView.Adapter {
             @Override
             public void onClick(View v) {
                 mListener.OnClickListener(v, position);
+            }
+        });
+        holder1.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                toGetIdListener.onClickListener(mList.get(position).getShopSpecDetailed().getCommodityId());
             }
         });
         holder1.mShousou.setVisibility(View.GONE);
@@ -97,4 +111,13 @@ public class WaitForPaymentAdapter extends RecyclerView.Adapter {
         this.mListener = listener;
     }
 
+    public void setToGetIdListener(WaitForPaymentAdapter.toGetIdListener toGetIdListener) {
+        this.toGetIdListener = toGetIdListener;
+    }
+
+    toGetIdListener toGetIdListener;
+
+    public interface toGetIdListener {
+        void onClickListener(int id);
+    }
 }

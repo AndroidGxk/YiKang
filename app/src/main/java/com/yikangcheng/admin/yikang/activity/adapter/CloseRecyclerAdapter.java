@@ -57,7 +57,7 @@ public class CloseRecyclerAdapter extends RecyclerView.Adapter<CloseRecyclerAdap
         }
         if (stringList.size() != 0) {
             ShopCarBean shopCarBean = stringList.get(position);
-            ShopCarBean.ShopSpecDetailedBean shopSpecDetailed = shopCarBean.getShopSpecDetailed();
+            final ShopCarBean.ShopSpecDetailedBean shopSpecDetailed = shopCarBean.getShopSpecDetailed();
             vh.close_title.setText(shopSpecDetailed.getCommodityName());
             vh.close_gui.setText(shopSpecDetailed.getSpecNames());
             java.text.DecimalFormat myformat = new java.text.DecimalFormat("0.00");
@@ -70,7 +70,7 @@ public class CloseRecyclerAdapter extends RecyclerView.Adapter<CloseRecyclerAdap
                 Glide.with(mContext).load(Constants.BASETUPIANSHANGCHUANURL + shopSpecDetailed.getLogo()).into(vh.close_img);
             }
         } else if (stringLists.size() != 0) {
-            PariticShopBean pariticShopBean = stringLists.get(position);
+            final PariticShopBean pariticShopBean = stringLists.get(position);
             vh.close_title.setText(pariticShopBean.getCommodityName());
             vh.close_gui.setText(pariticShopBean.getDataType());
             vh.close_price.setText("¥" + pariticShopBean.getPrice());
@@ -116,4 +116,6 @@ public class CloseRecyclerAdapter extends RecyclerView.Adapter<CloseRecyclerAdap
     public void setOnclickListener(Onclick mOnclick) {
         this.mOnclick = mOnclick;
     }
+
+
 }

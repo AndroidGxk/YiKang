@@ -6,6 +6,7 @@
     <permission
         android:name="com.yikangcheng.admin.yikang.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature" /> <!-- Required  一些系统要求的权限，如访问网络等 -->
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
     <uses-permission android:name="com.yikangcheng.admin.yikang.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -43,52 +44,121 @@
         android:roundIcon="@mipmap/appbg"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.h5activity.InsideActivity"></activity>
-        <activity android:name=".activity.seek.SeckillActivity" />
-        <activity android:name=".activity.particulars.GoodParticularsActivity" />
-        <activity android:name=".activity.particulars.CustomParticularActivity" />
-        <activity android:name=".activity.SeleGoodActivity" />
-        <activity android:name=".activity.BarterPayActivity" />
-        <activity android:name=".activity.BarterActivity" />
-        <activity android:name=".activity.PhotoActivity" />
-        <activity android:name=".activity.BrterActivity" />
-        <activity android:name=".activity.orderstatus.countdown.WaitForReceivingActivity" />
-        <activity android:name=".activity.H5SecActivity" />
-        <activity android:name=".activity.PayResultActivity" />
-        <activity android:name=".activity.PartiCarActivity" />
-        <activity android:name=".activity.ClassifyHomeActivity" />
-        <activity android:name=".activity.FindPwdActivity" />
-        <activity android:name=".activity.siteactivity.UserCompileActivity" />
-        <activity android:name=".activity.orderstatus.FackOfActivity" />
-        <activity android:name=".activity.orderstatus.CloseTheDealActivity" />
-        <activity android:name=".activity.SelectCouponActivity" />
-        <activity android:name=".activity.coupon.CouponActivity" />
-        <activity android:name=".activity.CustomerActivity" />
-        <activity android:name=".activity.SystemActivity" />
-        <activity android:name=".activity.OrderFormActivity" />
-        <activity android:name=".activity.siteactivity.CompileActivity" />
-        <activity android:name=".activity.siteactivity.AiteActivity" />
-        <activity android:name=".activity.ApoutUsActivity" />
-        <activity android:name=".activity.WuliuXinxiActivity" />
         <activity
-            android:name=".activity.CloseActivity"
-            android:launchMode="singleTask" />
-        <activity android:name=".activity.MessageActivity" />
-        <activity android:name=".activity.ConfirmActivity" />
-        <activity android:name=".activity.SeekListActivity" />
-        <activity android:name=".activity.SeekListNewActivity" />
+            android:name=".activity.h5activity.InsideActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.seek.SeckillActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.particulars.GoodParticularsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.particulars.CustomParticularActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SeleGoodActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BarterPayActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BarterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.PhotoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BrterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.orderstatus.countdown.WaitForReceivingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.H5SecActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.PayResultActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.PartiCarActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ClassifyHomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.FindPwdActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.siteactivity.UserCompileActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.orderstatus.FackOfActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.orderstatus.CloseTheDealActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SelectCouponActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.coupon.CouponActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.CustomerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SystemActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.OrderFormActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.siteactivity.CompileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.siteactivity.AiteActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ApoutUsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.WuliuXinxiActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.CloseActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MessageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ConfirmActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SeekListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SeekListNewActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.orderstatus.FackOfActivity"
+            android:screenOrientation="portrait"
             tools:ignore="DuplicateActivity" />
         <activity
             android:name=".activity.LoginActivity"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.RegisterActivity"
-            android:launchMode="singleTask" />
-        <activity android:name=".activity.myaccount.MyaccountActivity" />
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.myaccount.MyaccountActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.WelcomeActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.StartingWindowTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -108,48 +178,67 @@
             android:value="developer-default" />
         <meta-data
             android:name="JPUSH_APPKEY"
-            android:value="96c1e5c685835f94d4a0e3a0" /> <!-- </>值来自开发者平台取得的AppKey -->
+            android:value="71b4c79e15237f0558f34528" /> <!-- </>值来自开发者平台取得的AppKey -->
         <service android:name=".activity.orderstatus.countdown.ClockService" />
 
         <activity
             android:name=".activity.particulars.ParticularsActivity"
+            android:screenOrientation="portrait"
             tools:ignore="DuplicateActivity" />
         <activity
             android:name=".activity.seek.SeekActivity"
-            android:launchMode="singleInstance"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
             tools:ignore="DuplicateActivity" />
-        <activity android:name=".activity.MainActivity" />
+        <activity
+            android:name=".activity.MainActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.aftersale.AfterSaleActivity"
+
+            android:screenOrientation="portrait"
             tools:ignore="DuplicateActivity" />
         <activity
             android:name=".activity.ApoutUsActivity"
+
+            android:screenOrientation="portrait"
             tools:ignore="DuplicateActivity" />
         <activity
+
             android:name=".activity.siteactivity.CompileActivity"
+            android:screenOrientation="portrait"
             tools:ignore="DuplicateActivity" />
         <activity
             android:name=".activity.siteactivity.AiteActivity"
+            android:screenOrientation="portrait"
             tools:ignore="DuplicateActivity" />
         <activity
             android:name=".activity.obligation.ObligationActivity"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait"
             tools:ignore="DuplicateActivity" />
         <activity
             android:name=".activity.myaccount.IntroActivity"
+            android:screenOrientation="portrait"
             tools:ignore="DuplicateActivity" />
-        <activity android:name=".activity.orderstatus.WaitForpaymentActivity" />
+        <activity
+            android:name=".activity.orderstatus.WaitForpaymentActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.obligation.PaidActivity"
+            android:screenOrientation="portrait"
             tools:ignore="DuplicateActivity" />
         <activity
             android:name=".activity.orderstatus.CloseTheDealActivity"
+            android:screenOrientation="portrait"
             tools:ignore="DuplicateActivity" />
         <activity
             android:name=".activity.obligation.CanceledActivity"
+            android:screenOrientation="portrait"
             tools:ignore="DuplicateActivity" />
         <activity
             android:name=".activity.obligation.DetailActivity"
+            android:screenOrientation="portrait"
             tools:ignore="DuplicateActivity" />
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
@@ -164,7 +253,8 @@
         <activity
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

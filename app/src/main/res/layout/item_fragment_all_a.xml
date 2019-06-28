@@ -59,6 +59,9 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rlv_fragment_all_item"
         android:layout_width="match_parent"
+        android:focusable="false"
+        android:overScrollMode="never"
+        android:fadeScrollbars="false"
         android:layout_height="wrap_content"
         android:background="#FFFF" />
 

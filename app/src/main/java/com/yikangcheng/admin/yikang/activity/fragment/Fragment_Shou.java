@@ -1,13 +1,16 @@
 package com.yikangcheng.admin.yikang.activity.fragment;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
@@ -21,6 +24,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -31,11 +35,9 @@ import com.yikangcheng.admin.yikang.activity.CloseActivity;
 import com.yikangcheng.admin.yikang.activity.H5SecActivity;
 import com.yikangcheng.admin.yikang.activity.PartiCarActivity;
 import com.yikangcheng.admin.yikang.activity.SeekListNewActivity;
-import com.yikangcheng.admin.yikang.activity.SeleGoodActivity;
-import com.yikangcheng.admin.yikang.activity.aftersale.AfterSaleActivity;
+import com.yikangcheng.admin.yikang.activity.coupon.CouponActivity;
 import com.yikangcheng.admin.yikang.activity.h5activity.InsideActivity;
 import com.yikangcheng.admin.yikang.activity.particulars.ParticularsActivity;
-import com.yikangcheng.admin.yikang.activity.seek.SeckillActivity;
 import com.yikangcheng.admin.yikang.activity.seek.SeekActivity;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
 import com.yikangcheng.admin.yikang.bean.Request;
@@ -45,20 +47,35 @@ import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 
+import me.leefeng.promptlibrary.PromptDialog;
+
 
 public class Fragment_Shou extends BaseFragment implements ICoreInfe {
 
-
+    private ImageView imageView;
+    private ImageView quxiao;
+    private ImageView shouye;
+    private ImageView chakan;
+    private View dialogview;
+    private Dialog dialog;
     private static WebView webView;
     private String s;
     private SmartRefreshLayout refreshLayout;
     private ProgressBar pbProgress;
     private ImageView imgBut;
     private TextView text_seek;
+    private PromptDialog promptDialog;
+    //dialog展示
+    private int countDialog = 0;
 
     @SuppressLint("NewApi")
     @Override
     protected void initView(View view) {
+        //创建对象
+        promptDialog = new PromptDialog(getActivity());
+        //设置自定义属性
+        promptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(3000);
+        promptDialog.showLoading("加载中...");
         webView = view.findViewById(R.id.webview);
         //返回顶部按钮
         imgBut = view.findViewById(R.id.imgBut);
@@ -66,6 +83,7 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
         pbProgress = view.findViewById(R.id.pb_progress);
         //加载刷新
         refreshLayout = view.findViewById(R.id.refreshLayout);
+
         text_seek = view.findViewById(R.id.text_seek);
         refreshLayout.setEnableLoadmore(false);
         WebSettings webSettings = webView.getSettings();
@@ -76,7 +94,6 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
         //自适应屏幕
         webView.getSettings().setLoadWithOverviewMode(true);
         webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
-        //设置Web视图
         //如果不设置WebViewClient，请求会跳转系统浏览器
         webView.canGoBack();
         webView.setWebViewClient(new WebViewClient() {
@@ -117,12 +134,23 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
                 if (newProgress == 100) {
                     // 网页加载完成
                     pbProgress.setVisibility(View.GONE);
+                    promptDialog.dismissImmediately();
+                    if (countDialog == 0) {
+                        SharedPreferences sp = getContext().getSharedPreferences("activity", Context.MODE_PRIVATE);
+                        String str = sp.getString("acti", "");
+                        if (str.equals("register")) {
+                            showDialog();
+                        }
+                        countDialog++;
+                    }
                 } else {
                     // 加载中
                     pbProgress.setProgress(newProgress);
                 }
                 super.onProgressChanged(view, newProgress);
             }
+
+
         });
 
         webView.getSettings().setJavaScriptEnabled(true);
@@ -177,16 +205,19 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 // 判断url链接中是否含有某个字段，如果有就执行指定的跳转（不执行跳转url链接），如果没有就加载url链接
                 if (url.contains("/appShow/proDetail")) {
+                    //商品详情链接
                     Intent intent = new Intent(getActivity(), ParticularsActivity.class);
                     intent.putExtra("id", url);
                     startActivity(intent);
                     return true;
                 } else if (url.contains("/appShow/recommendList")) {
+                    //精选活动大图链接
                     Intent intent = new Intent(getContext(), H5SecActivity.class);
                     intent.putExtra("http", url);
                     startActivity(intent);
                     return true;
                 } else if (url.contains("appShow/proSomeList")) {
+                    //找相似链接
                     try {
                         //URL中文乱码转换
                         String decode = URLDecoder.decode(new String(url.getBytes("ISO-8859-1"), "UTF-8"), "UTF-8");
@@ -200,6 +231,7 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
                     }
                     return true;
                 } else if (url.contains("appShow/advertorial")) {
+                    //轮播图链接
                     Intent intent = new Intent(getContext(), H5SecActivity.class);
                     intent.putExtra("http", url);
                     startActivity(intent);
@@ -237,18 +269,91 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
                         intent.putExtra("title", "夏至福利");
                         startActivity(intent);
                         return true;
+                    } else if (url.contains("superToday")) {
+                        //抢购链接
+                        Intent intent = new Intent(getContext(), H5SecActivity.class);
+                        intent.putExtra("http", url);
+                        intent.putExtra("none", "yes");
+                        startActivity(intent);
+                        return true;
                     }
-                    Intent intent = new Intent(getContext(), H5SecActivity.class);
-                    intent.putExtra("http", url);
-                    startActivity(intent);
+                    return false;
+                } else if (url.contains("mobile/login")) {
                     return true;
                 } else {
                     return false;
                 }
             }
         });
+
     }
 
+    private void showDialog() {
+        //dialog展示优惠券
+        dialogview = getLayoutInflater().inflate(R.layout.three_dialog, null);
+        imageView = dialogview.findViewById(R.id.img);
+        quxiao = dialogview.findViewById(R.id.quxiao);
+        chakan = dialogview.findViewById(R.id.chakan);
+        shouye = dialogview.findViewById(R.id.shouye);
+        chakan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences sp = getContext().getSharedPreferences("activity", Context.MODE_PRIVATE);
+                SharedPreferences.Editor activit = sp.edit();
+                activit.putString("acti", "login");
+                activit.commit();
+                startActivity(new Intent(getContext(), CouponActivity.class));
+                dialog.dismiss();
+            }
+        });
+        shouye.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences sp = getContext().getSharedPreferences("activity", Context.MODE_PRIVATE);
+                SharedPreferences.Editor activit = sp.edit();
+                activit.putString("acti", "login");
+                activit.commit();
+                dialog.dismiss();
+            }
+        });
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences sp = getContext().getSharedPreferences("activity", Context.MODE_PRIVATE);
+                SharedPreferences.Editor activit = sp.edit();
+                activit.putString("acti", "login");
+                activit.commit();
+                startActivity(new Intent(getContext(), CouponActivity.class));
+                dialog.dismiss();
+            }
+        });
+        quxiao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences sp = getContext().getSharedPreferences("activity", Context.MODE_PRIVATE);
+                SharedPreferences.Editor activit = sp.edit();
+                activit.putString("acti", "login");
+                activit.commit();
+                dialog.dismiss();
+            }
+        });
+        Glide.with(getContext()).load(R.drawable.huodong)
+                .into(imageView);
+        dialog = new Dialog(getContext(), R.style.dialogWindowAnim);
+        dialog.setContentView(dialogview, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT));
+        Window window = dialog.getWindow();
+        //设置显示动画
+        window.setWindowAnimations(R.style.dialogWindowAnim);
+        WindowManager.LayoutParams wl = window.getAttributes();
+        wl.x = 0;
+        wl.y = 0;
+        //设置显示位置
+        dialog.onWindowAttributesChanged(wl);
+        //设置点击外围消散
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+    }
 
     @Override
     protected void initData() {

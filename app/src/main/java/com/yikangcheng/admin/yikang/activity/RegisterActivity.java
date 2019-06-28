@@ -3,6 +3,7 @@ package com.yikangcheng.admin.yikang.activity;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -21,11 +22,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.yikangcheng.admin.yikang.R;
+import com.yikangcheng.admin.yikang.activity.obligation.ObligationActivity;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
+import com.yikangcheng.admin.yikang.bean.LoginBean;
 import com.yikangcheng.admin.yikang.bean.Request;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
 import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
 import com.yikangcheng.admin.yikang.presenter.GetMobileKeyPresenter;
+import com.yikangcheng.admin.yikang.presenter.LoginPresenter;
 import com.yikangcheng.admin.yikang.presenter.RegisterPresenter;
 import com.yikangcheng.admin.yikang.presenter.SendMobilePresenter;
 import com.yikangcheng.admin.yikang.util.UIUtils;
@@ -71,6 +75,9 @@ public class RegisterActivity extends BaseActivtiy implements ICoreInfe, CustomA
     private String locationProvider;
     private String address;
     private PromptDialog promptDialog;
+    private LoginPresenter loginPresenter;
+    private String reg_two_pwd;
+    public SharedPreferences userInfo;
 
     @Override
     protected void initView() {
@@ -92,6 +99,10 @@ public class RegisterActivity extends BaseActivtiy implements ICoreInfe, CustomA
         getMobileKeyPresenter = new GetMobileKeyPresenter(this);
         sendMobilePresenter = new SendMobilePresenter(new SendMobile());
         registerPresenter = new RegisterPresenter(new Register());
+        loginPresenter = new LoginPresenter(new Login());
+        //用户ID
+        userInfo = getSharedPreferences("userInfo", MODE_PRIVATE);
+
     }
 
     @Override
@@ -150,18 +161,18 @@ public class RegisterActivity extends BaseActivtiy implements ICoreInfe, CustomA
 //            点击发送验证码
             case R.id.ver_btn:
                 phone = reg_phone_edit.getText().toString();
-                boolean mobile = UIUtils.isMobile(phone);
-                if (mobile) {
-                    getMobileKeyPresenter.request(phone, "Android");
-                } else {
+                if (phone.equals("")) {
                     Toast.makeText(RegisterActivity.this, "请输入正确的手机号", Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
+                    getMobileKeyPresenter.request(phone, "Android");
                 }
                 break;
 //                注册
             case R.id.register_btn:
                 String code = ver_pwd_edit.getText().toString();
                 String reg_pwd = reg_pwd_edit.getText().toString();
-                String reg_two_pwd = reg_two_pwd_edit.getText().toString();
+                reg_two_pwd = reg_two_pwd_edit.getText().toString();
                 phone = reg_phone_edit.getText().toString();
                 String code_two = RegisterActivity.this.code_two_pwd_edit.getText().toString();
                 if (phone.equals("") || reg_pwd.equals("") || reg_two_pwd.equals("")) {
@@ -269,8 +280,9 @@ public class RegisterActivity extends BaseActivtiy implements ICoreInfe, CustomA
         public void success(Object data) {
             Request request = (Request) data;
             if (request.isSuccess()) {
-                promptDialog.showSuccess(request.getMessage());
-                finish();
+//                promptDialog.showSuccess(request.getMessage());
+                loginPresenter.request(phone, reg_two_pwd);
+                promptDialog.showLoading("正在登录");
             } else {
                 promptDialog.showError(request.getMessage());
             }
@@ -286,5 +298,38 @@ public class RegisterActivity extends BaseActivtiy implements ICoreInfe, CustomA
     protected void onDestroy() {
         super.onDestroy();
         handler.removeMessages(1);
+    }
+
+    /**
+     * 登录
+     */
+    private class Login implements ICoreInfe {
+        @Override
+        public void success(Object data) {
+            Request request = (Request) data;
+            if (request.isSuccess()) {
+                SharedPreferences.Editor edit = userInfo.edit();
+                LoginBean entity = (LoginBean) request.getEntity();
+                edit.putString("pwd", reg_two_pwd);
+                edit.commit();
+                entity.setStatus(1);
+                setLogUser(RegisterActivity.this, entity);
+                promptDialog.showSuccess("登录成功");
+                SharedPreferences sp = getSharedPreferences("activity", MODE_PRIVATE);
+                SharedPreferences.Editor activit = sp.edit();
+                activit.putString("acti", "register");
+                activit.commit();
+                Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            } else {
+                promptDialog.showError(request.getMessage());
+            }
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
     }
 }

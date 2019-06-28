@@ -1,6 +1,5 @@
 package com.yikangcheng.admin.yikang.bean;
 
-import java.io.Serializable;
 
 /**
  * 作者：古祥坤 on 2019/5/18 15:17

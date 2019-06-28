@@ -11,6 +11,7 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.widget.ImageView;
@@ -23,11 +24,11 @@ import com.sobot.chat.SobotApi;
 import com.sobot.chat.api.model.Information;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.yikangcheng.admin.yikang.R;
-import com.yikangcheng.admin.yikang.activity.PayResultActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.WaitForPaymentAdapter;
 import com.yikangcheng.admin.yikang.activity.copy.CopyButtonLibrary;
 import com.yikangcheng.admin.yikang.activity.obligation.PaidActivity;
 import com.yikangcheng.admin.yikang.activity.orderstatus.countdown.ClockService;
+import com.yikangcheng.admin.yikang.activity.particulars.ParticularsActivity;
 import com.yikangcheng.admin.yikang.app.BaseApp;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.DeleteOrderBean;
@@ -58,8 +59,6 @@ import me.leefeng.promptlibrary.PromptDialog;
  * 这是订单详情里面的----等待付款
  */
 public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt, ICoreInfe {
-
-
     private ImageView mImgActivityWaitfrrpaymentFanhui;
     private RelativeLayout mToolbarActivityWaitfrrpayment;
     private TextView mTvActivityWaitfrrpaymentDaojishi;
@@ -98,6 +97,7 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
     private NestedScrollView mNestedScrollView;
     private TwoBallRotationProgressBar progress;
     private RelativeLayout rela1, rela2;
+    private long sTime;
 
     @Override
     protected void initView() {
@@ -186,16 +186,7 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
                 mPosition = position;
             }
         });
-//        //详情
-//        mWaitForPaymentAdapter.setToGoodParticula(new WaitForPaymentAdapter.toGoodParticula() {
-//            @Override
-//            public void onclick(int id) {
-//                Intent intent = new Intent(WaitForpaymentActivity.this,ParticularsActivity.class);
-//                Toast.makeText(WaitForpaymentActivity.this, ""+id, Toast.LENGTH_SHORT).show();
-//                intent.putExtra("id", id);
-//                startActivity(intent);
-//            }
-//        });
+
         /**
          * P层
          */
@@ -214,6 +205,17 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
                 } else {
                     Toast.makeText(WaitForpaymentActivity.this, "系统错误,支付失败", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+        /**
+         * 跳转商品详情
+         */
+        mWaitForPaymentAdapter.setToGetIdListener(new WaitForPaymentAdapter.toGetIdListener() {
+            @Override
+            public void onClickListener(int id) {
+                Intent intent = new Intent(WaitForpaymentActivity.this, ParticularsActivity.class);
+                intent.putExtra("id", id);
+                startActivity(intent);
             }
         });
         //刪除
@@ -269,8 +271,8 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
 
     private void changeTime() {
         mStime = "";
-        if (TIME == 0) {
-            mStime = "计时结束";
+        if (sTime == -25201000) {
+            mTvActivityWaitfrrpaymentDaojishi.setText("即将取消订单");
         } else {
             long l = System.currentTimeMillis();
             long time = l - ts;
@@ -279,17 +281,16 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
             SimpleDateFormat simpleDateFormats = new SimpleDateFormat("mm:ss");
             Date threeTime = null;
             try {
-                threeTime = simpleDateFormats.parse("30:00");
+                threeTime = simpleDateFormats.parse("30:01");
             } catch (ParseException e) {
                 e.printStackTrace();
             }
             long three_time = threeTime.getTime();
-            long sTime = three_time - time;
+            sTime = three_time - time;
             // 时间戳转换成时间
             mTime = sdf.format(new Date(sTime));
+            mTvActivityWaitfrrpaymentDaojishi.setText("剩余" + mTime + "秒系统将取消订单");
         }
-
-        mTvActivityWaitfrrpaymentDaojishi.setText("剩余" + mTime + "秒系统将取消订单");
     }
 
     private void initDelete() {

@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.obligation.ObligationActivity;
 import com.yikangcheng.admin.yikang.app.Constants;
@@ -41,10 +42,13 @@ public class ObligationAdapter_B extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ViewHolder holder1 = (ViewHolder) holder;
+        RequestOptions requestOptions = new RequestOptions();
+        requestOptions.placeholder(R.drawable.inco_log);
+        requestOptions.fallback(R.drawable.inco_log);
         if (mList.get(position).getShopImg().contains("http://") || mList.get(position).getShopImg().contains("https://")) {
-            Glide.with(mContent).load(mList.get(position).getShopImg()).into(holder1.mImg);
+            Glide.with(mContent).load(mList.get(position).getShopImg()).apply(requestOptions).into(holder1.mImg);
         } else {
-            Glide.with(mContent).load("https://static.yikch.com" + mList.get(position).getShopImg()).into(holder1.mImg);
+            Glide.with(mContent).load("https://static.yikch.com" + mList.get(position).getShopImg()).apply(requestOptions).into(holder1.mImg);
         }
         holder1.mName.setText(mList.get(position).getShopName());
         holder1.mNum.setText("X" + mList.get(position).getBuyNum());

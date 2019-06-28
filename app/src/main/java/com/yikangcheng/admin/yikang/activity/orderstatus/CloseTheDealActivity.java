@@ -19,6 +19,7 @@ import com.yikangcheng.admin.yikang.activity.H5SecActivity;
 import com.yikangcheng.admin.yikang.activity.SeleGoodActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.CloseTheDealAdapter;
 import com.yikangcheng.admin.yikang.activity.copy.CopyButtonLibrary;
+import com.yikangcheng.admin.yikang.activity.particulars.ParticularsActivity;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.DeleteOrderBean;
 import com.yikangcheng.admin.yikang.bean.LoginBean;
@@ -195,15 +196,15 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
                 startActivity(new Intent(intent));
             }
         });
-        //跳转详情
-//        mCloseTheDealAdapter.setToGoodParitual(new CloseTheDealAdapter.toGoodParitual() {
-//            @Override
-//            public void onclick(int id) {
-//                Intent intent = new Intent(CloseTheDealActivity.this,ParticularsActivity.class);
-//                intent.putExtra("id", id);
-//                startActivity(intent);
-//            }
-//        });
+        // 跳转详情
+        mCloseTheDealAdapter.setToGoodParitual(new CloseTheDealAdapter.toGoodParitual() {
+            @Override
+            public void onclick(int id) {
+                Intent intent = new Intent(CloseTheDealActivity.this, ParticularsActivity.class);
+                intent.putExtra("id", id);
+                startActivity(intent);
+            }
+        });
         //解决滑动不流畅
         mRlvActivityCloseShangPin.setHasFixedSize(true);
         mRlvActivityCloseShangPin.setNestedScrollingEnabled(false);
@@ -331,50 +332,57 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
     @Override
     public void success(Object data) {
         Request request = (Request) data;
-        mEntity = (WaliDealBean) request.getEntity();
-        //添加数据到适配器
-        mCloseTheDealAdapter.addAll(mEntity.getDetailsList());
-        if (mEntity.getOrderBook().getReceiver().equals("")) {
-            //用户名
-            mTvActivityCloseName.setText(mEntity.getUserAddress().getReceiver());
-            //地址
-            mProvinceStr.setText(mEntity.getUserAddress().getAddress());
-        } else {
-            //用户名
-            mTvActivityCloseName.setText(mEntity.getOrderBook().getReceiver());
-            //地址
-            mProvinceStr.setText(mEntity.getOrderBook().getAddress());
-        }
-        //订单编号
-        mTvActivityCloseBiaohao.setText(mEntity.getOrder().getOrderNo());
-        //运费
-        mTvActivityCloseYunFei.setText(mEntity.getOrder().getFreightPrice() + "");
-        //金额
-        mTvActivityCloseJinE.setText(mEntity.getOrder().getRealPrice() + "");
-        //总额
-        mTvActivityCloseZhongJi.setText(mEntity.getOrder().getSumPrice() + "");
-        //支付方式
-        if (mEntity.getOrder().getOrderState().equals("SUCCESS")) {
-            mTvActivityCloseFangShi.setText("支付成功");
-        }
-        //发票类型
-        int invoiceType = mEntity.getOrderBook().getInvoiceType();
-        Log.e("tag", "success: " + invoiceType);
-        if (mEntity.getOrderBook().getInvoiceType() == 1) {
-            mTvActivityCloseFaPianLeiXing.setText("电子发票");
-        } else if (mEntity.getOrderBook().getInvoiceType() == 2) {
-            mTvActivityCloseFaPianLeiXing.setText("纸质发票");
-        } else {
-            mTvActivityCloseFaPianLeiXing.setText("无发票");
-        }
+        if (request.isSuccess()) {
+            mEntity = (WaliDealBean) request.getEntity();
+            //添加数据到适配器
+            mCloseTheDealAdapter.addAll(mEntity.getDetailsList());
 
-        //发票内容
-        if (mEntity.getOrderBook().getInvoiceContent() == 1) {
-            mTvActivityCloseNeiRong.setText("商品明细");
-        } else {
-            mTvActivityCloseNeiRong.setText("商品类别");
-        }
+            if (mEntity.getOrderBook().getReceiver().equals("")) {
+                //用户名
+                mTvActivityCloseName.setText(mEntity.getUserAddress().getReceiver());
+                //地址
+                mProvinceStr.setText(mEntity.getUserAddress().getAddress());
+            } else {
+                //用户名
+                mTvActivityCloseName.setText(mEntity.getOrderBook().getReceiver());
+                //地址
+                mProvinceStr.setText(mEntity.getOrderBook().getAddress());
+            }
+            //订单编号
+            mTvActivityCloseBiaohao.setText(mEntity.getOrder().getOrderNo());
+            //运费
+            mTvActivityCloseYunFei.setText(mEntity.getOrder().getFreightPrice() + "");
+            //金额
+            mTvActivityCloseJinE.setText(mEntity.getOrder().getRealPrice() + "");
+            //总额
+            mTvActivityCloseZhongJi.setText(mEntity.getOrder().getSumPrice() + "");
+            //支付方式
+            if (mEntity.getOrder().getOrderState().equals("SUCCESS")) {
+                mTvActivityCloseFangShi.setText("支付成功");
+            }
+            //发票类型
+            int invoiceType = mEntity.getOrderBook().getInvoiceType();
+            Log.e("tag", "success: " + invoiceType);
+            if (mEntity.getOrderBook().getInvoiceType() == 1) {
+                mTvActivityCloseFaPianLeiXing.setText("电子发票");
+            } else if (mEntity.getOrderBook().getInvoiceType() == 2) {
+                mTvActivityCloseFaPianLeiXing.setText("纸质发票");
+            } else {
+                mTvActivityCloseFaPianLeiXing.setText("无发票");
+            }
 
+            //发票内容
+            if (mEntity.getOrderBook().getInvoiceContent() == 1) {
+                mTvActivityCloseNeiRong.setText("商品明细");
+            } else if(mEntity.getOrderBook().getInvoiceContent()==2){
+                mTvActivityCloseNeiRong.setText("商品类别");
+            }else{
+                mTvActivityCloseNeiRong.setText("无");
+            }
+            mCloseTheDealAdapter.notifyDataSetChanged();
+        } else {
+            Toast.makeText(this, "" + request.getMessage(), Toast.LENGTH_SHORT).show();
+        }
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -395,7 +403,6 @@ public class CloseTheDealActivity extends BaseActivtiy implements CustomAdapt, I
                 progress.stopAnimator();
             }
         }, 500);
-        Toast.makeText(this, "加载失败,请重试", Toast.LENGTH_SHORT).show();
     }
 
     /**
