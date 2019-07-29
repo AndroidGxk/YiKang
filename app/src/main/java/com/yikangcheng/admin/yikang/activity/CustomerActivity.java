@@ -15,7 +15,7 @@ import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
 import me.jessyan.autosize.internal.CustomAdapt;
 
-public class CustomerActivity extends BaseActivtiy implements CustomAdapt, View.OnClickListener {
+public class CustomerActivity extends BaseActivtiy implements  View.OnClickListener {
     private RecyclerView xrecycler;
     private boolean isclick;
     private TextView compile_text;
@@ -57,15 +57,6 @@ public class CustomerActivity extends BaseActivtiy implements CustomAdapt, View.
 
     }
 
-    @Override
-    public boolean isBaseOnWidth() {
-        return false;
-    }
-
-    @Override
-    public float getSizeInDp() {
-        return width / 2;
-    }
 
     /**
      * 点击事件

@@ -2,11 +2,7 @@ package com.yikangcheng.admin.yikang.activity.fragment.paricular;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Paint;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -26,26 +22,17 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bigkoo.convenientbanner.ConvenientBanner;
-import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bumptech.glide.Glide;
-import com.gxz.PagerSlidingTabStrip;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.adapter.Comadapter;
 import com.yikangcheng.admin.yikang.activity.adapter.GoodPartiRecdapter;
-import com.yikangcheng.admin.yikang.activity.adapter.particular.ItemRecommendAdapter;
-import com.yikangcheng.admin.yikang.activity.adapter.particular.ItemTitlePagerAdapter;
-import com.yikangcheng.admin.yikang.activity.adapter.particular.NetworkImageHolderView;
 import com.yikangcheng.admin.yikang.activity.particulars.GoodParticularsActivity;
 import com.yikangcheng.admin.yikang.bean.RecommendBean;
 import com.yikangcheng.admin.yikang.bean.Request;
-import com.yikangcheng.admin.yikang.bean.paricular.RecommendGoodsBean;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
 import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
 import com.yikangcheng.admin.yikang.presenter.RecommendPresenter;
-import com.yikangcheng.admin.yikang.util.TwoBallRotationProgressBar;
 import com.yikangcheng.admin.yikang.util.UIUtils;
 import com.yikangcheng.admin.yikang.util.widget.SlideDetailsLayout;
 import com.youth.banner.Banner;
@@ -53,7 +40,6 @@ import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
 import com.youth.banner.loader.ImageLoader;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 

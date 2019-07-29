@@ -1,3 +1,4 @@
+/*
 package com.yikangcheng.admin.yikang.activity.orderstatus;
 
 import android.content.BroadcastReceiver;
@@ -55,10 +56,12 @@ import me.leefeng.promptlibrary.PromptButton;
 import me.leefeng.promptlibrary.PromptButtonListener;
 import me.leefeng.promptlibrary.PromptDialog;
 
+*/
 /**
  * 这是订单详情里面的----等待付款
- */
-public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt, ICoreInfe {
+ *//*
+
+public class WaitForpaymentActivity extends BaseActivtiy implements  ICoreInfe {
     private ImageView mImgActivityWaitfrrpaymentFanhui;
     private RelativeLayout mToolbarActivityWaitfrrpayment;
     private TextView mTvActivityWaitfrrpaymentDaojishi;
@@ -187,14 +190,18 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
             }
         });
 
-        /**
+        */
+/**
          * P层
-         */
+         *//*
+
         CloseTheDeallPresenter closeTheDeallPresenter = new CloseTheDeallPresenter(this);
         closeTheDeallPresenter.request(mOrderId_wait);
-        /**
+        */
+/**
          * 去支付
-         */
+         *//*
+
         go_pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -207,9 +214,11 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
                 }
             }
         });
-        /**
+        */
+/**
          * 跳转商品详情
-         */
+         *//*
+
         mWaitForPaymentAdapter.setToGetIdListener(new WaitForPaymentAdapter.toGetIdListener() {
             @Override
             public void onClickListener(int id) {
@@ -240,10 +249,12 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
         super.registerReceiver(clockReceiver, intentFilter);
     }
 
-    /**
+    */
+/**
      * 广播接受者，接受来自ClockService（计时服务）的广播，ClockService每隔一秒
      * 钟发一次广播
-     */
+     *//*
+
     private BroadcastReceiver clockReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -321,9 +332,11 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
 
     @Override
     protected void initEventData() {
-        /**
+        */
+/**
          * 点击返回按钮关闭当前页面
-         */
+         *//*
+
         mImgActivityWaitfrrpaymentFanhui.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -398,15 +411,6 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
 
     }
 
-    @Override
-    public boolean isBaseOnWidth() {
-        return false;
-    }
-
-    @Override
-    public float getSizeInDp() {
-        return width / 2;
-    }
 
     public class delete implements ICoreInfe {
 
@@ -527,9 +531,11 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
         }, 500);
     }
 
-    /**
+    */
+/**
      * 生成新的订单号
-     */
+     *//*
+
     private class NewOrder implements ICoreInfe {
         @Override
         public void success(Object data) {
@@ -580,3 +586,4 @@ public class WaitForpaymentActivity extends BaseActivtiy implements CustomAdapt,
         }
     }
 }
+*/

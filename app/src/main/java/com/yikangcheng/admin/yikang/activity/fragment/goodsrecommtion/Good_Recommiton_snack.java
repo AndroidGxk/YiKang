@@ -10,6 +10,7 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.adapter.Recommtion_Good_Adapter;
+import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Wo;
 import com.yikangcheng.admin.yikang.activity.particulars.ParticularsActivity;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
 import com.yikangcheng.admin.yikang.bean.LoginBean;
@@ -23,23 +24,20 @@ import java.util.List;
 
 /**
  * 作者：古祥坤 on 2019/6/25 10:03
- *
+ * <p>
  * 零食
  * 邮箱：1724959985@qq.com
  */
 public class Good_Recommiton_snack extends BaseFragment implements ICoreInfe {
 
     private RecommendPresenter recommendPresenter;
-    private LoginBean logUser;
-    private int mPage = 1;
     //商品列表
-    private XRecyclerView rlv_fragment_accomplish;
+    private RecyclerView rlv_fragment_accomplish;
     private Recommtion_Good_Adapter recommtion_good_adapter;
-
+    private ImageView noGood_img;
     @Override
     protected void initView(View view) {
         recommendPresenter = new RecommendPresenter(this);
-        logUser = getLogUser(getContext());
         rlv_fragment_accomplish = view.findViewById(R.id.rlv_fragment_accomplish);
         recommtion_good_adapter = new Recommtion_Good_Adapter(getContext());
         recommtion_good_adapter.setmListener(new Recommtion_Good_Adapter.OnClickListener() {
@@ -50,21 +48,24 @@ public class Good_Recommiton_snack extends BaseFragment implements ICoreInfe {
                 startActivity(intent);
             }
         });
+        noGood_img = view.findViewById(R.id.noGood_img);
+        Fragment_Wo homeFragment = (Fragment_Wo) getParentFragment();
+        homeFragment.setChildObjectForPosition(view,4);
     }
 
     @Override
     protected void initData() {
-        if (logUser != null)
-            recommendPresenter.request(logUser.getId(), 1, mPage);
+        recommendPresenter.request(10, 252);
         rlv_fragment_accomplish.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        if (!recommtion_good_adapter.hasObservers()){
+        if (!recommtion_good_adapter.hasObservers()) {
             rlv_fragment_accomplish.setAdapter(recommtion_good_adapter);
-        }else {
+        } else {
             recommtion_good_adapter.notifyDataSetChanged();
         }
         //解决滑动不流畅
         rlv_fragment_accomplish.setHasFixedSize(true);
         rlv_fragment_accomplish.setNestedScrollingEnabled(false);
+
     }
 
     @Override
@@ -75,8 +76,18 @@ public class Good_Recommiton_snack extends BaseFragment implements ICoreInfe {
     @Override
     public void success(Object data) {
         Request request = (Request) data;
-        List<RecommendBean> entity = (List<RecommendBean>) request.getEntity();
-        recommtion_good_adapter.addAll(entity);
+        RecommendBean entity = (RecommendBean) request.getEntity();
+        List<RecommendBean.CommodityListBean> commodityListBeans = entity.getCommodityList();
+        if(commodityListBeans!=null){
+            if (commodityListBeans.size() != 0) {
+                rlv_fragment_accomplish.setVisibility(View.VISIBLE);
+                noGood_img.setVisibility(View.GONE);
+                recommtion_good_adapter.addAll(commodityListBeans);
+            } else {
+                noGood_img.setVisibility(View.VISIBLE);
+                rlv_fragment_accomplish.setVisibility(View.GONE);
+            }
+        }
     }
 
     @Override

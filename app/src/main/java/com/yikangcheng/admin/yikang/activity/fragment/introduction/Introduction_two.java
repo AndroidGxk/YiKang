@@ -19,26 +19,15 @@ import com.yikangcheng.admin.yikang.base.BaseFragment;
 public class Introduction_two extends BaseFragment {
 
 
-    private TextView over_btn;
+
 
     @Override
     protected void initView(View view) {
-        over_btn = view.findViewById(R.id.over_btn);
     }
 
     @Override
     protected void initData() {
-        over_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SharedPreferences sp = getActivity().getSharedPreferences("stratapp", Context.MODE_PRIVATE);
-                SharedPreferences.Editor edit = sp.edit();
-                edit.putString("stratapp", "true");
-                edit.commit();
-                startActivity(new Intent(getActivity(), LoginActivity.class));
-                getActivity().finish();
-            }
-        });
+
     }
 
     @Override

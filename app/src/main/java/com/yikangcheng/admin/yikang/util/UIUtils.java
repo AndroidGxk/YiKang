@@ -7,8 +7,11 @@ import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapFactory.Options;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.RelativeSizeSpan;
@@ -17,16 +20,22 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.yikangcheng.admin.yikang.app.BaseApp;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.security.MessageDigest;
 import java.util.Enumeration;
 import java.util.regex.Pattern;
+
+import jp.wasabeef.glide.transformations.BitmapTransformation;
+import jp.wasabeef.glide.transformations.internal.FastBlur;
 
 
 public class UIUtils {
@@ -377,7 +386,6 @@ public class UIUtils {
      * @return
      */
     private static boolean isEmojiCharacter(char codePoint) {
-
         return (codePoint == 0x0) || (codePoint == 0x9) || (codePoint == 0xA) ||
                 (codePoint == 0xD) || ((codePoint >= 0x20) && (codePoint <= 0xD7FF)) ||
                 ((codePoint >= 0xE000) && (codePoint <= 0xFFFD)) || ((codePoint >= 0x10000)
@@ -446,5 +454,76 @@ public class UIUtils {
             spannableString.setSpan(new RelativeSizeSpan(0.8f), value.indexOf("."), value.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
         return spannableString;
+    }
+    /**
+     * 高斯模糊类
+     */
+    public static class BlurTransformation extends BitmapTransformation {
+
+        private static final int VERSION = 1;
+        private static final String ID = "BlurTransformation." + VERSION;
+
+        private static int MAX_RADIUS = 25;
+        private static int DEFAULT_DOWN_SAMPLING = 1;
+
+        private int radius;
+        private int sampling;
+
+        public BlurTransformation() {
+            this(MAX_RADIUS, DEFAULT_DOWN_SAMPLING);
+        }
+
+        @Override
+        protected Bitmap transform(Context context, BitmapPool pool, Bitmap toTransform, int outWidth, int outHeight) {
+            int width = toTransform.getWidth();
+            int height = toTransform.getHeight();
+            int scaledWidth = width / sampling;
+            int scaledHeight = height / sampling;
+            Bitmap bitmap = pool.get(scaledWidth, scaledHeight, Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(bitmap);
+            canvas.scale(1 / (float) sampling, 1 / (float) sampling);
+            Paint paint = new Paint();
+            paint.setFlags(Paint.FILTER_BITMAP_FLAG);
+            canvas.drawBitmap(toTransform, 0, 0, paint);
+            bitmap = FastBlur.blur(bitmap, radius, true);
+
+            return bitmap;
+        }
+
+        public BlurTransformation(int radius) {
+            this(radius, DEFAULT_DOWN_SAMPLING);
+        }
+
+        public BlurTransformation(int radius, int sampling) {
+            this.radius = radius;
+            this.sampling = sampling;
+        }
+
+
+        @Override
+        public String toString() {
+            return "BlurTransformation(radius=" + radius + ", sampling=" + sampling + ")";
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            return o instanceof BlurTransformation &&
+                    ((BlurTransformation) o).radius == radius &&
+                    ((BlurTransformation) o).sampling == sampling;
+        }
+
+        @Override
+        public int hashCode() {
+            return ID.hashCode() + radius * 1000 + sampling * 10;
+        }
+
+        @Override
+        public void updateDiskCacheKey(@NonNull MessageDigest messageDigest) {
+            try {
+                messageDigest.update((ID + radius + sampling).getBytes("utf-8"));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

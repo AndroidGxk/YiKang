@@ -4,13 +4,12 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.hjq.toast.ToastUtils;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.LoginActivity;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
@@ -24,7 +23,6 @@ import com.yikangcheng.admin.yikang.presenter.GetMobileKeyPresenter;
 import com.yikangcheng.admin.yikang.presenter.RetrievePwdPresenter;
 import com.yikangcheng.admin.yikang.presenter.SendMobilePresenter;
 import com.yikangcheng.admin.yikang.presenter.UserInfoPresenter;
-import com.yikangcheng.admin.yikang.util.UIUtils;
 
 /**
  * Created by lenovo on 2019/5/17.
@@ -94,7 +92,7 @@ public class AmendFragment extends BaseFragment implements ICoreInfe {
             public void onClick(View view) {
                 String phone = phone_text.getText().toString();
                 if (phone.equals("")) {
-                    Toast.makeText(getContext(), "请输入正确的手机号", Toast.LENGTH_SHORT).show();
+                    ToastUtils.show("请输入正确的手机号");
                 } else {
                     getMobileKeyPresenter.request(phone, "Android");
                     handler.sendEmptyMessage(1);
@@ -113,10 +111,15 @@ public class AmendFragment extends BaseFragment implements ICoreInfe {
                 String newpwd = newpwd_text.getText().toString();
                 String newpwds = newpwd_texts.getText().toString();
                 if (moblie_code.equals("")) {
-                    Toast.makeText(getContext(), "请输入验证码", Toast.LENGTH_SHORT).show();
+                    ToastUtils.show("请输入验证码");
+                    return;
                 }
                 if (newpwd.equals("") || newpwds.equals("")) {
-                    Toast.makeText(getContext(), "请输入新密码", Toast.LENGTH_SHORT).show();
+                    ToastUtils.show("请输入新密码");
+                    return;
+                }
+                if (newpwd.length() < 6 || newpwd.length() > 20) {
+                    ToastUtils.show("密码长度需在6-20位字符之间");
                     return;
                 }
                 retrievePwdPresenter.request(phone, "mobile", moblie_code, newpwd, newpwds);
@@ -138,7 +141,7 @@ public class AmendFragment extends BaseFragment implements ICoreInfe {
     @Override
     public void success(Object data) {
         Request request = (Request) data;
-        Toast.makeText(getContext(), "" + request.getMessage(), Toast.LENGTH_SHORT).show();
+        ToastUtils.show("" + request.getMessage());
         if (request.isSuccess()) {
             getDelete(getContext());
             Intent intent = new Intent(getContext(), LoginActivity.class);
@@ -180,7 +183,7 @@ public class AmendFragment extends BaseFragment implements ICoreInfe {
         @Override
         public void success(Object data) {
             Request request = (Request) data;
-            Toast.makeText(getContext(), "" + request.getMessage(), Toast.LENGTH_SHORT).show();
+            ToastUtils.show("" + request.getMessage());
         }
 
         @Override

@@ -22,6 +22,8 @@ public class Introduction_four extends BaseFragment {
 
     private ImageView img;
 
+
+
     @Override
     protected void initView(View view) {
         img = view.findViewById(R.id.img);

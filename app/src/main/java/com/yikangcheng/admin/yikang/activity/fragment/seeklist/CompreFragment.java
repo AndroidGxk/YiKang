@@ -41,6 +41,8 @@ public class CompreFragment extends BaseFragment implements ICoreInfe {
     private SeekListNewAdapter seekListNewAdapter;
 
 
+
+
     @Override
     protected void initView(View view) {
         recycler = view.findViewById(R.id.xrecycler);

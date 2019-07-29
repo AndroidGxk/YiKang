@@ -22,7 +22,7 @@ import java.util.List;
 
 import me.jessyan.autosize.internal.CustomAdapt;
 
-public class WuliuXinxiActivity extends BaseActivtiy implements CustomAdapt {
+public class WuliuXinxiActivity extends BaseActivtiy   {
 
     private RecyclerView xrecycler;
     private TextView compile_text;
@@ -91,13 +91,4 @@ public class WuliuXinxiActivity extends BaseActivtiy implements CustomAdapt {
 
     }
 
-    @Override
-    public boolean isBaseOnWidth() {
-        return false;
-    }
-
-    @Override
-    public float getSizeInDp() {
-        return width / 2;
-    }
 }

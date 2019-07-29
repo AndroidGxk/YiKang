@@ -4,30 +4,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F3F3F3"
+    android:descendantFocusability="blocksDescendants"
     android:orientation="vertical">
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
+        android:descendantFocusability="blocksDescendants"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar"
-        android:visibility="gone"
-        app:srlEnableFooterFollowWhenLoadFinished="true"
-        app:srlEnableScrollContentWhenLoaded="true">
+        android:fadeScrollbars="false"
+        android:focusable="false">
 
         <com.scwang.smartrefresh.header.WaterDropHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/rlv_fragment_close"
+            android:id="@+id/rlv_fragment_all_dingdan"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="15dp" />
+            android:fadeScrollbars="false"
+            android:focusable="false"
+            android:overScrollMode="never" />
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-
 
     <ImageView
         android:id="@+id/imgBut"
@@ -40,7 +39,6 @@
         android:background="@drawable/fanhuidingbu"
         android:visibility="gone" />
 
-
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
@@ -48,7 +46,7 @@
         android:visibility="gone">
 
         <ImageView
-            android:id="@+id/img_fragment_accomplish"
+            android:id="@+id/img_fragment_all"
             android:layout_width="120dp"
             android:layout_height="80dp"
             android:layout_centerHorizontal="true"
@@ -65,9 +63,10 @@
             android:textSize="14sp" />
 
         <ImageView
-            android:id="@+id/img_fragment_accomplish_quguanghuang"
+            android:id="@+id/img_fragment_all_quguanghuang"
             android:layout_width="166dp"
             android:layout_height="40dp"
+            android:visibility="gone"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="271dp"
             android:src="@drawable/yuanjiao" />
@@ -75,12 +74,16 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="283dp"
             android:text="去逛逛吧"
             android:textColor="#ffffffff"
             android:textSize="14sp" />
     </RelativeLayout>
-
-
+    <com.yikangcheng.admin.yikang.util.TwoBallRotationProgressBar
+        android:id="@+id/progress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true" />
 </RelativeLayout>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    android:overScrollMode="never"
+    tools:context=".activity.SignInActivity">
+
+    <RelativeLayout
+        android:id="@+id/table"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/colorTab">
+
+        <ImageView
+            android:id="@+id/back_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingLeft="15dp"
+            android:paddingTop="10dp"
+            android:paddingRight="15dp"
+            android:paddingBottom="10dp"
+            android:src="@drawable/fanhui_seek" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:text="签到"
+            android:textColor="#ff333333"
+            android:textSize="19sp" />
+    </RelativeLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/meitianqiandao">
+
+                <TextView
+                    android:id="@+id/guize"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="335dp"
+                    android:layout_marginRight="30dp"
+                    android:padding="10dp"
+                    android:text="签到规则"
+                    android:textColor="#ffff8f5d"
+                    android:textSize="12sp" />
+
+                <ImageView
+                    android:id="@+id/qiandao_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/guize"
+                    android:layout_marginLeft="35dp"
+                    android:layout_marginTop="30dp"
+                    android:padding="5dp"
+                    android:src="@drawable/qiandao_left" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="93dp"
+                    android:layout_below="@id/guize"
+                    android:layout_toLeftOf="@+id/qiandao_right"
+                    android:layout_toRightOf="@+id/qiandao_left" />
+
+                <ImageView
+                    android:id="@+id/qiandao_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/guize"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginRight="35dp"
+                    android:padding="5dp"
+                    android:src="@drawable/qiandao_you" />
+
+                <TextView
+                    android:id="@+id/tianshu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/recycler"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:text="您已连续签到2天"
+                    android:textColor="#ff615858"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:layout_width="165dp"
+                    android:layout_height="45dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="606dp"
+                    android:background="@drawable/qiandao_btn_shape"
+                    android:gravity="center"
+                    android:shadowColor="#f2ea0808"
+                    android:shadowDx="0"
+                    android:shadowDy="3"
+                    android:shadowRadius="3.0"
+                    android:text="兑换优惠券"
+                    android:textColor="#ffffffff"
+                    android:textSize="24sp" />
+            </RelativeLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>

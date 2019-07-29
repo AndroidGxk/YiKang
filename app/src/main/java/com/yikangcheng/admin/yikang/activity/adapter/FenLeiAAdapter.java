@@ -53,7 +53,9 @@ public class FenLeiAAdapter extends RecyclerView.Adapter<FenLeiAAdapter.Vh> {
             public void onClick(View v) {
                 id = 0;
                 mPosition = position;
-                mOnclick.onClick(position);
+                if(mOnclick!=null){
+                    mOnclick.onClick(position);
+                }
                 notifyDataSetChanged();
             }
         });

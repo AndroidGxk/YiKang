@@ -13,7 +13,7 @@ import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
 import me.jessyan.autosize.internal.CustomAdapt;
 
-public class PayResultActivity extends BaseActivtiy implements CustomAdapt {
+public class PayResultActivity extends BaseActivtiy   {
 
     private ImageView img;
     private TextView text;
@@ -58,13 +58,4 @@ public class PayResultActivity extends BaseActivtiy implements CustomAdapt {
         finish();
     }
 
-    @Override
-    public boolean isBaseOnWidth() {
-        return false;
-    }
-
-    @Override
-    public float getSizeInDp() {
-        return width / 2;
-    }
 }

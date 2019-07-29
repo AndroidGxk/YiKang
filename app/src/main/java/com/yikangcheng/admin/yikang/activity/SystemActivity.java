@@ -17,7 +17,7 @@ import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
 import me.jessyan.autosize.internal.CustomAdapt;
 
-public class SystemActivity extends BaseActivtiy implements CustomAdapt {
+public class SystemActivity extends BaseActivtiy   {
     private RecyclerView xrecycler;
     private TextView compile_text;
     private boolean isclick;
@@ -82,13 +82,4 @@ public class SystemActivity extends BaseActivtiy implements CustomAdapt {
 
     }
 
-    @Override
-    public boolean isBaseOnWidth() {
-        return false;
-    }
-
-    @Override
-    public float getSizeInDp() {
-        return width / 2;
-    }
 }

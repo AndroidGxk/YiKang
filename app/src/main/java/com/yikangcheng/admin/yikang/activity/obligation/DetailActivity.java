@@ -14,7 +14,7 @@ import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
 import me.jessyan.autosize.internal.CustomAdapt;
 
-public class DetailActivity extends BaseActivtiy implements CustomAdapt {
+public class DetailActivity extends BaseActivtiy   {
     private ImageView back_img;
     private RelativeLayout mToolbarActivityDetail;
     private ImageView mImgActivityDetailQiaobao;
@@ -67,13 +67,5 @@ public class DetailActivity extends BaseActivtiy implements CustomAdapt {
 
     }
 
-    @Override
-    public boolean isBaseOnWidth() {
-        return false;
-    }
 
-    @Override
-    public float getSizeInDp() {
-        return width / 2;
-    }
 }

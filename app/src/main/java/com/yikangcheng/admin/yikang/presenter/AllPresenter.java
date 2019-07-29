@@ -19,6 +19,6 @@ public class AllPresenter extends BasePresenter {
     @Override
     protected Observable observable(Object... args) {
         ApiService apiService = NotWorkUtils.getInstance().create(ApiService.class);
-        return apiService.All((int) args[0], (int) args[1]);
+        return apiService.All((int) args[0], (int) args[1], (String) args[2]);
     }
 }

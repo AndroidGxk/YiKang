@@ -7,9 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.yikangcheng.admin.yikang.R;
 
@@ -69,7 +67,6 @@ public class SystemRecyclerAdapter extends RecyclerView.Adapter<SystemRecyclerAd
             vh.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(context, "这是未选中状态", Toast.LENGTH_SHORT).show();
                 }
             });
         }

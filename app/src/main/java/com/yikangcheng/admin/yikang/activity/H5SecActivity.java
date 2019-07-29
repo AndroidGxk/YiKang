@@ -1,8 +1,10 @@
 package com.yikangcheng.admin.yikang.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
-import android.support.annotation.NonNull;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
@@ -15,14 +17,14 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Shou;
+import com.yikangcheng.admin.yikang.activity.h5activity.H5DiscountActivity;
+import com.yikangcheng.admin.yikang.activity.h5activity.H5RecommendListActivity;
+import com.yikangcheng.admin.yikang.activity.h5activity.H5WuliuZhuangtaiActivity;
 import com.yikangcheng.admin.yikang.activity.particulars.ParticularsActivity;
+import com.yikangcheng.admin.yikang.app.BaseApp;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
@@ -33,10 +35,10 @@ public class H5SecActivity extends BaseActivtiy {
     private String http, title;
     private ImageView back_img;
     private ProgressBar pbProgress;
-    private SmartRefreshLayout refreshLayout;
     private TextView title_text;
     private RelativeLayout tabl;
     private String none;
+    private String color;
 
     @Override
     protected void initView() {
@@ -50,19 +52,23 @@ public class H5SecActivity extends BaseActivtiy {
         back_img = (ImageView) findViewById(R.id.back_img);
         tabl = (RelativeLayout) findViewById(R.id.tabl);
         title_text = (TextView) findViewById(R.id.title_text);
-        //加载刷新
-        refreshLayout = (SmartRefreshLayout) findViewById(R.id.refreshLayout);
-        refreshLayout.setEnableLoadmore(false);
         Fragment_Shou.getGoBack();
         Intent intent = getIntent();
         http = intent.getStringExtra("http");
         none = intent.getStringExtra("none");
+        color = intent.getStringExtra("color");
         if (http == null) {
-                http = "https://www.yikch.com/mobile/appShow/activity?type=android";
+            http = "https://www.yikch.com/mobile/appShow/activity?type=android";
         }
         if (none != null) {
             if (none.equals("yes")) {
                 tabl.setVisibility(View.GONE);
+            }
+        }
+        if (color != null) {
+            if (color.equals("bai")) {
+                tabl.setBackgroundColor(Color.WHITE);
+                StatusBarUtil.setStatusBarMode(this, true, R.color.clolrBAai);
             }
         }
         title = intent.getStringExtra("title");
@@ -84,6 +90,10 @@ public class H5SecActivity extends BaseActivtiy {
         //设置Web视图
         //如果不设置WebViewClient，请求会跳转系统浏览器
         webview.canGoBack();
+        // 在安卓5.0之后，默认不允许加载http与https混合内容，需要设置webview允许其加载混合网络协议内容
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            webview.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        }
         webview.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -110,6 +120,19 @@ public class H5SecActivity extends BaseActivtiy {
                 return false;
             }
         });
+        webview.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                //这event.getAction() == KeyEvent.ACTION_DOWN表示是返回键事件   
+                if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                    if (keyCode == KeyEvent.KEYCODE_BACK && webview.canGoBack()) {//表示按返回键 时的操作  
+                        webview.goBack();//后退    
+                        return true;//已处理     返回true表示被处理否则返回false    
+                    }
+                }
+                return false;
+            }
+        });
         webview.setWebChromeClient(new WebChromeClient() {
             @Override
             public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
@@ -129,17 +152,15 @@ public class H5SecActivity extends BaseActivtiy {
                 super.onProgressChanged(view, newProgress);
             }
         });
+        //webview在安卓5.0之前默认允许其加载混合网络协议内容
+// 在安卓5.0之后，默认不允许加载http与https混合内容，需要设置webview允许其加载混合网络协议内容
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            webview.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        }
+        webview.getSettings().setBlockNetworkImage(false);
         webview.getSettings().setJavaScriptEnabled(true);
         webview.addJavascriptInterface(this, "ww");
         webview.loadUrl(http);
-        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                String url = webview.getUrl();
-                webview.loadUrl(url);
-                refreshLayout.finishRefresh();
-            }
-        });
         webview.setWebViewClient(new WebViewClient() {
             @Override
             // 在点击请求的是链接是才会调用，重写此方法返回true表明点击网页里面的链接还是在当前的webview里跳转，不跳到浏览器那边。这个函数我们可以做很多操作，比如我们读取到某些特殊的URL，于是就可以不打开地址，取消这个操作，进行预先定义的其他操作，这对一个程序是非常必要的。
@@ -147,17 +168,54 @@ public class H5SecActivity extends BaseActivtiy {
                 // 判断url链接中是否含有某个字段，如果有就执行指定的跳转（不执行跳转url链接），如果没有就加载url链接
                 if (url.contains("/appShow/proDetail")) {
                     Intent intent = new Intent(H5SecActivity.this, ParticularsActivity.class);
-                    intent.putExtra("id", url);
+                    intent.putExtra("id", url + "&userId=" + getLogUser(BaseApp.getApp()).getId());
                     startActivity(intent);
                     return true;
                 } else if (url.contains("/login")) {
                     finish();
+                    return true;
+                } else if (url.contains("appShow/recommendList")) {
+                    Intent intent = new Intent(H5SecActivity.this, H5RecommendListActivity.class);
+                    intent.putExtra("http", url);
+                    startActivity(intent);
+                    return true;
+                } else if (url.contains("discounts")) {
+                    //优惠券链接
+                    Intent intent = new Intent(H5SecActivity.this, H5DiscountActivity.class);
+                    intent.putExtra("http", url);
+                    intent.putExtra("none", "yes");
+                    startActivity(intent);
+                    return true;
+                } else if (url.contains("appShow/orderLogistics")) {
+                    Intent intent = new Intent(H5SecActivity.this, H5WuliuZhuangtaiActivity.class);
+                    intent.putExtra("http", url);
+                    startActivity(intent);
+                    return true;
+                } else if (url.contains("/appShow/checkIn")) {
+//                    Intent intent = new Intent(H5SecActivity.this, H5WuliuZhuangtaiActivity.class);
+//                    intent.putExtra("http", "https://www.yikch.com/mobile/appShow/checkIn?type=android&userId=" + getLogUser(H5SecActivity.this).getId() + "");
+//                    startActivity(intent);
+//                    webview.loadUrl();
+//                    title_text.setText("签到");
+                    Intent intent = new Intent(H5SecActivity.this, H5SecActivity.class);
+                    intent.putExtra("http", "https://www.yikch.com/mobile/appShow/checkIn?type=android&userId=" + getLogUser(H5SecActivity.this).getId() + "");
+                    intent.putExtra("title", "签到");
+                    startActivity(intent);
+                    return true;
+                } else if (url.contains("/appShow/yousheng")) {
+//                    webview.loadUrl();
+//                    title_text.setText("优胜教育内部购");
+                    Intent intent = new Intent(H5SecActivity.this, H5SecActivity.class);
+                    intent.putExtra("http", "https://www.yikch.com/mobile/appShow/yousheng?type=android");
+                    intent.putExtra("title", "优胜教育内部购");
+                    startActivity(intent);
                     return true;
                 } else {
                     return false;
                 }
             }
         });
+        Log.d("GT", webview.getUrl());
     }
 
     @Override
@@ -170,12 +228,14 @@ public class H5SecActivity extends BaseActivtiy {
                  */
                 if (webview.canGoBack()) {
                     webview.goBack();
+                    title_text.setText("签到");
                 } else {
                     finish();
                 }
             }
         });
     }
+
 
     /**
      * @return

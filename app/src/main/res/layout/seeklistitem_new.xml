@@ -91,6 +91,7 @@
         <ImageView
             android:id="@+id/good_img"
             android:layout_width="130dp"
+            android:layout_marginTop="10dp"
             android:layout_height="130dp"
             android:src="@drawable/inco_log"
             app:layout_constraintBottom_toTopOf="@+id/img_bottom_line"

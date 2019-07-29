@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.Display;
 import android.view.KeyEvent;
 import android.view.View;
@@ -20,8 +21,9 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
+import com.hjq.toast.ToastUtils;
+import com.hjq.toast.style.ToastQQStyle;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -48,7 +50,7 @@ import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
 import java.util.List;
 
-public class ParticularsActivity extends BaseActivtiy implements  ICoreInfe {
+public class ParticularsActivity extends BaseActivtiy implements ICoreInfe {
     private WebView webView;
     private int id;
     private String s = "";
@@ -139,6 +141,14 @@ public class ParticularsActivity extends BaseActivtiy implements  ICoreInfe {
         //如果不设置WebViewClient，请求会跳转系统浏览器
         webView.canGoBack();
         webView.goBack();
+        /**
+         * http和https协议混合加载
+         */
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+            webView.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        }
+        webView.getSettings().setBlockNetworkImage(false);
+
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -146,10 +156,10 @@ public class ParticularsActivity extends BaseActivtiy implements  ICoreInfe {
                 //返回false，意味着请求过程里，不管有多少次的跳转请求（即新的请求地址），均交给webView自己处理，这也是此方法的默认处理
                 //返回true，说明你自己想根据url，做新的跳转，比如在判断url符合条件的情况下，我想让webView加载http://ask.csdn.net/questions/178242
                 if (url.toString().contains("sina.cn")) {
-                    if(id==0){
+                    if (id == 0) {
                         webView.loadUrl(url);
-                    }else{
-                        webView.loadUrl("https://www.yikch.com/mobile/appShow/proDetail/" + id + ".json?type=android");
+                    } else {
+                        webView.loadUrl("https://www.yikch.com/mobile/appShow/proDetail/" + id + ".json?type=android&userId=" + getLogUser(ParticularsActivity.this).getId());
                     }
                     return true;
                 }
@@ -162,10 +172,10 @@ public class ParticularsActivity extends BaseActivtiy implements  ICoreInfe {
                 //返回true，说明你自己想根据url，做新的跳转，比如在判断url符合条件的情况下，我想让webView加载http://ask.csdn.net/questions/178242
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     if (request.getUrl().toString().contains("sina.cn")) {
-                        if(id==0){
+                        if (id == 0) {
                             webView.loadUrl(url);
-                        }else{
-                            webView.loadUrl("https://www.yikch.com/mobile/appShow/proDetail/" + id + ".json?type=android");
+                        } else {
+                            webView.loadUrl("https://www.yikch.com/mobile/appShow/proDetail/" + id + ".json?type=android&userId=" + getLogUser(ParticularsActivity.this).getId());
                         }
                         return true;
                     }
@@ -206,15 +216,15 @@ public class ParticularsActivity extends BaseActivtiy implements  ICoreInfe {
         });
         webView.getSettings().setJavaScriptEnabled(true);
         webView.addJavascriptInterface(this, "ww");
-        if(id==0){
+        if (id == 0) {
             webView.loadUrl(url);
-        }else{
-            webView.loadUrl("https://www.yikch.com/mobile/appShow/proDetail/" + id + ".json?type=android");
+        } else {
+            webView.loadUrl("https://www.yikch.com/mobile/appShow/proDetail/" + id + ".json?type=android&userId=" + getLogUser(ParticularsActivity.this).getId());
         }
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                webView.loadUrl(url);
+                webView.loadUrl(webView.getUrl());
                 refreshLayout.finishRefresh();
             }
         });
@@ -240,8 +250,20 @@ public class ParticularsActivity extends BaseActivtiy implements  ICoreInfe {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 // 判断url链接中是否含有某个字段，如果有就执行指定的跳转（不执行跳转url链接），如果没有就加载url链接
                 if (url.contains("mobile/login")) {
-                    Toast.makeText(ParticularsActivity.this, "未知错误", Toast.LENGTH_SHORT).show();
+                    ToastUtils.show("未知错误");
                     finish();
+                    return true;
+                } else if (url.contains("mobile/appShow/xiazhi")) {
+                    Intent intent = new Intent(ParticularsActivity.this, H5SecActivity.class);
+                    intent.putExtra("http", "https://www.yikch.com/mobile/appShow/xiazhi?type=android");
+                    intent.putExtra("title", "夏至福利");
+                    startActivity(intent);
+                    return true;
+                } else if (url.contains("mobile/appShow/market")) {
+                    Intent intent = new Intent(ParticularsActivity.this, H5SecActivity.class);
+                    intent.putExtra("http", "https://www.yikch.com/mobile/appShow/market?type=android");
+                    intent.putExtra("title", "挚友超市");
+                    startActivity(intent);
                     return true;
                 } else {
                     return false;
@@ -281,15 +303,15 @@ public class ParticularsActivity extends BaseActivtiy implements  ICoreInfe {
                 addShopPresenter.request(id, split[0], split[1], split[2], split[3]);
                 s = "";
             } else if (split[4].equals("noProInfo")) {
-                Toast.makeText(this, "该规格下暂无商品信息", Toast.LENGTH_SHORT).show();
+                ToastUtils.show("该规格下暂无商品信息");
                 s = "";
                 return;
             } else if (split[4].equals("pleaseWriteNum")) {
-                Toast.makeText(this, "请输入要购买的数量", Toast.LENGTH_SHORT).show();
+                ToastUtils.show("请输入要购买的数量");
                 s = "";
                 return;
             } else if (split[4].equals("numNotThan")) {
-                Toast.makeText(this, "购买数量不能大于当前库存", Toast.LENGTH_SHORT).show();
+                ToastUtils.show("购买数量不能大于当前库存");
                 s = "";
                 return;
             }
@@ -311,15 +333,15 @@ public class ParticularsActivity extends BaseActivtiy implements  ICoreInfe {
                 startActivity(intent);
                 this.ss = "";
             } else if (split[8].equals("noProInfo")) {
-                Toast.makeText(this, "该规格下暂无商品信息", Toast.LENGTH_SHORT).show();
+                ToastUtils.show("该规格下暂无商品信息");
                 this.ss = "";
                 return;
             } else if (split[8].equals("pleaseWriteNum")) {
-                Toast.makeText(this, "请输入要购买的数量", Toast.LENGTH_SHORT).show();
+                ToastUtils.show("请输入要购买的数量");
                 this.ss = "";
                 return;
             } else if (split[8].equals("numNotThan")) {
-                Toast.makeText(this, "购买数量不能大于当前库存", Toast.LENGTH_SHORT).show();
+                ToastUtils.show("购买数量不能大于当前库存");
                 this.ss = "";
                 return;
             }
@@ -331,15 +353,15 @@ public class ParticularsActivity extends BaseActivtiy implements  ICoreInfe {
                 startActivity(intent);
                 this.ss = "";
             } else if (split[7].equals("noProInfo")) {
-                Toast.makeText(this, "该规格下暂无商品信息", Toast.LENGTH_SHORT).show();
+                ToastUtils.show("该规格下暂无商品信息");
                 this.ss = "";
                 return;
             } else if (split[7].equals("pleaseWriteNum")) {
-                Toast.makeText(this, "请输入要购买的数量", Toast.LENGTH_SHORT).show();
+                ToastUtils.show("请输入要购买的数量");
                 this.ss = "";
                 return;
             } else if (split[7].equals("numNotThan")) {
-                Toast.makeText(this, "购买数量不能大于当前库存", Toast.LENGTH_SHORT).show();
+                ToastUtils.show("购买数量不能大于当前库存");
                 this.ss = "";
                 return;
             }
@@ -397,7 +419,7 @@ public class ParticularsActivity extends BaseActivtiy implements  ICoreInfe {
     @Override
     public void success(Object data) {
         Request request = (Request) data;
-        Toast.makeText(this, "" + request.getMessage(), Toast.LENGTH_SHORT).show();
+        ToastUtils.show("" + request.getMessage());
     }
 
     @Override

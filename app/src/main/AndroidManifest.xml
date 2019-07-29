@@ -6,7 +6,8 @@
     <permission
         android:name="com.yikangcheng.admin.yikang.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature" /> <!-- Required  一些系统要求的权限，如访问网络等 -->
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="com.yikangcheng.admin.yikang.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -39,28 +40,124 @@
     <application
         android:name=".app.BaseApp"
         android:allowBackup="true"
-        android:icon="@mipmap/appbg"
+        android:icon="@mipmap/qizhiyouapp_bg"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/appbg"
+        android:roundIcon="@mipmap/qizhiyouapp_bg"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".activity.AdvertActivity"></activity>
         <activity
-            android:name=".activity.h5activity.InsideActivity"
-            android:screenOrientation="portrait"></activity>
+            android:name=".util.PermissionsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar.Permissions" />
         <activity
-            android:name=".activity.seek.SeckillActivity"
+            android:name=".activity.Jpush.YoushengActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.Jpush.LingyuanActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.upush.SplashTestActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.yuangong.AticleActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SignInActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.yuangong.PhyListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.liveambitus.city.CityActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.liveambitus.CateActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.liveambitus.LiveamActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.h5activity.H5MessActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.liveambitus.BuyTicketActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.liveambitus.MovieActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.orderstatus.newactivity.OrderReceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.h5activity.H5WuliuZhuangtaiActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.orderstatus.newactivity.OrderAccomActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.huanhuo.ApplyafterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.huanhuo.AfterappraiseActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.orderstatus.newactivity.OrderCancelActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.orderstatus.newactivity.OrderWaitActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.yuangong.PhysicalActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BuyAgainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.yuangong.StaffhealthActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ApplySeleActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.particulars.GoodParticularsActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".activity.groupbookingactivity.GroupBookActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.huanhuo.BarterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.LogisticsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.logistics.LogisticsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.h5activity.InsideActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.h5activity.H5RecommendListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.seek.SeckillActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.particulars.CustomParticularActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.particulars.MyParticularsActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.SeleGoodActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.BarterPayActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.h5activity.H5DiscountActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.BarterActivity"
@@ -91,12 +188,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.siteactivity.UserCompileActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.orderstatus.FackOfActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.orderstatus.CloseTheDealActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.SelectCouponActivity"
@@ -141,10 +232,6 @@
         <activity
             android:name=".activity.SeekListNewActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.orderstatus.FackOfActivity"
-            android:screenOrientation="portrait"
-            tools:ignore="DuplicateActivity" />
         <activity
             android:name=".activity.LoginActivity"
             android:launchMode="singleTask"
@@ -195,16 +282,13 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.aftersale.AfterSaleActivity"
-
             android:screenOrientation="portrait"
             tools:ignore="DuplicateActivity" />
         <activity
             android:name=".activity.ApoutUsActivity"
-
             android:screenOrientation="portrait"
             tools:ignore="DuplicateActivity" />
         <activity
-
             android:name=".activity.siteactivity.CompileActivity"
             android:screenOrientation="portrait"
             tools:ignore="DuplicateActivity" />
@@ -222,14 +306,7 @@
             android:screenOrientation="portrait"
             tools:ignore="DuplicateActivity" />
         <activity
-            android:name=".activity.orderstatus.WaitForpaymentActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".activity.obligation.PaidActivity"
-            android:screenOrientation="portrait"
-            tools:ignore="DuplicateActivity" />
-        <activity
-            android:name=".activity.orderstatus.CloseTheDealActivity"
             android:screenOrientation="portrait"
             tools:ignore="DuplicateActivity" />
         <activity

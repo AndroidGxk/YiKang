@@ -3,22 +3,19 @@ package com.yikangcheng.admin.yikang.activity.myaccount;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.widget.Toolbar;
 import android.view.Display;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.hjq.toast.ToastUtils;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
-import me.jessyan.autosize.internal.CustomAdapt;
-
-public class IntroActivity extends BaseActivtiy implements CustomAdapt {
+public class IntroActivity extends BaseActivtiy{
     private ImageView back_img;
     private RelativeLayout mToolbarActivityIntro;
     private EditText mEtIntroActivityIntro;
@@ -59,7 +56,7 @@ public class IntroActivity extends BaseActivtiy implements CustomAdapt {
             public void onClick(View view) {
                 String intro = mEtIntroActivityIntro.getText().toString();
                 if (intro.length() < 2) {
-                    Toast.makeText(IntroActivity.this, "简介太少啦", Toast.LENGTH_SHORT).show();
+                    ToastUtils.show("简介太少啦");
                     return;
                 }
                 SharedPreferences sp = getSharedPreferences("intro", MODE_PRIVATE);
@@ -79,13 +76,4 @@ public class IntroActivity extends BaseActivtiy implements CustomAdapt {
 
     }
 
-    @Override
-    public boolean isBaseOnWidth() {
-        return false;
-    }
-
-    @Override
-    public float getSizeInDp() {
-        return width / 2;
-    }
 }

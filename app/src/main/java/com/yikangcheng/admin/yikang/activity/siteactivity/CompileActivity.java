@@ -12,8 +12,8 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.hjq.toast.ToastUtils;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.adapter.AddressRecyclerAdapter;
 import com.yikangcheng.admin.yikang.activity.edittext_delete.ETextWithDelete;
@@ -31,12 +31,10 @@ import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.jessyan.autosize.internal.CustomAdapt;
-
 /**
  * 这是新增地址页面
  */
-public class CompileActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt {
+public class CompileActivity extends BaseActivtiy implements ICoreInfe  {
 
     private CheckBox check_btn;
     private ImageView back_img;
@@ -147,7 +145,7 @@ public class CompileActivity extends BaseActivtiy implements ICoreInfe, CustomAd
                 mDialog.setContentView(mInflate, layoutParams);
                 mDialog.getWindow().setGravity(Gravity.BOTTOM);
                 mDialog.setCanceledOnTouchOutside(true);
-                mDialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
+                mDialog.getWindow().setWindowAnimations(R.style.BottomDialogs);
                 mDialog.show();
             }
         });
@@ -164,18 +162,18 @@ public class CompileActivity extends BaseActivtiy implements ICoreInfe, CustomAd
                         addressPresenter.request(mid);
                         address = 1;
                     } else {
-                        Toast.makeText(CompileActivity.this, "请先选择省份", Toast.LENGTH_SHORT).show();
+                        ToastUtils.show("请先选择省份" );
                         mTabLayout.getTabAt(0).select();
                     }
 
                 } else if (tab.getText().equals("区县")) {
                     if (mid == 0) {
-                        Toast.makeText(CompileActivity.this, "请先选择省份", Toast.LENGTH_SHORT).show();
+                        ToastUtils.show("请先选择省份" );
                         mTabLayout.getTabAt(0).select();
                         return;
                     }
                     if (cityid == 0) {
-                        Toast.makeText(CompileActivity.this, "请先选择城市", Toast.LENGTH_SHORT).show();
+                        ToastUtils.show("请先选择城市" );
                         mTabLayout.getTabAt(1).select();
                         return;
                     }
@@ -208,14 +206,14 @@ public class CompileActivity extends BaseActivtiy implements ICoreInfe, CustomAd
                 }
                 LoginBean logUser = getLogUser(CompileActivity.this);
                 if (name.equals("") || phone.equals("") || xiangqing.equals("") || countryId == 0) {
-                    Toast.makeText(CompileActivity.this, "请完善信息", Toast.LENGTH_SHORT).show();
+                    ToastUtils.show("请完善信息" );
                     return;
                 } else {
                     String REGEX_MOBILE_EXACT = "^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,3,5-8])|(18[0-9])|166|198|199|(147))\\d{8}$";
                     if (phone_text.getText().toString().matches(REGEX_MOBILE_EXACT)) {
                         insertAddressPresenter.request(logUser.getId(), name, phone, xiangqing, isFirst, proId, cityId, countryId);
                     } else if (!phone_text.getText().toString().matches(REGEX_MOBILE_EXACT)) {
-                        Toast.makeText(CompileActivity.this, "请输入正确的手机号", Toast.LENGTH_SHORT).show();
+                        ToastUtils.show("请输入正确的手机号" );
                     }
                     return;
                 }
@@ -252,15 +250,6 @@ public class CompileActivity extends BaseActivtiy implements ICoreInfe, CustomAd
     }
 
 
-    @Override
-    public boolean isBaseOnWidth() {
-        return false;
-    }
-
-    @Override
-    public float getSizeInDp() {
-        return width / 2;
-    }
 
     /**
      * 添加收货地址

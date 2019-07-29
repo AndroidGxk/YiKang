@@ -6,6 +6,9 @@ import android.content.Context;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hjq.toast.ToastUtils;
+import com.sobot.chat.utils.ToastUtil;
+
 import static android.content.Context.CLIPBOARD_SERVICE;
 
 /**
@@ -31,8 +34,7 @@ public class CopyButtonLibrary {
 
         myClip = ClipData.newPlainText("text", text);
         myClipboard.setPrimaryClip(myClip);
-
-        Toast.makeText(context, text + " 已复制", Toast.LENGTH_SHORT).show();
+        ToastUtils.show(text + " 已复制");
     }
 
 }

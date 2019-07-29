@@ -1,5 +1,6 @@
 package com.yikangcheng.admin.yikang.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,37 +9,36 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.view.Display;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alipay.sdk.app.PayTask;
-import com.tencent.mm.opensdk.modelbase.BaseResp;
+import com.hjq.toast.ToastUtils;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.yikangcheng.admin.yikang.R;
-import com.yikangcheng.admin.yikang.activity.obligation.ObligationActivity;
-import com.yikangcheng.admin.yikang.activity.obligation.PaidActivity;
 import com.yikangcheng.admin.yikang.app.BaseApp;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.CreatOrderBean;
 import com.yikangcheng.admin.yikang.paysdk.PayResult;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
-import com.yikangcheng.admin.yikang.wxapi.WXPayEntryActivity;
 
 import java.util.Map;
-
-import me.jessyan.autosize.internal.CustomAdapt;
 
 /**
  * 支付页面
  */
-public class ConfirmActivity extends BaseActivtiy implements CustomAdapt {
+public class ConfirmActivity extends BaseActivtiy {
 
     private int height;
     private ImageView back_img;
     private TextView pay_btn, order_number, money, order_pay;
     private CreatOrderBean creatorder;
     private int width;
+    private View dialogview;
+    private Dialog dialog;
 
     @Override
     protected void initView() {
@@ -114,16 +114,58 @@ public class ConfirmActivity extends BaseActivtiy implements CustomAdapt {
         back_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ConfirmActivity.this, ObligationActivity.class));
-                finish();
+                showDialog();
+//
             }
         });
     }
+
+    private boolean isdialog = false;
+
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        startActivity(new Intent(ConfirmActivity.this, ObligationActivity.class));
-        finish();
+        if (!isdialog) {
+            showDialog();
+        } else {
+            dialog.dismiss();
+        }
+    }
+
+    private void showDialog() {
+        //dialog展示优惠券
+        dialogview = getLayoutInflater().inflate(R.layout.confirm_dialog, null);
+        TextView likai_btn = dialogview.findViewById(R.id.likai_btn);
+        TextView jixu_btn = dialogview.findViewById(R.id.jixu_btn);
+        likai_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+                Intent img_fragment_wo_daifukuan = new Intent(ConfirmActivity.this, OrderFormActivity.class);
+                img_fragment_wo_daifukuan.putExtra("tab", "daifukuan");
+                startActivity(img_fragment_wo_daifukuan);
+                finish();
+            }
+        });
+        jixu_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        dialog = new Dialog(ConfirmActivity.this, R.style.dialogWindowAnim);
+        dialog.setContentView(dialogview, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT));
+        Window window = dialog.getWindow();
+        //设置显示动画
+        window.setWindowAnimations(R.style.dialogWindowAnim);
+        WindowManager.LayoutParams wl = window.getAttributes();
+        wl.x = 0;
+        wl.y = 0;
+        //设置显示位置
+        dialog.onWindowAttributesChanged(wl);
+        //设置点击外围消散
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
     }
 
     @Override
@@ -136,15 +178,6 @@ public class ConfirmActivity extends BaseActivtiy implements CustomAdapt {
 
     }
 
-    @Override
-    public boolean isBaseOnWidth() {
-        return false;
-    }
-
-    @Override
-    public float getSizeInDp() {
-        return width / 2;
-    }
 
     private static final int SDK_PAY_FLAG = 1;
     private static final int SDK_CHECK_FLAG = 2;
@@ -160,25 +193,27 @@ public class ConfirmActivity extends BaseActivtiy implements CustomAdapt {
                     // 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
                     if (TextUtils.equals(resultStatus, "9000")) {
                         //支付成功后的逻辑
-                        startActivity(new Intent(ConfirmActivity.this, PaidActivity.class));
+                        Intent img_fragment_wo_daifukuan = new Intent(ConfirmActivity.this, OrderFormActivity.class);
+                        img_fragment_wo_daifukuan.putExtra("tab", "daishouhuo");
+                        startActivity(img_fragment_wo_daifukuan);
                         finish();
                     } else {
                         // 判断resultStatus 为非“9000”则代表可能支付失败
                         // “8000”代表支付结果因为支付渠道原因或者系统原因还在等待支付结果确认，最终交易是否成功以服务端异步通知为准（小概率状态）
                         if (TextUtils.equals(resultStatus, "8000")) {
-                            Toast.makeText(ConfirmActivity.this, "支付结果确认中",
-                                    Toast.LENGTH_SHORT).show();
+                            ToastUtils.show("支付结果确认中");
                         } else {
                             // 其他值就可以判断为支付失败，包括用户主动取消支付，或者系统返回的错误
-                            startActivity(new Intent(ConfirmActivity.this, ObligationActivity.class));
+                            Intent img_fragment_wo_daifukuan = new Intent(ConfirmActivity.this, OrderFormActivity.class);
+                            img_fragment_wo_daifukuan.putExtra("tab", "daifukuan");
+                            startActivity(img_fragment_wo_daifukuan);
                             finish();
                         }
                     }
                     break;
                 }
                 case SDK_CHECK_FLAG: {
-                    Toast.makeText(ConfirmActivity.this, "检查结果为：" + msg.obj,
-                            Toast.LENGTH_SHORT).show();
+                    ToastUtils.show("检查结果为：" + msg.obj);
                     break;
                 }
                 default:

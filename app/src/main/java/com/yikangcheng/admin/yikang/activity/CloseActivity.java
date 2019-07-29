@@ -1,40 +1,41 @@
 package com.yikangcheng.admin.yikang.activity;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.hjq.toast.ToastUtils;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.adapter.CloseRecyclerAdapter;
+import com.yikangcheng.admin.yikang.activity.adapter.SelectCouponRecyclerAdapter;
 import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Gou;
 import com.yikangcheng.admin.yikang.activity.siteactivity.AiteActivity;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.AllAddressBean;
+import com.yikangcheng.admin.yikang.bean.CouponusableBean;
 import com.yikangcheng.admin.yikang.bean.CreatOrderBean;
+import com.yikangcheng.admin.yikang.bean.LoginBean;
 import com.yikangcheng.admin.yikang.bean.PariticShopBean;
 import com.yikangcheng.admin.yikang.bean.Request;
 import com.yikangcheng.admin.yikang.bean.ShopCarBean;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
 import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
 import com.yikangcheng.admin.yikang.presenter.AllAddressPresenter;
+import com.yikangcheng.admin.yikang.presenter.CouponPresenter;
 import com.yikangcheng.admin.yikang.presenter.OrderBuyArrayPresenter;
 import com.yikangcheng.admin.yikang.presenter.OrderBuyPresenter;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
@@ -44,25 +45,23 @@ import com.yikangcheng.admin.yikang.util.UIUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.jessyan.autosize.internal.CustomAdapt;
 import me.leefeng.promptlibrary.PromptDialog;
 
 /**
  * 结算页面
  */
-public class CloseActivity extends BaseActivtiy implements View.OnClickListener, CustomAdapt {
+public class CloseActivity extends BaseActivtiy implements View.OnClickListener {
     boolean n_invoice = false, d_invoice = false, z_invoice = false, g_invoice = false, w_invoice = false, t_good = false, d_good = false;
     private RecyclerView recycler;
     private RelativeLayout rela4, rela3, rela2;
     private int width;
     private Dialog bottomDialog;
     private int height;
-    private View sele_pay_digo, invoice_item;
+    private View sele_pay_digo, invoice_item, select_coupon;
     private ImageView buy_img;
     private RelativeLayout wechat_pay, zhi_rela, youhuiquan;
     //选中未选中
     private boolean wechat = false, zhi = true;
-    private FragmentTransaction fragmentTransaction;
     private RelativeLayout no_yes;
     private TextView zhi_invoice, wan;
     private TextView no_invoice;
@@ -117,6 +116,23 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
     private String mGood_type = "1";
     private TextView text;
     private TwoBallRotationProgressBar progress;
+    private String strs;
+    private int youhuiquanid;
+    private int amount;
+    private TextView youhuiquan_text;
+
+    /**
+     * 优惠券
+     */
+    private SelectCouponRecyclerAdapter selectCouponRecyclerAdapter;
+    private ImageView youhuiquan_null;
+    private TextView shiyong;
+    private CouponPresenter couponPresenter;
+    private LoginBean loginBean;
+    private RecyclerView yourecycler;
+    private double moneyDouble = 0.0;
+    private int y_id;
+    private int y_money;
 
     /**
      * 回传值
@@ -146,6 +162,18 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
                 }
                 user_address.setText(userAddressBean.getProvinceStr() + userAddressBean.getCityStr() + userAddressBean.getTownStr() + userAddressBean.getAddress());
             }
+        } else if (requestCode == 2000 && resultCode == 2001) {
+            youhuiquanid = data.getIntExtra("id", 0);
+            amount = data.getIntExtra("amount", 0);
+            youhuiquan_text.setTextColor(Color.parseColor("#FF0000"));
+            youhuiquan_text.setText("-" + amount);
+            String money = total_money.getText().toString();
+            String[] split = money.split("¥");
+            double moneyDouble = Double.parseDouble(split[1]);
+            double zmoney = moneyDouble - amount;
+            java.text.DecimalFormat myformat1 = new java.text.DecimalFormat("0.00");
+            String moneyStr = myformat1.format(zmoney);
+            heji_text.setText("合计：¥" + moneyStr);
         }
     }
 
@@ -167,9 +195,11 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
         StatusBarUtil.setStatusBarMode(this, true, R.color.clolrBAai);
         sele_pay_digo = LayoutInflater.from(this).inflate(R.layout.sele_pay_digo, null);
         invoice_item = LayoutInflater.from(this).inflate(R.layout.invoice_item, null);
+
         invoice_text = (TextView) findViewById(R.id.invoice_text);
         pay_zhifu = (TextView) findViewById(R.id.pay_zhifu);
         recycler = (RecyclerView) findViewById(R.id.recycler);
+        youhuiquan_text = (TextView) findViewById(R.id.youhuiquan_text);
         buy_img = (ImageView) findViewById(R.id.buy_img);
         pay_img = (ImageView) findViewById(R.id.pay_img);
         rela4 = (RelativeLayout) findViewById(R.id.rela4);
@@ -218,6 +248,49 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
         wechat_pay = sele_pay_digo.findViewById(R.id.wechat_pay);
         wan1 = sele_pay_digo.findViewById(R.id.wan);
         zhi_rela = sele_pay_digo.findViewById(R.id.zhi_rela);
+        //优惠券
+        select_coupon = LayoutInflater.from(this).inflate(R.layout.activity_select_coupon, null);
+        String money = total_money.getText().toString();
+        String[] splits = money.split("¥");
+        moneyDouble = Double.parseDouble(splits[1]);
+        back_img = select_coupon.findViewById(R.id.back_img);
+        shiyong = select_coupon.findViewById(R.id.shiyong);
+        youhuiquan_null = select_coupon.findViewById(R.id.youhuiquan_null);
+        yourecycler = select_coupon.findViewById(R.id.recycler);
+        couponPresenter = new CouponPresenter(new Coupon());
+        yourecycler.setLayoutManager(new LinearLayoutManager(this));
+        selectCouponRecyclerAdapter = new SelectCouponRecyclerAdapter(this);
+        yourecycler.setAdapter(selectCouponRecyclerAdapter);
+        loginBean = getLogUser(this);
+        selectCouponRecyclerAdapter.setOnClickListener(new SelectCouponRecyclerAdapter.onClickListener() {
+            @Override
+            public void onClick(int id, int amount) {
+                y_id = id;
+                y_money = amount;
+            }
+        });
+
+        shiyong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (y_money == 0) {
+                    youhuiquan_text.setTextColor(Color.parseColor("#FF999999"));
+                    youhuiquan_text.setText("请选择优惠券");
+                } else {
+                    youhuiquan_text.setTextColor(Color.parseColor("#FF0000"));
+                    youhuiquan_text.setText("优惠¥" + y_money + ".00");
+                }
+                String money = total_money.getText().toString();
+                String[] split = money.split("¥");
+                double moneyDouble = Double.parseDouble(split[1]);
+                double zmoney = moneyDouble - y_money;
+                java.text.DecimalFormat myformat1 = new java.text.DecimalFormat("0.00");
+                String moneyStr = myformat1.format(zmoney);
+                heji_text.setText("合计：¥" + moneyStr);
+                bottomDialog.dismiss();
+            }
+        });
+        /**/
         wechat_pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -293,7 +366,7 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
                 closeRecyclerAdapter.addAlls(pariticShopBean);
                 double price = Double.parseDouble(split[4]);
                 java.text.DecimalFormat myformat1 = new java.text.DecimalFormat("0.00");
-                String strs = myformat1.format(price * Integer.parseInt(split[3]));
+                strs = myformat1.format(price * Integer.parseInt(split[3]));
                 good_num.setText("x" + split[3]);
                 total_money.setText("¥" + strs);
                 heji_text.setText("合计：¥" + strs);
@@ -376,8 +449,24 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
         youhuiquan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                selectCouponRecyclerAdapter.removeAll();
                 //优惠券
-                startActivity(new Intent(CloseActivity.this, SelectCouponActivity.class));
+                /*Intent intent = new Intent(CloseActivity.this, SelectCouponActivity.class);
+                intent.putExtra("money", total_money.getText().toString());
+                startActivityForResult(intent, 2000);*/
+                if (loginBean != null) {
+                    String money = total_money.getText().toString();
+                    String[] splits = money.split("¥");
+                    moneyDouble = Double.parseDouble(splits[1]);
+                    couponPresenter.request(loginBean.getId(), moneyDouble);
+                }
+                //设置dialog的宽高为屏幕的宽高
+                ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(width, height - (int) (height * 0.2));
+                bottomDialog.setContentView(select_coupon, layoutParams);
+                bottomDialog.getWindow().setGravity(Gravity.BOTTOM);
+                bottomDialog.setCanceledOnTouchOutside(true);
+                bottomDialog.getWindow().setWindowAnimations(R.style.BottomDialogs);
+                bottomDialog.show();
             }
         });
 
@@ -520,7 +609,7 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
                 bottomDialog.setContentView(sele_pay_digo, layoutParams);
                 bottomDialog.getWindow().setGravity(Gravity.BOTTOM);
                 bottomDialog.setCanceledOnTouchOutside(true);
-                bottomDialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
+                bottomDialog.getWindow().setWindowAnimations(R.style.BottomDialogs);
                 bottomDialog.show();
             }
         });
@@ -539,10 +628,10 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
                             String substring = str.substring(0, str.length() - 1);
                             if (userAddressBean == null) {
                                 orderBuyArrayPresenter.request(getLogUser(CloseActivity.this).getId(), substring,
-                                        id, invoicetypeInt, s_invoiceInt, mWorkuniit, mNumBer, mGood_type, mMail, zhi ? "ALIPAY" : "WEIXIN", "Android", "COMMODITY", zhi ? "" : ipAddressString);
+                                        id, invoicetypeInt, s_invoiceInt, mWorkuniit, mNumBer, mGood_type, mMail, zhi ? "ALIPAY" : "WEIXIN", "Android", "COMMODITY", zhi ? "" : ipAddressString, String.valueOf(y_id));
                             } else {
                                 orderBuyArrayPresenter.request(getLogUser(CloseActivity.this).getId(), substring,
-                                        userAddressBean.getId(), invoicetypeInt, s_invoiceInt, mWorkuniit, mNumBer, mGood_type, mMail, zhi ? "ALIPAY" : "WEIXIN", "Android", "COMMODITY", zhi ? "" : ipAddressString);
+                                        userAddressBean.getId(), invoicetypeInt, s_invoiceInt, mWorkuniit, mNumBer, mGood_type, mMail, zhi ? "ALIPAY" : "WEIXIN", "Android", "COMMODITY", zhi ? "" : ipAddressString, String.valueOf(y_id));
                             }
                         }
                     }
@@ -550,10 +639,10 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
                     String ids = pariticShopBean.getId();
                     if (userAddressBean == null) {
                         orderBuyPresenter.request(getLogUser(CloseActivity.this).getId(), Integer.parseInt(ids),
-                                id, Integer.parseInt(num), invoicetypeInt, s_invoiceInt, mWorkuniit, mNumBer, mGood_type, mMail, zhi ? "ALIPAY" : "WEIXIN", "Android", zhi ? "" : ipAddressString);
+                                id, Integer.parseInt(num), invoicetypeInt, s_invoiceInt, mWorkuniit, mNumBer, mGood_type, mMail, zhi ? "ALIPAY" : "WEIXIN", "Android", zhi ? "" : ipAddressString, String.valueOf(y_id));
                     } else {
                         orderBuyPresenter.request(getLogUser(CloseActivity.this).getId(), Integer.parseInt(ids),
-                                userAddressBean.getId(), Integer.parseInt(num), invoicetypeInt, s_invoiceInt, mWorkuniit, mNumBer, mGood_type, mMail, zhi ? "ALIPAY" : "WEIXIN", "Android", zhi ? "" : ipAddressString);
+                                userAddressBean.getId(), Integer.parseInt(num), invoicetypeInt, s_invoiceInt, mWorkuniit, mNumBer, mGood_type, mMail, zhi ? "ALIPAY" : "WEIXIN", "Android", zhi ? "" : ipAddressString, String.valueOf(y_id));
                     }
                 }
             }
@@ -579,7 +668,7 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
                 bottomDialog.setContentView(invoice_item, layoutParams);
                 bottomDialog.getWindow().setGravity(Gravity.BOTTOM);
                 bottomDialog.setCanceledOnTouchOutside(true);
-                bottomDialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
+                bottomDialog.getWindow().setWindowAnimations(R.style.BottomDialogs);
                 bottomDialog.show();
             }
         });
@@ -595,16 +684,6 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
 
     }
 
-
-    @Override
-    public boolean isBaseOnWidth() {
-        return false;
-    }
-
-    @Override
-    public float getSizeInDp() {
-        return width / 2;
-    }
 
     /**
      * 查询用户所有地址
@@ -680,7 +759,7 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
                 }
             } else {
                 promptDialog.dismiss();
-                Toast.makeText(CloseActivity.this, "" + request.getMessage(), Toast.LENGTH_SHORT).show();
+                ToastUtils.show("" + request.getMessage());
                 SharedPreferences close = getSharedPreferences("close", MODE_PRIVATE);
                 SharedPreferences.Editor edit = close.edit();
                 edit.putBoolean("close", true);
@@ -704,6 +783,28 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener,
         super.onResume();
         if (userAddressBean == null) {
             allAddressPresenter.request(getLogUser(CloseActivity.this).getId());
+        }
+    }
+
+    /**
+     * 优惠券
+     */
+    private class Coupon implements ICoreInfe {
+        @Override
+        public void success(Object data) {
+            Request request = (Request) data;
+            List<CouponusableBean> couponusableBeans = (List<CouponusableBean>) request.getEntity();
+            if (couponusableBeans != null && couponusableBeans.size() != 0) {
+                selectCouponRecyclerAdapter.addAll(couponusableBeans);
+                youhuiquan_null.setVisibility(View.GONE);
+            } else {
+                youhuiquan_null.setVisibility(View.VISIBLE);
+            }
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
         }
     }
 }

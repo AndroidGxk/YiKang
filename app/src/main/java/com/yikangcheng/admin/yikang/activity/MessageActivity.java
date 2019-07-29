@@ -16,7 +16,7 @@ import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
 import me.jessyan.autosize.internal.CustomAdapt;
 
-public class MessageActivity extends BaseActivtiy implements CustomAdapt, View.OnClickListener {
+public class MessageActivity extends BaseActivtiy implements View.OnClickListener {
 
     private LinearLayout wuliu, tongzhi, kefu;
     private XRecyclerView xrecycler;
@@ -58,15 +58,6 @@ public class MessageActivity extends BaseActivtiy implements CustomAdapt, View.O
 
     }
 
-    @Override
-    public boolean isBaseOnWidth() {
-        return false;
-    }
-
-    @Override
-    public float getSizeInDp() {
-        return width / 2;
-    }
 
     @Override
     public void onClick(View v) {

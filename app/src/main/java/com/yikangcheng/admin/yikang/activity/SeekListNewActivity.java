@@ -159,12 +159,12 @@ public class SeekListNewActivity extends BaseActivtiy implements ICoreInfe, View
             /**
              * 通过分类列表查询
              */
-            commodityPresenter.request(id, 1, "", 1, page);
+            commodityPresenter.request(id, record, "", 1, page);
         } else {
             /**
              * 用户输入关键字查询
              */
-            commodityPresenter.request(id, 1, count, 1, page);
+            commodityPresenter.request(id, record, count, 1, page);
         }
     }
 

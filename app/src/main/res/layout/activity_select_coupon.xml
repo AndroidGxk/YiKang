@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/dialog_bg_shape"
     android:clipToPadding="true"
     android:fillViewport="true"
     android:fitsSystemWindows="true"
@@ -15,7 +16,8 @@
         android:id="@+id/table"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="@color/colorTab">
+        android:background="@color/colorTab"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/back_img"
@@ -39,16 +41,45 @@
             android:textSize="19sp" />
     </RelativeLayout>
 
-    <com.jcodecraeer.xrecyclerview.XRecyclerView
-        android:id="@+id/xrecycler"
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="优惠券"
+        android:textColor="#ff333333"
+        android:textSize="14sp" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/table" />
+        android:layout_above="@id/shiyong"
+        android:layout_below="@+id/text"
+        android:background="@color/clolrBAai"
+        android:overScrollMode="never" />
 
     <ImageView
         android:id="@+id/youhuiquan_null"
         android:layout_width="115dp"
         android:layout_height="105dp"
         android:layout_centerInParent="true"
-        android:background="@drawable/zanwuyouhuiquan" />
+        android:background="@drawable/zanwuyouhuiquan"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/shiyong"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="18dp"
+        android:layout_marginRight="18dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/shop_btn_shape"
+        android:gravity="center"
+        android:text="使用"
+        android:textColor="#fffefefe"
+        android:textSize="14sp" />
 </RelativeLayout>

@@ -168,8 +168,7 @@
                     android:layout_height="37dp"
                     android:layout_below="@+id/rela3"
                     android:layout_marginTop="10dp"
-                    android:background="#FFFFFF"
-                    android:visibility="gone">
+                    android:background="#FFFFFF">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -181,12 +180,23 @@
                         android:textSize="13sp" />
 
                     <TextView
+                        android:layout_toLeftOf="@+id/go_text"
+                        android:id="@+id/youhuiquan_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="选择优惠券"
+                        android:textColor="#ff999999"
+                        android:textSize="11sp" />
+
+                    <TextView
+                        android:id="@+id/go_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
+                        android:text=" >"
                         android:layout_marginRight="15dp"
-                        android:text="选择优惠券 >"
                         android:textColor="#ff999999"
                         android:textSize="11sp" />
                 </RelativeLayout>
@@ -255,7 +265,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_marginTop="15dp"
                         android:layout_marginRight="15dp"
-                        android:textColor="#ff333333"
+                        android:textColor="#333333"
                         android:textSize="12sp" />
 
                     <TextView
@@ -279,7 +289,7 @@
                         android:layout_marginTop="15dp"
                         android:layout_marginRight="15dp"
                         android:layout_marginBottom="15dp"
-                        android:textColor="#ff333333"
+                        android:textColor="#333333"
                         android:textSize="12sp" />
                 </RelativeLayout>
 
@@ -314,8 +324,8 @@
     </RelativeLayout>
 
     <com.yikangcheng.admin.yikang.util.TwoBallRotationProgressBar
-        android:id="@+id/progress"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerInParent="true" />
+    android:id="@+id/progress"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerInParent="true" />
 </RelativeLayout>

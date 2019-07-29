@@ -42,23 +42,23 @@ public class Recommend_Fragment_wo_Adapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         final ViewHolder holder1 = (ViewHolder) holder;
-        Glide.with(mContent).load(Constants.BASETUPIANSHANGCHUANURL + mList.get(position).getLogo()).into(holder1.mImg);
-        holder1.mTv_name.setText(mList.get(position).getName());
-        holder1.mTitle.setText(mList.get(position).getTitle());
-        holder1.mJiage.setText(mList.get(position).getCurrentprice() + "");
-        holder1.mBprice.setText("市场价：" + mList.get(position).getSourceprice());
-        /**
-         * // 中间加横线 ， 添加Paint.ANTI_ALIAS_FLAG是线会变得清晰去掉锯齿
-         */
-        holder1.mBprice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
-
-        holder1.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int id = mList.get(position).getId();
-                mListener.OnClickListener(v,id);
-            }
-        });
+//        Glide.with(mContent).load(Constants.BASETUPIANSHANGCHUANURL + mList.get(position).getLogo()).into(holder1.mImg);
+//        holder1.mTv_name.setText(mList.get(position).getName());
+//        holder1.mTitle.setText(mList.get(position).getTitle());
+//        holder1.mJiage.setText(mList.get(position).getCurrentprice() + "");
+//        holder1.mBprice.setText("市场价：" + mList.get(position).getSourceprice());
+//        /**
+//         * // 中间加横线 ， 添加Paint.ANTI_ALIAS_FLAG是线会变得清晰去掉锯齿
+//         */
+//        holder1.mBprice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
+//
+//        holder1.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                int id = mList.get(position).getId();
+//                mListener.OnClickListener(v,id);
+//            }
+//        });
     }
 
     @Override

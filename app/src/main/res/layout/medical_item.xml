@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/clolrBAai"
+    android:orientation="horizontal"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/good_img"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/ceshi_good" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/good_title"
+            android:layout_width="195dp"
+            android:layout_height="wrap_content"
+            android:text="直降直降到手仅直降直女性专女性项检深度测"
+            android:textColor="#ff323232"
+            android:textSize="13sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/wuliu_xian_shape"
+                android:padding="3dp"
+                android:text="入职体检"
+                android:textColor="#FFFFFF"
+                android:textSize="9sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/wuliu_xian_shape"
+                android:padding="3dp"
+                android:text="入职体检"
+                android:textColor="#FFFFFF"
+                android:textSize="9sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/good_buynum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="6dp"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="月销80笔"
+                android:textColor="#ff727572"
+                android:textSize="8sp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/good_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="￥268"
+            android:textColor="#ffff5b1d"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/good_marprice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="门店价￥1700"
+            android:textColor="#ff727572"
+            android:textSize="8sp" />
+    </LinearLayout>
+</LinearLayout>

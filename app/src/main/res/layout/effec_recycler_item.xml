@@ -93,6 +93,7 @@
         app:layout_constraintGuide_percent="0.64" />
 
     <TextView
+        android:id="@+id/title_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#CACACA"
@@ -101,16 +102,22 @@
         app:layout_constraintTop_toBottomOf="@id/top_line" />
 
     <TextView
-        android:layout_width="72dp"
+        android:id="@+id/man_text"
+        android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:background="@drawable/effec_man_shape"
         android:gravity="center"
         android:textColor="#CACACA"
+        android:paddingRight="6dp"
+        android:paddingLeft="6dp"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
         android:textSize="10sp"
         app:layout_constraintLeft_toRightOf="@id/man_left_line"
         app:layout_constraintTop_toBottomOf="@+id/text_top_line" />
 
     <TextView
+        android:id="@+id/date_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#CACACA"
@@ -128,6 +135,7 @@
         app:layout_constraintTop_toBottomOf="@+id/qian_top_line" />
 
     <TextView
+        android:id="@+id/price_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#CACACA"
@@ -136,11 +144,17 @@
         app:layout_constraintTop_toBottomOf="@+id/price_top_line" />
 
     <TextView
-        android:layout_width="48dp"
-        android:layout_height="15dp"
+        android:id="@+id/type_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="@drawable/emanjian_shape"
         android:gravity="center"
         android:textColor="#FFFFFF"
+        android:paddingRight="6dp"
+        android:paddingLeft="6dp"
+        android:text="测试"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
         android:textSize="10sp"
         app:layout_constraintLeft_toRightOf="@+id/qian_left_line"
         app:layout_constraintTop_toBottomOf="@id/man_top_line" />

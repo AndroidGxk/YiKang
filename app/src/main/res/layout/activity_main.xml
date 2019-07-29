@@ -99,7 +99,7 @@
                     android:layout_height="48dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
-                    android:background="@drawable/miaosha"
+                    android:background="@drawable/qiandaofanxian"
                     android:button="@null"
                     android:gravity="center" />
 
@@ -108,7 +108,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="7dp"
-                    android:text="秒杀"
+                    android:text="签到返现"
                     android:textColor="#333333"
                     android:textSize="10sp" />
             </LinearLayout>
@@ -147,14 +147,14 @@
                     <TextView
                         android:id="@+id/text_count"
                         android:layout_width="13dp"
-                        android:visibility="gone"
                         android:layout_height="13dp"
                         android:layout_marginLeft="18dp"
                         android:background="@drawable/red_btn_shape"
                         android:gravity="center"
                         android:text="01"
                         android:textColor="@color/clolrBAai"
-                        android:textSize="9sp" />
+                        android:textSize="9sp"
+                        android:visibility="gone" />
                 </RelativeLayout>
 
             </LinearLayout>

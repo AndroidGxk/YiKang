@@ -3,7 +3,7 @@
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimary">@color/colorTab</item>
         <item name="colorPrimaryDark">@color/colorTab</item>
         <item name="android:windowTranslucentNavigation">false</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -31,5 +31,10 @@
         <item name="android:windowBackground">@color/transparent</item>
         <!--模糊-->
         <item name="android:backgroundDimEnabled">true</item>
+    </style>
+    <style name="foodRatingBar" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/ratingstars</item>
+        <item name="android:minHeight">22dip</item>
+        <item name="android:maxHeight">22dip</item>
     </style>
 </resources>

@@ -36,7 +36,7 @@ import me.leefeng.promptlibrary.PromptButton;
 import me.leefeng.promptlibrary.PromptButtonListener;
 import me.leefeng.promptlibrary.PromptDialog;
 
-public class AiteActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt {
+public class AiteActivity extends BaseActivtiy implements ICoreInfe  {
     private ImageView mImgActivityAiteFanhui, address_null, img_activity_aite_fanhui;
     private RelativeLayout mToolbarActivityAite;
     private RecyclerView mRlvActivityAite;
@@ -253,16 +253,6 @@ public class AiteActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
     @Override
     public void fail(ApiException e) {
 
-    }
-
-    @Override
-    public boolean isBaseOnWidth() {
-        return false;
-    }
-
-    @Override
-    public float getSizeInDp() {
-        return width / 2;
     }
 
     @Override

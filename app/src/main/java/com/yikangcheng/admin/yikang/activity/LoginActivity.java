@@ -1,17 +1,15 @@
 package com.yikangcheng.admin.yikang.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.hjq.toast.ToastUtils;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.LoginBean;
@@ -20,20 +18,17 @@ import com.yikangcheng.admin.yikang.model.http.ApiException;
 import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
 import com.yikangcheng.admin.yikang.presenter.LoginPresenter;
 
-import me.jessyan.autosize.internal.CustomAdapt;
 import me.leefeng.promptlibrary.PromptDialog;
 
-public class LoginActivity extends BaseActivtiy implements CustomAdapt, ICoreInfe, View.OnClickListener {
+public class LoginActivity extends BaseActivtiy implements ICoreInfe, View.OnClickListener {
 
     private LinearLayout reg_image;
-    private int height;
     private TextView forget_pwd;
     private RelativeLayout log_btn;
     private EditText phone_edit, pwd_edit;
     private LoginPresenter loginPresenter;
     public SharedPreferences userInfo;
     private PromptDialog promptDialog;
-    private int width;
 
     @Override
     protected void initView() {
@@ -43,9 +38,6 @@ public class LoginActivity extends BaseActivtiy implements CustomAdapt, ICoreInf
         //设置自定义属性
         promptDialog.getDefaultBuilder().touchAble(true).round(1).loadingDuration(1000);
         reg_image = (LinearLayout) findViewById(R.id.reg_image);
-        WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
-        height = wm.getDefaultDisplay().getHeight();
-        width = wm.getDefaultDisplay().getWidth();
         phone_edit = (EditText) findViewById(R.id.phone_edit);
         pwd_edit = (EditText) findViewById(R.id.pwd_edit);
         forget_pwd = (TextView) findViewById(R.id.forget_pwd);
@@ -73,15 +65,6 @@ public class LoginActivity extends BaseActivtiy implements CustomAdapt, ICoreInf
 
     }
 
-    @Override
-    public boolean isBaseOnWidth() {
-        return false;
-    }
-
-    @Override
-    public float getSizeInDp() {
-        return width / 2;
-    }
 
     @Override
     public void success(Object data) {
@@ -98,7 +81,7 @@ public class LoginActivity extends BaseActivtiy implements CustomAdapt, ICoreInf
             SharedPreferences.Editor activit = sp.edit();
             activit.putString("acti", "login");
             activit.commit();
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            startActivity(new Intent(LoginActivity.this, ApplySeleActivity.class));
             finish();
         } else {
             promptDialog.showError(request.getMessage());
@@ -128,7 +111,7 @@ public class LoginActivity extends BaseActivtiy implements CustomAdapt, ICoreInf
                 String phone = phone_edit.getText().toString();
                 String pwd = pwd_edit.getText().toString();
                 if (phone.equals("") || pwd.equals("")) {
-                    Toast.makeText(this, "账号或密码不能为空", Toast.LENGTH_SHORT).show();
+                    ToastUtils.show("账号或密码不能为空" );
                     return;
                 }
                 loginPresenter.request(phone, pwd);

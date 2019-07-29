@@ -15,8 +15,8 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.hjq.toast.ToastUtils;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.adapter.RecommendAdapter;
@@ -24,13 +24,11 @@ import com.yikangcheng.admin.yikang.activity.adapter.ShopRecyclerAdapter;
 import com.yikangcheng.admin.yikang.activity.particulars.ParticularsActivity;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.LoginBean;
-import com.yikangcheng.admin.yikang.bean.RecommendBean;
 import com.yikangcheng.admin.yikang.bean.Request;
 import com.yikangcheng.admin.yikang.bean.ShopCarBean;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
 import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
 import com.yikangcheng.admin.yikang.presenter.DeleteShopPresenter;
-import com.yikangcheng.admin.yikang.presenter.RecommendPresenter;
 import com.yikangcheng.admin.yikang.presenter.ShopCarPresenter;
 import com.yikangcheng.admin.yikang.presenter.UpdateCountPresenter;
 import com.yikangcheng.admin.yikang.util.SpacesItemDecoration;
@@ -60,7 +58,6 @@ public class PartiCarActivity extends BaseActivtiy implements ShopRecyclerAdapte
     private List<ShopCarBean> entity;
     private boolean isclick;
     private RecommendAdapter mRecommendAdapter;
-    private RecommendPresenter recommendPresenter;
     private DeleteShopPresenter deleteShopPresenter;
     private String mId = "";
     private ImageView back_img;
@@ -102,7 +99,6 @@ public class PartiCarActivity extends BaseActivtiy implements ShopRecyclerAdapte
         shopCarPresenter = new ShopCarPresenter(this);
         deleteShopPresenter = new DeleteShopPresenter(new DeleteShop());
 
-
         /**
          * 为你推荐
          */
@@ -110,7 +106,6 @@ public class PartiCarActivity extends BaseActivtiy implements ShopRecyclerAdapte
         shop_recyclertwo.setLayoutManager(gridLayoutManager);
         mRecommendAdapter = new RecommendAdapter(this);
         shop_recyclertwo.setAdapter(mRecommendAdapter);
-        recommendPresenter = new RecommendPresenter(new RecomICoreInfe());
         mRecommendAdapter.setOnClickListener(new RecommendAdapter.OnClickListener() {
             @Override
             public void OnClickListener(View v, int id) {
@@ -124,7 +119,6 @@ public class PartiCarActivity extends BaseActivtiy implements ShopRecyclerAdapte
         boolean includeEdge = false;
         shop_recyclertwo.addItemDecoration(new SpacesItemDecoration(spanCount, spacing, includeEdge));
         if (logUser != null) {
-            recommendPresenter.request(logUser.getId(), 10, mPage);
         }
     }
 
@@ -198,7 +192,7 @@ public class PartiCarActivity extends BaseActivtiy implements ShopRecyclerAdapte
             @Override
             public void onClick(View view) {
                 if (num_text.getText().toString().equals("去结算(0)")) {
-                    Toast.makeText(PartiCarActivity.this, "请选择商品", Toast.LENGTH_SHORT).show();
+                    ToastUtils.show("请选择商品");
                     return;
                 }
                 List<ShopCarBean> shopList = shopRecyclerAdapter.getShopList();
@@ -206,6 +200,15 @@ public class PartiCarActivity extends BaseActivtiy implements ShopRecyclerAdapte
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("shopList", (Serializable) shopList);
                 intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+
+        shopRecyclerAdapter.setGoParClickListener(new ShopRecyclerAdapter.goParClickListener() {
+            @Override
+            public void onclick(int id) {
+                Intent intent = new Intent(PartiCarActivity.this, ParticularsActivity.class);
+                intent.putExtra("id", id);
                 startActivity(intent);
             }
         });
@@ -303,13 +306,16 @@ public class PartiCarActivity extends BaseActivtiy implements ShopRecyclerAdapte
     public void success(Object data) {
         Request request = (Request) data;
         List<ShopCarBean> entity = (List<ShopCarBean>) request.getEntity();
-        if (entity.size() == 0) {
-            null_car.setVisibility(View.VISIBLE);
-            shop_recycler.setVisibility(View.GONE);
+        if (entity != null) {
+            if (entity.size() == 0) {
+                null_car.setVisibility(View.VISIBLE);
+                shop_recycler.setVisibility(View.GONE);
+            }
+            shopRecyclerAdapter.remove();
+            shopRecyclerAdapter.addAll(entity);
+        } else {
+            ToastUtils.show("购物车数据为空");
         }
-        shopRecyclerAdapter.remove();
-
-        shopRecyclerAdapter.addAll(entity);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -365,7 +371,6 @@ public class PartiCarActivity extends BaseActivtiy implements ShopRecyclerAdapte
     @Override
     public void onLoadMore() {
         mPage++;
-        recommendPresenter.request(logUser.getId(), 1, mPage);
     }
 
     /**
@@ -376,30 +381,11 @@ public class PartiCarActivity extends BaseActivtiy implements ShopRecyclerAdapte
         public void success(Object data) {
             LoginBean logUser = getLogUser(PartiCarActivity.this);
             Request request = (Request) data;
-            Toast.makeText(PartiCarActivity.this, request.getMessage() + "", Toast.LENGTH_SHORT).show();
+            ToastUtils.show(request.getMessage() + "");
             if (request.isSuccess()) {
                 if (logUser != null) {
                     shopCarPresenter.request(logUser.getId());
                 }
-            }
-        }
-
-        @Override
-        public void fail(ApiException e) {
-
-        }
-    }
-
-    public class RecomICoreInfe implements ICoreInfe {
-
-        @Override
-        public void success(Object data) {
-            Request request = (Request) data;
-            List<RecommendBean> entity1 = (List<RecommendBean>) request.getEntity();
-            if (entity1.size() == 0) {
-                base_btn.setVisibility(View.VISIBLE);
-            } else {
-                mRecommendAdapter.addData(entity1);
             }
         }
 

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,9 +23,9 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.hjq.toast.ToastUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -36,9 +37,13 @@ import com.yikangcheng.admin.yikang.activity.H5SecActivity;
 import com.yikangcheng.admin.yikang.activity.PartiCarActivity;
 import com.yikangcheng.admin.yikang.activity.SeekListNewActivity;
 import com.yikangcheng.admin.yikang.activity.coupon.CouponActivity;
+import com.yikangcheng.admin.yikang.activity.h5activity.H5DiscountActivity;
+import com.yikangcheng.admin.yikang.activity.h5activity.H5MessActivity;
+import com.yikangcheng.admin.yikang.activity.h5activity.H5RecommendListActivity;
 import com.yikangcheng.admin.yikang.activity.h5activity.InsideActivity;
 import com.yikangcheng.admin.yikang.activity.particulars.ParticularsActivity;
 import com.yikangcheng.admin.yikang.activity.seek.SeekActivity;
+import com.yikangcheng.admin.yikang.app.BaseApp;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
 import com.yikangcheng.admin.yikang.bean.Request;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
@@ -55,6 +60,7 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
     private ImageView imageView;
     private ImageView quxiao;
     private ImageView shouye;
+    private ImageView mess_img;
     private ImageView chakan;
     private View dialogview;
     private Dialog dialog;
@@ -63,14 +69,17 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
     private SmartRefreshLayout refreshLayout;
     private ProgressBar pbProgress;
     private ImageView imgBut;
+    private ImageView back_img;
     private TextView text_seek;
     private PromptDialog promptDialog;
     //dialog展示
     private int countDialog = 0;
 
+
     @SuppressLint("NewApi")
     @Override
     protected void initView(View view) {
+        mess_img = view.findViewById(R.id.mess_img);
         //创建对象
         promptDialog = new PromptDialog(getActivity());
         //设置自定义属性
@@ -83,8 +92,8 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
         pbProgress = view.findViewById(R.id.pb_progress);
         //加载刷新
         refreshLayout = view.findViewById(R.id.refreshLayout);
-
         text_seek = view.findViewById(R.id.text_seek);
+        back_img = view.findViewById(R.id.back_img);
         refreshLayout.setEnableLoadmore(false);
         WebSettings webSettings = webView.getSettings();
         //设置WebView属性，能够执行Javascript脚本
@@ -136,12 +145,14 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
                     pbProgress.setVisibility(View.GONE);
                     promptDialog.dismissImmediately();
                     if (countDialog == 0) {
-                        SharedPreferences sp = getContext().getSharedPreferences("activity", Context.MODE_PRIVATE);
-                        String str = sp.getString("acti", "");
-                        if (str.equals("register")) {
-                            showDialog();
+                        SharedPreferences sp = BaseApp.getApp().getSharedPreferences("activity", Context.MODE_PRIVATE);
+                        if (sp != null) {
+                            String str = sp.getString("acti", "");
+                            if (str.equals("register")) {
+                                showDialog();
+                            }
+                            countDialog++;
                         }
-                        countDialog++;
                     }
                 } else {
                     // 加载中
@@ -149,8 +160,6 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
                 }
                 super.onProgressChanged(view, newProgress);
             }
-
-
         });
 
         webView.getSettings().setJavaScriptEnabled(true);
@@ -170,7 +179,7 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
                 //这event.getAction() == KeyEvent.ACTION_DOWN表示是返回键事件   
                 if (event.getAction() == KeyEvent.ACTION_DOWN) {
                     if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {//表示按返回键 时的操作  
-                        webView.goBack();//后退    
+                        webView.goBack();//后退   
                         return true;//已处理     返回true表示被处理否则返回false    
                     }
                 }
@@ -187,6 +196,16 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
                 }
             }
         });
+        // 在安卓5.0之后，默认不允许加载http与https混合内容，需要设置webview允许其加载混合网络协议内容
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            webView.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        }
+        back_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().finish();
+            }
+        });
         imgBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -199,6 +218,12 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
                 startActivity(new Intent(getContext(), SeekActivity.class));
             }
         });
+        mess_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), H5MessActivity.class));
+            }
+        });
         webView.setWebViewClient(new WebViewClient() {
             @Override
             // 在点击请求的是链接是才会调用，重写此方法返回true表明点击网页里面的链接还是在当前的webview里跳转，不跳到浏览器那边。这个函数我们可以做很多操作，比如我们读取到某些特殊的URL，于是就可以不打开地址，取消这个操作，进行预先定义的其他操作，这对一个程序是非常必要的。
@@ -207,16 +232,32 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
                 if (url.contains("/appShow/proDetail")) {
                     //商品详情链接
                     Intent intent = new Intent(getActivity(), ParticularsActivity.class);
-                    intent.putExtra("id", url);
+                    intent.putExtra("id", url + "&userId=" + getLogUser(getContext()).getId());
+                    startActivity(intent);
+                    return true;
+                } else if (url.contains("appShow/yousheng")) {
+                    //内部购
+                    Intent intent = new Intent(getContext(), H5SecActivity.class);
+                    intent.putExtra("http", url);
+                    intent.putExtra("title", "优胜教育内部购");
                     startActivity(intent);
                     return true;
                 } else if (url.contains("/appShow/recommendList")) {
                     //精选活动大图链接
-                    Intent intent = new Intent(getContext(), H5SecActivity.class);
+                    Intent intent = new Intent(getContext(), H5RecommendListActivity.class);
                     intent.putExtra("http", url);
                     startActivity(intent);
                     return true;
-                } else if (url.contains("appShow/proSomeList")) {
+                } else if (url.contains("appShow/zeroPurchase")) {
+                    /**
+                     * 签到页面
+                     */
+                    Intent intent = new Intent(getContext(), H5SecActivity.class);
+                    intent.putExtra("http", "https://www.yikch.com/mobile/appShow/zeroPurchase?type=android");
+                    intent.putExtra("title", "专场0元购");
+                    startActivity(intent);
+                    return true;
+                } else if (url.contains("queryCourse.name")) {
                     //找相似链接
                     try {
                         //URL中文乱码转换
@@ -237,9 +278,27 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
                     startActivity(intent);
                     return true;
                 } else if (url.contains("appShow/activity")) {
-                    Intent intent = new Intent(getContext(), H5SecActivity.class);
-                    intent.putExtra("http", url);
-                    startActivity(intent);
+                    if (url.contains("appShow/activity1")) {
+                        Intent intent = new Intent(getContext(), H5SecActivity.class);
+                        intent.putExtra("http", url);
+                        intent.putExtra("title", "每日精品");
+                        startActivity(intent);
+                    } else if (url.contains("appShow/activity2")) {
+                        Intent intent = new Intent(getContext(), H5SecActivity.class);
+                        intent.putExtra("http", url);
+                        intent.putExtra("title", "狠货推荐");
+                        startActivity(intent);
+                    } else if (url.contains("appShow/activity3")) {
+                        Intent intent = new Intent(getContext(), H5SecActivity.class);
+                        intent.putExtra("http", url);
+                        intent.putExtra("title", "企业福利");
+                        startActivity(intent);
+                    } else {
+                        Intent intent = new Intent(getContext(), H5SecActivity.class);
+                        intent.putExtra("http", url);
+                        intent.putExtra("title", "周秒杀");
+                        startActivity(intent);
+                    }
                     return true;
                 } else if (url.contains("appShow/majorcredit")) {
                     Intent intent = new Intent(getContext(), H5SecActivity.class);
@@ -269,10 +328,25 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
                         intent.putExtra("title", "夏至福利");
                         startActivity(intent);
                         return true;
+                    } else if (url.contains("mobile/appShow/aixiaoxin")) {
+                        //抢购链接
+                        Intent intent = new Intent(getContext(), H5SecActivity.class);
+                        intent.putExtra("http", url);
+                        intent.putExtra("title", "爱小心内购");
+                        startActivity(intent);
+                        return true;
                     } else if (url.contains("superToday")) {
                         //抢购链接
                         Intent intent = new Intent(getContext(), H5SecActivity.class);
                         intent.putExtra("http", url);
+                        intent.putExtra("none", "yes");
+                        startActivity(intent);
+                        return true;
+                    } else if (url.contains("discounts")) {
+                        //优惠券链接
+                        Intent intent = new Intent(getContext(), H5DiscountActivity.class);
+                        intent.putExtra("http", url);
+                        Log.d("GTTT", url);
                         intent.putExtra("none", "yes");
                         startActivity(intent);
                         return true;
@@ -285,7 +359,6 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
                 }
             }
         });
-
     }
 
     private void showDialog() {
@@ -298,7 +371,7 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
         chakan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences sp = getContext().getSharedPreferences("activity", Context.MODE_PRIVATE);
+                SharedPreferences sp = BaseApp.getApp().getSharedPreferences("activity", Context.MODE_PRIVATE);
                 SharedPreferences.Editor activit = sp.edit();
                 activit.putString("acti", "login");
                 activit.commit();
@@ -309,7 +382,7 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
         shouye.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences sp = getContext().getSharedPreferences("activity", Context.MODE_PRIVATE);
+                SharedPreferences sp = BaseApp.getApp().getSharedPreferences("activity", Context.MODE_PRIVATE);
                 SharedPreferences.Editor activit = sp.edit();
                 activit.putString("acti", "login");
                 activit.commit();
@@ -319,7 +392,7 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences sp = getContext().getSharedPreferences("activity", Context.MODE_PRIVATE);
+                SharedPreferences sp = BaseApp.getApp().getSharedPreferences("activity", Context.MODE_PRIVATE);
                 SharedPreferences.Editor activit = sp.edit();
                 activit.putString("acti", "login");
                 activit.commit();
@@ -330,13 +403,14 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
         quxiao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences sp = getContext().getSharedPreferences("activity", Context.MODE_PRIVATE);
+                SharedPreferences sp = BaseApp.getApp().getSharedPreferences("activity", Context.MODE_PRIVATE);
                 SharedPreferences.Editor activit = sp.edit();
                 activit.putString("acti", "login");
                 activit.commit();
                 dialog.dismiss();
             }
         });
+
         Glide.with(getContext()).load(R.drawable.huodong)
                 .into(imageView);
         dialog = new Dialog(getContext(), R.style.dialogWindowAnim);
@@ -449,7 +523,7 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
     @Override
     public void success(Object data) {
         Request request = (Request) data;
-        Toast.makeText(getContext(), "" + request.getMessage(), Toast.LENGTH_SHORT).show();
+        ToastUtils.show("" + request.getMessage());
     }
 
     @Override

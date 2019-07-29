@@ -22,7 +22,6 @@ public class FenLeiAdapter extends RecyclerView.Adapter<FenLeiAdapter.Vh> {
     private List<ClassifyListOneBean> stringList = new ArrayList<>();
     private int mPosition;
     private Context context;
-    private int id;
 
     public FenLeiAdapter(Context context) {
         this.context = context;
@@ -46,6 +45,7 @@ public class FenLeiAdapter extends RecyclerView.Adapter<FenLeiAdapter.Vh> {
         vh.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //记录点击下标
                 mPosition = position;
                 mOnclick.onClick(position);
                 notifyDataSetChanged();

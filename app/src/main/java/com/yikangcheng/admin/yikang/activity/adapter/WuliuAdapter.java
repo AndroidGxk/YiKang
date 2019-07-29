@@ -7,16 +7,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.CheckBox;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.bean.TestBean;
 
-import junit.framework.Test;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,7 +70,6 @@ public class WuliuAdapter extends RecyclerView.Adapter<WuliuAdapter.Vh> {
             vh.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(context, "这是未选中状态", Toast.LENGTH_SHORT).show();
                 }
             });
         }

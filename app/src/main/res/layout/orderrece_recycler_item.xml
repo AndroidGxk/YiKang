@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/clolrBAai"
+    android:paddingLeft="15dp"
+    android:paddingTop="15dp"
+    android:paddingRight="15dp">
+
+    <LinearLayout
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/good_img"
+            android:layout_width="95dp"
+            android:layout_height="95dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/good_img_shaper"
+            android:src="@drawable/ceshi_good" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/good_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_toRightOf="@id/good_img"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="安热沙资生堂水能户外养生堂防安热沙资生堂水能户外养生堂防"
+                android:textColor="#ff333333"
+                android:textSize="15sp" />
+
+
+            <LinearLayout
+                android:id="@+id/good_line1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/good_title"
+                android:layout_toRightOf="@id/good_img"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/good_spec"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical"
+                    android:text="规格 90g"
+                    android:textColor="#ff999999"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/good_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="20dp"
+                    android:gravity="center_vertical"
+                    android:text="X1"
+                    android:textColor="#ff999999"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/good_line1"
+                android:layout_toRightOf="@id/good_img"
+                android:gravity="bottom">
+
+                <TextView
+                    android:id="@+id/good_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="¥205.00"
+                    android:textColor="#ffff0000"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/good_markprice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/good_line1"
+                    android:layout_marginLeft="30dp"
+                    android:layout_toRightOf="@id/good_price"
+                    android:text=" 市场价¥265.00 "
+                    android:textColor="#ff999999"
+                    android:textSize="10sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/cutoff_line"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@+id/line"
+        android:background="@drawable/fengexian_shape" />
+
+    <LinearLayout
+        android:id="@+id/take_line"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/cutoff_line"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/wuliu_mess"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/wuliu_mes_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:singleLine="true"
+                    android:text="您的订单已出库，点击查看详情"
+                    android:textColor="#ff333333"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/wuliu_mes_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:text="2019-06-10 23:09:39"
+                    android:textColor="#ff999999"
+                    android:textSize="12sp"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/jiantouyou" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/look_btn"
+                android:layout_width="75dp"
+                android:layout_height="25dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="15dp"
+                android:layout_toLeftOf="@+id/buy_but"
+                android:background="@drawable/yellow_pay_shape"
+                android:gravity="center"
+                android:text="查看物流"
+                android:textColor="@color/colorTab"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/shou_but"
+                android:layout_width="75dp"
+                android:layout_height="25dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/yellow_pay_shi_shape"
+                android:gravity="center"
+                android:text="确定收货"
+                android:textColor="#ffffffff"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

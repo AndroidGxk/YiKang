@@ -76,10 +76,10 @@ public class ItemRecommendGoodsAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         RecommendBean recommendGoods = data.get(position);
-        holder.tv_goods_name.setText(recommendGoods.getName());
-        holder.tv_goods_price.setText("￥" + recommendGoods.getCurrentprice());
-        Glide.with(context).load("https://static.yikch.com" + recommendGoods.getLogo()).into(holder.sdv_goods);
-        holder.tv_goods_old_price.setText("￥" + recommendGoods.getSourceprice());
+//        holder.tv_goods_name.setText(recommendGoods.getName());
+//        holder.tv_goods_price.setText("￥" + recommendGoods.getCurrentprice());
+//        Glide.with(context).load("https://static.yikch.com" + recommendGoods.getLogo()).into(holder.sdv_goods);
+//        holder.tv_goods_old_price.setText("￥" + recommendGoods.getSourceprice());
         return convertView;
     }
 

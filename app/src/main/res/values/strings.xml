@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name" translatable="false">企挚友</string>
     <string name="nearOverText" translatable="false">即将售罄</string>
     <string name="overText" translatable="false">已售罄</string>
@@ -12,5 +12,8 @@
     <string name="gouwu" translatable="false">购物车</string>
     <string name="wode" translatable="false">我的</string>
     <string name="pageBehavior" translatable="false">com.yikangcheng.admin.yikang.activity.fragment.goodfragment.page.PageBehavior</string>
-
+    <string name="settings" tools:ignore="MissingTranslation">去设置</string>
+    <string name="help" tools:ignore="MissingTranslation">提示</string>
+    <string name="string_help_text" tools:ignore="MissingTranslation">您未允许企挚友获取手机状态权限，需手动在系统设置中开启</string>
+    <string name="quit" tools:ignore="MissingTranslation">暂不</string>
 </resources>

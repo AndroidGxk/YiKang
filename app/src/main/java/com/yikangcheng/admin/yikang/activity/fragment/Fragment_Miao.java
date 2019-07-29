@@ -17,8 +17,8 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.hjq.toast.ToastUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -26,12 +26,12 @@ import com.sobot.chat.SobotApi;
 import com.sobot.chat.api.model.Information;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.CloseActivity;
+import com.yikangcheng.admin.yikang.activity.H5SecActivity;
 import com.yikangcheng.admin.yikang.activity.PartiCarActivity;
-import com.yikangcheng.admin.yikang.activity.SeleGoodActivity;
-import com.yikangcheng.admin.yikang.activity.aftersale.AfterSaleActivity;
 import com.yikangcheng.admin.yikang.activity.particulars.ParticularsActivity;
 import com.yikangcheng.admin.yikang.activity.seek.SeckillActivity;
 import com.yikangcheng.admin.yikang.activity.seek.SeekActivity;
+import com.yikangcheng.admin.yikang.app.BaseApp;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
 import com.yikangcheng.admin.yikang.bean.Request;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
@@ -48,6 +48,7 @@ public class Fragment_Miao extends BaseFragment implements ICoreInfe {
     private SmartRefreshLayout refreshLayout;
     private ImageView img_top;
     private TextView text_seek;
+
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @SuppressLint({"JavascriptInterface", "NewApi"})
@@ -85,7 +86,8 @@ public class Fragment_Miao extends BaseFragment implements ICoreInfe {
                 //返回false，意味着请求过程里，不管有多少次的跳转请求（即新的请求地址），均交给webView自己处理，这也是此方法的默认处理
                 //返回true，说明你自己想根据url，做新的跳转，比如在判断url符合条件的情况下，我想让webView加载http://ask.csdn.net/questions/178242
                 if (url.toString().contains("sina.cn")) {
-                    webView.loadUrl("https://www.yikch.com/mobile/appShow/activity?type=android");
+//                    webView.loadUrl("https://www.yikch.com/mobile/appShow/activity?type=android");
+                    webView.loadUrl("https://www.yikch.com/mobile/appShow/checkIn?type=android&userId=" + getLogUser(getContext()).getId() + "");
                     return true;
                 }
                 return false;
@@ -97,7 +99,8 @@ public class Fragment_Miao extends BaseFragment implements ICoreInfe {
                 //返回true，说明你自己想根据url，做新的跳转，比如在判断url符合条件的情况下，我想让webView加载http://ask.csdn.net/questions/178242
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     if (request.getUrl().toString().contains("sina.cn")) {
-                        webView.loadUrl("https://www.yikch.com/mobile/appShow/activity?type=android");
+//                        webView.loadUrl("https://www.yikch.com/mobile/appShow/activity?type=android");
+                        webView.loadUrl("https://www.yikch.com/mobile/appShow/checkIn?type=android&userId=" + getLogUser(getContext()).getId() + "");
                         return true;
                     }
                 }
@@ -136,9 +139,14 @@ public class Fragment_Miao extends BaseFragment implements ICoreInfe {
                 super.onProgressChanged(view, newProgress);
             }
         });
+        // 在安卓5.0之后，默认不允许加载http与https混合内容，需要设置webview允许其加载混合网络协议内容
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            webView.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        }
         webView.getSettings().setJavaScriptEnabled(true);
         webView.addJavascriptInterface(this, "ww");
-        webView.loadUrl("https://www.yikch.com/mobile/appShow/activity?type=android");
+        webView.loadUrl("https://www.yikch.com/mobile/appShow/checkIn?type=android&userId=" + getLogUser(getContext()).getId() + "");
+        //        webView.loadUrl("https://www.yikch.com/mobile/appShow/activity?type=android");
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
@@ -180,7 +188,13 @@ public class Fragment_Miao extends BaseFragment implements ICoreInfe {
                 } else if (url.contains("/appShow/proDetail")) {
                     Intent intent = new Intent(getContext(), ParticularsActivity.class);
 //                    int id = Integer.parseInt(msg);
-                    intent.putExtra("id", url);
+                    intent.putExtra("id", url + "&userId=" + getLogUser(BaseApp.getApp()).getId());
+                    startActivity(intent);
+                    return true;
+                } else if (url.contains("/appShow/yousheng")) {
+                    Intent intent = new Intent(getContext(), H5SecActivity.class);
+                    intent.putExtra("http", "https://www.yikch.com/mobile/appShow/yousheng?type=android");
+                    intent.putExtra("title", "优胜教育内部购");
                     startActivity(intent);
                     return true;
                 } else {
@@ -279,7 +293,7 @@ public class Fragment_Miao extends BaseFragment implements ICoreInfe {
     @Override
     public void success(Object data) {
         Request request = (Request) data;
-        Toast.makeText(getActivity(), "" + request.getMessage(), Toast.LENGTH_SHORT).show();
+        ToastUtils.show("" + request.getMessage());
     }
 
     @Override

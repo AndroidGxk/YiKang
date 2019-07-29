@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/moblie_editext_5_shape_left"
+    android:padding="15dp">
+
+    <TextView
+        android:id="@+id/text_two"
+        android:layout_width="185dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_one"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:text="商品已发货，不可取消订单，如有疑问请联系客服"
+        android:textColor="#333333" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_two"
+        android:layout_marginTop="15dp"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/lianxi_kefu"
+            android:layout_width="75dp"
+            android:layout_height="25dp"
+            android:layout_marginRight="40dp"
+            android:background="@drawable/yellow_pay_shape"
+            android:gravity="center"
+            android:text="联系客服"
+            android:textColor="@color/colorTab" />
+
+        <TextView
+            android:id="@+id/queren_btn"
+            android:layout_width="75dp"
+            android:layout_height="25dp"
+            android:layout_below="@+id/text_two"
+            android:background="@drawable/yellow_pay_shi_shape"
+            android:gravity="center"
+            android:text="确认"
+            android:textColor="@color/clolrBAai" />
+    </LinearLayout>
+</RelativeLayout>

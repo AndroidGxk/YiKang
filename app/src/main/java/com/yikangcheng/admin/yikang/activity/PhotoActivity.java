@@ -10,8 +10,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.view.View;
-import android.widget.Toast;
 
+import com.hjq.toast.ToastUtils;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.app.BaseApp;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
@@ -111,7 +111,7 @@ public class PhotoActivity extends BaseActivtiy {
             if (newUri != null) {
                 startPhotoZoom(newUri);
             } else {
-                Toast.makeText(PhotoActivity.this, "没有得到相册图片", Toast.LENGTH_LONG).show();
+                ToastUtils.show( "没有得到相册图片");
             }
         } else if (requestCode == REQUEST_CODE_TAKE_PHOTO) {
             startPhotoZoom(uri);

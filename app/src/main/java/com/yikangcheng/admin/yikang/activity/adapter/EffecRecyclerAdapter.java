@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.yikangcheng.admin.yikang.R;
+import com.yikangcheng.admin.yikang.bean.DiscountBean;
 import com.yikangcheng.admin.yikang.bean.ProvinceBean;
 
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ import java.util.List;
 
 
 public class EffecRecyclerAdapter extends RecyclerView.Adapter<EffecRecyclerAdapter.Vh> {
-    List<ProvinceBean> stringList = new ArrayList<>();
+    List<DiscountBean.CouponListBean> stringList = new ArrayList<>();
     //记录下标
     private int mPosition;
     Context context;
@@ -25,7 +26,7 @@ public class EffecRecyclerAdapter extends RecyclerView.Adapter<EffecRecyclerAdap
         this.context = context;
     }
 
-    public void addAll(List<ProvinceBean> stringList) {
+    public void addAll(List<DiscountBean.CouponListBean> stringList) {
         this.stringList.addAll(stringList);
         notifyDataSetChanged();
     }
@@ -34,7 +35,6 @@ public class EffecRecyclerAdapter extends RecyclerView.Adapter<EffecRecyclerAdap
         this.stringList.clear();
         notifyDataSetChanged();
     }
-
     @NonNull
     @Override
     public Vh onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -44,19 +44,41 @@ public class EffecRecyclerAdapter extends RecyclerView.Adapter<EffecRecyclerAdap
 
     @Override
     public void onBindViewHolder(@NonNull Vh vh, final int position) {
+        DiscountBean.CouponListBean couponCodeListBean = stringList.get(position);
+        vh.title_text.setText(couponCodeListBean.getTitle());
+        String startTime = couponCodeListBean.getStartTime();
+        String startTimes = startTime.substring(0, 10);
+        String endTime = couponCodeListBean.getEndTime();
+        String endTimes = endTime.substring(0, 10);
+        vh.date_text.setText(startTimes + "—" + endTimes);
+        vh.man_text.setText(couponCodeListBean.getInfo() + "");
+        if(couponCodeListBean.getLimitAmount()==0){
+            vh.price_text.setText(5 + "");
+        }else{
+            vh.price_text.setText(couponCodeListBean.getLimitAmount() + "");
+        }
+        vh.type_text.setText("满减券");
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return stringList.size();
     }
 
     class Vh extends RecyclerView.ViewHolder {
-        TextView city_text;
+        TextView title_text;
+        TextView man_text;
+        TextView price_text;
+        TextView date_text;
+        TextView type_text;
 
         public Vh(View itemView) {
             super(itemView);
+            title_text = itemView.findViewById(R.id.title_text);
+            man_text = itemView.findViewById(R.id.man_text);
+            date_text = itemView.findViewById(R.id.date_text);
+            price_text = itemView.findViewById(R.id.price_text);
+            type_text = itemView.findViewById(R.id.type_text);
         }
     }
-
 }

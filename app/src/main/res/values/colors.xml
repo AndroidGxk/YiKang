@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="colorToolbar">#ffaf00</color>
     <color name="colorTab">#FFAF00</color>
+    <color name="ColorTextAllT">#FD6734</color>
+    <color name="ColorTextAllF">#373737</color>
+    <color name="ColorTextAllBack">#F0F0F0</color>
+    <color name="colorPrimary">#2e8af1</color>
+    <color name="colorRed">#FF0000</color>
     <color name="clolrBAai">#FFFFFF</color>
     <color name="colorTouMing">#F7F7F7</color>
     <color name="colorHei">#333333</color>
     <color name="colorText">#333333</color>
+    <color name="colorGary">#666666</color>
+    <color name="colorTextT">#ff000000</color>
+    <color name="colorTextF">#ff5c5c5c</color>
+    <color name="colorRecycler">#F2F2F2</color>
     <color name="colorTabG">#EBEBEB</color>
     <color name="white">#FFFFFF</color>
     <color name="transparent">#00FFFFFF</color>
+    <color name="textColor">#3F3951</color>
+    <color name="wzbfilterview_expanded_background">#30000000</color>
+    <color name="wzbfilterview_divider_background">#f6f8fc</color>
     <color name="startingwindow_bgcolor">#FF7A64</color>
 </resources>

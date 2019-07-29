@@ -1,6 +1,7 @@
 package com.yikangcheng.admin.yikang.model.http;
 
 import com.yikangcheng.admin.yikang.bean.ALLBean;
+import com.yikangcheng.admin.yikang.bean.AdvertBean;
 import com.yikangcheng.admin.yikang.bean.AdvertisingBean;
 import com.yikangcheng.admin.yikang.bean.AllAddressBean;
 import com.yikangcheng.admin.yikang.bean.AppUpdateBean;
@@ -8,10 +9,12 @@ import com.yikangcheng.admin.yikang.bean.ClassifyCommodityListBean;
 import com.yikangcheng.admin.yikang.bean.ClassifyListOneBean;
 import com.yikangcheng.admin.yikang.bean.CloseBean;
 import com.yikangcheng.admin.yikang.bean.CloseTheDealBean;
+import com.yikangcheng.admin.yikang.bean.CouponusableBean;
 import com.yikangcheng.admin.yikang.bean.CreatOrderBean;
 import com.yikangcheng.admin.yikang.bean.DeleteOrderBean;
 import com.yikangcheng.admin.yikang.bean.DiscountBean;
 import com.yikangcheng.admin.yikang.bean.DiscountCouponBean;
+import com.yikangcheng.admin.yikang.bean.HaveSignBean;
 import com.yikangcheng.admin.yikang.bean.LikeBean;
 import com.yikangcheng.admin.yikang.bean.LoginBean;
 import com.yikangcheng.admin.yikang.bean.ObligationBean;
@@ -23,12 +26,15 @@ import com.yikangcheng.admin.yikang.bean.RegisterBean;
 import com.yikangcheng.admin.yikang.bean.Request;
 import com.yikangcheng.admin.yikang.bean.SeckillBean;
 import com.yikangcheng.admin.yikang.bean.ShopCarBean;
+import com.yikangcheng.admin.yikang.bean.ShouBannerBean;
 import com.yikangcheng.admin.yikang.bean.UserDetailBean;
 import com.yikangcheng.admin.yikang.bean.UserInfoBean;
+import com.yikangcheng.admin.yikang.bean.WaitSignBean;
 import com.yikangcheng.admin.yikang.bean.WaliDealBean;
 
 import java.util.List;
 
+import butterknife.OnClick;
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import okhttp3.ResponseBody;
@@ -64,8 +70,8 @@ public interface ApiService {
     /**
      * 为你推荐
      */
-    @POST("index/similarCommodityPage")
-    Observable<Request<List<RecommendBean>>> Recommend(@Query("userId") int userId, @Query("page") int page, @Query("currentPage") int currentPage);
+    @POST("api/everyDayCommodityList")
+    Observable<Request<RecommendBean>> Recommend(@Query("num") int num, @Query("subjectId") int subjectId);
 
 
     /**
@@ -94,7 +100,7 @@ public interface ApiService {
      */
     @POST("register")
     Observable<Request<RegisterBean>> register(@Query("mobile") String mobile, @Query("userPassword") String userPassword, @Query("confirmPwd") String confirmPwd,
-                                               @Query("mobileCheckCode") String mobileCheckCode, @Query("invitationCode") String invitationCode);
+                                               @Query("mobileCheckCode") String mobileCheckCode, @Query("invitationCode") String invitationCode, @Query("longitude") String longitude, @Query("dimensionality") String dimensionality);
 
     /**
      * 登录
@@ -134,7 +140,7 @@ public interface ApiService {
      * 查看全部订单
      */
     @POST("userOrderType")
-    Observable<Request<ALLBean>> All(@Query("userId") int userId, @Query("pageIndex") int pageIndex);
+    Observable<Request<ALLBean>> All(@Query("userId") int userId, @Query("pageIndex") int pageIndex, @Query("orderState") String orderState);
 
     /**
      * 待支付
@@ -150,11 +156,22 @@ public interface ApiService {
 
 
     /**
-     * 已支付
+     * 已取消
      */
     @POST("userOrderType")
     Observable<Request<CloseBean>> Close(@Query("userId") int userId, @Query("pageIndex") int pageIndex, @Query("orderState") String orderState);
 
+    /**
+     * 未签收
+     */
+    @POST("payOkWaitSign")
+    Observable<Request<WaitSignBean>> payOkWaitSign(@Query("userId") int userId, @Query("pageIndex") int pageIndex, @Query("orderState") String orderState);
+
+    /**
+     * 已签收
+     */
+    @POST("orderAto")
+    Observable<Request<HaveSignBean>> orderAto(@Query("userId") int userId, @Query("pageIndex") int pageIndex, @Query("orderState") String orderState);
 
     /**
      * 分类商品子类接口
@@ -184,17 +201,16 @@ public interface ApiService {
     Observable<Request<AllAddressBean>> listUserAddress(@Query("userId") int userId);
 
     /**
-     * 查询用户可用优惠券
+     * 查询用户失效优惠券
      */
-
-    @POST("DiscountCouponUnused")
-    Observable<Request<DiscountBean>> DiscountCouponUnused(@Query("userId") int userId);
+    @POST("mobile/listCouponCode")
+    Observable<Request<DiscountBean>> DiscountCouponUnused(@Query("userId") int userId, @Query("status") int status);
 
     /**
-     * 用户选择优惠券
+     * 查询用户可用优惠券
      */
-    @POST("DiscountCoupon")
-    Observable<Request<DiscountCouponBean>> DiscountCoupon(@Query("userId") int userId, @Query("status") int status);
+    @POST("mobile/listCouponCode")
+    Observable<Request<DiscountBean>> DiscountCouponUnused(@Query("userId") int userId);
 
     /**
      * 修改用户地址
@@ -203,7 +219,6 @@ public interface ApiService {
     Observable<Request> updateAddress(@Query("id") int id, @Query("userId") int userId, @Query("receiver") String receiver,
                                       @Query("mobile") String mobile, @Query("address") String address, @Query("isFirst") int isFirst,
                                       @Query("provinceId") int provinceId, @Query("cityId") int cityId, @Query("townId") int townId);
-
 
     /**
      * 订单详情
@@ -243,7 +258,7 @@ public interface ApiService {
     Observable<Request<CreatOrderBean>> orderbuy(@Query("userId") int userId, @Query("commodityId") int commodityId, @Query("addressId") int addressId,
                                                  @Query("buyNum") int buyNum, @Query("invoiceType") int invoiceType, @Query("invoiceFrom") int invoiceFrom,
                                                  @Query("invoiceName") String invoiceName, @Query("invoiceNo") String invoiceNo, @Query("invoiceContent") String invoiceContent,
-                                                 @Query("invoiceEmail") String invoiceEmail, @Query("payType") String payType, @Query("orderForm") String orderForm, @Query("ipAddr") String ipAddr);
+                                                 @Query("invoiceEmail") String invoiceEmail, @Query("payType") String payType, @Query("orderForm") String orderForm, @Query("ipAddr") String ipAddr, @Query("couponCodeId") String couponCodeId);
 
     /**
      * 创建多个商品订单
@@ -252,8 +267,7 @@ public interface ApiService {
     Observable<Request<CreatOrderBean>> createOrder(@Query("userId") int userId, @Query("cartIds") String cartIds, @Query("addressId") int addressId,
                                                     @Query("invoiceType") int invoiceType, @Query("invoiceFrom") int invoiceFrom,
                                                     @Query("invoiceName") String invoiceName, @Query("invoiceNo") String invoiceNo, @Query("invoiceContent") String invoiceContent,
-                                                    @Query("invoiceEmail") String invoiceEmail, @Query("payType") String payType, @Query("orderForm") String orderForm, @Query("dataType") String dataType, @Query("ipAddr") String ipAddr);
-
+                                                    @Query("invoiceEmail") String invoiceEmail, @Query("payType") String payType, @Query("orderForm") String orderForm, @Query("dataType") String dataType, @Query("ipAddr") String ipAddr, @Query("couponCodeId") String couponCodeId);
 
     /**
      * 上传头像
@@ -263,7 +277,7 @@ public interface ApiService {
     Observable<ResponseBody> goswf(@Part List<MultipartBody.Part> part);
 
     /**
-     * 重新下单
+     * 重新支付
      */
     @POST("order/repayUpdateOrder")
     Observable<Request<PayBean>> repayUpdateOrder(@Query("orderId") int orderId, @Query("payType") String payType, @Query("ipAddr") String ipAddr);
@@ -297,4 +311,27 @@ public interface ApiService {
      */
     @POST("initOrderCount")
     Observable<Request> initOrderCount(@Query("userId") int userId);
+
+    /**
+     * 查询订单可使用优惠券
+     */
+    @POST("get/coupon/usable")
+    Observable<Request<List<CouponusableBean>>> couponusable(@Query("userId") int userId, @Query("limitamount") double limitamount);
+
+    /**
+     * 取消订单接口
+     */
+    @POST("cancelOrder")
+    Observable<Request> cancelOrder(@Query("userId") int userId, @Query("orderId") int orderId);
+
+    /**
+     * 启动页广告接口
+     */
+    @POST("startUp/banner")
+    Observable<Request<List<AdvertBean>>> startUp();
+    /**
+     * 首页Banner
+     */
+    @POST("index/banner")
+    Observable<Request<List<ShouBannerBean>>> index();
 }

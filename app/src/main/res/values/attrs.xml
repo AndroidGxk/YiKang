@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <declare-styleable name="SaleProgressView">
         <attr name="sideColor" format="color" />
@@ -27,5 +27,26 @@
             <enum name="front" value="0"/>
             <enum name="behind" value="1"/>
         </attr>
+    </declare-styleable>
+    <declare-styleable name="FilterView">
+        <attr name="textSize2" format="dimension" />
+        <attr name="text" format="string" />
+        <attr name="selected" format="boolean" />
+        <attr name="selectedTextColor" format="color" />
+        <attr name="unSelectedTextColor" format="color" />
+        <attr name="expandedIcon" format="reference" />
+        <attr name="collapseIcon" format="reference" />
+        <attr name="selectedIconTintColor" format="color" />
+        <attr name="unSelectedIconTintColor" format="color" />
+        <attr name="expandedViewHeight" format="dimension" />
+        <attr name="expandedViewTop" format="dimension" />
+        <attr name="expandedDuration" format="integer" />
+    </declare-styleable>
+    <!-- 仿 ios 开关按钮 -->
+    <declare-styleable name="SwitchButton" tools:ignore="ResourceName">
+        <!-- 是否选中 -->
+        <attr name="android:checked" />
+        <!-- 是否禁用 -->
+        <attr name="android:enabled" />
     </declare-styleable>
 </resources>

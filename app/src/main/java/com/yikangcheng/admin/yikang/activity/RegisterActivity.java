@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -19,10 +21,9 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.hjq.toast.ToastUtils;
 import com.yikangcheng.admin.yikang.R;
-import com.yikangcheng.admin.yikang.activity.obligation.ObligationActivity;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.LoginBean;
 import com.yikangcheng.admin.yikang.bean.Request;
@@ -32,15 +33,19 @@ import com.yikangcheng.admin.yikang.presenter.GetMobileKeyPresenter;
 import com.yikangcheng.admin.yikang.presenter.LoginPresenter;
 import com.yikangcheng.admin.yikang.presenter.RegisterPresenter;
 import com.yikangcheng.admin.yikang.presenter.SendMobilePresenter;
-import com.yikangcheng.admin.yikang.util.UIUtils;
+import com.yikangcheng.admin.yikang.util.PermissionsActivity;
+import com.yikangcheng.admin.yikang.util.PermissionsChecker;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.List;
+import java.util.Locale;
 
-import me.jessyan.autosize.internal.CustomAdapt;
 import me.leefeng.promptlibrary.PromptDialog;
 
-public class RegisterActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt, View.OnClickListener {
+public class RegisterActivity extends BaseActivtiy implements ICoreInfe, View.OnClickListener {
 
+    private static final String TAG = "GTT";
     private String phone;
     private LinearLayout log_image;
     private TextView ver_btn, register_btn;
@@ -78,9 +83,24 @@ public class RegisterActivity extends BaseActivtiy implements ICoreInfe, CustomA
     private LoginPresenter loginPresenter;
     private String reg_two_pwd;
     public SharedPreferences userInfo;
+    private double dimensionality;
+    private double longitude;
 
+    private static final int REQUEST_CODE = 0; // 请求码
+    // 所需的全部权限
+    static final String[] PERMISSIONS = new String[]{
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_NETWORK_STATE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.CALL_PHONE,
+            Manifest.permission.CAMERA
+    };
+    private PermissionsChecker mPermissionsChecker; // 权限检测器
     @Override
     protected void initView() {
+        mPermissionsChecker = new PermissionsChecker(this);
         getLocation(getApplicationContext());
         WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         width = wm.getDefaultDisplay().getWidth();
@@ -112,7 +132,28 @@ public class RegisterActivity extends BaseActivtiy implements ICoreInfe, CustomA
         ver_btn.setOnClickListener(this);
         register_btn.setOnClickListener(this);
     }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // 缺少权限时, 进入权限配置页面
+        if (mPermissionsChecker.lacksPermissions(PERMISSIONS)) {
+            startPermissionsActivity();
+        }else{
+        }
+    }
 
+    private void startPermissionsActivity() {
+        PermissionsActivity.startActivityForResult(this, REQUEST_CODE, PERMISSIONS);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // 拒绝时, 关闭页面, 缺少主要权限, 无法运行
+        if (requestCode == REQUEST_CODE && resultCode == PermissionsActivity.PERMISSIONS_DENIED) {
+            finish();
+        }
+    }
     @Override
     protected int getActivtiyLayoutId() {
         return R.layout.activity_register;
@@ -136,16 +177,6 @@ public class RegisterActivity extends BaseActivtiy implements ICoreInfe, CustomA
     }
 
 
-    @Override
-    public boolean isBaseOnWidth() {
-        return false;
-    }
-
-    @Override
-    public float getSizeInDp() {
-        return width / 2;
-    }
-
     /**
      * 点击事件
      *
@@ -162,7 +193,7 @@ public class RegisterActivity extends BaseActivtiy implements ICoreInfe, CustomA
             case R.id.ver_btn:
                 phone = reg_phone_edit.getText().toString();
                 if (phone.equals("")) {
-                    Toast.makeText(RegisterActivity.this, "请输入正确的手机号", Toast.LENGTH_SHORT).show();
+                    ToastUtils.show("请输入正确的手机号");
                     return;
                 } else {
                     getMobileKeyPresenter.request(phone, "Android");
@@ -176,13 +207,16 @@ public class RegisterActivity extends BaseActivtiy implements ICoreInfe, CustomA
                 phone = reg_phone_edit.getText().toString();
                 String code_two = RegisterActivity.this.code_two_pwd_edit.getText().toString();
                 if (phone.equals("") || reg_pwd.equals("") || reg_two_pwd.equals("")) {
-                    Toast.makeText(this, "账号或密码不能为空", Toast.LENGTH_SHORT).show();
+                    ToastUtils.show("账号或密码不能为空");
                     return;
                 } else if (code.equals("") || code_two.equals("")) {
-                    Toast.makeText(this, "验证码或邀请码不能为空", Toast.LENGTH_SHORT).show();
+                    ToastUtils.show("验证码或邀请码不能为空");
+                    return;
+                } else if (reg_pwd.length() < 6 || reg_pwd.length() > 20) {
+                    ToastUtils.show("密码长度需在6-20位字符之间");
                     return;
                 }
-                registerPresenter.request(phone, reg_pwd, reg_two_pwd, code, code_two);
+                registerPresenter.request(phone, reg_pwd, reg_two_pwd, code, code_two,String.valueOf(longitude),String.valueOf(dimensionality));
                 promptDialog.showLoading("加载中...");
                 break;
         }
@@ -202,7 +236,7 @@ public class RegisterActivity extends BaseActivtiy implements ICoreInfe, CustomA
             locationProvider = LocationManager.GPS_PROVIDER;
             Log.e("main", "gps");
         } else {
-            Toast.makeText(this, "没有可用的位置提供器", Toast.LENGTH_SHORT).show();
+            Log.e("main","没有可用的位置提供器");
             return;
         }
 
@@ -228,6 +262,9 @@ public class RegisterActivity extends BaseActivtiy implements ICoreInfe, CustomA
     }
 
     private void showLocation(Location location) {
+        longitude = location.getLongitude();
+        dimensionality = location.getLongitude();
+
         address = "纬度：" + location.getLatitude() + "经度：" + location.getLongitude();
     }
 
@@ -259,7 +296,7 @@ public class RegisterActivity extends BaseActivtiy implements ICoreInfe, CustomA
         @Override
         public void success(Object data) {
             Request request = (Request) data;
-            Toast.makeText(RegisterActivity.this, "" + request.getMessage(), Toast.LENGTH_SHORT).show();
+            ToastUtils.show("" + request.getMessage());
             if (request.isSuccess()) {
                 handler.sendEmptyMessage(1);
             }
@@ -319,7 +356,7 @@ public class RegisterActivity extends BaseActivtiy implements ICoreInfe, CustomA
                 SharedPreferences.Editor activit = sp.edit();
                 activit.putString("acti", "register");
                 activit.commit();
-                Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                Intent intent = new Intent(RegisterActivity.this, ApplySeleActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             } else {

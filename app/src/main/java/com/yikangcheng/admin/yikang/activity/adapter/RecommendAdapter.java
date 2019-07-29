@@ -53,33 +53,33 @@ public class RecommendAdapter extends RecyclerView.Adapter {
         //设置图片圆角角度
         RequestOptions requestOptions = new RequestOptions();
         requestOptions.placeholder(R.drawable.inco_log);
-        if (mList.get(position).getLogo().contains("http://") || mList.get(position).getLogo().contains("https://")) {
-            Glide.with(mContent).load(mList.get(position).getLogo())
-                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(20)))
-                    .apply(requestOptions)
-                    .into(holder1.mImg);
-        } else {
-            Glide.with(mContent).load(Constants.BASETUPIANSHANGCHUANURL + mList.get(position).getLogo())
-                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(20)))
-                    .apply(requestOptions)
-                    .into(holder1.mImg);
-        }
-        holder1.mTv_name.setText(mList.get(position).getName());
-//        holder1.buymun.setText(mList.get(position).getTitle());
-        holder1.mJiage.setText("市场价:¥" + mList.get(position).getSourceprice());
-        holder1.mBprice.setText(mList.get(position).getCurrentprice() + "");
-        /**
-         * // 中间加横线 ， 添加Paint.ANTI_ALIAS_FLAG是线会变得清晰去掉锯齿
-         */
-        holder1.mBprice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
-
-        holder1.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int id = mList.get(position).getId();
-                mListener.OnClickListener(v, id);
-            }
-        });
+//        if (mList.get(position).getLogo().contains("http://") || mList.get(position).getLogo().contains("https://")) {
+//            Glide.with(mContent).load(mList.get(position).getLogo())
+//                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(20)))
+//                    .apply(requestOptions)
+//                    .into(holder1.mImg);
+//        } else {
+//            Glide.with(mContent).load(Constants.BASETUPIANSHANGCHUANURL + mList.get(position).getLogo())
+//                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(20)))
+//                    .apply(requestOptions)
+//                    .into(holder1.mImg);
+//        }
+//        holder1.mTv_name.setText(mList.get(position).getName());
+////        holder1.buymun.setText(mList.get(position).getTitle());
+//        holder1.mJiage.setText("市场价:¥" + mList.get(position).getSourceprice());
+//        holder1.mBprice.setText(mList.get(position).getCurrentprice() + "");
+//        /**
+//         * // 中间加横线 ， 添加Paint.ANTI_ALIAS_FLAG是线会变得清晰去掉锯齿
+//         */
+//        holder1.mBprice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
+//
+//        holder1.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                int id = mList.get(position).getId();
+//                mListener.OnClickListener(v, id);
+//            }
+//        });
     }
 
     @Override

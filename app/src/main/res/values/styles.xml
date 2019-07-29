@@ -3,20 +3,28 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimary">@color/colorTab</item>
         <item name="colorPrimaryDark">@color/colorTab</item>
         <item name="android:windowTranslucentNavigation">false</item>
         <item name="colorAccent">@color/colorAccent</item>
 
     </style>
 
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar.Permissions">
+        <item name="android:windowBackground">@color/ColorTextAllT</item>
+    </style>
 
     <style name="BottomDialog" parent="@style/Base.V7.Theme.AppCompat.Light.Dialog">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
-    <style name="BottomDialog.Animation" parent="Animation.AppCompat.Dialog">
+    <style name="BottomDialogs" parent="Animation.AppCompat.Dialog">
         <item name="android:windowEnterAnimation">@anim/menu_bottombar_in</item>
         <item name="android:windowExitAnimation">@anim/menu_bottombar_out</item>
     </style>
@@ -44,4 +52,20 @@
         <!--模糊-->
         <item name="android:backgroundDimEnabled">true</item>
     </style>
+
+    <style name="foodRatingBar" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/ratingstars</item>
+        <item name="android:minHeight">22dip</item>
+        <item name="android:maxHeight">22dip</item>
+    </style>
+
+    <style name="popwin_anim_style">
+        <item name="android:windowEnterAnimation">@anim/still</item>
+        <item name="android:windowExitAnimation">@anim/still_out</item>
+    </style>
+
+    <style name="Theme_Umeng_Push_Splash" parent="android:Theme.NoTitleBar.Fullscreen">
+        <item name="android:windowBackground">@drawable/qizhiyou_sanmiao</item>
+    </style>
+
 </resources>

@@ -37,7 +37,7 @@ import me.leefeng.promptlibrary.PromptButton;
 import me.leefeng.promptlibrary.PromptButtonListener;
 import me.leefeng.promptlibrary.PromptDialog;
 
-public class PaidActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt {
+public class PaidActivity extends BaseActivtiy implements ICoreInfe  {
 
 
     private ImageView mImgActivityPaidFanhui;
@@ -264,15 +264,6 @@ public class PaidActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt
 
     }
 
-    @Override
-    public boolean isBaseOnWidth() {
-        return false;
-    }
-
-    @Override
-    public float getSizeInDp() {
-        return width / 2;
-    }
 
     public class delete implements ICoreInfe {
 

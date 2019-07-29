@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/zc"
+    android:background="@drawable/zhuce_bg"
     tools:context=".activity.RegisterActivity">
 
     <ImageView

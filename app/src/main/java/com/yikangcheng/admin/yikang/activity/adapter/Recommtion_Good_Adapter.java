@@ -28,14 +28,14 @@ import java.util.List;
  */
 public class Recommtion_Good_Adapter extends RecyclerView.Adapter<Recommtion_Good_Adapter.Vh> {
 
-    private List<RecommendBean> recommendBeans = new ArrayList<>();
+    private List<RecommendBean.CommodityListBean>  recommendBeans = new ArrayList<>();
     private Context mContext;
 
     public Recommtion_Good_Adapter(Context mContext) {
         this.mContext = mContext;
     }
 
-    public void addAll(List<RecommendBean> recommendBeans) {
+    public void addAll(List<RecommendBean.CommodityListBean>  recommendBeans) {
         this.recommendBeans.addAll(recommendBeans);
         notifyDataSetChanged();
     }
@@ -57,26 +57,52 @@ public class Recommtion_Good_Adapter extends RecyclerView.Adapter<Recommtion_Goo
         RequestOptions requestOptions = new RequestOptions();
         requestOptions.placeholder(R.drawable.inco_log);
         requestOptions.fallback(R.drawable.inco_log);
-        final RecommendBean recommendBean = recommendBeans.get(position);
+        if (position %2==0) {
+            if(position==0){
+                LinearLayout.LayoutParams layout = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                layout.setMargins(0, 0,0 , 80);
+                vh.itemView.setLayoutParams(layout);
+            }else if(position==1){
+                LinearLayout.LayoutParams layout = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                layout.setMargins(0, 0,0 , 80);
+                vh.itemView.setLayoutParams(layout);
+            }else{
+                LinearLayout.LayoutParams layout = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                layout.setMargins(0, -50,0 , 80);
+                vh.itemView.setLayoutParams(layout);
+            }
+        }else{
+            LinearLayout.LayoutParams layout = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            layout.setMargins(0, -20, 0, 50);
+            vh.itemView.setLayoutParams(layout);
+        }
+        final RecommendBean.CommodityListBean commodityListBean = recommendBeans.get(position);
         //设置图片圆角角度
-        if (recommendBean.getLogo().contains("https://") || recommendBean.getLogo().contains("http://")) {
-            Glide.with(mContext).load(recommendBean.getLogo())
+        if (commodityListBean.getLogo().contains("https://") || commodityListBean.getLogo().contains("http://")) {
+            Glide.with(mContext).load(commodityListBean.getLogo())
                     .apply(RequestOptions.bitmapTransform(new RoundedCorners(20)))
+                    .apply(requestOptions)
                     .into(vh.imageView);
         } else {
-            Glide.with(mContext).load(Constants.BASETUPIANSHANGCHUANURL + recommendBean.getLogo())
+            Glide.with(mContext).load(Constants.BASETUPIANSHANGCHUANURL + commodityListBean.getLogo())
                     .apply(RequestOptions.bitmapTransform(new RoundedCorners(20)))
+                    .apply(requestOptions)
                     .into(vh.imageView);
         }
-        vh.count.setText(recommendBean.getTitle());
-        vh.title.setText(recommendBean.getName());
-        vh.price.setText("内购价格:¥" + recommendBean.getCurrentprice());
-        vh.yuanprice.setText("市场价格:¥" + recommendBean.getSourceprice());
+        vh.count.setText(commodityListBean.getName());
+        vh.title.setText(commodityListBean.getName());
+        vh.price.setText("内购价格:¥" + commodityListBean.getCurrentprice());
+        vh.yuanprice.setText("市场价格:¥" + commodityListBean.getSourceprice());
+//        vh.buy_text.setText(commodityListBean.getFreight()+"人已购买");
         vh.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (mListener != null) {
-                    mListener.OnClickListener(recommendBean.getId());
+                    mListener.OnClickListener(commodityListBean.getId());
                 }
             }
         });

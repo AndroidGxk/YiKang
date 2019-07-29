@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 import me.jessyan.autosize.internal.CustomAdapt;
 
-public class MyaccountActivity extends BaseActivtiy implements CustomAdapt {
+public class MyaccountActivity extends BaseActivtiy   {
 
 
     private ImageView mImgActivityMyaccountFanhui;
@@ -81,13 +81,4 @@ public class MyaccountActivity extends BaseActivtiy implements CustomAdapt {
 
     }
 
-    @Override
-    public boolean isBaseOnWidth() {
-        return false;
-    }
-
-    @Override
-    public float getSizeInDp() {
-        return width / 2;
-    }
 }

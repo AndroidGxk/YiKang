@@ -9,12 +9,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alipay.sdk.app.PayTask;
+import com.hjq.toast.ToastUtils;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.yikangcheng.admin.yikang.R;
-import com.yikangcheng.admin.yikang.activity.orderstatus.WaitForpaymentActivity;
 import com.yikangcheng.admin.yikang.app.BaseApp;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.PayBean;
@@ -187,8 +186,7 @@ public class BarterPayActivity extends BaseActivtiy implements ICoreInfe {
                         // 判断resultStatus 为非“9000”则代表可能支付失败
                         // “8000”代表支付结果因为支付渠道原因或者系统原因还在等待支付结果确认，最终交易是否成功以服务端异步通知为准（小概率状态）
                         if (TextUtils.equals(resultStatus, "8000")) {
-                            Toast.makeText(BarterPayActivity.this, "支付结果确认中",
-                                    Toast.LENGTH_SHORT).show();
+                            ToastUtils.show("支付结果确认中");
                             // 其他值就可以判断为支付失败，包括用户主动取消支付，或者系统返回的错误
                             Intent intent = new Intent(BarterPayActivity.this, PayResultActivity.class);
                             intent.putExtra("pay", 2);
@@ -205,8 +203,7 @@ public class BarterPayActivity extends BaseActivtiy implements ICoreInfe {
                     break;
                 }
                 case SDK_CHECK_FLAG: {
-                    Toast.makeText(BarterPayActivity.this, "检查结果为：" + msg.obj,
-                            Toast.LENGTH_SHORT).show();
+                    ToastUtils.show("检查结果为：" + msg.obj);
                     break;
                 }
                 default:

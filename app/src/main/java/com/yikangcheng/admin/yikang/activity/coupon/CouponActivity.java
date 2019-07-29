@@ -22,7 +22,7 @@ import java.util.ArrayList;
 
 import me.jessyan.autosize.internal.CustomAdapt;
 
-public class CouponActivity extends BaseActivtiy implements CustomAdapt {
+public class CouponActivity extends BaseActivtiy   {
     private TabLayout coupon_tab;
     private ViewPager viewpage;
     private ImageView back_img;
@@ -72,13 +72,4 @@ public class CouponActivity extends BaseActivtiy implements CustomAdapt {
 
     }
 
-    @Override
-    public boolean isBaseOnWidth() {
-        return false;
-    }
-
-    @Override
-    public float getSizeInDp() {
-        return width / 2;
-    }
 }

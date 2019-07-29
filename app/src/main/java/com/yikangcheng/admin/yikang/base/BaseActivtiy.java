@@ -11,7 +11,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import com.example.sqlite.dao.DaoMaster;
 import com.example.sqlite.dao.DaoSession;
@@ -20,12 +19,14 @@ import com.example.sqlite.dao.UserDetailBeanDao;
 import com.tianma.netdetector.lib.NetStateChangeObserver;
 import com.tianma.netdetector.lib.NetStateChangeReceiver;
 import com.tianma.netdetector.lib.NetworkType;
+import com.umeng.message.PushAgent;
 import com.yikangcheng.admin.yikang.app.BaseApp;
 import com.yikangcheng.admin.yikang.bean.LoginBean;
 import com.yikangcheng.admin.yikang.bean.UserDetailBean;
 
 import java.util.List;
 
+import butterknife.ButterKnife;
 import me.imid.swipebacklayout.lib.SwipeBackLayout;
 import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
@@ -48,8 +49,10 @@ public abstract class BaseActivtiy extends SwipeBackActivity implements NetState
             //透明导航栏
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
+        PushAgent.getInstance(this).onAppStart();
         mManager = getSupportFragmentManager();
         mContext = this;
+        ButterKnife.bind(this);//绑定布局
         BaseApp.getAppInstance().addActivtiy(this);
         initView();
         createPresenter();

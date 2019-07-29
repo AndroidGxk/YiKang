@@ -1,125 +1,106 @@
 package com.yikangcheng.admin.yikang.bean;
 
-/**
- * Created by lenovo on 2019/5/22.
- * WF
- */
-
 import java.util.List;
 
 /**
- * 这是为你推荐页面实体类
+ * 每日推荐页面实体类
  */
 public class RecommendBean {
 
+    private List<CommodityListBean> commodityList;
 
-    @Override
-    public String toString() {
-        return "EntityBean{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", isPay=" + isPay +
-                ", sourceprice=" + sourceprice +
-                ", currentprice=" + currentprice +
-                ", title='" + title + '\'' +
-                ", logo='" + logo + '\'' +
-                ", losetype=" + losetype +
-                ", freight=" + freight +
-                '}';
+    public List<CommodityListBean> getCommodityList() {
+        return commodityList;
     }
 
-    /**
-     * id : 3643
-     * name : 全国出发-美国塞班岛旅游自由行多酒店可选
-     * isPay : 0
-     * sourceprice : 7999
-     * currentprice : 5599
-     * title :
-     * logo : /upload/mavendemo/course/20190321/1553135022846242539.jpg
-     * losetype : 0
-     * freight : 0
-     */
-
-    private int id;
-    private String name;
-    private int isPay;
-    private double sourceprice;
-    private double currentprice;
-    private String title;
-    private String logo;
-    private int losetype;
-    private int freight;
-
-    public int getId() {
-        return id;
+    public void setCommodityList(List<CommodityListBean> commodityList) {
+        this.commodityList = commodityList;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    public static class CommodityListBean {
+        /**
+         * id : 20663
+         * name : 韩国原产SCANDINA成人儿童两用马桶盖坐便器盖子母马桶盖1269g
+         * isPay : 0
+         * sourceprice : 306
+         * currentprice : 289
+         * logo : http://images.houniao.hk/upload/goods/20190222173127899_big.jpeg
+         * losetype : 0
+         * freight : 0
+         */
 
-    public String getName() {
-        return name;
-    }
+        private int id;
+        private String name;
+        private int isPay;
+        private double sourceprice;
+        private double currentprice;
+        private String logo;
+        private int losetype;
+        private int freight;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+        public int getId() {
+            return id;
+        }
 
-    public int getIsPay() {
-        return isPay;
-    }
+        public void setId(int id) {
+            this.id = id;
+        }
 
-    public void setIsPay(int isPay) {
-        this.isPay = isPay;
-    }
+        public String getName() {
+            return name;
+        }
 
-    public double getSourceprice() {
-        return sourceprice;
-    }
+        public void setName(String name) {
+            this.name = name;
+        }
 
-    public void setSourceprice(double sourceprice) {
-        this.sourceprice = sourceprice;
-    }
+        public int getIsPay() {
+            return isPay;
+        }
 
-    public double getCurrentprice() {
-        return currentprice;
-    }
+        public void setIsPay(int isPay) {
+            this.isPay = isPay;
+        }
 
-    public void setCurrentprice(double currentprice) {
-        this.currentprice = currentprice;
-    }
+        public double getSourceprice() {
+            return sourceprice;
+        }
 
-    public String getTitle() {
-        return title;
-    }
+        public void setSourceprice(double sourceprice) {
+            this.sourceprice = sourceprice;
+        }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+        public double getCurrentprice() {
+            return currentprice;
+        }
 
-    public String getLogo() {
-        return logo;
-    }
+        public void setCurrentprice(double currentprice) {
+            this.currentprice = currentprice;
+        }
 
-    public void setLogo(String logo) {
-        this.logo = logo;
-    }
+        public String getLogo() {
+            return logo;
+        }
 
-    public int getLosetype() {
-        return losetype;
-    }
+        public void setLogo(String logo) {
+            this.logo = logo;
+        }
 
-    public void setLosetype(int losetype) {
-        this.losetype = losetype;
-    }
+        public int getLosetype() {
+            return losetype;
+        }
 
-    public int getFreight() {
-        return freight;
-    }
+        public void setLosetype(int losetype) {
+            this.losetype = losetype;
+        }
 
-    public void setFreight(int freight) {
-        this.freight = freight;
+        public int getFreight() {
+            return freight;
+        }
+
+        public void setFreight(int freight) {
+            this.freight = freight;
+        }
     }
 }
 

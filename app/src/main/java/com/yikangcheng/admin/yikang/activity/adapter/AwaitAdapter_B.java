@@ -7,12 +7,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.yikangcheng.admin.yikang.R;
+import com.yikangcheng.admin.yikang.app.Constants;
 import com.yikangcheng.admin.yikang.bean.ObligationBean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,38 +25,52 @@ import java.util.List;
  */
 public class AwaitAdapter_B extends RecyclerView.Adapter {
     private Context mContent;
-    private List<ObligationBean.OrderBean.OrderDetailsListBean> mList;
-    private OnClickListener mListener;
+    private List<ObligationBean.OrderBean.OrderDetailsListBean> mList = new ArrayList<>();
 
-    public AwaitAdapter_B(List<ObligationBean.OrderBean.OrderDetailsListBean> orderDetailsList, Context content) {
-        this.mList = orderDetailsList;
+    public AwaitAdapter_B(Context content) {
         this.mContent = content;
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View inflate = LayoutInflater.from(mContent).inflate(R.layout.item_fragment_all_b, null, false);
+        View inflate = LayoutInflater.from(mContent).inflate(R.layout.item_seekhot_activity, null, false);
         return new ViewHolder(inflate);
+    }
+
+    public void addAll(List<ObligationBean.OrderBean.OrderDetailsListBean> mList) {
+        this.mList.addAll(mList);
+        notifyDataSetChanged();
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
-        ViewHolder holder1 = (ViewHolder) holder;
-        if (mList.get(position).getShopImg().contains("http://") || mList.get(position).getShopImg().contains("https://")) {
-            Glide.with(mContent).load(mList.get(position).getShopImg()).into(holder1.mImg);
-        } else {
-            Glide.with(mContent).load("https://static.yikch.com" + mList.get(position).getShopImg()).into(holder1.mImg);
+        AwaitAdapter_B.ViewHolder holder1 = (AwaitAdapter_B.ViewHolder) holder;
+        if (position == getItemCount() - 1) {
+            LinearLayout.LayoutParams layout = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            layout.setMargins(0, 0, 300, 0);
+            holder.itemView.setLayoutParams(layout);
         }
-        holder1.mName.setText(mList.get(position).getShopName());
-        holder1.mNum.setText("X" + mList.get(position).getBuyNum());
-        holder1.mTitle.setText(mList.get(position).getSpecNames());
-        holder1.mPrice.setText(mList.get(position).getPrice() + "");
+        RequestOptions requestOptions = new RequestOptions();
+        requestOptions.placeholder(R.drawable.inco_log);
+        requestOptions.fallback(R.drawable.inco_log);
+        if (mList.get(position).getShopImg().contains("https://") || mList.get(position).getShopImg().contains("http://")) {
+            Glide.with(mContent).load(mList.get(position).getShopImg()).apply(requestOptions).apply(RequestOptions.bitmapTransform(new RoundedCorners(20))).into(holder1.mImg);
+        } else {
+            Glide.with(mContent).load(Constants.BASETUPIANSHANGCHUANURL + mList.get(position).getShopImg()).apply(requestOptions).apply(RequestOptions.bitmapTransform(new RoundedCorners(20))).into(holder1.mImg);
+        }
+
+//        holder1.mName.setText(mList.get(position).getShopName());
+//        holder1.mTitle.setText(mList.get(position).getSpecNames());
+//        holder1.mNum.setText("X" + mList.get(position).getBuyNum() + "");
+//        holder1.mPrice.setText(mList.get(position).getPrice() + "");
         holder1.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                int orderId = mList.get(position).getOrderId();
-                mListener.OnClickListener(v, orderId);
+            public void onClick(View view) {
+                if (onGoParicListener != null) {
+                    onGoParicListener.onClick(mList.get(position).getDataId());
+                }
             }
         });
     }
@@ -64,27 +82,23 @@ public class AwaitAdapter_B extends RecyclerView.Adapter {
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        private final ImageView mImg;
-        private final TextView mName;
-        private final TextView mTitle;
-        private final TextView mPrice;
-        private final TextView mNum;
+        private ImageView mImg;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            mImg = itemView.findViewById(R.id.img_fragment_all_b);
-            mName = itemView.findViewById(R.id.tv_fragment_all_b_name);
-            mTitle = itemView.findViewById(R.id.tv_fragment_all_b_title);
-            mPrice = itemView.findViewById(R.id.tv_fragment_all_b_price);
-            mNum = itemView.findViewById(R.id.tv_num);
+            mImg = itemView.findViewById(R.id.img_item_seekhot_activity);
         }
     }
-
-    public interface OnClickListener {
-        void OnClickListener(View v, int orderId);
+    /**
+     * 跳转详情
+     */
+    public interface onGoParicListener {
+        void onClick(int goodId);
     }
 
-    public void setOnClickListener(OnClickListener listener) {
-        this.mListener = listener;
+    onGoParicListener onGoParicListener;
+
+    public void setOnGoParicListener(onGoParicListener onGoParicListener) {
+        this.onGoParicListener = onGoParicListener;
     }
 }

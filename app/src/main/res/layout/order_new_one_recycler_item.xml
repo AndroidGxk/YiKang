@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="15dp"
+    android:background="@color/clolrBAai">
+
+    <TextView
+        android:id="@+id/order_num_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:text="订单编号"
+        android:textColor="#ff333333"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/order_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="15dp"
+        android:layout_toRightOf="@+id/order_num_text"
+        android:text="20190423123029"
+        android:textColor="#ff999999"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/order_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:padding="15dp"
+        android:text="等待付款"
+        android:textColor="#ffffaf00"
+        android:textSize="13sp" />
+
+
+    <RelativeLayout
+        android:id="@+id/one_good_rela"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@id/order_status"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="30dp">
+
+        <ImageView
+            android:id="@+id/one_good_img"
+            android:layout_width="95dp"
+            android:layout_height="95dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="15dp"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/good_img_shaper" />
+
+        <TextView
+            android:id="@+id/one_good_title"
+            android:layout_width="145dp"
+
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@+id/one_good_img"
+            android:maxLines="2"
+            android:text="安热沙资生堂水能户外养生
+
+堂防晒"
+            android:textColor="#ff333333"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/one_good_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="15dp"
+            android:text="¥205.00"
+            android:textColor="#ffff0000"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/one_good_spec"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginBottom="5dp"
+            android:layout_toRightOf="@+id/one_good_img"
+            android:text="规格 90g"
+            android:textColor="#ff999999"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/one_good_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="5dp"
+            android:text="X2"
+            android:textColor="#ff999999"
+            android:textSize="12sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/order_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/one_good_rela"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/order_sum"
+            android:text="订单金额"
+            android:textColor="#ffff0000"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/order_sum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="15dp"
+            android:text="¥205.00"
+            android:textColor="#ffff0000"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/cutoff_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/order_line"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="10dp"
+        android:background="#F5F5F5" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cutoff_line"
+        android:layout_alignParentRight="true">
+
+        <TextView
+            android:id="@+id/yellow_text"
+            android:layout_width="75dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_toLeftOf="@id/delete_text"
+            android:background="@drawable/yellow_pay_shape"
+            android:gravity="center"
+            android:text="再次购买"
+            android:textColor="#ffffaf00"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/delete_text"
+            android:layout_width="75dp"
+            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/gray_pay_shape"
+            android:gravity="center"
+            android:text="删除订单"
+            android:textColor="#333333"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+
+</RelativeLayout>

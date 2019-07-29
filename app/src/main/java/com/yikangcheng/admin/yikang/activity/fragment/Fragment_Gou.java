@@ -13,8 +13,8 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.hjq.toast.ToastUtils;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.CloseActivity;
@@ -22,15 +22,14 @@ import com.yikangcheng.admin.yikang.activity.MainActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.RecommendAdapter;
 import com.yikangcheng.admin.yikang.activity.adapter.ShopRecyclerAdapter;
 import com.yikangcheng.admin.yikang.activity.particulars.ParticularsActivity;
+import com.yikangcheng.admin.yikang.app.BaseApp;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
 import com.yikangcheng.admin.yikang.bean.LoginBean;
-import com.yikangcheng.admin.yikang.bean.RecommendBean;
 import com.yikangcheng.admin.yikang.bean.Request;
 import com.yikangcheng.admin.yikang.bean.ShopCarBean;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
 import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
 import com.yikangcheng.admin.yikang.presenter.DeleteShopPresenter;
-import com.yikangcheng.admin.yikang.presenter.RecommendPresenter;
 import com.yikangcheng.admin.yikang.presenter.ShopCarPresenter;
 import com.yikangcheng.admin.yikang.presenter.UpdateCountPresenter;
 import com.yikangcheng.admin.yikang.util.SpacesItemDecoration;
@@ -38,7 +37,6 @@ import com.yikangcheng.admin.yikang.util.SpacesItemDecoration;
 import java.io.Serializable;
 import java.util.List;
 
-import me.jessyan.autosize.internal.CustomAdapt;
 import me.leefeng.promptlibrary.PromptButton;
 import me.leefeng.promptlibrary.PromptButtonListener;
 import me.leefeng.promptlibrary.PromptDialog;
@@ -59,7 +57,6 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
     private static ShopCarPresenter shopCarPresenter;
     private boolean isclick;
     private RecommendAdapter mRecommendAdapter;
-    private RecommendPresenter recommendPresenter;
     private DeleteShopPresenter deleteShopPresenter;
     private String mId = "";
     //标记
@@ -70,6 +67,8 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
     private NestedScrollView nestedSV;
     private int mPage = 1;
     private static LoginBean logUser;
+
+
 
     @Override
     protected void initView(View view) {
@@ -111,16 +110,11 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
                 startActivity(intent);
             }
         });
-        recommendPresenter = new RecommendPresenter(new RecomICoreInfe());
         int spanCount = 1; // 3 columns
         int spacing = 20; // 50px
         boolean includeEdge = true;
         shop_recyclertwo.addItemDecoration(new SpacesItemDecoration(spanCount, spacing, includeEdge));
         shop_recyclertwo.setLoadingListener(this);
-        //加载更多
-        if (logUser != null) {
-            recommendPresenter.request(logUser.getId(), 1, mPage);
-        }
         nestedSV.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
@@ -203,7 +197,7 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
             @Override
             public void onClick(View view) {
                 if (num_text.getText().toString().equals("去结算(0)")) {
-                    Toast.makeText(getContext(), "请选择商品", Toast.LENGTH_SHORT).show();
+                    ToastUtils.show("请选择商品");
                     return;
                 }
                 List<ShopCarBean> shopList = shopRecyclerAdapter.getShopList();
@@ -327,30 +321,7 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
     @Override
     public void onLoadMore() {
         mPage++;
-        recommendPresenter.request(logUser.getId(), 1, mPage);
     }
-
-
-    public class RecomICoreInfe implements ICoreInfe {
-
-        @Override
-        public void success(Object data) {
-            Request request = (Request) data;
-            List<RecommendBean> entity1 = (List<RecommendBean>) request.getEntity();
-            if (entity1.size() == 0) {
-//                baseline.setVisibility(View.VISIBLE);
-//                diviline.setVisibility(View.VISIBLE);
-            } else {
-                mRecommendAdapter.addData(entity1);
-            }
-        }
-
-        @Override
-        public void fail(ApiException e) {
-
-        }
-    }
-
     public static void getRequest() {
         shopCarPresenter.request(logUser.getId());
     }
@@ -358,7 +329,7 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
     @Override
     public void onResume() {
         super.onResume();
-        SharedPreferences close = getContext().getSharedPreferences("close", Context.MODE_PRIVATE);
+        SharedPreferences close = BaseApp.getApp().getSharedPreferences("close", Context.MODE_PRIVATE);
         boolean aBoolean = close.getBoolean("close", false);
         if (aBoolean) {
             if (close.getBoolean("closes", false)) {
@@ -383,7 +354,7 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
             //相当于Fragment的onResume，为true时，Fragment已经可见
-            SharedPreferences close = getContext().getSharedPreferences("close", Context.MODE_PRIVATE);
+            SharedPreferences close = BaseApp.getApp().getSharedPreferences("close", Context.MODE_PRIVATE);
             boolean aBoolean = close.getBoolean("close", false);
             if (aBoolean) {
                 if (close.getBoolean("closes", false)) {

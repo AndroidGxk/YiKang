@@ -18,7 +18,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.MainActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.ObligationAdapter;
-import com.yikangcheng.admin.yikang.activity.orderstatus.WaitForpaymentActivity;
+import com.yikangcheng.admin.yikang.activity.orderstatus.newactivity.OrderWaitActivity;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.DeleteOrderBean;
 import com.yikangcheng.admin.yikang.bean.ObligationBean;
@@ -41,7 +41,7 @@ import me.leefeng.promptlibrary.PromptDialog;
 /**
  * 我的——————待付款页面
  */
-public class ObligationActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt {
+public class ObligationActivity extends BaseActivtiy implements ICoreInfe{
 
     private ImageView mImgActivityObligationFanhui;
     private RelativeLayout mToolbarActivityObligation;
@@ -108,7 +108,7 @@ public class ObligationActivity extends BaseActivtiy implements ICoreInfe, Custo
                  * 点击跳到详情的下标  删除后回来删除条目用到
                  */
                 mDeletePosition = position;
-                Intent intent = new Intent(ObligationActivity.this, WaitForpaymentActivity.class);
+                Intent intent = new Intent(ObligationActivity.this, OrderWaitActivity.class);
                 intent.putExtra("orderId_wait", orderId);
                 startActivityForResult(intent, 1);
             }
@@ -265,15 +265,6 @@ public class ObligationActivity extends BaseActivtiy implements ICoreInfe, Custo
 
     }
 
-    @Override
-    public boolean isBaseOnWidth() {
-        return false;
-    }
-
-    @Override
-    public float getSizeInDp() {
-        return width / 2;
-    }
 
     public class delete implements ICoreInfe {
 

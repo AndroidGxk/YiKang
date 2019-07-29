@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="优选商城"
+            android:text="挚友超市"
             android:textColor="#ff000000"
             android:textSize="19sp" />
     </RelativeLayout>
@@ -45,19 +45,10 @@
         android:max="100"
         android:progressDrawable="@drawable/progress_bar_states" />
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/refreshLayout"
+    <WebView
+        android:id="@+id/webView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/pb_progress">
-        <!--苹果水滴的样式-->
-        <com.scwang.smartrefresh.header.WaterDropHeader
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <WebView
-            android:id="@+id/webView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+        android:layout_below="@id/pb_progress"
+        android:overScrollMode="never" />
 </RelativeLayout>

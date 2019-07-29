@@ -26,7 +26,7 @@ import java.util.List;
 
 import me.jessyan.autosize.internal.CustomAdapt;
 
-public class ClassifyHomeActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt {
+public class ClassifyHomeActivity extends BaseActivtiy implements ICoreInfe {
     private RecyclerView mRlvFragmentFenleiYou;
     private RecyclerView mRlvFragmentFenleiZuo;
     private FenLeiAAdapter mFenLeiAdapter;
@@ -123,13 +123,4 @@ public class ClassifyHomeActivity extends BaseActivtiy implements ICoreInfe, Cus
 
     }
 
-    @Override
-    public boolean isBaseOnWidth() {
-        return false;
-    }
-
-    @Override
-    public float getSizeInDp() {
-        return width / 2;
-    }
 }

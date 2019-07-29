@@ -18,7 +18,6 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.MainActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.CanceledAdapter_A;
-import com.yikangcheng.admin.yikang.activity.orderstatus.FackOfActivity;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.CloseBean;
 import com.yikangcheng.admin.yikang.bean.DeleteOrderBean;
@@ -34,7 +33,6 @@ import com.yikangcheng.admin.yikang.util.TwoBallRotationProgressBar;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.jessyan.autosize.internal.CustomAdapt;
 import me.leefeng.promptlibrary.PromptButton;
 import me.leefeng.promptlibrary.PromptButtonListener;
 import me.leefeng.promptlibrary.PromptDialog;
@@ -42,7 +40,7 @@ import me.leefeng.promptlibrary.PromptDialog;
 /**
  * 已取消订单详情
  */
-public class CanceledActivity extends BaseActivtiy implements ICoreInfe, CustomAdapt {
+public class CanceledActivity extends BaseActivtiy implements ICoreInfe  {
 
     private ImageView back_img;
     private RelativeLayout mToolbarActivityCanceled;
@@ -111,9 +109,9 @@ public class CanceledActivity extends BaseActivtiy implements ICoreInfe, CustomA
                  * 点击跳到详情的下标  删除后回来删除条目用到
                  */
                 mDeletePosition = position;
-                Intent intent = new Intent(CanceledActivity.this, FackOfActivity.class);
-                intent.putExtra("orderId_fack", orderId);
-                startActivityForResult(intent, 5);
+//                Intent intent = new Intent(CanceledActivity.this, FackOfActivity.class);
+//                intent.putExtra("orderId_fack", orderId);
+//                startActivityForResult(intent, 5);
             }
         });
 
@@ -264,16 +262,6 @@ public class CanceledActivity extends BaseActivtiy implements ICoreInfe, CustomA
     @Override
     protected void createPresenter() {
 
-    }
-
-    @Override
-    public boolean isBaseOnWidth() {
-        return false;
-    }
-
-    @Override
-    public float getSizeInDp() {
-        return width / 2;
     }
 
     public class delete implements ICoreInfe {

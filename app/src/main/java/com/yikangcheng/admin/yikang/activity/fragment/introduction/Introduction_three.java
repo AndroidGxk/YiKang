@@ -19,6 +19,7 @@ import com.yikangcheng.admin.yikang.base.BaseFragment;
 public class Introduction_three extends BaseFragment {
 
     private TextView over_btn;
+
     @Override
     protected void initView(View view) {
         over_btn = view.findViewById(R.id.over_btn);

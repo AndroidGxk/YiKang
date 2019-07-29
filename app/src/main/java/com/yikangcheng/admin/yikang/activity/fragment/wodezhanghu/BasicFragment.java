@@ -15,7 +15,6 @@ import android.support.v4.content.FileProvider;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -23,11 +22,11 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
+import com.hjq.toast.ToastUtils;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.myaccount.IntroActivity;
 import com.yikangcheng.admin.yikang.app.BaseApp;
@@ -81,6 +80,7 @@ public class BasicFragment extends BaseFragment implements ICoreInfe {
     private PromptButton cancle;
     private UserDetailBean userCenter;
     int sex = 0;
+
 
     @Override
     protected void initView(View view) {
@@ -263,20 +263,20 @@ public class BasicFragment extends BaseFragment implements ICoreInfe {
                         }
                     }
                     if (name_str.equals("") || rela_name_str.equals("") || jianjie_str.equals("") || email.equals("")) {
-                        Toast.makeText(getContext(), "请完善信息", Toast.LENGTH_SHORT).show();
+                        ToastUtils.show("请完善信息");
                         return;
                     }
                     boolean contain = UIUtils.containsEmoji(name_str);
                     boolean contains = UIUtils.containsEmoji(rela_name_str);
                     if (!contain) {
-                        if(!contains){
+                        if (!contains) {
                             updateUserMapperPresenter.request(logUser.getId(), name_str, path, rela_name_str, email, sex, jianjie_str);
                             promptDialog.showLoading("正在保存");
-                        }else{
-                            Toast.makeText(getContext(), "姓名不能包含特殊符号", Toast.LENGTH_SHORT).show();
+                        } else {
+                            ToastUtils.show("姓名不能包含特殊符号");
                         }
-                    }else{
-                        Toast.makeText(getContext(), "昵称不能包含特殊符号", Toast.LENGTH_SHORT).show();
+                    } else {
+                        ToastUtils.show("昵称不能包含特殊符号");
                     }
                 }
             }
@@ -355,7 +355,7 @@ public class BasicFragment extends BaseFragment implements ICoreInfe {
             if (newUri != null) {
                 startPhotoZoom(newUri);
             } else {
-                Toast.makeText(getActivity(), "没有得到相册图片", Toast.LENGTH_LONG).show();
+                ToastUtils.show("没有得到相册图片");
             }
         } else if (requestCode == REQUEST_CODE_TAKE_PHOTO) {
             startPhotoZoom(uri);
@@ -495,7 +495,7 @@ public class BasicFragment extends BaseFragment implements ICoreInfe {
                 getActivity().finish();
             } else {
                 promptDialog.dismiss();
-                Toast.makeText(getContext(), "" + request.getMessage(), Toast.LENGTH_SHORT).show();
+                ToastUtils.show("" + request.getMessage());
             }
         }
 

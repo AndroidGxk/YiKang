@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
@@ -15,8 +14,7 @@ import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.yikangcheng.admin.yikang.R;
-import com.yikangcheng.admin.yikang.activity.obligation.ObligationActivity;
-import com.yikangcheng.admin.yikang.activity.obligation.PaidActivity;
+import com.yikangcheng.admin.yikang.activity.OrderFormActivity;
 
 /**
  * 微信回调
@@ -59,10 +57,12 @@ public class WXPayEntryActivity extends AppCompatActivity implements IWXAPIEvent
     @Override
     public void onResp(BaseResp resp) {
         if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
+            Intent img_fragment_wo_daifukuan = new Intent(WXPayEntryActivity.this, OrderFormActivity.class);
             switch (resp.errCode) {
                 case BaseResp.ErrCode.ERR_OK:
                     //支付成功后的逻辑
-                    startActivity(new Intent(WXPayEntryActivity.this, PaidActivity.class));
+                    img_fragment_wo_daifukuan.putExtra("tab", "daishouhuo");
+                    startActivity(img_fragment_wo_daifukuan);
                     finish();
                     break;
                 case BaseResp.ErrCode.ERR_COMM:
@@ -70,7 +70,8 @@ public class WXPayEntryActivity extends AppCompatActivity implements IWXAPIEvent
                     text.setText("支付失败");
                     break;
                 case BaseResp.ErrCode.ERR_USER_CANCEL:
-                    startActivity(new Intent(WXPayEntryActivity.this, ObligationActivity.class));
+                    img_fragment_wo_daifukuan.putExtra("tab", "daifukuan");
+                    startActivity(img_fragment_wo_daifukuan);
                     finish();
                     break;
                 default:

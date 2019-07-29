@@ -9,33 +9,59 @@
     android:focusableInTouchMode="true"
     android:overScrollMode="never">
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/rela"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="@color/colorTab">
 
+        <ImageView
+            android:id="@+id/back_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingLeft="15dp"
+            android:paddingTop="15dp"
+            android:paddingRight="15dp"
+            android:paddingBottom="15dp"
+            android:src="@drawable/fanhui_seek" />
 
-        <TextView
-            android:id="@+id/text_seek"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_centerInParent="true"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:background="@drawable/editext_gray_circular_shape"
-            android:gravity="center_vertical"
-            android:hint="搜索商品"
-            android:paddingLeft="30dp"
-            android:textSize="13sp" />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/text_seek"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/editext_gray_circular_shape"
+                android:gravity="center_vertical"
+                android:hint="搜索商品"
+                android:paddingLeft="45dp"
+                android:textSize="12sp" />
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="25dp"
+                android:background="@drawable/sousuo_2" />
+        </RelativeLayout>
 
         <ImageView
-            android:layout_width="15dp"
-            android:layout_height="15dp"
+            android:id="@+id/mess_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="25dp"
-            android:background="@drawable/sousuo_2" />
-    </RelativeLayout>
+            android:paddingLeft="15dp"
+            android:paddingTop="15dp"
+            android:paddingRight="15dp"
+            android:paddingBottom="15dp"
+            android:src="@drawable/xiaoxi_seek" />
+    </LinearLayout>
 
 
     <ProgressBar

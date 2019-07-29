@@ -40,7 +40,7 @@ import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
 import me.jessyan.autosize.internal.CustomAdapt;
 
-public class AfterSaleActivity extends BaseActivtiy implements CustomAdapt, ICoreInfe {
+public class AfterSaleActivity extends BaseActivtiy implements  ICoreInfe {
 
 
     /**
@@ -137,6 +137,10 @@ public class AfterSaleActivity extends BaseActivtiy implements CustomAdapt, ICor
         webSettings.setJavaScriptEnabled(true);
         //扩大比例的缩放
         webView.getSettings().setUseWideViewPort(true);
+        // 在安卓5.0之后，默认不允许加载http与https混合内容，需要设置webview允许其加载混合网络协议内容
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            webView.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        }
         //自适应屏幕
         webView.getSettings().setLoadWithOverviewMode(true);
         webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
@@ -184,15 +188,6 @@ public class AfterSaleActivity extends BaseActivtiy implements CustomAdapt, ICor
     }
 
 
-    @Override
-    public boolean isBaseOnWidth() {
-        return false;
-    }
-
-    @Override
-    public float getSizeInDp() {
-        return width / 2;
-    }
 
     @JavascriptInterface
     public void uploadChangeToAndroid() {

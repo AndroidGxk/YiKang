@@ -19,6 +19,6 @@ public class RecommendPresenter extends BasePresenter {
     @Override
     protected Observable observable(Object... args) {
         ApiService apiService = NotWorkUtils.getInstance().create(ApiService.class);
-        return apiService.Recommend((int) args[0], (int) args[1], (int) args[2]);
+        return apiService.Recommend((int) args[0], (int) args[1]);
     }
 }

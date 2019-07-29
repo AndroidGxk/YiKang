@@ -19,13 +19,14 @@ import com.yikangcheng.admin.yikang.bean.UserDetailBean;
 
 import java.util.List;
 
+import butterknife.ButterKnife;
 
 
 public abstract class BaseFragment extends Fragment {
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(getFragmentLayoutId(), container, false);
+        ButterKnife.bind(this, view);//绑定布局
         initView(view);
         initData();
         return view;

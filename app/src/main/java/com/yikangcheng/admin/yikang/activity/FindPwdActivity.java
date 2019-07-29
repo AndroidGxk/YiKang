@@ -10,8 +10,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.hjq.toast.ToastUtils;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.Request;
@@ -21,11 +21,8 @@ import com.yikangcheng.admin.yikang.presenter.GetMobileKeyPresenter;
 import com.yikangcheng.admin.yikang.presenter.RetrievePwdPresenter;
 import com.yikangcheng.admin.yikang.presenter.SendMobilePresenter;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
-import com.yikangcheng.admin.yikang.util.UIUtils;
 
-import me.jessyan.autosize.internal.CustomAdapt;
-
-public class FindPwdActivity extends BaseActivtiy implements CustomAdapt, ICoreInfe, View.OnClickListener {
+public class FindPwdActivity extends BaseActivtiy implements  ICoreInfe, View.OnClickListener {
     private TextView moblie_text;
     private RelativeLayout updatebtn;
     private int mCount = 60;
@@ -103,20 +100,11 @@ public class FindPwdActivity extends BaseActivtiy implements CustomAdapt, ICoreI
 
     }
 
-    @Override
-    public boolean isBaseOnWidth() {
-        return false;
-    }
-
-    @Override
-    public float getSizeInDp() {
-        return width / 2;
-    }
 
     @Override
     public void success(Object data) {
         Request request = (Request) data;
-        Toast.makeText(FindPwdActivity.this, "" + request.getMessage(), Toast.LENGTH_SHORT).show();
+        ToastUtils.show("" + request.getMessage());
         if (request.isSuccess()) {
             finish();
         }
@@ -143,7 +131,7 @@ public class FindPwdActivity extends BaseActivtiy implements CustomAdapt, ICoreI
             case R.id.moblie_text:
                 String phone = phone_text.getText().toString();
                 if (phone.equals("")) {
-                    Toast.makeText(FindPwdActivity.this, "请输入正确的手机号", Toast.LENGTH_SHORT).show();
+                    ToastUtils.show("请输入正确的手机号");
                     return;
                 } else {
                     getMobileKeyPresenter.request(phone, "Android");
@@ -157,10 +145,15 @@ public class FindPwdActivity extends BaseActivtiy implements CustomAdapt, ICoreI
                 String newpwd = newpwd_text.getText().toString();
                 String newpwds = newpwd_texts.getText().toString();
                 if (moblie_code.equals("")) {
-                    Toast.makeText(FindPwdActivity.this, "请输入验证码", Toast.LENGTH_SHORT).show();
+                    ToastUtils.show("请输入验证码");
+                    return;
                 }
                 if (newpwd.equals("") || newpwds.equals("")) {
-                    Toast.makeText(FindPwdActivity.this, "请输入新密码", Toast.LENGTH_SHORT).show();
+                    ToastUtils.show("请输入新密码");
+                    return;
+                }
+                if (newpwd.length() < 6 || newpwd.length() > 20) {
+                    ToastUtils.show("密码长度需在6-20位字符之间");
                     return;
                 }
                 retrievePwdPresenter.request(phone_up, "mobile", moblie_code, newpwd, newpwds);
@@ -195,7 +188,7 @@ public class FindPwdActivity extends BaseActivtiy implements CustomAdapt, ICoreI
         @Override
         public void success(Object data) {
             Request request = (Request) data;
-            Toast.makeText(FindPwdActivity.this, "" + request.getMessage(), Toast.LENGTH_SHORT).show();
+            ToastUtils.show("" + request.getMessage());
         }
 
         @Override

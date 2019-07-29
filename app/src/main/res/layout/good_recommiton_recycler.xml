@@ -1,28 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/linear"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:fillViewport="true"
     android:orientation="vertical">
 
-    <com.jcodecraeer.xrecyclerview.XRecyclerView
+
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/rlv_fragment_accomplish"
         android:layout_width="match_parent"
-        android:minHeight="60dp"
+        android:layout_height="match_parent"
         android:layout_marginTop="10dp"
-        android:layout_height="match_parent"
-        android:overScrollMode="never"
-        android:layout_marginBottom="60dp" />
+        android:layout_marginBottom="40dp"
+        android:overScrollMode="never" />
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/noGood_img"
-        android:layout_width="125dp"
-        android:layout_height="match_parent"
-        android:layout_centerInParent="true"
-        android:layout_gravity="center"
-        android:layout_marginBottom="100dp"
-        android:background="@drawable/nogood"
-        android:visibility="gone" />
-</LinearLayout>
+        <ImageView
+            android:id="@+id/noGood_img"
+            android:layout_width="125dp"
+            android:layout_height="125dp"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="300dp"
+            android:background="@drawable/nogood" />
+    </RelativeLayout>
+</RelativeLayout>

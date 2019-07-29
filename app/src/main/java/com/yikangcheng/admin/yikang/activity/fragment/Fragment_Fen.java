@@ -36,6 +36,7 @@ public class Fragment_Fen extends BaseFragment implements ICoreInfe {
     private TextView text_seek;
     private int width;
 
+
     @Override
     protected void initView(View view) {
         AutoSizeConfig.getInstance().setCustomFragment(true);

@@ -1,6 +1,7 @@
 package com.yikangcheng.admin.yikang.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Handler;
 import android.support.design.widget.TabLayout;
@@ -12,7 +13,6 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.adapter.Orderform_ViewPagerAdapter;
@@ -20,25 +20,22 @@ import com.yikangcheng.admin.yikang.activity.fragment.orderform.AccomplishFragme
 import com.yikangcheng.admin.yikang.activity.fragment.orderform.AllFragment;
 import com.yikangcheng.admin.yikang.activity.fragment.orderform.AwaitFragment;
 import com.yikangcheng.admin.yikang.activity.fragment.orderform.CloseFragment;
+import com.yikangcheng.admin.yikang.activity.fragment.orderform.CompletedlishFragment;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
-import com.yikangcheng.admin.yikang.util.TwoBallRotationProgressBar;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.jessyan.autosize.internal.CustomAdapt;
-import me.leefeng.promptlibrary.PromptDialog;
-
-public class OrderFormActivity extends BaseActivtiy implements CustomAdapt {
+public class OrderFormActivity extends BaseActivtiy {
 
     private ImageView back_img;
     private RelativeLayout mToolbarActivityOrderfrom;
     private TabLayout mTabActivityOrderform;
     private ViewPager mViewPagerOrderform;
     private int width;
-    private TwoBallRotationProgressBar progress;
+    private String tab;
 
     @Override
     protected void initView() {
@@ -46,11 +43,12 @@ public class OrderFormActivity extends BaseActivtiy implements CustomAdapt {
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
         WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         width = wm.getDefaultDisplay().getWidth();
+        Intent intent = getIntent();
+        tab = intent.getStringExtra("tab");
         back_img = (ImageView) findViewById(R.id.back_img);
         mToolbarActivityOrderfrom = (RelativeLayout) findViewById(R.id.toolbar_activity_orderfrom);
         mTabActivityOrderform = (TabLayout) findViewById(R.id.tab_activity_orderform);
         mViewPagerOrderform = (ViewPager) findViewById(R.id.viewPager_orderform);
-        progress = (TwoBallRotationProgressBar) findViewById(R.id.progress);
 
         /**
          * 点击返回关闭当前页面
@@ -65,24 +63,19 @@ public class OrderFormActivity extends BaseActivtiy implements CustomAdapt {
         final List<String> strings = new ArrayList<>();
         strings.add("全部");
         strings.add("待付款");
-//        strings.add("待收货");
-        strings.add("已付款");
+        strings.add("待收货");
+        strings.add("已完成");
         strings.add("已取消");
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(new AllFragment());
         fragments.add(new AwaitFragment());
         fragments.add(new AccomplishFragment());
+        fragments.add(new CompletedlishFragment());
         fragments.add(new CloseFragment());
         Orderform_ViewPagerAdapter orderform_viewPagerAdapter = new Orderform_ViewPagerAdapter(getSupportFragmentManager(), strings, fragments);
         mViewPagerOrderform.setAdapter(orderform_viewPagerAdapter);
         mTabActivityOrderform.setupWithViewPager(mViewPagerOrderform);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                progress.setVisibility(View.GONE);
-                progress.stopAnimator();
-            }
-        }, 500);
+        mViewPagerOrderform.setOffscreenPageLimit(1);
         //设置下划线长度
         mTabActivityOrderform.post(new Runnable() {
             @Override
@@ -90,50 +83,60 @@ public class OrderFormActivity extends BaseActivtiy implements CustomAdapt {
                 setIndicator(mTabActivityOrderform, 10, 10);
             }
         });
-
-        /**
-         * 点击tab字体变大
-         */
-        mTabActivityOrderform.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            //这是选中状态
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                View view = tab.getCustomView();
-                if (null == view) {
-                    //寻找item布局
-                    tab.setCustomView(R.layout.custom_tab_layout_text);
-                }
-                //找控件
-                TextView textView = tab.getCustomView().findViewById(android.R.id.text1);
-                //设置文字加粗
-                textView.setTextColor(mTabActivityOrderform.getTabTextColors());
-                //设置文字字体大小
-                textView.setTextSize(15);
-                //这是设置字体
-//                textView.setTypeface(Typeface.DEFAULT_BOLD);
+        if (tab != null) {
+            if (tab.equals("yiquxiao")) {
+                mTabActivityOrderform.getTabAt(4).select();
+            } else if (tab.equals("daifukuan")) {
+                mTabActivityOrderform.getTabAt(1).select();
+            } else if (tab.equals("daishouhuo")) {
+                mTabActivityOrderform.getTabAt(2).select();
+            }else if(tab.equals("yiwancheng")){
+                mTabActivityOrderform.getTabAt(3).select();
             }
-
-            //未选中状态
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-                View view = tab.getCustomView();
-                if (null == view) {
-                    //寻找item布局
-                    tab.setCustomView(R.layout.custom_tab_layout_text);
-                }
-                //找控件
-                TextView textView = tab.getCustomView().findViewById(android.R.id.text1);
-                //设置当未选中状态字体大小
-                textView.setTextSize(12);
-                //设置字体
-//                textView.setTypeface(Typeface.DEFAULT);
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
+        }
+//        /**
+//         * 点击tab字体变大
+//         */
+//        mTabActivityOrderform.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+//            //这是选中状态
+//            @Override
+//            public void onTabSelected(TabLayout.Tab tab) {
+//                View view = tab.getCustomView();
+//                if (null == view) {
+//                    //寻找item布局
+//                    tab.setCustomView(R.layout.custom_tab_layout_text);
+//                }
+//                //找控件
+//                TextView textView = tab.getCustomView().findViewById(android.R.id.text1);
+//                //设置文字加粗
+//                textView.setTextColor(mTabActivityOrderform.getTabTextColors());
+//                //设置文字字体大小
+//                textView.setTextSize(15);
+//                //这是设置字体
+////                textView.setTypeface(Typeface.DEFAULT_BOLD);
+//            }
+//
+//            //未选中状态
+//            @Override
+//            public void onTabUnselected(TabLayout.Tab tab) {
+//                View view = tab.getCustomView();
+//                if (null == view) {
+//                    //寻找item布局
+//                    tab.setCustomView(R.layout.custom_tab_layout_text);
+//                }
+//                //找控件
+//                TextView textView = tab.getCustomView().findViewById(android.R.id.text1);
+//                //设置当未选中状态字体大小
+//                textView.setTextSize(12);
+//                //设置字体
+////                textView.setTypeface(Typeface.DEFAULT);
+//            }
+//
+//            @Override
+//            public void onTabReselected(TabLayout.Tab tab) {
+//
+//            }
+//        });
 
 
     }
@@ -181,12 +184,7 @@ public class OrderFormActivity extends BaseActivtiy implements CustomAdapt {
 
     @Override
     protected void initEventData() {
-        progress.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                return;
-            }
-        });
+
     }
 
     @Override
@@ -199,14 +197,5 @@ public class OrderFormActivity extends BaseActivtiy implements CustomAdapt {
 
     }
 
-    @Override
-    public boolean isBaseOnWidth() {
-        return false;
-    }
-
-    @Override
-    public float getSizeInDp() {
-        return width / 2;
-    }
 
 }

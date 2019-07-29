@@ -14,10 +14,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yikangcheng.admin.yikang.R;
-import com.yikangcheng.admin.yikang.activity.SeekListActivity;
 import com.yikangcheng.admin.yikang.activity.SeekListNewActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.SeekHotAdapter;
-import com.yikangcheng.admin.yikang.activity.adapter.TagAdapter;
+import com.yikangcheng.admin.yikang.activity.adapter.TagAdapters;
 import com.yikangcheng.admin.yikang.activity.edittext_delete.ETextWithDelete;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.SeekHotBean;
@@ -32,7 +31,7 @@ import java.util.List;
 
 import me.jessyan.autosize.internal.CustomAdapt;
 
-public class SeekActivity extends BaseActivtiy implements CustomAdapt {
+public class SeekActivity extends BaseActivtiy{
 
 
     private ImageView mImgActivitySeekDelete;
@@ -41,16 +40,12 @@ public class SeekActivity extends BaseActivtiy implements CustomAdapt {
     private RecyclerView mRlvActivitySeekHot;
     private List<SoSuoDb> mSoSuoDbs;
     private FlowTagLayout flowTagLayout;
-    private TagAdapter tagAdapter;
+    private TagAdapters tagAdapter;
     private List<String> searchHistory;//搜索历史
-    private int width;
     private SharedPreferences.Editor edit;
 
     @Override
     protected void initView() {
-        Display display = this.getWindowManager().getDefaultDisplay();
-        width = display.getWidth();
-        int height = display.getHeight();
         //删除最近搜索按钮
         mImgActivitySeekDelete = (ImageView) findViewById(R.id.img_activity_seek_delete);
         //取消搜索
@@ -63,7 +58,7 @@ public class SeekActivity extends BaseActivtiy implements CustomAdapt {
         mRlvActivitySeekHot = (RecyclerView) findViewById(R.id.rlv_activity_seek_hot);
         //获得搜索历史
         searchHistory = SerachUtils.getInstance().getSearchList();
-        tagAdapter = new TagAdapter(this);
+        tagAdapter = new TagAdapters(this);
         //设置这个模式意思是处理流标签点击事件
         flowTagLayout.setTagCheckedMode(FlowTagLayout.FLOW_TAG_CHECKED_NONE);
         flowTagLayout.setAdapter(tagAdapter);
@@ -188,16 +183,5 @@ public class SeekActivity extends BaseActivtiy implements CustomAdapt {
     @Override
     protected void createPresenter() {
 
-    }
-
-
-    @Override
-    public boolean isBaseOnWidth() {
-        return false;
-    }
-
-    @Override
-    public float getSizeInDp() {
-        return width / 2;
     }
 }

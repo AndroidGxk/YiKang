@@ -1,16 +1,11 @@
 package com.yikangcheng.admin.yikang.activity;
 
 import android.annotation.SuppressLint;
-import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.graphics.Color;
-import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -23,18 +18,11 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
-import com.mylhyl.circledialog.CircleDialog;
-import com.mylhyl.circledialog.callback.ConfigButton;
-import com.mylhyl.circledialog.callback.ConfigDialog;
-import com.mylhyl.circledialog.callback.ConfigText;
-import com.mylhyl.circledialog.params.ButtonParams;
-import com.mylhyl.circledialog.params.DialogParams;
-import com.mylhyl.circledialog.params.TextParams;
+import com.hjq.toast.ToastUtils;
 import com.tianma.netdetector.lib.NetworkType;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Fen;
@@ -46,20 +34,15 @@ import com.yikangcheng.admin.yikang.activity.myaccount.MyaccountActivity;
 import com.yikangcheng.admin.yikang.activity.obligation.DetailActivity;
 import com.yikangcheng.admin.yikang.activity.siteactivity.AiteActivity;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
-import com.yikangcheng.admin.yikang.bean.AppUpdateBean;
 import com.yikangcheng.admin.yikang.bean.LoginBean;
 import com.yikangcheng.admin.yikang.bean.Request;
 import com.yikangcheng.admin.yikang.bean.UserDetailBean;
 import com.yikangcheng.admin.yikang.bean.UserInfoBean;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
 import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
-import com.yikangcheng.admin.yikang.presenter.CheckupdatePresenter;
 import com.yikangcheng.admin.yikang.presenter.UserInfoPresenter;
-import com.yikangcheng.admin.yikang.updater.Updater;
-import com.yikangcheng.admin.yikang.updater.UpdaterConfig;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
-import me.leefeng.promptlibrary.OnAdClickListener;
 import me.leefeng.promptlibrary.PromptButton;
 import me.leefeng.promptlibrary.PromptButtonListener;
 import me.leefeng.promptlibrary.PromptDialog;
@@ -89,7 +72,7 @@ public class MainActivity extends BaseActivtiy {
     private PromptDialog promptDialog;
     private UserInfoPresenter userInfoPresenter;
     private int width;
-    private CheckupdatePresenter checkupdatePresenter;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void initView() {
@@ -141,8 +124,7 @@ public class MainActivity extends BaseActivtiy {
             }
         });
 
-        checkupdatePresenter = new CheckupdatePresenter(new UpdateApp());
-        checkupdatePresenter.request("android");
+
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         mNv = (RelativeLayout) findViewById(R.id.nv);
         mRelativeLayout = (RelativeLayout) findViewById(R.id.relativeLayout);
@@ -165,20 +147,8 @@ public class MainActivity extends BaseActivtiy {
                 }), confirm);
             }
         });
-
-
+        sharedPreferences = getSharedPreferences("wo", MODE_PRIVATE);
     }
-
-    //查询当前App版本号
-    private String getVersionName() throws Exception {
-        // 获取packagemanager的实例
-        PackageManager packageManager = getPackageManager();
-        // getPackageName()是你当前类的包名，0代表是获取版本信息
-        PackageInfo packInfo = packageManager.getPackageInfo(getPackageName(), 0);
-        String version = packInfo.versionName;
-        return version;
-    }
-
     //按钮的定义，创建一个按钮的对象
     final PromptButton confirm = new PromptButton("确定", new PromptButtonListener() {
         @Override
@@ -188,23 +158,6 @@ public class MainActivity extends BaseActivtiy {
             finish();
         }
     });
-//    //更新按钮
-//    final PromptButton newConfirm = new PromptButton("更新", new PromptButtonListener() {
-//        @Override
-//        public void onClick(PromptButton button) {
-//            Toast.makeText(MainActivity.this, "正在更新", Toast.LENGTH_SHORT).show();
-//            UpdaterConfig config = new UpdaterConfig.Builder(MainActivity.this)
-//                    .setTitle(getResources().getString(R.string.app_name))
-//                    .setDescription("更新")
-//                    .setFileUrl(APK_URL)
-//                    .setCanMediaScanner(true)
-//                    .setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE
-//                            | DownloadManager.Request.NETWORK_WIFI)
-//                    .build();
-//            Updater.get().showLog(true).download(config);
-//        }
-//    });
-
     /**
      * 购物车的商品数量
      */
@@ -232,7 +185,7 @@ public class MainActivity extends BaseActivtiy {
 
     @Override
     public void onNetDisconnected() {
-        Toast.makeText(this, "当前网络不可用", Toast.LENGTH_SHORT).show();
+        ToastUtils.show("当前网络不可用" );
     }
 
     @Override
@@ -392,6 +345,9 @@ public class MainActivity extends BaseActivtiy {
                 miao_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
                 gou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
                 wo_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorTab));
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("wo", "no");
+                editor.commit();
             }
         });
         shou.setOnClickListener(new View.OnClickListener() {
@@ -520,6 +476,9 @@ public class MainActivity extends BaseActivtiy {
                 miao_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
                 gou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
                 wo_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorTab));
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("wo", "no");
+                editor.commit();
             }
         });
         /**
@@ -608,49 +567,6 @@ public class MainActivity extends BaseActivtiy {
         }
         return res;
     }
-
-    /**
-     * @authorszx 双击返回键退出应用
-     */
-
-    int longprePressed = 0;//第一次点击
-
-    int longlastPressed = 0;//第二次点击
-    long lastPressed;
-    long prePressed;
-
-    @Override
-
-    public void onBackPressed() {
-
-//            获得系统第二次点击的时间
-
-        lastPressed = System.currentTimeMillis();
-
-        if (lastPressed - prePressed > 2000) {
-
-//把第一次点击获得的时间赋值给第二次
-
-            prePressed = lastPressed;
-
-//弹出吐司
-
-            Toast.makeText(this, "再点一次退出应用", Toast.LENGTH_SHORT).show();
-
-        } else {
-
-//结束页面（销毁页面）
-
-            finish();
-
-            System.exit(0);
-
-//            Log.e("exit", "应用退出");
-
-        }
-
-    }
-
 
     @Override
     protected void onResume() {
@@ -779,16 +695,18 @@ public class MainActivity extends BaseActivtiy {
             Request request = (Request) data;
             UserInfoBean entity = (UserInfoBean) request.getEntity();
             UserDetailBean userCenter = (UserDetailBean) entity.getUserCenter();
-            if (userCenter.getAvatar().contains("https://") || userCenter.getAvatar().contains("http://")) {
-                //设置图片圆角角度
-                Glide.with(MainActivity.this).load(userCenter.getAvatar())
-                        .apply(RequestOptions.bitmapTransform(new CircleCrop()))
-                        .into(header);
-            } else {
-                //设置图片圆角角度
-                Glide.with(MainActivity.this).load("https://static.yikch.com" + userCenter.getAvatar())
-                        .apply(RequestOptions.bitmapTransform(new CircleCrop()))
-                        .into(header);
+            if(userCenter.getAvatar()!=null){
+                if (userCenter.getAvatar().contains("https://") || userCenter.getAvatar().contains("http://")) {
+                    //设置图片圆角角度
+                    Glide.with(MainActivity.this).load(userCenter.getAvatar())
+                            .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                            .into(header);
+                } else {
+                    //设置图片圆角角度
+                    Glide.with(MainActivity.this).load("https://static.yikch.com" + userCenter.getAvatar())
+                            .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                            .into(header);
+                }
             }
             //名称
             my_name.setText(userCenter.getNickName());
@@ -800,104 +718,5 @@ public class MainActivity extends BaseActivtiy {
         }
     }
 
-    /**
-     * 更新APP
-     */
-    private class UpdateApp implements ICoreInfe {
-        private String versionName;
 
-        @Override
-        public void success(Object data) {
-            Request request = (Request) data;
-            final AppUpdateBean entity = (AppUpdateBean) request.getEntity();
-            try {
-                versionName = getVersionName();
-                if (versionName != null && entity.getVersionNo() != null) {
-                    if (!versionName.equals(entity.getVersionNo())) {
-                        new CircleDialog.Builder()
-                                .setMaxHeight(0.8f)
-                                .setCanceledOnTouchOutside(false)
-                                .setCancelable(false)
-                                .configDialog(new ConfigDialog() {
-                                    @Override
-                                    public void onConfig(DialogParams params) {
-//                            params.backgroundColor = Color.DKGRAY;
-//                            params.backgroundColorPress = Color.BLUE;
-
-                                    }
-                                })
-                                .setTitle("发现新版本")
-                                .setText(entity.getDepict())
-                                .configText(new ConfigText() {
-                                    @Override
-                                    public void onConfig(TextParams params) {
-                                        params.gravity = Gravity.LEFT | Gravity.TOP;
-                                    }
-                                })
-                                .setNegative("取消", new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        String versionNo = entity.getVersionNo();
-                                        String versionNostr = versionNo.substring(0, 1);
-                                        String versionNamestr = versionName.substring(0, 1);
-                                        if (versionNamestr.equals(versionNamestr)) {
-                                            String versionNostr2 = versionNo.substring(2, 3);
-                                            String versionNamestr2 = versionName.substring(2, 3);
-                                            if (versionNostr2.equals(versionNamestr2)) {
-                                                String versionNostr3 = versionNo.substring(versionNo.length() - 1, versionNo.length());
-                                                String versionNamestr3 = versionName.substring(versionName.length() - 1, versionName.length());
-                                                if (versionNamestr3.equals(versionNostr3)) {
-                                                    return;
-                                                } else {
-                                                    return;
-                                                }
-                                            } else {
-                                                finish();
-                                            }
-                                            return;
-                                        } else {
-                                            finish();
-                                        }
-                                    }
-                                })
-                                .setPositive("确定", new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        Toast.makeText(MainActivity.this, "正在更新", Toast.LENGTH_SHORT).show();
-                                        UpdaterConfig config = new UpdaterConfig.Builder(MainActivity.this)
-                                                .setTitle(getResources().getString(R.string.app_name))
-                                                .setDescription(entity.getDepict())
-                                                .setFileUrl(entity.getDownloadUrl())
-                                                .setCanMediaScanner(true)
-                                                .setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE
-                                                        | DownloadManager.Request.NETWORK_WIFI)
-                                                .build();
-                                        Updater.get().showLog(true).download(config);
-                                    }
-                                })
-                                .configPositive(new ConfigButton() {
-                                    @Override
-                                    public void onConfig(ButtonParams params) {
-                                        params.backgroundColorPress = Color.RED;
-                                    }
-                                })
-                                .show(getSupportFragmentManager());
-//                promptDialog.showWarnAlert("发现新版本是否要更新", new PromptButton("取消", new PromptButtonListener() {
-//                    @Override
-//                    public void onClick(PromptButton button) {
-//                        finish();
-//                    }
-//                }), newConfirm);
-                    }
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        @Override
-        public void fail(ApiException e) {
-
-        }
-    }
 }

@@ -69,7 +69,7 @@
         android:layout_below="@id/good_price"
         android:layout_alignParentRight="true"
         android:layout_marginRight="7dp"
-        android:text="1234人已购"
+        android:text="0人已购"
         android:textColor="#ff999999"
         android:textSize="10sp" />
 </RelativeLayout>
