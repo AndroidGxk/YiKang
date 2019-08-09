@@ -13,7 +13,8 @@
         android:layout_height="550dp"
         android:background="@color/transparent"
         android:scaleType="fitXY"
-        android:src="@drawable/huodong" />
+        android:src="@drawable/huodong3" />
+
 
     <ImageView
         android:id="@+id/quxiao"
@@ -21,8 +22,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_marginTop="110dp"
-        android:padding="10dp"
         android:layout_marginRight="60dp"
+        android:padding="10dp"
         android:src="@drawable/quxiao" />
 
 
@@ -37,17 +38,87 @@
             android:id="@+id/chakan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/transparent"
             android:layout_weight="1"
+            android:background="@color/transparent"
             android:src="@drawable/you_look" />
 
         <ImageView
             android:id="@+id/shouye"
-            android:layout_weight="1.2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/img"
+            android:layout_weight="1.2"
             android:background="@color/transparent"
             android:src="@drawable/shou_look" />
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/line1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="237dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:text="¥"
+            android:textColor="#FFFE00"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/money_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:gravity="center"
+            android:layout_marginLeft="5dp"
+            android:minWidth="30dp"
+            android:text="10"
+            android:textColor="#FFFE00"
+            android:textSize="35sp" />
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:minWidth="30dp"
+            android:text="元优惠券"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/line1"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/youhuiquan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:minWidth="30dp"
+            android:text="无门槛优惠券"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/time_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="355dp"
+        android:gravity="center"
+        android:minWidth="30dp"
+        android:text="有效期:2019.7.1至2019.7.6"
+        android:textColor="#720b02"
+        android:textSize="10sp" />
 </RelativeLayout>

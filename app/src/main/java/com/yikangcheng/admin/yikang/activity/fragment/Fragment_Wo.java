@@ -7,7 +7,6 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
@@ -15,22 +14,16 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
-import android.support.v7.widget.LinearLayoutManager;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.OvershootInterpolator;
-import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
@@ -45,8 +38,6 @@ import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.ApoutUsActivity;
 import com.yikangcheng.admin.yikang.activity.H5SecActivity;
 import com.yikangcheng.admin.yikang.activity.OrderFormActivity;
-import com.yikangcheng.admin.yikang.activity.adapter.CateAddressRecyclerAdapter;
-import com.yikangcheng.admin.yikang.activity.adapter.CateAddressRecyclerAdapterTwo;
 import com.yikangcheng.admin.yikang.activity.adapter.Orderform_ViewPagerAdapter;
 import com.yikangcheng.admin.yikang.activity.coupon.CouponActivity;
 import com.yikangcheng.admin.yikang.activity.fragment.goodsrecommtion.Good_Recommiton_Chu;
@@ -55,7 +46,6 @@ import com.yikangcheng.admin.yikang.activity.fragment.goodsrecommtion.Good_Recom
 import com.yikangcheng.admin.yikang.activity.fragment.goodsrecommtion.Good_Recommiton_fash;
 import com.yikangcheng.admin.yikang.activity.fragment.goodsrecommtion.Good_Recommiton_snack;
 import com.yikangcheng.admin.yikang.activity.h5activity.H5MessActivity;
-import com.yikangcheng.admin.yikang.activity.liveambitus.CateActivity;
 import com.yikangcheng.admin.yikang.activity.myaccount.MyaccountActivity;
 import com.yikangcheng.admin.yikang.activity.obligation.DetailActivity;
 import com.yikangcheng.admin.yikang.activity.siteactivity.AiteActivity;
@@ -75,7 +65,6 @@ import com.yikangcheng.admin.yikang.presenter.RecommendPresenter;
 import com.yikangcheng.admin.yikang.presenter.UserInfoPresenter;
 import com.yikangcheng.admin.yikang.util.FloatTouchListener;
 import com.yikangcheng.admin.yikang.util.MyViewPager;
-import com.yikangcheng.admin.yikang.util.WXShareUtil;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -83,8 +72,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import me.leefeng.promptlibrary.PromptDialog;
-
-import static com.yikangcheng.admin.yikang.util.UIUtils.getResources;
 
 public class Fragment_Wo extends BaseFragment implements View.OnClickListener {
     private TextView mTvFragmentWoDingdan;
@@ -258,7 +245,7 @@ public class Fragment_Wo extends BaseFragment implements View.OnClickListener {
             Glide.with(getContext()).load(R.drawable.miao_bg)
                     .apply(RequestOptions.bitmapTransform(new CircleCrop()))
                     .into(shop_seckill);
-            Glide.with(getContext()).load(R.drawable.pin_bg)
+            Glide.with(getContext()).load(R.drawable.yaoqing)
                     .apply(RequestOptions.bitmapTransform(new CircleCrop()))
                     .into(shop_booking);
             tou_lin2.setBackgroundResource(R.drawable.three_bg);
@@ -300,6 +287,8 @@ public class Fragment_Wo extends BaseFragment implements View.OnClickListener {
             tou_lin2.setBackgroundResource(R.drawable.pink_bg);
             rela.setBackgroundResource(R.color.colorTab);
             iv_toolBar_left.setVisibility(View.VISIBLE);
+            contentMeiView = View.inflate(getContext(), R.layout.wxshaer_item,
+                    null);
         }
         //tabLayout
         final List<String> strings = new ArrayList<>();
@@ -618,11 +607,11 @@ public class Fragment_Wo extends BaseFragment implements View.OnClickListener {
                 seckill_btn.putExtra("title", "周秒杀");
                 startActivity(seckill_btn);
                 break;
-            //拼团
+            //分享
             case R.id.booking_btn:
                 Intent booking_btn = new Intent(getContext(), H5SecActivity.class);
-                booking_btn.putExtra("http", "https://www.yikch.com/mobile/appShow/activity1?type=android");
-                booking_btn.putExtra("title", "拼团");
+                booking_btn.putExtra("http", "https://www.yikch.com/mobile/appShow/share?type=android&userId=" + getLogUser(getContext()).getId());
+                booking_btn.putExtra("title", "分享");
                 startActivity(booking_btn);
                 break;
             /**
@@ -848,12 +837,12 @@ public class Fragment_Wo extends BaseFragment implements View.OnClickListener {
     private void wechatShare(int flag) {
         IWXAPI wxApi = WXAPIFactory.createWXAPI(getContext(), "wx38a0aef5df24fe50", false);
         WXWebpageObject webpage = new WXWebpageObject();
-        webpage.webpageUrl = "www.hooxiao.com";
+        webpage.webpageUrl = "https://www.yikch.com";
         WXMediaMessage msg = new WXMediaMessage(webpage);
-        msg.title = "这里填写标题";
-        msg.description = "这里填写内容";
+        msg.title = "企挚友平台";
+        msg.description = "用心打造企业福利";
         //这里替换一张自己工程里的图片资源
-        Bitmap thumb = BitmapFactory.decodeResource(getResources(), R.drawable.daifukuan);
+        Bitmap thumb = BitmapFactory.decodeResource(getResources(), R.drawable.guanggaoimg);
         msg.setThumbImage(thumb);
         SendMessageToWX.Req req = new SendMessageToWX.Req();
         req.transaction = String.valueOf(System.currentTimeMillis());

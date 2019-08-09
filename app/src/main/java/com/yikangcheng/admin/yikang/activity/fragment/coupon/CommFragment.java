@@ -79,11 +79,17 @@ public class CommFragment extends BaseFragment implements ICoreInfe {
         Request request = (Request) data;
         DiscountBean entity = (DiscountBean) request.getEntity();
         List<DiscountBean.CouponListBean> couponCodeList = entity.getCouponList();
-        commissRecyclerAdapter.addAll(couponCodeList);
+        if (couponCodeList.size() != 0) {
+            commissRecyclerAdapter.addAll(couponCodeList);
+        } else {
+            zanwuyouhuiquan.setVisibility(View.VISIBLE);
+            mRefreshLayout.setVisibility(View.GONE);
+        }
     }
 
     @Override
     public void fail(ApiException e) {
-
+        zanwuyouhuiquan.setVisibility(View.VISIBLE);
+        mRefreshLayout.setVisibility(View.GONE);
     }
 }

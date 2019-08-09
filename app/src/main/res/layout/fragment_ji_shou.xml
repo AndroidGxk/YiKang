@@ -93,18 +93,15 @@
                     android:id="@+id/qiandao_img"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/qizhiyou_lingyuan" />
+                    android:background="@drawable/quanyuanfanxiangou" />
 
                 <ImageView
                     android:id="@+id/yousheng_imag"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="10dp"
                     android:layout_weight="1"
-                    android:background="@drawable/qizhiyou_yousheng" />
+                    android:background="@drawable/qizhiyou_neigou" />
             </LinearLayout>
 
             <LinearLayout
@@ -120,7 +117,6 @@
                     android:id="@+id/shop_imag"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/qizhiyou_shangcheng" />
 
@@ -128,10 +124,8 @@
                     android:id="@+id/shenghuo_img"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginRight="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/qizhiyou_zhoubian" />
+                    android:background="@drawable/qizhiyou_qixi" />
             </LinearLayout>
 
             <LinearLayout
@@ -147,18 +141,15 @@
                     android:id="@+id/lvyou_img"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/qizhiyou_tuanjian" />
+                    android:background="@drawable/qizhiyou_zhoubian" />
 
                 <ImageView
                     android:id="@+id/jiankang"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/qizhiyou_guanli" />
+                    android:background="@drawable/qizhiyou_fuli" />
             </LinearLayout>
 
             <LinearLayout
@@ -174,15 +165,13 @@
                     android:id="@+id/fanka_img"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/qizhiyou_fuli" />
+                    android:background="@drawable/qizhiyou_jiankang" />
 
                 <ImageView
                     android:id="@+id/zhineng_img"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/qizhiyou_yundong" />
             </LinearLayout>

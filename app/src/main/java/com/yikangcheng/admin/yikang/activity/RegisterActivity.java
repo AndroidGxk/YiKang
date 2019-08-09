@@ -41,6 +41,8 @@ import java.net.URL;
 import java.util.List;
 import java.util.Locale;
 
+import butterknife.BindView;
+import me.jessyan.autosize.internal.CustomAdapt;
 import me.leefeng.promptlibrary.PromptDialog;
 
 public class RegisterActivity extends BaseActivtiy implements ICoreInfe, View.OnClickListener {
@@ -61,7 +63,7 @@ public class RegisterActivity extends BaseActivtiy implements ICoreInfe, View.On
             if (msg.what == 1) {
                 if (mCount <= 0) {
                     ver_btn.setClickable(true);
-                    ver_btn.setText("点击发送验证码");
+                    ver_btn.setText("获取验证码");
                     mCount = 60;
                     return;
                 }
@@ -85,7 +87,16 @@ public class RegisterActivity extends BaseActivtiy implements ICoreInfe, View.On
     public SharedPreferences userInfo;
     private double dimensionality;
     private double longitude;
-
+    @BindView(R.id.phone_line)
+    LinearLayout phone_line;
+    @BindView(R.id.yanzheng_line)
+    LinearLayout yanzheng_line;
+    @BindView(R.id.password_line)
+    LinearLayout password_line;
+    @BindView(R.id.password_line2)
+    LinearLayout password_line2;
+    @BindView(R.id.yaoqingma)
+    LinearLayout yaoqingma;
     private static final int REQUEST_CODE = 0; // 请求码
     // 所需的全部权限
     static final String[] PERMISSIONS = new String[]{
@@ -98,6 +109,7 @@ public class RegisterActivity extends BaseActivtiy implements ICoreInfe, View.On
             Manifest.permission.CAMERA
     };
     private PermissionsChecker mPermissionsChecker; // 权限检测器
+
     @Override
     protected void initView() {
         mPermissionsChecker = new PermissionsChecker(this);
@@ -122,7 +134,11 @@ public class RegisterActivity extends BaseActivtiy implements ICoreInfe, View.On
         loginPresenter = new LoginPresenter(new Login());
         //用户ID
         userInfo = getSharedPreferences("userInfo", MODE_PRIVATE);
-
+        phone_line.getBackground().mutate().setAlpha(100);
+        password_line.getBackground().mutate().setAlpha(100);
+        yanzheng_line.getBackground().mutate().setAlpha(100);
+        password_line2.getBackground().mutate().setAlpha(100);
+        yaoqingma.getBackground().mutate().setAlpha(100);
     }
 
     @Override
@@ -132,13 +148,14 @@ public class RegisterActivity extends BaseActivtiy implements ICoreInfe, View.On
         ver_btn.setOnClickListener(this);
         register_btn.setOnClickListener(this);
     }
+
     @Override
     protected void onResume() {
         super.onResume();
         // 缺少权限时, 进入权限配置页面
         if (mPermissionsChecker.lacksPermissions(PERMISSIONS)) {
             startPermissionsActivity();
-        }else{
+        } else {
         }
     }
 
@@ -154,6 +171,7 @@ public class RegisterActivity extends BaseActivtiy implements ICoreInfe, View.On
             finish();
         }
     }
+
     @Override
     protected int getActivtiyLayoutId() {
         return R.layout.activity_register;
@@ -216,7 +234,7 @@ public class RegisterActivity extends BaseActivtiy implements ICoreInfe, View.On
                     ToastUtils.show("密码长度需在6-20位字符之间");
                     return;
                 }
-                registerPresenter.request(phone, reg_pwd, reg_two_pwd, code, code_two,String.valueOf(longitude),String.valueOf(dimensionality));
+                registerPresenter.request(phone, reg_pwd, reg_two_pwd, code, code_two, String.valueOf(longitude), String.valueOf(dimensionality));
                 promptDialog.showLoading("加载中...");
                 break;
         }
@@ -236,7 +254,7 @@ public class RegisterActivity extends BaseActivtiy implements ICoreInfe, View.On
             locationProvider = LocationManager.GPS_PROVIDER;
             Log.e("main", "gps");
         } else {
-            Log.e("main","没有可用的位置提供器");
+            Log.e("main", "没有可用的位置提供器");
             return;
         }
 
@@ -287,6 +305,7 @@ public class RegisterActivity extends BaseActivtiy implements ICoreInfe, View.On
             showLocation(location);
         }
     };
+
 
 
     /**

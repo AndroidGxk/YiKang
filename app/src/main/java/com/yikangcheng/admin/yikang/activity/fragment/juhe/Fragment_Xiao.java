@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.JavascriptInterface;
@@ -21,18 +20,8 @@ import com.sobot.chat.SobotApi;
 import com.sobot.chat.api.model.Information;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.H5SecActivity;
-import com.yikangcheng.admin.yikang.activity.PartiCarActivity;
-import com.yikangcheng.admin.yikang.activity.SeekListNewActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.shougang.ShouGangXiaoAdapter;
-import com.yikangcheng.admin.yikang.activity.h5activity.H5DiscountActivity;
-import com.yikangcheng.admin.yikang.activity.h5activity.H5RecommendListActivity;
-import com.yikangcheng.admin.yikang.activity.h5activity.InsideActivity;
-import com.yikangcheng.admin.yikang.activity.orderstatus.newactivity.OrderAccomActivity;
-import com.yikangcheng.admin.yikang.activity.particulars.ParticularsActivity;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 
 import butterknife.BindView;
 

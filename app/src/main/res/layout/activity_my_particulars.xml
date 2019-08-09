@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/clolrBAai"
+    android:background="#F1F1F1"
     android:clipToPadding="true"
     android:fitsSystemWindows="true">
 
@@ -57,7 +57,7 @@
                         android:id="@+id/banner"
                         android:layout_width="match_parent"
                         android:layout_height="365dp"
-                        android:background="@color/colorTab" />
+                        android:background="#F1F1F1" />
 
                     <RelativeLayout
                         android:id="@+id/rela1"
@@ -65,7 +65,8 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/banner"
                         android:background="@drawable/miaosha_bg"
-                        android:overScrollMode="never">
+                        android:overScrollMode="never"
+                        android:visibility="invisible">
 
                         <LinearLayout
                             android:id="@+id/miao_lin"
@@ -217,14 +218,26 @@
                         <TextView
                             android:layout_width="308dp"
                             android:layout_height="wrap_content"
-                            android:text="女装 宽松T恤(五分袖) 415797 优衣库女装 宽松T恤(五分袖) 415797 优衣库UNIQLO"
+                            android:background="@drawable/particular_gray_shaper"
+                            android:text=""
                             android:textColor="#ff282727"
                             android:textSize="15sp" />
 
                         <TextView
                             android:layout_width="328dp"
                             android:layout_height="wrap_content"
-                            android:text="女装 宽松T恤(五分袖) 415797 优衣库女装 宽松T恤(五分袖)装 宽松T恤(五分袖)... "
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/particular_gray_shaper"
+                            android:text=""
+                            android:textColor="#ff999999"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:layout_width="348dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/particular_gray_shaper"
+                            android:text=""
                             android:textColor="#ff999999"
                             android:textSize="12sp" />
 
@@ -234,7 +247,8 @@
                             android:layout_marginTop="10dp"
                             android:layout_marginRight="12dp"
                             android:layout_marginBottom="10dp"
-                            android:background="@drawable/fengexian_shape" />
+                            android:background="@drawable/fengexian_shape"
+                            android:visibility="invisible" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -249,7 +263,29 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="领券"
+                                android:background="@drawable/particular_gray_shaper"
+                                android:minWidth="65dp"
+                                android:text=""
+                                android:textColor="#ff333333"
+                                android:textSize="15sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="15dp"
+                                android:background="@drawable/particular_yell_shaper"
+                                android:minWidth="65dp"
+                                android:text=""
+                                android:textColor="#ff333333"
+                                android:textSize="15sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="15dp"
+                                android:background="@drawable/particular_gray_shaper"
+                                android:minWidth="65dp"
+                                android:text=""
                                 android:textColor="#ff333333"
                                 android:textSize="15sp" />
 
@@ -263,7 +299,8 @@
                                 android:gravity="center"
                                 android:text="满100减20"
                                 android:textColor="#FFFFFF"
-                                android:textSize="10sp" />
+                                android:textSize="10sp"
+                                android:visibility="gone" />
 
                             <TextView
                                 android:layout_width="66dp"
@@ -274,7 +311,8 @@
                                 android:gravity="center"
                                 android:text="满300减50"
                                 android:textColor="#FFFFFF"
-                                android:textSize="10sp" />
+                                android:textSize="10sp"
+                                android:visibility="gone" />
 
                         </LinearLayout>
 
@@ -325,7 +363,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:text="已选"
+                                android:background="@drawable/particular_gray_shaper"
+                                android:minWidth="45dp"
+                                android:text=""
                                 android:textColor="#ff333333"
                                 android:textSize="15sp" />
 
@@ -337,7 +377,9 @@
                                 android:layout_marginLeft="10dp"
                                 android:layout_marginRight="20dp"
                                 android:layout_toRightOf="@+id/sele_text"
-                                android:text="08深灰色，165/09L，1件"
+                                android:background="@drawable/particular_gray_shaper"
+                                android:minWidth="150dp"
+                                android:text=""
                                 android:textColor="#999999"
                                 android:textSize="12sp" />
                         </LinearLayout>
@@ -354,7 +396,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:text="送至"
+                                android:background="@drawable/particular_gray_shaper"
+                                android:minWidth="45dp"
+                                android:text=""
                                 android:textColor="#333333"
                                 android:textSize="15sp" />
 
@@ -365,7 +409,8 @@
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginLeft="10dp"
                                 android:layout_toRightOf="@+id/send_text"
-                                android:src="@drawable/address" />
+                                android:src="@drawable/address"
+                                android:visibility="invisible" />
 
                             <TextView
                                 android:id="@+id/send_address"
@@ -376,8 +421,10 @@
                                 android:layout_marginLeft="2dp"
                                 android:layout_marginRight="20dp"
                                 android:layout_toRightOf="@+id/address_img"
+                                android:background="@drawable/particular_gray_shaper"
+                                android:minWidth="150dp"
                                 android:singleLine="true"
-                                android:text="北京市门头沟区北京市门头沟区北京市门头沟区..."
+                                android:text=""
                                 android:textColor="#999999"
                                 android:textSize="12sp" />
                         </LinearLayout>
@@ -395,7 +442,9 @@
                                 android:layout_height="wrap_content"
                                 android:layout_below="@id/send_text"
                                 android:layout_gravity="center_vertical"
-                                android:text="运费"
+                                android:background="@drawable/particular_gray_shaper"
+                                android:minWidth="45dp"
+                                android:text=""
                                 android:textColor="#333333"
                                 android:textSize="15sp" />
 
@@ -408,7 +457,9 @@
                                 android:layout_marginLeft="10dp"
                                 android:layout_marginRight="20dp"
                                 android:layout_toRightOf="@+id/sele_text"
-                                android:text="免运费"
+                                android:background="@drawable/particular_gray_shaper"
+                                android:minWidth="45dp"
+                                android:text=""
                                 android:textColor="#999999"
                                 android:textSize="12sp" />
                         </LinearLayout>
@@ -430,8 +481,7 @@
                         android:layout_below="@+id/view3"
                         android:layout_marginLeft="5dp"
                         android:layout_marginTop="5dp"
-                        android:layout_marginRight="5dp"
-                        android:background="@drawable/ceshi" />
+                        android:layout_marginRight="5dp" />
 
                     <!-- 用户点评 -->
                     <View
@@ -468,13 +518,16 @@
                             <ImageView
                                 android:layout_width="13dp"
                                 android:layout_height="13dp"
-                                android:src="@drawable/com_img" />
+                                android:src="@drawable/com_img"
+                                android:visibility="invisible" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="3dp"
-                                android:text="评论"
+                                android:background="@drawable/particular_gray_shaper"
+                                android:minWidth="45dp"
+                                android:text=""
                                 android:textColor="#222222"
                                 android:textSize="15sp" />
 
@@ -483,7 +536,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="10dp"
-                                android:text="2230条"
+                                android:background="@drawable/particular_yell_shaper"
+                                android:minWidth="45dp"
+                                android:text=""
                                 android:textColor="#999999"
                                 android:textSize="12sp" />
                         </LinearLayout>
@@ -498,7 +553,9 @@
                                 android:id="@+id/tv_good_comment"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="好评度100%"
+                                android:background="@drawable/particular_yell_shaper"
+                                android:minWidth="45dp"
+                                android:text=""
                                 android:textColor="#999999"
                                 android:textSize="12sp" />
 
@@ -507,7 +564,8 @@
                                 android:layout_width="6dp"
                                 android:layout_height="9dp"
                                 android:layout_marginLeft="6dp"
-                                android:src="@drawable/go_img" />
+                                android:src="@drawable/go_img"
+                                android:visibility="invisible" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -545,7 +603,8 @@
                                 android:layout_width="26dp"
                                 android:layout_height="26dp"
                                 android:layout_marginLeft="10dp"
-                                android:src="@drawable/touxiang_2" />
+                                android:src="@drawable/touxiang_2"
+                                android:visibility="invisible" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -553,7 +612,9 @@
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginLeft="4dp"
                                 android:layout_toRightOf="@+id/com_user_header"
-                                android:text="昵称********昵称"
+                                android:background="@drawable/particular_gray_shaper"
+                                android:minWidth="145dp"
+                                android:text=""
                                 android:textColor="#ff333333"
                                 android:textSize="10sp" />
                         </LinearLayout>
@@ -563,8 +624,7 @@
                             android:layout_height="13dp"
                             android:layout_marginLeft="5dp"
                             android:layout_marginTop="5dp"
-                            android:text="评论评论评论评论评论评论评论评论评论评论评论评论评论评论评
-论评论评论评论评论评论评论评论评论评论评论评论评论评论评...."
+                            android:text=""
                             android:textColor="#ff333333"
                             android:textSize="11sp" />
 
@@ -682,45 +742,45 @@
 
                 </RelativeLayout>
 
-                    <LinearLayout
-                        android:id="@+id/line4"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/ping_rela"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:overScrollMode="never">
-
-                        <TextView
-                            android:id="@+id/tv_goods_detail"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:background="@drawable/parti_true"
-                            android:gravity="center"
-                            android:text="商品介绍"
-                            android:textColor="#FFAF00"
-                            android:textSize="15sp" />
-
-                        <TextView
-                            android:id="@+id/tv_goods_config"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:background="@drawable/parti_false"
-                            android:gravity="center"
-                            android:text="商品规格"
-                            android:textColor="@color/clolrBAai"
-                            android:textSize="15sp" />
-                    </LinearLayout>
-                </RelativeLayout>
-
-                <WebView
-                    android:id="@+id/webview"
+                <LinearLayout
+                    android:id="@+id/line4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/xiangqing_relat" />
+                    android:layout_below="@+id/ping_rela"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:overScrollMode="never">
+
+                    <TextView
+                        android:id="@+id/tv_goods_detail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/parti_true"
+                        android:gravity="center"
+                        android:text="商品介绍"
+                        android:textColor="#FFAF00"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/tv_goods_config"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/parti_false"
+                        android:gravity="center"
+                        android:text="商品规格"
+                        android:textColor="@color/clolrBAai"
+                        android:textSize="15sp" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <WebView
+                android:id="@+id/webview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/xiangqing_relat" />
 
             <RelativeLayout
                 android:id="@+id/kan_rela"
@@ -767,13 +827,19 @@
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:id="@+id/rela"
+        android:layout_height="match_parent"></RelativeLayout>
+
     <LinearLayout
         android:id="@+id/tab_line"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_below="@+id/rela_tabl"
         android:background="@color/clolrBAai"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <LinearLayout
             android:id="@+id/shangpin_lin"
@@ -896,14 +962,16 @@
                 android:layout_width="21dp"
                 android:layout_height="17dp"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/kefu_pri" />
+                android:background="@drawable/particular_gray_shaper" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="3dp"
-                android:text="联系客服"
+                android:background="@drawable/particular_gray_shaper"
+                android:minWidth="45dp"
+                android:text=""
                 android:textColor="#ff2c2d2c"
                 android:textSize="10sp" />
         </LinearLayout>
@@ -918,14 +986,15 @@
                 android:layout_width="19dp"
                 android:layout_height="17dp"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/gouwu_pri" />
+                android:background="@drawable/particular_gray_shaper" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="3dp"
-                android:text="购物车"
+                android:background="@drawable/particular_gray_shaper"
+                android:minWidth="45dp"
                 android:textColor="#ff2c2d2c"
                 android:textSize="10sp" />
         </LinearLayout>
@@ -935,7 +1004,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="5dp"
-            android:background="@drawable/bg_jia_li"
+            android:background="@drawable/particular_gray_shaper"
+            android:minHeight="35dp"
             android:orientation="horizontal">
 
             <TextView
@@ -945,7 +1015,7 @@
                 android:layout_marginLeft="23dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="加入购物车"
+                android:text=""
                 android:textColor="#FFAF00"
                 android:textSize="15sp" />
 
@@ -955,7 +1025,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="立即购买"
+                android:text=""
                 android:textColor="#000000"
                 android:textSize="15sp" />
         </LinearLayout>

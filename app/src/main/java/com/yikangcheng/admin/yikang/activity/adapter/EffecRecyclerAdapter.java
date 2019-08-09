@@ -52,12 +52,12 @@ public class EffecRecyclerAdapter extends RecyclerView.Adapter<EffecRecyclerAdap
         String endTimes = endTime.substring(0, 10);
         vh.date_text.setText(startTimes + "—" + endTimes);
         vh.man_text.setText(couponCodeListBean.getInfo() + "");
-        if(couponCodeListBean.getLimitAmount()==0){
-            vh.price_text.setText(5 + "");
-        }else{
-            vh.price_text.setText(couponCodeListBean.getLimitAmount() + "");
+        vh.price_text.setText(couponCodeListBean.getAmount() + "");
+        if (couponCodeListBean.getType() == 1) {
+            vh.type_text.setText("折扣券");
+        } else if (couponCodeListBean.getType() == 2) {
+            vh.type_text.setText("满减券");
         }
-        vh.type_text.setText("满减券");
     }
 
     @Override

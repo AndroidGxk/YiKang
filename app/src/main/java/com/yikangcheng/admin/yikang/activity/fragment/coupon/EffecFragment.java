@@ -36,10 +36,13 @@ public class EffecFragment extends BaseFragment implements ICoreInfe {
     private DiscountPresenter discountPresenter;
     private EffecRecyclerAdapter effecRecyclerAdapter;
     private LoginBean loginBean;
+    private ImageView zanwuyouhuiquan;
 
 
     @Override
     protected void initView(View view) {
+        zanwuyouhuiquan = view.findViewById(R.id.zanwuyouhuiquan);
+        zanwuyouhuiquan.setImageResource(R.drawable.zanwushixiao);
         xrecycler = view.findViewById(R.id.recycler);
         mRefreshLayout = view.findViewById(R.id.refreshLayout);
         zanwushixiao = view.findViewById(R.id.zanwushixiao);
@@ -94,11 +97,17 @@ public class EffecFragment extends BaseFragment implements ICoreInfe {
         Request request = (Request) data;
         DiscountBean entity = (DiscountBean) request.getEntity();
         List<DiscountBean.CouponListBean> couponCodeList = entity.getCouponList();
-        effecRecyclerAdapter.addAll(couponCodeList);
+        if (couponCodeList.size() != 0) {
+            effecRecyclerAdapter.addAll(couponCodeList);
+        } else {
+            zanwuyouhuiquan.setVisibility(View.VISIBLE);
+            mRefreshLayout.setVisibility(View.GONE);
+        }
     }
 
     @Override
     public void fail(ApiException e) {
-
+        zanwuyouhuiquan.setVisibility(View.VISIBLE);
+        mRefreshLayout.setVisibility(View.GONE);
     }
 }

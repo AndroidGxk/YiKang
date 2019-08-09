@@ -33,13 +33,15 @@ import com.youth.banner.loader.ImageLoader;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+
 public class MyParticularsActivity extends BaseActivtiy implements View.OnClickListener, ICoreInfe {
     private NestedScrollView nested;
-    private LinearLayout tab_line,ll_recommend,line4;
+    private LinearLayout tab_line, ll_recommend, line4;
     private LinearLayout shangpin_lin, pingjia_lin, xiangqing_lin, tuijian_lin;
     private TextView shang_text, ping_text, xiang_text, tuijian_text;
     private ImageView shang_img, ping_img, xiang_img, tuijian_img;
-    private RelativeLayout shang_relat, ping_rela, rela_tabl,xiangqing_relat;
+    private RelativeLayout shang_relat, ping_rela, rela_tabl, xiangqing_relat;
     private int height;
     private int ping_height;
     private int height2;
@@ -56,6 +58,9 @@ public class MyParticularsActivity extends BaseActivtiy implements View.OnClickL
     private int xiangqingRelatMeasuredHeight;
     private int webViewMeasuredHeight;
     private int nestedScrollViewTop;
+    @BindView(R.id.rela)
+    RelativeLayout rela;
+
     @Override
     protected void initView() {
         nested = (NestedScrollView) findViewById(R.id.nested);
@@ -85,20 +90,28 @@ public class MyParticularsActivity extends BaseActivtiy implements View.OnClickL
         recom_recycler = (RecyclerView) findViewById(R.id.recom_recycler);
         img_count_recycler = (RecyclerView) findViewById(R.id.img_count_recycler);
         tab_line.setAlpha(0);
-        getHeight();
 
+        getHeight();
+        rela.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
+
     //控制nestedScrollView滑动到一定的距离
-    public void scrollByDistance(int dy){
-        if(nestedScrollViewTop==0){
-            int[] intArray=new int[2];
+    public void scrollByDistance(int dy) {
+        if (nestedScrollViewTop == 0) {
+            int[] intArray = new int[2];
             nested.getLocationOnScreen(intArray);
-            nestedScrollViewTop=intArray[1];
+            nestedScrollViewTop = intArray[1];
         }
-        int distance=dy-nestedScrollViewTop;//必须算上nestedScrollView本身与屏幕的距离
+        int distance = dy - nestedScrollViewTop;//必须算上nestedScrollView本身与屏幕的距离
         nested.fling(distance);//添加上这句滑动才有效
-        nested.smoothScrollBy(0,distance);
+        nested.smoothScrollBy(0, distance);
     }
+
     @SuppressLint("NewApi")
     public void getHeight() {
         int w = View.MeasureSpec.makeMeasureSpec(0,
@@ -118,7 +131,7 @@ public class MyParticularsActivity extends BaseActivtiy implements View.OnClickL
         recommendMeasuredHeight = ll_recommend.getMeasuredHeight();
         tabheight = tab_line.getMeasuredHeight();
         tablheight = rela_tabl.getMeasuredHeight();
-        ping_height = height  +recommendMeasuredHeight;
+        ping_height = height + recommendMeasuredHeight;
     }
 
     @SuppressLint("NewApi")
@@ -166,7 +179,7 @@ public class MyParticularsActivity extends BaseActivtiy implements View.OnClickL
         //设置图片加载器，图片加载器在下方
         banner.setImageLoader(new MyLoader());
         //设置图片网址或地址的集合
-        banner.setImages(list_path);
+//        banner.setImages(list_path);
         banner.start();
         WebSettings webSettings = webView.getSettings();
         //设置WebView属性，能够执行Javascript脚本
@@ -184,6 +197,7 @@ public class MyParticularsActivity extends BaseActivtiy implements View.OnClickL
         }
         webView.getSettings().setBlockNetworkImage(false);
         webView.loadUrl("https://www.yikch.com/mobile/appShow/index?type=android");
+
     }
 
     @Override
@@ -233,7 +247,7 @@ public class MyParticularsActivity extends BaseActivtiy implements View.OnClickL
                 ping_img.setVisibility(View.INVISIBLE);
                 xiang_img.setVisibility(View.INVISIBLE);
                 tuijian_img.setVisibility(View.VISIBLE);
-                nested.scrollTo(0, (xiangqingRelatMeasuredHeight+tabheight+tablheight+webViewMeasuredHeight));
+                nested.scrollTo(0, (xiangqingRelatMeasuredHeight + tabheight + tablheight + webViewMeasuredHeight));
                 break;
         }
     }

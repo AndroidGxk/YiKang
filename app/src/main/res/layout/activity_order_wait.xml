@@ -439,7 +439,7 @@
             android:layout_toLeftOf="@+id/go_pay"
             android:background="@drawable/yellow_pay_shape"
             android:gravity="center"
-            android:text="取消订单"
+            android:text="删除订单"
             android:textColor="#FFAF00"
             android:textSize="12sp" />
     </RelativeLayout>

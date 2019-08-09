@@ -11,6 +11,7 @@ import com.yikangcheng.admin.yikang.bean.CloseBean;
 import com.yikangcheng.admin.yikang.bean.CloseTheDealBean;
 import com.yikangcheng.admin.yikang.bean.CouponusableBean;
 import com.yikangcheng.admin.yikang.bean.CreatOrderBean;
+import com.yikangcheng.admin.yikang.bean.DalogTimeBean;
 import com.yikangcheng.admin.yikang.bean.DeleteOrderBean;
 import com.yikangcheng.admin.yikang.bean.DiscountBean;
 import com.yikangcheng.admin.yikang.bean.DiscountCouponBean;
@@ -329,9 +330,16 @@ public interface ApiService {
      */
     @POST("startUp/banner")
     Observable<Request<List<AdvertBean>>> startUp();
+
     /**
      * 首页Banner
      */
     @POST("index/banner")
     Observable<Request<List<ShouBannerBean>>> index();
+
+    /**
+     * 首页赠送优惠券接口
+     */
+    @POST("getRegisterCouponInfo")
+    Observable<Request<DalogTimeBean>> getRegisterCouponInfo();
 }

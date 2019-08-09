@@ -2,6 +2,8 @@ package com.yikangcheng.admin.yikang.activity;
 
 import android.annotation.SuppressLint;
 import android.app.DownloadManager;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -9,12 +11,19 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.fm.openinstall.OpenInstall;
+import com.fm.openinstall.listener.AppInstallAdapter;
+import com.fm.openinstall.listener.AppWakeUpAdapter;
+import com.fm.openinstall.model.AppData;
 import com.hjq.toast.ToastUtils;
 import com.mylhyl.circledialog.CircleDialog;
 import com.mylhyl.circledialog.callback.ConfigButton;
@@ -165,6 +174,7 @@ public class ApplySeleActivity extends BaseActivtiy {
         //super.onSaveInstanceState(outState);   //将这一行注释掉，阻止activity保存fragment的状态
     }
 
+
     /**
      * @authorszx 双击返回键退出应用
      */
@@ -257,6 +267,7 @@ public class ApplySeleActivity extends BaseActivtiy {
                                                         | DownloadManager.Request.NETWORK_WIFI)
                                                 .build();
                                         Updater.get().showLog(true).download(config);
+                                        finish();
                                     }
                                 })
                                 .configPositive(new ConfigButton() {

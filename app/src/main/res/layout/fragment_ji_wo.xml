@@ -595,7 +595,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/si_geren_qun"
                     android:layout_marginTop="10dp"
-                    android:src="@drawable/si_geren_fulishe" />
+                    android:src="@drawable/fulishe" />
 
                 <ImageView
                     android:id="@+id/bo_phone"

@@ -10,6 +10,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,6 +29,8 @@ import com.yikangcheng.admin.yikang.util.SerachUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import me.jessyan.autosize.internal.CustomAdapt;
 
@@ -36,7 +39,7 @@ public class SeekActivity extends BaseActivtiy{
 
     private ImageView mImgActivitySeekDelete;
     private TextView mTvActivitySeekCancel;
-    private ETextWithDelete mEditTixtActivitySeekSousuo;
+    private EditText mEditTixtActivitySeekSousuo;
     private RecyclerView mRlvActivitySeekHot;
     private List<SoSuoDb> mSoSuoDbs;
     private FlowTagLayout flowTagLayout;
@@ -51,7 +54,7 @@ public class SeekActivity extends BaseActivtiy{
         //取消搜索
         mTvActivitySeekCancel = (TextView) findViewById(R.id.tv_activity_seek_cancel);
         //搜索EditText
-        mEditTixtActivitySeekSousuo = (ETextWithDelete) findViewById(R.id.EditTixt_activity_seek_sousuo);
+        mEditTixtActivitySeekSousuo = (EditText) findViewById(R.id.EditTixt_activity_seek_sousuo);
         //最近搜索
         flowTagLayout = (FlowTagLayout) findViewById(R.id.FlowLayout_activity_seek);
         //热门搜索
@@ -73,6 +76,8 @@ public class SeekActivity extends BaseActivtiy{
                 startActivityToResult();
             }
         });
+
+
         /**
          * shaper
          */
@@ -183,5 +188,23 @@ public class SeekActivity extends BaseActivtiy{
     @Override
     protected void createPresenter() {
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mEditTixtActivitySeekSousuo.selectAll();   //默认选中EditText中的所有内容
+        mEditTixtActivitySeekSousuo.setFocusable(true);   //设置可以获取焦点
+        mEditTixtActivitySeekSousuo.setFocusableInTouchMode(true);
+        mEditTixtActivitySeekSousuo.requestFocus();
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+                           public void run() {
+                               InputMethodManager inputManager =
+                                       (InputMethodManager) mEditTixtActivitySeekSousuo.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                               inputManager.showSoftInput(mEditTixtActivitySeekSousuo, 0);
+                           }
+                       },
+                500);
     }
 }

@@ -275,7 +275,7 @@ public class OrderWaitActivity extends BaseActivtiy implements ICoreInfe {
         cancel_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mPromptDialog.showWarnAlert("你确定要取消订单吗？", new PromptButton("取消", new PromptButtonListener() {
+                mPromptDialog.showWarnAlert("确定要删除订单吗？", new PromptButton("取消", new PromptButtonListener() {
                     @Override
                     public void onClick(PromptButton button) {
                     }

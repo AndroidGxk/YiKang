@@ -1,14 +1,19 @@
 package com.yikangcheng.admin.yikang.app;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.multidex.MultiDex;
 import android.util.Log;
 
+import com.facebook.cache.disk.DiskCacheConfig;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.imagepipeline.core.ImagePipelineConfig;
+import com.fm.openinstall.OpenInstall;
 import com.hjq.toast.ToastUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreater;
@@ -26,7 +31,9 @@ import com.umeng.commonsdk.UMConfigure;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
 import com.yikangcheng.admin.yikang.R;
+import com.yikangcheng.admin.yikang.activity.particulars.ParticularsActivity;
 
+import java.io.File;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -63,6 +70,7 @@ public class BaseApp extends Application {
      * 主线程Looper
      */
     private static Looper mMainLooper;
+    private IWXAPI wxApi;
 
     public static synchronized BaseApp getAppInstance() {
         return mAppInstance;
@@ -100,11 +108,28 @@ public class BaseApp extends Application {
         registToWX();
         JPushInterface.setDebugMode(false);    // 设置开启日志,发布时请关闭日志
         JPushInterface.init(this);            // 初始化 JPush
-        Fresco.initialize(this);
+        File file = new File(Environment.getExternalStorageDirectory() + File.separator + "frescocache");
+        Fresco.initialize(this, ImagePipelineConfig.newBuilder(this).
+                setMainDiskCacheConfig(
+                        DiskCacheConfig.newBuilder(this)
+                                .setBaseDirectoryPath(file)
+                                .build()
+                ).build());
         NetStateChangeReceiver.registerReceiver(this);
         ToastUtils.init(this);
         startYM();
+        wxApi = WXAPIFactory.createWXAPI(this, "wx38a0aef5df24fe50", false);
     }
+
+
+    public IWXAPI getWxApi() {
+        if (wxApi != null) {
+            return wxApi;
+        } else {
+            return null;
+        }
+    }
+
 
 
     private void startYM() {

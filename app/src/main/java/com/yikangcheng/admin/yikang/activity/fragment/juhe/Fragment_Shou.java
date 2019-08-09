@@ -3,28 +3,21 @@ package com.yikangcheng.admin.yikang.activity.fragment.juhe;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.net.Uri;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.request.RequestOptions;
 import com.hjq.toast.ToastUtils;
 import com.superluo.textbannerlibrary.TextBannerView;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.H5SecActivity;
 import com.yikangcheng.admin.yikang.activity.MainActivity;
-import com.yikangcheng.admin.yikang.activity.coupon.CouponActivity;
-import com.yikangcheng.admin.yikang.activity.liveambitus.LiveamActivity;
-import com.yikangcheng.admin.yikang.activity.liveambitus.MovieActivity;
-import com.yikangcheng.admin.yikang.activity.yuangong.StaffhealthActivity;
-import com.yikangcheng.admin.yikang.app.BaseApp;
+import com.yikangcheng.admin.yikang.activity.WelcomeActivity;
+import com.yikangcheng.admin.yikang.activity.particulars.ToParticularsActivity;
 import com.yikangcheng.admin.yikang.app.Constants;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
 import com.yikangcheng.admin.yikang.bean.Request;
@@ -58,7 +51,7 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
     @BindView(R.id.qiandao_img)
     ImageView qiandao_img;
     @BindView(R.id.shenghuo_img)
-    ImageView shenghuo_img;
+    ImageView qixi_img;
     @BindView(R.id.lvyou_img)
     ImageView lvyou_img;
     @BindView(R.id.fanka_img)
@@ -73,15 +66,17 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
     private View dialogview;
     private Dialog dialog;
     private ImageView imageView;
-    private TextView tiao;
-    private TextView jinru;
+    private ImageView tiao;
+    private ImageView jinru;
     private int count = 0;
+    private List<ShouBannerBean> shouBannerBeans;
 
     @Override
     protected void initView(View view) {
         onClickListener();
         shouBannerPresenter = new ShouBannerPresenter(this);
         shouBannerPresenter.request();
+
     }
 
     @Override
@@ -105,10 +100,8 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
         //dialog展示优惠券
         dialogview = getLayoutInflater().inflate(R.layout.neigou_dialog, null);
         imageView = dialogview.findViewById(R.id.img);
-        tiao = dialogview.findViewById(R.id.tiao);
-        jinru = dialogview.findViewById(R.id.jinru);
-        Glide.with(getContext()).load(R.drawable.neigou)
-                .into(imageView);
+        tiao = dialogview.findViewById(R.id.quxiao);
+        jinru = dialogview.findViewById(R.id.qukankan);
         dialog = new Dialog(getContext(), R.style.dialogWindowAnim);
         dialog.setContentView(dialogview, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -134,7 +127,7 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), H5SecActivity.class);
                 intent.putExtra("http", "https://www.yikch.com/mobile/appShow/yousheng?type=android");
-                intent.putExtra("title", "优胜教育内部购");
+                intent.putExtra("title", "优胜内购");
                 startActivity(intent);
                 dialog.dismiss();
             }
@@ -181,16 +174,21 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
                  */
                 Intent intent = new Intent(getContext(), H5SecActivity.class);
                 intent.putExtra("http", "https://www.yikch.com/mobile/appShow/zeroPurchase?type=android");
-                intent.putExtra("title", "专场0元购");
+                intent.putExtra("title", "全额返现购");
                 startActivity(intent);
                 return;
             }
         });
-        shenghuo_img.setOnClickListener(new View.OnClickListener() {
+        qixi_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                startActivity(new Intent(getContext(), LiveamActivity.class));
-                ToastUtils.show("功能暂未开放，敬请期待！");
+                /**
+                 * 七夕
+                 */
+                Intent intent = new Intent(getContext(), H5SecActivity.class);
+                intent.putExtra("http", "https://www.yikch.com/mobile/appShow/activity3?type=android" + getLogUser(getContext()).getId());
+                intent.putExtra("title", "七夕有礼");
+                startActivity(intent);
                 return;
             }
         });
@@ -221,7 +219,7 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
                 //内部购
                 Intent intent = new Intent(getContext(), H5SecActivity.class);
                 intent.putExtra("http", "https://www.yikch.com/mobile/appShow/yousheng?type=android");
-                intent.putExtra("title", "优胜教育内部购");
+                intent.putExtra("title", "优胜内购");
                 startActivity(intent);
                 return;
             }
@@ -233,23 +231,11 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
             @Override
             public void OnBannerClick(int position) {
                 Intent intent = new Intent(getContext(), H5SecActivity.class);
-                switch (position) {
-
-                    case 0:
-                        //内部购
-                        intent.putExtra("http", "https://www.yikch.com/mobile/appShow/yousheng?type=android");
-                        intent.putExtra("title", "优胜教育内部购");
-                        startActivity(intent);
-                        break;
-                    case 1:
-                        /**
-                         * 签到页面
-                         */
-                        intent.putExtra("http", "https://www.yikch.com/mobile/appShow/zeroPurchase?type=android");
-                        intent.putExtra("title", "专场0元购");
-                        startActivity(intent);
-                        break;
-                }
+                //内部购
+                String url = shouBannerBeans.get(position).getLinkAddress().replace("type=ios", "type=android");
+                intent.putExtra("http", url);
+                intent.putExtra("title", shouBannerBeans.get(position).getTitle());
+                startActivity(intent);
             }
         });
     }
@@ -281,7 +267,7 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
     @Override
     public void success(Object data) {
         Request request = (Request) data;
-        List<ShouBannerBean> shouBannerBeans = (List<ShouBannerBean>) request.getEntity();
+        shouBannerBeans = (List<ShouBannerBean>) request.getEntity();
         if (shouBannerBeans != null) {
             list_path = new ArrayList<>();
             for (int i = 0; i < shouBannerBeans.size(); i++) {

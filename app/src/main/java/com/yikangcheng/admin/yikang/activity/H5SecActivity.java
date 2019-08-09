@@ -1,11 +1,17 @@
 package com.yikangcheng.admin.yikang.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
 import android.util.Log;
+import android.view.Display;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
@@ -14,11 +20,19 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.hjq.toast.ToastUtils;
+import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.yikangcheng.admin.yikang.R;
+import com.yikangcheng.admin.yikang.activity.coupon.CouponActivity;
 import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Shou;
 import com.yikangcheng.admin.yikang.activity.h5activity.H5DiscountActivity;
 import com.yikangcheng.admin.yikang.activity.h5activity.H5RecommendListActivity;
@@ -27,6 +41,11 @@ import com.yikangcheng.admin.yikang.activity.particulars.ParticularsActivity;
 import com.yikangcheng.admin.yikang.app.BaseApp;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 
 public class H5SecActivity extends BaseActivtiy {
@@ -39,6 +58,10 @@ public class H5SecActivity extends BaseActivtiy {
     private RelativeLayout tabl;
     private String none;
     private String color;
+    private int width;
+    private Dialog bottomDialog;
+    private View contentMeiView;
+    private LinearLayout wx_pengyouquan, wx_haoyou;
 
     @Override
     protected void initView() {
@@ -46,6 +69,9 @@ public class H5SecActivity extends BaseActivtiy {
         closeSwipeBack();
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.colorTab);
+        Display display = getWindowManager().getDefaultDisplay();
+        width = display.getWidth();
+
         //进度条
         pbProgress = (ProgressBar) findViewById(R.id.pb_progress);
         webview = (WebView) findViewById(R.id.webView);
@@ -71,6 +97,7 @@ public class H5SecActivity extends BaseActivtiy {
                 StatusBarUtil.setStatusBarMode(this, true, R.color.clolrBAai);
             }
         }
+
         title = intent.getStringExtra("title");
         if (title != null && !title.equals("")) {
             title_text.setText(title);
@@ -207,7 +234,21 @@ public class H5SecActivity extends BaseActivtiy {
 //                    title_text.setText("优胜教育内部购");
                     Intent intent = new Intent(H5SecActivity.this, H5SecActivity.class);
                     intent.putExtra("http", "https://www.yikch.com/mobile/appShow/yousheng?type=android");
-                    intent.putExtra("title", "优胜教育内部购");
+                    intent.putExtra("title", "优胜内购");
+                    startActivity(intent);
+                    return true;
+                } else if (url.contains("/mobile/appShow/qixiFestival")) {
+                    Intent intent = new Intent(H5SecActivity.this, H5SecActivity.class);
+                    intent.putExtra("http", "https://www.yikch.com/mobile/appShow/qixiFestival?type=android&userId=" + getLogUser(H5SecActivity.this).getId() + "");
+                    intent.putExtra("title", "七夕情人节");
+                    startActivity(intent);
+                    return true;
+                } else if (url.contains("/mobile/appShow/turnOver")) {
+                    Intent intent = new Intent(H5SecActivity.this, H5SecActivity.class);
+                    String userUrl = url + "&userId=" + getLogUser(H5SecActivity.this).getId();
+                    intent.putExtra("http", userUrl);
+                    Log.d("GTT", userUrl);
+                    intent.putExtra("title", "抽奖");
                     startActivity(intent);
                     return true;
                 } else {
@@ -228,7 +269,6 @@ public class H5SecActivity extends BaseActivtiy {
                  */
                 if (webview.canGoBack()) {
                     webview.goBack();
-                    title_text.setText("签到");
                 } else {
                     finish();
                 }
@@ -269,7 +309,96 @@ public class H5SecActivity extends BaseActivtiy {
         }
     }
 
+    @JavascriptInterface
+    public void toSeeCoupon() {
+        startActivity(new Intent(H5SecActivity.this, CouponActivity.class));
+    }
+
+    String Cust = "";
+
+    @JavascriptInterface
+    public void sayShare(String msg) {
+        Log.d("GTT", msg);
+        if (msg.equals("")) {
+            msg = "1";
+        }
+        Cust += msg + ",";
+        final String[] split = Cust.split(",");
+        Log.d("GTT", split.length + "");
+        if (split.length == 4) {
+            Cust = "";
+            bottomDialog = new Dialog(this, R.style.BottomDialog);
+            contentMeiView = View.inflate(this, R.layout.wxshaer_item,
+                    null);
+            //设置dialog的宽高为屏幕的宽高
+            ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(width, ViewGroup.LayoutParams.WRAP_CONTENT);
+            bottomDialog.setContentView(contentMeiView, layoutParams);
+            bottomDialog.getWindow().setGravity(Gravity.BOTTOM);
+            bottomDialog.setCanceledOnTouchOutside(true);
+            bottomDialog.getWindow().setWindowAnimations(R.style.BottomDialogs);
+            bottomDialog.show();
+            wx_pengyouquan = contentMeiView.findViewById(R.id.wx_pengyou);
+            wx_haoyou = contentMeiView.findViewById(R.id.wx_haoyou);
+            wx_pengyouquan.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    wechatShare(1, split[0], split[1], split[3], split[2]);
+                    bottomDialog.dismiss();
+                }
+            });
+            wx_haoyou.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    wechatShare(0, split[0], split[1], split[3], split[2]);
+                    bottomDialog.dismiss();
+                }
+            });
+        }
+    }
+
     public static void getGoBack() {
         webview.goBack();
+    }
+
+    /**
+     * 微信分享 （这里仅提供一个分享网页的示例，其它请参看官网示例代码）
+     *
+     * @param flag(0:分享到微信好友，1：分享到微信朋友圈)
+     */
+    private void wechatShare(int flag, String title, String count, String url, String imgUrl) {
+        IWXAPI wxApi =  BaseApp.mWxApi;
+        WXWebpageObject webpage = new WXWebpageObject();
+        webpage.webpageUrl = url;
+        WXMediaMessage msg = new WXMediaMessage(webpage);
+        msg.title = title;
+        msg.description = count;
+        //这里替换一张自己工程里的图片资源
+        msg.setThumbImage(getBitmap(imgUrl));
+        SendMessageToWX.Req req = new SendMessageToWX.Req();
+        req.transaction = String.valueOf(System.currentTimeMillis());
+        req.message = msg;
+        req.scene = flag == 0 ? SendMessageToWX.Req.WXSceneSession : SendMessageToWX.Req.WXSceneTimeline;
+        wxApi.sendReq(req);
+    }
+
+    /**
+     * @param path 网络图片地址
+     */
+    public Bitmap getBitmap(String path) {
+        try {
+            URL url = new URL(path);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setConnectTimeout(5000);
+            conn.setRequestMethod("GET");
+            if (conn.getResponseCode() == 200) {
+                InputStream inputStream = conn.getInputStream();
+                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                return bitmap;
+            }
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        }
+        return null;
     }
 }

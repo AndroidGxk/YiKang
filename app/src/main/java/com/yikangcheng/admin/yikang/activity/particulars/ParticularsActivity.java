@@ -1,8 +1,13 @@
 package com.yikangcheng.admin.yikang.activity.particulars;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
@@ -10,8 +15,10 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
@@ -20,7 +27,9 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.hjq.toast.ToastUtils;
 import com.hjq.toast.style.ToastQQStyle;
@@ -30,6 +39,11 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.sobot.chat.SobotApi;
 import com.sobot.chat.api.model.ConsultingContent;
 import com.sobot.chat.api.model.Information;
+import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.CloseActivity;
 import com.yikangcheng.admin.yikang.activity.H5SecActivity;
@@ -37,6 +51,7 @@ import com.yikangcheng.admin.yikang.activity.PartiCarActivity;
 import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Miao;
 import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Shou;
 import com.yikangcheng.admin.yikang.activity.seek.SeckillActivity;
+import com.yikangcheng.admin.yikang.app.BaseApp;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.LoginBean;
 import com.yikangcheng.admin.yikang.bean.Request;
@@ -48,6 +63,12 @@ import com.yikangcheng.admin.yikang.presenter.OrderBuyPresenter;
 import com.yikangcheng.admin.yikang.presenter.ShopCarPresenter;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 
 public class ParticularsActivity extends BaseActivtiy implements ICoreInfe {
@@ -76,6 +97,12 @@ public class ParticularsActivity extends BaseActivtiy implements ICoreInfe {
     private List<ShopCarBean> entity;
     private LoginBean logUser;
     private String url;
+    private Dialog bottomDialog;
+    private View contentMeiView;
+    private LinearLayout wx_pengyouquan, wx_haoyou;
+    String Custs = "";
+    private IWXAPI wxApi;
+    private Bitmap bitmap;
 
     @Override
     protected void initView() {
@@ -111,6 +138,12 @@ public class ParticularsActivity extends BaseActivtiy implements ICoreInfe {
         back_img = (ImageView) findViewById(R.id.back_img);
         img_top = (ImageView) findViewById(R.id.img_top);
         Intent intent = getIntent();
+        String scheme = intent.getScheme();
+        Uri uri = intent.getData();
+        if (uri != null) {
+            String test1 = uri.getQueryParameter("id");//参数1
+            Toast.makeText(this, "" + test1, Toast.LENGTH_SHORT).show();
+        }
         id = intent.getIntExtra("id", 0);
         url = intent.getStringExtra("id");
         addShopPresenter = new AddShopPresenter(this);
@@ -269,6 +302,12 @@ public class ParticularsActivity extends BaseActivtiy implements ICoreInfe {
                     return false;
                 }
             }
+
+            @Override
+            public void onLoadResource(WebView view, String url) {
+                bitmap = null;
+                super.onLoadResource(view, url);
+            }
         });
     }
 
@@ -400,7 +439,6 @@ public class ParticularsActivity extends BaseActivtiy implements ICoreInfe {
         }
     }
 
-
     @JavascriptInterface
     public void goCar() {
         SharedPreferences close = getSharedPreferences("close", MODE_PRIVATE);
@@ -409,6 +447,87 @@ public class ParticularsActivity extends BaseActivtiy implements ICoreInfe {
         edit.putBoolean("closes", false);
         edit.commit();
         startActivity(new Intent(ParticularsActivity.this, PartiCarActivity.class));
+    }
+
+    @JavascriptInterface
+    public void sayDetailShare(String msg) {
+        Log.d("GTT", msg);
+        Custs += msg + ",";
+        final String[] split = Custs.split(",");
+        Log.d("GTT", split.length + "");
+        if (split.length == 4) {
+            Custs = "";
+            bottomDialog = new Dialog(this, R.style.BottomDialog);
+            contentMeiView = View.inflate(this, R.layout.wxshaer_item,
+                    null);
+            //设置dialog的宽高为屏幕的宽高
+            ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(width, ViewGroup.LayoutParams.WRAP_CONTENT);
+            bottomDialog.setContentView(contentMeiView, layoutParams);
+            bottomDialog.getWindow().setGravity(Gravity.BOTTOM);
+            bottomDialog.setCanceledOnTouchOutside(true);
+            bottomDialog.getWindow().setWindowAnimations(R.style.BottomDialogs);
+            bottomDialog.show();
+            wx_pengyouquan = contentMeiView.findViewById(R.id.wx_pengyou);
+            wx_haoyou = contentMeiView.findViewById(R.id.wx_haoyou);
+            final IWXAPI wxApi = BaseApp.mWxApi;
+            if (bitmap == null) {
+                bitmap = createBitmapThumbnail(getBitmap(split[2]));
+            }
+            wx_pengyouquan.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    WXWebpageObject webpage = new WXWebpageObject();
+                    WXMediaMessage msg = new WXMediaMessage(webpage);
+                    msg.title = split[0];
+                    msg.description = split[1];
+                    webpage.webpageUrl = split[3];
+                    //这里替换一张自己工程里的图片资源
+                    msg.setThumbImage(bitmap);
+                    SendMessageToWX.Req req = new SendMessageToWX.Req();
+                    req.transaction = String.valueOf(System.currentTimeMillis());
+                    req.message = msg;
+                    req.scene = 1 == 0 ? SendMessageToWX.Req.WXSceneSession : SendMessageToWX.Req.WXSceneTimeline;
+                    wxApi.sendReq(req);
+                    bottomDialog.dismiss();
+                }
+            });
+            wx_haoyou.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    WXWebpageObject webpage = new WXWebpageObject();
+                    WXMediaMessage msg = new WXMediaMessage(webpage);
+                    msg.title = split[0];
+                    msg.description = split[1];
+                    webpage.webpageUrl = split[3];
+                    //这里替换一张自己工程里的图片资源
+                    msg.setThumbImage(bitmap);
+                    SendMessageToWX.Req req = new SendMessageToWX.Req();
+                    req.transaction = String.valueOf(System.currentTimeMillis());
+                    req.message = msg;
+                    req.scene = 0 == 0 ? SendMessageToWX.Req.WXSceneSession : SendMessageToWX.Req.WXSceneTimeline;
+                    wxApi.sendReq(req);
+                    bottomDialog.dismiss();
+                }
+            });
+        }
+    }
+
+    //压缩图片
+    public Bitmap createBitmapThumbnail(Bitmap bitMap) {
+        int width = bitMap.getWidth();
+        int height = bitMap.getHeight();
+        // 设置想要的大小
+        int newWidth = 99;
+        int newHeight = 99;
+        // 计算缩放比例
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+        // 取得想要缩放的matrix参数
+        Matrix matrix = new Matrix();
+        matrix.postScale(scaleWidth, scaleHeight);
+        // 得到新的图片
+        Bitmap newBitMap = Bitmap.createBitmap(bitMap, 0, 0, width, height, matrix, true);
+        return newBitMap;
     }
 
     /**
@@ -457,5 +576,46 @@ public class ParticularsActivity extends BaseActivtiy implements ICoreInfe {
         public void fail(ApiException e) {
 
         }
+    }
+
+
+    /**
+     * @param path 网络图片地址
+     */
+    public Bitmap getBitmap(String path) {
+        try {
+            URL url = new URL(path);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setConnectTimeout(5000);
+            conn.setRequestMethod("GET");
+            if (conn.getResponseCode() == 200) {
+                InputStream inputStream = conn.getInputStream();
+                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                return bitmap;
+            }
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * Bitmap转换成byte[]并且进行压缩,压缩到不大于maxkb
+     *
+     * @param bitmap
+     * @param
+     * @return
+     */
+    public static byte[] bitmap2Bytes(Bitmap bitmap, int maxkb) {
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, output);
+        int options = 100;
+        while (output.toByteArray().length > maxkb && options != 10) {
+            output.reset(); //清空output
+            bitmap.compress(Bitmap.CompressFormat.JPEG, options, output);//这里压缩options%，把压缩后的数据存放到output中
+            options -= 10;
+        }
+        return output.toByteArray();
     }
 }

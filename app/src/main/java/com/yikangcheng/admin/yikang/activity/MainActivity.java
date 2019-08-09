@@ -9,6 +9,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -149,15 +150,20 @@ public class MainActivity extends BaseActivtiy {
         });
         sharedPreferences = getSharedPreferences("wo", MODE_PRIVATE);
     }
+
     //按钮的定义，创建一个按钮的对象
     final PromptButton confirm = new PromptButton("确定", new PromptButtonListener() {
         @Override
         public void onClick(PromptButton button) {
-            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            //进行查看账号之前是否存在如果存在就不添加只修改状态
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
             getDelete(MainActivity.this);
             finish();
         }
     });
+
     /**
      * 购物车的商品数量
      */
@@ -185,7 +191,6 @@ public class MainActivity extends BaseActivtiy {
 
     @Override
     public void onNetDisconnected() {
-        ToastUtils.show("当前网络不可用" );
     }
 
     @Override
@@ -695,7 +700,7 @@ public class MainActivity extends BaseActivtiy {
             Request request = (Request) data;
             UserInfoBean entity = (UserInfoBean) request.getEntity();
             UserDetailBean userCenter = (UserDetailBean) entity.getUserCenter();
-            if(userCenter.getAvatar()!=null){
+            if (userCenter.getAvatar() != null) {
                 if (userCenter.getAvatar().contains("https://") || userCenter.getAvatar().contains("http://")) {
                     //设置图片圆角角度
                     Glide.with(MainActivity.this).load(userCenter.getAvatar())

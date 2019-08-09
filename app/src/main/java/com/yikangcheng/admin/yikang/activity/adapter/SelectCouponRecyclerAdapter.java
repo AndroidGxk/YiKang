@@ -7,13 +7,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.bean.CouponusableBean;
-import com.yikangcheng.admin.yikang.bean.DiscountBean;
-import com.yikangcheng.admin.yikang.bean.DiscountCouponBean;
 
 import java.util.ArrayList;
 import java.util.List;

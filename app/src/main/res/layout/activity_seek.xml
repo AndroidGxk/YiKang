@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:background="#FFFF">
 
-        <com.yikangcheng.admin.yikang.activity.edittext_delete.ETextWithDelete
+        <EditText
             android:id="@+id/EditTixt_activity_seek_sousuo"
             android:layout_width="match_parent"
             android:layout_height="27dp"
@@ -58,9 +58,9 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="wrap_content"
@@ -84,25 +84,25 @@
 
     <com.yikangcheng.admin.yikang.util.FlowTagLayout
         android:id="@+id/FlowLayout_activity_seek"
-        android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="100dp" />
+        android:layout_height="100dp"
+        android:visibility="gone" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:visibility="gone"
         android:layout_marginTop="20dp"
         android:text="热门搜索"
         android:textColor="#666666"
-        android:textSize="13sp" />
+        android:textSize="13sp"
+        android:visibility="gone" />
 
     <android.support.v7.widget.RecyclerView
-        android:visibility="gone"
         android:id="@+id/rlv_activity_seek_hot"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="20dp"
+        android:visibility="gone" />
 
 </LinearLayout>

@@ -3,30 +3,25 @@ package com.yikangcheng.admin.yikang.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.ImageView;
 
-import com.example.sqlite.dao.DaoMaster;
-import com.example.sqlite.dao.DaoSession;
-import com.example.sqlite.dao.LoginBeanDao;
 import com.hjq.toast.ToastUtils;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.fragment.introduction.Introduction_one;
 import com.yikangcheng.admin.yikang.activity.fragment.introduction.Introduction_three;
 import com.yikangcheng.admin.yikang.activity.fragment.introduction.Introduction_two;
+import com.yikangcheng.admin.yikang.activity.particulars.ToParticularsActivity;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.AdvertBean;
 import com.yikangcheng.admin.yikang.bean.LoginBean;
@@ -37,24 +32,11 @@ import com.yikangcheng.admin.yikang.presenter.AdvertPresenter;
 import com.yikangcheng.admin.yikang.util.PermissionsActivity;
 import com.yikangcheng.admin.yikang.util.PermissionsChecker;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
-import com.yikangcheng.admin.yikang.util.file.ToImg3;
-import com.yikangcheng.admin.yikang.util.file.ToImg4;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 import me.leefeng.promptlibrary.PromptDialog;
-
-import static com.facebook.common.internal.ByteStreams.copy;
 
 public class WelcomeActivity extends BaseActivtiy implements ICoreInfe {
 
@@ -74,7 +56,7 @@ public class WelcomeActivity extends BaseActivtiy implements ICoreInfe {
     private ViewPager viewpage;
     List<Fragment> list_frag = new ArrayList<>();
     private int count = 3;
-    private static int record;
+    private static int record = 1;
     private LoginBean loginBean;
     private int countper = 0;
     Handler handler = new Handler(Looper.myLooper()) {
@@ -130,6 +112,7 @@ public class WelcomeActivity extends BaseActivtiy implements ICoreInfe {
         });
         //设置状态栏颜色
         StatusBarUtil.setStatusBarMode(this, true, R.color.transparent);
+
     }
 
     @Override
@@ -142,10 +125,12 @@ public class WelcomeActivity extends BaseActivtiy implements ICoreInfe {
             SharedPreferences startapp = getSharedPreferences("stratapp", MODE_PRIVATE);
             String start = startapp.getString("stratapp", "fasle");
             if (start.equals("true")) {
-                if (record != 1) {
+                if (record == 1) {
                     viewpage.setVisibility(View.GONE);
                     image.setVisibility(View.VISIBLE);
                     setRecord();
+                } else {
+
                 }
                 handler.sendEmptyMessage(1);
                 return;

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rela"
     android:layout_width="match_parent"
@@ -7,34 +7,70 @@
     android:background="@color/transparent"
     android:gravity="center">
 
-    <RelativeLayout
-        android:layout_width="250dp"
-        android:layout_height="280dp">
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="640dp">
+
+        <android.support.constraint.Guideline
+            android:id="@+id/top_line"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.21" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/cuo_top_line"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.23" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/go_top_line"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.62" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/go_left_line"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.85" />
 
         <ImageView
             android:id="@+id/img"
-            android:layout_width="250dp"
-            android:layout_height="280dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/shou_tankuang1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/top_line" />
+
+
+        <ImageView
+            android:id="@+id/qukankan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/img"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="-115dp"
+            android:src="@drawable/shoutan_kuang3"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/go_top_line" />
+
+        <ImageView
+            android:id="@+id/quxiao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_centerInParent="true"
-            android:background="@drawable/neigou"
-            android:scaleType="fitXY" />
+            android:padding="15dp"
+            android:src="@drawable/shou_tankuang2"
+            app:layout_constraintRight_toLeftOf="@+id/go_left_line"
+            app:layout_constraintTop_toBottomOf="@+id/cuo_top_line" />
+    </android.support.constraint.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/tiao"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_alignParentRight="true"
-            android:minWidth="30dp" />
-
-        <TextView
-            android:id="@+id/jinru"
-            android:layout_width="250dp"
-            android:layout_height="50dp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:minWidth="30dp" />
-    </RelativeLayout>
-
-
-</LinearLayout>
+</RelativeLayout>

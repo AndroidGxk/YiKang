@@ -300,7 +300,7 @@ public class OrderReceActivity extends BaseActivtiy implements ICoreInfe {
                     });
                     return;
                 } else {
-                    mPromptDialog.showWarnAlert("你确定要取消订单吗？", new PromptButton("取消", new PromptButtonListener() {
+                    mPromptDialog.showWarnAlert("你确定要删除订单吗？", new PromptButton("取消", new PromptButtonListener() {
                         @Override
                         public void onClick(PromptButton button) {
                         }
