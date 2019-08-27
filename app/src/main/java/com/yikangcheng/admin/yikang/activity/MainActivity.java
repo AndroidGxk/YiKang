@@ -6,10 +6,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -23,7 +24,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
-import com.hjq.toast.ToastUtils;
 import com.tianma.netdetector.lib.NetworkType;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Fen;
@@ -34,6 +34,7 @@ import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Wo;
 import com.yikangcheng.admin.yikang.activity.myaccount.MyaccountActivity;
 import com.yikangcheng.admin.yikang.activity.obligation.DetailActivity;
 import com.yikangcheng.admin.yikang.activity.siteactivity.AiteActivity;
+import com.yikangcheng.admin.yikang.app.BaseApp;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.LoginBean;
 import com.yikangcheng.admin.yikang.bean.Request;
@@ -42,7 +43,6 @@ import com.yikangcheng.admin.yikang.bean.UserInfoBean;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
 import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
 import com.yikangcheng.admin.yikang.presenter.UserInfoPresenter;
-import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
 import me.leefeng.promptlibrary.PromptButton;
 import me.leefeng.promptlibrary.PromptButtonListener;
@@ -51,7 +51,6 @@ import me.leefeng.promptlibrary.PromptDialog;
 public class MainActivity extends BaseActivtiy {
     private RadioGroup radio;
     private FragmentTransaction transaction;
-    private RadioButton shou, fen, miao, gou, wo;
     private LinearLayout shou_linear, fen_linear, miao_linear,
             gou_linear, wo_linear, line1, line4, line3, line2, line5, line6;
     private DrawerLayout mDrawerLayout;
@@ -74,6 +73,10 @@ public class MainActivity extends BaseActivtiy {
     private UserInfoPresenter userInfoPresenter;
     private int width;
     private SharedPreferences sharedPreferences;
+    private ImageView shou_img;
+    private ImageView fen_img;
+    private ImageView gou_img;
+    private ImageView wo_img;
 
     @Override
     protected void initView() {
@@ -82,8 +85,6 @@ public class MainActivity extends BaseActivtiy {
         promptDialog = new PromptDialog(this);
         //设置自定义属性
         promptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(3000);
-        //设置状态栏颜色
-        StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
         userInfoPresenter = new UserInfoPresenter(new UserInfo());
         WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         int height = wm.getDefaultDisplay().getHeight();
@@ -93,6 +94,7 @@ public class MainActivity extends BaseActivtiy {
         shou_linear = (LinearLayout) findViewById(R.id.shou_linear);
         fen_linear = (LinearLayout) findViewById(R.id.fen_linear);
         shou_text = (TextView) findViewById(R.id.shou_text);
+        shou_text.setTextColor(Color.parseColor(getLogUser(this).getThemeColors()));
         fen_text = (TextView) findViewById(R.id.fen_text);
         log_text = (TextView) findViewById(R.id.log_text);
         line1 = (LinearLayout) findViewById(R.id.line1);
@@ -103,6 +105,8 @@ public class MainActivity extends BaseActivtiy {
         line6 = (LinearLayout) findViewById(R.id.line6);
         header = (ImageView) findViewById(R.id.header);
         text_count = (TextView) findViewById(R.id.text_count);
+//        GradientDrawable gradientDrawable = (GradientDrawable) text_count.getBackground();
+//        gradientDrawable.setColor(Color.parseColor(getLogUser(this).getThemeColors()));
         my_name = (TextView) findViewById(R.id.my_name);
         miao_text = (TextView) findViewById(R.id.miao_text);
         gou_text = (TextView) findViewById(R.id.gou_text);
@@ -110,6 +114,7 @@ public class MainActivity extends BaseActivtiy {
         miao_linear = (LinearLayout) findViewById(R.id.miao_linear);
         gou_linear = (LinearLayout) findViewById(R.id.gou_linear);
         wo_linear = (LinearLayout) findViewById(R.id.wo_linear);
+
         //我的账号
         line2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,7 +129,6 @@ public class MainActivity extends BaseActivtiy {
                 startActivity(new Intent(MainActivity.this, ApoutUsActivity.class));
             }
         });
-
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         mNv = (RelativeLayout) findViewById(R.id.nv);
@@ -159,7 +163,10 @@ public class MainActivity extends BaseActivtiy {
             //进行查看账号之前是否存在如果存在就不添加只修改状态
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
+            LoginBean loginBean = getLogUser(BaseApp.getApp());
+            loginBean.setStatus(2);
             getDelete(MainActivity.this);
+            setLogUser(BaseApp.getApp(), loginBean);
             finish();
         }
     });
@@ -216,11 +223,11 @@ public class MainActivity extends BaseActivtiy {
         /**
          * 切换页面
          */
-        shou = (RadioButton) findViewById(R.id.shou);
-        fen = (RadioButton) findViewById(R.id.fen);
-        miao = (RadioButton) findViewById(R.id.miao);
-        gou = (RadioButton) findViewById(R.id.gou);
-        wo = (RadioButton) findViewById(R.id.wo);
+        shou_img = (ImageView) findViewById(R.id.shou_img);
+        shou_img.setColorFilter(Color.parseColor(getLogUser(MainActivity.this).getThemeColors()));
+        fen_img = (ImageView) findViewById(R.id.fen_img);
+        gou_img = (ImageView) findViewById(R.id.gou_img);
+        wo_img = (ImageView) findViewById(R.id.wo_img);
         shou_linear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -233,12 +240,11 @@ public class MainActivity extends BaseActivtiy {
                 fragmentTransaction.hide(fragment_wo);
                 fragmentTransaction.show(fragment_shou);
                 fragmentTransaction.commit();
-                shou.setChecked(true);
-                fen.setChecked(false);
-                gou.setChecked(false);
-                wo.setChecked(false);
-                miao.setChecked(false);
-                shou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorTab));
+                shou_img.setColorFilter(Color.parseColor(getLogUser(MainActivity.this).getThemeColors()));
+                fen_img.setColorFilter(Color.parseColor("#666666"));
+                gou_img.setColorFilter(Color.parseColor("#666666"));
+                wo_img.setColorFilter(Color.parseColor("#666666"));
+                shou_text.setTextColor(Color.parseColor(getLogUser(MainActivity.this).getThemeColors()));
                 fen_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
                 miao_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
                 gou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
@@ -257,13 +263,12 @@ public class MainActivity extends BaseActivtiy {
                 fragmentTransaction.hide(fragment_wo);
                 fragmentTransaction.show(fragment_fen);
                 fragmentTransaction.commit();
-                fen.setChecked(true);
-                shou.setChecked(false);
-                gou.setChecked(false);
-                wo.setChecked(false);
-                miao.setChecked(false);
                 shou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
-                fen_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorTab));
+                fen_img.setColorFilter(Color.parseColor(getLogUser(MainActivity.this).getThemeColors()));
+                shou_img.setColorFilter(Color.parseColor("#666666"));
+                gou_img.setColorFilter(Color.parseColor("#666666"));
+                wo_img.setColorFilter(Color.parseColor("#666666"));
+                fen_text.setTextColor(Color.parseColor(getLogUser(MainActivity.this).getThemeColors()));
                 miao_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
                 gou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
                 wo_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
@@ -282,14 +287,13 @@ public class MainActivity extends BaseActivtiy {
                 fragmentTransaction.hide(fragment_wo);
                 fragmentTransaction.show(fragment_miao);
                 fragmentTransaction.commit();
-                miao.setChecked(true);
-                gou.setChecked(false);
-                wo.setChecked(false);
-                shou.setChecked(false);
-                fen.setChecked(false);
                 shou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
                 fen_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
-                miao_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorTab));
+                miao_text.setTextColor(Color.parseColor(getLogUser(MainActivity.this).getThemeColors()));
+                fen_img.setColorFilter(Color.parseColor("#666666"));
+                shou_img.setColorFilter(Color.parseColor("#666666"));
+                gou_img.setColorFilter(Color.parseColor("#666666"));
+                wo_img.setColorFilter(Color.parseColor("#666666"));
                 gou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
                 wo_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
 
@@ -315,15 +319,14 @@ public class MainActivity extends BaseActivtiy {
                 fragmentTransaction.hide(fragment_wo);
                 fragmentTransaction.show(fragment_gou);
                 fragmentTransaction.commit();
-                gou.setChecked(true);
-                wo.setChecked(false);
-                shou.setChecked(false);
-                miao.setChecked(false);
-                fen.setChecked(false);
                 shou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
                 fen_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
                 miao_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
-                gou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorTab));
+                gou_img.setColorFilter(Color.parseColor(getLogUser(MainActivity.this).getThemeColors()));
+                fen_img.setColorFilter(Color.parseColor("#666666"));
+                shou_img.setColorFilter(Color.parseColor("#666666"));
+                wo_img.setColorFilter(Color.parseColor("#666666"));
+                gou_text.setTextColor(Color.parseColor(getLogUser(MainActivity.this).getThemeColors()));
                 wo_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
 
             }
@@ -340,147 +343,15 @@ public class MainActivity extends BaseActivtiy {
                 fragmentTransaction.hide(fragment_gou);
                 fragmentTransaction.show(fragment_wo);
                 fragmentTransaction.commit();
-                wo.setChecked(true);
-                shou.setChecked(false);
-                gou.setChecked(false);
-                miao.setChecked(false);
-                fen.setChecked(false);
                 shou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
                 fen_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
                 miao_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
                 gou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
-                wo_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorTab));
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("wo", "no");
-                editor.commit();
-            }
-        });
-        shou.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Fragment_Gou.getSignY();
-                record_ac = 1;
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.hide(fragment_fen);
-                fragmentTransaction.hide(fragment_miao);
-                fragmentTransaction.hide(fragment_gou);
-                fragmentTransaction.hide(fragment_wo);
-                fragmentTransaction.show(fragment_shou);
-                fragmentTransaction.commit();
-                shou.setChecked(true);
-                fen.setChecked(false);
-                gou.setChecked(false);
-                wo.setChecked(false);
-                miao.setChecked(false);
-                shou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorTab));
-                fen_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
-                miao_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
-                gou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
-                wo_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
-            }
-        });
-        fen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Fragment_Gou.getSignY();
-                record_ac = 2;
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.hide(fragment_shou);
-                fragmentTransaction.hide(fragment_miao);
-                fragmentTransaction.hide(fragment_gou);
-                fragmentTransaction.hide(fragment_wo);
-                fragmentTransaction.show(fragment_fen);
-                fragmentTransaction.commit();
-                fen.setChecked(true);
-                shou.setChecked(false);
-                gou.setChecked(false);
-                wo.setChecked(false);
-                miao.setChecked(false);
-                shou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
-                fen_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorTab));
-                miao_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
-                gou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
-                wo_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
-            }
-        });
-        miao.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Fragment_Gou.getSignY();
-                record_ac = 3;
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.hide(fragment_shou);
-                fragmentTransaction.hide(fragment_fen);
-                fragmentTransaction.hide(fragment_gou);
-                fragmentTransaction.hide(fragment_wo);
-                fragmentTransaction.show(fragment_miao);
-                fragmentTransaction.commit();
-                miao.setChecked(true);
-                gou.setChecked(false);
-                wo.setChecked(false);
-                shou.setChecked(false);
-                fen.setChecked(false);
-                shou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
-                fen_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
-                miao_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorTab));
-                gou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
-                wo_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
-            }
-        });
-        gou.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Fragment_Gou.getSignY();
-                SharedPreferences close = getSharedPreferences("close", MODE_PRIVATE);
-                SharedPreferences.Editor edit = close.edit();
-                edit.putBoolean("close", false);
-                edit.putBoolean("closes", false);
-                edit.commit();
-                LoginBean logUser = getLogUser(MainActivity.this);
-                if (logUser == null) {
-                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                }
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.hide(fragment_shou);
-                fragmentTransaction.hide(fragment_fen);
-                fragmentTransaction.hide(fragment_miao);
-                fragmentTransaction.hide(fragment_wo);
-                fragmentTransaction.show(fragment_gou);
-                fragmentTransaction.commit();
-                gou.setChecked(true);
-                wo.setChecked(false);
-                shou.setChecked(false);
-                miao.setChecked(false);
-                fen.setChecked(false);
-                shou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
-                fen_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
-                miao_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
-                gou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorTab));
-                wo_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
-            }
-        });
-        wo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Fragment_Gou.getSignY();
-                record_ac = 5;
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.hide(fragment_shou);
-                fragmentTransaction.hide(fragment_fen);
-                fragmentTransaction.hide(fragment_miao);
-                fragmentTransaction.hide(fragment_gou);
-                fragmentTransaction.show(fragment_wo);
-                fragmentTransaction.commit();
-                wo.setChecked(true);
-                shou.setChecked(false);
-                gou.setChecked(false);
-                miao.setChecked(false);
-                fen.setChecked(false);
-                shou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
-                fen_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
-                miao_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
-                gou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
-                wo_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorTab));
+                wo_img.setColorFilter(Color.parseColor(getLogUser(MainActivity.this).getThemeColors()));
+                gou_img.setColorFilter(Color.parseColor("#666666"));
+                fen_img.setColorFilter(Color.parseColor("#666666"));
+                shou_img.setColorFilter(Color.parseColor("#666666"));
+                wo_text.setTextColor(Color.parseColor(getLogUser(MainActivity.this).getThemeColors()));
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString("wo", "no");
                 editor.commit();
@@ -521,6 +392,7 @@ public class MainActivity extends BaseActivtiy {
 
             @Override
             public void onClick(View view) {
+//                ToastUtils.show("功能暂未开放，敬请期待！");
                 startActivity(new Intent(MainActivity.this, DetailActivity.class));
             }
         });
@@ -553,30 +425,8 @@ public class MainActivity extends BaseActivtiy {
 
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        //非默认值
-        if (newConfig.fontScale != 1) {
-            getResources();
-        }
-        super.onConfigurationChanged(newConfig);
-    }
-
-    @Override
-    public Resources getResources() {//还原字体大小
-        Resources res = super.getResources();
-        //非默认值
-        if (res.getConfiguration().fontScale != 1) {
-            Configuration newConfig = new Configuration();
-            newConfig.setToDefaults();//设置默认
-            res.updateConfiguration(newConfig, res.getDisplayMetrics());
-        }
-        return res;
-    }
-
-    @Override
     protected void onResume() {
         super.onResume();
-
         LoginBean logUser = getLogUser(this);
         if (logUser != null) {
             line1.setVisibility(View.VISIBLE);
@@ -601,87 +451,6 @@ public class MainActivity extends BaseActivtiy {
             header.setVisibility(View.GONE);
             my_name.setVisibility(View.GONE);
             log_text.setVisibility(View.VISIBLE);
-            /**
-             * 页面
-             */
-            switch (record_ac) {
-                case 1:
-                    shou.setChecked(true);
-                    fen.setChecked(false);
-                    gou.setChecked(false);
-                    wo.setChecked(false);
-                    miao.setChecked(false);
-                    shou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorTab));
-                    fen_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
-                    miao_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
-                    gou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
-                    wo_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
-                    FragmentTransaction fragmentTransaction1 = getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction1.hide(fragment_wo);
-                    fragmentTransaction1.hide(fragment_fen);
-                    fragmentTransaction1.hide(fragment_miao);
-                    fragmentTransaction1.hide(fragment_gou);
-                    fragmentTransaction1.show(fragment_shou);
-                    fragmentTransaction1.commit();
-                    break;
-                case 2:
-                    shou.setChecked(false);
-                    fen.setChecked(true);
-                    gou.setChecked(false);
-                    wo.setChecked(false);
-                    miao.setChecked(false);
-                    shou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
-                    fen_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorTab));
-                    miao_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
-                    gou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
-                    wo_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
-                    FragmentTransaction fragmentTransaction2 = getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction2.hide(fragment_shou);
-                    fragmentTransaction2.hide(fragment_wo);
-                    fragmentTransaction2.hide(fragment_miao);
-                    fragmentTransaction2.hide(fragment_gou);
-                    fragmentTransaction2.show(fragment_fen);
-                    fragmentTransaction2.commit();
-                    break;
-                case 3:
-                    shou.setChecked(false);
-                    fen.setChecked(false);
-                    gou.setChecked(false);
-                    wo.setChecked(false);
-                    miao.setChecked(true);
-                    shou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
-                    fen_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
-                    miao_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorTab));
-                    gou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
-                    wo_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
-                    FragmentTransaction fragmentTransaction3 = getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction3.hide(fragment_shou);
-                    fragmentTransaction3.hide(fragment_fen);
-                    fragmentTransaction3.hide(fragment_wo);
-                    fragmentTransaction3.hide(fragment_gou);
-                    fragmentTransaction3.show(fragment_miao);
-                    fragmentTransaction3.commit();
-                    break;
-                case 5:
-                    shou.setChecked(false);
-                    fen.setChecked(false);
-                    gou.setChecked(false);
-                    wo.setChecked(true);
-                    miao.setChecked(false);
-                    shou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
-                    fen_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
-                    miao_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
-                    gou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
-                    wo_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorTab));
-                    FragmentTransaction fragmentTransaction5 = getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction5.hide(fragment_shou);
-                    fragmentTransaction5.hide(fragment_fen);
-                    fragmentTransaction5.hide(fragment_miao);
-                    fragmentTransaction5.hide(fragment_gou);
-                    fragmentTransaction5.show(fragment_wo);
-                    fragmentTransaction5.commit();
-                    break;
-            }
         }
     }
 

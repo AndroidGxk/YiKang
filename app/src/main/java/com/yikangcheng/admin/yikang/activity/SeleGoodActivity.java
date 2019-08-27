@@ -3,6 +3,7 @@ package com.yikangcheng.admin.yikang.activity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Build;
 import android.util.Log;
 import android.view.View;
@@ -13,9 +14,11 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.RelativeLayout;
 
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.aftersale.AfterSaleActivity;
+import com.yikangcheng.admin.yikang.app.BaseApp;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.Request;
 import com.yikangcheng.admin.yikang.bean.UserDetailBean;
@@ -33,14 +36,14 @@ public class SeleGoodActivity extends BaseActivtiy implements ICoreInfe {
     private AfterSaleStatusPresenter afterSaleStatusPresenter;
     private UserDetailBean logUser;
     private String pwd;
-    private long mobile;
+    private String mobile;
     //    private ImageView back_img;
     private WebView webView;
     private String s = "";
     private String path;
     int count = 1;
     private PromptDialog promptDialog;
-
+    private RelativeLayout table;
     /**
      * 回传值
      *
@@ -79,7 +82,14 @@ public class SeleGoodActivity extends BaseActivtiy implements ICoreInfe {
         promptDialog = new PromptDialog(this);
         //设置自定义属性
         promptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(3000);
-        StatusBarUtil.setStatusBarMode(this, true, R.color.colorTab);
+        //设置状态栏颜色
+        if (!getLogUser(this).getThemeColors().equals("")) {
+            StatusBarUtil.setStatusBarMode(this, true, Color.parseColor(getLogUser(this).getThemeColors()));
+        } else {
+            StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        }
+        table = (RelativeLayout) findViewById(R.id.table);
+        table.setBackgroundColor(Color.parseColor(getLogUser(this).getThemeColors()));
         afterSaleStatusPresenter = new AfterSaleStatusPresenter(this);
         logUser = getUserInfo(this);
         mobile = logUser.getMobile();
@@ -113,7 +123,7 @@ public class SeleGoodActivity extends BaseActivtiy implements ICoreInfe {
                 //返回false，意味着请求过程里，不管有多少次的跳转请求（即新的请求地址），均交给webView自己处理，这也是此方法的默认处理
                 //返回true，说明你自己想根据url，做新的跳转，比如在判断url符合条件的情况下，我想让webView加载http://ask.csdn.net/questions/178242
                 if (url.toString().contains("sina.cn")) {
-                    webView.loadUrl("https://www.yikch.com/mobile/afterSale/toApply?detailsId=" + id + "&mobile=" + mobile + "&password=" + pwd + "&type=android");
+                    webView.loadUrl("https://www.yikch.com/mobile/afterSale/toApply?detailsId=" + id + "&mobile=" + mobile + "&password=" + pwd + "&type=android&userId="+getLogUser(BaseApp.getApp()).getId());
                     return true;
                 }
                 return false;
@@ -125,7 +135,8 @@ public class SeleGoodActivity extends BaseActivtiy implements ICoreInfe {
                 //返回true，说明你自己想根据url，做新的跳转，比如在判断url符合条件的情况下，我想让webView加载http://ask.csdn.net/questions/178242
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     if (request.getUrl().toString().contains("sina.cn")) {
-                        webView.loadUrl("https://www.yikch.com/mobile/afterSale/toApply?detailsId=" + id + "&mobile=" + mobile + "&password=" + pwd + "&type=android");
+                        webView.loadUrl("https://www.yikch.com/mobile/afterSale/toApply?detailsId=" + id + "&mobile=" + mobile + "&password=" + pwd + "&type=android&userId="+getLogUser(BaseApp.getApp()).getId());
+
                         return true;
                     }
                 }
@@ -207,9 +218,9 @@ public class SeleGoodActivity extends BaseActivtiy implements ICoreInfe {
 //            startActivity(intent);
 //            finish();
 //
-            webView.loadUrl("https://www.yikch.com/mobile/afterSale/lookSaleApply?detailsId=" + id + "&mobile=" + mobile + "&password=" + pwd + "&type=android");
+            webView.loadUrl("https://www.yikch.com/mobile/afterSale/lookSaleApply?detailsId=" + id + "&mobile=" + mobile + "&password=" + pwd + "&type=android&userId="+getLogUser(BaseApp.getApp()).getId());
         } else {
-            webView.loadUrl("https://www.yikch.com/mobile/afterSale/toApply?detailsId=" + id + "&mobile=" + mobile + "&password=" + pwd + "&type=android");
+            webView.loadUrl("https://www.yikch.com/mobile/afterSale/toApply?detailsId=" + id + "&mobile=" + mobile + "&password=" + pwd + "&type=android&userId="+getLogUser(BaseApp.getApp()).getId());
         }
     }
 

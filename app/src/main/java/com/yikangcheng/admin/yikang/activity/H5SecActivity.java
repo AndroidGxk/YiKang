@@ -68,23 +68,28 @@ public class H5SecActivity extends BaseActivtiy {
         //不允许侧滑退出
         closeSwipeBack();
         //设置状态栏颜色
-        StatusBarUtil.setStatusBarMode(this, true, R.color.colorTab);
+        if (!getLogUser(this).getThemeColors().equals("")) {
+            StatusBarUtil.setStatusBarMode(this, true, Color.parseColor(getLogUser(this).getThemeColors()));
+        } else {
+            StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        }
+        tabl = (RelativeLayout) findViewById(R.id.tabl);
+        tabl.setBackgroundColor(Color.parseColor(getLogUser(this).getThemeColors()));
         Display display = getWindowManager().getDefaultDisplay();
         width = display.getWidth();
-
         //进度条
         pbProgress = (ProgressBar) findViewById(R.id.pb_progress);
         webview = (WebView) findViewById(R.id.webView);
         back_img = (ImageView) findViewById(R.id.back_img);
-        tabl = (RelativeLayout) findViewById(R.id.tabl);
         title_text = (TextView) findViewById(R.id.title_text);
+//        title_text.setTextColor(Color.parseColor());
         Fragment_Shou.getGoBack();
         Intent intent = getIntent();
         http = intent.getStringExtra("http");
         none = intent.getStringExtra("none");
         color = intent.getStringExtra("color");
         if (http == null) {
-            http = "https://www.yikch.com/mobile/appShow/activity?type=android";
+            http = "https://www.yikch.com/mobile/appShow/activity?type=android&userId="+getLogUser(this).getId();
         }
         if (none != null) {
             if (none.equals("yes")) {
@@ -103,8 +108,7 @@ public class H5SecActivity extends BaseActivtiy {
             title_text.setText(title);
         }
         if (title != null) {
-            if (title.equals("夏至福利") || title.equals("挚友超市"))
-                tabl.setVisibility(View.GONE);
+
         }
         WebSettings webSettings = webview.getSettings();
         //设置WebView属性，能够执行Javascript脚本
@@ -198,24 +202,30 @@ public class H5SecActivity extends BaseActivtiy {
                     intent.putExtra("id", url + "&userId=" + getLogUser(BaseApp.getApp()).getId());
                     startActivity(intent);
                     return true;
-                } else if (url.contains("/login")) {
+                } else if(url.contains("appShow/tableTennisRegister")){
+                    Intent intent = new Intent(H5SecActivity.this, H5SecActivity.class);
+                    intent.putExtra("title", "易康成杯乒乓球报名");
+                    intent.putExtra("http", url+"&userId="+getLogUser(BaseApp.getApp()).getId());
+                    startActivity(intent);
+                    return true;
+                }else if (url.contains("/login")) {
                     finish();
                     return true;
                 } else if (url.contains("appShow/recommendList")) {
                     Intent intent = new Intent(H5SecActivity.this, H5RecommendListActivity.class);
-                    intent.putExtra("http", url);
+                    intent.putExtra("http", url+"&userId="+getLogUser(BaseApp.getApp()).getId());
                     startActivity(intent);
                     return true;
                 } else if (url.contains("discounts")) {
                     //优惠券链接
                     Intent intent = new Intent(H5SecActivity.this, H5DiscountActivity.class);
-                    intent.putExtra("http", url);
+                    intent.putExtra("http", url + "&userId=" + getLogUser(BaseApp.getApp()).getId());
                     intent.putExtra("none", "yes");
                     startActivity(intent);
                     return true;
                 } else if (url.contains("appShow/orderLogistics")) {
                     Intent intent = new Intent(H5SecActivity.this, H5WuliuZhuangtaiActivity.class);
-                    intent.putExtra("http", url);
+                    intent.putExtra("http", url + "&userId=" + getLogUser(BaseApp.getApp()).getId());
                     startActivity(intent);
                     return true;
                 } else if (url.contains("/appShow/checkIn")) {
@@ -231,10 +241,9 @@ public class H5SecActivity extends BaseActivtiy {
                     return true;
                 } else if (url.contains("/appShow/yousheng")) {
 //                    webview.loadUrl();
-//                    title_text.setText("优胜教育内部购");
                     Intent intent = new Intent(H5SecActivity.this, H5SecActivity.class);
-                    intent.putExtra("http", "https://www.yikch.com/mobile/appShow/yousheng?type=android");
-                    intent.putExtra("title", "优胜内购");
+                    intent.putExtra("http", "https://www.yikch.com/mobile/appShow/yousheng?type=android&userId="+getLogUser(BaseApp.getApp()).getId());
+                    intent.putExtra("title", "福利内购");
                     startActivity(intent);
                     return true;
                 } else if (url.contains("/mobile/appShow/qixiFestival")) {
@@ -256,7 +265,6 @@ public class H5SecActivity extends BaseActivtiy {
                 }
             }
         });
-        Log.d("GT", webview.getUrl());
     }
 
     @Override

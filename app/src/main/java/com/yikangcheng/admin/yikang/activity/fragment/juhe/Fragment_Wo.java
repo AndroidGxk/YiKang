@@ -1,5 +1,6 @@
 package com.yikangcheng.admin.yikang.activity.fragment.juhe;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
@@ -48,6 +49,7 @@ import com.yikangcheng.admin.yikang.presenter.InitOrderCountPresenter;
 import com.yikangcheng.admin.yikang.presenter.RecommendPresenter;
 import com.yikangcheng.admin.yikang.presenter.UserInfoPresenter;
 import com.yikangcheng.admin.yikang.util.MyViewPager;
+import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -101,6 +103,8 @@ public class Fragment_Wo extends BaseFragment implements View.OnClickListener {
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void initView(View view) {
+        //设置状态栏颜色
+        StatusBarUtil.setStatusBarMode((Activity) getContext(), true, R.color.clolrBAai);
         //创建对象
         promptDialog = new PromptDialog(getActivity());
         //设置自定义属性

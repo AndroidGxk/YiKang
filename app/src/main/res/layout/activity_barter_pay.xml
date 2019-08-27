@@ -11,8 +11,8 @@
     <RelativeLayout
         android:id="@+id/rela"
         android:layout_width="match_parent"
-        android:background="@color/colorTab"
-        android:layout_height="40dp">
+        android:layout_height="40dp"
+        android:background="@color/colorTab">
 
         <ImageView
             android:id="@+id/back_img"
@@ -26,6 +26,7 @@
             android:src="@drawable/fanhuiactivity" />
 
         <TextView
+            android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -36,30 +37,30 @@
     </RelativeLayout>
 
     <TextView
-        android:layout_below="@+id/rela"
         android:id="@+id/money_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/rela"
+        android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp"
         android:text="订单总额："
-        android:layout_marginLeft="15dp"
         android:textSize="13sp" />
 
     <TextView
-        android:layout_below="@+id/rela"
         android:id="@+id/money_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/rela"
         android:layout_marginTop="15dp"
-        android:layout_toRightOf="@id/money_text"/>
+        android:layout_toRightOf="@id/money_text" />
 
     <TextView
         android:id="@+id/pay_sele"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/money_text"
-        android:layout_marginTop="15dp"
         android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
         android:text="选择支付方式" />
 
     <RelativeLayout
@@ -127,8 +128,8 @@
         android:layout_width="300dp"
         android:layout_height="40dp"
         android:layout_below="@+id/wechat_rela"
-        android:layout_marginTop="36dp"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="36dp"
         android:background="@drawable/red_btn_shape"
         android:onClick="toPayOnclick"
         android:text="立即支付"

@@ -52,7 +52,7 @@ public class StatusBarUtil {
         //Android6.0（API 23）以上，系统方法
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = activity.getWindow();
-            window.setStatusBarColor(activity.getResources().getColor(colorId));
+            window.setStatusBarColor(colorId);
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             //使用SystemBarTint库使4.4版本状态栏变色，需要先将状态栏设置为透明
             setTranslucentStatus(activity);

@@ -176,27 +176,27 @@
                                 android:layout_height="46dp"
                                 android:layout_centerHorizontal="true"
                                 android:layout_marginTop="5dp"
-                                android:src="@drawable/daifukuan" />
+                                android:src="@drawable/gerenzhongxin_fukuan" />
 
                             <ImageView
                                 android:id="@+id/img_fragment_wo_hongyuanquan_b"
                                 android:layout_width="13dp"
                                 android:layout_height="14dp"
-                                android:visibility="gone"
                                 android:layout_marginLeft="38dp"
                                 android:layout_marginTop="9dp"
-                                android:src="@drawable/hong" />
+                                android:src="@drawable/hong"
+                                android:visibility="gone" />
 
                             <TextView
                                 android:id="@+id/tv_fragment_wo_xiaoxi_b"
-                                android:visibility="gone"
                                 android:layout_width="13dp"
                                 android:layout_height="14dp"
                                 android:layout_marginLeft="40dp"
                                 android:layout_marginTop="9.5dp"
                                 android:text="02"
                                 android:textColor="#FFFFFF"
-                                android:textSize="9sp" />
+                                android:textSize="9sp"
+                                android:visibility="gone" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -256,7 +256,7 @@
                                 android:layout_height="46dp"
                                 android:layout_centerHorizontal="true"
                                 android:layout_marginTop="8dp"
-                                android:src="@drawable/daishouhuo" />
+                                android:src="@drawable/gerenzhongxin_shouhuo" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -286,7 +286,7 @@
                                 android:layout_height="46dp"
                                 android:layout_centerHorizontal="true"
                                 android:layout_marginTop="5dp"
-                                android:src="@drawable/yizhifu" />
+                                android:src="@drawable/gerenzhongxin_wancheng" />
 
                             <TextView
                                 android:layout_width="wrap_content"

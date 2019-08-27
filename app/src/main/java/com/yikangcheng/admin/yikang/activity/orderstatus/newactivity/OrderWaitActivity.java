@@ -4,6 +4,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -14,6 +17,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alipay.sdk.app.PayTask;
@@ -22,6 +26,7 @@ import com.sobot.chat.SobotApi;
 import com.sobot.chat.api.model.Information;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.yikangcheng.admin.yikang.R;
+import com.yikangcheng.admin.yikang.activity.H5SecActivity;
 import com.yikangcheng.admin.yikang.activity.OrderFormActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.ordernew_adapter.OrderWaitAdapter;
 import com.yikangcheng.admin.yikang.activity.copy.CopyButtonLibrary;
@@ -29,6 +34,7 @@ import com.yikangcheng.admin.yikang.activity.orderstatus.countdown.ClockService;
 import com.yikangcheng.admin.yikang.activity.particulars.ParticularsActivity;
 import com.yikangcheng.admin.yikang.app.BaseApp;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
+import com.yikangcheng.admin.yikang.bean.CreatOrderBean;
 import com.yikangcheng.admin.yikang.bean.PayBean;
 import com.yikangcheng.admin.yikang.bean.Request;
 import com.yikangcheng.admin.yikang.bean.WaliDealBean;
@@ -100,6 +106,8 @@ public class OrderWaitActivity extends BaseActivtiy implements ICoreInfe {
     ImageView back_img;
     @BindView(R.id.cancel_btn)
     TextView cancel_btn;
+    @BindView(R.id.toolbar_activity_orderfrom)
+    RelativeLayout toolbar_activity_orderfrom;
     //待付款订单列表
     private OrderWaitAdapter waitAdapter;
     //接收订单ID
@@ -134,13 +142,24 @@ public class OrderWaitActivity extends BaseActivtiy implements ICoreInfe {
     private WaliDealBean entity;
     private NewOrderPresenter newOrderPresenter;
     private PayBean mEntity;
+    private SharedPreferences.Editor editor;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void initView() {
-        /**
-         * 设置状态栏颜色
-         */
-        StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+
+        sharedPreferences = getSharedPreferences("orderInfo", MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+        //设置状态栏颜色
+        if (!getLogUser(this).getThemeColors().equals("")) {
+            StatusBarUtil.setStatusBarMode(this, true, Color.parseColor(getLogUser(this).getThemeColors()));
+        } else {
+            StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        }
+        toolbar_activity_orderfrom.setBackgroundColor(Color.parseColor(getLogUser(this).getThemeColors()));
+        cancel_btn.setTextColor(Color.parseColor(getLogUser(this).getThemeColors()));
+        GradientDrawable myGrad = (GradientDrawable) go_pay.getBackground();
+        myGrad.setColor(Color.parseColor(getLogUser(this).getThemeColors()));
         /**
          * 订单详情Adapter
          */
@@ -176,6 +195,7 @@ public class OrderWaitActivity extends BaseActivtiy implements ICoreInfe {
 
     @Override
     protected void initEventData() {
+
         recycle.setLayoutManager(new LinearLayoutManager(this));
         recycle.setAdapter(waitAdapter);
         //解决滑动不流畅
@@ -433,6 +453,7 @@ public class OrderWaitActivity extends BaseActivtiy implements ICoreInfe {
 
         }
     }
+
     /**
      * 支付
      */
@@ -449,10 +470,18 @@ public class OrderWaitActivity extends BaseActivtiy implements ICoreInfe {
                     String resultStatus = payResult.getResultStatus();
                     // 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
                     if (TextUtils.equals(resultStatus, "9000")) {
-                        Intent intent = new Intent(OrderWaitActivity.this, OrderFormActivity.class);
-                        intent.putExtra("tab", "daishouhuo");
-                        startActivity(intent);
-                        finish();
+                        if (sharedPreferences.getInt("orderType", 0) == 2) {
+                            Intent intent = new Intent(OrderWaitActivity.this, OrderFormActivity.class);
+                            intent.putExtra("tab", "daishouhuo");
+                            startActivity(intent);
+                            finish();
+                        } else if (sharedPreferences.getInt("orderType", 0) == 3) {
+                            Intent intent = new Intent(OrderWaitActivity.this, H5SecActivity.class);
+                            intent.putExtra("title", "易康成杯乒乓球报名");
+                            intent.putExtra("http", "https://www.yikch.com/mobile/appShow/tableTennisRegister?type=android&userId=" + getLogUser(BaseApp.getApp()).getId());
+                            startActivity(intent);
+                            finish();
+                        }
                     } else {
                         // 判断resultStatus 为非“9000”则代表可能支付失败
                         // “8000”代表支付结果因为支付渠道原因或者系统原因还在等待支付结果确认，最终交易是否成功以服务端异步通知为准（小概率状态）
@@ -612,6 +641,8 @@ public class OrderWaitActivity extends BaseActivtiy implements ICoreInfe {
                             msg.what = SDK_PAY_FLAG;
                             msg.obj = result;
                             mHandler.sendMessage(msg);
+                            editor.putInt("orderType", mEntity.getIsZeroPurchase());
+                            editor.commit();
                         }
                     };
                     // 必须异步调用
@@ -628,6 +659,13 @@ public class OrderWaitActivity extends BaseActivtiy implements ICoreInfe {
                     req.timeStamp = mEntity.getTimeStamp();
                     req.sign = mEntity.getSign();
                     BaseApp.mWxApi.sendReq(req);//将订单信息对象发送给微信服务器，即发送支付请求
+                    editor.putInt("orderType", mEntity.getIsZeroPurchase());
+                    editor.commit();
+                    CreatOrderBean creatOrderBean = new CreatOrderBean();
+                    creatOrderBean.setIsZeroPurchase(mEntity.getIsZeroPurchase());
+                    setOrderInfo(OrderWaitActivity.this, creatOrderBean);
+                    setNewPayInfo(OrderWaitActivity.this, mEntity);
+
                 } else {
                     ToastUtils.show("系统错误,支付失败");
                 }

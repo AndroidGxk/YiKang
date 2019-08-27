@@ -10,7 +10,7 @@ import android.util.Log;
 
 public class Logger {
 
-    private static final String TAG = "Logger";
+    private static final String TAG = "GTT";
 
     private static Logger instance;
 
@@ -27,7 +27,7 @@ public class Logger {
         isShowLog = log;
     }
 
-    public boolean getShowLog() {
+    boolean getShowLog() {
         return isShowLog;
     }
 

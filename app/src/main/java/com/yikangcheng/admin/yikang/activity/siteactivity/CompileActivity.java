@@ -1,6 +1,8 @@
 package com.yikangcheng.admin.yikang.activity.siteactivity;
 
 import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.support.design.widget.TabLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hjq.toast.ToastUtils;
@@ -28,13 +31,17 @@ import com.yikangcheng.admin.yikang.presenter.AddressPresenter;
 import com.yikangcheng.admin.yikang.presenter.InsertAddressPresenter;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
 
 /**
  * 这是新增地址页面
  */
-public class CompileActivity extends BaseActivtiy implements ICoreInfe  {
+public class CompileActivity extends BaseActivtiy implements ICoreInfe {
 
     private CheckBox check_btn;
     private ImageView back_img;
@@ -64,29 +71,40 @@ public class CompileActivity extends BaseActivtiy implements ICoreInfe  {
     private int proId;
     private int cityId;
     private int countryId = 0;
-
+    private RelativeLayout rela;
+    @BindView(R.id.title)
+    TextView title;
     @Override
     protected void initView() {
-        /**
-         *  设置状态栏颜色
-         */
-        StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
-
+        //设置状态栏颜色
+        if (!getLogUser(this).getThemeColors().equals("")) {
+            StatusBarUtil.setStatusBarMode(this, true, Color.parseColor(getLogUser(this).getThemeColors()));
+        } else {
+            StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        }
         mInflate = LayoutInflater.from(CompileActivity.this).inflate(R.layout.site_compile, null);
         mTabLayout = mInflate.findViewById(R.id.tablayout);
         address_recycler = mInflate.findViewById(R.id.add_recycler);
         mTabLayout.addTab(mTabLayout.newTab().setText(defaultProvince));
         mTabLayout.addTab(mTabLayout.newTab().setText(defaultCity));
         mTabLayout.addTab(mTabLayout.newTab().setText(defaultDistrict));
+        changeTextColor(mTabLayout);
         address_recycler.setLayoutManager(new LinearLayoutManager(this));
-        addressRecyclerAdapter = new AddressRecyclerAdapter(this);
+        addressRecyclerAdapter = new AddressRecyclerAdapter(this, getLogUser(this).getThemeColors());
+
         address_recycler.setAdapter(addressRecyclerAdapter);
         name_edit = (ETextWithDelete) findViewById(R.id.name_edit);
         back_img = (ImageView) findViewById(R.id.back_img);
         check_btn = (CheckBox) findViewById(R.id.check_btn);
         phone_text = (ETextWithDelete) findViewById(R.id.phone_text);
+        rela = (RelativeLayout) findViewById(R.id.rela);
+        rela.setBackgroundColor(Color.parseColor(getLogUser(this).getThemeColors()));
+        //标题颜色
+//        title.setTextColor(Color.parseColor());
         address_text = (TextView) findViewById(R.id.address_text);
         add_address = (TextView) findViewById(R.id.add_address);
+        GradientDrawable myGrad = (GradientDrawable) add_address.getBackground();
+        myGrad.setColor(Color.parseColor(getLogUser(this).getThemeColors()));
         relay_address = (ETextWithDelete) findViewById(R.id.relay_address);
         Display display = this.getWindowManager().getDefaultDisplay();
         width = display.getWidth();
@@ -162,18 +180,18 @@ public class CompileActivity extends BaseActivtiy implements ICoreInfe  {
                         addressPresenter.request(mid);
                         address = 1;
                     } else {
-                        ToastUtils.show("请先选择省份" );
+                        ToastUtils.show("请先选择省份");
                         mTabLayout.getTabAt(0).select();
                     }
 
                 } else if (tab.getText().equals("区县")) {
                     if (mid == 0) {
-                        ToastUtils.show("请先选择省份" );
+                        ToastUtils.show("请先选择省份");
                         mTabLayout.getTabAt(0).select();
                         return;
                     }
                     if (cityid == 0) {
-                        ToastUtils.show("请先选择城市" );
+                        ToastUtils.show("请先选择城市");
                         mTabLayout.getTabAt(1).select();
                         return;
                     }
@@ -206,19 +224,35 @@ public class CompileActivity extends BaseActivtiy implements ICoreInfe  {
                 }
                 LoginBean logUser = getLogUser(CompileActivity.this);
                 if (name.equals("") || phone.equals("") || xiangqing.equals("") || countryId == 0) {
-                    ToastUtils.show("请完善信息" );
+                    ToastUtils.show("请完善信息");
                     return;
                 } else {
                     String REGEX_MOBILE_EXACT = "^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,3,5-8])|(18[0-9])|166|198|199|(147))\\d{8}$";
                     if (phone_text.getText().toString().matches(REGEX_MOBILE_EXACT)) {
                         insertAddressPresenter.request(logUser.getId(), name, phone, xiangqing, isFirst, proId, cityId, countryId);
                     } else if (!phone_text.getText().toString().matches(REGEX_MOBILE_EXACT)) {
-                        ToastUtils.show("请输入正确的手机号" );
+                        ToastUtils.show("请输入正确的手机号");
                     }
                     return;
                 }
             }
         });
+    }
+
+    private void changeTextColor(TabLayout tabLayout) {
+        try {
+            //拿到tabLayout的mTabStrip属性
+            Field field = TabLayout.class.getDeclaredField("mTabStrip");
+            field.setAccessible(true);
+            //拿mTabStrip属性里面的值
+            Object mTabStrip = field.get(tabLayout);
+            //通过mTabStrip对象来获取class类，不能用field来获取class类，参数不能写Integer.class
+            Method method = mTabStrip.getClass().getDeclaredMethod("setSelectedIndicatorColor", int.class);
+            method.setAccessible(true);
+            method.invoke(mTabStrip, Color.parseColor(getLogUser(this).getThemeColors()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -248,7 +282,6 @@ public class CompileActivity extends BaseActivtiy implements ICoreInfe  {
     public void fail(ApiException e) {
 
     }
-
 
 
     /**

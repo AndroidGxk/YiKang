@@ -2,6 +2,7 @@ package com.yikangcheng.admin.yikang.activity.h5activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -14,6 +15,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.particulars.ParticularsActivity;
@@ -21,21 +24,35 @@ import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.LoginBean;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
+import org.w3c.dom.Text;
+
+import butterknife.BindView;
+
 public class H5RecommendListActivity extends BaseActivtiy {
     private static WebView webView;
     private ProgressBar pbProgress;
     private String url;
     private LoginBean loginBean;
     private ImageView back_img;
+    private RelativeLayout tabl;
+    @BindView(R.id.title_text)
+    TextView title_text;
 
     @Override
     protected void initView() {
         //设置状态栏颜色
-        StatusBarUtil.setStatusBarMode(this, true, R.color.colorTab);
+        if (!getLogUser(this).getThemeColors().equals("")) {
+            StatusBarUtil.setStatusBarMode(this, true, Color.parseColor(getLogUser(this).getThemeColors()));
+        } else {
+            StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        }
         Intent intent = getIntent();
         url = intent.getStringExtra("http");
         //进度条
         back_img = (ImageView) findViewById(R.id.back_img);
+        tabl = (RelativeLayout) findViewById(R.id.tabl);
+        tabl.setBackgroundColor(Color.parseColor(getLogUser(this).getThemeColors()));
+//        title_text.setTextColor(Color.parseColor());
         pbProgress = (ProgressBar) findViewById(R.id.pb_progress);
         webView = (WebView) findViewById(R.id.webView);
     }
@@ -63,7 +80,7 @@ public class H5RecommendListActivity extends BaseActivtiy {
                 //返回false，意味着请求过程里，不管有多少次的跳转请求（即新的请求地址），均交给webView自己处理，这也是此方法的默认处理
                 //返回true，说明你自己想根据url，做新的跳转，比如在判断url符合条件的情况下，我想让webView加载http://ask.csdn.net/questions/178242
                 if (url.toString().contains("sina.cn")) {
-                    webView.loadUrl(url);
+                    webView.loadUrl(url+"&userId="+getLogUser(H5RecommendListActivity.this).getId());
                     return true;
                 }
                 return false;
@@ -75,7 +92,7 @@ public class H5RecommendListActivity extends BaseActivtiy {
                 //返回true，说明你自己想根据url，做新的跳转，比如在判断url符合条件的情况下，我想让webView加载http://ask.csdn.net/questions/178242
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     if (request.getUrl().toString().contains("sina.cn")) {
-                        webView.loadUrl(url);
+                        webView.loadUrl(url+"&userId="+getLogUser(H5RecommendListActivity.this).getId());
                         return true;
                     }
                 }
@@ -121,7 +138,7 @@ public class H5RecommendListActivity extends BaseActivtiy {
         }
         webView.getSettings().setJavaScriptEnabled(true);
         webView.addJavascriptInterface(this, "ww");
-        webView.loadUrl(url);
+        webView.loadUrl(url+"&userId="+getLogUser(H5RecommendListActivity.this).getId());
         webView.setWebViewClient(new WebViewClient() {
             @Override
             // 在点击请求的是链接是才会调用，重写此方法返回true表明点击网页里面的链接还是在当前的webview里跳转，不跳到浏览器那边。这个函数我们可以做很多操作，比如我们读取到某些特殊的URL，于是就可以不打开地址，取消这个操作，进行预先定义的其他操作，这对一个程序是非常必要的。

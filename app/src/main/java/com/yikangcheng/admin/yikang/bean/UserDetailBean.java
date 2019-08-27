@@ -30,11 +30,11 @@ public class UserDetailBean {
     private String avatar;
     private String nickName;
     private String email;
-    private long mobile;
-    @Generated(hash = 1716048296)
+    private String mobile;
+    @Generated(hash = 658792027)
     public UserDetailBean(long id, int userId, int status, String realName,
             int gender, String userInfo, String avatar, String nickName,
-            String email, long mobile) {
+            String email, String mobile) {
         this.id = id;
         this.userId = userId;
         this.status = status;
@@ -103,10 +103,10 @@ public class UserDetailBean {
     public void setEmail(String email) {
         this.email = email;
     }
-    public long getMobile() {
+    public String getMobile() {
         return this.mobile;
     }
-    public void setMobile(long mobile) {
+    public void setMobile(String mobile) {
         this.mobile = mobile;
     }
 }

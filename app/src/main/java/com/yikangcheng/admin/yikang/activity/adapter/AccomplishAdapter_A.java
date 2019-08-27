@@ -1,6 +1,8 @@
 package com.yikangcheng.admin.yikang.activity.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,9 +33,11 @@ public class AccomplishAdapter_A extends RecyclerView.Adapter {
     private Context mContent;
     public ArrayList<WaitSignBean.OrderBean> mList = new ArrayList<>();
     private List<WaitSignBean.OrderBean.OrderDetailsListBean> goodsize;
+    private String color;
 
-    public AccomplishAdapter_A(Context context) {
+    public AccomplishAdapter_A(Context context, String color) {
         this.mContent = context;
+        this.color = color;
     }
 
 
@@ -54,6 +58,11 @@ public class AccomplishAdapter_A extends RecyclerView.Adapter {
         goodsize = mList.get(position).getOrderDetailsList();
         if (goodsize != null) {
             if (vh instanceof DVhOne) {
+                ((DVhOne) vh).order_status.setTextColor(Color.parseColor(color));
+                ((DVhOne) vh).yellow_text.setTextColor(Color.parseColor(color));
+                GradientDrawable myGrad = (GradientDrawable) ((DVhOne) vh).yellow_text.getBackground();
+                myGrad.setStroke(2,Color.parseColor(color));
+
                 ((DVhOne) vh).order_num.setText(mList.get(position).getOrderNo() + "");
                 java.text.DecimalFormat myformat1 = new java.text.DecimalFormat("0.00");
                 String moneyStr = myformat1.format(mList.get(position).getOrderDetailsList().get(0).getPrice());
@@ -100,7 +109,13 @@ public class AccomplishAdapter_A extends RecyclerView.Adapter {
                         }
                     }
                 });
+
             } else if (vh instanceof DVh) {
+                ((DVh) vh).mZhuangtai.setTextColor(Color.parseColor(color));
+                ((DVh) vh).yellow_text.setTextColor(Color.parseColor(color));
+                GradientDrawable myGrad = (GradientDrawable) ((DVh) vh).yellow_text.getBackground();
+                myGrad.setStroke(2,Color.parseColor(color));
+
                 ((DVh) vh).price_num_line.getBackground().mutate().setAlpha(240);
                 ((DVh) vh).mBianhao.setText(mList.get(position).getOrderNo() + "");
                 java.text.DecimalFormat myformat1 = new java.text.DecimalFormat("0.00");
@@ -244,7 +259,6 @@ public class AccomplishAdapter_A extends RecyclerView.Adapter {
         TextView one_good_num;
         TextView yellow_text;
         ImageView one_good_img;
-
         public DVhOne(View itemView) {
             super(itemView);
             order_num = itemView.findViewById(R.id.order_num);

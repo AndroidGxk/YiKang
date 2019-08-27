@@ -1,11 +1,14 @@
 package com.yikangcheng.admin.yikang.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.adapter.SelectCouponRecyclerAdapter;
@@ -28,10 +31,17 @@ public class SelectCouponActivity extends BaseActivtiy implements ICoreInfe {
     private LoginBean loginBean;
     private RecyclerView recycler;
     private double moneyDouble;
-
+    private RelativeLayout table;
     @Override
     protected void initView() {
-        StatusBarUtil.setStatusBarMode(this, true, R.color.colorTab);
+        //设置状态栏颜色
+        if (!getLogUser(this).getThemeColors().equals("")) {
+            StatusBarUtil.setStatusBarMode(this, true, Color.parseColor(getLogUser(this).getThemeColors()));
+        } else {
+            StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        }
+        table = (RelativeLayout) findViewById(R.id.table);
+        table.setBackgroundColor(Color.parseColor(getLogUser(this).getThemeColors()));
         Intent intent = getIntent();
         String money = intent.getStringExtra("money");
         String[] split = money.split("¥");

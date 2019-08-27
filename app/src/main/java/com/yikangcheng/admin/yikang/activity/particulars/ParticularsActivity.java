@@ -1,17 +1,20 @@
 package com.yikangcheng.admin.yikang.activity.particulars;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.support.annotation.LongDef;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.Display;
@@ -29,6 +32,8 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hjq.toast.ToastUtils;
@@ -46,6 +51,7 @@ import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.CloseActivity;
+import com.yikangcheng.admin.yikang.activity.GoodComActivity;
 import com.yikangcheng.admin.yikang.activity.H5SecActivity;
 import com.yikangcheng.admin.yikang.activity.PartiCarActivity;
 import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Miao;
@@ -59,7 +65,6 @@ import com.yikangcheng.admin.yikang.bean.ShopCarBean;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
 import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
 import com.yikangcheng.admin.yikang.presenter.AddShopPresenter;
-import com.yikangcheng.admin.yikang.presenter.OrderBuyPresenter;
 import com.yikangcheng.admin.yikang.presenter.ShopCarPresenter;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
@@ -71,13 +76,14 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 
+import butterknife.BindView;
+
 public class ParticularsActivity extends BaseActivtiy implements ICoreInfe {
     private WebView webView;
     private int id;
     private String s = "";
     private AddShopPresenter addShopPresenter;
     private ImageView back_img, img_top;
-    private OrderBuyPresenter orderBuyPresenter;
     private ProgressBar pbProgress;
     private SmartRefreshLayout refreshLayout;
     String Cust = "";
@@ -103,12 +109,21 @@ public class ParticularsActivity extends BaseActivtiy implements ICoreInfe {
     String Custs = "";
     private IWXAPI wxApi;
     private Bitmap bitmap;
+    private RelativeLayout tabl;
+    @BindView(R.id.title)
+    TextView title;
+    private String comm;
 
     @Override
     protected void initView() {
         //设置状态栏颜色
-        StatusBarUtil.setStatusBarMode(this, true, R.color.colorTab);
+        if (!getLogUser(this).getThemeColors().equals("")) {
+            StatusBarUtil.setStatusBarMode(this, true, Color.parseColor(getLogUser(this).getThemeColors()));
+        } else {
+            StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        }
         SharedPreferences close = getSharedPreferences("close", MODE_PRIVATE);
+//        title.setTextColor(Color.parseColor());
         SharedPreferences.Editor edit = close.edit();
         edit.putBoolean("close", true);
         edit.commit();
@@ -134,6 +149,8 @@ public class ParticularsActivity extends BaseActivtiy implements ICoreInfe {
         refreshLayout.setEnableLoadmore(false);
         //进度条
         pbProgress = (ProgressBar) findViewById(R.id.pb_progress);
+        tabl = (RelativeLayout) findViewById(R.id.tabl);
+        tabl.setBackgroundColor(Color.parseColor(getLogUser(this).getThemeColors()));
         webView = (WebView) findViewById(R.id.webvieww);
         back_img = (ImageView) findViewById(R.id.back_img);
         img_top = (ImageView) findViewById(R.id.img_top);
@@ -147,7 +164,6 @@ public class ParticularsActivity extends BaseActivtiy implements ICoreInfe {
         id = intent.getIntExtra("id", 0);
         url = intent.getStringExtra("id");
         addShopPresenter = new AddShopPresenter(this);
-        orderBuyPresenter = new OrderBuyPresenter(new OrderBuy());
         logUser = getLogUser(ParticularsActivity.this);
         if (logUser != null) {
             shopCarPresenter.request(logUser.getId());
@@ -192,7 +208,7 @@ public class ParticularsActivity extends BaseActivtiy implements ICoreInfe {
                     if (id == 0) {
                         webView.loadUrl(url);
                     } else {
-                        webView.loadUrl("https://www.yikch.com/mobile/appShow/proDetail/" + id + ".json?type=android&userId=" + getLogUser(ParticularsActivity.this).getId());
+                        webView.loadUrl("https://www.yikch.com/mobile/appShow/proDetail/" + id + "?type=android&userId=" + getLogUser(ParticularsActivity.this).getId());
                     }
                     return true;
                 }
@@ -208,12 +224,18 @@ public class ParticularsActivity extends BaseActivtiy implements ICoreInfe {
                         if (id == 0) {
                             webView.loadUrl(url);
                         } else {
-                            webView.loadUrl("https://www.yikch.com/mobile/appShow/proDetail/" + id + ".json?type=android&userId=" + getLogUser(ParticularsActivity.this).getId());
+                            webView.loadUrl("https://www.yikch.com/mobile/appShow/proDetail/" + id + "?type=android&userId=" + getLogUser(ParticularsActivity.this).getId());
                         }
                         return true;
                     }
                 }
                 return false;
+            }
+
+            @Override
+            public void onLoadResource(WebView view, String url) {
+                Log.d("GTT", "WebView3:" + view.getUrl() + "\\n" + "   URL3:" + url);
+                super.onLoadResource(view, url);
             }
         });
         webView.setOnKeyListener(new View.OnKeyListener() {
@@ -252,7 +274,7 @@ public class ParticularsActivity extends BaseActivtiy implements ICoreInfe {
         if (id == 0) {
             webView.loadUrl(url);
         } else {
-            webView.loadUrl("https://www.yikch.com/mobile/appShow/proDetail/" + id + ".json?type=android&userId=" + getLogUser(ParticularsActivity.this).getId());
+            webView.loadUrl("https://www.yikch.com/mobile/appShow/proDetail/" + id + "?type=android&userId=" + getLogUser(ParticularsActivity.this).getId());
         }
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -288,14 +310,21 @@ public class ParticularsActivity extends BaseActivtiy implements ICoreInfe {
                     return true;
                 } else if (url.contains("mobile/appShow/xiazhi")) {
                     Intent intent = new Intent(ParticularsActivity.this, H5SecActivity.class);
-                    intent.putExtra("http", "https://www.yikch.com/mobile/appShow/xiazhi?type=android");
+                    intent.putExtra("http", "https://www.yikch.com/mobile/appShow/xiazhi?type=android&userId=" + getLogUser(ParticularsActivity.this).getId());
                     intent.putExtra("title", "夏至福利");
+                    intent.putExtra("none", "no");
                     startActivity(intent);
                     return true;
                 } else if (url.contains("mobile/appShow/market")) {
                     Intent intent = new Intent(ParticularsActivity.this, H5SecActivity.class);
-                    intent.putExtra("http", "https://www.yikch.com/mobile/appShow/market?type=android");
+                    intent.putExtra("http", "https://www.yikch.com/mobile/appShow/market?type=android&userId=" + getLogUser(ParticularsActivity.this).getId());
                     intent.putExtra("title", "挚友超市");
+                    intent.putExtra("none", "no");
+                    startActivity(intent);
+                    return true;
+                } else if (url.contains("from=proDetail")) {
+                    Intent intent = new Intent(ParticularsActivity.this, ParticularsActivity.class);
+                    intent.putExtra("id", url + "&userId=" + getLogUser(ParticularsActivity.this).getId());
                     startActivity(intent);
                     return true;
                 } else {
@@ -323,6 +352,23 @@ public class ParticularsActivity extends BaseActivtiy implements ICoreInfe {
 
     }
 
+    @JavascriptInterface
+    public void goMoreEvaluateToAndroid(String msg) {
+        if (msg.equals("")) {
+            msg = "";
+        }
+        comm += msg + ",";
+        String[] split = comm.split(",");
+        if (split.length == 2) {
+            Intent intent = new Intent(ParticularsActivity.this, GoodComActivity.class);
+            intent.putExtra("detaid", split[0]);
+            intent.putExtra("goodid", split[1]);
+            Log.d("GTT",split[0]);
+            Log.d("GTT",split[1]);
+            startActivity(intent);
+            comm = "";
+        }
+    }
 
     @JavascriptInterface
     public void sayHello(String msg) {
@@ -414,7 +460,6 @@ public class ParticularsActivity extends BaseActivtiy implements ICoreInfe {
         }
         Cust += msg + ",";
         String[] split = Cust.split(",");
-
         if (split.length == 5) {
             Information info = new Information();
 //            //咨询内容
@@ -448,6 +493,7 @@ public class ParticularsActivity extends BaseActivtiy implements ICoreInfe {
         edit.commit();
         startActivity(new Intent(ParticularsActivity.this, PartiCarActivity.class));
     }
+
 
     @JavascriptInterface
     public void sayDetailShare(String msg) {
@@ -546,20 +592,7 @@ public class ParticularsActivity extends BaseActivtiy implements ICoreInfe {
 
     }
 
-    /**
-     * 创建订单
-     */
-    private class OrderBuy implements ICoreInfe {
-        @Override
-        public void success(Object data) {
 
-        }
-
-        @Override
-        public void fail(ApiException e) {
-
-        }
-    }
 
     /**
      * 购物车数量

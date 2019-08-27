@@ -2,12 +2,12 @@ package com.yikangcheng.admin.yikang.activity.siteactivity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.widget.ImageView;
@@ -31,12 +31,12 @@ import com.yikangcheng.admin.yikang.util.TwoBallRotationProgressBar;
 
 import java.util.List;
 
-import me.jessyan.autosize.internal.CustomAdapt;
+import butterknife.BindView;
 import me.leefeng.promptlibrary.PromptButton;
 import me.leefeng.promptlibrary.PromptButtonListener;
 import me.leefeng.promptlibrary.PromptDialog;
 
-public class AiteActivity extends BaseActivtiy implements ICoreInfe  {
+public class AiteActivity extends BaseActivtiy implements ICoreInfe {
     private ImageView mImgActivityAiteFanhui, address_null, img_activity_aite_fanhui;
     private RelativeLayout mToolbarActivityAite;
     private RecyclerView mRlvActivityAite;
@@ -52,7 +52,8 @@ public class AiteActivity extends BaseActivtiy implements ICoreInfe  {
     private int mPosition;
     private int mId;
     private TwoBallRotationProgressBar progress;
-
+    @BindView(R.id.title)
+    TextView title;
     @Override
     protected void initView() {
         Display display = this.getWindowManager().getDefaultDisplay();
@@ -67,10 +68,20 @@ public class AiteActivity extends BaseActivtiy implements ICoreInfe  {
         allAddressRecyclerAdapter = new AllAddressRecyclerAdapter(this);
         mImgActivityAiteFanhui = (ImageView) findViewById(R.id.img_activity_aite_fanhui);
         mToolbarActivityAite = (RelativeLayout) findViewById(R.id.toolbar_activity_aite);
+        mToolbarActivityAite.setBackgroundColor(Color.parseColor(getLogUser(this).getThemeColors()));
+        //标题字体颜色
+//        title.setTextColor(Color.parseColor());
         mRlvActivityAite = (RecyclerView) findViewById(R.id.rlv_activity_aite);
         address_null = (ImageView) findViewById(R.id.address_null);
         new_address = (TextView) findViewById(R.id.new_address);
+        /**
+         * 设置颜色
+         */
+        GradientDrawable myGrad = (GradientDrawable) new_address.getBackground();
+        myGrad.setColor(Color.parseColor(getLogUser(this).getThemeColors()));
         add_address = (TextView) findViewById(R.id.add_address);
+        GradientDrawable myGrad1 = (GradientDrawable) add_address.getBackground();
+        myGrad1.setColor(Color.parseColor(getLogUser(this).getThemeColors()));
         progress = (TwoBallRotationProgressBar) findViewById(R.id.progress);
         img_activity_aite_fanhui = (ImageView) findViewById(R.id.img_activity_aite_fanhui);
         nested = (NestedScrollView) findViewById(R.id.nested);
@@ -130,12 +141,14 @@ public class AiteActivity extends BaseActivtiy implements ICoreInfe  {
                 promptDialog.showWarnAlert("确定要删除吗？", confirm, Noconfirm);
             }
         });
-        confirm.setTextColor(Color.parseColor("#FFAF00"));
+        confirm.setTextColor(Color.parseColor(getLogUser(this).getThemeColors()));
         Noconfirm.setTextColor(Color.parseColor("#666666"));
-        /**
-         *  设置状态栏颜色
-         */
-        StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        //设置状态栏颜色
+        if (!getLogUser(this).getThemeColors().equals("")) {
+            StatusBarUtil.setStatusBarMode(this, true, Color.parseColor(getLogUser(this).getThemeColors()));
+        } else {
+            StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        }
         /**
          * 点击返回按钮关闭当前页面
          */

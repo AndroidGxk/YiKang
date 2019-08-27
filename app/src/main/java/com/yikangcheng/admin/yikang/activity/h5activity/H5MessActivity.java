@@ -2,6 +2,7 @@ package com.yikangcheng.admin.yikang.activity.h5activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +17,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.sobot.chat.SobotApi;
 import com.sobot.chat.api.model.Information;
@@ -25,12 +28,16 @@ import com.yikangcheng.admin.yikang.activity.adapter.shougang.ShouGangXiaoAdapte
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
+import org.w3c.dom.Text;
+
 import butterknife.BindView;
 
 public class H5MessActivity extends BaseActivtiy {
 
     @BindView(R.id.mess_recycler)
     RecyclerView mess_recycler;
+    @BindView(R.id.activity_myaccount)
+    RelativeLayout activity_myaccount;
     @BindView(R.id.webview)
     WebView webView;
     @BindView(R.id.pb_progress)
@@ -38,10 +45,20 @@ public class H5MessActivity extends BaseActivtiy {
     @BindView(R.id.back_img)
     ImageView back_img;
 
+    @BindView(R.id.title)
+    TextView title;
+
     @Override
     protected void initView() {
         //设置状态栏颜色
-        StatusBarUtil.setStatusBarMode(this, true, R.color.colorTab);
+        if (!getLogUser(this).getThemeColors().equals("")) {
+            StatusBarUtil.setStatusBarMode(this, true, Color.parseColor(getLogUser(this).getThemeColors()));
+        } else {
+            StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        }
+        activity_myaccount.setBackgroundColor(Color.parseColor(getLogUser(this).getThemeColors()));
+        //标题颜色
+//        title.setTextColor(Color.parseColor());
         mess_recycler.setLayoutManager(new LinearLayoutManager(H5MessActivity.this));
         mess_recycler.setAdapter(new ShouGangXiaoAdapter());
     }

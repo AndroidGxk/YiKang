@@ -10,11 +10,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.sqlite.dao.CreatOrderBeanDao;
 import com.example.sqlite.dao.DaoMaster;
 import com.example.sqlite.dao.DaoSession;
 import com.example.sqlite.dao.LoginBeanDao;
+import com.example.sqlite.dao.PayBeanDao;
 import com.example.sqlite.dao.UserDetailBeanDao;
+import com.yikangcheng.admin.yikang.bean.CreatOrderBean;
 import com.yikangcheng.admin.yikang.bean.LoginBean;
+import com.yikangcheng.admin.yikang.bean.PayBean;
 import com.yikangcheng.admin.yikang.bean.UserDetailBean;
 
 import java.util.List;
@@ -103,6 +107,8 @@ public abstract class BaseFragment extends Fragment {
         }
         return null;
     }
+
+
     /**
      * 删除用户登录数据库
      */
@@ -110,5 +116,60 @@ public abstract class BaseFragment extends Fragment {
         DaoSession daoSession = DaoMaster.newDevSession(context, LoginBeanDao.TABLENAME);
         LoginBeanDao loginBeanDao = daoSession.getLoginBeanDao();
         loginBeanDao.deleteAll();
+    }
+
+
+    /**
+     * 订单信息
+     */
+    public CreatOrderBean getOrderInfo(Context context) {
+        DaoSession daoSession = DaoMaster.newDevSession(context, CreatOrderBeanDao.TABLENAME);
+        CreatOrderBeanDao creatOrderBeanDao = daoSession.getCreatOrderBeanDao();
+        List<CreatOrderBean> beanList = creatOrderBeanDao.loadAll();
+        if (beanList.size() > 0) {
+            CreatOrderBean creatOrderBean = beanList.get(0);
+            return creatOrderBean;
+        }
+        return null;
+    }
+
+    /**
+     * 添加订单数据库
+     *
+     * @param context
+     * @param creatOrderBean
+     */
+    public void setOrderInfo(Context context, CreatOrderBean creatOrderBean) {
+        DaoSession daoSession = DaoMaster.newDevSession(context, CreatOrderBeanDao.TABLENAME);
+        CreatOrderBeanDao creatOrderBeanDao = daoSession.getCreatOrderBeanDao();
+        creatOrderBeanDao.deleteAll();
+        creatOrderBeanDao.insertOrReplace(creatOrderBean);
+    }
+
+    /**
+     * 重新支付
+     */
+    public PayBean getNewPayInfo(Context context) {
+        DaoSession daoSession = DaoMaster.newDevSession(context, PayBeanDao.TABLENAME);
+        PayBeanDao payBeanDao = daoSession.getPayBeanDao();
+        List<PayBean> beanList = payBeanDao.loadAll();
+        if (beanList.size() > 0) {
+            PayBean payBean = beanList.get(0);
+            return payBean;
+        }
+        return null;
+    }
+
+    /**
+     * 添加重新支付数据库
+     *
+     * @param context
+     * @param PayBeanDao
+     */
+    public void setNewPayInfo(Context context, PayBean payBean) {
+        DaoSession daoSession = DaoMaster.newDevSession(context, PayBeanDao.TABLENAME);
+        PayBeanDao payBeanDao = daoSession.getPayBeanDao();
+        payBeanDao.deleteAll();
+        payBeanDao.insertOrReplace(payBean);
     }
 }

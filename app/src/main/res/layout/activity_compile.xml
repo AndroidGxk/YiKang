@@ -9,6 +9,7 @@
     tools:context=".activity.fragment.wodezhanghu.BasicFragment">
 
     <RelativeLayout
+        android:id="@+id/rela"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@color/colorTab">
@@ -25,6 +26,7 @@
             android:src="@drawable/fanhui_seek" />
 
         <TextView
+            android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -200,13 +202,13 @@
 
     <TextView
         android:id="@+id/add_address"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="166dp"
+        android:layout_height="40dp"
         android:layout_centerInParent="true"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="62dp"
-        android:background="@drawable/baocunxinxi"
         android:gravity="center"
+        android:background="@drawable/shop_btn_shape"
         android:text="保存地址"
         android:textColor="@color/clolrBAai"
         android:textSize="14sp" />

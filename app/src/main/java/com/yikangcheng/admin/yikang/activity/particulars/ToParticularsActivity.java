@@ -57,7 +57,6 @@ import com.yikangcheng.admin.yikang.bean.ShopCarBean;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
 import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
 import com.yikangcheng.admin.yikang.presenter.AddShopPresenter;
-import com.yikangcheng.admin.yikang.presenter.OrderBuyPresenter;
 import com.yikangcheng.admin.yikang.presenter.ShopCarPresenter;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
@@ -74,7 +73,6 @@ public class ToParticularsActivity extends BaseActivtiy implements ICoreInfe {
     private String s = "";
     private AddShopPresenter addShopPresenter;
     private ImageView back_img, img_top;
-    private OrderBuyPresenter orderBuyPresenter;
     private ProgressBar pbProgress;
     private SmartRefreshLayout refreshLayout;
     String Cust = "";
@@ -151,7 +149,6 @@ public class ToParticularsActivity extends BaseActivtiy implements ICoreInfe {
             test1 = uri.getQueryParameter("id");
         }
         addShopPresenter = new AddShopPresenter(this);
-        orderBuyPresenter = new OrderBuyPresenter(new OrderBuy());
         logUser = getLogUser(ToParticularsActivity.this);
         if (logUser != null) {
             shopCarPresenter.request(logUser.getId());
@@ -581,20 +578,6 @@ public class ToParticularsActivity extends BaseActivtiy implements ICoreInfe {
 
     }
 
-    /**
-     * 创建订单
-     */
-    private class OrderBuy implements ICoreInfe {
-        @Override
-        public void success(Object data) {
-
-        }
-
-        @Override
-        public void fail(ApiException e) {
-
-        }
-    }
 
     /**
      * 购物车数量

@@ -1,6 +1,8 @@
 package com.yikangcheng.admin.yikang.activity.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,9 +33,11 @@ public class AwaitAdapter extends RecyclerView.Adapter {
     private Context mContext;
     public ArrayList<ObligationBean.OrderBean> mList = new ArrayList<>();
     private List<ObligationBean.OrderBean.OrderDetailsListBean> goodsize;
+    private String color;
 
-    public AwaitAdapter(Context context) {
+    public AwaitAdapter(Context context, String color) {
         this.mContext = context;
+        this.color = color;
     }
 
 
@@ -53,6 +57,11 @@ public class AwaitAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder vh, final int position) {
         goodsize = mList.get(position).getOrderDetailsList();
         if (vh instanceof DVhOne) {
+            ((DVhOne) vh).order_status.setTextColor(Color.parseColor(color));
+            ((DVhOne) vh).yellow_text.setTextColor(Color.parseColor(color));
+            GradientDrawable myGrad = (GradientDrawable) ((DVhOne) vh).yellow_text.getBackground();
+            myGrad.setStroke(2,Color.parseColor(color));
+
             ((DVhOne) vh).order_num.setText(mList.get(position).getOrderNo() + "");
             java.text.DecimalFormat myformat1 = new java.text.DecimalFormat("0.00");
             String moneyStr = myformat1.format(mList.get(position).getOrderDetailsList().get(0).getPrice());
@@ -72,7 +81,7 @@ public class AwaitAdapter extends RecyclerView.Adapter {
             ((DVhOne) vh).one_good_title.setText(mList.get(position).getOrderDetailsList().get(0).getShopName());
             ((DVhOne) vh).one_good_spec.setText(mList.get(position).getOrderDetailsList().get(0).getSpecNames());
             ((DVhOne) vh).one_good_num.setText("x" + mList.get(position).getOrderDetailsList().get(0).getBuyNum());
-            ((DVhOne) vh).order_sum.setText("¥" + myformat1.format( mList.get(position).getRealPrice()));
+            ((DVhOne) vh).order_sum.setText("¥" + myformat1.format(mList.get(position).getRealPrice()));
             RequestOptions requestOptions = new RequestOptions();
             requestOptions.placeholder(R.drawable.inco_log);
             requestOptions.fallback(R.drawable.inco_log);
@@ -100,11 +109,16 @@ public class AwaitAdapter extends RecyclerView.Adapter {
                 }
             });
         } else if (vh instanceof DVh) {
+            ((DVh) vh).mZhuangtai.setTextColor(Color.parseColor(color));
+            ((DVh) vh).yellow_text.setTextColor(Color.parseColor(color));
+            GradientDrawable myGrad = (GradientDrawable) ((DVh) vh).yellow_text.getBackground();
+            myGrad.setStroke(2,Color.parseColor(color));
+
             ((DVh) vh).price_num_line.getBackground().mutate().setAlpha(240);
             ((DVh) vh).mBianhao.setText(mList.get(position).getOrderNo() + "");
             java.text.DecimalFormat myformat1 = new java.text.DecimalFormat("0.00");
             String moneyStr = myformat1.format(mList.get(position).getRealPrice());
-            ((DVh) vh).mPrice.setText("¥" +moneyStr);
+            ((DVh) vh).mPrice.setText("¥" + moneyStr);
             ((DVh) vh).good_num.setText("共" + mList.get(position).getOrderDetailsList().size() + "件");
             if (mList.get(position).getOrderState().equals("SUCCESS")) {
                 ((DVh) vh).mZhuangtai.setText("已完成");

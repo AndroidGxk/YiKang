@@ -1,6 +1,8 @@
 package com.yikangcheng.admin.yikang.activity.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,9 +33,11 @@ public class All_A_Adapter extends RecyclerView.Adapter {
     private List<ALLBean.OrderBean.OrderDetailsListBean> goodsize;
     //多个商品再次购买
     private String goodsId = "";
+    private String color;
 
-    public All_A_Adapter(Context mContext) {
+    public All_A_Adapter(Context mContext, String color) {
         this.mContext = mContext;
+        this.color = color;
     }
 
     /**
@@ -80,6 +84,10 @@ public class All_A_Adapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder vh, final int position) {
         goodsize = orderBeans.get(position).getOrderDetailsList();
         if (vh instanceof DVhOne) {
+            ((DVhOne) vh).order_status.setTextColor(Color.parseColor(color));
+            ((DVhOne) vh).yellow_text.setTextColor(Color.parseColor(color));
+            GradientDrawable myGrad = (GradientDrawable) ((DVhOne) vh).yellow_text.getBackground();
+            myGrad.setStroke(2,Color.parseColor(color));
             ((DVhOne) vh).order_num.setText(orderBeans.get(position).getOrderNo() + "");
             java.text.DecimalFormat myformat1 = new java.text.DecimalFormat("0.00");
             String moneyStr = myformat1.format(orderBeans.get(position).getOrderDetailsList().get(0).getPrice());
@@ -163,6 +171,10 @@ public class All_A_Adapter extends RecyclerView.Adapter {
             });
 
         } else if (vh instanceof DVh) {
+            ((DVh) vh).mZhuangtai.setTextColor(Color.parseColor(color));
+            ((DVh) vh).yellow_text.setTextColor(Color.parseColor(color));
+            GradientDrawable myGrad = (GradientDrawable) ((DVh) vh).yellow_text.getBackground();
+            myGrad.setStroke(2,Color.parseColor(color));
             ((DVh) vh).price_num_line.getBackground().mutate().setAlpha(240);
             ((DVh) vh).mBianhao.setText(orderBeans.get(position).getOrderNo() + "");
             java.text.DecimalFormat myformat1 = new java.text.DecimalFormat("0.00");

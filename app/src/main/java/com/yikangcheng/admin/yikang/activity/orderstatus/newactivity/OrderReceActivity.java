@@ -2,6 +2,8 @@ package com.yikangcheng.admin.yikang.activity.orderstatus.newactivity;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Handler;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +14,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hjq.toast.ToastUtils;
@@ -89,6 +92,9 @@ public class OrderReceActivity extends BaseActivtiy implements ICoreInfe {
     TextView cancel_btn;
     @BindView(R.id.back_img)
     ImageView back_img;
+    @BindView(R.id.toolbar_activity_orderfrom)
+    RelativeLayout toolbar_activity_orderfrom;
+
     //待收货订单列表
     private OrderReceAdapter receAdapter;
     //接收订单ID
@@ -119,10 +125,16 @@ public class OrderReceActivity extends BaseActivtiy implements ICoreInfe {
 
     @Override
     protected void initView() {
-        /**
-         * 设置状态栏颜色
-         */
-        StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        //设置状态栏颜色
+        if (!getLogUser(this).getThemeColors().equals("")) {
+            StatusBarUtil.setStatusBarMode(this, true, Color.parseColor(getLogUser(this).getThemeColors()));
+        } else {
+            StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        }
+        toolbar_activity_orderfrom.setBackgroundColor(Color.parseColor(getLogUser(this).getThemeColors()));
+        cancel_btn.setTextColor(Color.parseColor(getLogUser(this).getThemeColors()));
+        GradientDrawable gradientDrawable = (GradientDrawable) cancel_btn.getBackground();
+        gradientDrawable.setStroke(2, Color.parseColor(getLogUser(this).getThemeColors()));
         /**
          * 订单详情
          */
@@ -146,7 +158,7 @@ public class OrderReceActivity extends BaseActivtiy implements ICoreInfe {
         /**
          * 订单详情Adapter
          */
-        receAdapter = new OrderReceAdapter(this);
+        receAdapter = new OrderReceAdapter(this, getLogUser(this).getThemeColors());
         /**
          * 点击事件
          */

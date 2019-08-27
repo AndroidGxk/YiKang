@@ -29,7 +29,11 @@ public class LoginBeanDao extends AbstractDao<LoginBean, Long> {
         public final static Property LastLoginTime = new Property(2, String.class, "lastLoginTime", false, "LAST_LOGIN_TIME");
         public final static Property Nickname = new Property(3, String.class, "nickname", false, "NICKNAME");
         public final static Property MemTime = new Property(4, String.class, "memTime", false, "MEM_TIME");
-        public final static Property Id = new Property(5, int.class, "id", false, "ID");
+        public final static Property ThemeColors = new Property(5, String.class, "themeColors", false, "THEME_COLORS");
+        public final static Property Id = new Property(6, int.class, "id", false, "ID");
+        public final static Property EnterId = new Property(7, int.class, "enterId", false, "ENTER_ID");
+        public final static Property Mobile = new Property(8, String.class, "mobile", false, "MOBILE");
+        public final static Property IsZeroPurchase = new Property(9, int.class, "isZeroPurchase", false, "IS_ZERO_PURCHASE");
     }
 
 
@@ -50,7 +54,11 @@ public class LoginBeanDao extends AbstractDao<LoginBean, Long> {
                 "\"LAST_LOGIN_TIME\" TEXT," + // 2: lastLoginTime
                 "\"NICKNAME\" TEXT," + // 3: nickname
                 "\"MEM_TIME\" TEXT," + // 4: memTime
-                "\"ID\" INTEGER NOT NULL );"); // 5: id
+                "\"THEME_COLORS\" TEXT," + // 5: themeColors
+                "\"ID\" INTEGER NOT NULL ," + // 6: id
+                "\"ENTER_ID\" INTEGER NOT NULL ," + // 7: enterId
+                "\"MOBILE\" TEXT," + // 8: mobile
+                "\"IS_ZERO_PURCHASE\" INTEGER NOT NULL );"); // 9: isZeroPurchase
     }
 
     /** Drops the underlying database table. */
@@ -79,7 +87,19 @@ public class LoginBeanDao extends AbstractDao<LoginBean, Long> {
         if (memTime != null) {
             stmt.bindString(5, memTime);
         }
-        stmt.bindLong(6, entity.getId());
+ 
+        String themeColors = entity.getThemeColors();
+        if (themeColors != null) {
+            stmt.bindString(6, themeColors);
+        }
+        stmt.bindLong(7, entity.getId());
+        stmt.bindLong(8, entity.getEnterId());
+ 
+        String mobile = entity.getMobile();
+        if (mobile != null) {
+            stmt.bindString(9, mobile);
+        }
+        stmt.bindLong(10, entity.getIsZeroPurchase());
     }
 
     @Override
@@ -102,7 +122,19 @@ public class LoginBeanDao extends AbstractDao<LoginBean, Long> {
         if (memTime != null) {
             stmt.bindString(5, memTime);
         }
-        stmt.bindLong(6, entity.getId());
+ 
+        String themeColors = entity.getThemeColors();
+        if (themeColors != null) {
+            stmt.bindString(6, themeColors);
+        }
+        stmt.bindLong(7, entity.getId());
+        stmt.bindLong(8, entity.getEnterId());
+ 
+        String mobile = entity.getMobile();
+        if (mobile != null) {
+            stmt.bindString(9, mobile);
+        }
+        stmt.bindLong(10, entity.getIsZeroPurchase());
     }
 
     @Override
@@ -118,7 +150,11 @@ public class LoginBeanDao extends AbstractDao<LoginBean, Long> {
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // lastLoginTime
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // nickname
             cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // memTime
-            cursor.getInt(offset + 5) // id
+            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // themeColors
+            cursor.getInt(offset + 6), // id
+            cursor.getInt(offset + 7), // enterId
+            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // mobile
+            cursor.getInt(offset + 9) // isZeroPurchase
         );
         return entity;
     }
@@ -130,7 +166,11 @@ public class LoginBeanDao extends AbstractDao<LoginBean, Long> {
         entity.setLastLoginTime(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setNickname(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setMemTime(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
-        entity.setId(cursor.getInt(offset + 5));
+        entity.setThemeColors(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
+        entity.setId(cursor.getInt(offset + 6));
+        entity.setEnterId(cursor.getInt(offset + 7));
+        entity.setMobile(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
+        entity.setIsZeroPurchase(cursor.getInt(offset + 9));
      }
     
     @Override

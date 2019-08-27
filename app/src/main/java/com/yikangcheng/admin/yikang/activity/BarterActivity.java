@@ -2,6 +2,7 @@ package com.yikangcheng.admin.yikang.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Build;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -27,7 +28,7 @@ public class BarterActivity extends BaseActivtiy {
     int count = 1;
     private WebView webView;
     private String pwd;
-    private long mobile;
+    private String mobile;
     private int id;
     private UserDetailBean logUser;
 
@@ -59,7 +60,12 @@ public class BarterActivity extends BaseActivtiy {
 
     @Override
     protected void initView() {
-        StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        //设置状态栏颜色
+        if (!getLogUser(this).getThemeColors().equals("")) {
+            StatusBarUtil.setStatusBarMode(this, true, Color.parseColor(getLogUser(this).getThemeColors()));
+        } else {
+            StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        }
         webView = (WebView) findViewById(R.id.webView);
         Intent intent = getIntent();
         SharedPreferences userId = getSharedPreferences("userInfo", MODE_PRIVATE);
@@ -92,7 +98,7 @@ public class BarterActivity extends BaseActivtiy {
                 //返回false，意味着请求过程里，不管有多少次的跳转请求（即新的请求地址），均交给webView自己处理，这也是此方法的默认处理
                 //返回true，说明你自己想根据url，做新的跳转，比如在判断url符合条件的情况下，我想让webView加载http://ask.csdn.net/questions/178242
                 if (url.toString().contains("sina.cn")) {
-                    webView.loadUrl("https://www.yikch.com/mobile/afterSale/applyRefund?detailsId=" + id + "&mobile=" + mobile + "&password=" + pwd + "&type=android");
+                    webView.loadUrl("https://www.yikch.com/mobile/afterSale/applyRefund?detailsId=" + id + "&mobile=" + mobile + "&password=" + pwd + "&type=android&userId="+getLogUser(BarterActivity.this).getId());
                     return true;
                 }
                 return false;
@@ -104,7 +110,8 @@ public class BarterActivity extends BaseActivtiy {
                 //返回true，说明你自己想根据url，做新的跳转，比如在判断url符合条件的情况下，我想让webView加载http://ask.csdn.net/questions/178242
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     if (request.getUrl().toString().contains("sina.cn")) {
-                        webView.loadUrl("https://www.yikch.com/mobile/afterSale/applyRefund?detailsId=" + id + "&mobile=" + mobile + "&password=" + pwd + "&type=android");
+                        webView.loadUrl("https://www.yikch.com/mobile/afterSale/applyRefund?detailsId=" + id + "&mobile=" + mobile + "&password=" + pwd + "&type=android&userId="+getLogUser(BarterActivity.this).getId());
+
                         return true;
                     }
                 }
@@ -132,7 +139,7 @@ public class BarterActivity extends BaseActivtiy {
         });
         webView.getSettings().setJavaScriptEnabled(true);
         webView.addJavascriptInterface(this, "ww");
-        webView.loadUrl("https://www.yikch.com/mobile/afterSale/applyRefund?detailsId=" + id + "&mobile=" + mobile + "&password=" + pwd + "&type=android");
+        webView.loadUrl("https://www.yikch.com/mobile/afterSale/applyRefund?detailsId=" + id + "&mobile=" + mobile + "&password=" + pwd + "&type=android&userId="+getLogUser(BarterActivity.this).getId());
     }
 
     @Override

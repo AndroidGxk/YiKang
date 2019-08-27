@@ -1,14 +1,18 @@
 package com.yikangcheng.admin.yikang.activity.fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.RelativeLayout;
@@ -33,10 +37,12 @@ import com.yikangcheng.admin.yikang.presenter.DeleteShopPresenter;
 import com.yikangcheng.admin.yikang.presenter.ShopCarPresenter;
 import com.yikangcheng.admin.yikang.presenter.UpdateCountPresenter;
 import com.yikangcheng.admin.yikang.util.SpacesItemDecoration;
+import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
 import java.io.Serializable;
 import java.util.List;
 
+import butterknife.BindView;
 import me.leefeng.promptlibrary.PromptButton;
 import me.leefeng.promptlibrary.PromptButtonListener;
 import me.leefeng.promptlibrary.PromptDialog;
@@ -67,20 +73,34 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
     private NestedScrollView nestedSV;
     private int mPage = 1;
     private static LoginBean logUser;
+    private Toolbar toolBar;
 
-
+    @BindView(R.id.tv_toolBar_title)
+    TextView tv_toolBar_title;
 
     @Override
     protected void initView(View view) {
+        //设置状态栏颜色
+        if (!getLogUser(getContext()).getThemeColors().equals("")) {
+            StatusBarUtil.setStatusBarMode((Activity) getContext(), true, Color.parseColor(getLogUser(getContext()).getThemeColors()));
+        } else {
+            StatusBarUtil.setStatusBarMode((Activity) getContext(), true, R.color.colorToolbar);
+        }
         logUser = getLogUser(getContext());
         //创建对象
         promptDialog = new PromptDialog(getActivity());
+        toolBar = (Toolbar) view.findViewById(R.id.toolBar);
+        toolBar.setBackgroundColor(Color.parseColor(getLogUser(getContext()).getThemeColors()));
+        //标题颜色
+//        tv_toolBar_title.setTextColor(Color.parseColor());
         //设置自定义属性
         promptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(100);
         shop_recycler = view.findViewById(R.id.shop_recycler);
         shop_recyclertwo = view.findViewById(R.id.shop_recyclertwo);
         all_check = view.findViewById(R.id.all_check);
         num_text = view.findViewById(R.id.num_text);
+        GradientDrawable myGrad = (GradientDrawable) num_text.getBackground();
+        myGrad.setColor(Color.parseColor(getLogUser(getContext()).getThemeColors()));
         diviline = view.findViewById(R.id.diviline);
         baseline = view.findViewById(R.id.baseline);
         dele_text = view.findViewById(R.id.dele_text);
@@ -322,6 +342,7 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
     public void onLoadMore() {
         mPage++;
     }
+
     public static void getRequest() {
         shopCarPresenter.request(logUser.getId());
     }

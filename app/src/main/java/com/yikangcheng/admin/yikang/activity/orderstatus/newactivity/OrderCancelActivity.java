@@ -1,6 +1,7 @@
 package com.yikangcheng.admin.yikang.activity.orderstatus.newactivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Handler;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hjq.toast.ToastUtils;
@@ -45,6 +47,8 @@ public class OrderCancelActivity extends BaseActivtiy implements ICoreInfe {
     RecyclerView recycle;
     @BindView(R.id.opneorclose_btn)
     LinearLayout opneorclose_btn;
+    @BindView(R.id.toolbar_activity_orderfrom)
+    RelativeLayout toolbar_activity_orderfrom;
     @BindView(R.id.text_open_close)
     TextView text_open_close;
     @BindView(R.id.image)
@@ -105,14 +109,18 @@ public class OrderCancelActivity extends BaseActivtiy implements ICoreInfe {
 
     @Override
     protected void initView() {
-        /**
-         * 设置状态栏颜色
-         */
-        StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        //设置状态栏颜色
+        if (!getLogUser(this).getThemeColors().equals("")) {
+            StatusBarUtil.setStatusBarMode(this, true, Color.parseColor(getLogUser(this).getThemeColors()));
+        } else {
+            StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        }
+        toolbar_activity_orderfrom.setBackgroundColor(Color.parseColor(getLogUser(this).getThemeColors()));
+        delete_btn.setTextColor(Color.parseColor(getLogUser(this).getThemeColors()));
         /**
          * 订单详情Adapter
          */
-        canceAdapter = new OrderCanceAdapter(this);
+        canceAdapter = new OrderCanceAdapter(this, getLogUser(this).getThemeColors());
         /**
          * 订单详情
          */

@@ -2,9 +2,11 @@ package com.yikangcheng.admin.yikang.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yikangcheng.admin.yikang.R;
@@ -22,8 +24,12 @@ public class PayResultActivity extends BaseActivtiy   {
 
     @Override
     protected void initView() {
-        //设置标题栏颜色
-        StatusBarUtil.setStatusBarMode(this, true, R.color.colorTab);
+        //设置状态栏颜色
+        if (!getLogUser(this).getThemeColors().equals("")) {
+            StatusBarUtil.setStatusBarMode(this, true, Color.parseColor(getLogUser(this).getThemeColors()));
+        } else {
+            StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        }
         WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         int height = wm.getDefaultDisplay().getHeight();
         width = wm.getDefaultDisplay().getWidth();

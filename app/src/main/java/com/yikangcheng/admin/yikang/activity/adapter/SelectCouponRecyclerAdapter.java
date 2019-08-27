@@ -63,14 +63,6 @@ public class SelectCouponRecyclerAdapter extends RecyclerView.Adapter<SelectCoup
         } else if (couponusableBean.getType() == 2) {
             vh.type_text.setText("满减券");
         }
-//        vh.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (onClickListener != null) {
-//                    onClickListener.onClick(couponusableBean.getId(), couponusableBean.getAmount());
-//                }
-//            }
-//        });
         vh.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

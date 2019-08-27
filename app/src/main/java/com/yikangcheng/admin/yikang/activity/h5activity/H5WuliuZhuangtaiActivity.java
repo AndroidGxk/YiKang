@@ -2,6 +2,7 @@ package com.yikangcheng.admin.yikang.activity.h5activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.view.KeyEvent;
 import android.view.View;
@@ -13,6 +14,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.particulars.ParticularsActivity;
@@ -20,21 +23,34 @@ import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.LoginBean;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
+import butterknife.BindView;
+
 public class H5WuliuZhuangtaiActivity extends BaseActivtiy {
     private static WebView webView;
     private ProgressBar pbProgress;
     private ImageView img_top;
     private String url;
     private LoginBean loginBean;
+    private RelativeLayout tabl;
+    @BindView(R.id.title_text)
+    TextView title_text;
 
     @Override
     protected void initView() {
         //设置状态栏颜色
-        StatusBarUtil.setStatusBarMode(this, true, R.color.colorTab);
+        if (!getLogUser(this).getThemeColors().equals("")) {
+            StatusBarUtil.setStatusBarMode(this, true, Color.parseColor(getLogUser(this).getThemeColors()));
+        } else {
+            StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        }
         Intent intent = getIntent();
         url = intent.getStringExtra("http");
         //进度条
         pbProgress = (ProgressBar) findViewById(R.id.pb_progress);
+        tabl = (RelativeLayout) findViewById(R.id.tabl);
+        tabl.setBackgroundColor(Color.parseColor(getLogUser(this).getThemeColors()));
+        //标题颜色
+//        title_text.setTextColor(Color.parseColor());
         img_top = (ImageView) findViewById(R.id.img_top);
         webView = (WebView) findViewById(R.id.webView);
     }

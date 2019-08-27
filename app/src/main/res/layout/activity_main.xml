@@ -47,7 +47,14 @@
                     android:layout_height="27dp"
                     android:background="@drawable/radio_sele_shou"
                     android:button="@null"
-                    android:gravity="center" />
+                    android:gravity="center"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/shou_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/shouye" />
 
                 <TextView
                     android:id="@+id/shou_text"
@@ -74,7 +81,14 @@
                     android:layout_height="26dp"
                     android:background="@drawable/radio_sele_fen"
                     android:button="@null"
-                    android:gravity="center" />
+                    android:gravity="center"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/fen_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/fenlei" />
 
                 <TextView
                     android:id="@+id/fen_text"
@@ -93,22 +107,17 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <RadioButton
-                    android:id="@+id/miao"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_weight="1"
-                    android:background="@drawable/qiandaofanxian"
-                    android:button="@null"
-                    android:gravity="center" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/comm_fanxian" />
 
                 <TextView
                     android:id="@+id/miao_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="7dp"
-                    android:text="签到返现"
+                    android:text="评论返现购"
                     android:textColor="#333333"
                     android:textSize="10sp" />
             </LinearLayout>
@@ -133,7 +142,14 @@
                         android:layout_height="29dp"
                         android:layout_marginTop="-2dp"
                         android:background="@drawable/radio_sele_gou"
-                        android:button="@null" />
+                        android:button="@null"
+                        android:visibility="gone" />
+
+                    <ImageView
+                        android:id="@+id/gou_img"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/gouwuche" />
 
                     <TextView
                         android:id="@+id/gou_text"
@@ -173,7 +189,14 @@
                     android:layout_width="29dp"
                     android:layout_height="29dp"
                     android:background="@drawable/radio_sele_wo"
-                    android:button="@null" />
+                    android:button="@null"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/wo_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/wode" />
 
                 <TextView
                     android:id="@+id/wo_text"

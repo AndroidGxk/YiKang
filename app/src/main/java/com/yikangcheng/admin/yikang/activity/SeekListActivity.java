@@ -52,6 +52,7 @@ public class SeekListActivity extends BaseActivtiy implements ICoreInfe, View.On
     private TextView zonghe, xiaoliang, price_text;
     private RelativeLayout price;
     private RelativeLayout relat_one;
+    private RelativeLayout table;
     private ImageView qiehuan, back_img;
     private boolean zclick = true, xclick, pclick, qclick = true, pimgclick = true;
     private int id;
@@ -67,7 +68,14 @@ public class SeekListActivity extends BaseActivtiy implements ICoreInfe, View.On
 
     @Override
     protected void initView() {
-        StatusBarUtil.setStatusBarMode(this, true, R.color.colorTab);
+        //设置状态栏颜色
+        if (!getLogUser(this).getThemeColors().equals("")) {
+            StatusBarUtil.setStatusBarMode(this, true, Color.parseColor(getLogUser(this).getThemeColors()));
+        } else {
+            StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        }
+        table = (RelativeLayout) findViewById(R.id.table);
+        table.setBackgroundColor(Color.parseColor(getLogUser(this).getThemeColors()));
         WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         width = wm.getDefaultDisplay().getWidth();
         Intent intent = getIntent();

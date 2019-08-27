@@ -1,6 +1,8 @@
 package com.yikangcheng.admin.yikang.activity.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -34,10 +36,11 @@ public class CompletedlishAdapter_A extends RecyclerView.Adapter {
     private Context mContent;
     public List<HaveSignBean.OrderBean> mLists = new ArrayList<>();
     private List<HaveSignBean.OrderBean.OrderDetailsListBean> goodsize;
+    private String color;
 
-
-    public CompletedlishAdapter_A(Context context) {
+    public CompletedlishAdapter_A(Context context, String color) {
         this.mContent = context;
+        this.color = color;
     }
 
     /**
@@ -75,7 +78,7 @@ public class CompletedlishAdapter_A extends RecyclerView.Adapter {
         if (viewType == 1) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.order_new_one_recycler_item_quxiao, parent, false);
             return new DVhOne(view);
-        } else  {
+        } else {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.order_new_recycler_item_quxiao, parent, false);
             return new DVh(view);
         }
@@ -86,9 +89,12 @@ public class CompletedlishAdapter_A extends RecyclerView.Adapter {
         goodsize = mLists.get(position).getOrderDetailsList();
         if (goodsize != null) {
             if (vh instanceof DVhOne) {
+                ((DVhOne) vh).order_status.setTextColor(Color.parseColor(color));
+                ((DVhOne) vh).yellow_text.setTextColor(Color.parseColor(color));
+                GradientDrawable myGrad = (GradientDrawable) ((DVhOne) vh).yellow_text.getBackground();
+                myGrad.setStroke(2, Color.parseColor(color));
                 ((DVhOne) vh).order_num.setText(mLists.get(position).getOrderNo() + "");
                 java.text.DecimalFormat myformat1 = new java.text.DecimalFormat("0.00");
-
                 String moneyStr = myformat1.format(mLists.get(position).getOrderDetailsList().get(0).getPrice());
                 ((DVhOne) vh).one_good_price.setText("¥" + moneyStr);
                 if (mLists.get(position).getOrderState().equals("SUCCESS")) {
@@ -145,7 +151,10 @@ public class CompletedlishAdapter_A extends RecyclerView.Adapter {
                     }
                 });
             } else if (vh instanceof DVh) {
-
+                ((DVh) vh).mZhuangtai.setTextColor(Color.parseColor(color));
+                ((DVh) vh).yellow_text.setTextColor(Color.parseColor(color));
+                GradientDrawable myGrad = (GradientDrawable) ((DVh) vh).yellow_text.getBackground();
+                myGrad.setStroke(2, Color.parseColor(color));
                 ((DVh) vh).price_num_line.getBackground().mutate().setAlpha(240);
                 ((DVh) vh).mBianhao.setText(mLists.get(position).getOrderNo() + "");
                 java.text.DecimalFormat myformat1 = new java.text.DecimalFormat("0.00");
@@ -164,6 +173,7 @@ public class CompletedlishAdapter_A extends RecyclerView.Adapter {
                 if (mLists.get(position).getOrderState().equals("INIT")) {
                     ((DVh) vh).mZhuangtai.setText("等待支付");
                 }
+
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContent, LinearLayoutManager.HORIZONTAL, false);
                 ((DVh) vh).mRlv.setLayoutManager(linearLayoutManager);
                 CompletedlishAdapter_B all_b_adapter = new CompletedlishAdapter_B(mContent);
@@ -198,6 +208,7 @@ public class CompletedlishAdapter_A extends RecyclerView.Adapter {
                         }
                     }
                 });
+
                 /**
                  * 跳转详情
                  */
@@ -210,7 +221,7 @@ public class CompletedlishAdapter_A extends RecyclerView.Adapter {
                     }
                 });
             }
-        }else{
+        } else {
             ((DVhOne) vh).delete_text.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -303,12 +314,14 @@ public class CompletedlishAdapter_A extends RecyclerView.Adapter {
             delete_text = itemView.findViewById(R.id.delete_text);
         }
     }
-    class NullView extends RecyclerView.ViewHolder{
+
+    class NullView extends RecyclerView.ViewHolder {
 
         public NullView(View itemView) {
             super(itemView);
         }
     }
+
     @Override
     public int getItemCount() {
         return mLists.size();
@@ -365,5 +378,15 @@ public class CompletedlishAdapter_A extends RecyclerView.Adapter {
 
     public void setOnPartiCliclListener(onPartiCliclListener onPartiCliclListener) {
         this.onPartiCliclListener = onPartiCliclListener;
+    }
+
+    public interface onClicklistener {
+        void onClick(int id, int lago);
+    }
+
+    onClicklistener onClicklistener;
+
+    public void setOnClicklistener(CompletedlishAdapter_A.onClicklistener onClicklistener) {
+        this.onClicklistener = onClicklistener;
     }
 }

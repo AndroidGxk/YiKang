@@ -2,8 +2,10 @@
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nested"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:overScrollMode="never"
     android:background="@drawable/denglu_bg_new"
     tools:context=".activity.RegisterActivity">
 
@@ -42,8 +44,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@null"
-                android:inputType="number"
                 android:hint="请输入手机号"
+                android:inputType="number"
                 android:maxLength="11"
                 android:textColor="#FFFFFF"
                 android:textColorHint="#7F7F7F"
@@ -69,9 +71,9 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="62dp"
                 android:layout_weight="1"
-                android:inputType="number"
                 android:background="@null"
                 android:hint="请输入验证码"
+                android:inputType="number"
                 android:textColor="#FFFFFF"
                 android:textColorHint="#7F7F7F"
                 android:textSize="13sp" />
@@ -204,15 +206,47 @@
                 android:textSize="12sp" />
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/xieyi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/log_image"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/xieyi_check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/check_selector"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="我已阅读并同意企挚友"
+                android:textColor="#cccc" />
+
+            <TextView
+                android:id="@+id/user_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="《用户注册协议》"
+                android:textColor="@color/colorPrimary" />
+        </LinearLayout>
+
         <TextView
             android:id="@+id/register_btn"
             android:layout_width="210dp"
             android:layout_height="50dp"
-            android:layout_below="@+id/log_image"
+            android:layout_below="@+id/xieyi"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="25dp"
-            android:background="@drawable/yellow_pay_shi_shape"
+            android:background="@drawable/baocunxinxi"
             android:gravity="center"
             android:text="注册"
             android:textColor="#ffffffff"

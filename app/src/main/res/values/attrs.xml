@@ -19,13 +19,13 @@
     </declare-styleable>
     <declare-styleable name="SlideDetailsLayout">
         <!-- float value for indicate the moment of switch panel-->
-        <attr name="percent" format="float"/>
+        <attr name="percent" format="float" />
         <!-- how long the animation keep-->
-        <attr name="duration" format="integer"/>
+        <attr name="duration" format="integer" />
         <!-- default panel to show after init-->
         <attr name="default_panel" format="enum">
-            <enum name="front" value="0"/>
-            <enum name="behind" value="1"/>
+            <enum name="front" value="0" />
+            <enum name="behind" value="1" />
         </attr>
     </declare-styleable>
     <declare-styleable name="FilterView">
@@ -48,5 +48,25 @@
         <attr name="android:checked" />
         <!-- 是否禁用 -->
         <attr name="android:enabled" />
+    </declare-styleable>
+    <declare-styleable name="RatingBar">
+        <!--星星间距-->
+        <attr name="starDistance" format="dimension" />
+        <!--星星大小-->
+        <attr name="starSize" format="dimension" />
+        <!--星星个数-->
+        <attr name="starCount" format="integer" />
+        <!--星星空图-->
+        <attr name="starEmpty" format="reference" />
+        <!--星星满图-->
+        <attr name="starFill" format="reference" />
+    </declare-styleable>
+    <!--textview-->
+    <declare-styleable name="FolderTextView">
+        <attr name="foldText" format="string"/>
+        <attr name="unFoldText" format="string"/>
+        <attr name="foldLine" format="integer"/>
+        <attr name="tailTextColor" format="color"/>
+        <attr name="canFoldAgain" format="boolean"/>
     </declare-styleable>
 </resources>

@@ -2,6 +2,7 @@ package com.yikangcheng.admin.yikang.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,6 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.adapter.FenLeiAAdapter;
@@ -24,6 +27,7 @@ import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
 import java.util.List;
 
+import butterknife.BindView;
 import me.jessyan.autosize.internal.CustomAdapt;
 
 public class ClassifyHomeActivity extends BaseActivtiy implements ICoreInfe {
@@ -39,11 +43,20 @@ public class ClassifyHomeActivity extends BaseActivtiy implements ICoreInfe {
     private String id;
     private int recI;
     private int width;
-
+    private RelativeLayout rela;
+    @BindView(R.id.title)
+    TextView title;
     @Override
     protected void initView() {
         //设置状态栏颜色
-        StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        if (!getLogUser(this).getThemeColors().equals("")) {
+            StatusBarUtil.setStatusBarMode(this, true, Color.parseColor(getLogUser(this).getThemeColors()));
+        } else {
+            StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        }
+        rela = (RelativeLayout) findViewById(R.id.rela);
+        rela.setBackgroundColor(Color.parseColor(getLogUser(this).getThemeColors()));
+//        title.setTextColor(Color.parseColor());
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
         WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);

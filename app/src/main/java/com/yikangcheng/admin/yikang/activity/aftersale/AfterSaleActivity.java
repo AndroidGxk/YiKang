@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -60,7 +61,7 @@ public class AfterSaleActivity extends BaseActivtiy implements  ICoreInfe {
     private String s = "";
     private UserDetailBean logUser;
     private String pwd;
-    private long mobile;
+    private String mobile;
     private AfterSaleStatusPresenter afterSaleStatusPresenter;
 
     /**
@@ -93,8 +94,12 @@ public class AfterSaleActivity extends BaseActivtiy implements  ICoreInfe {
     @SuppressLint("JavascriptInterface")
     @Override
     protected void initView() {
-//        //设置状态栏颜色
-        StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        //设置状态栏颜色
+        if (!getLogUser(this).getThemeColors().equals("")) {
+            StatusBarUtil.setStatusBarMode(this, true, Color.parseColor(getLogUser(this).getThemeColors()));
+        } else {
+            StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        }
         afterSaleStatusPresenter = new AfterSaleStatusPresenter(this);
         logUser = getUserInfo(this);
         Display display = this.getWindowManager().getDefaultDisplay();
@@ -227,9 +232,9 @@ public class AfterSaleActivity extends BaseActivtiy implements  ICoreInfe {
                 //返回true，说明你自己想根据url，做新的跳转，比如在判断url符合条件的情况下，我想让webView加载http://ask.csdn.net/questions/178242
                 if (url.toString().contains("sina.cn")) {
                     if (stitu.equals("0")) {
-                        webView.loadUrl("https://www.yikch.com/mobile/afterSale/applyChange?detailsId=" + id + "&mobile=" + mobile + "&password=" + pwd + "&type=android");
+                        webView.loadUrl("https://www.yikch.com/mobile/afterSale/applyChange?detailsId=" + id + "&mobile=" + mobile + "&password=" + pwd + "&type=android&userId=" + getLogUser(AfterSaleActivity.this).getId());
                     } else {
-                        webView.loadUrl("https://www.yikch.com/mobile/afterSale/lookSaleApply?detailsId=" + id + "&mobile=" + mobile + "&password=" + pwd + "&type=android");
+                        webView.loadUrl("https://www.yikch.com/mobile/afterSale/lookSaleApply?detailsId=" + id + "&mobile=" + mobile + "&password=" + pwd + "&type=android=" + getLogUser(AfterSaleActivity.this).getId());
                     }
                     return true;
                 }
@@ -243,9 +248,9 @@ public class AfterSaleActivity extends BaseActivtiy implements  ICoreInfe {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     if (request.getUrl().toString().contains("sina.cn")) {
                         if (stitu.equals("0")) {
-                            webView.loadUrl("https://www.yikch.com/mobile/afterSale/applyChange?detailsId=" + id + "&mobile=" + mobile + "&password=" + pwd + "&type=android");
+                            webView.loadUrl("https://www.yikch.com/mobile/afterSale/applyChange?detailsId=" + id + "&mobile=" + mobile + "&password=" + pwd + "&type=android&userId=" + getLogUser(AfterSaleActivity.this).getId());
                         } else {
-                            webView.loadUrl("https://www.yikch.com/mobile/afterSale/lookSaleApply?detailsId=" + id + "&mobile=" + mobile + "&password=" + pwd + "&type=android");
+                            webView.loadUrl("https://www.yikch.com/mobile/afterSale/lookSaleApply?detailsId=" + id + "&mobile=" + mobile + "&password=" + pwd + "&type=android=" + getLogUser(AfterSaleActivity.this).getId());
                         }
                         return true;
                     }
@@ -254,9 +259,9 @@ public class AfterSaleActivity extends BaseActivtiy implements  ICoreInfe {
             }
         });
         if (stitu.equals("0")) {
-            webView.loadUrl("https://www.yikch.com/mobile/afterSale/applyChange?detailsId=" + id + "&mobile=" + mobile + "&password=" + pwd + "&type=android");
+            webView.loadUrl("https://www.yikch.com/mobile/afterSale/applyChange?detailsId=" + id + "&mobile=" + mobile + "&password=" + pwd + "&type=android&userId=" + getLogUser(AfterSaleActivity.this).getId());
         } else {
-            webView.loadUrl("https://www.yikch.com/mobile/afterSale/lookSaleApply?detailsId=" + id + "&mobile=" + mobile + "&password=" + pwd + "&type=android");
+            webView.loadUrl("https://www.yikch.com/mobile/afterSale/lookSaleApply?detailsId=" + id + "&mobile=" + mobile + "&password=" + pwd + "&type=android=" + getLogUser(AfterSaleActivity.this).getId());
         }
     }
 

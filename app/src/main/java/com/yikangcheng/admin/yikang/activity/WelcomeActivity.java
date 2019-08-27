@@ -3,9 +3,6 @@ package com.yikangcheng.admin.yikang.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -13,15 +10,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.webkit.WebView;
 import android.widget.ImageView;
 
-import com.hjq.toast.ToastUtils;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.fragment.introduction.Introduction_one;
 import com.yikangcheng.admin.yikang.activity.fragment.introduction.Introduction_three;
 import com.yikangcheng.admin.yikang.activity.fragment.introduction.Introduction_two;
-import com.yikangcheng.admin.yikang.activity.particulars.ToParticularsActivity;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.AdvertBean;
 import com.yikangcheng.admin.yikang.bean.LoginBean;
@@ -71,9 +65,7 @@ public class WelcomeActivity extends BaseActivtiy implements ICoreInfe {
                     startActivity(new Intent(WelcomeActivity.this, AdvertActivity.class));
                     finish();
                 }
-
             } else if (msg.what == 0) {
-                ToastUtils.show(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory() + "/test.jpg").toString());
             }
         }
     };
@@ -85,6 +77,7 @@ public class WelcomeActivity extends BaseActivtiy implements ICoreInfe {
     @Override
     protected void initView() {
         closeSwipeBack();
+        StatusBarUtil.setStatusBarMode(this, true, R.color.transparent);
         mPermissionsChecker = new PermissionsChecker(this);
         //创建对象
         promptDialog = new PromptDialog(this);
@@ -155,7 +148,7 @@ public class WelcomeActivity extends BaseActivtiy implements ICoreInfe {
     @Override
     protected void initEventData() {
         advertPresenter = new AdvertPresenter(this);
-        advertPresenter.request();
+//        advertPresenter.request();
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.yikangcheng.admin.yikang.activity.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -22,9 +23,10 @@ public class AddressRecyclerAdapter extends RecyclerView.Adapter<AddressRecycler
     //记录下标
     private int mPosition = 0;
     Context context;
-
-    public AddressRecyclerAdapter(Context context) {
+    String color;
+    public AddressRecyclerAdapter(Context context,String color) {
         this.context = context;
+        this.color = color;
     }
 
     public void addAll(List<ProvinceBean> stringList) {
@@ -58,7 +60,7 @@ public class AddressRecyclerAdapter extends RecyclerView.Adapter<AddressRecycler
             }
         });
         if (mPosition == position) {
-            vh.city_text.setTextColor(context.getResources().getColor(R.color.colorTab));
+            vh.city_text.setTextColor(Color.parseColor(color));
         } else {
             vh.city_text.setTextColor(context.getResources().getColor(R.color.colorText));
         }

@@ -19,11 +19,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/clolrBAai">
-
-        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+        <com.scwang.smartrefresh.header.StoreHouseHeader
+            android:id="@+id/storeHouseHeader"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
+            android:layout_height="100dp"
+            app:shhLineWidth="2dp"
+            app:shhText="QiZhiYou" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"

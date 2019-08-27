@@ -3,6 +3,7 @@ package com.yikangcheng.admin.yikang.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
@@ -10,6 +11,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.hjq.toast.ToastUtils;
 import com.yikangcheng.admin.yikang.R;
@@ -24,6 +27,7 @@ import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
 import java.io.File;
 
+import butterknife.BindView;
 import me.leefeng.promptlibrary.PromptButton;
 import me.leefeng.promptlibrary.PromptButtonListener;
 import me.leefeng.promptlibrary.PromptDialog;
@@ -38,11 +42,21 @@ public class PhotoActivity extends BaseActivtiy {
     private PromptDialog promptDialog;
     private PromptButton cancle;
     private GoswfPresenter goswfPresenter;
+    private RelativeLayout table;
     private String path;
-
+    @BindView(R.id.title)
+    TextView title;
     @Override
     protected void initView() {
-        StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        //设置状态栏颜色
+        if (!getLogUser(this).getThemeColors().equals("")) {
+            StatusBarUtil.setStatusBarMode(this, true, Color.parseColor(getLogUser(this).getThemeColors()));
+        } else {
+            StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        }
+        table = (RelativeLayout) findViewById(R.id.table);
+        table.setBackgroundColor(Color.parseColor(getLogUser(this).getThemeColors()));
+//        title.setTextColor(Color.parseColor());
         //创建对象
         promptDialog = new PromptDialog(PhotoActivity.this);
         //设置自定义属性

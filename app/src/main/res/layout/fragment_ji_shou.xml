@@ -80,101 +80,11 @@
                     app:setTextSize="11sp" />
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/line1"
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recy"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tuijian_img"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginBottom="15dp">
-
-                <ImageView
-                    android:id="@+id/qiandao_img"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/quanyuanfanxiangou" />
-
-                <ImageView
-                    android:id="@+id/yousheng_imag"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/qizhiyou_neigou" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/line2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/line1"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginBottom="15dp">
-
-                <ImageView
-                    android:id="@+id/shop_imag"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/qizhiyou_shangcheng" />
-
-                <ImageView
-                    android:id="@+id/shenghuo_img"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/qizhiyou_qixi" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/line3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/line2"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginBottom="15dp">
-
-                <ImageView
-                    android:id="@+id/lvyou_img"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/qizhiyou_zhoubian" />
-
-                <ImageView
-                    android:id="@+id/jiankang"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/qizhiyou_fuli" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/line4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/line3"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginBottom="55dp">
-
-                <ImageView
-                    android:id="@+id/fanka_img"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/qizhiyou_jiankang" />
-
-                <ImageView
-                    android:id="@+id/zhineng_img"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/qizhiyou_yundong" />
-            </LinearLayout>
+                android:layout_below="@+id/tuijian_img" />
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
 </RelativeLayout>

@@ -1,6 +1,8 @@
 package com.yikangcheng.admin.yikang.activity.fragment.wodezhanghu;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -34,6 +36,7 @@ public class AmendFragment extends BaseFragment implements ICoreInfe {
     private int mCount = 60;
     private RelativeLayout reLayout_fragment_basic_save;
     private EditText moblie, newpwd_text, newpwd_texts;
+    private TextView text;
     /**
      * 倒计时
      */
@@ -67,6 +70,12 @@ public class AmendFragment extends BaseFragment implements ICoreInfe {
         moblie = view.findViewById(R.id.set_moblie);
         newpwd_text = view.findViewById(R.id.newpwd);
         newpwd_texts = view.findViewById(R.id.newpwds);
+        text = view.findViewById(R.id.text);
+
+        GradientDrawable myGrad = (GradientDrawable) text.getBackground();
+        myGrad.setColor(Color.parseColor(getLogUser(getContext()).getThemeColors()));
+        GradientDrawable myGrad1 = (GradientDrawable) moblie_text.getBackground();
+        myGrad1.setColor(Color.parseColor(getLogUser(getContext()).getThemeColors()));
         reLayout_fragment_basic_save = view.findViewById(R.id.reLayout_fragment_basic_save);
         //修改密码
         retrievePwdPresenter = new RetrievePwdPresenter(this);

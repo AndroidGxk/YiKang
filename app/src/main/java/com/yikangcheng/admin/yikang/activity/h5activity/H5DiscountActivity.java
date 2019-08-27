@@ -2,6 +2,7 @@ package com.yikangcheng.admin.yikang.activity.h5activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.view.KeyEvent;
@@ -34,7 +35,11 @@ public class H5DiscountActivity extends BaseActivtiy {
     @Override
     protected void initView() {
         //设置状态栏颜色
-        StatusBarUtil.setStatusBarMode(this, true, R.color.colorTab);
+        if (!getLogUser(this).getThemeColors().equals("")) {
+            StatusBarUtil.setStatusBarMode(this, true, Color.parseColor(getLogUser(this).getThemeColors()));
+        } else {
+            StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        }
         Intent intent = getIntent();
         url = intent.getStringExtra("http");
         //进度条

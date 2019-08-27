@@ -14,7 +14,6 @@
         android:id="@+id/toolbar_activity_orderfrom"
         android:layout_width="match_parent"
         android:layout_height="42dp"
-
         android:background="@color/colorTab">
 
         <ImageView

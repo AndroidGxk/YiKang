@@ -40,8 +40,8 @@
         android:id="@+id/img"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_centerInParent="true"
-        android:background="@drawable/pay_succeed" />
+        android:src="@drawable/pay_succeed"
+        android:layout_centerInParent="true" />
 
     <TextView
         android:id="@+id/text"

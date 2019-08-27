@@ -1,6 +1,8 @@
 package com.yikangcheng.admin.yikang.activity.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,9 +24,11 @@ public class FenLeiAdapter extends RecyclerView.Adapter<FenLeiAdapter.Vh> {
     private List<ClassifyListOneBean> stringList = new ArrayList<>();
     private int mPosition;
     private Context context;
+    private String color;
 
-    public FenLeiAdapter(Context context) {
+    public FenLeiAdapter(Context context, String color) {
         this.context = context;
+        this.color = color;
     }
 
     public void addAll(List<ClassifyListOneBean> stringList) {
@@ -53,10 +57,13 @@ public class FenLeiAdapter extends RecyclerView.Adapter<FenLeiAdapter.Vh> {
         });
         for (int i = 0; i < stringList.size(); i++) {
             if (mPosition == position) {
-                vh.textView.setTextColor(context.getResources().getColor(R.color.colorTab));
-                vh.itemView.setBackgroundResource(R.drawable.fen_text_check_true);
+                vh.view.setVisibility(View.VISIBLE);
+                vh.view.setBackgroundColor(Color.parseColor(color));
                 vh.textView.setTextSize(13);
+                vh.textView.setTextColor(Color.parseColor(color));
+                vh.itemView.setBackgroundColor(context.getResources().getColor(R.color.clolrBAai));
             } else {
+                vh.view.setVisibility(View.INVISIBLE);
                 vh.textView.setTextColor(context.getResources().getColor(R.color.colorText));
                 vh.itemView.setBackgroundColor(context.getResources().getColor(R.color.colorTouMing));
                 vh.textView.setTextSize(13);
@@ -71,10 +78,12 @@ public class FenLeiAdapter extends RecyclerView.Adapter<FenLeiAdapter.Vh> {
 
     class Vh extends RecyclerView.ViewHolder {
         TextView textView;
+        View view;
 
         public Vh(View itemView) {
             super(itemView);
             textView = (TextView) itemView.findViewById(R.id.tv_item_zuo);
+            view = (View) itemView.findViewById(R.id.view);
         }
     }
 

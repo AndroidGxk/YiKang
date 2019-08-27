@@ -99,7 +99,7 @@ public class AccomplishFragment extends BaseFragment implements ICoreInfe {
     @SuppressLint("NewApi")
     @Override
     protected void initView(View view) {
-        aAdapter = new AccomplishAdapter_A(getContext());
+        aAdapter = new AccomplishAdapter_A(getContext(), getLogUser(getContext()).getThemeColors());
         payWaitSignPresenter = new payWaitSignPresenter(this);
         //点击事件处理
         onTouchListener();
@@ -214,7 +214,7 @@ public class AccomplishFragment extends BaseFragment implements ICoreInfe {
         progress.stopAnimator();
         refreshLayout.finishLoadmore();
         refreshLayout.finishRefresh();
-        if(mPage==1){
+        if (mPage == 1) {
             refreshLayout.setVisibility(View.GONE);
             Glide.with(this).load(R.drawable.dengdai).into(img_fragment_all);
             imgBut.setVisibility(View.GONE);

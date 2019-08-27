@@ -1,6 +1,8 @@
 package com.yikangcheng.admin.yikang.activity.adapter.ordernew_adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -28,9 +30,11 @@ public class OrderReceAdapter extends RecyclerView.Adapter<OrderReceAdapter.Vh> 
     List<WaliDealBean.DetailsListBean> mList = new ArrayList<>();
     Context mContext;
     private Vh vh;
+    String color;
 
-    public OrderReceAdapter(Context mContext) {
+    public OrderReceAdapter(Context mContext, String color) {
         this.mContext = mContext;
+        this.color = color;
     }
 
     //判断有多少个商品物流号相同
@@ -111,6 +115,11 @@ public class OrderReceAdapter extends RecyclerView.Adapter<OrderReceAdapter.Vh> 
             if (!(mList.get(position).getAfterSaleStatus() == 0 && mList.get(position).getMailStatus() == 2 && mList.get(position).getSignStatus() == 1)) {
                 vh.shou_but.setVisibility(View.GONE);
             }
+            GradientDrawable myGrad = (GradientDrawable) vh.shou_but.getBackground();
+            myGrad.setColor(Color.parseColor(color));
+            GradientDrawable myGrad1 = (GradientDrawable) vh.look_btn.getBackground();
+            myGrad1.setStroke(2, Color.parseColor(color));
+            vh.look_btn.setTextColor(Color.parseColor(color));
             vh.good_title.setText(shopSpecDetailedBean.getCommodityName());
             vh.good_spec.setText("规格" + shopSpecDetailedBean.getSpecNames());
             vh.good_num.setText("x" + mList.get(position).getBuyNum());

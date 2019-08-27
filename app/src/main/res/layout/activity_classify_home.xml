@@ -9,6 +9,7 @@
     android:overScrollMode="never">
 
     <RelativeLayout
+        android:id="@+id/rela"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@color/colorTab">
@@ -25,6 +26,7 @@
             android:src="@drawable/fanhui_seek" />
 
         <TextView
+            android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"

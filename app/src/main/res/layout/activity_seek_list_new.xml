@@ -149,10 +149,12 @@
         android:layout_below="@+id/table"
         android:background="@color/clolrBAai">
 
-        <com.scwang.smartrefresh.header.WaterDropHeader
+        <com.scwang.smartrefresh.header.StoreHouseHeader
+            android:id="@+id/storeHouseHeader"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp" />
+            android:layout_height="100dp"
+            tools:shhLineWidth="2dp"
+            tools:shhText="QiZhiYou" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/xrecycler"

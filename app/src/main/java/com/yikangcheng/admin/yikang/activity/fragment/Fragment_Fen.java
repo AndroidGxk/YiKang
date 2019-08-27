@@ -1,11 +1,14 @@
 package com.yikangcheng.admin.yikang.activity.fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yikangcheng.admin.yikang.R;
@@ -19,6 +22,7 @@ import com.yikangcheng.admin.yikang.bean.Request;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
 import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
 import com.yikangcheng.admin.yikang.presenter.ClassifyPresenter;
+import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
 import java.util.List;
 
@@ -35,12 +39,20 @@ public class Fragment_Fen extends BaseFragment implements ICoreInfe {
     private int height;
     private TextView text_seek;
     private int width;
+    private RelativeLayout rela;
 
 
     @Override
     protected void initView(View view) {
+        //设置状态栏颜色
+        if (!getLogUser(getContext()).getThemeColors().equals("")) {
+            StatusBarUtil.setStatusBarMode((Activity) getContext(), true, Color.parseColor(getLogUser(getContext()).getThemeColors()));
+        } else {
+            StatusBarUtil.setStatusBarMode((Activity) getContext(), true, R.color.colorToolbar);
+        }
         AutoSizeConfig.getInstance().setCustomFragment(true);
-
+        rela = (RelativeLayout) view.findViewById(R.id.rela);
+        rela.setBackgroundColor(Color.parseColor(getLogUser(getContext()).getThemeColors()));
         WindowManager wm = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
         height = wm.getDefaultDisplay().getHeight();
         width = wm.getDefaultDisplay().getWidth();
@@ -53,7 +65,7 @@ public class Fragment_Fen extends BaseFragment implements ICoreInfe {
         //左边
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         mRlvFragmentFenleiZuo.setLayoutManager(linearLayoutManager);
-        mFenLeiAdapter = new FenLeiAdapter(getContext());
+        mFenLeiAdapter = new FenLeiAdapter(getContext(),getLogUser(getContext()).getThemeColors());
         mRlvFragmentFenleiZuo.setAdapter(mFenLeiAdapter);
         //右边
         LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(getActivity());

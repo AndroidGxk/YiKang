@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipToPadding="true"
@@ -24,6 +25,7 @@
             android:src="@drawable/fanhui_seek" />
 
         <TextView
+            android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -47,10 +49,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/pb_progress">
-        <!--苹果水滴的样式-->
-        <com.scwang.smartrefresh.header.WaterDropHeader
+        <com.scwang.smartrefresh.header.StoreHouseHeader
+            android:id="@+id/storeHouseHeader"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="100dp"
+            app:shhLineWidth="2dp"
+            app:shhText="QiZhiYou" />
 
         <WebView
             android:id="@+id/webvieww"

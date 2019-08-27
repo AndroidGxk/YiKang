@@ -1,7 +1,9 @@
 package com.yikangcheng.admin.yikang.activity.fragment.orderform;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -22,11 +24,13 @@ import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.yikangcheng.admin.yikang.R;
+import com.yikangcheng.admin.yikang.activity.H5SecActivity;
 import com.yikangcheng.admin.yikang.activity.OrderFormActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.AwaitAdapter;
 import com.yikangcheng.admin.yikang.activity.orderstatus.newactivity.OrderWaitActivity;
 import com.yikangcheng.admin.yikang.app.BaseApp;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
+import com.yikangcheng.admin.yikang.bean.CreatOrderBean;
 import com.yikangcheng.admin.yikang.bean.ObligationBean;
 import com.yikangcheng.admin.yikang.bean.PayBean;
 import com.yikangcheng.admin.yikang.bean.Request;
@@ -77,6 +81,8 @@ public class AwaitFragment extends BaseFragment implements ICoreInfe {
     private String mPayType = "";
     private NewOrderPresenter newOrderPresenter;
     private ObligationBean entity;
+    private SharedPreferences.Editor editor;
+    private SharedPreferences sharedPreferences;
 
     /**
      * 回传值
@@ -101,7 +107,9 @@ public class AwaitFragment extends BaseFragment implements ICoreInfe {
     @SuppressLint("NewApi")
     @Override
     protected void initView(View view) {
-        aAdapter = new AwaitAdapter(getContext());
+        sharedPreferences = getActivity().getSharedPreferences("orderInfo", Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+        aAdapter = new AwaitAdapter(getContext(), getLogUser(getContext()).getThemeColors());
         allPresenter = new ObligationPresenter(this);
         //点击事件处理
         onTouchListener();
@@ -196,10 +204,19 @@ public class AwaitFragment extends BaseFragment implements ICoreInfe {
                     String resultStatus = payResult.getResultStatus();
                     // 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
                     if (TextUtils.equals(resultStatus, "9000")) {
-                        Intent intent = new Intent(getContext(), OrderFormActivity.class);
-                        intent.putExtra("tab", "daishouhuo");
-                        startActivity(intent);
-                        getActivity().finish();
+                        if (sharedPreferences.getInt("orderType", 0) == 2) {
+                            Intent intent = new Intent(getContext(), OrderFormActivity.class);
+                            intent.putExtra("tab", "daishouhuo");
+                            startActivity(intent);
+                            getActivity().finish();
+                        } else if (sharedPreferences.getInt("orderType", 0) == 3) {
+                            Intent intent = new Intent(getContext(), H5SecActivity.class);
+                            intent.putExtra("title","易康成杯乒乓球报名");
+                            intent.putExtra("http", "https://www.yikch.com/mobile/appShow/tableTennisRegister?type=android&userId=" + getLogUser(BaseApp.getApp()).getId());
+                            startActivity(intent);
+                            getActivity().finish();
+
+                        }
                     } else {
                         // 判断resultStatus 为非“9000”则代表可能支付失败
                         // “8000”代表支付结果因为支付渠道原因或者系统原因还在等待支付结果确认，最终交易是否成功以服务端异步通知为准（小概率状态）
@@ -316,6 +333,8 @@ public class AwaitFragment extends BaseFragment implements ICoreInfe {
                             msg.what = SDK_PAY_FLAG;
                             msg.obj = result;
                             mHandler.sendMessage(msg);
+                            editor.putInt("orderType", mEntity.getIsZeroPurchase());
+                            editor.commit();
                         }
                     };
                     // 必须异步调用
@@ -332,6 +351,12 @@ public class AwaitFragment extends BaseFragment implements ICoreInfe {
                     req.timeStamp = mEntity.getTimeStamp();
                     req.sign = mEntity.getSign();
                     BaseApp.mWxApi.sendReq(req);//将订单信息对象发送给微信服务器，即发送支付请求
+                    editor.putInt("orderType", mEntity.getIsZeroPurchase());
+                    editor.commit();
+                    CreatOrderBean creatOrderBean = new CreatOrderBean();
+                    creatOrderBean.setIsZeroPurchase(mEntity.getIsZeroPurchase());
+                    setOrderInfo(getContext(), creatOrderBean);
+                    setNewPayInfo(getContext(),mEntity);
                 } else {
                     ToastUtils.show("系统错误,支付失败");
                 }

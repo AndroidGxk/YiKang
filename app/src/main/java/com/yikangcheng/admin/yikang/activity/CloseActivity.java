@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
@@ -45,6 +46,7 @@ import com.yikangcheng.admin.yikang.util.UIUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
 import me.leefeng.promptlibrary.PromptDialog;
 
 /**
@@ -63,6 +65,7 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener 
     //选中未选中
     private boolean wechat = false, zhi = true;
     private RelativeLayout no_yes;
+    private RelativeLayout rela1;
     private TextView zhi_invoice, wan;
     private TextView no_invoice;
     private TextView dian_invoice;
@@ -120,7 +123,10 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener 
     private int youhuiquanid;
     private int amount;
     private TextView youhuiquan_text;
-
+    @BindView(R.id.text1)
+    TextView text1;
+    @BindView(R.id.text2)
+    TextView text2;
     /**
      * 优惠券
      */
@@ -179,6 +185,11 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener 
 
     @Override
     protected void initView() {
+        GradientDrawable myGrad = (GradientDrawable) text1.getBackground();
+        myGrad.setColor(Color.parseColor(getLogUser(this).getThemeColors()));
+        GradientDrawable myGra1d = (GradientDrawable) text2.getBackground();
+        myGra1d.setStroke(2,Color.parseColor(getLogUser(this).getThemeColors()));
+        StatusBarUtil.setStatusBarMode(this, true, R.color.clolrBAai);
         //获取Ip地址
         ipAddressString = UIUtils.getIpAddressString();
         SharedPreferences close = getSharedPreferences("close", MODE_PRIVATE);
@@ -192,7 +203,6 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener 
         promptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(100);
         //网络请求
         network();
-        StatusBarUtil.setStatusBarMode(this, true, R.color.clolrBAai);
         sele_pay_digo = LayoutInflater.from(this).inflate(R.layout.sele_pay_digo, null);
         invoice_item = LayoutInflater.from(this).inflate(R.layout.invoice_item, null);
 
@@ -204,7 +214,7 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener 
         pay_img = (ImageView) findViewById(R.id.pay_img);
         rela4 = (RelativeLayout) findViewById(R.id.rela4);
         rela2 = (RelativeLayout) findViewById(R.id.rela2);
-        back_img = (ImageView) findViewById(R.id.back_img);
+        rela1 = (RelativeLayout) findViewById(R.id.rela1);
         rela3 = (RelativeLayout) findViewById(R.id.rela3);
         //进度条
         progress = (TwoBallRotationProgressBar) findViewById(R.id.progress);
@@ -328,6 +338,22 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener 
             }
         });
         /**
+         * 退出
+         */
+        back_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+        rela1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+
+            }
+        });
+        /**
          * 收货地址
          */
         rela2.setOnClickListener(new View.OnClickListener() {
@@ -339,15 +365,7 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener 
             }
         });
 
-        /**
-         * 退出
-         */
-        back_img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+
         /**
          * 详情页面数据
          */
@@ -410,6 +428,10 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener 
     public void invoice() {
         dian_invoice = invoice_item.findViewById(R.id.dian_invoice);
         no_invoice = invoice_item.findViewById(R.id.no_invoice);
+        GradientDrawable myGrad = (GradientDrawable) no_invoice.getBackground();
+        myGrad.setColor(Color.parseColor(getLogUser(this).getThemeColors()));
+        GradientDrawable myGrad1 = (GradientDrawable) dian_invoice.getBackground();
+        myGrad1.setStroke(2, Color.parseColor(getLogUser(this).getThemeColors()));
         zhi_invoice = invoice_item.findViewById(R.id.zhi_invoice);
         wan = invoice_item.findViewById(R.id.wan);
         no_yes = invoice_item.findViewById(R.id.no_yes);
@@ -742,9 +764,7 @@ public class CloseActivity extends BaseActivtiy implements View.OnClickListener 
                 CreatOrderBean entity = (CreatOrderBean) request.getEntity();
                 entity.setPayType(zhi ? "ALIPAY" : "WEIXIN");
                 Intent intent = new Intent(CloseActivity.this, ConfirmActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("creatorder", entity);
-                intent.putExtras(bundle);
+                setOrderInfo(CloseActivity.this,entity);
                 startActivity(intent);
                 promptDialog.dismiss();
                 SharedPreferences close = getSharedPreferences("close", MODE_PRIVATE);

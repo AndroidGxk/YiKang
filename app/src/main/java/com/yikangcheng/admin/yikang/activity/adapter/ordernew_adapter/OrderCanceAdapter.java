@@ -1,6 +1,8 @@
 package com.yikangcheng.admin.yikang.activity.adapter.ordernew_adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -27,9 +29,10 @@ import java.util.List;
 public class OrderCanceAdapter extends RecyclerView.Adapter<OrderCanceAdapter.Vh> {
     List<WaliDealBean.DetailsListBean> mList = new ArrayList<>();
     Context mContext;
-
-    public OrderCanceAdapter(Context mContext) {
+    String color;
+    public OrderCanceAdapter(Context mContext,String color) {
         this.mContext = mContext;
+        this.color = color;
     }
 
     /**
@@ -81,6 +84,8 @@ public class OrderCanceAdapter extends RecyclerView.Adapter<OrderCanceAdapter.Vh
             } else {
                 Glide.with(mContext).load(Constants.BASETUPIANSHANGCHUANURL + shopSpecDetailedBean.getLogo()).into(vh.good_img);
             }
+            GradientDrawable myGrad = (GradientDrawable) vh.buy_btn.getBackground();
+            myGrad.setColor(Color.parseColor(color));
             vh.good_title.setText(shopSpecDetailedBean.getCommodityName());
             vh.good_spec.setText("规格" + shopSpecDetailedBean.getSpecNames());
             vh.good_num.setText("x" + mList.get(position).getBuyNum());

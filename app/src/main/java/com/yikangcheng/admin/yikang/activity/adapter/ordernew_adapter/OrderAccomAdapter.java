@@ -1,6 +1,8 @@
 package com.yikangcheng.admin.yikang.activity.adapter.ordernew_adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -26,9 +28,11 @@ import java.util.List;
 public class OrderAccomAdapter extends RecyclerView.Adapter<OrderAccomAdapter.Vh> {
     List<WaliDealBean.DetailsListBean> mList = new ArrayList<>();
     Context mContext;
+    String color;
 
-    public OrderAccomAdapter(Context mContext) {
+    public OrderAccomAdapter(Context mContext, String color) {
         this.mContext = mContext;
+        this.color = color;
     }
 
     /**
@@ -81,11 +85,19 @@ public class OrderAccomAdapter extends RecyclerView.Adapter<OrderAccomAdapter.Vh
                 Glide.with(mContext).load(Constants.BASETUPIANSHANGCHUANURL + shopSpecDetailedBean.getLogo()).into(vh.good_img);
             }
             vh.good_title.setText(shopSpecDetailedBean.getCommodityName());
+            vh.shou_btn.setTextColor(Color.parseColor(color));
+            GradientDrawable myGrad = (GradientDrawable) vh.buy_btn.getBackground();
+            myGrad.setColor(Color.parseColor(color));
             vh.good_spec.setText("规格" + shopSpecDetailedBean.getSpecNames());
             vh.good_num.setText("x" + mList.get(position).getBuyNum());
             java.text.DecimalFormat myformat = new java.text.DecimalFormat("0.00");
             vh.good_price.setText("¥" + myformat.format(shopSpecDetailedBean.getRetailPrice()));
             vh.good_markprice.setText("市场价" + myformat.format(shopSpecDetailedBean.getMarketPrice()));
+            if (mList.get(position).getAssessStatus() == 1) {
+                vh.comm_btn.setVisibility(View.VISIBLE);
+            } else {
+                vh.comm_btn.setVisibility(View.GONE);
+            }
             /**
              * 进入详情
              */
@@ -119,6 +131,17 @@ public class OrderAccomAdapter extends RecyclerView.Adapter<OrderAccomAdapter.Vh
                     }
                 }
             });
+            /**
+             * 去评价
+             */
+            vh.comm_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (onClickCommitListener != null) {
+                        onClickCommitListener.onClick(mList.get(position).getId(), shopSpecDetailedBean.getCommodityId(),shopSpecDetailedBean.getLogo());
+                    }
+                }
+            });
         }
     }
 
@@ -137,6 +160,7 @@ public class OrderAccomAdapter extends RecyclerView.Adapter<OrderAccomAdapter.Vh
         TextView good_markprice;
         TextView buy_btn;
         TextView shou_btn;
+        TextView comm_btn;
 
         public Vh(View itemView) {
             super(itemView);
@@ -148,6 +172,7 @@ public class OrderAccomAdapter extends RecyclerView.Adapter<OrderAccomAdapter.Vh
             good_price = itemView.findViewById(R.id.good_price);
             good_markprice = itemView.findViewById(R.id.good_markprice);
             buy_btn = itemView.findViewById(R.id.buy_but);
+            comm_btn = itemView.findViewById(R.id.comm_btn);
             shou_btn = itemView.findViewById(R.id.shou_btn);
         }
     }
@@ -189,5 +214,18 @@ public class OrderAccomAdapter extends RecyclerView.Adapter<OrderAccomAdapter.Vh
 
     public void setOnAfterListener(OrderAccomAdapter.onAfterListener onAfterListener) {
         this.onAfterListener = onAfterListener;
+    }
+
+    /**
+     * 去评价
+     */
+    public interface onClickCommitListener {
+        void onClick(int goodid, int dateid,String url);
+    }
+
+    onClickCommitListener onClickCommitListener;
+
+    public void setOnClickCommitListener(OrderAccomAdapter.onClickCommitListener onClickCommitListener) {
+        this.onClickCommitListener = onClickCommitListener;
     }
 }

@@ -47,13 +47,19 @@ public class YoushengActivity extends BaseActivtiy {
         //不允许侧滑退出
         closeSwipeBack();
         //设置状态栏颜色
-        StatusBarUtil.setStatusBarMode(this, true, R.color.colorTab);
+        if (!getLogUser(this).getThemeColors().equals("")) {
+            StatusBarUtil.setStatusBarMode(this, true, Color.parseColor(getLogUser(this).getThemeColors()));
+        } else {
+            StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        }
         //进度条
         pbProgress = (ProgressBar) findViewById(R.id.pb_progress);
         webview = (WebView) findViewById(R.id.webView);
         back_img = (ImageView) findViewById(R.id.back_img);
         tabl = (RelativeLayout) findViewById(R.id.tabl);
+        tabl.setBackgroundColor(Color.parseColor(getLogUser(this).getThemeColors()));
         title_text = (TextView) findViewById(R.id.title_text);
+//        title_text.setTextColor(Color.parseColor());
         Fragment_Shou.getGoBack();
         Intent intent = getIntent();
         http = intent.getStringExtra("http");
@@ -104,7 +110,7 @@ public class YoushengActivity extends BaseActivtiy {
                 //返回false，意味着请求过程里，不管有多少次的跳转请求（即新的请求地址），均交给webView自己处理，这也是此方法的默认处理
                 //返回true，说明你自己想根据url，做新的跳转，比如在判断url符合条件的情况下，我想让webView加载http://ask.csdn.net/questions/178242
                 if (url.toString().contains("sina.cn")) {
-                    webview.loadUrl(http);
+                    webview.loadUrl(http+"&userId="+getLogUser(YoushengActivity.this).getId());
                     return true;
                 }
                 return false;
@@ -116,7 +122,7 @@ public class YoushengActivity extends BaseActivtiy {
                 //返回true，说明你自己想根据url，做新的跳转，比如在判断url符合条件的情况下，我想让webView加载http://ask.csdn.net/questions/178242
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     if (request.getUrl().toString().contains("sina.cn")) {
-                        webview.loadUrl(http);
+                        webview.loadUrl(http+"&userId="+getLogUser(YoushengActivity.this).getId());
                         return true;
                     }
                 }
@@ -163,7 +169,7 @@ public class YoushengActivity extends BaseActivtiy {
         webview.getSettings().setBlockNetworkImage(false);
         webview.getSettings().setJavaScriptEnabled(true);
         webview.addJavascriptInterface(this, "ww");
-        webview.loadUrl(http);
+        webview.loadUrl(http+"&userId="+getLogUser(YoushengActivity.this).getId());
         webview.setWebViewClient(new WebViewClient() {
             @Override
             // 在点击请求的是链接是才会调用，重写此方法返回true表明点击网页里面的链接还是在当前的webview里跳转，不跳到浏览器那边。这个函数我们可以做很多操作，比如我们读取到某些特殊的URL，于是就可以不打开地址，取消这个操作，进行预先定义的其他操作，这对一个程序是非常必要的。

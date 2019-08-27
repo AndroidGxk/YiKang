@@ -16,7 +16,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 27
         versionCode 2
-        versionName "1.3.0"
+        versionName "1.3.2"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.yikangcheng
@@ -57,7 +57,7 @@ android {
 }
 greendao {
     //数据库的schema版本，也可以理解为数据库版本号
-    schemaVersion 1
+    schemaVersion 7
     //设置DaoMaster、DaoSession、Dao包名，也就是要放置这些类的包的全路径。
     daoPackage 'com.example.sqlite.dao'
     //设置DaoMaster、DaoSession、Dao目录

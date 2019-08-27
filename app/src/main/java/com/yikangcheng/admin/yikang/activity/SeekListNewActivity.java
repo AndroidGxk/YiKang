@@ -62,7 +62,16 @@ public class SeekListNewActivity extends BaseActivtiy implements ICoreInfe, View
 
     @Override
     protected void initView() {
-        StatusBarUtil.setStatusBarMode(this, true, R.color.colorTab);
+        //设置状态栏颜色
+        if (!getLogUser(this).getThemeColors().equals("")) {
+            StatusBarUtil.setStatusBarMode(this, true, Color.parseColor(getLogUser(this).getThemeColors()));
+        } else {
+            StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        }
+        edit_seek_sousuo = (TextView) findViewById(R.id.EditTixt_activity_seek_sousuo);
+
+        edit_seek_sousuo.setBackgroundColor(Color.parseColor(getLogUser(this).getThemeColors()));
+//        edit_seek_sousuo.setTextColor(Color.parseColor());
         WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         width = wm.getDefaultDisplay().getWidth();
         Intent intent = getIntent();
@@ -70,12 +79,14 @@ public class SeekListNewActivity extends BaseActivtiy implements ICoreInfe, View
         id = intent.getIntExtra("id", 000);
         xrecycler = (RecyclerView) findViewById(R.id.xrecycler);
         //搜素框
-        edit_seek_sousuo = (TextView) findViewById(R.id.EditTixt_activity_seek_sousuo);
         zonghe = (TextView) findViewById(R.id.zonghe);
         imgBut = (ImageView) findViewById(R.id.imgBut);
         zong_img = (ImageView) findViewById(R.id.zong_img);
+        zong_img.setColorFilter(Color.parseColor(getLogUser(this).getThemeColors()));
         xiao_img = (ImageView) findViewById(R.id.xiao_img);
+        xiao_img.setColorFilter(Color.parseColor(getLogUser(this).getThemeColors()));
         jia_img = (ImageView) findViewById(R.id.jia_img);
+        jia_img.setColorFilter(Color.parseColor(getLogUser(this).getThemeColors()));
         //加载进度
         progress = (TwoBallRotationProgressBar) findViewById(R.id.progress);
         //暂无商品
@@ -96,7 +107,7 @@ public class SeekListNewActivity extends BaseActivtiy implements ICoreInfe, View
          * P层
          */
         initMvp(mPage);
-
+        zonghe.setTextColor(Color.parseColor(getLogUser(this).getThemeColors()));
         xrecycler.setLayoutManager(new LinearLayoutManager(this));
         classCommodAdapter = new SeekListNewAdapter(this);
         xrecycler.setAdapter(classCommodAdapter);
@@ -264,7 +275,7 @@ public class SeekListNewActivity extends BaseActivtiy implements ICoreInfe, View
                     } else {
                         commodityPresenter.request(id, record, count, 1, 1);
                     }
-                    zonghe.setTextColor(SeekListNewActivity.this.getResources().getColor(R.color.colorTab));
+                    zonghe.setTextColor(Color.parseColor((getLogUser(SeekListNewActivity.this).getThemeColors())));
                     xiaoliang.setTextColor(SeekListNewActivity.this.getResources().getColor(R.color.colorText));
                     price_text.setTextColor(SeekListNewActivity.this.getResources().getColor(R.color.colorText));
                     zclick = true;
@@ -290,7 +301,7 @@ public class SeekListNewActivity extends BaseActivtiy implements ICoreInfe, View
                     } else {
                         commodityPresenter.request(id, record, count, 1, 1);
                     }
-                    xiaoliang.setTextColor(SeekListNewActivity.this.getResources().getColor(R.color.colorTab));
+                    xiaoliang.setTextColor(Color.parseColor((getLogUser(SeekListNewActivity.this).getThemeColors())));
                     zonghe.setTextColor(SeekListNewActivity.this.getResources().getColor(R.color.colorText));
                     price_text.setTextColor(SeekListNewActivity.this.getResources().getColor(R.color.colorText));
                     zclick = false;
@@ -308,7 +319,7 @@ public class SeekListNewActivity extends BaseActivtiy implements ICoreInfe, View
                 break;
             case R.id.price_rela:
                 if (!pclick) {
-                    price_text.setTextColor(SeekListNewActivity.this.getResources().getColor(R.color.colorTab));
+                    price_text.setTextColor(Color.parseColor((getLogUser(SeekListNewActivity.this).getThemeColors())));
                     xiaoliang.setTextColor(SeekListNewActivity.this.getResources().getColor(R.color.colorText));
                     zonghe.setTextColor(SeekListNewActivity.this.getResources().getColor(R.color.colorText));
                     zclick = false;

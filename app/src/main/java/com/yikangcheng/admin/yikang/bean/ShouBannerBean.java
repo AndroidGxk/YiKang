@@ -26,6 +26,15 @@ public class ShouBannerBean {
     private int seriesNumber;
     private String color;
     private String previewUrl;
+    private String merChantId;
+
+    public String getMerChantId() {
+        return merChantId;
+    }
+
+    public void setMerChantId(String merChantId) {
+        this.merChantId = merChantId;
+    }
 
     public int getId() {
         return id;

@@ -2,6 +2,8 @@ package com.yikangcheng.admin.yikang.activity.orderstatus.newactivity;
 
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Handler;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,12 +11,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hjq.toast.ToastUtils;
 import com.sobot.chat.SobotApi;
 import com.sobot.chat.api.model.Information;
 import com.yikangcheng.admin.yikang.R;
+import com.yikangcheng.admin.yikang.activity.GoodComBaskActivity;
 import com.yikangcheng.admin.yikang.activity.PartiCarActivity;
 import com.yikangcheng.admin.yikang.activity.SeleGoodActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.ordernew_adapter.OrderAccomAdapter;
@@ -79,12 +83,16 @@ public class OrderAccomActivity extends BaseActivtiy implements ICoreInfe {
     TwoBallRotationProgressBar progress;
     @BindView(R.id.delete_btn)
     TextView delete_btn;
+    @BindView(R.id.shouhuo_btn)
+    TextView shouhuo_btn;
     @BindView(R.id.kefu)
     LinearLayout kefu;
     @BindView(R.id.copay_img)
     ImageView copay_img;
     @BindView(R.id.back_img)
     ImageView back_img;
+    @BindView(R.id.toolbar_activity_orderfrom)
+    RelativeLayout toolbar_activity_orderfrom;
     //待收货订单列表
     private OrderAccomAdapter accomAdapter;
     //接收订单ID
@@ -107,10 +115,16 @@ public class OrderAccomActivity extends BaseActivtiy implements ICoreInfe {
 
     @Override
     protected void initView() {
-        /**
-         * 设置状态栏颜色
-         */
-        StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        //设置状态栏颜色
+        if (!getLogUser(this).getThemeColors().equals("")) {
+            StatusBarUtil.setStatusBarMode(this, true, Color.parseColor(getLogUser(this).getThemeColors()));
+        } else {
+            StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        }
+        toolbar_activity_orderfrom.setBackgroundColor(Color.parseColor(getLogUser(this).getThemeColors()));
+        delete_btn.setTextColor(Color.parseColor(getLogUser(this).getThemeColors()));
+        GradientDrawable gradientDrawable = (GradientDrawable) shouhuo_btn.getBackground();
+        gradientDrawable.setColor(Color.parseColor(getLogUser(this).getThemeColors()));
         /**
          * 订单详情
          */
@@ -134,7 +148,7 @@ public class OrderAccomActivity extends BaseActivtiy implements ICoreInfe {
         /**
          * 订单详情Adapter
          */
-        accomAdapter = new OrderAccomAdapter(this);
+        accomAdapter = new OrderAccomAdapter(this, getLogUser(OrderAccomActivity.this).getThemeColors());
         /**
          * 点击事件
          */
@@ -248,6 +262,18 @@ public class OrderAccomActivity extends BaseActivtiy implements ICoreInfe {
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+        /**
+         * 去评价
+         */
+        accomAdapter.setOnClickCommitListener(new OrderAccomAdapter.onClickCommitListener() {
+            @Override
+            public void onClick(int goodid, int dateid, String url) {
+                Intent intent = new Intent(OrderAccomActivity.this, GoodComBaskActivity.class);
+                intent.putExtra("id", goodid);
+                intent.putExtra("logo", url);
+                startActivity(intent);
             }
         });
     }

@@ -2,6 +2,8 @@ package com.yikangcheng.admin.yikang.activity.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -34,10 +36,11 @@ public class CloseAdapter_A extends RecyclerView.Adapter {
     private Context mContent;
     public List<CloseBean.OrderBean> mList = new ArrayList<>();
     private List<CloseBean.OrderBean.OrderDetailsListBean> goodsize;
+    private String color;
 
-
-    public CloseAdapter_A(Context context) {
+    public CloseAdapter_A(Context context, String color) {
         this.mContent = context;
+        this.color = color;
     }
 
     /**
@@ -85,6 +88,10 @@ public class CloseAdapter_A extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder vh, final int position) {
         goodsize = mList.get(position).getOrderDetailsList();
         if (vh instanceof DVhOne) {
+            ((DVhOne) vh).order_status.setTextColor(Color.parseColor(color));
+            ((DVhOne) vh).yellow_text.setTextColor(Color.parseColor(color));
+            GradientDrawable myGrad = (GradientDrawable) ((DVhOne) vh).yellow_text.getBackground();
+            myGrad.setStroke(2,Color.parseColor(color));
             ((DVhOne) vh).order_num.setText(mList.get(position).getOrderNo() + "");
             java.text.DecimalFormat myformat1 = new java.text.DecimalFormat("0.00");
             String moneyStr = myformat1.format(mList.get(position).getOrderDetailsList().get(0).getPrice());
@@ -104,7 +111,7 @@ public class CloseAdapter_A extends RecyclerView.Adapter {
             ((DVhOne) vh).one_good_title.setText(mList.get(position).getOrderDetailsList().get(0).getShopName());
             ((DVhOne) vh).one_good_spec.setText(mList.get(position).getOrderDetailsList().get(0).getSpecNames());
             ((DVhOne) vh).one_good_num.setText("x" + mList.get(position).getOrderDetailsList().get(0).getBuyNum());
-            ((DVhOne) vh).order_sum.setText("¥" + myformat1.format( mList.get(position).getRealPrice()));
+            ((DVhOne) vh).order_sum.setText("¥" + myformat1.format(mList.get(position).getRealPrice()));
             RequestOptions requestOptions = new RequestOptions();
             requestOptions.placeholder(R.drawable.inco_log);
             requestOptions.fallback(R.drawable.inco_log);
@@ -127,7 +134,7 @@ public class CloseAdapter_A extends RecyclerView.Adapter {
                 @Override
                 public void onClick(View view) {
                     if (onBuyClickListener != null) {
-                        onBuyClickListener.onClick( mList.get(position).getOrderDetailsList().get(0).getDataId(),  mList.get(position).getOrderDetailsList().get(0).getBuyNum(),  mList.get(position).getOrderDetailsList().get(0).getPrice());
+                        onBuyClickListener.onClick(mList.get(position).getOrderDetailsList().get(0).getDataId(), mList.get(position).getOrderDetailsList().get(0).getBuyNum(), mList.get(position).getOrderDetailsList().get(0).getPrice());
                     }
                 }
             });
@@ -143,11 +150,15 @@ public class CloseAdapter_A extends RecyclerView.Adapter {
                 }
             });
         } else if (vh instanceof DVh) {
+            ((DVh) vh).mZhuangtai.setTextColor(Color.parseColor(color));
+            ((DVh) vh).yellow_text.setTextColor(Color.parseColor(color));
+            GradientDrawable myGrad = (GradientDrawable) ((DVh) vh).yellow_text.getBackground();
+            myGrad.setStroke(2,Color.parseColor(color));
             ((DVh) vh).price_num_line.getBackground().mutate().setAlpha(240);
             ((DVh) vh).mBianhao.setText(mList.get(position).getOrderNo() + "");
             java.text.DecimalFormat myformat1 = new java.text.DecimalFormat("0.00");
             String moneyStr = myformat1.format(mList.get(position).getRealPrice());
-            ((DVh) vh).mPrice.setText("¥" +moneyStr);
+            ((DVh) vh).mPrice.setText("¥" + moneyStr);
             ((DVh) vh).good_num.setText("共" + mList.get(position).getOrderDetailsList().size() + "件");
             if (mList.get(position).getOrderState().equals("SUCCESS")) {
                 ((DVh) vh).mZhuangtai.setText("已完成");
@@ -187,11 +198,11 @@ public class CloseAdapter_A extends RecyclerView.Adapter {
                 public void onClick(View view) {
                     if (onBuySomeClickListener != null) {
                         for (int i = 0; i < mList.get(position).getOrderDetailsList().size(); i++) {
-                                int gId = mList.get(position).getOrderDetailsList().get(i).getDataId();
-                                goodsId += gId + ",";
-                            }
+                            int gId = mList.get(position).getOrderDetailsList().get(i).getDataId();
+                            goodsId += gId + ",";
+                        }
                         onBuySomeClickListener.onClick(goodsId.substring(0, goodsId.length() - 1));
-                            goodsId = "";
+                        goodsId = "";
                     }
                 }
             });
@@ -300,14 +311,16 @@ public class CloseAdapter_A extends RecyclerView.Adapter {
     /**
      * 再次购买
      */
-    public interface onBuyClickListener{
+    public interface onBuyClickListener {
         void onClick(int goodId, int num, double price);
     }
+
     onBuyClickListener onBuyClickListener;
 
     public void setOnBuyClickListener(CloseAdapter_A.onBuyClickListener onBuyClickListener) {
         this.onBuyClickListener = onBuyClickListener;
     }
+
     /**
      * 再次购买多个商品
      */

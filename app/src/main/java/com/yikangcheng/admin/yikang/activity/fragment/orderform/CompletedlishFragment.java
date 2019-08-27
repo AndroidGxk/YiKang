@@ -92,7 +92,7 @@ public class CompletedlishFragment extends BaseFragment implements ICoreInfe {
     @SuppressLint("NewApi")
     @Override
     protected void initView(View view) {
-        aAdapter = new CompletedlishAdapter_A(getContext());
+        aAdapter = new CompletedlishAdapter_A(getContext(), getLogUser(getContext()).getThemeColors());
         haveSignPresenter = new HaveSignPresenter(this);
         //点击事件处理
         onTouchListener();
@@ -203,7 +203,6 @@ public class CompletedlishFragment extends BaseFragment implements ICoreInfe {
     public void success(Object data) {
         Request request = (Request) data;
         HaveSignBean entity = (HaveSignBean) request.getEntity();
-
         /**
          * 显示隐藏
          */
@@ -230,7 +229,7 @@ public class CompletedlishFragment extends BaseFragment implements ICoreInfe {
         progress.stopAnimator();
         refreshLayout.finishLoadmore();
         refreshLayout.finishRefresh();
-        if(mPage==1){
+        if (mPage == 1) {
             refreshLayout.setVisibility(View.GONE);
             Glide.with(this).load(R.drawable.dengdai).into(img_fragment_all);
             imgBut.setVisibility(View.GONE);

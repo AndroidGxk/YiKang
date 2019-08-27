@@ -2,6 +2,7 @@ package com.yikangcheng.admin.yikang.activity;
 
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.view.Display;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,9 +13,10 @@ import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
+import butterknife.BindView;
 import me.jessyan.autosize.internal.CustomAdapt;
 
-public class ApoutUsActivity extends BaseActivtiy   {
+public class ApoutUsActivity extends BaseActivtiy {
 
 
     private ImageView back_img;
@@ -23,17 +25,25 @@ public class ApoutUsActivity extends BaseActivtiy   {
     private int width;
     private String versionName;
     private TextView versions_text;
+    @BindView(R.id.title)
+    TextView title;
 
     @Override
     protected void initView() {
         //设置状态栏颜色
-        StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        if (!getLogUser(this).getThemeColors().equals("")) {
+            StatusBarUtil.setStatusBarMode(this, true, Color.parseColor(getLogUser(this).getThemeColors()));
+        } else {
+            StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        }
+        mToolbarActivityMyaccount = (RelativeLayout) findViewById(R.id.activity_myaccount);
+        mToolbarActivityMyaccount.setBackgroundColor(Color.parseColor(getLogUser(this).getThemeColors()));
+//        title.setTextColor(Color.parseColor());
         Display display = this.getWindowManager().getDefaultDisplay();
         height = display.getHeight();
         width = display.getWidth();
         back_img = (ImageView) findViewById(R.id.back_img);
         versions_text = (TextView) findViewById(R.id.versions_text);
-        mToolbarActivityMyaccount = (RelativeLayout) findViewById(R.id.activity_myaccount);
         try {
             versionName = getVersionName();
         } catch (Exception e) {

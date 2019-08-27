@@ -1,6 +1,7 @@
 package com.yikangcheng.admin.yikang.activity.fragment.juhe;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.support.v7.widget.LinearLayoutManager;
@@ -22,6 +23,7 @@ import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.H5SecActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.shougang.ShouGangXiaoAdapter;
 import com.yikangcheng.admin.yikang.base.BaseFragment;
+import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
 import butterknife.BindView;
 
@@ -39,6 +41,8 @@ public class Fragment_Xiao extends BaseFragment {
 
     @Override
     protected void initView(View view) {
+        //设置状态栏颜色
+        StatusBarUtil.setStatusBarMode((Activity) getContext(), true, R.color.clolrBAai);
         mess_recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         mess_recycler.setAdapter(new ShouGangXiaoAdapter());
     }

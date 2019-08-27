@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="match_parent"
+        android:background="@color/clolrBAai"
+        app:srlAccentColor="@color/colorText"
+        app:srlEnablePreviewInEditMode="true"
+        app:srlPrimaryColor="@color/clolrBAai">
+        <!--srlAccentColor srlPrimaryColor 将会改变 Header 和 Footer 的主题颜色-->
+        <!--srlEnablePreviewInEditMode 可以开启和关闭预览功能-->
+        <com.scwang.smartrefresh.header.StoreHouseHeader
+            android:id="@+id/storeHouseHeader"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            app:shhLineWidth="2dp"
+            app:shhText="QiZhiYou" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recy_comple"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/clolrBAai"
+            android:overScrollMode="never" />
+
+        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <LinearLayout
+        android:id="@+id/img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/comm_bg" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:text="没有评论"
+            android:textColor="#ffd8d7d7"
+            android:textSize="12sp" />
+    </LinearLayout>
+</RelativeLayout>

@@ -12,16 +12,20 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.example.sqlite.dao.CreatOrderBeanDao;
 import com.example.sqlite.dao.DaoMaster;
 import com.example.sqlite.dao.DaoSession;
 import com.example.sqlite.dao.LoginBeanDao;
+import com.example.sqlite.dao.PayBeanDao;
 import com.example.sqlite.dao.UserDetailBeanDao;
 import com.tianma.netdetector.lib.NetStateChangeObserver;
 import com.tianma.netdetector.lib.NetStateChangeReceiver;
 import com.tianma.netdetector.lib.NetworkType;
 import com.umeng.message.PushAgent;
 import com.yikangcheng.admin.yikang.app.BaseApp;
+import com.yikangcheng.admin.yikang.bean.CreatOrderBean;
 import com.yikangcheng.admin.yikang.bean.LoginBean;
+import com.yikangcheng.admin.yikang.bean.PayBean;
 import com.yikangcheng.admin.yikang.bean.UserDetailBean;
 
 import java.util.List;
@@ -116,6 +120,74 @@ public abstract class BaseActivtiy extends SwipeBackActivity implements NetState
     }
 
     /**
+     * 订单信息
+     */
+    public CreatOrderBean getOrderInfo(Context context) {
+        DaoSession daoSession = DaoMaster.newDevSession(context, CreatOrderBeanDao.TABLENAME);
+        CreatOrderBeanDao creatOrderBeanDao = daoSession.getCreatOrderBeanDao();
+        List<CreatOrderBean> beanList = creatOrderBeanDao.loadAll();
+        if (beanList.size() > 0) {
+            CreatOrderBean creatOrderBean = beanList.get(0);
+            return creatOrderBean;
+        }
+        return null;
+    }
+
+    /**
+     * 添加订单数据库
+     *
+     * @param context
+     * @param creatOrderBean
+     */
+    public void setOrderInfo(Context context, CreatOrderBean creatOrderBean) {
+        DaoSession daoSession = DaoMaster.newDevSession(context, CreatOrderBeanDao.TABLENAME);
+        CreatOrderBeanDao creatOrderBeanDao = daoSession.getCreatOrderBeanDao();
+        creatOrderBeanDao.deleteAll();
+        creatOrderBeanDao.insertOrReplace(creatOrderBean);
+    }
+    /**
+     * 删除重新支付数据库
+     */
+    public void getDeleteOrderInfo(Context context) {
+        DaoSession daoSession = DaoMaster.newDevSession(context, CreatOrderBeanDao.TABLENAME);
+        CreatOrderBeanDao creatOrderBeanDao = daoSession.getCreatOrderBeanDao();
+        creatOrderBeanDao.deleteAll();
+    }
+    /**
+     * 重新支付
+     */
+    public PayBean getNewPayInfo(Context context) {
+        DaoSession daoSession = DaoMaster.newDevSession(context, PayBeanDao.TABLENAME);
+        PayBeanDao payBeanDao = daoSession.getPayBeanDao();
+        List<PayBean> beanList = payBeanDao.loadAll();
+        if (beanList.size() > 0) {
+            PayBean payBean = beanList.get(0);
+            return payBean;
+        }
+        return null;
+    }
+
+    /**
+     * 添加重新支付数据库
+     *
+     * @param context
+     * @param
+     */
+    public void setNewPayInfo(Context context, PayBean payBean) {
+        DaoSession daoSession = DaoMaster.newDevSession(context, PayBeanDao.TABLENAME);
+        PayBeanDao payBeanDao = daoSession.getPayBeanDao();
+        payBeanDao.deleteAll();
+        payBeanDao.insertOrReplace(payBean);
+    }
+    /**
+     * 删除重新支付数据库
+     */
+    public void getDeleteNewPayInfo(Context context) {
+        DaoSession daoSession = DaoMaster.newDevSession(context, PayBeanDao.TABLENAME);
+        PayBeanDao payBeanDao = daoSession.getPayBeanDao();
+        payBeanDao.deleteAll();
+    }
+    /**
      * 添加数据库
      */
     public void setUserInfo(Context context, UserDetailBean data) {
@@ -144,6 +216,18 @@ public abstract class BaseActivtiy extends SwipeBackActivity implements NetState
         DaoSession daoSession = DaoMaster.newDevSession(context, LoginBeanDao.TABLENAME);
         LoginBeanDao loginBeanDao = daoSession.getLoginBeanDao();
         List<LoginBean> list = loginBeanDao.queryBuilder().where(LoginBeanDao.Properties.Status.eq("1"))
+                .build().list();
+        if (list.size() > 0) {
+            LoginBean loginBean = list.get(0);
+            return loginBean;
+        }
+        return null;
+    }
+
+    public LoginBean getLogUser2(Context context) {
+        DaoSession daoSession = DaoMaster.newDevSession(context, LoginBeanDao.TABLENAME);
+        LoginBeanDao loginBeanDao = daoSession.getLoginBeanDao();
+        List<LoginBean> list = loginBeanDao.queryBuilder().where(LoginBeanDao.Properties.Status.eq("2"))
                 .build().list();
         if (list.size() > 0) {
             LoginBean loginBean = list.get(0);

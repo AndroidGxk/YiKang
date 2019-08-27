@@ -2,6 +2,9 @@ package com.yikangcheng.admin.yikang.activity;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -13,12 +16,14 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alipay.sdk.app.PayTask;
 import com.hjq.toast.ToastUtils;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.yikangcheng.admin.yikang.R;
+import com.yikangcheng.admin.yikang.activity.orderstatus.newactivity.OrderWaitActivity;
 import com.yikangcheng.admin.yikang.app.BaseApp;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.CreatOrderBean;
@@ -26,6 +31,8 @@ import com.yikangcheng.admin.yikang.paysdk.PayResult;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
 import java.util.Map;
+
+import butterknife.BindView;
 
 /**
  * 支付页面
@@ -39,12 +46,29 @@ public class ConfirmActivity extends BaseActivtiy {
     private int width;
     private View dialogview;
     private Dialog dialog;
+    private RelativeLayout table;
+    @BindView(R.id.dingdan_text)
+    TextView dingdan_text;
+    @BindView(R.id.title)
+    TextView title;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
 
     @Override
     protected void initView() {
+        sharedPreferences = getSharedPreferences("orderInfo", MODE_PRIVATE);
+        editor = sharedPreferences.edit();
         closeSwipeBack();
         //设置标题栏颜色
-        StatusBarUtil.setStatusBarMode(this, true, R.color.colorTab);
+        if (!getLogUser(this).getThemeColors().equals("")) {
+            StatusBarUtil.setStatusBarMode(this, true, Color.parseColor(getLogUser(this).getThemeColors()));
+        } else {
+            StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        }
+        dingdan_text.setTextColor(Color.parseColor(getLogUser(this).getThemeColors()));
+//        title.setTextColor(Color.parseColor());
+        table = (RelativeLayout) findViewById(R.id.table);
+        table.setBackgroundColor(Color.parseColor(getLogUser(this).getThemeColors()));
         Display display = this.getWindowManager().getDefaultDisplay();
         height = display.getHeight();
         width = display.getWidth();
@@ -53,9 +77,7 @@ public class ConfirmActivity extends BaseActivtiy {
         order_number = (TextView) findViewById(R.id.order_number);
         money = (TextView) findViewById(R.id.money);
         order_pay = (TextView) findViewById(R.id.order_pay);
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        creatorder = (CreatOrderBean) bundle.getSerializable("creatorder");
+        creatorder = getOrderInfo(this);
         order_number.setText(creatorder.getOrderNo());
         money.setText((double) creatorder.getSumPrice() + "");
         String payType = creatorder.getPayType();
@@ -83,6 +105,8 @@ public class ConfirmActivity extends BaseActivtiy {
                             msg.what = SDK_PAY_FLAG;
                             msg.obj = result;
                             mHandler.sendMessage(msg);
+                            editor.putInt("orderType", creatorder.getIsZeroPurchase());
+                            editor.commit();
                         }
                     };
                     // 必须异步调用
@@ -99,6 +123,9 @@ public class ConfirmActivity extends BaseActivtiy {
                     req.timeStamp = creatorder.getTimeStamp();
                     req.sign = creatorder.getSign();
                     BaseApp.mWxApi.sendReq(req);//将订单信息对象发送给微信服务器，即发送支付请求
+                    editor.putInt("orderType", creatorder.getIsZeroPurchase());
+                    setOrderInfo(ConfirmActivity.this, creatorder);
+                    editor.commit();
                 }
                 finish();
             }
@@ -135,7 +162,10 @@ public class ConfirmActivity extends BaseActivtiy {
         //dialog展示优惠券
         dialogview = getLayoutInflater().inflate(R.layout.confirm_dialog, null);
         TextView likai_btn = dialogview.findViewById(R.id.likai_btn);
+        GradientDrawable grad = (GradientDrawable) likai_btn.getBackground();
+        grad.setColor(Color.parseColor(getLogUser(this).getThemeColors()));
         TextView jixu_btn = dialogview.findViewById(R.id.jixu_btn);
+        jixu_btn.setTextColor(Color.parseColor(getLogUser(this).getThemeColors()));
         likai_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -192,11 +222,20 @@ public class ConfirmActivity extends BaseActivtiy {
                     String resultStatus = payResult.getResultStatus();
                     // 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
                     if (TextUtils.equals(resultStatus, "9000")) {
-                        //支付成功后的逻辑
-                        Intent img_fragment_wo_daifukuan = new Intent(ConfirmActivity.this, OrderFormActivity.class);
-                        img_fragment_wo_daifukuan.putExtra("tab", "daishouhuo");
-                        startActivity(img_fragment_wo_daifukuan);
-                        finish();
+                        if (sharedPreferences.getInt("orderType", 0) == 2) {
+                            Intent intent = new Intent(ConfirmActivity.this, OrderFormActivity.class);
+                            intent.putExtra("tab", "daishouhuo");
+                            startActivity(intent);
+                            finish();
+                        } else if (sharedPreferences.getInt("orderType", 0) == 3) {
+                            Intent intent = new Intent(ConfirmActivity.this, H5SecActivity.class);
+                            intent.putExtra("title", "易康成杯乒乓球报名");
+                            intent.putExtra("http", "https://www.yikch.com/mobile/appShow/tableTennisRegister?type=android&userId=" + getLogUser(BaseApp.getApp()).getId());
+                            startActivity(intent);
+                            finish();
+                        } else if (sharedPreferences.getInt("orderType", 0) == 1) {
+                            ToastUtils.show("您已参加评论返现购活动，收到货后请及时评价哦");
+                        }
                     } else {
                         // 判断resultStatus 为非“9000”则代表可能支付失败
                         // “8000”代表支付结果因为支付渠道原因或者系统原因还在等待支付结果确认，最终交易是否成功以服务端异步通知为准（小概率状态）

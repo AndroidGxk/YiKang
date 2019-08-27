@@ -193,6 +193,9 @@ public class SeekActivity extends BaseActivtiy{
     @Override
     protected void onResume() {
         super.onResume();
+        /**
+         * 软键盘自动弹出
+         */
         mEditTixtActivitySeekSousuo.selectAll();   //默认选中EditText中的所有内容
         mEditTixtActivitySeekSousuo.setFocusable(true);   //设置可以获取焦点
         mEditTixtActivitySeekSousuo.setFocusableInTouchMode(true);

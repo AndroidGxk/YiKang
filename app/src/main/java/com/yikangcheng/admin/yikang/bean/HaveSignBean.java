@@ -162,6 +162,15 @@ public class HaveSignBean {
         private int toPay;
         private String userName;
         private List<OrderDetailsListBean> orderDetailsList;
+        private int assessStatus;
+
+        public int getAssessStatus() {
+            return assessStatus;
+        }
+
+        public void setAssessStatus(int assessStatus) {
+            this.assessStatus = assessStatus;
+        }
 
         public String getEmail() {
             return email;

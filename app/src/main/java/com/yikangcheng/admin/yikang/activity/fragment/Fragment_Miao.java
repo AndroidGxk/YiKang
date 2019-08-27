@@ -1,10 +1,14 @@
 package com.yikangcheng.admin.yikang.activity.fragment;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.JavascriptInterface;
@@ -16,6 +20,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hjq.toast.ToastUtils;
@@ -36,24 +41,33 @@ import com.yikangcheng.admin.yikang.base.BaseFragment;
 import com.yikangcheng.admin.yikang.bean.Request;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
 import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
-import com.yikangcheng.admin.yikang.presenter.OrderBuyPresenter;
+import com.yikangcheng.admin.yikang.util.StatusBarUtil;
+
+import butterknife.BindView;
 
 public class Fragment_Miao extends BaseFragment implements ICoreInfe {
     private static WebView webView;
     private String s = "";
     //    private ImageView miao_one_btn;
 //    private RecyclerView recycler_one;
-    private OrderBuyPresenter orderBuyPresenter;
     private ProgressBar pbProgress;
     private SmartRefreshLayout refreshLayout;
     private ImageView img_top;
     private TextView text_seek;
-
+    private RelativeLayout rela;
+    @BindView(R.id.title)
+    TextView title;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @SuppressLint({"JavascriptInterface", "NewApi"})
     @Override
     protected void initView(View view) {
+        //设置状态栏颜色
+        if (!getLogUser(getContext()).getThemeColors().equals("")) {
+            StatusBarUtil.setStatusBarMode((Activity) getContext(), true, Color.parseColor(getLogUser(getContext()).getThemeColors()));
+        } else {
+            StatusBarUtil.setStatusBarMode((Activity) getContext(), true, R.color.colorToolbar);
+        }
         //进度条
         pbProgress = view.findViewById(R.id.pb_progress);
         //加载刷新
@@ -61,11 +75,12 @@ public class Fragment_Miao extends BaseFragment implements ICoreInfe {
         refreshLayout.setEnableLoadmore(false);
         img_top = view.findViewById(R.id.img_top);
         text_seek = view.findViewById(R.id.text_seek);
-
-        orderBuyPresenter = new OrderBuyPresenter(new OrderBuy());
+        rela = (RelativeLayout) view.findViewById(R.id.rela);
+        rela.setBackgroundColor(Color.parseColor(getLogUser(getContext()).getThemeColors()));
+        //标题颜色
+//        title.setTextColor(Color.parseColor());
 //        miao_one_btn = view.findViewById(R.id.miao_one_btn);
 //        recycler_one = view.findViewById(R.id.recycler_one);
-
         webView = view.findViewById(R.id.webView);
         WebSettings webSettings = webView.getSettings();
         //设置WebView属性，能够执行Javascript脚本
@@ -87,7 +102,7 @@ public class Fragment_Miao extends BaseFragment implements ICoreInfe {
                 //返回true，说明你自己想根据url，做新的跳转，比如在判断url符合条件的情况下，我想让webView加载http://ask.csdn.net/questions/178242
                 if (url.toString().contains("sina.cn")) {
 //                    webView.loadUrl("https://www.yikch.com/mobile/appShow/activity?type=android");
-                    webView.loadUrl("https://www.yikch.com/mobile/appShow/checkIn?type=android&userId=" + getLogUser(getContext()).getId() + "");
+                    webView.loadUrl("https://www.yikch.com/mobile/appShow/praisePurchase?type=android&userId=" + getLogUser(getContext()).getId() + "");
                     return true;
                 }
                 return false;
@@ -100,7 +115,7 @@ public class Fragment_Miao extends BaseFragment implements ICoreInfe {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     if (request.getUrl().toString().contains("sina.cn")) {
 //                        webView.loadUrl("https://www.yikch.com/mobile/appShow/activity?type=android");
-                        webView.loadUrl("https://www.yikch.com/mobile/appShow/checkIn?type=android&userId=" + getLogUser(getContext()).getId() + "");
+                        webView.loadUrl("https://www.yikch.com/mobile/appShow/praisePurchase?type=android&userId=" + getLogUser(getContext()).getId() + "");
                         return true;
                     }
                 }
@@ -145,7 +160,7 @@ public class Fragment_Miao extends BaseFragment implements ICoreInfe {
         }
         webView.getSettings().setJavaScriptEnabled(true);
         webView.addJavascriptInterface(this, "ww");
-        webView.loadUrl("https://www.yikch.com/mobile/appShow/checkIn?type=android&userId=" + getLogUser(getContext()).getId() + "");
+        webView.loadUrl("https://www.yikch.com/mobile/appShow/praisePurchase?type=android&userId=" + getLogUser(getContext()).getId() + "");
         //        webView.loadUrl("https://www.yikch.com/mobile/appShow/activity?type=android");
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -172,17 +187,17 @@ public class Fragment_Miao extends BaseFragment implements ICoreInfe {
                 // 判断url链接中是否含有某个字段，如果有就执行指定的跳转（不执行跳转url链接），如果没有就加载url链接
                 if (url.contains("appShow/activityResidue?activitiesId=1")) {
                     Intent i = new Intent(getActivity(), SeckillActivity.class);
-                    i.putExtra("url", "https://www.yikch.com/mobile/appShow/activityResidue?activitiesId=1&time=0&type=android");
+                    i.putExtra("url", "https://www.yikch.com/mobile/appShow/activityResidue?activitiesId=1&time=0&type=android&userId=" + getLogUser(BaseApp.getApp()).getId());
                     startActivity(i);
                     return true;
                 } else if (url.contains("appShow/activityResidue?activitiesId=2")) {
                     Intent i = new Intent(getActivity(), SeckillActivity.class);
-                    i.putExtra("url", "https://www.yikch.com/mobile/appShow/activityResidue?activitiesId=2&time=0&type=android");
+                    i.putExtra("url", "https://www.yikch.com/mobile/appShow/activityResidue?activitiesId=2&time=0&type=android&userId=" + getLogUser(BaseApp.getApp()).getId());
                     startActivity(i);
                     return true;
                 } else if (url.contains("appShow/activityResidue?activitiesId=3")) {
                     Intent i = new Intent(getActivity(), SeckillActivity.class);
-                    i.putExtra("url", "https://www.yikch.com/mobile/appShow/activityResidue?activitiesId=3&time=0&type=android");
+                    i.putExtra("url", "https://www.yikch.com/mobile/appShow/activityResidue?activitiesId=3&time=0&type=android&userId=" + getLogUser(BaseApp.getApp()).getId());
                     startActivity(i);
                     return true;
                 } else if (url.contains("/appShow/proDetail")) {
@@ -193,8 +208,14 @@ public class Fragment_Miao extends BaseFragment implements ICoreInfe {
                     return true;
                 } else if (url.contains("/appShow/yousheng")) {
                     Intent intent = new Intent(getContext(), H5SecActivity.class);
-                    intent.putExtra("http", "https://www.yikch.com/mobile/appShow/yousheng?type=android");
-                    intent.putExtra("title", "优胜教育内部购");
+                    intent.putExtra("http", "https://www.yikch.com/mobile/appShow/yousheng?type=android&userId=" + getLogUser(BaseApp.getApp()).getId());
+                    intent.putExtra("title", "福利内购");
+                    startActivity(intent);
+                    return true;
+                } else if (url.contains("appShow/checkIn")) {
+                    Intent intent = new Intent(getContext(), H5SecActivity.class);
+                    intent.putExtra("http", url+ "&userId=" + getLogUser(getContext()).getId());
+                    intent.putExtra("title", "签到");
                     startActivity(intent);
                     return true;
                 } else {
@@ -301,18 +322,5 @@ public class Fragment_Miao extends BaseFragment implements ICoreInfe {
 
     }
 
-    /**
-     * 创建订单
-     */
-    private class OrderBuy implements ICoreInfe {
-        @Override
-        public void success(Object data) {
 
-        }
-
-        @Override
-        public void fail(ApiException e) {
-
-        }
-    }
 }

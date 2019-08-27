@@ -24,6 +24,7 @@ import com.mylhyl.circledialog.params.DialogParams;
 import com.mylhyl.circledialog.params.TextParams;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.adapter.CloseAdapter_A;
+import com.yikangcheng.admin.yikang.app.BaseApp;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 import com.yikangcheng.admin.yikang.bean.AppUpdateBean;
 import com.yikangcheng.admin.yikang.bean.LoginBean;
@@ -103,6 +104,18 @@ public class LoginActivity extends BaseActivtiy implements ICoreInfe, View.OnCli
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LoginBean loginBean = getLogUser2(BaseApp.getApp());
+        if(loginBean!=null){
+            phone_edit.setText(loginBean.getMobile());
+            if(getSharedPreferences("userInfo",MODE_PRIVATE).getString("pwd","").equals("")){
+            }else{
+            pwd_edit.setText(getSharedPreferences("userInfo",MODE_PRIVATE).getString("pwd",""));
+            }
+        }
+    }
 
     @Override
     public void success(Object data) {
@@ -113,6 +126,7 @@ public class LoginActivity extends BaseActivtiy implements ICoreInfe, View.OnCli
             edit.putString("pwd", pwd_edit.getText().toString());
             edit.commit();
             entity.setStatus(1);
+            getDelete(LoginActivity.this);
             setLogUser(LoginActivity.this, entity);
             promptDialog.showSuccess("登录成功");
             SharedPreferences sp = getSharedPreferences("activity", MODE_PRIVATE);
@@ -253,5 +267,4 @@ public class LoginActivity extends BaseActivtiy implements ICoreInfe, View.OnCli
                 break;
         }
     }
-
 }

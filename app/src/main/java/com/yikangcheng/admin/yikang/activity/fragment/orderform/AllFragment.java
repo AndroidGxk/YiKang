@@ -1,7 +1,9 @@
 package com.yikangcheng.admin.yikang.activity.fragment.orderform;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -22,6 +24,7 @@ import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.yikangcheng.admin.yikang.R;
+import com.yikangcheng.admin.yikang.activity.H5SecActivity;
 import com.yikangcheng.admin.yikang.activity.OrderFormActivity;
 import com.yikangcheng.admin.yikang.activity.PartiCarActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.All_A_Adapter;
@@ -85,6 +88,8 @@ public class AllFragment extends BaseFragment implements ICoreInfe {
     private int orderNum = 0;
     @BindView(R.id.progress)
     TwoBallRotationProgressBar progress;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
 
     /**
      * 回传值
@@ -125,7 +130,9 @@ public class AllFragment extends BaseFragment implements ICoreInfe {
     @SuppressLint("NewApi")
     @Override
     protected void initView(View view) {
-        aAdapter = new All_A_Adapter(getContext());
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("orderInfo", Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+        aAdapter = new All_A_Adapter(getContext(), getLogUser(getContext()).getThemeColors());
         allPresenter = new AllPresenter(this);
         //点击事件处理
         onTouchListener();
@@ -280,10 +287,21 @@ public class AllFragment extends BaseFragment implements ICoreInfe {
                     String resultStatus = payResult.getResultStatus();
                     // 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
                     if (TextUtils.equals(resultStatus, "9000")) {
-                        Intent intent = new Intent(getContext(), OrderFormActivity.class);
-                        intent.putExtra("tab", "daishouhuo");
-                        startActivity(intent);
-                        getActivity().finish();
+                        if (sharedPreferences.getInt("orderType", 0) == 2) {
+                            Intent intent = new Intent(getContext(), OrderFormActivity.class);
+                            intent.putExtra("tab", "daishouhuo");
+                            startActivity(intent);
+                            getActivity().finish();
+                        } else if (sharedPreferences.getInt("orderType", 0) == 3) {
+                            Intent intent = new Intent(getContext(), H5SecActivity.class);
+                            intent.putExtra("http", "daishouhuo");
+                            startActivity(intent);
+                            getActivity().finish();
+                        }
+//                        Intent intent = new Intent(getContext(), OrderFormActivity.class);
+//                        intent.putExtra("tab", "daishouhuo");
+//                        startActivity(intent);
+//                        getActivity().finish();
                     } else {
                         // 判断resultStatus 为非“9000”则代表可能支付失败
                         // “8000”代表支付结果因为支付渠道原因或者系统原因还在等待支付结果确认，最终交易是否成功以服务端异步通知为准（小概率状态）
@@ -342,6 +360,8 @@ public class AllFragment extends BaseFragment implements ICoreInfe {
                             msg.what = SDK_PAY_FLAG;
                             msg.obj = result;
                             mHandler.sendMessage(msg);
+                            editor.putInt("orderType", mEntity.getIsZeroPurchase());
+                            editor.commit();
                         }
                     };
                     // 必须异步调用
@@ -358,6 +378,8 @@ public class AllFragment extends BaseFragment implements ICoreInfe {
                     req.timeStamp = mEntity.getTimeStamp();
                     req.sign = mEntity.getSign();
                     BaseApp.mWxApi.sendReq(req);//将订单信息对象发送给微信服务器，即发送支付请求
+                    editor.putInt("orderType", mEntity.getIsZeroPurchase());
+                    editor.commit();
                 } else {
                     ToastUtils.show("系统错误,支付失败");
                 }

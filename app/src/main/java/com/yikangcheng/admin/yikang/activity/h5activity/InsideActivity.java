@@ -2,6 +2,7 @@ package com.yikangcheng.admin.yikang.activity.h5activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.view.KeyEvent;
@@ -35,7 +36,11 @@ public class InsideActivity extends BaseActivtiy {
     @Override
     protected void initView() {
         //设置状态栏颜色
-        StatusBarUtil.setStatusBarMode(this, true, R.color.colorTab);
+        if (!getLogUser(this).getThemeColors().equals("")) {
+            StatusBarUtil.setStatusBarMode(this, true, Color.parseColor(getLogUser(this).getThemeColors()));
+        } else {
+            StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        }
         Intent intent = getIntent();
         url = intent.getStringExtra("http");
         //进度条
@@ -69,7 +74,7 @@ public class InsideActivity extends BaseActivtiy {
                 //返回false，意味着请求过程里，不管有多少次的跳转请求（即新的请求地址），均交给webView自己处理，这也是此方法的默认处理
                 //返回true，说明你自己想根据url，做新的跳转，比如在判断url符合条件的情况下，我想让webView加载http://ask.csdn.net/questions/178242
                 if (url.toString().contains("sina.cn")) {
-                    webView.loadUrl(url);
+                    webView.loadUrl(url+"&userId="+getLogUser(InsideActivity.this).getId());
                     return true;
                 }
                 return false;
@@ -81,7 +86,7 @@ public class InsideActivity extends BaseActivtiy {
                 //返回true，说明你自己想根据url，做新的跳转，比如在判断url符合条件的情况下，我想让webView加载http://ask.csdn.net/questions/178242
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     if (request.getUrl().toString().contains("sina.cn")) {
-                        webView.loadUrl(url);
+                        webView.loadUrl(url+"&userId="+getLogUser(InsideActivity.this).getId());
                         return true;
                     }
                 }
@@ -126,7 +131,7 @@ public class InsideActivity extends BaseActivtiy {
         });
         webView.getSettings().setJavaScriptEnabled(true);
         webView.addJavascriptInterface(this, "ww");
-        webView.loadUrl(url);
+        webView.loadUrl(url+"&userId="+getLogUser(InsideActivity.this).getId());
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {

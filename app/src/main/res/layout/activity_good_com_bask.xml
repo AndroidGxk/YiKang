@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ratingbar="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/clolrBAai"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context=".activity.GoodComBaskActivity">
+
+    <RelativeLayout
+        android:id="@+id/table"
+        android:layout_width="match_parent"
+        android:layout_height="42dp">
+
+        <ImageView
+            android:id="@+id/back_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:src="@drawable/fanhuiactivity" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="评价晒单"
+            android:textColor="#000000"
+            android:textSize="19sp" />
+    </RelativeLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="20dp">
+
+                <ImageView
+                    android:id="@+id/good_img"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:src="@drawable/ceshi_good" />
+
+                <com.yikangcheng.admin.yikang.util.StarBar
+                    android:id="@+id/start"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    ratingbar:starCount="5"
+                    ratingbar:starDistance="5dp"
+                    ratingbar:starEmpty="@drawable/xingxing_false"
+                    ratingbar:starFill="@drawable/xingxing_true"
+                    ratingbar:starSize="20dp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#F1F1F1"
+                android:gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:text="分享您的使用体验吧"
+                android:textColor="#ff434343"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/comm_edit"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="@null"
+                android:gravity="left"
+                android:hint="感觉怎么样？跟大家分享一下吧~"
+                android:padding="20dp"
+                android:textSize="12sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <LinearLayout
+                        android:id="@+id/img1"
+                        android:layout_width="95dp"
+                        android:layout_height="95dp"
+                        android:background="@drawable/tianjiatupian"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/tianjiatupianxiangji" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="添加图片"
+                            android:textColor="#fff1f1f1"
+                            android:textSize="9sp" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/imag1"
+                        android:layout_width="95dp"
+                        android:layout_height="95dp"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <LinearLayout
+                        android:id="@+id/img2"
+                        android:layout_width="95dp"
+                        android:layout_height="95dp"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginRight="25dp"
+                        android:background="@drawable/tianjiatupian"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:visibility="invisible">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/tianjiatupianxiangji" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="添加图片"
+                            android:textColor="#fff1f1f1"
+                            android:textSize="9sp" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/imag2"
+                        android:layout_width="95dp"
+                        android:layout_height="95dp"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <LinearLayout
+                        android:id="@+id/img3"
+                        android:layout_width="95dp"
+                        android:layout_height="95dp"
+                        android:background="@drawable/tianjiatupian"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:visibility="invisible">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/tianjiatupianxiangji" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="添加图片"
+                            android:textColor="#fff1f1f1"
+                            android:textSize="9sp" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/imag3"
+                        android:layout_width="95dp"
+                        android:layout_height="95dp"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:layout_marginTop="15dp"
+                android:background="#F1F1F1" />
+
+            <TextView
+                android:id="@+id/add_comm"
+                android:layout_width="125dp"
+                android:layout_height="35dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="85dp"
+                android:background="@drawable/yellow_pay_shape"
+                android:gravity="center"
+                android:text="提交评价"
+                android:textColor="#ffffaf00"
+                android:textSize="15sp" />
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>

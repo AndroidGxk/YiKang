@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
@@ -138,7 +140,7 @@ public class BasicFragment extends BaseFragment implements ICoreInfe {
 //
 //
 //        /**
-//         * 点击用户昵称跳转页面
+//         * 点击用cancle户昵称跳转页面
 //         */
 //        mReLayoutFragmentBasic.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -238,7 +240,8 @@ public class BasicFragment extends BaseFragment implements ICoreInfe {
 ////                mDialog.dismiss();
 //            }
 //        });
-
+        GradientDrawable myGrad = (GradientDrawable) ok_btn.getBackground();
+        myGrad.setColor(Color.parseColor(getLogUser(getContext()).getThemeColors()));
         /**
          * 保存信息
          */
@@ -254,7 +257,6 @@ public class BasicFragment extends BaseFragment implements ICoreInfe {
                     sex = 1;
                 }
                 String email = youxiang_text.getText().toString();
-                //todo 修改个人信息
                 LoginBean logUser = getLogUser(getContext());
                 if (logUser != null) {
                     if (path == null || path.equals("")) {

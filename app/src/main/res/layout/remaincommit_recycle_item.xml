@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="15dp">
+
+        <ImageView
+            android:id="@+id/img"
+            android:layout_width="95dp"
+            android:layout_height="95dp"
+            android:src="@drawable/ceshi_good" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="安热沙资生堂水能户外养生堂防生堂水能户外养生堂防"
+                android:textColor="#ff333333"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/com_btn"
+                android:layout_width="75dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingRight="2dp"
+                android:paddingLeft="2dp"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/yellow_pay_shape"
+                android:gravity="center"
+                android:text="去评价"
+                android:textColor="#ffffaf00"
+                android:textSize="15sp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_marginTop="5dp"
+        android:background="#F1F1F1" />
+</LinearLayout>

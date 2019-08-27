@@ -91,7 +91,7 @@ public class CloseFragment extends BaseFragment implements ICoreInfe {
     @SuppressLint("NewApi")
     @Override
     protected void initView(View view) {
-        aAdapter = new CloseAdapter_A(getContext());
+        aAdapter = new CloseAdapter_A(getContext(), getLogUser(getContext()).getThemeColors());
         allPresenter = new ClosePresenter(this);
         //点击事件处理
         onTouchListener();

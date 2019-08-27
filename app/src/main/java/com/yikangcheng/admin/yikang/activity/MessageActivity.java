@@ -2,11 +2,13 @@ package com.yikangcheng.admin.yikang.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.yikangcheng.admin.yikang.R;
@@ -26,7 +28,13 @@ public class MessageActivity extends BaseActivtiy implements View.OnClickListene
     @Override
     protected void initView() {
         //设置状态栏颜色
-        StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        if (!getLogUser(this).getThemeColors().equals("")) {
+            StatusBarUtil.setStatusBarMode(this, true, Color.parseColor(getLogUser(this).getThemeColors()));
+        } else {
+            StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        }
+//        tabl = (RelativeLayout) findViewById(R.id.tabl);
+//        tabl.setBackgroundColor(Color.parseColor(getLogUser(this).getThemeColors()));
         WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         int height = wm.getDefaultDisplay().getHeight();
         width = wm.getDefaultDisplay().getWidth();

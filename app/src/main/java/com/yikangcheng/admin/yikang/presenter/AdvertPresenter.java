@@ -20,6 +20,6 @@ public class AdvertPresenter extends BasePresenter {
     @Override
     protected Observable observable(Object... args) {
         ApiService apiService = NotWorkUtils.getInstance().create(ApiService.class);
-        return apiService.startUp();
+        return apiService.startUp((int) args[0]);
     }
 }

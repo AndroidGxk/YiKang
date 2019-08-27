@@ -47,7 +47,39 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning,HardcodedDebugMode">
-        <activity android:name=".activity.AdvertActivity"></activity>
+        <activity
+            android:name=".activity.PhotoBigActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.walletactivity.IncomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.walletactivity.WithdrawActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.walletactivity.RechargeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ProtocolActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.GoodCommCentreActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.GoodComBaskActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.GoodComActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BankWebActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BankActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.AdvertActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".util.PermissionsActivity"
             android:screenOrientation="portrait"
@@ -121,9 +153,7 @@
         <activity
             android:name=".activity.ApplySeleActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.particulars.GoodParticularsActivity"
             android:screenOrientation="portrait" />
@@ -275,7 +305,7 @@
         <activity
             android:name=".activity.particulars.ParticularsActivity"
             android:screenOrientation="portrait"
-            tools:ignore="DuplicateActivity"></activity>
+            tools:ignore="DuplicateActivity" />
         <activity
             android:name=".activity.particulars.ToParticularsActivity"
             android:screenOrientation="portrait"

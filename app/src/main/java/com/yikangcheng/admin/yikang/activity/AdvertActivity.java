@@ -1,34 +1,22 @@
 package com.yikangcheng.admin.yikang.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
+import android.graphics.Color;
 import android.net.Uri;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CircleCrop;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.CustomViewTarget;
-import com.bumptech.glide.request.transition.Transition;
 import com.example.sqlite.dao.DaoMaster;
 import com.example.sqlite.dao.DaoSession;
 import com.example.sqlite.dao.LoginBeanDao;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.hjq.toast.ToastUtils;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.app.Constants;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
@@ -37,16 +25,10 @@ import com.yikangcheng.admin.yikang.bean.LoginBean;
 import com.yikangcheng.admin.yikang.bean.Request;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
 import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
+import com.yikangcheng.admin.yikang.presenter.AdvertNullPresenter;
 import com.yikangcheng.admin.yikang.presenter.AdvertPresenter;
-import com.youth.banner.loader.ImageLoader;
+import com.yikangcheng.admin.yikang.presenter.LoginPresenter;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URL;
 import java.util.List;
 
 import butterknife.BindView;
@@ -83,8 +65,7 @@ public class AdvertActivity extends BaseActivtiy implements ICoreInfe {
                         startActivity(new Intent(AdvertActivity.this, LoginActivity.class));
                         finish();
                     } else {
-                        startActivity(new Intent(AdvertActivity.this, ApplySeleActivity.class));
-                        finish();
+                        loginPresenter.request(getLogUser(AdvertActivity.this).getMobile(), getSharedPreferences("userInfo", MODE_PRIVATE).getString("pwd", ""));
                     }
                 }
             }
@@ -92,6 +73,8 @@ public class AdvertActivity extends BaseActivtiy implements ICoreInfe {
     };
     private String path;
     private Bitmap mBitmap;
+    private LoginPresenter loginPresenter;
+    private AdvertNullPresenter nullPresenter;
 
     @Override
     protected void initView() {
@@ -100,8 +83,14 @@ public class AdvertActivity extends BaseActivtiy implements ICoreInfe {
 
     @Override
     protected void initEventData() {
+        loginPresenter = new LoginPresenter(new LogUser());
         advertPresenter = new AdvertPresenter(this);
-        advertPresenter.request();
+        nullPresenter = new AdvertNullPresenter(this);
+        if (getLogUser(this) != null) {
+            advertPresenter.request(getLogUser(this).getId());
+        } else {
+            nullPresenter.request();
+        }
         tiaoguo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -117,8 +106,7 @@ public class AdvertActivity extends BaseActivtiy implements ICoreInfe {
                     startActivity(new Intent(AdvertActivity.this, LoginActivity.class));
                     finish();
                 } else {
-                    startActivity(new Intent(AdvertActivity.this, ApplySeleActivity.class));
-                    finish();
+                    loginPresenter.request(getLogUser(AdvertActivity.this).getMobile() + "", getSharedPreferences("userInfo", MODE_PRIVATE).getString("pwd", ""));
                 }
             }
         });
@@ -151,13 +139,32 @@ public class AdvertActivity extends BaseActivtiy implements ICoreInfe {
 
     @Override
     public void fail(ApiException e) {
-        RequestOptions requestOptions = new RequestOptions();
-        requestOptions.placeholder(R.drawable.guanggaoimg);
-        requestOptions.fallback(R.drawable.guanggaoimg);
-        Glide.with(AdvertActivity.this).load(Constants.BASETUPIANSHANGCHUANURL + path)
-                .apply(requestOptions)
-                .into(img);
+
     }
 
 
+    private class LogUser implements ICoreInfe {
+        @Override
+        public void success(Object data) {
+            Request request = (Request) data;
+            if (request.isSuccess()) {
+                LoginBean entity = (LoginBean) request.getEntity();
+                entity.setStatus(1);
+                getDelete(AdvertActivity.this);
+                setLogUser(AdvertActivity.this, entity);
+                startActivity(new Intent(AdvertActivity.this, ApplySeleActivity.class));
+                finish();
+            } else {
+                startActivity(new Intent(AdvertActivity.this, LoginActivity.class));
+                finish();
+            }
+        }
+
+        @Override
+        public void fail(ApiException e) {
+            ToastUtils.show("未知错误,请查看是否连接网络");
+            startActivity(new Intent(AdvertActivity.this, LoginActivity.class));
+            finish();
+        }
+    }
 }

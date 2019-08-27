@@ -33,7 +33,7 @@ public class UserDetailBeanDao extends AbstractDao<UserDetailBean, Long> {
         public final static Property Avatar = new Property(6, String.class, "avatar", false, "AVATAR");
         public final static Property NickName = new Property(7, String.class, "nickName", false, "NICK_NAME");
         public final static Property Email = new Property(8, String.class, "email", false, "EMAIL");
-        public final static Property Mobile = new Property(9, long.class, "mobile", false, "MOBILE");
+        public final static Property Mobile = new Property(9, String.class, "mobile", false, "MOBILE");
     }
 
 
@@ -58,7 +58,7 @@ public class UserDetailBeanDao extends AbstractDao<UserDetailBean, Long> {
                 "\"AVATAR\" TEXT," + // 6: avatar
                 "\"NICK_NAME\" TEXT," + // 7: nickName
                 "\"EMAIL\" TEXT," + // 8: email
-                "\"MOBILE\" INTEGER NOT NULL );"); // 9: mobile
+                "\"MOBILE\" TEXT);"); // 9: mobile
     }
 
     /** Drops the underlying database table. */
@@ -99,7 +99,11 @@ public class UserDetailBeanDao extends AbstractDao<UserDetailBean, Long> {
         if (email != null) {
             stmt.bindString(9, email);
         }
-        stmt.bindLong(10, entity.getMobile());
+ 
+        String mobile = entity.getMobile();
+        if (mobile != null) {
+            stmt.bindString(10, mobile);
+        }
     }
 
     @Override
@@ -134,7 +138,11 @@ public class UserDetailBeanDao extends AbstractDao<UserDetailBean, Long> {
         if (email != null) {
             stmt.bindString(9, email);
         }
-        stmt.bindLong(10, entity.getMobile());
+ 
+        String mobile = entity.getMobile();
+        if (mobile != null) {
+            stmt.bindString(10, mobile);
+        }
     }
 
     @Override
@@ -154,7 +162,7 @@ public class UserDetailBeanDao extends AbstractDao<UserDetailBean, Long> {
             cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // avatar
             cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // nickName
             cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // email
-            cursor.getLong(offset + 9) // mobile
+            cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9) // mobile
         );
         return entity;
     }
@@ -170,7 +178,7 @@ public class UserDetailBeanDao extends AbstractDao<UserDetailBean, Long> {
         entity.setAvatar(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
         entity.setNickName(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
         entity.setEmail(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
-        entity.setMobile(cursor.getLong(offset + 9));
+        entity.setMobile(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
      }
     
     @Override

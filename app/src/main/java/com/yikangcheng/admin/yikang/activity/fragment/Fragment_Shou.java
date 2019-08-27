@@ -1,10 +1,12 @@
 package com.yikangcheng.admin.yikang.activity.fragment;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -21,7 +23,9 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -50,6 +54,7 @@ import com.yikangcheng.admin.yikang.bean.Request;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
 import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
 import com.yikangcheng.admin.yikang.presenter.DalogTimePresenter;
+import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -81,11 +86,17 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
     private DalogTimePresenter dalogTimePresenter;
     private DalogTimeBean dalogTimeBean;
     private Request request;
-
+    private LinearLayout rela;
 
     @SuppressLint("NewApi")
     @Override
     protected void initView(View view) {
+        //设置状态栏颜色
+        if (!getLogUser(getContext()).getThemeColors().equals("")) {
+            StatusBarUtil.setStatusBarMode((Activity) getContext(), true, Color.parseColor(getLogUser(getContext()).getThemeColors()));
+        } else {
+            StatusBarUtil.setStatusBarMode((Activity) getContext(), true, R.color.colorToolbar);
+        }
         dalogTimePresenter = new DalogTimePresenter(new DalogTime());
         mess_img = view.findViewById(R.id.mess_img);
         //创建对象
@@ -96,6 +107,8 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
         webView = view.findViewById(R.id.webview);
         //返回顶部按钮
         imgBut = view.findViewById(R.id.imgBut);
+        rela = (LinearLayout) view.findViewById(R.id.rela);
+        rela.setBackgroundColor(Color.parseColor(getLogUser(getContext()).getThemeColors()));
         //进度条
         pbProgress = view.findViewById(R.id.pb_progress);
         //加载刷新
@@ -121,7 +134,7 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
                 //返回false，意味着请求过程里，不管有多少次的跳转请求（即新的请求地址），均交给webView自己处理，这也是此方法的默认处理
                 //返回true，说明你自己想根据url，做新的跳转，比如在判断url符合条件的情况下，我想让webView加载http://ask.csdn.net/questions/178242
                 if (url.toString().contains("sina.cn")) {
-                    webView.loadUrl("https://www.yikch.com/mobile/appShow/index?type=android");
+                    webView.loadUrl("https://www.yikch.com/mobile/appShow/index?type=android&userId=" + getLogUser(getContext()).getId());
                     return true;
                 }
                 return false;
@@ -133,7 +146,7 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
                 //返回true，说明你自己想根据url，做新的跳转，比如在判断url符合条件的情况下，我想让webView加载http://ask.csdn.net/questions/178242
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     if (request.getUrl().toString().contains("sina.cn")) {
-                        webView.loadUrl("https://www.yikch.com/mobile/appShow/index?type=android");
+                        webView.loadUrl("https://www.yikch.com/mobile/appShow/index?type=android&userId=" + getLogUser(getContext()).getId());
                         return true;
                     }
                 }
@@ -158,8 +171,8 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
                         if (sp != null) {
                             String str = sp.getString("acti", "");
                             if (str.equals("register")) {
-                                if(request!=null){
-                                    if(request.isSuccess()){
+                                if (request != null) {
+                                    if (request.isSuccess()) {
                                         showDialog();
                                     }
                                 }
@@ -176,7 +189,7 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
         });
         webView.getSettings().setJavaScriptEnabled(true);
         webView.addJavascriptInterface(this, "ww");
-        webView.loadUrl("https://www.yikch.com/mobile/appShow/index?type=android");
+        webView.loadUrl("https://www.yikch.com/mobile/appShow/index?type=android&userId=" + getLogUser(getContext()).getId());
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
@@ -248,6 +261,18 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
                     intent.putExtra("id", url + "&userId=" + getLogUser(getContext()).getId());
                     startActivity(intent);
                     return true;
+                } else if (url.contains("appShow/midAutumnFestival")) {
+                    Intent intent = new Intent(getContext(), H5SecActivity.class);
+                    intent.putExtra("http", "https://www.yikch.com/mobile/appShow/midAutumnFestival?type=android&userId=" + getLogUser(getContext()).getId() + "");
+                    intent.putExtra("title", "中秋特惠");
+                    startActivity(intent);
+                    return true;
+                } else if (url.contains("appShow/pingPongActivity")) {
+                    Intent intent = new Intent(getContext(), H5SecActivity.class);
+                    intent.putExtra("http", "https://www.yikch.com/mobile/appShow/pingPongActivity?type=android&userId=" + getLogUser(getContext()).getId() + "");
+                    intent.putExtra("title", "乒乓球交流赛");
+                    startActivity(intent);
+                    return true;
                 } else if (url.contains("/mobile/appShow/qixiFestival")) {
                     Intent intent = new Intent(getContext(), H5SecActivity.class);
                     intent.putExtra("http", "https://www.yikch.com/mobile/appShow/qixiFestival?type=android&userId=" + getLogUser(getContext()).getId() + "");
@@ -270,7 +295,7 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
                     //内部购
                     Intent intent = new Intent(getContext(), H5SecActivity.class);
                     intent.putExtra("http", url);
-                    intent.putExtra("title", "优胜内购");
+                    intent.putExtra("title", "福利内购");
                     startActivity(intent);
                     return true;
                 } else if (url.contains("/appShow/recommendList")) {
@@ -284,8 +309,8 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
                      * 签到页面
                      */
                     Intent intent = new Intent(getContext(), H5SecActivity.class);
-                    intent.putExtra("http", "https://www.yikch.com/mobile/appShow/zeroPurchase?type=android");
-                    intent.putExtra("title", "全额返现购");
+                    intent.putExtra("http", "https://www.yikch.com/mobile/appShow/zeroPurchase?type=android&userId=" + getLogUser(getContext()).getId());
+                    intent.putExtra("title", "评论返现购");
                     startActivity(intent);
                     return true;
                 } else if (url.contains("queryCourse.name")) {
@@ -311,72 +336,72 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
                 } else if (url.contains("appShow/activity")) {
                     if (url.contains("appShow/activity1")) {
                         Intent intent = new Intent(getContext(), H5SecActivity.class);
-                        intent.putExtra("http", url);
+                        intent.putExtra("http", url + "&userId=" + getLogUser(getContext()).getId());
                         intent.putExtra("title", "每日精品");
                         startActivity(intent);
                     } else if (url.contains("appShow/activity2")) {
                         Intent intent = new Intent(getContext(), H5SecActivity.class);
-                        intent.putExtra("http", url);
+                        intent.putExtra("http", url + "&userId=" + getLogUser(getContext()).getId());
                         intent.putExtra("title", "狠货推荐");
                         startActivity(intent);
                     } else if (url.contains("appShow/activity3")) {
                         Intent intent = new Intent(getContext(), H5SecActivity.class);
-                        intent.putExtra("http", url);
+                        intent.putExtra("http", url + "&userId=" + getLogUser(getContext()).getId());
                         intent.putExtra("title", "企业福利");
                         startActivity(intent);
                     } else {
                         Intent intent = new Intent(getContext(), H5SecActivity.class);
-                        intent.putExtra("http", url);
+                        intent.putExtra("http", url + "&userId=" + getLogUser(getContext()).getId());
                         intent.putExtra("title", "周秒杀");
                         startActivity(intent);
                     }
                     return true;
                 } else if (url.contains("appShow/majorcredit")) {
                     Intent intent = new Intent(getContext(), H5SecActivity.class);
-                    intent.putExtra("http", url);
+                    intent.putExtra("http", url + "&userId=" + getLogUser(getContext()).getId());
                     startActivity(intent);
                     return true;
                 } else if (url.contains("appShow/sixoneeight")) {
                     Intent intent = new Intent(getContext(), H5SecActivity.class);
-                    intent.putExtra("http", url);
+                    intent.putExtra("http", url + "&userId=" + getLogUser(getContext()).getId());
                     startActivity(intent);
                     return true;
                 } else if (url.contains("appShow/internalActivity")) {
                     Intent intent = new Intent(getContext(), InsideActivity.class);
-                    intent.putExtra("http", url);
+                    intent.putExtra("http", url + "&userId=" + getLogUser(getContext()).getId());
                     startActivity(intent);
                     return true;
                 } else if (url.contains("mobile/appShow")) {
                     if (url.contains("market")) {
                         Intent intent = new Intent(getContext(), H5SecActivity.class);
-                        intent.putExtra("http", url);
-                        intent.putExtra("title", "挚友超市");
+                        intent.putExtra("http", url + "&userId=" + getLogUser(getContext()).getId());
                         startActivity(intent);
                         return true;
                     } else if (url.contains("xiazhi")) {
                         Intent intent = new Intent(getContext(), H5SecActivity.class);
-                        intent.putExtra("http", url);
+                        intent.putExtra("http", url + "&userId=" + getLogUser(getContext()).getId());
                         intent.putExtra("title", "夏至福利");
                         startActivity(intent);
                         return true;
                     } else if (url.contains("mobile/appShow/aixiaoxin")) {
                         //抢购链接
                         Intent intent = new Intent(getContext(), H5SecActivity.class);
-                        intent.putExtra("http", url);
+                        intent.putExtra("http", url + "&userId=" + getLogUser(getContext()).getId());
                         intent.putExtra("title", "爱小心内购");
                         startActivity(intent);
                         return true;
                     } else if (url.contains("superToday")) {
                         //抢购链接
                         Intent intent = new Intent(getContext(), H5SecActivity.class);
-                        intent.putExtra("http", url);
-                        intent.putExtra("none", "yes");
+                        intent.putExtra("http", url + "&userId=" + getLogUser(getContext()).getId());
+                        intent.putExtra("none", "no");
+                        intent.putExtra("title", "超惠购");
                         startActivity(intent);
                         return true;
                     } else if (url.contains("discounts")) {
                         //优惠券链接
                         Intent intent = new Intent(getContext(), H5DiscountActivity.class);
-                        intent.putExtra("http", url);
+                        intent.putExtra("http", url + "&userId=" + getLogUser(getContext()).getId());
                         intent.putExtra("none", "yes");
                         startActivity(intent);
                         return true;
@@ -390,6 +415,7 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
             }
         });
     }
+
     private void showDialog() {
         //dialog展示优惠券
         dialogview = getLayoutInflater().inflate(R.layout.three_dialog, null);

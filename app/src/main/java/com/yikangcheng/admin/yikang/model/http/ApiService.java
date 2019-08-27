@@ -8,13 +8,12 @@ import com.yikangcheng.admin.yikang.bean.AppUpdateBean;
 import com.yikangcheng.admin.yikang.bean.ClassifyCommodityListBean;
 import com.yikangcheng.admin.yikang.bean.ClassifyListOneBean;
 import com.yikangcheng.admin.yikang.bean.CloseBean;
-import com.yikangcheng.admin.yikang.bean.CloseTheDealBean;
 import com.yikangcheng.admin.yikang.bean.CouponusableBean;
 import com.yikangcheng.admin.yikang.bean.CreatOrderBean;
 import com.yikangcheng.admin.yikang.bean.DalogTimeBean;
 import com.yikangcheng.admin.yikang.bean.DeleteOrderBean;
 import com.yikangcheng.admin.yikang.bean.DiscountBean;
-import com.yikangcheng.admin.yikang.bean.DiscountCouponBean;
+import com.yikangcheng.admin.yikang.bean.GoodComBean;
 import com.yikangcheng.admin.yikang.bean.HaveSignBean;
 import com.yikangcheng.admin.yikang.bean.LikeBean;
 import com.yikangcheng.admin.yikang.bean.LoginBean;
@@ -26,8 +25,11 @@ import com.yikangcheng.admin.yikang.bean.RecommendBean;
 import com.yikangcheng.admin.yikang.bean.RegisterBean;
 import com.yikangcheng.admin.yikang.bean.Request;
 import com.yikangcheng.admin.yikang.bean.SeckillBean;
+import com.yikangcheng.admin.yikang.bean.SectionImageBean;
 import com.yikangcheng.admin.yikang.bean.ShopCarBean;
 import com.yikangcheng.admin.yikang.bean.ShouBannerBean;
+import com.yikangcheng.admin.yikang.bean.UserCommDaiListBean;
+import com.yikangcheng.admin.yikang.bean.UserCommListBean;
 import com.yikangcheng.admin.yikang.bean.UserDetailBean;
 import com.yikangcheng.admin.yikang.bean.UserInfoBean;
 import com.yikangcheng.admin.yikang.bean.WaitSignBean;
@@ -35,7 +37,6 @@ import com.yikangcheng.admin.yikang.bean.WaliDealBean;
 
 import java.util.List;
 
-import butterknife.OnClick;
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import okhttp3.ResponseBody;
@@ -329,7 +330,16 @@ public interface ApiService {
      * 启动页广告接口
      */
     @POST("startUp/banner")
+    Observable<Request<List<AdvertBean>>> startUp(@Query("userId") int userId);
+
+    @POST("startUp/banner")
     Observable<Request<List<AdvertBean>>> startUp();
+
+    /**
+     * 首页弹框
+     */
+    @POST("startUp/index")
+    Observable<Request<List<ShouBannerBean>>> startUpindex(@Query("userId") int userId);
 
     /**
      * 首页Banner
@@ -342,4 +352,34 @@ public interface ApiService {
      */
     @POST("getRegisterCouponInfo")
     Observable<Request<DalogTimeBean>> getRegisterCouponInfo();
+
+    /**
+     * 千企千面聚合首页板块接口
+     */
+    @POST("querysectionImages")
+    Observable<Request<List<SectionImageBean>>> querysectionImages(@Query("enterId") int enterId);
+
+    /**
+     * 用户添加评论接口
+     */
+    @POST("assess/add")
+    Observable<Request> assessadd(@Query("orderDetailsId") int orderDetailsId, @Query("starClass") int starClass, @Query("userId") int userId, @Query("content") String content, @Query("image1") String image1, @Query("image2") String image2, @Query("image3") String image3);
+
+    /**
+     * 我的已评论列表
+     */
+    @POST("center/assess/list")
+    Observable<Request<UserCommListBean>> assesslist(@Query("userId") int userId, @Query("page.currentPage") int page);
+
+    /**
+     * 我的待评论列表
+     */
+    @POST("center/waitAssess/list")
+    Observable<Request<UserCommDaiListBean>> waitAssesslist(@Query("userId") int userId, @Query("page.currentPage") int page);
+
+    /**
+     * 查看商品评价列表
+     */
+    @POST("assess/list")
+    Observable<Request<GoodComBean>> lookcommlist(@Query("commodityId") int commodityId, @Query("detailedId") int detailedId, @Query("page.currentPage") int page);
 }

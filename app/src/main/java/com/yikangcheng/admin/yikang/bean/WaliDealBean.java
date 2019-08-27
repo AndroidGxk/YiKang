@@ -398,6 +398,15 @@ public class WaliDealBean {
         private String signTime;
         private int afterSaleStatus;
         private ShopSpecDetailedBean shopSpecDetailed;
+        private int assessStatus;
+
+        public int getAssessStatus() {
+            return assessStatus;
+        }
+
+        public void setAssessStatus(int assessStatus) {
+            this.assessStatus = assessStatus;
+        }
 
         public int getId() {
             return id;

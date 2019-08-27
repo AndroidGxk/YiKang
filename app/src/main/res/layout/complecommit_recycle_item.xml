@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ratingbar="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="15dp">
+
+        <ImageView
+            android:id="@+id/good_img"
+            android:layout_width="95dp"
+            android:layout_height="95dp"
+            android:src="@drawable/ceshi_good" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/good_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="安热沙资生堂水能户外养生堂防生堂水能户外养生堂防"
+                android:textColor="#ff333333"
+                android:textSize="15sp" />
+
+            <com.yikangcheng.admin.yikang.util.StarBar
+                android:id="@+id/start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="15dp"
+                ratingbar:starCount="5"
+                ratingbar:starDistance="5dp"
+                ratingbar:starEmpty="@drawable/xingxing_false"
+                ratingbar:starFill="@drawable/xingxing_true"
+                ratingbar:starSize="20dp" />
+
+            <RelativeLayout
+                android:id="@+id/rela"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <com.yikangcheng.admin.yikang.util.FolderTextView
+        android:id="@+id/good_commit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="5dp"
+        android:text="评价评价评价评价评价评价评价评价评价评价评价评价
+评价评价评评价评价评价评价评价评价评价价评价评..."
+        android:textColor="#ff333333"
+        android:textSize="14sp" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_marginTop="5dp"
+        android:background="#F1F1F1" />
+</LinearLayout>

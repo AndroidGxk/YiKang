@@ -3,6 +3,8 @@ package com.yikangcheng.admin.yikang.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.NestedScrollView;
@@ -38,6 +40,7 @@ import com.yikangcheng.admin.yikang.util.TwoBallRotationProgressBar;
 import java.io.Serializable;
 import java.util.List;
 
+import butterknife.BindView;
 import me.leefeng.promptlibrary.PromptButton;
 import me.leefeng.promptlibrary.PromptButtonListener;
 import me.leefeng.promptlibrary.PromptDialog;
@@ -49,6 +52,7 @@ public class PartiCarActivity extends BaseActivtiy implements ShopRecyclerAdapte
     private RelativeLayout null_car;
     private RelativeLayout diviline;
     private RelativeLayout baseline;
+    private RelativeLayout ly_toolBar;
     private RelativeLayout base_btn;
     private CheckBox all_check;
     private TextView text_total, num_text, heji, dele_text;
@@ -68,6 +72,8 @@ public class PartiCarActivity extends BaseActivtiy implements ShopRecyclerAdapte
     private PromptDialog promptDialog;
     private UpdateCountPresenter updateCountPresenter;
     private TwoBallRotationProgressBar progress;
+    @BindView(R.id.title)
+    TextView title;
 
     @Override
     protected void initView() {
@@ -76,8 +82,14 @@ public class PartiCarActivity extends BaseActivtiy implements ShopRecyclerAdapte
         //设置自定义属性
         promptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(100);
         logUser = getLogUser(PartiCarActivity.this);
-//      设置状态栏颜色
-        StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        //设置状态栏颜色
+        if (!getLogUser(this).getThemeColors().equals("")) {
+            StatusBarUtil.setStatusBarMode(this, true, Color.parseColor(getLogUser(this).getThemeColors()));
+        } else {
+            StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        }
+        ly_toolBar = (RelativeLayout) findViewById(R.id.ly_toolBar);
+        ly_toolBar.setBackgroundColor(Color.parseColor(getLogUser(this).getThemeColors()));
         WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         int height = wm.getDefaultDisplay().getHeight();
         width = wm.getDefaultDisplay().getWidth();
@@ -85,6 +97,8 @@ public class PartiCarActivity extends BaseActivtiy implements ShopRecyclerAdapte
         shop_recyclertwo = (XRecyclerView) findViewById(R.id.shop_recyclertwo);
         all_check = (CheckBox) findViewById(R.id.all_check);
         num_text = (TextView) findViewById(R.id.num_text);
+        GradientDrawable myGrad = (GradientDrawable) num_text.getBackground();
+        myGrad.setColor(Color.parseColor(getLogUser(this).getThemeColors()));
         diviline = (RelativeLayout) findViewById(R.id.diviline);
         baseline = (RelativeLayout) findViewById(R.id.baseline);
         nestedSV = (NestedScrollView) findViewById(R.id.nestedSV);
@@ -93,6 +107,8 @@ public class PartiCarActivity extends BaseActivtiy implements ShopRecyclerAdapte
         progress = (TwoBallRotationProgressBar) findViewById(R.id.progress);
         null_car = (RelativeLayout) findViewById(R.id.null_car);
         tv_toolBar_right = (TextView) findViewById(R.id.tv_toolBar_right);
+//        tv_toolBar_right.setTextColor(Color.parseColor());
+//        title.setTextColor(Color.parseColor());
         back_img = (ImageView) findViewById(R.id.back_img);
         heji = (TextView) findViewById(R.id.heji);
         text_total = (TextView) findViewById(R.id.text_total);

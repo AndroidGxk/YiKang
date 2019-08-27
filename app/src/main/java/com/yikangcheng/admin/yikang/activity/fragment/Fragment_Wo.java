@@ -1,5 +1,6 @@
 package com.yikangcheng.admin.yikang.activity.fragment;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -36,8 +37,15 @@ import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.ApoutUsActivity;
+import com.yikangcheng.admin.yikang.activity.BankActivity;
+import com.yikangcheng.admin.yikang.activity.GoodCommCentreActivity;
 import com.yikangcheng.admin.yikang.activity.H5SecActivity;
+import com.yikangcheng.admin.yikang.activity.LoginActivity;
+import com.yikangcheng.admin.yikang.activity.MainActivity;
 import com.yikangcheng.admin.yikang.activity.OrderFormActivity;
+import com.yikangcheng.admin.yikang.activity.PhotoActivity;
+import com.yikangcheng.admin.yikang.activity.PhotoBigActivity;
+import com.yikangcheng.admin.yikang.activity.ProtocolActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.Orderform_ViewPagerAdapter;
 import com.yikangcheng.admin.yikang.activity.coupon.CouponActivity;
 import com.yikangcheng.admin.yikang.activity.fragment.goodsrecommtion.Good_Recommiton_Chu;
@@ -65,12 +73,16 @@ import com.yikangcheng.admin.yikang.presenter.RecommendPresenter;
 import com.yikangcheng.admin.yikang.presenter.UserInfoPresenter;
 import com.yikangcheng.admin.yikang.util.FloatTouchListener;
 import com.yikangcheng.admin.yikang.util.MyViewPager;
+import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import me.leefeng.promptlibrary.PromptButton;
+import me.leefeng.promptlibrary.PromptButtonListener;
 import me.leefeng.promptlibrary.PromptDialog;
 
 public class Fragment_Wo extends BaseFragment implements View.OnClickListener {
@@ -113,21 +125,35 @@ public class Fragment_Wo extends BaseFragment implements View.OnClickListener {
     FrameLayout flChild;
     @BindView(R.id.flParent)
     FrameLayout flParent;
-    @BindView(R.id.qiandao_img)
-    ImageView qiandao_img;
+    @BindView(R.id.comm_img)
+    ImageView comm_img;
     @BindView(R.id.shaer_btn)
     TextView shaer_btn;
+    @BindView(R.id.xiaoxi)
+    ImageView xiaoxi;
     private View contentMeiView;
     private Dialog bottomDialog;
     private int width;
     private int height;
     private LinearLayout wx_pengyouquan, wx_haoyou;
+    @BindView(R.id.title)
+    TextView title;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void initView(View view) {
+        //设置状态栏颜色
+        if (!getLogUser(getContext()).getThemeColors().equals("")) {
+            StatusBarUtil.setStatusBarMode((Activity) getContext(), true, Color.parseColor(getLogUser(getContext()).getThemeColors()));
+        } else {
+            StatusBarUtil.setStatusBarMode((Activity) getContext(), true, R.color.colorToolbar);
+        }
         String wo = BaseApp.getApp().getSharedPreferences("wo", Context.MODE_PRIVATE).getString("wo", "");
         bottomDialog = new Dialog(getContext(), R.style.BottomDialog);
+        rela = (RelativeLayout) view.findViewById(R.id.rela);
+        rela.setBackgroundColor(Color.parseColor(getLogUser(getContext()).getThemeColors()));
+        //标题颜色
+//        title.setTextColor(Color.parseColor());
         //创建对象
         promptDialog = new PromptDialog(getActivity());
         //设置自定义属性
@@ -156,10 +182,11 @@ public class Fragment_Wo extends BaseFragment implements View.OnClickListener {
         mImgFragmentWoTouxiang = view.findViewById(R.id.img_fragment_wo_touxiang);
         //这是待付款上面的红点点
         mImgFragmentWoHongyuanquanB = view.findViewById(R.id.img_fragment_wo_hongyuanquan_b);
+//        mImgFragmentWoHongyuanquanB.setColorFilter(Color.parseColor(getLogUser(getContext()).getThemeColors()));
         //这是铃铛
         mImgFragmentWoLingdang = view.findViewById(R.id.img_fragment_wo_lingdang);
         //title
-        tv_toolBar_title = view.findViewById(R.id.tv_toolBar_title);
+        tv_toolBar_title = view.findViewById(R.id.title);
         //待付款
         mImgFragmentWoDaifukuan = view.findViewById(R.id.img_fragment_wo_daifukuan);
         //已取消
@@ -184,7 +211,6 @@ public class Fragment_Wo extends BaseFragment implements View.OnClickListener {
         //侧滑
         iv_toolBar_left = view.findViewById(R.id.iv_toolBar_left);
         tou_rela = view.findViewById(R.id.tou_rela);
-        rela = view.findViewById(R.id.rela);
         tou_lin = view.findViewById(R.id.tou_lin);
         tou_lin2 = view.findViewById(R.id.tou_lin2);
         bo_phone = view.findViewById(R.id.bo_phone);
@@ -206,17 +232,16 @@ public class Fragment_Wo extends BaseFragment implements View.OnClickListener {
         shop_seckill = view.findViewById(R.id.shop_seckill);
         shop_booking = view.findViewById(R.id.shop_booking);
         si_geren_qun = view.findViewById(R.id.si_geren_qun);
-
         RequestOptions requestOptions = new RequestOptions();
         requestOptions.placeholder(R.drawable.si_grenzhongxin);
         requestOptions.fallback(R.drawable.si_grenzhongxin);
-        Glide.with(getContext()).load(R.drawable.si_grenzhongxin).apply(requestOptions)
-                .into(si_geren_qun);
+//        Glide.with(getContext()).load(R.drawable.si_grenzhongxin).apply(requestOptions)
+//                .into(si_geren_qun);
         RequestOptions requestOptions1 = new RequestOptions();
-        requestOptions1.placeholder(R.drawable.qiandao_btn);
-        requestOptions1.fallback(R.drawable.qiandao_btn);
-        Glide.with(getContext()).load(R.drawable.qiandao_btn).apply(requestOptions1)
-                .into(qiandao_img);
+        requestOptions1.placeholder(R.drawable.comm_fanxiangou);
+        requestOptions1.fallback(R.drawable.comm_fanxiangou);
+        Glide.with(getContext()).load(R.drawable.comm_fanxiangou).apply(requestOptions1)
+                .into(comm_img);
         if (wo.equals("yes")) {
             Glide.with(getContext()).load(R.drawable.qizhiyou_bg)
                     .into(beijing);
@@ -226,7 +251,7 @@ public class Fragment_Wo extends BaseFragment implements View.OnClickListener {
                     .into(daishouhuo_img);
             Glide.with(getContext()).load(R.drawable.yiwanchengding_bg)
                     .into(yiwancheng_img);
-            Glide.with(getContext()).load(R.drawable.yiquxiao_bg)
+            Glide.with(getContext()).load(R.drawable.comm_bg_gray)
                     .into(quxiao_img);
             Glide.with(getContext()).load(R.drawable.you_bg)
                     .into(you_img);
@@ -248,6 +273,18 @@ public class Fragment_Wo extends BaseFragment implements View.OnClickListener {
             Glide.with(getContext()).load(R.drawable.yaoqing)
                     .apply(RequestOptions.bitmapTransform(new CircleCrop()))
                     .into(shop_booking);
+            Glide.with(getContext()).load(R.drawable.tuichuuser)
+                    .into(xiaoxi);
+            mess_img.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    promptDialog.showWarnAlert("确定要退出登录吗？", new PromptButton("取消", new PromptButtonListener() {
+                        @Override
+                        public void onClick(PromptButton button) {
+                        }
+                    }), confirm);
+                }
+            });
             tou_lin2.setBackgroundResource(R.drawable.three_bg);
             rela.setBackgroundResource(R.color.clolrBAai);
             iv_toolBar_left.setVisibility(View.GONE);
@@ -256,13 +293,15 @@ public class Fragment_Wo extends BaseFragment implements View.OnClickListener {
         } else {
             Glide.with(getContext()).load(R.drawable.wodebeijing)
                     .into(beijing);
-            Glide.with(getContext()).load(R.drawable.daifukuan)
+            Glide.with(getContext()).load(R.drawable.xiaoxi_seek)
+                    .into(xiaoxi);
+            Glide.with(getContext()).load(R.drawable.gerenzhongxin_fukuan)
                     .into(daifukan_img);
-            Glide.with(getContext()).load(R.drawable.daishouhuo)
+            Glide.with(getContext()).load(R.drawable.gerenzhongxin_shouhuo)
                     .into(daishouhuo_img);
-            Glide.with(getContext()).load(R.drawable.yizhifu)
+            Glide.with(getContext()).load(R.drawable.gerenzhongxin_wancheng)
                     .into(yiwancheng_img);
-            Glide.with(getContext()).load(R.drawable.yiquxiao)
+            Glide.with(getContext()).load(R.drawable.gerenzhongxin_pinglun)
                     .into(quxiao_img);
             Glide.with(getContext()).load(R.drawable.wo_youhuiquan)
                     .into(you_img);
@@ -285,10 +324,16 @@ public class Fragment_Wo extends BaseFragment implements View.OnClickListener {
                     .apply(RequestOptions.bitmapTransform(new CircleCrop()))
                     .into(shop_booking);
             tou_lin2.setBackgroundResource(R.drawable.pink_bg);
-            rela.setBackgroundResource(R.color.colorTab);
+            rela.setBackgroundColor(Color.parseColor(getLogUser(getContext()).getThemeColors()));
             iv_toolBar_left.setVisibility(View.VISIBLE);
             contentMeiView = View.inflate(getContext(), R.layout.wxshaer_item,
                     null);
+            mess_img.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(new Intent(getContext(), H5MessActivity.class));
+                }
+            });
         }
         //tabLayout
         final List<String> strings = new ArrayList<>();
@@ -322,6 +367,8 @@ public class Fragment_Wo extends BaseFragment implements View.OnClickListener {
                 setIndicator(tab1, 10, 10);
             }
         });
+        changeTextColor(tab1);
+        changeTextColor(mTabActivityOrderform);
         neste.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             @Override
             public void onScrollChange(View view, int i, int i1, int i2, int i3) {
@@ -356,12 +403,8 @@ public class Fragment_Wo extends BaseFragment implements View.OnClickListener {
 
             }
         });
-        mess_img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getContext(), H5MessActivity.class));
-            }
-        });
+
+
         Display display = getActivity().getWindowManager().getDefaultDisplay();
         width = display.getWidth();
         height = display.getHeight();
@@ -399,6 +442,7 @@ public class Fragment_Wo extends BaseFragment implements View.OnClickListener {
         userInfoPresenter = new UserInfoPresenter(new UserInfo());
         //查询
         recommendPresenter = new RecommendPresenter(new RecommendGood());
+
         tab1.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             //这是选中状态
             @Override
@@ -459,6 +503,37 @@ public class Fragment_Wo extends BaseFragment implements View.OnClickListener {
         });
     }
 
+    //按钮的定义，创建一个按钮的对象
+    final PromptButton confirm = new PromptButton("确定", new PromptButtonListener() {
+        @Override
+        public void onClick(PromptButton button) {
+            Intent intent = new Intent(getContext(), LoginActivity.class);
+            //进行查看账号之前是否存在如果存在就不添加只修改状态
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            LoginBean loginBean = getLogUser(BaseApp.getApp());
+            loginBean.setStatus(2);
+            getDelete(getContext());
+            setLogUser(BaseApp.getApp(), loginBean);
+            getActivity().finish();
+        }
+    });
+    private void changeTextColor(TabLayout tabLayout) {
+        try {
+            //拿到tabLayout的mTabStrip属性
+            Field field = TabLayout.class.getDeclaredField("mTabStrip");
+            field.setAccessible(true);
+            //拿mTabStrip属性里面的值
+            Object mTabStrip = field.get(tabLayout);
+            //通过mTabStrip对象来获取class类，不能用field来获取class类，参数不能写Integer.class
+            Method method = mTabStrip.getClass().getDeclaredMethod("setSelectedIndicatorColor", int.class);
+            method.setAccessible(true);
+            method.invoke(mTabStrip, Color.parseColor(getLogUser(getContext()).getThemeColors()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private void getHeight() {
         int w = View.MeasureSpec.makeMeasureSpec(0,
                 View.MeasureSpec.UNSPECIFIED);
@@ -491,11 +566,11 @@ public class Fragment_Wo extends BaseFragment implements View.OnClickListener {
             @Override
             public void onClick(View view) {
                 /**
-                 * 签到页面
+                 * 评论返现购
                  */
                 Intent intent = new Intent(getContext(), H5SecActivity.class);
-                intent.putExtra("http", "https://www.yikch.com/mobile/appShow/checkIn?type=android&userId=" + getLogUser(getContext()).getId() + "");
-                intent.putExtra("title", "签到");
+                intent.putExtra("http", "https://www.yikch.com/mobile/appShow/praisePurchase?type=android&userId=" + getLogUser(getContext()).getId() + "");
+                intent.putExtra("title", "评论返现购");
                 startActivity(intent);
             }
         });
@@ -523,14 +598,13 @@ public class Fragment_Wo extends BaseFragment implements View.OnClickListener {
         switch (v.getId()) {
             //已取消
             case R.id.img__fragment_wo_yiquxiao:
-                Intent img__fragment_wo_yiquxiao = new Intent(getActivity(), OrderFormActivity.class);
-                img__fragment_wo_yiquxiao.putExtra("tab", "yiquxiao");
-                startActivity(img__fragment_wo_yiquxiao);
+                startActivity(new Intent(getContext(), GoodCommCentreActivity.class));
                 break;
             //账户明细
             case R.id.relativeLayout_mingxi_fragment_wo:
+//                ToastUtils.show("功能暂未开放，敬请期待！");
                 startActivity(new Intent(getActivity(), DetailActivity.class));
-                ToastUtils.show("功能暂未开放，敬请期待！");
+
                 break;
             //待付款
             case R.id.img_fragment_wo_daifukuan:
@@ -589,21 +663,21 @@ public class Fragment_Wo extends BaseFragment implements View.OnClickListener {
             //挚友超市
             case R.id.shop_btn:
                 Intent intent = new Intent(getContext(), H5SecActivity.class);
-                intent.putExtra("none", "yes");
-                intent.putExtra("http", "https://www.yikch.com/mobile/appShow/market?type=android");
+                intent.putExtra("none", "no");
+                intent.putExtra("http", "https://www.yikch.com/mobile/appShow/market?type=android&userId=" + getLogUser(BaseApp.getApp()).getId());
                 startActivity(intent);
                 break;
             //超惠购
             case R.id.gobuy_btn:
                 Intent gobuy_btn = new Intent(getContext(), H5SecActivity.class);
-                gobuy_btn.putExtra("none", "yes");
-                gobuy_btn.putExtra("http", "https://www.yikch.com/mobile/appShow/superToday?type=android");
+                gobuy_btn.putExtra("http", "https://www.yikch.com/mobile/appShow/superToday?type=android&userId=" + getLogUser(BaseApp.getApp()).getId());
+                gobuy_btn.putExtra("title", "超惠购");
                 startActivity(gobuy_btn);
                 break;
             //周秒杀
             case R.id.seckill_btn:
                 Intent seckill_btn = new Intent(getContext(), H5SecActivity.class);
-                seckill_btn.putExtra("http", "https://www.yikch.com/mobile/appShow/activity?type=android");
+                seckill_btn.putExtra("http", "https://www.yikch.com/mobile/appShow/activity?type=android&userId=" + getLogUser(BaseApp.getApp()).getId());
                 seckill_btn.putExtra("title", "周秒杀");
                 startActivity(seckill_btn);
                 break;
@@ -618,7 +692,7 @@ public class Fragment_Wo extends BaseFragment implements View.OnClickListener {
              *  进群
              */
             case R.id.si_geren_qun:
-
+                startActivity(new Intent(getContext(), BankActivity.class));
                 break;
             /**
              *  拨打营养师号码
@@ -633,7 +707,7 @@ public class Fragment_Wo extends BaseFragment implements View.OnClickListener {
             case R.id.tou_lin3:
                 Intent tou_lin3 = new Intent(getContext(), H5SecActivity.class);
                 tou_lin3.putExtra("title", "会员福利社");
-                tou_lin3.putExtra("http", "https://www.yikch.com/mobile/appShow/memberBenefits?type=android");
+                tou_lin3.putExtra("http", "https://www.yikch.com/mobile/appShow/memberBenefits?type=android&userId=" + getLogUser(BaseApp.getApp()).getId());
                 startActivity(tou_lin3);
                 break;
         }

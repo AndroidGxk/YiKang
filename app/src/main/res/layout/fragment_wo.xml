@@ -36,7 +36,7 @@
                     android:visibility="visible" />
 
                 <TextView
-                    android:id="@+id/tv_toolBar_title"
+                    android:id="@+id/title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
@@ -52,8 +52,9 @@
                     android:gravity="center">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:id="@+id/xiaoxi"
+                        android:layout_width="26dp"
+                        android:layout_height="26dp"
                         android:layout_alignParentRight="true"
                         android:gravity="center"
                         android:src="@drawable/xiaoxi_seek" />
@@ -75,6 +76,7 @@
                     android:layout_height="match_parent"
                     android:fillViewport="true"
                     android:orientation="vertical">
+
 
                     <RelativeLayout
                         android:id="@+id/tou_rela"
@@ -198,12 +200,12 @@
 
                                     <ImageView
                                         android:id="@+id/daifukan_img"
-                                        android:layout_width="46dp"
-                                        android:layout_height="46dp"
+                                        android:layout_width="50dp"
+                                        android:layout_height="45dp"
                                         android:layout_centerHorizontal="true"
                                         android:layout_marginTop="5dp"
                                         android:scaleType="fitXY"
-                                        android:src="@drawable/daifukuan" />
+                                        android:src="@drawable/gerenzhongxin_fukuan" />
 
                                     <ImageView
                                         android:id="@+id/img_fragment_wo_hongyuanquan_b"
@@ -280,12 +282,12 @@
 
                                     <ImageView
                                         android:id="@+id/daishouhuo_img"
-                                        android:layout_width="46dp"
-                                        android:layout_height="46dp"
+                                        android:layout_width="50dp"
+                                        android:layout_height="45dp"
                                         android:layout_centerHorizontal="true"
                                         android:layout_marginTop="5dp"
                                         android:scaleType="fitXY"
-                                        android:src="@drawable/daishouhuo" />
+                                        android:src="@drawable/gerenzhongxin_shouhuo" />
 
                                     <TextView
                                         android:layout_width="wrap_content"
@@ -312,12 +314,12 @@
 
                                     <ImageView
                                         android:id="@+id/yiwancheng_img"
-                                        android:layout_width="46dp"
-                                        android:layout_height="46dp"
+                                        android:layout_width="50dp"
+                                        android:layout_height="45dp"
                                         android:layout_centerHorizontal="true"
                                         android:layout_marginTop="5dp"
                                         android:scaleType="fitXY"
-                                        android:src="@drawable/yizhifu" />
+                                        android:src="@drawable/gerenzhongxin_wancheng" />
 
                                     <TextView
                                         android:layout_width="wrap_content"
@@ -344,19 +346,19 @@
 
                                     <ImageView
                                         android:id="@+id/quxiao_img"
-                                        android:layout_width="46dp"
-                                        android:layout_height="46dp"
+                                        android:layout_width="50dp"
+                                        android:layout_height="45dp"
                                         android:layout_centerHorizontal="true"
                                         android:layout_marginTop="5dp"
                                         android:scaleType="fitXY"
-                                        android:src="@drawable/yiquxiao" />
+                                        android:src="@drawable/gerenzhongxin_pinglun" />
 
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_centerHorizontal="true"
                                         android:layout_marginTop="54dp"
-                                        android:text="已取消"
+                                        android:text="评价"
                                         android:textColor="#333333"
                                         android:textSize="11sp" />
 
@@ -400,7 +402,7 @@
                                         android:layout_height="wrap_content"
                                         android:layout_centerHorizontal="true"
                                         android:layout_marginTop="51dp"
-                                        android:text="账号明细"
+                                        android:text="我的钱包"
                                         android:textColor="#333333"
                                         android:textSize="11sp" />
                                 </RelativeLayout>
@@ -619,12 +621,12 @@
 
                         <ImageView
                             android:id="@+id/si_geren_qun"
+                           android:visibility="gone"
                             android:layout_width="match_parent"
                             android:layout_height="102dp"
-
                             android:layout_below="@+id/text_fuli"
                             android:layout_marginTop="10dp"
-                            android:src="@drawable/si_grenzhongxin" />
+                            android:src="@drawable/wo_yinhang" />
 
                         <ImageView
                             android:id="@+id/tou_lin3"
@@ -711,11 +713,11 @@
             android:padding="10dp">
 
             <ImageView
-                android:id="@+id/qiandao_img"
+                android:id="@+id/comm_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/transparent"
-                android:src="@drawable/qiandao_btn" />
+                android:src="@drawable/comm_fanxiangou" />
         </FrameLayout>
     </FrameLayout>
 </RelativeLayout>

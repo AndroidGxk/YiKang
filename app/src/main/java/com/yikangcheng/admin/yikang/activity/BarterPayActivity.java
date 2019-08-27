@@ -1,6 +1,8 @@
 package com.yikangcheng.admin.yikang.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -27,13 +29,15 @@ import com.yikangcheng.admin.yikang.util.UIUtils;
 
 import java.util.Map;
 
+import butterknife.BindView;
+
 public class BarterPayActivity extends BaseActivtiy implements ICoreInfe {
 
     /**
      * 重新支付页面
      */
     private TextView money_count;
-    private RelativeLayout alpay_rela, wechat_rela;
+    private RelativeLayout alpay_rela, wechat_rela, rela;
     //判断微信支付宝
     private boolean zf_btn = true, wx_btn = false;
     private NewOrderPresenter newOrderPresenter;
@@ -43,17 +47,30 @@ public class BarterPayActivity extends BaseActivtiy implements ICoreInfe {
     private String type;
     private ImageView back_img;
     private PayBean mEntity;
+    @BindView(R.id.title)
+    TextView title;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
 
     @Override
     protected void initView() {
+        SharedPreferences sharedPreferences = getSharedPreferences("orderInfo", MODE_PRIVATE);
+        editor = sharedPreferences.edit();
         //设置状态栏颜色
-        StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        if (!getLogUser(this).getThemeColors().equals("")) {
+            StatusBarUtil.setStatusBarMode(this, true, Color.parseColor(getLogUser(this).getThemeColors()));
+        } else {
+            StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+        }
+//        title.setTextColor(Color.parseColor());
         //获取Ip地址
         ipAddressString = UIUtils.getIpAddressString();
         money_count = (TextView) findViewById(R.id.money_count);
         alpay_rela = (RelativeLayout) findViewById(R.id.alpay_rela);
+        rela = (RelativeLayout) findViewById(R.id.rela);
         back_img = (ImageView) findViewById(R.id.back_img);
         wechat_rela = (RelativeLayout) findViewById(R.id.wechat_rela);
+        rela.setBackgroundColor(Color.parseColor(getLogUser(this).getThemeColors()));
         Intent intent = getIntent();
         String id = intent.getStringExtra("id");
         idInt = Integer.parseInt(id);
@@ -137,6 +154,8 @@ public class BarterPayActivity extends BaseActivtiy implements ICoreInfe {
                         msg.what = SDK_PAY_FLAG;
                         msg.obj = result;
                         mHandler.sendMessage(msg);
+                        editor.putInt("orderType", mEntity.getIsZeroPurchase());
+                        editor.commit();
                     }
                 };
                 // 必须异步调用
@@ -154,6 +173,8 @@ public class BarterPayActivity extends BaseActivtiy implements ICoreInfe {
                 req.sign = mEntity.getSign();
                 BaseApp.mWxApi.sendReq(req);//将订单信息对象发送给微信服务器，即发送支付请求
 //                Toast.makeText(WaitForpaymentActivity.this, "haha", Toast.LENGTH_SHORT).show();
+                editor.putInt("orderType", mEntity.getIsZeroPurchase());
+                editor.commit();
             }
         }
     }
@@ -178,10 +199,22 @@ public class BarterPayActivity extends BaseActivtiy implements ICoreInfe {
                     String resultStatus = payResult.getResultStatus();
                     // 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
                     if (TextUtils.equals(resultStatus, "9000")) {
-                        Intent intent = new Intent(BarterPayActivity.this, PayResultActivity.class);
-                        intent.putExtra("pay", 1);
-                        startActivity(intent);
-                        finish();
+
+                        if (sharedPreferences.getInt("orderType", 0) == 2) {
+                            Intent intent = new Intent(BarterPayActivity.this, OrderFormActivity.class);
+                            intent.putExtra("tab", "daishouhuo");
+                            startActivity(intent);
+                            finish();
+                        } else if (sharedPreferences.getInt("orderType", 0) == 3) {
+                            Intent intent = new Intent(BarterPayActivity.this, H5SecActivity.class);
+                            intent.putExtra("http", "daishouhuo");
+                            startActivity(intent);
+                            finish();
+                        }
+//                        Intent intent = new Intent(BarterPayActivity.this, PayResultActivity.class);
+//                        intent.putExtra("pay", 1);
+//                        startActivity(intent);
+//                        finish();
                     } else {
                         // 判断resultStatus 为非“9000”则代表可能支付失败
                         // “8000”代表支付结果因为支付渠道原因或者系统原因还在等待支付结果确认，最终交易是否成功以服务端异步通知为准（小概率状态）

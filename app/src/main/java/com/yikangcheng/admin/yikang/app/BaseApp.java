@@ -32,6 +32,7 @@ import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.particulars.ParticularsActivity;
+import com.yikangcheng.admin.yikang.util.image.ImageLoader;
 
 import java.io.File;
 import java.util.HashSet;
@@ -119,6 +120,8 @@ public class BaseApp extends Application {
         ToastUtils.init(this);
         startYM();
         wxApi = WXAPIFactory.createWXAPI(this, "wx38a0aef5df24fe50", false);
+        // 初始化图片加载器
+        ImageLoader.init(this);
     }
 
 

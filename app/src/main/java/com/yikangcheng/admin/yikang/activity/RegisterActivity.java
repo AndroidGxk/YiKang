@@ -15,9 +15,11 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.widget.NestedScrollView;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -97,6 +99,14 @@ public class RegisterActivity extends BaseActivtiy implements ICoreInfe, View.On
     LinearLayout password_line2;
     @BindView(R.id.yaoqingma)
     LinearLayout yaoqingma;
+    @BindView(R.id.xieyi_check)
+    CheckBox mCheck;
+    @BindView(R.id.xieyi)
+    LinearLayout xieyi;
+    @BindView(R.id.nested)
+    NestedScrollView nested;
+    @BindView(R.id.user_btn)
+    TextView user_btn;
     private static final int REQUEST_CODE = 0; // 请求码
     // 所需的全部权限
     static final String[] PERMISSIONS = new String[]{
@@ -147,6 +157,7 @@ public class RegisterActivity extends BaseActivtiy implements ICoreInfe, View.On
         log_image.setOnClickListener(this);
         ver_btn.setOnClickListener(this);
         register_btn.setOnClickListener(this);
+        user_btn.setOnClickListener(this);
     }
 
     @Override
@@ -233,9 +244,16 @@ public class RegisterActivity extends BaseActivtiy implements ICoreInfe, View.On
                 } else if (reg_pwd.length() < 6 || reg_pwd.length() > 20) {
                     ToastUtils.show("密码长度需在6-20位字符之间");
                     return;
+                } else if (!mCheck.isChecked()) {
+                    ToastUtils.show("请仔细阅读并同意企挚友《用户注册协议》");
+                    nested.scrollTo(0, xieyi.getTop());
+                    return;
                 }
                 registerPresenter.request(phone, reg_pwd, reg_two_pwd, code, code_two, String.valueOf(longitude), String.valueOf(dimensionality));
                 promptDialog.showLoading("加载中...");
+                break;
+            case R.id.user_btn:
+                startActivity(new Intent(RegisterActivity.this,ProtocolActivity.class));
                 break;
         }
     }
@@ -305,7 +323,6 @@ public class RegisterActivity extends BaseActivtiy implements ICoreInfe, View.On
             showLocation(location);
         }
     };
-
 
 
     /**
