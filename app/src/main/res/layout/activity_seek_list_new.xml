@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rela"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#EBEBEB"
@@ -26,7 +27,6 @@
             android:focusable="false"
             android:gravity="center"
             android:imeOptions="actionSearch"
-            android:paddingLeft="35dp"
             android:singleLine="true"
             android:text="商品列表"
             android:textColor="#000000"
@@ -153,8 +153,8 @@
             android:id="@+id/storeHouseHeader"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            tools:shhLineWidth="2dp"
-            tools:shhText="QiZhiYou" />
+            app:shhLineWidth="2dp"
+            app:shhText="QiZhiYou" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/xrecycler"
@@ -183,8 +183,8 @@
         android:visibility="gone" />
 
     <com.yikangcheng.admin.yikang.util.TwoBallRotationProgressBar
-    android:id="@+id/progress"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_centerInParent="true" />
+        android:id="@+id/progress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true" />
 </RelativeLayout>

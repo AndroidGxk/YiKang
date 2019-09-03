@@ -74,6 +74,7 @@ public class GoodComActivity extends BaseActivtiy implements ICoreInfe {
         detaid = intent.getStringExtra("detaid");
         detanum = detaid.replace("null", "");
         goodidnum = goodid.replace("null", "");
+        goodidnum = goodidnum.replace(".json", "");
         Log.d("GTT", detanum);
         Log.d("GTT", goodidnum);
         lookAssessListPresenter = new LookAssessListPresenter(this);

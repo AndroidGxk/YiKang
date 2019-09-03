@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/liwu_shengri_bg"
+    android:gravity="center_horizontal">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="35dp"
+            android:layout_marginRight="31dp"
+            android:src="@drawable/quxiao" />
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="230dp"
+            android:shadowColor="#85b62c15"
+            android:shadowDx="0"
+            android:shadowDy="4"
+            android:shadowRadius="3.0"
+            android:text="王豆豆的生日礼物"
+            android:textColor="#ffffd58d"
+            android:textSize="21sp" />
+
+        <TextView
+            android:id="@+id/count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/name"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:text="王豆豆祝你生日快乐,愿你年年有今日,岁岁有今朝,企业的关怀无微不至,收下礼品吧~"
+            android:textColor="#fffefefe"
+            android:textSize="15sp" />
+
+        <RelativeLayout
+            android:id="@+id/liebiao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/count"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/liwu_shengri_lipin_bg">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recy"
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="15dp"
+                android:overScrollMode="never" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/liebiao"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/yellow_pay_shi_shape"
+            android:gravity="center"
+            android:text="去兑换"
+            android:textColor="@color/clolrBAai"
+            android:textSize="19sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+</android.support.v4.widget.NestedScrollView>

@@ -70,8 +70,8 @@ public class GoodCommRecyclerAdapter extends RecyclerView.Adapter {
         final ArrayList<String> imagList = new ArrayList<>();
         if (vh instanceof Vh1) {
             RequestOptions requestOptions = new RequestOptions();
-            requestOptions.placeholder(R.drawable.inco_log);
-            requestOptions.fallback(R.drawable.inco_log);
+            requestOptions.placeholder(R.drawable.touxiang_2);
+            requestOptions.fallback(R.drawable.touxiang_2);
             Glide.with(context).load(Constants.BASETUPIANSHANGCHUANURL + courseAssessListBean.getAvatar())
                     .apply(requestOptions)
                     .apply(RequestOptions.bitmapTransform(new CircleCrop()))
@@ -84,6 +84,8 @@ public class GoodCommRecyclerAdapter extends RecyclerView.Adapter {
             }
             if (!courseAssessListBean.getImage1().equals("")) {
                 imagList.add(courseAssessListBean.getImage1());
+                requestOptions.placeholder(R.drawable.inco_log);
+                requestOptions.fallback(R.drawable.inco_log);
                 Glide.with(context).load(courseAssessListBean.getImage1())
                         .apply(requestOptions)
                         .into(((Vh1) vh).imag1);
@@ -100,8 +102,8 @@ public class GoodCommRecyclerAdapter extends RecyclerView.Adapter {
             ((Vh1) vh).spec.setText(courseAssessListBean.getSpecNames());
         } else if (vh instanceof Vh3) {
             RequestOptions requestOptions = new RequestOptions();
-            requestOptions.placeholder(R.drawable.inco_log);
-            requestOptions.fallback(R.drawable.inco_log);
+            requestOptions.placeholder(R.drawable.touxiang_2);
+            requestOptions.fallback(R.drawable.touxiang_2);
             Glide.with(context).load(Constants.BASETUPIANSHANGCHUANURL + courseAssessListBean.getAvatar())
                     .apply(requestOptions)
                     .apply(RequestOptions.bitmapTransform(new CircleCrop()))
@@ -115,6 +117,8 @@ public class GoodCommRecyclerAdapter extends RecyclerView.Adapter {
             }
             if (!courseAssessListBean.getImage1().equals("")) {
                 imagList.add(courseAssessListBean.getImage1());
+                requestOptions.placeholder(R.drawable.inco_log);
+                requestOptions.fallback(R.drawable.inco_log);
                 Glide.with(context).load(courseAssessListBean.getImage1())
                         .apply(requestOptions)
                         .into(((Vh3) vh).imag1);
@@ -129,6 +133,8 @@ public class GoodCommRecyclerAdapter extends RecyclerView.Adapter {
             }
             if (!courseAssessListBean.getImage2().equals("")) {
                 imagList.add(courseAssessListBean.getImage2());
+                requestOptions.placeholder(R.drawable.inco_log);
+                requestOptions.fallback(R.drawable.inco_log);
                 Glide.with(context).load(courseAssessListBean.getImage2())
                         .apply(requestOptions)
                         .into(((Vh3) vh).img2);
@@ -145,8 +151,8 @@ public class GoodCommRecyclerAdapter extends RecyclerView.Adapter {
             ((Vh3) vh).spec.setText(courseAssessListBean.getSpecNames());
         } else if (vh instanceof Vh4) {
             RequestOptions requestOptions = new RequestOptions();
-            requestOptions.placeholder(R.drawable.inco_log);
-            requestOptions.fallback(R.drawable.inco_log);
+            requestOptions.placeholder(R.drawable.touxiang_2);
+            requestOptions.fallback(R.drawable.touxiang_2);
             Glide.with(context).load(Constants.BASETUPIANSHANGCHUANURL + courseAssessListBean.getAvatar())
                     .apply(requestOptions)
                     .apply(RequestOptions.bitmapTransform(new CircleCrop()))
@@ -159,6 +165,8 @@ public class GoodCommRecyclerAdapter extends RecyclerView.Adapter {
             }
             if (!courseAssessListBean.getImage1().equals("")) {
                 imagList.add(courseAssessListBean.getImage1());
+                requestOptions.placeholder(R.drawable.inco_log);
+                requestOptions.fallback(R.drawable.inco_log);
                 Glide.with(context).load(courseAssessListBean.getImage1())
                         .apply(requestOptions)
                         .into(((Vh4) vh).imag1);
@@ -173,6 +181,8 @@ public class GoodCommRecyclerAdapter extends RecyclerView.Adapter {
             }
             if (!courseAssessListBean.getImage2().equals("")) {
                 imagList.add(courseAssessListBean.getImage2());
+                requestOptions.placeholder(R.drawable.inco_log);
+                requestOptions.fallback(R.drawable.inco_log);
                 Glide.with(context).load(courseAssessListBean.getImage2())
                         .apply(requestOptions)
                         .into(((Vh4) vh).imag2);
@@ -187,6 +197,8 @@ public class GoodCommRecyclerAdapter extends RecyclerView.Adapter {
             }
             if (!courseAssessListBean.getImage3().equals("")) {
                 imagList.add(courseAssessListBean.getImage3());
+                requestOptions.placeholder(R.drawable.inco_log);
+                requestOptions.fallback(R.drawable.inco_log);
                 Glide.with(context).load(courseAssessListBean.getImage3())
                         .apply(requestOptions)
                         .into(((Vh4) vh).imag3);
@@ -203,8 +215,8 @@ public class GoodCommRecyclerAdapter extends RecyclerView.Adapter {
             ((Vh4) vh).spec.setText(courseAssessListBean.getSpecNames());
         } else if (vh instanceof Vh2) {
             RequestOptions requestOptions = new RequestOptions();
-            requestOptions.placeholder(R.drawable.inco_log);
-            requestOptions.fallback(R.drawable.inco_log);
+            requestOptions.placeholder(R.drawable.touxiang_2);
+            requestOptions.fallback(R.drawable.touxiang_2);
             Glide.with(context).load(Constants.BASETUPIANSHANGCHUANURL + courseAssessListBean.getAvatar())
                     .apply(requestOptions)
                     .apply(RequestOptions.bitmapTransform(new CircleCrop()))

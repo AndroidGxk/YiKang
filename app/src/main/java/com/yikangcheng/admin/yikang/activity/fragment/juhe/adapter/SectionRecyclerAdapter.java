@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -50,6 +51,12 @@ public class SectionRecyclerAdapter extends RecyclerView.Adapter<SectionRecycler
 
     @Override
     public void onBindViewHolder(@NonNull Vh vh, final int position) {
+        if (position == getItemCount() - 1) {
+            LinearLayout.LayoutParams layout = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            layout.setMargins(0, 0, 0, 285);
+            vh.itemView.setLayoutParams(layout);
+        }
         SectionImageBean sectionImageBean = stringList.get(position);
         vh.title.setText(sectionImageBean.getImagesTitle());
         RequestOptions requestOptions = new RequestOptions();

@@ -621,7 +621,6 @@
 
                         <ImageView
                             android:id="@+id/si_geren_qun"
-                           android:visibility="gone"
                             android:layout_width="match_parent"
                             android:layout_height="102dp"
                             android:layout_below="@+id/text_fuli"

@@ -111,8 +111,6 @@ public class GoodCommCentreActivity extends BaseActivtiy {
         }
     }
 
-
-
     @Override
     protected void createPresenter() {
 

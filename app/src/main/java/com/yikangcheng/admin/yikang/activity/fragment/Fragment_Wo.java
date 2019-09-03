@@ -689,7 +689,7 @@ public class Fragment_Wo extends BaseFragment implements View.OnClickListener {
                 startActivity(booking_btn);
                 break;
             /**
-             *  进群
+             * 银行
              */
             case R.id.si_geren_qun:
                 startActivity(new Intent(getContext(), BankActivity.class));

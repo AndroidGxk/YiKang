@@ -66,6 +66,7 @@
 
             <ImageView
                 android:id="@+id/img1"
+                android:scaleType="fitXY"
                 android:layout_width="105dp"
                 android:layout_height="110dp" />
         </LinearLayout>
@@ -77,6 +78,7 @@
             android:gravity="center">
 
             <ImageView
+                android:scaleType="fitXY"
                 android:id="@+id/img2"
                 android:layout_width="105dp"
                 android:layout_height="110dp" />
@@ -89,6 +91,7 @@
             android:gravity="center">
 
             <ImageView
+                android:scaleType="fitXY"
                 android:id="@+id/img3"
                 android:layout_width="105dp"
                 android:layout_height="110dp" />

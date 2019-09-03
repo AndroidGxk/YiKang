@@ -325,6 +325,8 @@ public class PartiCarActivity extends BaseActivtiy implements ShopRecyclerAdapte
         if (entity != null) {
             if (entity.size() == 0) {
                 null_car.setVisibility(View.VISIBLE);
+                tv_toolBar_right.setVisibility(View.GONE);
+                base_btn.setVisibility(View.GONE);
                 shop_recycler.setVisibility(View.GONE);
             }
             shopRecyclerAdapter.remove();
@@ -397,11 +399,12 @@ public class PartiCarActivity extends BaseActivtiy implements ShopRecyclerAdapte
         public void success(Object data) {
             LoginBean logUser = getLogUser(PartiCarActivity.this);
             Request request = (Request) data;
-            ToastUtils.show(request.getMessage() + "");
             if (request.isSuccess()) {
                 if (logUser != null) {
                     shopCarPresenter.request(logUser.getId());
                 }
+            }else{
+                ToastUtils.show(request.getMessage() + "");
             }
         }
 

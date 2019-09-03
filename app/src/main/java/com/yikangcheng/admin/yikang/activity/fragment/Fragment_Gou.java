@@ -77,6 +77,9 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
 
     @BindView(R.id.tv_toolBar_title)
     TextView tv_toolBar_title;
+    @BindView(R.id.quan)
+    TextView quan;
+
 
     @Override
     protected void initView(View view) {
@@ -316,9 +319,23 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
         Request request = (Request) data;
         List<ShopCarBean> entity = (List<ShopCarBean>) request.getEntity();
         if (entity.size() == 0) {
+            tv_toolBar_right.setVisibility(View.GONE);
+            all_check.setVisibility(View.GONE);
+            quan.setVisibility(View.GONE);
+            heji.setVisibility(View.GONE);
+            text_total.setVisibility(View.GONE);
+            num_text.setVisibility(View.GONE);
+            base_btn.setVisibility(View.GONE);
             null_car.setVisibility(View.VISIBLE);
             shop_recycler.setVisibility(View.GONE);
         } else {
+            tv_toolBar_right.setVisibility(View.VISIBLE);
+            all_check.setVisibility(View.VISIBLE);
+            quan.setVisibility(View.VISIBLE);
+            heji.setVisibility(View.VISIBLE);
+            text_total.setVisibility(View.VISIBLE);
+            num_text.setVisibility(View.VISIBLE);
+            base_btn.setVisibility(View.VISIBLE);
             null_car.setVisibility(View.GONE);
             shop_recycler.setVisibility(View.VISIBLE);
         }
@@ -416,6 +433,8 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
                     tv_toolBar_right.setText("编辑");
                     judge = false;
                 }
+            }else{
+                    ToastUtils.show(request.getMessage() + "");
             }
         }
 

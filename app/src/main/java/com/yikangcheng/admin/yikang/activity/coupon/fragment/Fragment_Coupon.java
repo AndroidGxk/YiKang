@@ -1,39 +1,22 @@
-package com.yikangcheng.admin.yikang.activity.coupon;
+package com.yikangcheng.admin.yikang.activity.coupon.fragment;
 
-import android.annotation.SuppressLint;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.Display;
 import android.view.View;
-import android.widget.CompoundButton;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yikangcheng.admin.yikang.R;
-import com.yikangcheng.admin.yikang.activity.ApplySeleActivity;
-import com.yikangcheng.admin.yikang.activity.OrderFormActivity;
 import com.yikangcheng.admin.yikang.activity.adapter.MyAccountAdapter;
-import com.yikangcheng.admin.yikang.activity.coupon.fragment.Fragment_Coupon;
-import com.yikangcheng.admin.yikang.activity.coupon.fragment.Fragment_Welfare;
-import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Wo;
+import com.yikangcheng.admin.yikang.activity.coupon.CouponActivity;
 import com.yikangcheng.admin.yikang.activity.fragment.coupon.CommFragment;
 import com.yikangcheng.admin.yikang.activity.fragment.coupon.EffecFragment;
-import com.yikangcheng.admin.yikang.activity.fragment.juhe.Fragment_Shou;
-import com.yikangcheng.admin.yikang.activity.fragment.juhe.Fragment_Xiao;
-import com.yikangcheng.admin.yikang.activity.fragment.wodezhanghu.AmendFragment;
-import com.yikangcheng.admin.yikang.activity.fragment.wodezhanghu.BasicFragment;
 import com.yikangcheng.admin.yikang.app.BaseApp;
-import com.yikangcheng.admin.yikang.base.BaseActivtiy;
+import com.yikangcheng.admin.yikang.base.BaseFragment;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
 import java.lang.reflect.Field;
@@ -41,9 +24,12 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 import butterknife.BindView;
-import me.jessyan.autosize.internal.CustomAdapt;
 
-public class CouponActivity extends BaseActivtiy {
+/**
+ * 作者：古祥坤 on 2019/8/28 16:03
+ * 邮箱：1724959985@qq.com
+ */
+public class Fragment_Coupon extends BaseFragment {
     private TabLayout coupon_tab;
     private ViewPager viewpage;
     private ImageView back_img;
@@ -52,31 +38,32 @@ public class CouponActivity extends BaseActivtiy {
     private int width;
     @BindView(R.id.title)
     TextView title;
+
     @Override
-    protected void initView() {
+    protected void initView(View view) {
         //设置状态栏颜色
         if (!getLogUser(BaseApp.getApp()).getThemeColors().equals("")) {
-            StatusBarUtil.setStatusBarMode(this, true, Color.parseColor(getLogUser(BaseApp.getApp()).getThemeColors()));
+            StatusBarUtil.setStatusBarMode(getActivity(), true, Color.parseColor(getLogUser(BaseApp.getApp()).getThemeColors()));
         } else {
-            StatusBarUtil.setStatusBarMode(this, true, R.color.colorToolbar);
+            StatusBarUtil.setStatusBarMode(getActivity(), true, R.color.colorToolbar);
         }
-        Display display = getWindowManager().getDefaultDisplay();
+        Display display = getActivity().getWindowManager().getDefaultDisplay();
         width = display.getWidth();
         height = display.getHeight();
-        coupon_tab = (TabLayout) findViewById(R.id.coupon_tab);
-        table = (RelativeLayout) findViewById(R.id.table);
+        coupon_tab = (TabLayout) view.findViewById(R.id.coupon_tab);
+        table = (RelativeLayout) view.findViewById(R.id.table);
         table.setBackgroundColor(Color.parseColor(getLogUser(BaseApp.getApp()).getThemeColors()));
         //标题颜色
 //        title.setTextColor(Color.parseColor());
-        viewpage = (ViewPager) findViewById(R.id.viewpage);
-        back_img = (ImageView) findViewById(R.id.back_img);
+        viewpage = (ViewPager) view.findViewById(R.id.viewpage);
+        back_img = (ImageView) view.findViewById(R.id.back_img);
         ArrayList<String> strings = new ArrayList<>();
         strings.add("可使用");
         strings.add("已失效");
         ArrayList<Fragment> fragments = new ArrayList<>();
         fragments.add(new CommFragment());
         fragments.add(new EffecFragment());
-        MyAccountAdapter myAccountAdapter = new MyAccountAdapter(getSupportFragmentManager(), strings, fragments);
+        MyAccountAdapter myAccountAdapter = new MyAccountAdapter(getActivity().getSupportFragmentManager(), strings, fragments);
         viewpage.setAdapter(myAccountAdapter);
         coupon_tab.setupWithViewPager(viewpage);
         changeTextColor(coupon_tab);
@@ -97,27 +84,22 @@ public class CouponActivity extends BaseActivtiy {
             e.printStackTrace();
         }
     }
+
     @Override
-    protected void initEventData() {
+    protected void initData() {
         /**
          * 退出
          */
         back_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               finish();
+                getActivity().finish();
             }
         });
     }
 
     @Override
-    protected int getActivtiyLayoutId() {
-        return R.layout.activity_coupon;
+    protected int getFragmentLayoutId() {
+        return R.layout.fragment_coupon;
     }
-
-    @Override
-    protected void createPresenter() {
-
-    }
-
 }

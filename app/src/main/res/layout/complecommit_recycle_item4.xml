@@ -79,7 +79,8 @@
             <ImageView
                 android:id="@+id/img1"
                 android:layout_width="105dp"
-                android:layout_height="110dp" />
+                android:layout_height="110dp"
+                android:scaleType="fitXY" />
         </LinearLayout>
 
         <LinearLayout
@@ -91,7 +92,8 @@
             <ImageView
                 android:id="@+id/img2"
                 android:layout_width="105dp"
-                android:layout_height="110dp" />
+                android:layout_height="110dp"
+                android:scaleType="fitXY" />
         </LinearLayout>
 
         <LinearLayout
@@ -103,7 +105,8 @@
             <ImageView
                 android:id="@+id/img3"
                 android:layout_width="105dp"
-                android:layout_height="110dp" />
+                android:layout_height="110dp"
+                android:scaleType="fitXY" />
         </LinearLayout>
 
     </LinearLayout>

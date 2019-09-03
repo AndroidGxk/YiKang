@@ -79,7 +79,7 @@ public class MyReceiver extends BroadcastReceiver {
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     context.startActivity(i);
                 } else {
-                    Intent i = new Intent(context, H5SecActivity.class);
+                    Intent i = new Intent(context, MainActivity.class);
                     i.putExtras(bundle);
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);

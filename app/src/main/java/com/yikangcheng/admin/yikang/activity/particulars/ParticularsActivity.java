@@ -96,7 +96,10 @@ public class ParticularsActivity extends BaseActivtiy implements ICoreInfe {
             super.handleMessage(msg);
             if (msg.what == 1) {
                 webView.loadUrl("javascript:redDot(" + entity.size() + ")");
-                handler.sendEmptyMessageDelayed(1, 1000);
+                Log.d("GTT", entity.size() + "");
+                if (logUser != null) {
+                    shopCarPresenter.request(logUser.getId());
+                }
             }
         }
     };
@@ -363,8 +366,8 @@ public class ParticularsActivity extends BaseActivtiy implements ICoreInfe {
             Intent intent = new Intent(ParticularsActivity.this, GoodComActivity.class);
             intent.putExtra("detaid", split[0]);
             intent.putExtra("goodid", split[1]);
-            Log.d("GTT",split[0]);
-            Log.d("GTT",split[1]);
+            Log.d("GTT", split[0]);
+            Log.d("GTT", split[1]);
             startActivity(intent);
             comm = "";
         }
@@ -417,6 +420,9 @@ public class ParticularsActivity extends BaseActivtiy implements ICoreInfe {
                 intent.putExtra("goodinfo", this.ss);
                 startActivity(intent);
                 this.ss = "";
+                if (logUser != null) {
+                    shopCarPresenter.request(logUser.getId());
+                }
             } else if (split[8].equals("noProInfo")) {
                 ToastUtils.show("该规格下暂无商品信息");
                 this.ss = "";
@@ -437,6 +443,9 @@ public class ParticularsActivity extends BaseActivtiy implements ICoreInfe {
                 intent.putExtra("goodinfo", this.ss);
                 startActivity(intent);
                 this.ss = "";
+                if (logUser != null) {
+                    shopCarPresenter.request(logUser.getId());
+                }
             } else if (split[7].equals("noProInfo")) {
                 ToastUtils.show("该规格下暂无商品信息");
                 this.ss = "";
@@ -593,7 +602,6 @@ public class ParticularsActivity extends BaseActivtiy implements ICoreInfe {
     }
 
 
-
     /**
      * 购物车数量
      */
@@ -650,5 +658,17 @@ public class ParticularsActivity extends BaseActivtiy implements ICoreInfe {
             options -= 10;
         }
         return output.toByteArray();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        handler.removeMessages(1);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        handler.removeMessages(1);
     }
 }

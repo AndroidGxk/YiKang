@@ -382,4 +382,10 @@ public interface ApiService {
      */
     @POST("assess/list")
     Observable<Request<GoodComBean>> lookcommlist(@Query("commodityId") int commodityId, @Query("detailedId") int detailedId, @Query("page.currentPage") int page);
+
+    /**
+     * 统计银行
+     */
+    @POST("advertisement/click")
+    Observable<Request> click(@Query("userId") int userId, @Query("key") String key);
 }
