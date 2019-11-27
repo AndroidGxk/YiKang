@@ -8,7 +8,7 @@ import com.yikangcheng.admin.yikang.activity.adapter.PhotoPagerAdapter;
 import com.yikangcheng.admin.yikang.base.BaseActivtiy;
 
 import java.util.ArrayList;
-
+//
 import butterknife.BindView;
 
 public class PhotoBigActivity extends BaseActivtiy {
