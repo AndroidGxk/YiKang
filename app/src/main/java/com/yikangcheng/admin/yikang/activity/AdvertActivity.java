@@ -35,7 +35,7 @@ import butterknife.BindView;
 
 /**
  * 启动页广告显示
- * 
+ *
  */
 public class AdvertActivity extends BaseActivtiy implements ICoreInfe {
     private AdvertPresenter advertPresenter;
