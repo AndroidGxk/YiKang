@@ -7,12 +7,17 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
@@ -23,7 +28,9 @@ import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.H5SecActivity;
 import com.yikangcheng.admin.yikang.activity.MainActivity;
 import com.yikangcheng.admin.yikang.activity.WelcomeActivity;
+import com.yikangcheng.admin.yikang.activity.adapter.WelfareCourseAdapter;
 import com.yikangcheng.admin.yikang.activity.fragment.juhe.adapter.SectionRecyclerAdapter;
+import com.yikangcheng.admin.yikang.activity.giftactivity.MyGiftActivity;
 import com.yikangcheng.admin.yikang.activity.particulars.ToParticularsActivity;
 import com.yikangcheng.admin.yikang.app.BaseApp;
 import com.yikangcheng.admin.yikang.app.Constants;
@@ -31,11 +38,13 @@ import com.yikangcheng.admin.yikang.base.BaseFragment;
 import com.yikangcheng.admin.yikang.bean.Request;
 import com.yikangcheng.admin.yikang.bean.SectionImageBean;
 import com.yikangcheng.admin.yikang.bean.ShouBannerBean;
+import com.yikangcheng.admin.yikang.bean.WelfareCourseBean;
 import com.yikangcheng.admin.yikang.model.http.ApiException;
 import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
 import com.yikangcheng.admin.yikang.presenter.SectionImagePresenter;
 import com.yikangcheng.admin.yikang.presenter.ShouBannerPresenter;
 import com.yikangcheng.admin.yikang.presenter.ShouTankuangPresenter;
+import com.yikangcheng.admin.yikang.presenter.WelfareCoursePresenter;
 import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 import com.yikangcheng.admin.yikang.util.UIUtils;
 import com.youth.banner.Banner;
@@ -72,12 +81,16 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
     private List<SectionImageBean> imageBeans;
     private ShouTankuangPresenter shouTankuangPresenter;
     private List<ShouBannerBean> bannerBean;
+    private WelfareCoursePresenter welfareCoursePresenter;
+    private RecyclerView recy1;
+    private WelfareCourseAdapter welfareCourseAdapter;
+    private TextView name;
+    private TextView count1;
+    private WelfareCourseBean welfareCourseBeans;
 
     @Override
     protected void initView(View view) {
         onClickListener();
-        //设置状态栏颜色
-        StatusBarUtil.setStatusBarMode((Activity) getContext(), true, R.color.colorToolbar);
         shouBannerPresenter = new ShouBannerPresenter(this);
         shouTankuangPresenter = new ShouTankuangPresenter(new ShouTanKuang());
         shouTankuangPresenter.request(getLogUser(BaseApp.getApp()).getId());
@@ -89,6 +102,12 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
         if (getLogUser(getContext()) != null) {
             sectionImagePresenter.request(getLogUser(getContext()).getEnterId());
         }
+        /**
+         * 福利礼品接口
+         */
+        welfareCourseAdapter = new WelfareCourseAdapter(getContext());
+        welfareCoursePresenter = new WelfareCoursePresenter(new WelfareCourse());
+        welfareCoursePresenter.request(getLogUser(getContext()).getId(), 1);
     }
 
     @Override
@@ -227,6 +246,11 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
             @Override
             public void onClick(View view) {
                 dialog.dismiss();
+                if (welfareCourseBeans != null) {
+                    if (welfareCourseBeans.getWelfareDetailsList() != null) {
+                        showLiPinDialog();
+                    }
+                }
             }
         });
         jinru.setOnClickListener(new View.OnClickListener() {
@@ -237,6 +261,66 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
                 intent.putExtra("http", url + "&userId=" + getLogUser(BaseApp.getApp()).getId());
                 intent.putExtra("title", bannerBean.get(0).getTitle());
                 startActivity(intent);
+                dialog.dismiss();
+                if (welfareCourseBeans != null) {
+                    if (welfareCourseBeans.getWelfareDetailsList() != null) {
+                        showLiPinDialog();
+                    }
+                }
+            }
+        });
+    }
+
+
+    /**
+     * 福利礼品弹框
+     */
+    private void showLiPinDialog() {
+        //dialog展示优惠券
+        dialogview = getLayoutInflater().inflate(R.layout.pop_liwu_shengri, null);
+        ImageView diss_img = dialogview.findViewById(R.id.diss_img);
+        TextView go_list = dialogview.findViewById(R.id.go_list);
+        name = dialogview.findViewById(R.id.name);
+        count1 = dialogview.findViewById(R.id.count);
+        if (welfareCourseBeans != null) {
+            if (welfareCourseBeans.getWelfareDetailsList() != null) {
+                if (welfareCourseBeans.getWelfareDetailsList().get(0).getType() == 0) {
+                    name.setText("节日礼物");
+                    count1.setText("祝你节日快乐,愿你年年有今日,岁岁有今朝,企业的关怀无微不至,收下礼品吧~");
+                } else {
+                    name.setText("生日礼物");
+                    count1.setText("祝你生日快乐,愿你年年有今日,岁岁有今朝,企业的关怀无微不至,收下礼品吧~");
+                }
+            }
+        }
+
+        recy1 = dialogview.findViewById(R.id.recy);
+        recy1.setLayoutManager(new LinearLayoutManager(getContext()));
+        recy1.setAdapter(welfareCourseAdapter);
+        dialog = new Dialog(getContext(), R.style.dialogWindowAnim);
+        dialog.setContentView(dialogview, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT));
+        Window window = dialog.getWindow();
+        //设置显示动画
+        window.setWindowAnimations(R.style.dialogWindowAnim);
+        WindowManager.LayoutParams wl = window.getAttributes();
+        wl.x = 0;
+        wl.y = 0;
+        //设置显示位置
+        dialog.onWindowAttributesChanged(wl);
+        //设置点击外围消散
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+        diss_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        go_list.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), MyGiftActivity.class));
                 dialog.dismiss();
             }
         });
@@ -279,12 +363,6 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
         });
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        tv_banner.startViewAnimator();
-        banner.startAutoPlay();
-    }
 
     @Override
     public void onPause() {
@@ -362,5 +440,29 @@ public class Fragment_Shou extends BaseFragment implements ICoreInfe {
         public void fail(ApiException e) {
 
         }
+    }
+
+    /**
+     * 礼品展示
+     */
+    private class WelfareCourse implements ICoreInfe {
+        @Override
+        public void success(Object data) {
+            Request request = (Request) data;
+            welfareCourseBeans = (WelfareCourseBean) request.getEntity();
+            welfareCourseAdapter.addAll(welfareCourseBeans.getWelfareDetailsList());
+
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        tv_banner.startViewAnimator();
+        banner.startAutoPlay();
     }
 }

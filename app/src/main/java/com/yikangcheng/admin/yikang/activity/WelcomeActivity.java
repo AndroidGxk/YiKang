@@ -32,7 +32,7 @@ import java.util.List;
 
 import me.leefeng.promptlibrary.PromptDialog;
 
-public class WelcomeActivity extends BaseActivtiy implements ICoreInfe {
+public class WelcomeActivity extends BaseActivtiy {
 
     private static final int REQUEST_CODE = 0; // 请求码
     // 所需的全部权限
@@ -51,8 +51,6 @@ public class WelcomeActivity extends BaseActivtiy implements ICoreInfe {
     List<Fragment> list_frag = new ArrayList<>();
     private int count = 3;
     private static int record = 1;
-    private LoginBean loginBean;
-    private int countper = 0;
     Handler handler = new Handler(Looper.myLooper()) {
         @Override
         public void handleMessage(Message msg) {
@@ -72,12 +70,10 @@ public class WelcomeActivity extends BaseActivtiy implements ICoreInfe {
 
     private ImageView image;
     private PromptDialog promptDialog;
-    private AdvertPresenter advertPresenter;
 
     @Override
     protected void initView() {
         closeSwipeBack();
-        StatusBarUtil.setStatusBarMode(this, true, R.color.transparent);
         mPermissionsChecker = new PermissionsChecker(this);
         //创建对象
         promptDialog = new PromptDialog(this);
@@ -103,9 +99,6 @@ public class WelcomeActivity extends BaseActivtiy implements ICoreInfe {
             }
 
         });
-        //设置状态栏颜色
-        StatusBarUtil.setStatusBarMode(this, true, R.color.transparent);
-
     }
 
     @Override
@@ -123,7 +116,6 @@ public class WelcomeActivity extends BaseActivtiy implements ICoreInfe {
                     image.setVisibility(View.VISIBLE);
                     setRecord();
                 } else {
-
                 }
                 handler.sendEmptyMessage(1);
                 return;
@@ -147,8 +139,6 @@ public class WelcomeActivity extends BaseActivtiy implements ICoreInfe {
 
     @Override
     protected void initEventData() {
-        advertPresenter = new AdvertPresenter(this);
-//        advertPresenter.request();
     }
 
     @Override
@@ -163,25 +153,6 @@ public class WelcomeActivity extends BaseActivtiy implements ICoreInfe {
 
     public static void setRecord() {
         record = 1;
-    }
-
-    @Override
-    public void success(Object data) {
-        Request beans = (Request) data;
-        List<AdvertBean> advertBeanList = (List<AdvertBean>) beans.getEntity();
-        if (advertBeanList != null) {
-            final String path = advertBeanList.get(0).getImagesUrl();
-            if (path == null && path.equals("")) {
-            } else {
-
-            }
-        } else {
-        }
-    }
-
-
-    @Override
-    public void fail(ApiException e) {
     }
 
 

@@ -38,7 +38,7 @@ public class NotWorkIntranetUtils {
         retrofit = new Retrofit.Builder()
                 .client(okHttpClient)
 //                .baseUrl("https://www.yikch.com/api/")//base_url:http+域名
-                .baseUrl("http://192.168.0.110/api/")
+                .baseUrl("http://test.yikch.com/api/")
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())//使用Rxjava对回调数据进行处理
                 .addConverterFactory(GsonConverterFactory.create())//响应结果的解析器，包含gson，xml，protobuf
                 .build();
@@ -52,9 +52,8 @@ public class NotWorkIntranetUtils {
     public static OkHttpClient getUnsafeOkHttpClient() {
 
         try {
-
-//            HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-//            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);//打印请求参数，请求结果
+            //HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+            //interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);//打印请求参数，请求结果
             // Create a trust manager that does not validate certificate chains
             final TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
                 @Override

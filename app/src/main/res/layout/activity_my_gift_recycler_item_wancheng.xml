@@ -4,30 +4,45 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/lipin_item_bg_wancheng"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:id="@+id/linear"
+    android:layout_marginBottom="15dp"
+    android:background="@drawable/lipin_bg"
     android:orientation="vertical"
     android:padding="15dp">
+    <!--android:background="#E5DBCB"-->
+
 
     <TextView
+        android:id="@+id/time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
         android:text="领取时间 2019.08.09 9:13:34"
         android:textColor="#C78B52"
         android:textSize="14sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/fengexian_shape"
+        android:visibility="gone" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:src="@drawable/liwu_address" />
+
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -41,6 +56,7 @@
                 android:layout_height="wrap_content">
 
                 <TextView
+                    android:id="@+id/user_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="王添翼"
@@ -48,6 +64,7 @@
                     android:textSize="14sp" />
 
                 <TextView
+                    android:id="@+id/user_phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="133555884"
@@ -56,6 +73,7 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/user_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="北京市石景山区中铁创业大厦A座604"

@@ -1,161 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="96dp"
+    android:layout_height="wrap_content"
     android:layout_marginLeft="15dp"
     android:layout_marginTop="15dp"
     android:layout_marginRight="15dp"
-    android:background="@drawable/youhuiquanbg">
+    android:background="@drawable/youhuiquan_bg"
+    android:orientation="horizontal">
 
-    <android.support.constraint.Guideline
-        android:id="@+id/top_line"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.18" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/text_left_line"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.32" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/man_left_line"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.327" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/go_left_line"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.73" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/qian_left_line"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.08" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/price_left_line"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.118" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/text_top_line"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.42" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/date_top_line"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.76" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/go_top_line"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.63" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/qian_top_line"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.36" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/price_top_line"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.28" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/man_top_line"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.64" />
-
-    <TextView
-        android:id="@+id/title_text"
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#CACACA"
-        android:textSize="14sp"
-        app:layout_constraintLeft_toRightOf="@+id/text_left_line"
-        app:layout_constraintTop_toBottomOf="@id/top_line" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/man_text"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:background="@drawable/effec_man_shape"
-        android:gravity="center"
-        android:textColor="#CACACA"
-        android:paddingRight="6dp"
-        android:paddingLeft="6dp"
-        android:paddingTop="3dp"
-        android:paddingBottom="3dp"
-        android:textSize="10sp"
-        app:layout_constraintLeft_toRightOf="@id/man_left_line"
-        app:layout_constraintTop_toBottomOf="@+id/text_top_line" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="27dp"
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/date_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#CACACA"
-        android:textSize="10sp"
-        app:layout_constraintLeft_toRightOf="@id/text_left_line"
-        app:layout_constraintTop_toBottomOf="@+id/date_top_line" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="¥"
+                android:textColor="#ffffffff"
+                android:textSize="15sp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="¥"
-        android:textColor="#CACACA"
-        android:textSize="19sp"
-        app:layout_constraintLeft_toRightOf="@+id/qian_left_line"
-        app:layout_constraintTop_toBottomOf="@+id/qian_top_line" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5"
+                android:textColor="#ffffffff"
+                android:id="@+id/price_text"
+                android:textSize="24sp" />
+        </LinearLayout>
 
-    <TextView
-        android:id="@+id/price_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#CACACA"
-        android:textSize="29sp"
-        app:layout_constraintLeft_toRightOf="@id/price_left_line"
-        app:layout_constraintTop_toBottomOf="@+id/price_top_line" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="27dp"
+            android:layout_marginTop="5dp"
+            android:text="无门槛"
+            android:id="@+id/type_text"
+            android:textColor="#fffffefe"
+            android:textSize="12sp" />
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/type_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/emanjian_shape"
-        android:gravity="center"
-        android:textColor="#FFFFFF"
-        android:paddingRight="6dp"
-        android:paddingLeft="6dp"
-        android:text="测试"
-        android:paddingTop="3dp"
-        android:paddingBottom="3dp"
-        android:textSize="10sp"
-        app:layout_constraintLeft_toRightOf="@+id/qian_left_line"
-        app:layout_constraintTop_toBottomOf="@id/man_top_line" />
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:paddingLeft="55dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:id="@+id/title_text"
+                android:background="@drawable/gray_pay_shape"
+                android:paddingLeft="10dp"
+                android:paddingTop="3dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="3dp"
+                android:text="企业券"
+                android:textColor="#ffd3d3d3"
+                android:textSize="9sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5元无门槛福利券"
+                android:textColor="#ff5e5e5e"
+                android:id="@+id/man_text"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:id="@+id/date_text"
+                android:text="2019.09.01-2021.10.24"
+                android:textColor="#ffbcbcbc"
+                android:textSize="9sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/youhuiquan_yishiyong_bg" />
+    </LinearLayout>
+</LinearLayout>

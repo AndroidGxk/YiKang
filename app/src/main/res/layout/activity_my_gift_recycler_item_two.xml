@@ -11,16 +11,19 @@
     tools:context=".activity.giftactivity.MyGiftActivity">
 
     <ImageView
+        android:id="@+id/good_img"
         android:layout_width="110dp"
         android:layout_height="90dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/ceshi_good" />
+        android:scaleType="fitXY"/>
 
     <TextView
+        android:id="@+id/good_title"
         android:layout_width="161dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
+        android:ellipsize="end"
+        android:maxLines="2"
         android:text="幸福牌巧克力蛋糕牌巧克力蛋糕牌巧克力蛋糕"
         android:textColor="#ff434343"
         android:textSize="13sp" />

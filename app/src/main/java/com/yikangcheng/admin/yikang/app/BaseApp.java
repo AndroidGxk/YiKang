@@ -97,6 +97,7 @@ public class BaseApp extends Application {
                 return new ClassicsFooter(context).setDrawableSize(20);
             }
         });
+
     }
 
     @Override

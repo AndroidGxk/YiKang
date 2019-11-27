@@ -11,8 +11,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.hjq.toast.ToastUtils;
 import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.bean.AllAddressBean;
+import com.yikangcheng.admin.yikang.bean.WelfareCourseBean;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 作者：古祥坤 on 2019/8/28 17:22
@@ -21,6 +26,8 @@ import com.yikangcheng.admin.yikang.bean.AllAddressBean;
 public class MyGiftOneAdapter extends RecyclerView.Adapter<MyGiftOneAdapter.Vh> {
 
     Context context;
+    int mPosition;
+    List<WelfareCourseBean> welfareCourseBeans = new ArrayList<>();
 
     public MyGiftOneAdapter(Context context) {
         this.context = context;
@@ -28,11 +35,21 @@ public class MyGiftOneAdapter extends RecyclerView.Adapter<MyGiftOneAdapter.Vh> 
 
     AllAddressBean.ListUserAddressBean listUserAddressBean;
 
-    public void addAddress(AllAddressBean.ListUserAddressBean listUserAddressBean) {
+    public void addAddress(AllAddressBean.ListUserAddressBean listUserAddressBean, int mPosition) {
         this.listUserAddressBean = listUserAddressBean;
+        this.mPosition = mPosition;
         notifyDataSetChanged();
     }
 
+    public void addAll(List<WelfareCourseBean> welfareCourseBeans) {
+        this.welfareCourseBeans.addAll(welfareCourseBeans);
+        notifyDataSetChanged();
+    }
+
+    public void removieAll() {
+        this.welfareCourseBeans.clear();
+        notifyDataSetChanged();
+    }
     @NonNull
     @Override
     public Vh onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -41,38 +58,57 @@ public class MyGiftOneAdapter extends RecyclerView.Adapter<MyGiftOneAdapter.Vh> 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Vh vh, int position) {
+    public void onBindViewHolder(@NonNull Vh vh, final int position) {
         vh.recy.setLayoutManager(new LinearLayoutManager(context));
-        vh.recy.setAdapter(new MyGiftTwoAdapter(context, (int) (Math.random() * 10 + 1)));
+        MyGiftTwoAdapter myGiftTwoAdapter = new MyGiftTwoAdapter(context);
+        vh.recy.setAdapter(myGiftTwoAdapter);
+        final List<WelfareCourseBean.WelfareDetailsListBean> welfareDetailsListBeans = welfareCourseBeans.get(position).getWelfareDetailsList();
+        myGiftTwoAdapter.removeAll();
+        if (welfareDetailsListBeans != null)
+            myGiftTwoAdapter.addAll(welfareDetailsListBeans);
         vh.img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (onClickListener != null) {
-                    onClickListener.onClick();
+                    if (listUserAddressBean != null) {
+                        onClickListener.onClick(listUserAddressBean.getId(), position, welfareCourseBeans.get(position).getOrderNumber());
+                    } else {
+                        ToastUtils.show("请选择收货地址");
+                    }
                 }
             }
         });
-        if (listUserAddressBean != null) {
-            vh.line2.setVisibility(View.VISIBLE);
-            vh.line1.setVisibility(View.GONE);
-            vh.name.setText(listUserAddressBean.getReceiver());
-            String mobile = listUserAddressBean.getMobile();
-            if (mobile.length() >= 11) {
-                String frontMobile = mobile.substring(0, 3);
-                String frontStr = frontMobile + "****";
-                String AllMobile = frontStr + mobile.substring(7, mobile.length());
-                vh.phone.setText(AllMobile);
+        if (mPosition == position) {
+            if (listUserAddressBean != null) {
+                vh.line2.setVisibility(View.VISIBLE);
+                vh.line1.setVisibility(View.GONE);
+                vh.name.setText(listUserAddressBean.getReceiver());
+                String mobile = listUserAddressBean.getMobile();
+                if (mobile.length() >= 11) {
+                    String frontMobile = mobile.substring(0, 3);
+                    String frontStr = frontMobile + "****";
+                    String AllMobile = frontStr + mobile.substring(7, mobile.length());
+                    vh.phone.setText(AllMobile);
+                }
+                vh.address.setText(listUserAddressBean.getProvinceStr() + listUserAddressBean.getCityStr() + listUserAddressBean.getTownStr() + listUserAddressBean.getAddress());
+            } else {
+                vh.line2.setVisibility(View.GONE);
+                vh.line1.setVisibility(View.VISIBLE);
             }
-            vh.address.setText(listUserAddressBean.getProvinceStr() + listUserAddressBean.getCityStr() + listUserAddressBean.getTownStr() + listUserAddressBean.getAddress());
-        } else {
-            vh.line2.setVisibility(View.GONE);
-            vh.line1.setVisibility(View.VISIBLE);
         }
         vh.line1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (onClickAddressListener != null) {
-                    onClickAddressListener.onClick();
+                    onClickAddressListener.onClick(position);
+                }
+            }
+        });
+        vh.line2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (onClickAddressListener != null) {
+                    onClickAddressListener.onClick(position);
                 }
             }
         });
@@ -81,13 +117,14 @@ public class MyGiftOneAdapter extends RecyclerView.Adapter<MyGiftOneAdapter.Vh> 
 
     @Override
     public int getItemCount() {
-        return 10;
+        return welfareCourseBeans.size();
     }
 
     class Vh extends RecyclerView.ViewHolder {
         RecyclerView recy;
         ImageView img;
         LinearLayout line1;
+        LinearLayout linear;
         LinearLayout line2;
         TextView name;
         TextView phone;
@@ -99,6 +136,7 @@ public class MyGiftOneAdapter extends RecyclerView.Adapter<MyGiftOneAdapter.Vh> 
             img = itemView.findViewById(R.id.img);
             line1 = itemView.findViewById(R.id.line1);
             line2 = itemView.findViewById(R.id.line2);
+            linear = itemView.findViewById(R.id.linear);
             name = itemView.findViewById(R.id.name);
             phone = itemView.findViewById(R.id.phone);
             address = itemView.findViewById(R.id.address);
@@ -109,7 +147,7 @@ public class MyGiftOneAdapter extends RecyclerView.Adapter<MyGiftOneAdapter.Vh> 
      * 领取
      */
     public interface onClickListener {
-        void onClick();
+        void onClick(int id, int position, String welfareId);
     }
 
     onClickListener onClickListener;
@@ -123,7 +161,7 @@ public class MyGiftOneAdapter extends RecyclerView.Adapter<MyGiftOneAdapter.Vh> 
      * 选择地址
      */
     public interface onClickAddressListener {
-        void onClick();
+        void onClick(int position);
     }
 
     onClickAddressListener onClickAddressListener;

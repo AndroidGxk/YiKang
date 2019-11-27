@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -80,15 +81,17 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
     @BindView(R.id.quan)
     TextView quan;
 
+    @BindView(R.id.tabview)
+    TextView tabview;
 
     @Override
     protected void initView(View view) {
         //设置状态栏颜色
-        if (!getLogUser(getContext()).getThemeColors().equals("")) {
-            StatusBarUtil.setStatusBarMode((Activity) getContext(), true, Color.parseColor(getLogUser(getContext()).getThemeColors()));
-        } else {
-            StatusBarUtil.setStatusBarMode((Activity) getContext(), true, R.color.colorToolbar);
-        }
+//        if (!getLogUser(getContext()).getThemeColors().equals("")) {
+//            StatusBarUtil.setStatusBarMode((Activity) getContext(), true, Color.parseColor(getLogUser(getContext()).getThemeColors()));
+//        } else {
+//            StatusBarUtil.setStatusBarMode((Activity) getContext(), true, R.color.colorToolbar);
+//        }
         logUser = getLogUser(getContext());
         //创建对象
         promptDialog = new PromptDialog(getActivity());
@@ -265,8 +268,23 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
         } else {
             baseline.setVisibility(View.GONE);
         }
-    }
 
+        RelativeLayout.LayoutParams linearParams =(RelativeLayout.LayoutParams) tabview.getLayoutParams(); //取控件textView当前的布局参数
+        linearParams.height =getStatusBarHeight(getContext());// 控件的高强制设成20
+        tabview.setLayoutParams(linearParams);
+        tabview.setBackgroundColor(Color.parseColor(getLogUser(getContext()).getThemeColors()));
+    }
+    /**
+     * 获取状态栏高度
+     * @param context
+     * @return
+     */
+    public static int getStatusBarHeight(Context context) {
+        Resources resources = context.getResources();
+        int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
+        int height = resources.getDimensionPixelSize(resourceId);
+        return height;
+    }
     @Override
     protected int getFragmentLayoutId() {
         return R.layout.fragment_gou;
@@ -433,8 +451,8 @@ public class Fragment_Gou extends BaseFragment implements ShopRecyclerAdapter.To
                     tv_toolBar_right.setText("编辑");
                     judge = false;
                 }
-            }else{
-                    ToastUtils.show(request.getMessage() + "");
+            } else {
+                ToastUtils.show(request.getMessage() + "");
             }
         }
 

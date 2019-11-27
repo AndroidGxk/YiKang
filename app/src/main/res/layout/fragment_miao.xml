@@ -1,159 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF">
 
-    <!--<RelativeLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content">-->
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/tabview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorTab" />
 
-    <!--<ImageView-->
-    <!--android:id="@+id/miao_background"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="125dp"-->
-    <!--android:layout_marginBottom="7dp"-->
-    <!--android:background="@drawable/miao_background" />-->
-
-    <!--<RelativeLayout-->
-    <!--android:id="@+id/image"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_below="@+id/miao_background"-->
-    <!--android:layout_marginLeft="13dp"-->
-    <!--android:layout_marginRight="13dp">-->
-
-
-    <!--<ImageView-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="159dp"-->
-    <!--android:background="@drawable/bao" />-->
-
-    <!--<ImageView-->
-    <!--android:id="@+id/miao_one_btn"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="159dp"-->
-    <!--android:background="@drawable/trans" />-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/tmiao"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_centerHorizontal="true"-->
-    <!--android:layout_marginTop="50dp"-->
-    <!--android:text="秒杀专场"-->
-    <!--android:textColor="#FFFFFF"-->
-    <!--android:textSize="16sp" />-->
-
-    <!--<TextView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_below="@+id/tmiao"-->
-    <!--android:layout_centerHorizontal="true"-->
-    <!--android:layout_marginTop="11dp"-->
-    <!--android:background="@drawable/feng_text"-->
-    <!--android:paddingLeft="8dp"-->
-    <!--android:paddingTop="5dp"-->
-    <!--android:paddingRight="8dp"-->
-    <!--android:paddingBottom="5dp"-->
-    <!--android:text="到手价三折封顶"-->
-    <!--android:textColor="#FFFFFF"-->
-    <!--android:textSize="12sp" />-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/jks"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginLeft="16dp"-->
-    <!--android:layout_marginTop="101dp"-->
-    <!--android:text="距开始"-->
-    <!--android:textColor="#FFFFFF" />-->
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_below="@+id/jks"-->
-    <!--android:layout_marginLeft="14dp"-->
-    <!--android:layout_marginTop="5dp"-->
-    <!--android:orientation="horizontal">-->
-
-    <!--<Button-->
-    <!--android:layout_width="25dp"-->
-    <!--android:layout_height="25dp"-->
-    <!--android:layout_marginRight="3dp"-->
-    <!--android:background="@drawable/feng_btn_red"-->
-    <!--android:gravity="center"-->
-    <!--android:text="1"-->
-    <!--android:textColor="#FFFFFF" />-->
-
-    <!--<TextView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginRight="3dp"-->
-    <!--android:text="天"-->
-    <!--android:textColor="#FFFFFF"-->
-    <!--android:textSize="15sp" />-->
-
-    <!--<Button-->
-    <!--android:layout_width="25dp"-->
-    <!--android:layout_height="25dp"-->
-    <!--android:layout_marginRight="3dp"-->
-    <!--android:background="@drawable/feng_btn_red"-->
-    <!--android:gravity="center"-->
-    <!--android:text="23"-->
-    <!--android:textColor="#FFFFFF" />-->
-
-    <!--<TextView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginRight="3dp"-->
-    <!--android:text=":"-->
-    <!--android:textColor="#FFFFFF"-->
-    <!--android:textSize="15sp" />-->
-
-    <!--<Button-->
-    <!--android:layout_width="25dp"-->
-    <!--android:layout_height="25dp"-->
-    <!--android:layout_marginRight="3dp"-->
-    <!--android:background="@drawable/feng_btn_red"-->
-    <!--android:gravity="center"-->
-    <!--android:text="23"-->
-    <!--android:textColor="#FFFFFF" />-->
-
-    <!--<TextView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginRight="3dp"-->
-    <!--android:text=":"-->
-    <!--android:textColor="#FFFFFF"-->
-    <!--android:textSize="15sp" />-->
-
-    <!--<Button-->
-    <!--android:layout_width="25dp"-->
-    <!--android:layout_height="25dp"-->
-    <!--android:layout_marginRight="3dp"-->
-    <!--android:background="@drawable/feng_btn_red"-->
-    <!--android:gravity="center"-->
-    <!--android:text="23"-->
-    <!--android:textColor="#FFFFFF" />-->
-    <!--</LinearLayout>-->
-    <!--</RelativeLayout>-->
-
-    <!--<android.support.v7.widget.RecyclerView-->
-    <!--android:id="@+id/recycler_one"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="163dp"-->
-    <!--android:overScrollMode="never"-->
-    <!--android:layout_marginLeft="10dp"-->
-    <!--android:layout_marginRight="10dp"-->
-    <!--android:layout_below="@+id/image"-->
-    <!--android:background="@drawable/miao_recycler_shape" />-->
-    <!--</RelativeLayout>-->
     <RelativeLayout
         android:id="@+id/rela"
         android:layout_width="match_parent"
         android:layout_height="45dp"
+        android:layout_below="@+id/tabview"
         android:background="@color/colorTab">
 
 
@@ -204,6 +67,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/pb_progress">
+
         <com.scwang.smartrefresh.header.StoreHouseHeader
             android:id="@+id/storeHouseHeader"
             android:layout_width="match_parent"

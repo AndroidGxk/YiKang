@@ -4,6 +4,7 @@ import com.yikangcheng.admin.yikang.bean.ALLBean;
 import com.yikangcheng.admin.yikang.bean.AdvertBean;
 import com.yikangcheng.admin.yikang.bean.AdvertisingBean;
 import com.yikangcheng.admin.yikang.bean.AllAddressBean;
+import com.yikangcheng.admin.yikang.bean.AllWelfareBean;
 import com.yikangcheng.admin.yikang.bean.AppUpdateBean;
 import com.yikangcheng.admin.yikang.bean.ClassifyCommodityListBean;
 import com.yikangcheng.admin.yikang.bean.ClassifyListOneBean;
@@ -34,6 +35,7 @@ import com.yikangcheng.admin.yikang.bean.UserDetailBean;
 import com.yikangcheng.admin.yikang.bean.UserInfoBean;
 import com.yikangcheng.admin.yikang.bean.WaitSignBean;
 import com.yikangcheng.admin.yikang.bean.WaliDealBean;
+import com.yikangcheng.admin.yikang.bean.WelfareCourseBean;
 
 import java.util.List;
 
@@ -110,11 +112,6 @@ public interface ApiService {
     @POST("login")
     Observable<Request<LoginBean>> login(@Query("mobile") String mobile, @Query("userPassword") String userPassword);
 
-    /**
-     * 首页 秒杀 倒计时
-     */
-    @POST("seckill")
-    Observable<Request<SeckillBean>> Seckill();
 
     /**
      * 个人信息资料
@@ -388,4 +385,32 @@ public interface ApiService {
      */
     @POST("advertisement/click")
     Observable<Request> click(@Query("userId") int userId, @Query("key") String key);
+
+    /**
+     * 礼品弹框
+     */
+    @POST("welfareCoursePopup")
+    Observable<Request<WelfareCourseBean>> welfareCoursePopup(@Query("userId") int userId, @Query("presentState") int presentState);
+
+    /**
+     * 未领取礼品
+     *
+     * @param userId
+     * @param presentState
+     * @return
+     */
+    @POST("welfareCoursePopup")
+    Observable<Request<List<WelfareCourseBean>>> welfareCoursePopupList(@Query("userId") int userId, @Query("presentState") int presentState);
+
+    /**
+     * 已领取礼品
+     */
+    @POST("allWelfareCourse")
+    Observable<Request<List<AllWelfareBean>>> allWelfareCourse(@Query("userId") int userId);
+
+    /**
+     * 领取礼品
+     */
+    @POST("order/createFuLiOrder")
+    Observable<Request> createFuLiOrder(@Query("welfareId") String welfareId, @Query("addressId") int addressId, @Query("userId") int userId);
 }

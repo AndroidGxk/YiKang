@@ -2,11 +2,13 @@ package com.yikangcheng.admin.yikang.activity;
 
 import android.annotation.SuppressLint;
 import android.app.DownloadManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -19,6 +21,8 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.fm.openinstall.OpenInstall;
 import com.fm.openinstall.listener.AppInstallAdapter;
@@ -33,6 +37,7 @@ import com.mylhyl.circledialog.params.ButtonParams;
 import com.mylhyl.circledialog.params.DialogParams;
 import com.mylhyl.circledialog.params.TextParams;
 import com.yikangcheng.admin.yikang.R;
+import com.yikangcheng.admin.yikang.activity.fragment.Fragment_New_Wo;
 import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Wo;
 import com.yikangcheng.admin.yikang.activity.fragment.juhe.Fragment_Shou;
 import com.yikangcheng.admin.yikang.activity.fragment.juhe.Fragment_Xiao;
@@ -44,7 +49,6 @@ import com.yikangcheng.admin.yikang.model.http.ICoreInfe;
 import com.yikangcheng.admin.yikang.presenter.CheckupdatePresenter;
 import com.yikangcheng.admin.yikang.updater.Updater;
 import com.yikangcheng.admin.yikang.updater.UpdaterConfig;
-import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
 import butterknife.BindView;
 
@@ -64,13 +68,13 @@ public class ApplySeleActivity extends BaseActivtiy {
     @BindView(R.id.radio_group)
     RadioGroup radio_group;
     private SharedPreferences sharedPreferences;
+    @BindView(R.id.tabview)
+    TextView tabview;
 
     @Override
     protected void initView() {
         sharedPreferences = getSharedPreferences("wo", MODE_PRIVATE);
         closeSwipeBack();
-        //设置状态栏颜色
-        StatusBarUtil.setStatusBarMode(this, true, R.color.clolrBAai);
         onClickListener();
         one.setChecked(true);
     }
@@ -90,8 +94,23 @@ public class ApplySeleActivity extends BaseActivtiy {
     protected void initEventData() {
         checkupdatePresenter = new CheckupdatePresenter(new ApplySeleActivity.UpdateApp());
         checkupdatePresenter.request("android");
-    }
 
+        RelativeLayout.LayoutParams linearParams =(RelativeLayout.LayoutParams) tabview.getLayoutParams(); //取控件textView当前的布局参数
+        linearParams.height =getStatusBarHeight(ApplySeleActivity.this);// 控件的高强制设成20
+        tabview.setLayoutParams(linearParams);
+        tabview.setBackgroundColor(Color.parseColor("#FFFFFF"));
+    }
+    /**
+     * 获取状态栏高度
+     * @param context
+     * @return
+     */
+    public static int getStatusBarHeight(Context context) {
+        Resources resources = context.getResources();
+        int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
+        int height = resources.getDimensionPixelSize(resourceId);
+        return height;
+    }
     private FragmentTransaction switchFragment(Fragment targetFragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         if (!targetFragment.isAdded()) {

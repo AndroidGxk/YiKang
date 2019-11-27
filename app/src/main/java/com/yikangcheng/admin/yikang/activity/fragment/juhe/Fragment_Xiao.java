@@ -41,8 +41,6 @@ public class Fragment_Xiao extends BaseFragment {
 
     @Override
     protected void initView(View view) {
-        //设置状态栏颜色
-        StatusBarUtil.setStatusBarMode((Activity) getContext(), true, R.color.clolrBAai);
         mess_recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         mess_recycler.setAdapter(new ShouGangXiaoAdapter());
     }

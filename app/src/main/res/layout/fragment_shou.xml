@@ -9,10 +9,18 @@
     android:focusableInTouchMode="true"
     android:overScrollMode="never">
 
+    <TextView
+        android:id="@+id/tabview"
+        android:layout_width="match_parent"
+        android:background="@color/colorTab"
+        android:visibility="gone"
+        android:layout_height="wrap_content" />
+
     <LinearLayout
         android:id="@+id/rela"
         android:layout_width="match_parent"
         android:layout_height="45dp"
+        android:layout_below="@+id/tabview"
         android:background="@color/colorTab">
 
         <ImageView
@@ -79,6 +87,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/pb_progress">
+
         <com.scwang.smartrefresh.header.StoreHouseHeader
             android:id="@+id/storeHouseHeader"
             android:layout_width="match_parent"

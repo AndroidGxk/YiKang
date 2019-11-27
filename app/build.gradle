@@ -16,7 +16,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 27
         versionCode 2
-        versionName "1.3.2"
+        versionName "1.3.3"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.yikangcheng
@@ -64,7 +64,7 @@ greendao {
     targetGenDir 'src/main/java'
 }
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:27.1.1'
     // 支付宝 SDK AAR 包所需的配置
     implementation(name: 'alipaySdk-15.5.9-20181123210601', ext: 'aar')
@@ -72,22 +72,27 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    implementation 'com.squareup.retrofit2:retrofit:2.3.0'        //网络请求   Retrofit
-    implementation 'com.android.support:design:27.1.1'                          //   TabLayout组件
-    implementation 'com.github.bumptech.glide:glide:4.8.0'        //图片加载	一般这两个都加
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'    //制作圆形图片
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    //网络请求   Retrofit
+    implementation 'com.android.support:design:27.1.1'
+    //   TabLayout组件
+    implementation 'com.github.bumptech.glide:glide:4.8.0'
+    //图片加载	一般这两个都加
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
+    //制作圆形图片
     implementation 'jp.wasabeef:glide-transformations:4.0.1'
     implementation 'com.android.support:recyclerview-v7:27.1.1'
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
     implementation 'io.reactivex.rxjava2:rxjava:2.1.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
-    implementation 'me.jessyan:autosize:0.9.5'//今日头条适配
+    implementation 'me.jessyan:autosize:0.9.5'
+    //今日头条适配
     implementation('com.jcodecraeer:xrecyclerview:1.5.9') {
         exclude group: 'com.android.support'
     }
-
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.1'//拦截器
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.1'
+    //拦截器
     //改变状态栏颜色依赖
     implementation 'com.readystatesoftware.systembartint:systembartint:1.0.3'
     implementation 'org.greenrobot:greendao:3.2.0'
@@ -96,15 +101,16 @@ dependencies {
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-7'
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.4-7'//没有使用特殊Header，可以不加这行
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.4-7'
+    //没有使用特殊Header，可以不加这行
     implementation 'com.ashokvarma.android:bottom-navigation-bar:1.4.1'
-    implementation 'com.squareup.retrofit2:converter-scalars:2.0.0'    //导入scalars包
+    implementation 'com.squareup.retrofit2:converter-scalars:2.0.0'
+    //导入scalars包
     implementation 'me.imid.swipebacklayout.lib:library:1.1.0'
     implementation files('libs/fastjson-1.2.6.jar')
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:1.1.6'
     implementation 'com.facebook.fresco:fresco:1.11.0'
-
     implementation 'com.github.limxing:Android-PromptDialog:1.1.3'
     implementation project(path: ':sobotsdk')
     implementation 'com.youth.banner:banner:1.4.9'
@@ -121,10 +127,10 @@ dependencies {
     implementation 'com.hyman:flowlayout-lib:1.1.2'
     implementation 'com.github.promeg:tinypinyin:1.0.0'
     /**
-     * 友盟推送
+     *  友盟推送
      */
-//PushSDK必须依赖基础组件库，所以需要加入对应依赖
+    //PushSDK必须依赖基础组件库，所以需要加入对应依赖
     implementation 'com.umeng.umsdk:common:1.5.4'
-//PushSDK
+    //PushSDK
     implementation 'com.umeng.umsdk:push:6.0.1'
 }

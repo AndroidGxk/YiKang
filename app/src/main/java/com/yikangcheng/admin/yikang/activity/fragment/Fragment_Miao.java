@@ -2,7 +2,9 @@ package com.yikangcheng.admin.yikang.activity.fragment;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -57,17 +59,18 @@ public class Fragment_Miao extends BaseFragment implements ICoreInfe {
     private RelativeLayout rela;
     @BindView(R.id.title)
     TextView title;
-
+    @BindView(R.id.tabview)
+    TextView tabview;
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @SuppressLint({"JavascriptInterface", "NewApi"})
     @Override
     protected void initView(View view) {
         //设置状态栏颜色
-        if (!getLogUser(getContext()).getThemeColors().equals("")) {
-            StatusBarUtil.setStatusBarMode((Activity) getContext(), true, Color.parseColor(getLogUser(getContext()).getThemeColors()));
-        } else {
-            StatusBarUtil.setStatusBarMode((Activity) getContext(), true, R.color.colorToolbar);
-        }
+//        if (!getLogUser(getContext()).getThemeColors().equals("")) {
+//            StatusBarUtil.setStatusBarMode((Activity) getContext(), true, Color.parseColor(getLogUser(getContext()).getThemeColors()));
+//        } else {
+//            StatusBarUtil.setStatusBarMode((Activity) getContext(), true, R.color.colorToolbar);
+//        }
         //进度条
         pbProgress = view.findViewById(R.id.pb_progress);
         //加载刷新
@@ -237,18 +240,24 @@ public class Fragment_Miao extends BaseFragment implements ICoreInfe {
         });
     }
 
+
     @Override
     protected void initData() {
-//        miao_one_btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(new Intent(getContext(), SeckillSecondActivity.class));
-//            }
-//        });
-//        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-//        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-//        recycler_one.setLayoutManager(layoutManager);
-//        recycler_one.setAdapter(firstSeckillRecyclerAdapter);
+        RelativeLayout.LayoutParams linearParams =(RelativeLayout.LayoutParams) tabview.getLayoutParams(); //取控件textView当前的布局参数
+        linearParams.height =getStatusBarHeight(getContext());// 控件的高强制设成20
+        tabview.setLayoutParams(linearParams);
+        tabview.setBackgroundColor(Color.parseColor(getLogUser(getContext()).getThemeColors()));
+    }
+    /**
+     * 获取状态栏高度
+     * @param context
+     * @return
+     */
+    public static int getStatusBarHeight(Context context) {
+        Resources resources = context.getResources();
+        int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
+        int height = resources.getDimensionPixelSize(resourceId);
+        return height;
     }
 
     @Override

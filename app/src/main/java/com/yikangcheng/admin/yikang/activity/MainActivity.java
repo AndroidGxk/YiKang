@@ -1,22 +1,19 @@
 package com.yikangcheng.admin.yikang.activity;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
-import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -29,8 +26,8 @@ import com.yikangcheng.admin.yikang.R;
 import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Fen;
 import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Gou;
 import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Miao;
+import com.yikangcheng.admin.yikang.activity.fragment.Fragment_New_Wo;
 import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Shou;
-import com.yikangcheng.admin.yikang.activity.fragment.Fragment_Wo;
 import com.yikangcheng.admin.yikang.activity.myaccount.MyaccountActivity;
 import com.yikangcheng.admin.yikang.activity.obligation.DetailActivity;
 import com.yikangcheng.admin.yikang.activity.siteactivity.AiteActivity;
@@ -59,7 +56,6 @@ public class MainActivity extends BaseActivtiy {
     private TextView log_text;
     private TextView shou_text, fen_text, miao_text, gou_text, wo_text, my_name;
     private ImageView header;
-    private Fragment_Miao fragment_miao;
     private TextView text_count;
     /**
      * 记录上次点击的页面
@@ -68,7 +64,8 @@ public class MainActivity extends BaseActivtiy {
     private Fragment_Shou fragment_shou;
     private Fragment_Fen fragment_fen;
     private Fragment_Gou fragment_gou;
-    private Fragment_Wo fragment_wo;
+    private Fragment_Miao fragment_miao;
+    private Fragment_New_Wo fragment_new_wo = new Fragment_New_Wo();
     private PromptDialog promptDialog;
     private UserInfoPresenter userInfoPresenter;
     private int width;
@@ -153,6 +150,7 @@ public class MainActivity extends BaseActivtiy {
             }
         });
         sharedPreferences = getSharedPreferences("wo", MODE_PRIVATE);
+
     }
 
     //按钮的定义，创建一个按钮的对象
@@ -207,16 +205,15 @@ public class MainActivity extends BaseActivtiy {
         fragment_fen = new Fragment_Fen();
         fragment_miao = new Fragment_Miao();
         fragment_gou = new Fragment_Gou();
-        fragment_wo = new Fragment_Wo();
         transaction.add(R.id.frag, fragment_shou);
         transaction.add(R.id.frag, fragment_fen);
         transaction.add(R.id.frag, fragment_miao);
         transaction.add(R.id.frag, fragment_gou);
-        transaction.add(R.id.frag, fragment_wo);
+        transaction.add(R.id.frag, fragment_new_wo);
         transaction.hide(fragment_fen);
         transaction.hide(fragment_miao);
         transaction.hide(fragment_gou);
-        transaction.hide(fragment_wo);
+        transaction.hide(fragment_new_wo);
         transaction.show(fragment_shou);
         transaction.commit();
 
@@ -237,7 +234,7 @@ public class MainActivity extends BaseActivtiy {
                 fragmentTransaction.hide(fragment_fen);
                 fragmentTransaction.hide(fragment_miao);
                 fragmentTransaction.hide(fragment_gou);
-                fragmentTransaction.hide(fragment_wo);
+                fragmentTransaction.hide(fragment_new_wo);
                 fragmentTransaction.show(fragment_shou);
                 fragmentTransaction.commit();
                 shou_img.setColorFilter(Color.parseColor(getLogUser(MainActivity.this).getThemeColors()));
@@ -260,7 +257,7 @@ public class MainActivity extends BaseActivtiy {
                 fragmentTransaction.hide(fragment_shou);
                 fragmentTransaction.hide(fragment_miao);
                 fragmentTransaction.hide(fragment_gou);
-                fragmentTransaction.hide(fragment_wo);
+                fragmentTransaction.hide(fragment_new_wo);
                 fragmentTransaction.show(fragment_fen);
                 fragmentTransaction.commit();
                 shou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
@@ -284,7 +281,7 @@ public class MainActivity extends BaseActivtiy {
                 fragmentTransaction.hide(fragment_shou);
                 fragmentTransaction.hide(fragment_fen);
                 fragmentTransaction.hide(fragment_gou);
-                fragmentTransaction.hide(fragment_wo);
+                fragmentTransaction.hide(fragment_new_wo);
                 fragmentTransaction.show(fragment_miao);
                 fragmentTransaction.commit();
                 shou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
@@ -316,7 +313,7 @@ public class MainActivity extends BaseActivtiy {
                 fragmentTransaction.hide(fragment_shou);
                 fragmentTransaction.hide(fragment_fen);
                 fragmentTransaction.hide(fragment_miao);
-                fragmentTransaction.hide(fragment_wo);
+                fragmentTransaction.hide(fragment_new_wo);
                 fragmentTransaction.show(fragment_gou);
                 fragmentTransaction.commit();
                 shou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
@@ -341,7 +338,7 @@ public class MainActivity extends BaseActivtiy {
                 fragmentTransaction.hide(fragment_fen);
                 fragmentTransaction.hide(fragment_miao);
                 fragmentTransaction.hide(fragment_gou);
-                fragmentTransaction.show(fragment_wo);
+                fragmentTransaction.show(fragment_new_wo);
                 fragmentTransaction.commit();
                 shou_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
                 fen_text.setTextColor(MainActivity.this.getResources().getColor(R.color.colorText));
@@ -403,12 +400,6 @@ public class MainActivity extends BaseActivtiy {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
-            }
-        });
-        fragment_wo.setOnClickListener(new Fragment_Wo.onClickListener() {
-            @Override
-            public void onclick() {
-                mDrawerLayout.openDrawer(Gravity.LEFT);
             }
         });
     }
@@ -491,6 +482,4 @@ public class MainActivity extends BaseActivtiy {
 
         }
     }
-
-
 }

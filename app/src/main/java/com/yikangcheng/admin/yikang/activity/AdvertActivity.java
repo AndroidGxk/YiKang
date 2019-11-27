@@ -72,7 +72,6 @@ public class AdvertActivity extends BaseActivtiy implements ICoreInfe {
         }
     };
     private String path;
-    private Bitmap mBitmap;
     private LoginPresenter loginPresenter;
     private AdvertNullPresenter nullPresenter;
 
@@ -162,7 +161,7 @@ public class AdvertActivity extends BaseActivtiy implements ICoreInfe {
 
         @Override
         public void fail(ApiException e) {
-            ToastUtils.show("未知错误,请查看是否连接网络");
+            ToastUtils.show("当前无网络连接");
             startActivity(new Intent(AdvertActivity.this, LoginActivity.class));
             finish();
         }

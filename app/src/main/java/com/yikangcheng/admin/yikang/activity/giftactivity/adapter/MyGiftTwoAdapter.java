@@ -7,10 +7,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.RequestOptions;
 import com.yikangcheng.admin.yikang.R;
+import com.yikangcheng.admin.yikang.bean.WelfareCourseBean;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -19,11 +27,20 @@ import java.util.Random;
  */
 public class MyGiftTwoAdapter extends RecyclerView.Adapter<MyGiftTwoAdapter.Vh> {
     Context context;
-    int random;
+    List<WelfareCourseBean.WelfareDetailsListBean> welfareDetailsListBeans = new ArrayList<>();
 
-    public MyGiftTwoAdapter(Context context, int random) {
+    public MyGiftTwoAdapter(Context context) {
         this.context = context;
-        this.random = random;
+    }
+
+    public void addAll(List<WelfareCourseBean.WelfareDetailsListBean> welfareDetailsListBeans) {
+        this.welfareDetailsListBeans.addAll(welfareDetailsListBeans);
+        notifyDataSetChanged();
+    }
+
+    public void removeAll() {
+        this.welfareDetailsListBeans.clear();
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -35,19 +52,45 @@ public class MyGiftTwoAdapter extends RecyclerView.Adapter<MyGiftTwoAdapter.Vh> 
 
     @Override
     public void onBindViewHolder(@NonNull Vh vh, int position) {
-
+        if (welfareDetailsListBeans.get(position).getCurselogo() != null&&!welfareDetailsListBeans.get(position).getCurselogo().equals("")) {
+            vh.good_title.setText(welfareDetailsListBeans.get(position).getCursename());
+            //设置图片圆角角度
+            RequestOptions requestOptions = new RequestOptions();
+            requestOptions.placeholder(R.drawable.inco_log);
+            if (welfareDetailsListBeans.get(position).getCurselogo().contains("http://") || welfareDetailsListBeans.get(position).getCurselogo().contains("https://")) {
+                Glide.with(context).load(welfareDetailsListBeans.get(position).getCurselogo())
+                        .apply(requestOptions)
+                        .into(vh.good_img);
+            } else {
+                Glide.with(context).load("https://static.yikch.com" + welfareDetailsListBeans.get(position).getCurselogo())
+                        .apply(requestOptions)
+                        .into(vh.good_img);
+            }
+        } else {
+            vh.good_title.setText(welfareDetailsListBeans.get(position).getCouponname());
+            RequestOptions requestOptions = new RequestOptions();
+            requestOptions.placeholder(R.drawable.fuliquan);
+            requestOptions.fallback(R.drawable.fuliquan);
+            Glide.with(context).load("")
+                    .apply(requestOptions)
+                    .into(vh.good_img);
+        }
     }
 
     @Override
     public int getItemCount() {
-        return 6;
+        return welfareDetailsListBeans.size();
     }
 
     class Vh extends RecyclerView.ViewHolder {
 
+        ImageView good_img;
+        TextView good_title;
 
         public Vh(View itemView) {
             super(itemView);
+            good_img = itemView.findViewById(R.id.good_img);
+            good_title = itemView.findViewById(R.id.good_title);
         }
     }
 

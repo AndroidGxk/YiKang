@@ -10,6 +10,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
+            android:id="@+id/diss_img"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_alignParentRight="true"
@@ -27,7 +28,7 @@
             android:shadowDx="0"
             android:shadowDy="4"
             android:shadowRadius="3.0"
-            android:text="王豆豆的生日礼物"
+            android:text=""
             android:textColor="#ffffd58d"
             android:textSize="21sp" />
 
@@ -39,7 +40,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:text="王豆豆祝你生日快乐,愿你年年有今日,岁岁有今朝,企业的关怀无微不至,收下礼品吧~"
+            android:text=""
             android:textColor="#fffefefe"
             android:textSize="15sp" />
 
@@ -64,6 +65,7 @@
         </RelativeLayout>
 
         <TextView
+            android:id="@+id/go_list"
             android:layout_width="120dp"
             android:layout_height="40dp"
             android:layout_below="@+id/liebiao"

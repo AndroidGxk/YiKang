@@ -142,12 +142,6 @@ public class Fragment_Wo extends BaseFragment implements View.OnClickListener {
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void initView(View view) {
-        //设置状态栏颜色
-        if (!getLogUser(getContext()).getThemeColors().equals("")) {
-            StatusBarUtil.setStatusBarMode((Activity) getContext(), true, Color.parseColor(getLogUser(getContext()).getThemeColors()));
-        } else {
-            StatusBarUtil.setStatusBarMode((Activity) getContext(), true, R.color.colorToolbar);
-        }
         String wo = BaseApp.getApp().getSharedPreferences("wo", Context.MODE_PRIVATE).getString("wo", "");
         bottomDialog = new Dialog(getContext(), R.style.BottomDialog);
         rela = (RelativeLayout) view.findViewById(R.id.rela);
@@ -235,44 +229,12 @@ public class Fragment_Wo extends BaseFragment implements View.OnClickListener {
         RequestOptions requestOptions = new RequestOptions();
         requestOptions.placeholder(R.drawable.si_grenzhongxin);
         requestOptions.fallback(R.drawable.si_grenzhongxin);
-//        Glide.with(getContext()).load(R.drawable.si_grenzhongxin).apply(requestOptions)
-//                .into(si_geren_qun);
         RequestOptions requestOptions1 = new RequestOptions();
         requestOptions1.placeholder(R.drawable.comm_fanxiangou);
         requestOptions1.fallback(R.drawable.comm_fanxiangou);
         Glide.with(getContext()).load(R.drawable.comm_fanxiangou).apply(requestOptions1)
                 .into(comm_img);
         if (wo.equals("yes")) {
-            Glide.with(getContext()).load(R.drawable.qizhiyou_bg)
-                    .into(beijing);
-            Glide.with(getContext()).load(R.drawable.daifukuan_bg)
-                    .into(daifukan_img);
-            Glide.with(getContext()).load(R.drawable.daishouhuo_bg)
-                    .into(daishouhuo_img);
-            Glide.with(getContext()).load(R.drawable.yiwanchengding_bg)
-                    .into(yiwancheng_img);
-            Glide.with(getContext()).load(R.drawable.comm_bg_gray)
-                    .into(quxiao_img);
-            Glide.with(getContext()).load(R.drawable.you_bg)
-                    .into(you_img);
-            Glide.with(getContext()).load(R.drawable.guanyu_bg)
-                    .into(guanyu);
-            Glide.with(getContext()).load(R.drawable.dizhi_bg)
-                    .into(address);
-            Glide.with(getContext()).load(R.drawable.zhanghaomingxi_bg)
-                    .into(zhang);
-            Glide.with(getContext()).load(R.drawable.chao_bg)
-                    .apply(RequestOptions.bitmapTransform(new CircleCrop()))
-                    .into(shop_car);
-            Glide.with(getContext()).load(R.drawable.hui_bg)
-                    .apply(RequestOptions.bitmapTransform(new CircleCrop()))
-                    .into(shop_buy);
-            Glide.with(getContext()).load(R.drawable.miao_bg)
-                    .apply(RequestOptions.bitmapTransform(new CircleCrop()))
-                    .into(shop_seckill);
-            Glide.with(getContext()).load(R.drawable.yaoqing)
-                    .apply(RequestOptions.bitmapTransform(new CircleCrop()))
-                    .into(shop_booking);
             Glide.with(getContext()).load(R.drawable.tuichuuser)
                     .into(xiaoxi);
             mess_img.setOnClickListener(new View.OnClickListener() {
@@ -542,7 +504,6 @@ public class Fragment_Wo extends BaseFragment implements View.OnClickListener {
         tou_rela.measure(w, h);
         mTabActivityOrderform.measure(w, h);
         int height = tou_rela.getMeasuredHeight();
-        int measuredHeight = mTabActivityOrderform.getMeasuredHeight();
         mViewHeight += height;
     }
 
@@ -596,7 +557,7 @@ public class Fragment_Wo extends BaseFragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            //已取消
+            //待评价
             case R.id.img__fragment_wo_yiquxiao:
                 startActivity(new Intent(getContext(), GoodCommCentreActivity.class));
                 break;
@@ -622,6 +583,7 @@ public class Fragment_Wo extends BaseFragment implements View.OnClickListener {
                 if (logUser != null) {
                     startActivity(new Intent(getActivity(), MyaccountActivity.class));
                 }
+
                 break;
             //全部订单
             case R.id.tv_fragment_wo_dingdan:

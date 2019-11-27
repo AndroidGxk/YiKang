@@ -4,18 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clipToPadding="true"
-    android:fitsSystemWindows="true"
     android:background="@color/clolrBAai"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="true"
     android:orientation="vertical"
     android:overScrollMode="never"
     tools:context=".activity.ApplySeleActivity">
 
-    <FrameLayout
-        android:background="@color/clolrBAai"
-        android:id="@+id/fragment"
+    <TextView
+        android:id="@+id/tabview"
+        android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content" />
+
+    <FrameLayout
+        android:id="@+id/fragment"
+        android:layout_below="@+id/tabview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/clolrBAai" />
 
     <RelativeLayout
         android:layout_width="match_parent"

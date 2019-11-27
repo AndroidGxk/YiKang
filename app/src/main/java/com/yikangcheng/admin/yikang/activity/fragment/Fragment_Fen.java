@@ -3,6 +3,7 @@ package com.yikangcheng.admin.yikang.activity.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,6 +27,7 @@ import com.yikangcheng.admin.yikang.util.StatusBarUtil;
 
 import java.util.List;
 
+import butterknife.BindView;
 import me.jessyan.autosize.AutoSizeConfig;
 
 public class Fragment_Fen extends BaseFragment implements ICoreInfe {
@@ -40,16 +42,17 @@ public class Fragment_Fen extends BaseFragment implements ICoreInfe {
     private TextView text_seek;
     private int width;
     private RelativeLayout rela;
-
+    @BindView(R.id.tabview)
+    TextView tabview;
 
     @Override
     protected void initView(View view) {
         //设置状态栏颜色
-        if (!getLogUser(getContext()).getThemeColors().equals("")) {
-            StatusBarUtil.setStatusBarMode((Activity) getContext(), true, Color.parseColor(getLogUser(getContext()).getThemeColors()));
-        } else {
-            StatusBarUtil.setStatusBarMode((Activity) getContext(), true, R.color.colorToolbar);
-        }
+//        if (!getLogUser(getContext()).getThemeColors().equals("")) {
+//            StatusBarUtil.setStatusBarMode((Activity) getContext(), true, Color.parseColor(getLogUser(getContext()).getThemeColors()));
+//        } else {
+//            StatusBarUtil.setStatusBarMode((Activity) getContext(), true, R.color.colorToolbar);
+//        }
         AutoSizeConfig.getInstance().setCustomFragment(true);
         rela = (RelativeLayout) view.findViewById(R.id.rela);
         rela.setBackgroundColor(Color.parseColor(getLogUser(getContext()).getThemeColors()));
@@ -65,7 +68,7 @@ public class Fragment_Fen extends BaseFragment implements ICoreInfe {
         //左边
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         mRlvFragmentFenleiZuo.setLayoutManager(linearLayoutManager);
-        mFenLeiAdapter = new FenLeiAdapter(getContext(),getLogUser(getContext()).getThemeColors());
+        mFenLeiAdapter = new FenLeiAdapter(getContext(), getLogUser(getContext()).getThemeColors());
         mRlvFragmentFenleiZuo.setAdapter(mFenLeiAdapter);
         //右边
         LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(getActivity());
@@ -98,6 +101,21 @@ public class Fragment_Fen extends BaseFragment implements ICoreInfe {
 
     @Override
     protected void initData() {
+        RelativeLayout.LayoutParams linearParams =(RelativeLayout.LayoutParams) tabview.getLayoutParams(); //取控件textView当前的布局参数
+        linearParams.height =getStatusBarHeight(getContext());// 控件的高强制设成20
+        tabview.setLayoutParams(linearParams);
+        tabview.setBackgroundColor(Color.parseColor(getLogUser(getContext()).getThemeColors()));
+    }
+    /**
+     * 获取状态栏高度
+     * @param context
+     * @return
+     */
+    public static int getStatusBarHeight(Context context) {
+        Resources resources = context.getResources();
+        int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
+        int height = resources.getDimensionPixelSize(resourceId);
+        return height;
     }
 
     @Override

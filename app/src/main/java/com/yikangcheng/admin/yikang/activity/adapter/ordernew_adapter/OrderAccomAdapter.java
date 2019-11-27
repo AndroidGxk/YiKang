@@ -95,6 +95,7 @@ public class OrderAccomAdapter extends RecyclerView.Adapter<OrderAccomAdapter.Vh
             vh.good_markprice.setText("市场价" + myformat.format(shopSpecDetailedBean.getMarketPrice()));
             if (mList.get(position).getAssessStatus() == 1) {
                 vh.comm_btn.setVisibility(View.VISIBLE);
+                vh.comm_btn.setTextColor(Color.parseColor(color));
             } else {
                 vh.comm_btn.setVisibility(View.GONE);
             }

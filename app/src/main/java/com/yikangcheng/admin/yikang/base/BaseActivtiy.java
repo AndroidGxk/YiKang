@@ -61,6 +61,7 @@ public abstract class BaseActivtiy extends SwipeBackActivity implements NetState
         initView();
         createPresenter();
         initEventData();
+
     }
 
     protected abstract void initView();

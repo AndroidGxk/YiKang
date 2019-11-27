@@ -200,12 +200,12 @@
 
                                     <ImageView
                                         android:id="@+id/daifukan_img"
-                                        android:layout_width="50dp"
-                                        android:layout_height="45dp"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
                                         android:layout_centerHorizontal="true"
                                         android:layout_marginTop="5dp"
                                         android:scaleType="fitXY"
-                                        android:src="@drawable/gerenzhongxin_fukuan" />
+                                        android:src="@drawable/daifukuan_bg" />
 
                                     <ImageView
                                         android:id="@+id/img_fragment_wo_hongyuanquan_b"
@@ -282,12 +282,12 @@
 
                                     <ImageView
                                         android:id="@+id/daishouhuo_img"
-                                        android:layout_width="50dp"
-                                        android:layout_height="45dp"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
                                         android:layout_centerHorizontal="true"
                                         android:layout_marginTop="5dp"
                                         android:scaleType="fitXY"
-                                        android:src="@drawable/gerenzhongxin_shouhuo" />
+                                        android:src="@drawable/daishouhuo_bg" />
 
                                     <TextView
                                         android:layout_width="wrap_content"
@@ -314,12 +314,12 @@
 
                                     <ImageView
                                         android:id="@+id/yiwancheng_img"
-                                        android:layout_width="50dp"
-                                        android:layout_height="45dp"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
                                         android:layout_centerHorizontal="true"
                                         android:layout_marginTop="5dp"
                                         android:scaleType="fitXY"
-                                        android:src="@drawable/gerenzhongxin_wancheng" />
+                                        android:src="@drawable/yiwanchengding_bg" />
 
                                     <TextView
                                         android:layout_width="wrap_content"
@@ -346,12 +346,12 @@
 
                                     <ImageView
                                         android:id="@+id/quxiao_img"
-                                        android:layout_width="50dp"
-                                        android:layout_height="45dp"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
                                         android:layout_centerHorizontal="true"
                                         android:layout_marginTop="5dp"
                                         android:scaleType="fitXY"
-                                        android:src="@drawable/gerenzhongxin_pinglun" />
+                                        android:src="@drawable/comm_bg_gray" />
 
                                     <TextView
                                         android:layout_width="wrap_content"
@@ -391,11 +391,11 @@
 
                                     <ImageView
                                         android:id="@+id/zhang"
-                                        android:layout_width="33dp"
-                                        android:layout_height="33dp"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
                                         android:layout_centerHorizontal="true"
                                         android:layout_marginTop="9dp"
-                                        android:src="@drawable/zhanghuminggxi" />
+                                        android:src="@drawable/zhanghaomingxi_bg" />
 
                                     <TextView
                                         android:layout_width="wrap_content"
@@ -423,11 +423,11 @@
 
                                     <ImageView
                                         android:id="@+id/address"
-                                        android:layout_width="33dp"
-                                        android:layout_height="33dp"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
                                         android:layout_centerHorizontal="true"
                                         android:layout_marginTop="9dp"
-                                        android:src="@drawable/yonghudizhi" />
+                                        android:src="@drawable/dizhi_bg" />
 
                                     <TextView
                                         android:layout_width="wrap_content"
@@ -453,11 +453,11 @@
 
                                     <ImageView
                                         android:id="@+id/guanyu"
-                                        android:layout_width="33dp"
-                                        android:layout_height="33dp"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
                                         android:layout_centerHorizontal="true"
                                         android:layout_marginTop="9dp"
-                                        android:src="@drawable/guanyuruanjian" />
+                                        android:src="@drawable/guanyu_bg" />
 
                                     <TextView
                                         android:layout_width="wrap_content"
@@ -484,11 +484,11 @@
 
                                     <ImageView
                                         android:id="@+id/you_img"
-                                        android:layout_width="33dp"
-                                        android:layout_height="33dp"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
                                         android:layout_centerHorizontal="true"
                                         android:layout_marginTop="9dp"
-                                        android:src="@drawable/wo_youhuiquan" />
+                                        android:src="@drawable/you_bg" />
 
                                     <TextView
                                         android:layout_width="wrap_content"
@@ -521,10 +521,10 @@
 
                                 <ImageView
                                     android:id="@+id/shop_car"
-                                    android:layout_width="35dp"
-                                    android:layout_height="35dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
                                     android:scaleType="fitXY"
-                                    android:src="@drawable/shop_car_gif" />
+                                    android:src="@drawable/chao_bg" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -545,10 +545,10 @@
 
                                 <ImageView
                                     android:id="@+id/shop_buy"
-                                    android:layout_width="35dp"
-                                    android:layout_height="35dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
                                     android:scaleType="fitXY"
-                                    android:src="@drawable/buy_gif" />
+                                    android:src="@drawable/hui_bg" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -569,10 +569,10 @@
 
                                 <ImageView
                                     android:id="@+id/shop_seckill"
-                                    android:layout_width="35dp"
-                                    android:layout_height="35dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
                                     android:scaleType="fitXY"
-                                    android:src="@drawable/sekill_gif" />
+                                    android:src="@drawable/miao_bg" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -593,10 +593,10 @@
 
                                 <ImageView
                                     android:id="@+id/shop_booking"
-                                    android:layout_width="35dp"
-                                    android:layout_height="35dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
                                     android:scaleType="fitXY"
-                                    android:src="@drawable/pintuan_gif" />
+                                    android:src="@drawable/yaoqing" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
